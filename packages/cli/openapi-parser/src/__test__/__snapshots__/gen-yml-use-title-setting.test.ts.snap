@@ -12,6 +12,7 @@ exports[`open api parser gen-yml-use-title parse open api 1`] = `
   "nonRequestReferencedSchemas": [],
   "schemas": {
     "SchemaWithALongNameIsRightHereAndNotSomewhereElse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -37,8 +38,11 @@ exports[`open api parser gen-yml-use-title parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "uuid",
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",

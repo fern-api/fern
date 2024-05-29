@@ -135,7 +135,11 @@ export class Writer {
     public toString(): string {
         const imports = this.stringifyImports();
         if (imports.length > 0) {
-            return `${imports}\n\n${this.buffer}`;
+            return `${imports}
+
+#nullable enable
+
+${this.buffer}`;
         }
         return this.buffer;
     }

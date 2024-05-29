@@ -5,6 +5,91 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.20.1-rc0] - 2024-05-20
+
+- (Pre-emptive) Fix: URL encoded bodies are now appropriately encoded within the fetcher.
+
+## [0.20.0-rc1] - 2024-05-20
+
+- Fix: Pass `abortSignal` to `Stream` for server-sent-events and JSON streams so that the user
+  can opt out and break from a stream.
+
+## [0.20.0-rc0] - 2024-05-20
+
+- Feature: Add `abortSignal` to `RequestOptions`. SDK consumers can now specify an
+  an arbitrary abort signal that can interrupt the API call.
+
+  ```ts
+  const controller = new AbortController();
+  client.endpoint.call(..., {
+    abortSignal: controller.signal,
+  })
+  ```
+
+## [0.19.0] - 2024-05-20
+
+- Feature: Add `inlineFileProperties` configuration to support generating file upload properties
+  as in-lined request properties (instead of positional parameters). Simply configure the following:
+
+  ```yaml
+  - name: fernapi/fern-typscript-node-sdk
+    version: 0.19.0
+    ...
+    config:
+      inlineFileProperties: true
+  ```
+
+  **Before**:
+
+  ```ts
+  /**
+    * @param {File | fs.ReadStream} file
+    * @param {File[] | fs.ReadStream[]} fileList
+    * @param {File | fs.ReadStream | undefined} maybeFile
+    * @param {File[] | fs.ReadStream[] | undefined} maybeFileList
+    * @param {Acme.MyRequest} request
+    * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+    *
+    * @example
+    *     await client.service.post(fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], {})
+    */
+  public async post(
+      file: File | fs.ReadStream,
+      fileList: File[] | fs.ReadStream[],
+      maybeFile: File | fs.ReadStream | undefined,
+      maybeFileList: File[] | fs.ReadStream[] | undefined,
+      request: Acme.MyRequest,
+      requestOptions?: Acme.RequestOptions
+  ): Promise<void> {
+    ...
+  }
+  ```
+
+  **After**:
+
+  ```ts
+  /**
+    * @param {Acme.MyRequest} request
+    * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+    *
+    * @example
+    *     await client.service.post({
+    *        file: fs.createReadStream("/path/to/your/file"),
+    *        fileList: [fs.createReadStream("/path/to/your/file")]
+    *     })
+    */
+  public async post(
+      request: Acme.MyRequest,
+      requestOptions?: Service.RequestOptions
+  ): Promise<void> {
+    ...
+  }
+  ```
+
+## [0.18.3] - 2024-05-17
+
+- Internal: The generator now uses the latest FDR SDK.
+
 ## [0.18.2] - 2024-05-15
 
 - Fix: If OAuth is configured, the generated `getAuthorizationHeader` helper now treats the

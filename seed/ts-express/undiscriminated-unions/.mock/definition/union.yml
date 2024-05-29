@@ -19,3 +19,4 @@ types:
       - integer
       - list<integer>
       - list<list<integer>>
+      - set<string>

@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/container/list-of-primitives",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/container.getAndReturnListOfPrimitives"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -100,7 +101,8 @@
         },
         "endpointId": {
             "path": "/container/list-of-objects",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/container.getAndReturnListOfObjects"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -221,7 +223,8 @@
         },
         "endpointId": {
             "path": "/container/set-of-primitives",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/container.getAndReturnSetOfPrimitives"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -258,7 +261,8 @@
         },
         "endpointId": {
             "path": "/container/set-of-objects",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/container.getAndReturnSetOfObjects"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -295,7 +299,8 @@
         },
         "endpointId": {
             "path": "/container/map-prim-to-prim",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/container.getAndReturnMapPrimToPrim"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -416,7 +421,8 @@
         },
         "endpointId": {
             "path": "/container/map-prim-to-object",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/container.getAndReturnMapOfPrimToObject"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -565,7 +571,8 @@
         },
         "endpointId": {
             "path": "/container/opt-objects",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/container.getAndReturnOptional"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -664,7 +671,8 @@
         },
         "endpointId": {
             "path": "/enum",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/enum.getAndReturnEnum"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -741,7 +749,8 @@
         },
         "endpointId": {
             "path": "/http-methods/{id}",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_endpoints/http-methods.testGet"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -812,7 +821,8 @@
         },
         "endpointId": {
             "path": "/http-methods",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/http-methods.testPost"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -883,7 +893,8 @@
         },
         "endpointId": {
             "path": "/http-methods/{id}",
-            "method": "PUT"
+            "method": "PUT",
+            "identifierOverride": "endpoint_endpoints/http-methods.testPut"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -986,7 +997,8 @@
         },
         "endpointId": {
             "path": "/http-methods/{id}",
-            "method": "PATCH"
+            "method": "PATCH",
+            "identifierOverride": "endpoint_endpoints/http-methods.testPatch"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -1481,7 +1493,8 @@
         },
         "endpointId": {
             "path": "/http-methods/{id}",
-            "method": "DELETE"
+            "method": "DELETE",
+            "identifierOverride": "endpoint_endpoints/http-methods.testDelete"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -1552,7 +1565,8 @@
         },
         "endpointId": {
             "path": "/object/get-and-return-with-optional-field",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/object.getAndReturnWithOptionalField"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -2015,7 +2029,8 @@
         },
         "endpointId": {
             "path": "/object/get-and-return-with-required-field",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/object.getAndReturnWithRequiredField"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -2086,7 +2101,8 @@
         },
         "endpointId": {
             "path": "/object/get-and-return-with-map-of-map",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/object.getAndReturnWithMapOfMap"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -2257,7 +2273,8 @@
         },
         "endpointId": {
             "path": "/object/get-and-return-nested-with-optional-field",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithOptionalField"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -2779,8 +2796,9 @@
             "type": "python"
         },
         "endpointId": {
-            "path": "/object/get-and-return-nested-with-required-field",
-            "method": "POST"
+            "path": "/object/get-and-return-nested-with-required-field/{string}",
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithRequiredField"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -2789,6 +2807,22 @@
                 "isOptional": true,
                 "templateString": "client.endpoints.object.get_and_return_nested_with_required_field(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "string=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "PATH",
+                                    "path": "string",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
                     {
                         "type": "template",
                         "value": {
@@ -3053,6 +3087,22 @@
                                 "templateString": "string=$FERN_INPUT",
                                 "templateInputs": [
                                     {
+                                        "location": "PATH",
+                                        "path": "string",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "string=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
                                         "location": "BODY",
                                         "path": "string",
                                         "type": "payload"
@@ -3303,7 +3353,8 @@
         },
         "endpointId": {
             "path": "/object/get-and-return-nested-with-required-field-list",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithRequiredFieldAsList"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -3876,7 +3927,8 @@
         },
         "endpointId": {
             "path": "/params/path/{param}",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_endpoints/params.getWithPath"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -3947,7 +3999,8 @@
         },
         "endpointId": {
             "path": "/params",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_endpoints/params.getWithQuery"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -4050,7 +4103,8 @@
         },
         "endpointId": {
             "path": "/params",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_endpoints/params.getWithAllowMultipleQuery"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -4153,7 +4207,8 @@
         },
         "endpointId": {
             "path": "/params/path-query/{param}",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_endpoints/params.getWithPathAndQuery"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -4256,7 +4311,8 @@
         },
         "endpointId": {
             "path": "/params/path/{param}",
-            "method": "PUT"
+            "method": "PUT",
+            "identifierOverride": "endpoint_endpoints/params.modifyWithPath"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -4359,7 +4415,8 @@
         },
         "endpointId": {
             "path": "/primitive/string",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/primitive.getAndReturnString"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -4430,7 +4487,8 @@
         },
         "endpointId": {
             "path": "/primitive/integer",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/primitive.getAndReturnInt"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -4501,7 +4559,8 @@
         },
         "endpointId": {
             "path": "/primitive/long",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/primitive.getAndReturnLong"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -4572,7 +4631,8 @@
         },
         "endpointId": {
             "path": "/primitive/double",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/primitive.getAndReturnDouble"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -4643,7 +4703,8 @@
         },
         "endpointId": {
             "path": "/primitive/boolean",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/primitive.getAndReturnBool"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -4714,7 +4775,8 @@
         },
         "endpointId": {
             "path": "/primitive/datetime",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/primitive.getAndReturnDatetime"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -4785,7 +4847,8 @@
         },
         "endpointId": {
             "path": "/primitive/date",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/primitive.getAndReturnDate"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -4856,7 +4919,8 @@
         },
         "endpointId": {
             "path": "/primitive/uuid",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/primitive.getAndReturnUUID"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -4927,7 +4991,8 @@
         },
         "endpointId": {
             "path": "/primitive/base64",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/primitive.getAndReturnBase64"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -4998,7 +5063,8 @@
         },
         "endpointId": {
             "path": "/union",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_endpoints/union.getAndReturnUnion"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -5229,7 +5295,8 @@
         },
         "endpointId": {
             "path": "/req-bodies/object",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_inlined-requests.postWithObjectBodyandResponse"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -5784,7 +5851,8 @@
         },
         "endpointId": {
             "path": "/no-auth",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_no-auth.postWithNoAuth"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -5855,7 +5923,8 @@
         },
         "endpointId": {
             "path": "/no-req-body",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_no-req-body.getWithNoRequestBody"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -5892,7 +5961,8 @@
         },
         "endpointId": {
             "path": "/no-req-body",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_no-req-body.postWithNoRequestBody"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -5929,7 +5999,8 @@
         },
         "endpointId": {
             "path": "/test-headers/custom-header",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_req-with-headers.getWithCustomHeader"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

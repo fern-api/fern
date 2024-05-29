@@ -12,6 +12,12 @@ type SendResponse struct {
 	Message string `json:"message" url:"message"`
 	Status  int    `json:"status" url:"status"`
 	success bool
+
+	extraProperties map[string]interface{}
+}
+
+func (s *SendResponse) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
 }
 
 func (s *SendResponse) Success() bool {
@@ -30,6 +36,13 @@ func (s *SendResponse) UnmarshalJSON(data []byte) error {
 	}
 	*s = SendResponse(unmarshaler.embed)
 	s.success = true
+
+	extraProperties, err := core.ExtractExtraProperties(data, *s, "success")
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+
 	return nil
 }
 

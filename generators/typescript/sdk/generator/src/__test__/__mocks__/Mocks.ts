@@ -60,6 +60,7 @@ export const Mocks = {
             retainOriginalCasing: false,
             allowExtraFields: false,
             generateOAuthClients: false,
+            inlineFileProperties: false,
             writeUnitTests: true,
             ...partialConfig
         };

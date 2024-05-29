@@ -19,7 +19,7 @@
 This repository contains the source for the various generators that produce Python artifacts for [Fern](https://github.com/fern-api/fern):
 
 - `fernapi/fern-python-sdk`
-- `fernapi/fern-pydandic-model`
+- `fernapi/fern-pydantic-model`
 - `fernapi/fern-fastapi-server`
 
 The Python generators are written in Python. We strongly emphasize idiomatic code generation that feels hand-written and is friendly to read.
@@ -133,7 +133,7 @@ Shape.factory.circle(Circle(...))
 shape = get_shape()
 shape.visit(
   circle: lambda circle: do_something_with_circle(circle),
-  triangle: lambda triangle: do_something_with_circle(circle),
+  triangle: lambda triangle: do_something_with_triangle(triangle),
 )
 ```
 

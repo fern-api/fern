@@ -8,7 +8,7 @@ import uuid
 import typing_extensions
 
 from .datetime_utils import serialize_datetime
-from .pydantic_utilities import pydantic_v1
+from .pydantic_utilities import IS_PYDANTIC_V2, pydantic_v1
 
 
 class UnionMetadata:
@@ -60,6 +60,7 @@ class UncheckedBaseModel(pydantic_v1.BaseModel):
                 else:
                     type_ = typing.cast(typing.Type, field.outer_type_)  # type: ignore
                     fields_values[name] = construct_type(object_=values[key], type_=type_)
+                _fields_set.add(name)
             elif not field.required:
                 default = field.get_default()
                 fields_values[name] = default
@@ -71,10 +72,19 @@ class UncheckedBaseModel(pydantic_v1.BaseModel):
                     _fields_set.add(key)
 
         # Add extras back in
+        _extra = {}
         for key, value in values.items():
-            if key not in cls.__fields__:
-                _fields_set.add(key)
-                fields_values[key] = value
+            if key not in _fields_set:
+                _extra[key] = value
+                # In v2 we'll need to exclude extra fields from fields_values
+                if not IS_PYDANTIC_V2:
+                    _fields_set.add(key)
+                    fields_values[key] = value
+
+        if IS_PYDANTIC_V2:
+            object.__setattr__(m, "__pydantic_private__", None)
+            object.__setattr__(m, "__pydantic_extra__", _extra)
+            object.__setattr__(m, "__pydantic_fields_set__", _fields_set)
 
         object.__setattr__(m, "__dict__", fields_values)
         object.__setattr__(m, "__fields_set__", _fields_set)
@@ -144,8 +154,12 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
         if not isinstance(object_, typing.Mapping):
             return object_
 
-        _, items_type = pydantic_v1.typing.get_args(type_)
-        return {key: construct_type(object_=item, type_=items_type) for key, item in object_.items()}
+        key_type, items_type = pydantic_v1.typing.get_args(type_)
+        d = {
+            construct_type(object_=key, type_=key_type): construct_type(object_=item, type_=items_type)
+            for key, item in object_.items()
+        }
+        return d
 
     if base_type == list:
         if not isinstance(object_, list):
@@ -187,6 +201,22 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
     if base_type == uuid.UUID:
         try:
             return uuid.UUID(object_)
+        except Exception:
+            return object_
+
+    if base_type == int:
+        try:
+            return int(object_)
+        except Exception:
+            return object_
+
+    if base_type == bool:
+        try:
+            if isinstance(object_, str):
+                stringified_object = object_.lower()
+                return stringified_object == "true" or stringified_object == "1"
+
+            return bool(object_)
         except Exception:
             return object_
 

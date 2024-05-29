@@ -14,7 +14,8 @@ export interface NoReqBodyServiceMethods {
             send: (responseBody: SeedExhaustive.types.ObjectWithOptionalField) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     postWithNoRequestBody(
         req: express.Request<never, string, never, never>,
@@ -22,7 +23,8 @@ export interface NoReqBodyServiceMethods {
             send: (responseBody: string) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -46,17 +48,21 @@ export class NoReqBodyService {
     public toRouter(): express.Router {
         this.router.get("", async (req, res, next) => {
             try {
-                await this.methods.getWithNoRequestBody(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.getWithNoRequestBody(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedExhaustiveError) {
@@ -74,17 +80,21 @@ export class NoReqBodyService {
         });
         this.router.post("", async (req, res, next) => {
             try {
-                await this.methods.postWithNoRequestBody(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.noReqBody.postWithNoRequestBody.Response.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.postWithNoRequestBody(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.noReqBody.postWithNoRequestBody.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedExhaustiveError) {

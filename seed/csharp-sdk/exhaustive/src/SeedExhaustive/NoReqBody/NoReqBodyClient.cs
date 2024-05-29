@@ -2,6 +2,8 @@ using System.Text.Json;
 using SeedExhaustive;
 using SeedExhaustive.Types;
 
+#nullable enable
+
 namespace SeedExhaustive;
 
 public class NoReqBodyClient
@@ -23,7 +25,7 @@ public class NoReqBodyClient
         {
             return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<string> PostWithNoRequestBodyAsync()
@@ -36,6 +38,6 @@ public class NoReqBodyClient
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

@@ -37,7 +37,6 @@ import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.client.generators.visitors.FilePropertyIsOptional;
 import com.fern.java.client.generators.visitors.GetFilePropertyKey;
 import com.fern.java.generators.object.EnrichedObjectProperty;
-import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
@@ -340,7 +339,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             } else if (fileUploadProperty instanceof FilePropertyContainer) {
                 FileProperty fileProperty = ((FilePropertyContainer) fileUploadProperty).fileProperty();
                 NameAndWireValue filePropertyKey = fileProperty.visit(new GetFilePropertyKey());
-                String filePropertyName = filePropertyKey.getName().getCamelCase().getUnsafeName();
+                String filePropertyName =
+                        filePropertyKey.getName().getCamelCase().getUnsafeName();
                 String mimeTypeVariableName = filePropertyName + "MimeType";
                 String mediaTypeVariableName = mimeTypeVariableName + "MediaType";
                 String filePropertyParameterName = getFilePropertyParameterName(fileProperty);
@@ -406,6 +406,10 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
     }
 
     private static String getFilePropertyParameterName(FileProperty fileProperty) {
-        return fileProperty.visit(new GetFilePropertyKey()).getName().getCamelCase().getSafeName();
+        return fileProperty
+                .visit(new GetFilePropertyKey())
+                .getName()
+                .getCamelCase()
+                .getSafeName();
     }
 }

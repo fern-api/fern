@@ -2,6 +2,8 @@ using System.Text.Json;
 using SeedExamples;
 using SeedExamples.File;
 
+#nullable enable
+
 namespace SeedExamples.File;
 
 public class ServiceClient
@@ -26,6 +28,6 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<File>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

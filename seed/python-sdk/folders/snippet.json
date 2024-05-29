@@ -4,7 +4,8 @@
         {
             "id": {
                 "path": "/",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_.foo"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.foo()\n",
@@ -15,7 +16,8 @@
         {
             "id": {
                 "path": "/",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_a/b.foo"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.a.b.foo()\n",
@@ -26,7 +28,8 @@
         {
             "id": {
                 "path": "/",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_a/c.foo"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.a.c.foo()\n",
@@ -37,7 +40,8 @@
         {
             "id": {
                 "path": "/",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_folder.foo"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.folder.foo()\n",
@@ -48,7 +52,8 @@
         {
             "id": {
                 "path": "/service",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_folder/service.endpoint"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.folder.service.endpoint()\n",
@@ -59,7 +64,8 @@
         {
             "id": {
                 "path": "/service",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_folder/service.unknownRequest"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.folder.service.unknown_request(\n    request={\"key\": \"value\"},\n)\n",

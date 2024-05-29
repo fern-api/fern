@@ -2423,7 +2423,15 @@ exports[`open api parser hathora docs 1`] = `
       "AppConfig": {
         "docs": undefined,
         "properties": {
-          "appName": "string",
+          "appName": {
+            "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": 32,
+              "minLength": undefined,
+              "pattern": "^[a-z0-9-]+$",
+            },
+          },
           "authConfiguration": "AppConfigAuthConfiguration",
         },
       },
@@ -2537,18 +2545,52 @@ exports[`open api parser hathora docs 1`] = `
       "DeploymentConfig": {
         "docs": undefined,
         "properties": {
-          "containerPort": "integer",
+          "containerPort": {
+            "type": "integer",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": 65535,
+              "min": 1,
+              "multipleOf": undefined,
+            },
+          },
           "env": "list<DeploymentConfigEnvItem>",
           "planName": "PlanName",
-          "roomsPerProcess": "integer",
+          "roomsPerProcess": {
+            "type": "integer",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": 10000,
+              "min": 1,
+              "multipleOf": undefined,
+            },
+          },
           "transportType": "TransportType",
         },
       },
       "DeploymentConfigEnvItem": {
         "docs": undefined,
         "properties": {
-          "name": "string",
-          "value": "string",
+          "name": {
+            "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": 100,
+              "minLength": 1,
+              "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$",
+            },
+          },
+          "value": {
+            "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": 5000,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
       "DeploymentId": "double",
@@ -2715,7 +2757,16 @@ exports[`open api parser hathora docs 1`] = `
           "roomId": "RoomId",
         },
       },
-      "TailLines": "integer",
+      "TailLines": {
+        "type": "integer",
+        "validation": {
+          "exclusiveMax": undefined,
+          "exclusiveMin": undefined,
+          "max": 10000,
+          "min": 1,
+          "multipleOf": undefined,
+        },
+      },
       "TransportType": {
         "enum": [
           "tcp",
@@ -4793,7 +4844,15 @@ exports[`open api parser hathora simple 1`] = `
       "AppConfig": {
         "docs": undefined,
         "properties": {
-          "appName": "string",
+          "appName": {
+            "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": 32,
+              "minLength": undefined,
+              "pattern": "^[a-z0-9-]+$",
+            },
+          },
           "authConfiguration": "AppConfigAuthConfiguration",
         },
       },
@@ -4907,18 +4966,52 @@ exports[`open api parser hathora simple 1`] = `
       "DeploymentConfig": {
         "docs": undefined,
         "properties": {
-          "containerPort": "integer",
+          "containerPort": {
+            "type": "integer",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": 65535,
+              "min": 1,
+              "multipleOf": undefined,
+            },
+          },
           "env": "list<DeploymentConfigEnvItem>",
           "planName": "PlanName",
-          "roomsPerProcess": "integer",
+          "roomsPerProcess": {
+            "type": "integer",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": 10000,
+              "min": 1,
+              "multipleOf": undefined,
+            },
+          },
           "transportType": "TransportType",
         },
       },
       "DeploymentConfigEnvItem": {
         "docs": undefined,
         "properties": {
-          "name": "string",
-          "value": "string",
+          "name": {
+            "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": 100,
+              "minLength": 1,
+              "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$",
+            },
+          },
+          "value": {
+            "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": 5000,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
       "DeploymentId": "double",
@@ -5085,7 +5178,16 @@ exports[`open api parser hathora simple 1`] = `
           "roomId": "RoomId",
         },
       },
-      "TailLines": "integer",
+      "TailLines": {
+        "type": "integer",
+        "validation": {
+          "exclusiveMax": undefined,
+          "exclusiveMin": undefined,
+          "max": 10000,
+          "min": 1,
+          "multipleOf": undefined,
+        },
+      },
       "TransportType": {
         "enum": [
           "tcp",

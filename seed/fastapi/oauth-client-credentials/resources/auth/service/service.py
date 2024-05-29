@@ -75,7 +75,7 @@ class AbstractAuthService(AbstractFernService):
         wrapper.__globals__.update(cls.get_token_with_client_credentials.__globals__)
 
         router.post(
-            path="//token",
+            path="/token",
             response_model=TokenResponse,
             description=AbstractAuthService.get_token_with_client_credentials.__doc__,
             **get_route_args(cls.get_token_with_client_credentials, default_tag="auth"),
@@ -111,7 +111,7 @@ class AbstractAuthService(AbstractFernService):
         wrapper.__globals__.update(cls.refresh_token.__globals__)
 
         router.post(
-            path="//token",
+            path="/token",
             response_model=TokenResponse,
             description=AbstractAuthService.refresh_token.__doc__,
             **get_route_args(cls.refresh_token, default_tag="auth"),

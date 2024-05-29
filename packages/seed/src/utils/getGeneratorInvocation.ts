@@ -95,7 +95,12 @@ function getGithubPublishInfo({
         case "python":
             return FernFiddle.GithubPublishInfo.pypi({
                 packageName: `fern_${fixtureName}`,
-                registryUrl: ""
+                registryUrl: "",
+                pypiMetadata: {
+                    keywords: ["fern", "test"],
+                    documentationLink: "https://buildwithfern.com/learn",
+                    homepageLink: "https://buildwithfern.com/"
+                }
             });
         case "typescript":
             return FernFiddle.GithubPublishInfo.npm({

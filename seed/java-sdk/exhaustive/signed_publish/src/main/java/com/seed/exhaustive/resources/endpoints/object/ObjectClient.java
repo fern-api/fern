@@ -210,16 +210,18 @@ public class ObjectClient {
         }
     }
 
-    public NestedObjectWithRequiredField getAndReturnNestedWithRequiredField(NestedObjectWithRequiredField request) {
-        return getAndReturnNestedWithRequiredField(request, null);
+    public NestedObjectWithRequiredField getAndReturnNestedWithRequiredField(
+            String string, NestedObjectWithRequiredField request) {
+        return getAndReturnNestedWithRequiredField(string, request, null);
     }
 
     public NestedObjectWithRequiredField getAndReturnNestedWithRequiredField(
-            NestedObjectWithRequiredField request, RequestOptions requestOptions) {
+            String string, NestedObjectWithRequiredField request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
                 .addPathSegments("get-and-return-nested-with-required-field")
+                .addPathSegment(string)
                 .build();
         RequestBody body;
         try {

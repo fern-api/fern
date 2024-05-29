@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class ProblemClient
@@ -30,7 +32,7 @@ public class ProblemClient
         {
             return JsonSerializer.Deserialize<CreateProblemResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -54,7 +56,7 @@ public class ProblemClient
         {
             return JsonSerializer.Deserialize<UpdateProblemResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -87,6 +89,6 @@ public class ProblemClient
         {
             return JsonSerializer.Deserialize<GetDefaultStarterFilesResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

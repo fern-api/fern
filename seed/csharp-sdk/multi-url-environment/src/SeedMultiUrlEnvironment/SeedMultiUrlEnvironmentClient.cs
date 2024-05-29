@@ -1,5 +1,7 @@
 using SeedMultiUrlEnvironment;
 
+#nullable enable
+
 namespace SeedMultiUrlEnvironment;
 
 public partial class SeedMultiUrlEnvironmentClient

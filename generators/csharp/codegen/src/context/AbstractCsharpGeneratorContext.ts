@@ -9,9 +9,12 @@ import {
     ObjectTypeDeclaration,
     TypeDeclaration,
     TypeId,
+    TypeReference,
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
+import { csharp } from "..";
+import { STRING_ENUM_SERIALIZER_CLASS_NAME } from "../AsIs";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { CsharpProject } from "../project";
 import { CORE_DIRECTORY_NAME } from "../project/CsharpProject";
@@ -65,6 +68,13 @@ export abstract class AbstractCsharpGeneratorContext<
         return `${this.namespace}.Test`;
     }
 
+    public getStringEnumSerializerClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: STRING_ENUM_SERIALIZER_CLASS_NAME
+        });
+    }
+
     public getPascalCaseSafeName(name: Name): string {
         return name.pascalCase.safeName;
     }
@@ -79,6 +89,23 @@ export abstract class AbstractCsharpGeneratorContext<
 
     public getCoreDirectory(): RelativeFilePath {
         return RelativeFilePath.of(CORE_DIRECTORY_NAME);
+    }
+
+    public isEnum(reference: TypeReference): boolean {
+        if (reference.type === "container" && reference.container.type === "optional") {
+            return this.isEnum(reference.container.optional);
+        }
+        if (reference.type !== "named") {
+            return false;
+        }
+        const declaration = this.getTypeDeclarationOrThrow(reference.typeId);
+        if (declaration.shape.type === "enum") {
+            return true;
+        }
+        if (declaration.shape.type === "alias") {
+            return declaration.shape.resolvedType.type === "named" && declaration.shape.resolvedType.shape === "ENUM";
+        }
+        return false;
     }
 
     public abstract getAsIsFiles(): string[];

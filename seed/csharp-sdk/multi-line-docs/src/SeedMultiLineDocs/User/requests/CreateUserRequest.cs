@@ -1,3 +1,7 @@
+using System.Text.Json.Serialization;
+
+#nullable enable
+
 namespace SeedMultiLineDocs;
 
 public class CreateUserRequest
@@ -7,6 +11,7 @@ public class CreateUserRequest
     /// This name is unique to each user.
     ///
     /// </summary>
+    [JsonPropertyName("name")]
     public string Name { get; init; }
 
     /// <summary>
@@ -14,5 +19,6 @@ public class CreateUserRequest
     /// This propery is not required.
     ///
     /// </summary>
+    [JsonPropertyName("age")]
     public int? Age { get; init; }
 }

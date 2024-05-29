@@ -1,5 +1,7 @@
 using SeedApi;
 
+#nullable enable
+
 namespace SeedApi.Folder;
 
 public class ServiceClient

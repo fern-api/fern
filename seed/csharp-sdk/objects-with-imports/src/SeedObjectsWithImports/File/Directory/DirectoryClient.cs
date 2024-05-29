@@ -1,5 +1,7 @@
 using SeedObjectsWithImports;
 
+#nullable enable
+
 namespace SeedObjectsWithImports.File;
 
 public class DirectoryClient

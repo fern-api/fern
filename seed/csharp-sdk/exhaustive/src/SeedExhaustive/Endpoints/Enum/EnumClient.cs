@@ -2,6 +2,8 @@ using System.Text.Json;
 using SeedExhaustive;
 using SeedExhaustive.Types;
 
+#nullable enable
+
 namespace SeedExhaustive.Endpoints;
 
 public class EnumClient
@@ -28,6 +30,6 @@ public class EnumClient
         {
             return JsonSerializer.Deserialize<WeatherReport>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

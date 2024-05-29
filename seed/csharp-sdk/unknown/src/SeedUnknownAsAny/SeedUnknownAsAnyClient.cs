@@ -1,5 +1,7 @@
 using SeedUnknownAsAny;
 
+#nullable enable
+
 namespace SeedUnknownAsAny;
 
 public partial class SeedUnknownAsAnyClient

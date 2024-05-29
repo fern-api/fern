@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedBearerTokenEnvironmentVariable;
 
+#nullable enable
+
 namespace SeedBearerTokenEnvironmentVariable;
 
 public class ServiceClient
@@ -25,6 +27,6 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

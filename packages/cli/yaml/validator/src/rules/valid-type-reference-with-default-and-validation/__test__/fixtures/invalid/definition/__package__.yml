@@ -1,0 +1,49 @@
+types:
+  Object:
+    docs: |
+      Defines properties with default values and validation rules.
+    properties:
+      enabled:
+        docs: |
+          Booleans don't support defaults or validation.
+        type: boolean
+        default: true
+      id:
+        docs: |
+          UUIDs don't support defaults or validation.
+        type: uuid
+        validation:
+          minLength: 26
+          maxLength: 26
+      value:
+        docs: |
+          Integers can't have double defaults or validation rules,
+        type: integer
+        default: 26.2
+        validation:
+          min: 26.2
+          max: 26.2
+      name:
+        docs: |
+          Strings can't have integer defaults or validation rules,
+        type: integer
+        default: 42
+        validation:
+          min: 42
+          max: 42
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    create:
+      path: /create
+      method: POST
+      request:
+        name: CreateRequest
+        body:
+          properties:
+            decimal:
+              type: boolean
+              default: true
+      response: Object

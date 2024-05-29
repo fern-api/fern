@@ -493,8 +493,11 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": "",
+                "format": null,
                 "maxLength": 256,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -517,6 +520,12 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 100,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": 1000,
+                "minimum": 0,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -1280,6 +1289,12 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": 10,
+                "minimum": 1,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -1759,8 +1774,11 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": "",
+                "format": null,
                 "maxLength": 256,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -1783,6 +1801,12 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 100,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": 1000,
+                "minimum": 0,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -2169,8 +2193,11 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": "",
+                "format": null,
                 "maxLength": 256,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -2193,6 +2220,12 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 100,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": 1000,
+                "minimum": 0,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -2680,6 +2713,7 @@ This error response may have one of the following \`type\` values:
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -3005,6 +3039,7 @@ This error response may have one of the following \`type\` values:
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -3397,8 +3432,11 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": 36,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -3427,8 +3465,11 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": 2,
               "minLength": 2,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -3844,8 +3885,11 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": "date",
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -3867,8 +3911,11 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "date",
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -3904,6 +3951,12 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 6,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": 12,
+                "minimum": 1,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -4241,8 +4294,11 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": 512,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -5056,8 +5112,11 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "date",
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -5080,8 +5139,11 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "date",
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -5699,8 +5761,11 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": "",
+                "format": null,
                 "maxLength": 256,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -5723,6 +5788,12 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 100,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": 10000,
+                "minimum": 0,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -5745,8 +5816,11 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}|([[(](\\d{4}-\\d{2}-\\d{2},(\\d{4}-\\d{2}-\\d{2})?|,\\d{4}-\\d{2}-\\d{2})[)\\]])$",
                 "type": "string",
               },
               "type": "primitive",
@@ -5952,6 +6026,12 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": 10,
+                "minimum": 1,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -6177,8 +6257,11 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": 512,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -6807,8 +6890,11 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": "",
+                "format": null,
                 "maxLength": 256,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -6831,6 +6917,12 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 100,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": 1000,
+                "minimum": 0,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -7291,6 +7383,7 @@ This error response may have one of the following \`type\` values:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -8299,6 +8392,7 @@ This error response may have one of the following \`type\` values:
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -8430,6 +8524,7 @@ This error response may have one of the following \`type\` values:
   ],
   "schemas": {
     "abstractBody": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "An abstract schema used to define other request and response body model schemas.",
@@ -8440,6 +8535,7 @@ This error response may have one of the following \`type\` values:
       "type": "object",
     },
     "abstractPagedBody": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -8480,8 +8576,11 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": 256,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -8492,6 +8591,7 @@ This error response may have one of the following \`type\` values:
       "type": "object",
     },
     "abstractPagedBodyFields": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Common properties of collection page responses.",
@@ -8511,6 +8611,12 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": 100,
+              "exclusiveMaximum": null,
+              "exclusiveMinimum": null,
+              "maximum": null,
+              "minimum": 0,
+              "multipleOf": null,
               "type": "int",
             },
             "type": "primitive",
@@ -8534,8 +8640,11 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "uri-reference",
                 "maxLength": 8000,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -8546,6 +8655,7 @@ This error response may have one of the following \`type\` values:
       "type": "object",
     },
     "account": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -8737,6 +8847,7 @@ This error response may have one of the following \`type\` values:
       ],
     },
     "accountBalance": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The current balances of the given account.",
@@ -8868,6 +8979,7 @@ This error response may have one of the following \`type\` values:
       "type": "object",
     },
     "accountBalances": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -8909,6 +9021,7 @@ This error response may have one of the following \`type\` values:
       "type": "object",
     },
     "accountFields": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Fragment schema use to build other account schemas.",
@@ -8943,8 +9056,11 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": 80,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -9036,6 +9152,7 @@ This error response may have one of the following \`type\` values:
       },
     },
     "accountItem": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -9099,8 +9216,11 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": 80,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -9230,6 +9350,7 @@ This error response may have one of the following \`type\` values:
       "type": "object",
     },
     "accountJointOwner": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -9272,8 +9393,11 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": 50,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -9283,6 +9407,7 @@ This error response may have one of the following \`type\` values:
       "type": "object",
     },
     "accountJointOwners": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9370,13 +9495,17 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
+        "format": null,
         "maxLength": 50,
         "minLength": null,
+        "pattern": null,
         "type": "string",
       },
       "type": "primitive",
     },
     "accountPermissions": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Flags which indicate the permissions the current authorized user has on this account item resource. Most of these properties may only be \`true\` for internal accounts. These permissions are available in account items in the [\`accounts\`](#schema-accounts) list. See [\`fullAccountPermissions\`](#schema-fullAccountPermissions) for all capabilities a customer has on an account (the \`account.allows\` object in the [\`account\`](#schema-account) object response from [\`getAccount\`](#op-getAccount).)",
@@ -9512,13 +9641,17 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
+        "format": null,
         "maxLength": 9,
         "minLength": 9,
+        "pattern": "^[0-9]{9}$",
         "type": "string",
       },
       "type": "primitive",
     },
     "accounts": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -9574,6 +9707,12 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": 0,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -9624,8 +9763,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "uri-reference",
                 "maxLength": 256,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -9892,6 +10034,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       ],
     },
     "address": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -9925,8 +10068,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": 20,
                 "minLength": 2,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -9951,8 +10097,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": 2,
                 "minLength": 2,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -9971,8 +10120,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": 10,
               "minLength": 5,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -9994,8 +10146,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": 2,
               "minLength": 2,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -10005,6 +10160,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "type": "object",
     },
     "addressFields": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Properties of a simple address, used to compose other addresses.",
@@ -10024,8 +10180,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": 35,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -10049,8 +10208,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": 35,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -10069,8 +10231,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": 20,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -10088,8 +10253,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": 2,
               "minLength": 2,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -10104,13 +10272,17 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
+        "format": null,
         "maxLength": null,
         "minLength": null,
+        "pattern": "^((\\d+(\\.\\d{0,2})?)|([\\[\\(](((\\d+(\\.\\d{0,2})?),((\\d+(\\.\\d{0,2})?))?)|(,(\\d+(\\.\\d{0,2})?)))[\\]\\)]))$",
         "type": "string",
       },
       "type": "primitive",
     },
     "apiProblem": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "API problem or error, as per [RFC 7807 application/problem+json](https://tools.ietf.org/html/rfc7807).",
@@ -10137,8 +10309,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "uri-reference",
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -10164,8 +10339,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -10191,6 +10369,12 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": 599,
+                "minimum": 100,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -10216,8 +10400,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -10243,8 +10430,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "uri-reference",
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -10346,8 +10536,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
               },
@@ -10365,6 +10558,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "type": "object",
     },
     "challengeFactor": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "An challenge factor. See [\`requiredIdentityChallenge\`](#schema-requiredIdentityChallenge) for multiple examples.",
@@ -10411,8 +10605,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": 40,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -10552,13 +10749,17 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
+        "format": null,
         "maxLength": 48,
         "minLength": 1,
+        "pattern": "^[-_:.~$a-zA-Z0-9]+$",
         "type": "string",
       },
       "type": "primitive",
     },
     "challengeSecurityQuestion": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "A single security question within the \`questions\` array of the [\`challengeSecurityQuestions\`](#schema-challengeSecurityQuestions)",
@@ -10593,8 +10794,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": 50,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -10604,6 +10808,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "type": "object",
     },
     "challengeSecurityQuestions": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Describes a \`securityQuestions\` challenge. This is omitted if the challenge \`type\` is not \`securityQuestions\`.",
@@ -10642,8 +10847,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
+        "format": null,
         "maxLength": 255,
         "minLength": 8,
+        "pattern": "^[-_:.~%$a-zA-Z0-9]{6,255}$",
         "type": "string",
       },
       "type": "primitive",
@@ -10662,13 +10870,17 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
+        "format": null,
         "maxLength": null,
         "minLength": null,
+        "pattern": "^(-|\\+)?(0|[1-9][0-9]*)\\.[0-9][0-9]$",
         "type": "string",
       },
       "type": "primitive",
     },
     "cutoffTime": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "A representation of a cutoff time for a money movement process at a financial institution.",
@@ -10703,8 +10915,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": "^(?<hour>[0-2][0-9]):(?<minute>[0-5][0-9])$",
               "type": "string",
             },
             "type": "primitive",
@@ -10842,6 +11057,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       ],
     },
     "cutoffTimes": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -10904,8 +11120,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
+        "format": null,
         "maxLength": null,
         "minLength": null,
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}|([[(](\\d{4}-\\d{2}-\\d{2},(\\d{4}-\\d{2}-\\d{2})?|,\\d{4}-\\d{2}-\\d{2})[)\\]])$",
         "type": "string",
       },
       "type": "primitive",
@@ -10919,6 +11138,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "reference",
     },
     "eligibleOverdraftAccounts": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -10958,6 +11178,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "exclusiveMaximum": null,
+              "exclusiveMinimum": null,
+              "maximum": 4,
+              "minimum": null,
+              "multipleOf": null,
               "type": "int",
             },
             "type": "primitive",
@@ -10985,8 +11211,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "uri-reference",
                 "maxLength": 256,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -11071,13 +11300,17 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
+        "format": null,
         "maxLength": 32,
         "minLength": 1,
+        "pattern": "^[- a-zA-Z0-9.]{1,32}$",
         "type": "string",
       },
       "type": "primitive",
     },
     "fullAccountPermissions": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -11131,6 +11364,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "object",
     },
     "incompleteAccountBalances": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -11195,6 +11429,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "exclusiveMaximum": null,
+              "exclusiveMinimum": null,
+              "maximum": 10,
+              "minimum": 1,
+              "multipleOf": null,
               "type": "int",
             },
             "type": "primitive",
@@ -11204,6 +11444,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "object",
     },
     "incompleteTransactions": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -11231,6 +11472,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "exclusiveMaximum": null,
+              "exclusiveMinimum": null,
+              "maximum": 10,
+              "minimum": 1,
+              "multipleOf": null,
               "type": "int",
             },
             "type": "primitive",
@@ -11245,8 +11492,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
+        "format": null,
         "maxLength": 9,
         "minLength": 2,
+        "pattern": "^[A-Z0-9_]{2,8}$",
         "type": "string",
       },
       "type": "primitive",
@@ -11321,6 +11571,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       ],
     },
     "institutionLookupResult": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -11408,6 +11659,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "object",
     },
     "jointOwnerInvitation": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -11449,6 +11701,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "object",
     },
     "jointOwnerInvitationFields": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Fields used to compose other joint owner invitation schemas.",
@@ -11468,8 +11721,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": 32,
               "minLength": 1,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -11487,8 +11743,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": 32,
               "minLength": 1,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -11512,8 +11771,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": 4,
                 "minLength": 4,
+                "pattern": "^[0-9]{4}$",
                 "type": "string",
               },
               "type": "primitive",
@@ -11532,8 +11794,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": 100,
               "minLength": 8,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -11551,8 +11816,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": "email",
               "maxLength": 80,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -11591,8 +11859,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
+        "format": null,
         "maxLength": 5,
         "minLength": 2,
+        "pattern": "^\\*[- _a-zA-Z0-9.]{1,4}$",
         "type": "string",
       },
       "type": "primitive",
@@ -11603,13 +11874,17 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
+        "format": null,
         "maxLength": null,
         "minLength": null,
+        "pattern": "^(0|[1-9][0-9]*)\\.[0-9][0-9]$",
         "type": "string",
       },
       "type": "primitive",
     },
     "newJointOwnerInvitation": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -11635,6 +11910,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "object",
     },
     "newTransfer": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -11683,6 +11959,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "object",
     },
     "overdraftAccountFields": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Fields of an overdraft protection account, used to compose other schemas.",
@@ -11730,8 +12007,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": 80,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -11772,6 +12052,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "reference",
     },
     "overdraftProtection": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -11806,6 +12087,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "exclusiveMaximum": null,
+              "exclusiveMinimum": null,
+              "maximum": 4,
+              "minimum": null,
+              "multipleOf": null,
               "type": "int",
             },
             "type": "primitive",
@@ -11815,6 +12102,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "object",
     },
     "overdraftProtectionFields": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Fields used to compose other overdraft protection schemas.",
@@ -11845,6 +12133,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "object",
     },
     "overdraftProtectionPatch": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -11875,13 +12164,17 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
+        "format": null,
         "maxLength": null,
         "minLength": null,
+        "pattern": "^\\d+|([[(](\\d+,(\\d+)?|,\\d+)[)\\]])$",
         "type": "string",
       },
       "type": "primitive",
     },
     "problemResponse": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -11907,6 +12200,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "object",
     },
     "productReference": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "A reference to a banking product.",
@@ -11941,8 +12235,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": 16,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -11960,8 +12257,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": 48,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -11979,8 +12279,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": "markdown",
               "maxLength": 400,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -12125,6 +12428,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "primitive",
     },
     "requiredIdentityChallenge": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "A request from the service for the user to verify their identity. This contains a challenge ID, the corresponding operation ID, and a list of challenge factors for identity verification. The user must complete one of these challenge factors to satisfy the challenge. This schema defines the attributes in the 401 [Unauthorized problem response](#schema-apiProblem) when the 401 problem type name is \`challengeRequired\`. See the "Challenge API" for details.",
@@ -12193,13 +12497,17 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
+        "format": null,
         "maxLength": 48,
         "minLength": 6,
+        "pattern": "^[-_:.~$a-zA-Z0-9]+$",
         "type": "string",
       },
       "type": "primitive",
     },
     "simpleInstitution": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "A simple representation of a financial institution.",
@@ -12219,8 +12527,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": 35,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -12253,8 +12564,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": 36,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -12284,13 +12598,17 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
+        "format": null,
         "maxLength": 36,
         "minLength": null,
+        "pattern": "^America\\/[a-zA-Z_]+(?:\\/[a-zA-Z_]+)*",
         "type": "string",
       },
       "type": "primitive",
     },
     "timestampFields": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Timestamps which describe when a resource was created or last updated.",
@@ -12350,6 +12668,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "object",
     },
     "transactionCategories": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -12383,6 +12702,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "object",
     },
     "transactionCategorization": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The transaction categorization.",
@@ -12417,8 +12737,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": 32,
               "minLength": 1,
+              "pattern": "^[-_:.~$a-zA-Z0-9]{1,32}$",
               "type": "string",
             },
             "type": "primitive",
@@ -12428,6 +12751,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "object",
     },
     "transactionCategory": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -12474,8 +12798,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
+        "format": null,
         "maxLength": 64,
         "minLength": 1,
+        "pattern": null,
         "type": "string",
       },
       "type": "primitive",
@@ -12534,6 +12861,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       ],
     },
     "transactionCheck": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Describes a check associated with a transaction for a checking account. This object is only present if the transaction \`type\` is \`debit\` and the \`subtype\` is \`check\`.",
@@ -12553,6 +12881,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "exclusiveMaximum": null,
+              "exclusiveMinimum": null,
+              "maximum": null,
+              "minimum": 1,
+              "multipleOf": null,
               "type": "int",
             },
             "type": "primitive",
@@ -12576,8 +12910,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "uri-reference",
                 "maxLength": 400,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -12602,8 +12939,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "uri-reference",
                 "maxLength": 400,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -12614,6 +12954,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "object",
     },
     "transactionFields": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Common fields of the transaction resource used to build other model schemas.",
@@ -12633,8 +12974,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": 128,
               "minLength": 6,
+              "pattern": "^[-_:,.~$a-zA-Z0-9]{6,128}$",
               "type": "string",
             },
             "type": "primitive",
@@ -12682,8 +13026,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": "date",
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -12707,8 +13054,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "date",
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -12733,8 +13083,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "date",
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -12820,8 +13173,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": 128,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -12846,8 +13202,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": 128,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -12924,6 +13283,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "object",
     },
     "transactionItem": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -12949,6 +13309,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "object",
     },
     "transactionMerchant": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Describes the merchant associated with a transaction.",
@@ -12974,8 +13335,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": 32,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -13000,8 +13364,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "uri-reference",
                 "maxLength": 400,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -13026,8 +13393,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "uri-reference",
                 "maxLength": 400,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -13160,6 +13530,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       ],
     },
     "transactions": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -13222,6 +13593,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": 0,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -13232,6 +13609,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "object",
     },
     "transfer": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -13257,6 +13635,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "object",
     },
     "transferAccountReference": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "A reference to a banking account used within an account to account transfer. This object may be set from an account's \`account.reference\` object.",
@@ -13297,8 +13676,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": 80,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -13353,6 +13735,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "object",
     },
     "transferDateRestriction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "A date where a transfer restriction occurs, and the \`reason\` it is restricted. If the \`reason\` is \`holiday\`, \`closure\` and the transfer is an ACH transfer, the object also contains either a \`debitOn\` or \`creditOn\` date or both.",
@@ -13372,8 +13755,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": "date",
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -13412,8 +13798,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "date",
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -13438,8 +13827,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "date",
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -13567,6 +13959,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       ],
     },
     "transferDateRestrictions": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -13630,8 +14023,11 @@ The response may include dates prior to requested the start date, as that is use
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "date",
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -13642,6 +14038,7 @@ The response may include dates prior to requested the start date, as that is use
       "type": "object",
     },
     "transferFields": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Common fields of the transfer resource used to build other model schemas.",
@@ -13733,8 +14130,11 @@ The response may include dates prior to requested the start date, as that is use
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": 128,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -13974,6 +14374,7 @@ The response may include dates prior to requested the start date, as that is use
       ],
     },
     "transferItem": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -14083,8 +14484,11 @@ The response may include dates prior to requested the start date, as that is use
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": 48,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -14095,6 +14499,7 @@ The response may include dates prior to requested the start date, as that is use
       "type": "object",
     },
     "transferItemSchedule": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -14128,8 +14533,11 @@ The response may include dates prior to requested the start date, as that is use
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "date",
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -14154,8 +14562,11 @@ The response may include dates prior to requested the start date, as that is use
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "date",
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -14166,6 +14577,7 @@ The response may include dates prior to requested the start date, as that is use
       "type": "object",
     },
     "transferPatch": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -14267,6 +14679,7 @@ The response may include dates prior to requested the start date, as that is use
       ],
     },
     "transferSchedule": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The scheduled date when the transfer should be completed, the recurrence, if any, and other derived dates based on the scheduled date.
@@ -14294,8 +14707,11 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "date",
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -14357,8 +14773,11 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "date",
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -14383,6 +14802,12 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 1,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": 1,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -14484,6 +14909,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       ],
     },
     "transferScheduleItem": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Summary representation of a transfer schedule resource in transfer schedule list.",
@@ -14503,8 +14929,11 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": "date",
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -14522,8 +14951,11 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": "date",
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -14533,6 +14965,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "type": "object",
     },
     "transferSchedules": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -14822,6 +15255,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       ],
     },
     "transfers": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -14877,6 +15311,12 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": 0,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -14887,6 +15327,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "type": "object",
     },
     "wireTransferInstitution": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -14920,8 +15361,11 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "[a-zA-Z0-9]{3,12}",
                 "maxLength": 12,
                 "minLength": 3,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",

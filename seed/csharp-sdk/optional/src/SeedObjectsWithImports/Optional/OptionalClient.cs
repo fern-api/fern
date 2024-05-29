@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedObjectsWithImports;
 
+#nullable enable
+
 namespace SeedObjectsWithImports;
 
 public class OptionalClient
@@ -27,6 +29,6 @@ public class OptionalClient
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

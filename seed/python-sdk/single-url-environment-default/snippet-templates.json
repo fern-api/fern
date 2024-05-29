@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/dummy",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_dummy.getDummy"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedSingleUrlEnvironmentDefault\n\nclient = SeedSingleUrlEnvironmentDefault(\n    token=\"YOUR_TOKEN\",\n)",

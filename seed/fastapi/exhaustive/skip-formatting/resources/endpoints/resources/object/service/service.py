@@ -37,7 +37,7 @@ class AbstractEndpointsObjectService(AbstractFernService):
     def get_and_return_nested_with_optional_field(self, *, body: NestedObjectWithOptionalField, auth: ApiAuth) -> NestedObjectWithOptionalField:
         ...
     @abc.abstractmethod
-    def get_and_return_nested_with_required_field(self, *, body: NestedObjectWithRequiredField, auth: ApiAuth) -> NestedObjectWithRequiredField:
+    def get_and_return_nested_with_required_field(self, *, body: NestedObjectWithRequiredField, string: str, auth: ApiAuth) -> NestedObjectWithRequiredField:
         ...
     @abc.abstractmethod
     def get_and_return_nested_with_required_field_as_list(self, *, body: typing.List[NestedObjectWithRequiredField], auth: ApiAuth) -> NestedObjectWithRequiredField:
@@ -211,6 +211,8 @@ class AbstractEndpointsObjectService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "string":
+                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "auth":
                 new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
@@ -234,7 +236,7 @@ class AbstractEndpointsObjectService(AbstractFernService):
         wrapper.__globals__.update(cls.get_and_return_nested_with_required_field.__globals__)
         
         router.post(
-            path="/object/get-and-return-nested-with-required-field",
+            path="/object/get-and-return-nested-with-required-field/{string}",
             response_model=NestedObjectWithRequiredField,
             description=AbstractEndpointsObjectService.get_and_return_nested_with_required_field.__doc__,
             **get_route_args(cls.get_and_return_nested_with_required_field, default_tag="endpoints.object"),

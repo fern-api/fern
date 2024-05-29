@@ -23,8 +23,8 @@ module SeedTraceClient
     # @param token [String]
     # @param x_random_header [String]
     # @return [SeedTraceClient::RequestClient]
-    def initialize(token:, environment: Environment::PROD, base_url: nil, max_retries: nil, timeout_in_seconds: nil,
-                   x_random_header: nil)
+    def initialize(token:, environment: SeedTraceClient::Environment::PROD, base_url: nil, max_retries: nil,
+                   timeout_in_seconds: nil, x_random_header: nil)
       @default_environment = environment
       @base_url = environment || base_url
       @headers = {
@@ -66,8 +66,8 @@ module SeedTraceClient
     # @param token [String]
     # @param x_random_header [String]
     # @return [SeedTraceClient::AsyncRequestClient]
-    def initialize(token:, environment: Environment::PROD, base_url: nil, max_retries: nil, timeout_in_seconds: nil,
-                   x_random_header: nil)
+    def initialize(token:, environment: SeedTraceClient::Environment::PROD, base_url: nil, max_retries: nil,
+                   timeout_in_seconds: nil, x_random_header: nil)
       @default_environment = environment
       @base_url = environment || base_url
       @headers = {

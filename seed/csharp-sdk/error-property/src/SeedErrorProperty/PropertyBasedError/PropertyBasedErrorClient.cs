@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedErrorProperty;
 
+#nullable enable
+
 namespace SeedErrorProperty;
 
 public class PropertyBasedErrorClient
@@ -25,6 +27,6 @@ public class PropertyBasedErrorClient
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

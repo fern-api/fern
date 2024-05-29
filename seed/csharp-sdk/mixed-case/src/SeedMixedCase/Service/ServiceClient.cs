@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedMixedCase;
 
+#nullable enable
+
 namespace SeedMixedCase;
 
 public class ServiceClient
@@ -22,7 +24,7 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<Resource>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<List<Resource>> ListResourcesAsync(ListResourcesRequest request)
@@ -45,6 +47,6 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<List<Resource>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

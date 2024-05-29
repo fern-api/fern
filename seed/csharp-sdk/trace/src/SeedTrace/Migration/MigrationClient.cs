@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class MigrationClient
@@ -33,6 +35,6 @@ public class MigrationClient
         {
             return JsonSerializer.Deserialize<List<Migration>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

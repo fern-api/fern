@@ -1,5 +1,7 @@
 using SeedFileDownload;
 
+#nullable enable
+
 namespace SeedFileDownload;
 
 public class ServiceClient

@@ -19,8 +19,8 @@ module SeedMultiUrlEnvironmentClient
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @return [SeedMultiUrlEnvironmentClient::Client]
-    def initialize(token:, environment: Environment::PRODUCTION, base_url: nil, max_retries: nil,
-                   timeout_in_seconds: nil)
+    def initialize(token:, environment: SeedMultiUrlEnvironmentClient::Environment::PRODUCTION, base_url: nil,
+                   max_retries: nil, timeout_in_seconds: nil)
       @request_client = SeedMultiUrlEnvironmentClient::RequestClient.new(
         environment: environment,
         base_url: base_url,
@@ -45,8 +45,8 @@ module SeedMultiUrlEnvironmentClient
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @return [SeedMultiUrlEnvironmentClient::AsyncClient]
-    def initialize(token:, environment: Environment::PRODUCTION, base_url: nil, max_retries: nil,
-                   timeout_in_seconds: nil)
+    def initialize(token:, environment: SeedMultiUrlEnvironmentClient::Environment::PRODUCTION, base_url: nil,
+                   max_retries: nil, timeout_in_seconds: nil)
       @async_request_client = SeedMultiUrlEnvironmentClient::AsyncRequestClient.new(
         environment: environment,
         base_url: base_url,

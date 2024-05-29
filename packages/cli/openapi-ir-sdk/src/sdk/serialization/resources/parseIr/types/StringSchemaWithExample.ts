@@ -10,6 +10,8 @@ export const StringSchemaWithExample: core.serialization.ObjectSchema<
     serializers.StringSchemaWithExample.Raw,
     FernOpenapiIr.StringSchemaWithExample
 > = core.serialization.objectWithoutOptionalProperties({
+    default: core.serialization.string().optional(),
+    pattern: core.serialization.string().optional(),
     format: core.serialization.string().optional(),
     minLength: core.serialization.number().optional(),
     maxLength: core.serialization.number().optional(),
@@ -18,6 +20,8 @@ export const StringSchemaWithExample: core.serialization.ObjectSchema<
 
 export declare namespace StringSchemaWithExample {
     interface Raw {
+        default?: string | null;
+        pattern?: string | null;
         format?: string | null;
         minLength?: number | null;
         maxLength?: number | null;

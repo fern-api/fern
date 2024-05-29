@@ -14,7 +14,8 @@ export interface HomepageServiceMethods {
             send: (responseBody: SeedTrace.ProblemId[]) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     setHomepageProblems(
         req: express.Request<never, never, SeedTrace.ProblemId[], never>,
@@ -22,7 +23,8 @@ export interface HomepageServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -46,17 +48,21 @@ export class HomepageService {
     public toRouter(): express.Router {
         this.router.get("", async (req, res, next) => {
             try {
-                await this.methods.getHomepageProblems(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.homepage.getHomepageProblems.Response.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.getHomepageProblems(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.homepage.getHomepageProblems.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedTraceError) {
@@ -77,13 +83,17 @@ export class HomepageService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.setHomepageProblems(req as any, {
-                        send: async () => {
-                            res.sendStatus(204);
+                    await this.methods.setHomepageProblems(
+                        req as any,
+                        {
+                            send: async () => {
+                                res.sendStatus(204);
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedTraceError) {

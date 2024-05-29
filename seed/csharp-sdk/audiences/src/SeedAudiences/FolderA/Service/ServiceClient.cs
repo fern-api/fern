@@ -2,6 +2,8 @@ using System.Text.Json;
 using SeedAudiences;
 using SeedAudiences.FolderA;
 
+#nullable enable
+
 namespace SeedAudiences.FolderA;
 
 public class ServiceClient
@@ -23,6 +25,6 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<Response>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

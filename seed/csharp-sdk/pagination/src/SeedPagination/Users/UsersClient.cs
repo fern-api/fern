@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedPagination;
 
+#nullable enable
+
 namespace SeedPagination;
 
 public class UsersClient
@@ -46,7 +48,7 @@ public class UsersClient
         {
             return JsonSerializer.Deserialize<ListUsersPaginationResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<ListUsersPaginationResponse> ListWithOffsetPaginationAsync(
@@ -83,7 +85,7 @@ public class UsersClient
         {
             return JsonSerializer.Deserialize<ListUsersPaginationResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<ListUsersExtendedResponse> ListWithExtendedResultsAsync(
@@ -108,7 +110,7 @@ public class UsersClient
         {
             return JsonSerializer.Deserialize<ListUsersExtendedResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<UsernameCursor> ListUsernamesAsync(ListUsernamesRequest request)
@@ -131,7 +133,7 @@ public class UsersClient
         {
             return JsonSerializer.Deserialize<UsernameCursor>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<UsernameContainer> ListWithGlobalConfigAsync(
@@ -156,6 +158,6 @@ public class UsersClient
         {
             return JsonSerializer.Deserialize<UsernameContainer>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

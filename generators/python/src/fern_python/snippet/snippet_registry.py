@@ -85,6 +85,7 @@ class SnippetRegistry:
         return generator_exec.EndpointIdentifier(
             path=generator_exec.EndpointPath(self._full_path_for_endpoint(endpoint)),
             method=self._ir_method_to_generator_exec_method(endpoint.method),
+            identifier_override=endpoint.id.get_as_str(),
         )
 
     def _full_path_for_endpoint(

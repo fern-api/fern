@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class PlaylistClient
@@ -39,7 +41,7 @@ public class PlaylistClient
         {
             return JsonSerializer.Deserialize<Playlist>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -74,7 +76,7 @@ public class PlaylistClient
         {
             return JsonSerializer.Deserialize<List<Playlist>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -90,7 +92,7 @@ public class PlaylistClient
         {
             return JsonSerializer.Deserialize<Playlist>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -114,7 +116,7 @@ public class PlaylistClient
         {
             return JsonSerializer.Deserialize<Playlist?>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>

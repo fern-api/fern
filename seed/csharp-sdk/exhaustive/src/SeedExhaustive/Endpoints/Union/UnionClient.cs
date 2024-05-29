@@ -2,6 +2,8 @@ using System.Text.Json;
 using SeedExhaustive;
 using SeedExhaustive.Types;
 
+#nullable enable
+
 namespace SeedExhaustive.Endpoints;
 
 public class UnionClient
@@ -28,6 +30,6 @@ public class UnionClient
         {
             return JsonSerializer.Deserialize<Animal>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

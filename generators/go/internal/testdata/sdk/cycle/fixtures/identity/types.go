@@ -12,7 +12,12 @@ import (
 type Token struct {
 	Username *user.Username `json:"username,omitempty" url:"username,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (t *Token) GetExtraProperties() map[string]interface{} {
+	return t.extraProperties
 }
 
 func (t *Token) UnmarshalJSON(data []byte) error {
@@ -22,6 +27,13 @@ func (t *Token) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*t = Token(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+
 	t._rawJSON = json.RawMessage(data)
 	return nil
 }

@@ -35,13 +35,27 @@ paths:
       x-fern-sdk-method-name: create_user
 ```
 
+If you add more than one `x-fern-sdk-group-name` extension, then the generated SDK will nested group names. The order of the group names is preserved in the generated SDK method.
+
+For example, the following OpenAPI will generate `client.admin.users.create()`:
+
+```yaml title="openapi.yaml"
+paths:
+  /users:
+    post:
+      x-fern-sdk-group-name: 
+        - admin
+        - users
+      x-fern-sdk-method-name: create
+```
+
 ## Authentication overrides
 
 For authentication within your SDK, you may want to customize the:
 - Names of the parameters a user will populate to provide their credentials
 - Any environment variable the SDK can scan for to automatically provide the user's credentials automatically
 
-By default, Fern uses selects names for authentication parameters like api_key, username and password, etc.
+By default, Fern uses names for authentication parameters like api_key, username and password, etc.
 Note that this configuration is optional, and even when provided `name` or `env` may be provided alone, both are not required.
 
 For bearer authentication:
@@ -509,29 +523,23 @@ components:
 
 Because of the number of tools that use OpenAPI, it may be more convenient to
 "overlay" your fern specific OpenAPI extensions onto your original definition. \
-In order to do this you can use the `x-fern-overrides-filepath` extension.
+In order to do this you can specify your overrides file in `generators.yml`.
 
 Below is an example of how someone can overlay the extensions `x-fern-sdk-method-name` and
 `x-fern-sdk-group-name` without polluting their original OpenAPI. The combined result is
 shown in the third tab.
 
 <CodeBlocks>
-    ```yaml title="openapi.yml" {5}
-    openapi: 3.0.0
-    info:
-      title: User API
-      version: 1.0.0
-    x-fern-overrides-filepath: overrides.yml
-    paths:
-      /users:
-        get:
-          summary: Get a list of users
-          description: Retrieve a list of users from the system.
-          responses:
-            '200':
-              description: Successful response
-            '500':
-              description: Internal Server Error
+    ```yaml title="generators.yml" {3}
+    api:
+      path: ./openapi/openapi.yaml
+      overrides: ./openapi/overrides.yaml
+    default-group: sdk
+    groups:
+      sdk:
+        generators:
+          - name: fernapi/fern-python-sdk
+            version: 2.2.0
     ```
 
     ```yaml title="overrides.yml"
@@ -564,7 +572,7 @@ If instead of overlaying your extensions within an overrides file, as mentioned 
 
 ### FastAPI
 
-Please view our page on [FastAPI](../server-grameworks/fastapi) for more information on how to extend your OpenAPI spec within FastAPI.
+Please view our page on [FastAPI](/learn/api-definition/openapi/frameworks/fastapi) for more information on how to extend your OpenAPI spec within FastAPI.
 
 
 ## Request + response examples

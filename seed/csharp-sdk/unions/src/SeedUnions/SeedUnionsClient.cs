@@ -1,5 +1,7 @@
 using SeedUnions;
 
+#nullable enable
+
 namespace SeedUnions;
 
 public partial class SeedUnionsClient

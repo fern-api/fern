@@ -554,6 +554,7 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
         description: request.description,
         nameOverride: undefined,
         generatedName: "",
-        groupName: undefined
+        groupName: undefined,
+        additionalProperties: false
     });
 }

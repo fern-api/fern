@@ -17,6 +17,7 @@ export declare namespace Object_ {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -71,6 +72,7 @@ export class Object_ {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
@@ -138,6 +140,7 @@ export class Object_ {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, {
@@ -206,6 +209,7 @@ export class Object_ {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.types.ObjectWithMapOfMap.parseOrThrow(_response.body, {
@@ -289,6 +293,7 @@ export class Object_ {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.types.NestedObjectWithOptionalField.parseOrThrow(_response.body, {
@@ -322,11 +327,12 @@ export class Object_ {
     }
 
     /**
+     * @param {string} string
      * @param {SeedExhaustive.types.NestedObjectWithRequiredField} request
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.object.getAndReturnNestedWithRequiredField({
+     *     await seedExhaustive.endpoints.object.getAndReturnNestedWithRequiredField("string", {
      *         string: "string",
      *         nestedObject: {
      *             string: "string",
@@ -347,13 +353,14 @@ export class Object_ {
      *     })
      */
     public async getAndReturnNestedWithRequiredField(
+        string: string,
         request: SeedExhaustive.types.NestedObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions
     ): Promise<SeedExhaustive.types.NestedObjectWithRequiredField> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-nested-with-required-field"
+                `/object/get-and-return-nested-with-required-field/${encodeURIComponent(string)}`
             ),
             method: "POST",
             headers: {
@@ -372,6 +379,7 @@ export class Object_ {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
@@ -458,6 +466,7 @@ export class Object_ {
             ),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {

@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedOauthClientCredentialsEnvironmentVariables;
 
+#nullable enable
+
 namespace SeedOauthClientCredentialsEnvironmentVariables;
 
 public class AuthClient
@@ -27,7 +29,7 @@ public class AuthClient
         {
             return JsonSerializer.Deserialize<TokenResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<TokenResponse> RefreshTokenAsync(RefreshTokenRequest request)
@@ -45,6 +47,6 @@ public class AuthClient
         {
             return JsonSerializer.Deserialize<TokenResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

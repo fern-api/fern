@@ -2,6 +2,8 @@ using System.Text.Json;
 using SeedExhaustive;
 using SeedExhaustive.Types;
 
+#nullable enable
+
 namespace SeedExhaustive.Endpoints;
 
 public class ContainerClient
@@ -28,7 +30,7 @@ public class ContainerClient
         {
             return JsonSerializer.Deserialize<List<string>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<List<ObjectWithRequiredField>> GetAndReturnListOfObjectsAsync(
@@ -48,7 +50,7 @@ public class ContainerClient
         {
             return JsonSerializer.Deserialize<List<ObjectWithRequiredField>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<HashSet<string>> GetAndReturnSetOfPrimitivesAsync(HashSet<string> request)
@@ -66,7 +68,7 @@ public class ContainerClient
         {
             return JsonSerializer.Deserialize<HashSet<string>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<HashSet<ObjectWithRequiredField>> GetAndReturnSetOfObjectsAsync(
@@ -86,7 +88,7 @@ public class ContainerClient
         {
             return JsonSerializer.Deserialize<HashSet<ObjectWithRequiredField>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<Dictionary<string, string>> GetAndReturnMapPrimToPrimAsync(
@@ -106,7 +108,7 @@ public class ContainerClient
         {
             return JsonSerializer.Deserialize<Dictionary<string, string>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<
@@ -128,7 +130,7 @@ public class ContainerClient
                 responseBody
             );
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<ObjectWithRequiredField?> GetAndReturnOptionalAsync(
@@ -148,6 +150,6 @@ public class ContainerClient
         {
             return JsonSerializer.Deserialize<ObjectWithRequiredField?>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

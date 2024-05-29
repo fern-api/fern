@@ -1,6 +1,6 @@
 ---
 title: Packages in Fern Definition 
-description: Fern Definition packages have namespaces for reusing API type and error names across packages, and can configure the order in which your docs shows services.
+description: Fern Definition enables the reuse of API type and error names across packages, and can configure the structure of your API documentation.
 ---
 
 ## What is a package?
@@ -37,9 +37,9 @@ client.roles.admin.get();
 ## Package configuration
 
 Each package can have a special definition file called `__package__.yml`. Like any
-other definition file, it can contain [imports](/learn/overview/define-your-api/ferndef/imports),
-[types](/learn/overview/define-your-api/ferndef/types), [endpoints](/learn/overview/define-your-api/ferndef/endpoints),
-and [errors](/learn/overview/define-your-api/ferndef/errors).
+other definition file, it can contain [imports](/learn/api-definition/fern/imports),
+[types](/learn/api-definition/fern/types), [endpoints](/learn/api-definition/fern/endpoints),
+and [errors](/learn/api-definition/fern/errors).
 
 Endpoints in `__package__.yml` will appear at the root of the package.
 For example, the following generated SDK:

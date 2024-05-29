@@ -157,7 +157,11 @@ function getRequestHandler(endpoint: HttpEndpoint): RequestHandler {
                 return;
             }
         }
-        res.status(404).send("Unrecognized example request");
+        res.status(404).send(
+            `Unrecognized example request: ${JSON.stringify(req.headers)} ${JSON.stringify(
+                req.params
+            )} ${JSON.stringify(req.body)}`
+        );
     };
 }
 

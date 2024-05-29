@@ -3,10 +3,6 @@ buildscript {
         gradlePluginPortal()
         mavenCentral()
     }
-
-    dependencies {
-        classpath 'com.palantir.javaformat:gradle-palantir-java-format:2.20.0'
-    }
 }
 
 plugins {
@@ -21,13 +17,18 @@ group 'io.github.fern-api'
 
 apply plugin: 'com.palantir.consistent-versions'
 
-allprojects {
+spotless {
+    java {
+        target '*/src/main/java/**/*.java', '*/src/test/java/**/*.java'
+        palantirJavaFormat('2.46.0').formatJavadoc(true)
+    }
+}
 
+allprojects {
     apply plugin: "org.inferred.processors"
     apply plugin: "maven-publish"
     apply plugin: "com.jfrog.artifactory"
     apply plugin: "java-library"
-    apply plugin: 'com.palantir.java-format'
 
     version rootProject.version
     group rootProject.group
@@ -50,8 +51,4 @@ allprojects {
     }
 
     sourceCompatibility = 11
-
-    java {
-        palantirJavaFormat {}
-    }
 }

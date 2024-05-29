@@ -17,8 +17,8 @@ class TypeDeclarationReferencer(SdkDeclarationReferencer[ir_types.DeclaredTypeNa
                     export_strategy=ExportStrategy(export_all=True),
                 ),
             ),
-            file=Filepath.FilepathPart(module_name=name.name.snake_case.unsafe_name),
+            file=Filepath.FilepathPart(module_name=name.name.snake_case.safe_name),
         )
 
     def get_class_name(self, *, name: ir_types.DeclaredTypeName) -> str:
-        return name.name.pascal_case.unsafe_name
+        return name.name.pascal_case.safe_name

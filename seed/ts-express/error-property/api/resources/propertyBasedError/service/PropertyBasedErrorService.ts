@@ -13,7 +13,8 @@ export interface PropertyBasedErrorServiceMethods {
             send: (responseBody: string) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -37,17 +38,21 @@ export class PropertyBasedErrorService {
     public toRouter(): express.Router {
         this.router.get("/property-based-error", async (req, res, next) => {
             try {
-                await this.methods.throwError(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.propertyBasedError.throwError.Response.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.throwError(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.propertyBasedError.throwError.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedErrorPropertyError) {

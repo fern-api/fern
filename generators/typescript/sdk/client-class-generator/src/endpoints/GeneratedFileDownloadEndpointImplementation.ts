@@ -7,6 +7,7 @@ import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
 import { buildUrl } from "./utils/buildUrl";
 import {
+    getAbortSignalExpression,
     getMaxRetriesExpression,
     getRequestOptionsParameter,
     getTimeoutExpression
@@ -157,6 +158,11 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
             }),
             maxRetries: getMaxRetriesExpression({
                 maxRetriesReference: this.generatedSdkClientClass.getReferenceToMaxRetries.bind(
+                    this.generatedSdkClientClass
+                )
+            }),
+            abortSignal: getAbortSignalExpression({
+                abortSignalReference: this.generatedSdkClientClass.getReferenceToAbortSignal.bind(
                     this.generatedSdkClientClass
                 )
             }),

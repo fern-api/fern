@@ -30,7 +30,6 @@ import com.fern.java.client.GeneratedWrappedRequest;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.generators.object.EnrichedObjectProperty;
-import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;

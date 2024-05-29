@@ -1,4 +1,5 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
+import { getEnumSerializationAnnotation } from "@fern-api/fern-csharp-model";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { HttpEndpoint, SdkRequestWrapper, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
@@ -60,6 +61,8 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             );
         }
 
+        const addJsonAnnotations = this.endpoint.queryParameters.length === 0 && this.endpoint.headers.length === 0;
+
         this.endpoint.requestBody?._visit({
             reference: (reference) => {
                 class_.addField(
@@ -76,6 +79,13 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             inlinedRequestBody: (request) => {
                 // TODO(dsinghvi): handle extends of inlined request bodies
                 for (const property of request.properties) {
+                    const annotations: csharp.Annotation[] = [];
+                    if (this.context.isEnum(property.valueType)) {
+                        annotations.push(
+                            getEnumSerializationAnnotation({ context: this.context, enumReference: property.valueType })
+                        );
+                    }
+
                     class_.addField(
                         csharp.field({
                             name: property.name.name.pascalCase.safeName,
@@ -83,7 +93,9 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                             access: "public",
                             get: true,
                             init: true,
-                            summary: property.docs
+                            summary: property.docs,
+                            jsonPropertyName: addJsonAnnotations ? property.name.wireValue : undefined,
+                            annotations
                         })
                     );
                 }
@@ -95,14 +107,14 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
 
         return new CSharpFile({
             clazz: class_,
-            directory: RelativeFilePath.of(`${this.context.getDirectoryForServiceId(this.serviceId)}/requests`)
+            directory: RelativeFilePath.of(`${this.context.getDirectoryForServiceId(this.serviceId)}/Requests`)
         });
     }
 
     protected getFilepath(): RelativeFilePath {
         return join(
             this.context.project.filepaths.getSourceFileDirectory(),
-            RelativeFilePath.of(`${this.context.getDirectoryForServiceId(this.serviceId)}/requests`),
+            RelativeFilePath.of(`${this.context.getDirectoryForServiceId(this.serviceId)}/Requests`),
             RelativeFilePath.of(this.classReference.name + ".cs")
         );
     }

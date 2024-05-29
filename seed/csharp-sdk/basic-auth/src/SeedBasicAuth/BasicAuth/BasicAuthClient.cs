@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedBasicAuth;
 
+#nullable enable
+
 namespace SeedBasicAuth;
 
 public class BasicAuthClient
@@ -25,7 +27,7 @@ public class BasicAuthClient
         {
             return JsonSerializer.Deserialize<bool>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -46,6 +48,6 @@ public class BasicAuthClient
         {
             return JsonSerializer.Deserialize<bool>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

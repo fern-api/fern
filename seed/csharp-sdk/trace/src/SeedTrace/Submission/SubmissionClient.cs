@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class SubmissionClient
@@ -29,7 +31,7 @@ public class SubmissionClient
         {
             return JsonSerializer.Deserialize<ExecutionSessionResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -45,7 +47,7 @@ public class SubmissionClient
         {
             return JsonSerializer.Deserialize<ExecutionSessionResponse?>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -68,6 +70,6 @@ public class SubmissionClient
         {
             return JsonSerializer.Deserialize<GetExecutionSessionStateResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

@@ -189,7 +189,7 @@ types:
   DoubleType:
     properties:
       default: optional<integer>
-      validation: optional<IntegerValidationRules>
+      validation: optional<DoubleValidationRules>
   DoubleValidationRules:
     properties:
       min: optional<double>

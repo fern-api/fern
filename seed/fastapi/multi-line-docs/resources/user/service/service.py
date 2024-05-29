@@ -81,7 +81,7 @@ class AbstractUserService(AbstractFernService):
         wrapper.__globals__.update(cls.get_user.__globals__)
 
         router.get(
-            path="//users/{user_id}",
+            path="/users/{user_id}",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractUserService.get_user.__doc__,
@@ -118,7 +118,7 @@ class AbstractUserService(AbstractFernService):
         wrapper.__globals__.update(cls.create_user.__globals__)
 
         router.post(
-            path="//users",
+            path="/users",
             response_model=User,
             description=AbstractUserService.create_user.__doc__,
             **get_route_args(cls.create_user, default_tag="user"),

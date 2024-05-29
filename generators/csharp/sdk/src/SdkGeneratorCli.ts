@@ -4,6 +4,7 @@ import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ClientOptionsGenerator } from "./client-options/ClientOptionsGenerator";
+import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
@@ -78,6 +79,14 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
 
         const rootClient = new RootClientGenerator(context);
         context.project.addSourceFiles(rootClient.generate());
+
+        if (context.ir.environments?.environments.type === "singleBaseUrl") {
+            const environments = new EnvironmentGenerator({
+                context,
+                singleUrlEnvironments: context.ir.environments?.environments
+            });
+            context.project.addSourceFiles(environments.generate());
+        }
 
         const testGenerator = new TestFileGenerator(context);
         const test = testGenerator.generate();

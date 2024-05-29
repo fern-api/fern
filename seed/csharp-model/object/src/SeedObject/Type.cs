@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using SeedObject;
 
+#nullable enable
+
 namespace SeedObject;
 
 public class Type

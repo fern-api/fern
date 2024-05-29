@@ -2,6 +2,8 @@ using SeedExhaustive;
 using SeedExhaustive.Endpoints;
 using SeedExhaustive.Types;
 
+#nullable enable
+
 namespace SeedExhaustive;
 
 public partial class SeedExhaustiveClient

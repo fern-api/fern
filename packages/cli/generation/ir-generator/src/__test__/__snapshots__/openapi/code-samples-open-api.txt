@@ -1533,7 +1533,11 @@ axios.request(options).then(function (response) {
                   "_type": "primitive",
                   "primitive": {
                     "v1": "DOUBLE",
-                    "v2": null,
+                    "v2": {
+                      "default": null,
+                      "type": "double",
+                      "validation": null,
+                    },
                   },
                 },
               },
@@ -1572,7 +1576,11 @@ axios.request(options).then(function (response) {
                   "_type": "primitive",
                   "primitive": {
                     "v1": "DOUBLE",
-                    "v2": null,
+                    "v2": {
+                      "default": null,
+                      "type": "double",
+                      "validation": null,
+                    },
                   },
                 },
               },
@@ -1611,7 +1619,11 @@ axios.request(options).then(function (response) {
                   "_type": "primitive",
                   "primitive": {
                     "v1": "DOUBLE",
-                    "v2": null,
+                    "v2": {
+                      "default": null,
+                      "type": "double",
+                      "validation": null,
+                    },
                   },
                 },
               },
@@ -1692,7 +1704,11 @@ axios.request(options).then(function (response) {
                   "_type": "primitive",
                   "primitive": {
                     "v1": "DOUBLE",
-                    "v2": null,
+                    "v2": {
+                      "default": null,
+                      "type": "double",
+                      "validation": null,
+                    },
                   },
                 },
               },
@@ -1731,7 +1747,11 @@ axios.request(options).then(function (response) {
                   "_type": "primitive",
                   "primitive": {
                     "v1": "STRING",
-                    "v2": null,
+                    "v2": {
+                      "default": null,
+                      "type": "string",
+                      "validation": null,
+                    },
                   },
                 },
               },

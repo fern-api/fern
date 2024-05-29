@@ -11,6 +11,7 @@ import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
 import { loadProject, Project } from "@fern-api/project-loader";
 import { FernCliError } from "@fern-api/task-context";
+import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -18,6 +19,7 @@ import { loadOpenAPIFromUrl, LoadOpenAPIStatus } from "../../init/src/utils/load
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
+import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
 import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
@@ -26,7 +28,6 @@ import { writeOverridesForWorkspaces } from "./commands/generate-overrides/write
 import { generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
 import { mockServer } from "./commands/mock/mockServer";
-import { previewDocsWorkspace } from "./commands/preview/previewDocsWorkspace";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
 import { testOutput } from "./commands/test/testOutput";
@@ -39,6 +40,7 @@ import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeD
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { isURL } from "./utils/isUrl";
+
 interface GlobalCliOptions {
     "log-level": LogLevel;
 }
@@ -141,7 +143,7 @@ async function tryRunCli(cliContext: CliContext) {
     addLoginCommand(cli, cliContext);
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
-    addPreviewCommand(cli, cliContext);
+    addDocsPreviewCommand(cli, cliContext);
     addMockCommand(cli, cliContext);
     addWriteOverridesCommand(cli, cliContext);
     addTestCommand(cli, cliContext);
@@ -882,18 +884,30 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
     );
 }
 
-function addPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "preview",
-        false, // hide from help message
-        (yargs) => yargs,
-        async () => {
+        "docs dev",
+        "Run a local development server to preview your docs",
+        (yargs) =>
+            yargs.option("port", {
+                number: true,
+                description: "Run the development server on the following port"
+            }),
+        async (argv) => {
+            let port: number;
+            if (argv.port != null) {
+                port = argv.port;
+            } else {
+                port = await getPort({ port: [3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009, 3010] });
+            }
             await previewDocsWorkspace({
-                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    defaultToAllApiWorkspaces: true,
-                    commandLineApiWorkspace: undefined
-                }),
-                cliContext
+                loadProject: () =>
+                    loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        defaultToAllApiWorkspaces: true,
+                        commandLineApiWorkspace: undefined
+                    }),
+                cliContext,
+                port
             });
         }
     );

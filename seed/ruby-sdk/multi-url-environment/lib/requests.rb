@@ -22,8 +22,8 @@ module SeedMultiUrlEnvironmentClient
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @return [SeedMultiUrlEnvironmentClient::RequestClient]
-    def initialize(token:, environment: Environment::PRODUCTION, base_url: nil, max_retries: nil,
-                   timeout_in_seconds: nil)
+    def initialize(token:, environment: SeedMultiUrlEnvironmentClient::Environment::PRODUCTION, base_url: nil,
+                   max_retries: nil, timeout_in_seconds: nil)
       @default_environment = environment
       @headers = {
         "X-Fern-Language": "Ruby",
@@ -63,8 +63,8 @@ module SeedMultiUrlEnvironmentClient
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @return [SeedMultiUrlEnvironmentClient::AsyncRequestClient]
-    def initialize(token:, environment: Environment::PRODUCTION, base_url: nil, max_retries: nil,
-                   timeout_in_seconds: nil)
+    def initialize(token:, environment: SeedMultiUrlEnvironmentClient::Environment::PRODUCTION, base_url: nil,
+                   max_retries: nil, timeout_in_seconds: nil)
       @default_environment = environment
       @headers = {
         "X-Fern-Language": "Ruby",

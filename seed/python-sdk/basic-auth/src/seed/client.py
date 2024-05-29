@@ -10,7 +10,7 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 
 class SeedBasicAuth:
     """
-    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
     Parameters
     ----------
@@ -66,7 +66,7 @@ class SeedBasicAuth:
 
 class AsyncSeedBasicAuth:
     """
-    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
     Parameters
     ----------

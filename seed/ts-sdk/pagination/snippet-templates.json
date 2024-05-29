@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/users",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_users.listWithCursorPagination"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\n",
@@ -109,7 +110,8 @@
         },
         "endpointId": {
             "path": "/users",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_users.listWithOffsetPagination"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\n",
@@ -211,7 +213,8 @@
         },
         "endpointId": {
             "path": "/users",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_users.listWithExtendedResults"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\n",
@@ -263,7 +266,8 @@
         },
         "endpointId": {
             "path": "/users",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_users.listUsernames"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\n",
@@ -315,7 +319,8 @@
         },
         "endpointId": {
             "path": "/users",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_users.listWithGlobalConfig"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\n",

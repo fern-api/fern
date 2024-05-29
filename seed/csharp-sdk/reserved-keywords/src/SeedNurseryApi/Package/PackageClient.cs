@@ -1,5 +1,7 @@
 using SeedNurseryApi;
 
+#nullable enable
+
 namespace SeedNurseryApi;
 
 public class PackageClient

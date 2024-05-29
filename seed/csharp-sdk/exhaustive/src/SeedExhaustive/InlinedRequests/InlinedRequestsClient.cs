@@ -2,6 +2,8 @@ using System.Text.Json;
 using SeedExhaustive;
 using SeedExhaustive.Types;
 
+#nullable enable
+
 namespace SeedExhaustive;
 
 public class InlinedRequestsClient
@@ -33,6 +35,6 @@ public class InlinedRequestsClient
         {
             return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

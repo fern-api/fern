@@ -48,8 +48,8 @@ class ReferenceClient:
         )
         """
         _request: typing.Dict[str, typing.Any] = {
-            "prompt": "You are a helpful assistant",
             "query": query,
+            "prompt": "You are a helpful assistant",
             "stream": False,
         }
         _response = self._client_wrapper.httpx_client.request(
@@ -120,8 +120,8 @@ class AsyncReferenceClient:
         )
         """
         _request: typing.Dict[str, typing.Any] = {
-            "prompt": "You are a helpful assistant",
             "query": query,
+            "prompt": "You are a helpful assistant",
             "stream": False,
         }
         _response = await self._client_wrapper.httpx_client.request(

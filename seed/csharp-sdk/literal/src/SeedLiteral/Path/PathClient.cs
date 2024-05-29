@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedLiteral;
 
+#nullable enable
+
 namespace SeedLiteral;
 
 public class PathClient
@@ -22,6 +24,6 @@ public class PathClient
         {
             return JsonSerializer.Deserialize<SendResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

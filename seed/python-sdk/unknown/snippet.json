@@ -4,7 +4,8 @@
         {
             "id": {
                 "path": "/",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_unknown.post"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedUnknownAsAny\n\nclient = SeedUnknownAsAny(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.unknown.post(\n    request={\"key\": \"value\"},\n)\n",

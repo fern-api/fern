@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/custom-auth",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_custom-auth.getWithCustomAuth"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedCustomAuth\n\nclient = SeedCustomAuth(\n    custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -44,7 +45,8 @@
         },
         "endpointId": {
             "path": "/custom-auth",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_custom-auth.postWithCustomAuth"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedCustomAuth\n\nclient = SeedCustomAuth(\n    custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

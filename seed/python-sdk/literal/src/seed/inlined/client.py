@@ -55,8 +55,8 @@ class InlinedClient:
         )
         """
         _request: typing.Dict[str, typing.Any] = {
-            "prompt": "You are a helpful assistant",
             "query": query,
+            "prompt": "You are a helpful assistant",
             "stream": False,
         }
         if temperature is not OMIT:
@@ -136,8 +136,8 @@ class AsyncInlinedClient:
         )
         """
         _request: typing.Dict[str, typing.Any] = {
-            "prompt": "You are a helpful assistant",
             "query": query,
+            "prompt": "You are a helpful assistant",
             "stream": False,
         }
         if temperature is not OMIT:
