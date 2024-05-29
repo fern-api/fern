@@ -20,5 +20,4 @@ allowedFailures:
   - multi-url-environment
   - reserved-keywords
   - trace
-  - undiscriminated-unions
   - unions

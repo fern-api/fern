@@ -40,5 +40,8 @@ components:
             type: array
             items:
               type: integer
+        - type: array
+          items:
+            type: string
       description: Several different types are accepted.
   securitySchemes: {}
