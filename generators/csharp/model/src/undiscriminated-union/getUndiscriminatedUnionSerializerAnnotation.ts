@@ -2,15 +2,16 @@ import { AbstractCsharpGeneratorContext, csharp } from "@fern-api/csharp-codegen
 import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 /**
- * Returns a C# annotation used to deserialize and serialize OneOf references. 
- * The generated code would look something like: 
- * 
+ * Returns a C# annotation used to deserialize and serialize OneOf references.
+ * The generated code would look something like:
+ *
  * [JsonConverter(typeof(OneOfSerializer<OneOf<Square, Circle, ...>>))]
  */
 export function getUndiscriminatedUnionSerializerAnnotation({
     context,
     undiscriminatedUnionDeclaration
 }: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     context: AbstractCsharpGeneratorContext<any>;
     undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration;
 }): csharp.Annotation {
