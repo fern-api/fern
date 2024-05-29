@@ -76,7 +76,7 @@ class Type(pydantic_v1.BaseModel):
     fifteen: typing.List[typing.List[int]]
     sixteen: typing.List[typing.Dict[str, int]]
     seventeen: typing.List[typing.Optional[uuid.UUID]]
-    eighteen: typing.Literal["eighteen"]
+    eighteen: typing.Literal["eighteen"] = "eighteen"
     nineteen: Name
 
     def json(self, **kwargs: typing.Any) -> str:
