@@ -636,21 +636,27 @@ class EndpointFunctionGenerator:
     def _get_property_type_off_object(self) -> AST.TypeHint:
         return AST.TypeHint.any()
 
+    def _unwrap_container_types(self, type_reference: ir_types.TypeReference) -> Optional[ir_types.TypeReference]:
+        unwrapped_type: Union[ir_types.TypeReference, None] = type_reference
+        maybe_wrapped_type: Union[ir_types.TypeReference, None] = type_reference
+        if maybe_wrapped_type is not None and maybe_wrapped_type.get_as_union().type == "container":
+            unwrapped_type = maybe_wrapped_type.get_as_union().container.visit(
+                list_=lambda item_type: item_type,
+                set_=lambda item_type: item_type,
+                optional=lambda item_type: self._unwrap_container_types(item_type),
+                map_=lambda _: None,
+                literal=lambda _: None,
+            )
+        return unwrapped_type
+
     def _get_pagination_results_type(self, fallback_typehint: AST.TypeHint) -> AST.TypeHint:
         if self.pagination is not None:
             results_response_property = self.pagination.get_as_union().results.property
 
             # TODO: The IR should really have the inner type baked in so we don't have to unwrap it here
-            unwrapped_type: Union[ir_types.TypeReference, None] = results_response_property.value_type
-            maybe_wrapped_type: Union[ir_types.TypeReference, None] = results_response_property.value_type
-            if maybe_wrapped_type is not None and maybe_wrapped_type.get_as_union().type == "container":
-                unwrapped_type = maybe_wrapped_type.get_as_union().container.visit(
-                    list_=lambda item_type: item_type,
-                    set_=lambda item_type: item_type,
-                    optional=lambda item_type: item_type,
-                    map_=lambda _: None,
-                    literal=lambda _: None,
-                )
+            unwrapped_type: Optional[ir_types.TypeReference] = self._unwrap_container_types(
+                results_response_property.value_type
+            )
             if unwrapped_type is not None:
                 return self._context.pydantic_generator_context.get_type_hint_for_type_reference(unwrapped_type)
 
