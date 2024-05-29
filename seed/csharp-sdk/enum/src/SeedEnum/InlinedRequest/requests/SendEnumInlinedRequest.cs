@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
-using OneOf;
+using SeedEnum.Core;
 using SeedEnum;
+using OneOf;
 
 #nullable enable
 
@@ -8,7 +9,9 @@ namespace SeedEnum;
 
 public class SendEnumInlinedRequest
 {
-    [JsonPropertyName("operand")]
+    [JsonPropertyName("operand")JsonConverter(typeof(StringEnumSerializer;
+    <Operand;
+    >))]
     public Operand Operand { get; init; }
 
     [JsonPropertyName("maybeOperand")]

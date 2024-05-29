@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 using SeedTrace;
 
 #nullable enable
@@ -22,9 +23,13 @@ public class ExecutionSessionState
     [JsonPropertyName("awsTaskId")]
     public string? AwsTaskId { get; init; }
 
-    [JsonPropertyName("language")]
+    [JsonPropertyName("language")JsonConverter(typeof(StringEnumSerializer;
+    <Language;
+    >))]
     public Language Language { get; init; }
 
-    [JsonPropertyName("status")]
+    [JsonPropertyName("status")JsonConverter(typeof(StringEnumSerializer;
+    <ExecutionSessionStatus;
+    >))]
     public ExecutionSessionStatus Status { get; init; }
 }

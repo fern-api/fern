@@ -1,6 +1,7 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { getEnumSerializationAnnotation } from "../enum/getEnumSerializationAnnotation";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
@@ -26,15 +27,23 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
 
         const properties = this.context.flattenedProperties.get(typeId) ?? this.objectDeclaration.properties;
         properties.forEach((property) => {
+            const type = this.context.csharpTypeMapper.convert({ reference: property.valueType });
+            const isEnum = this.context.isEnum(property.valueType);
+            const annotations: csharp.Annotation[] = [];
+            if (isEnum) {
+                annotations.push(getEnumSerializationAnnotation({ context: this.context, type }));
+            }
+
             class_.addField(
                 csharp.field({
                     name: this.getPropertyName({ className: this.classReference.name, objectProperty: property }),
-                    type: this.context.csharpTypeMapper.convert({ reference: property.valueType }),
+                    type,
                     access: "public",
                     get: true,
                     init: true,
                     summary: property.docs,
-                    jsonPropertyName: property.name.wireValue
+                    jsonPropertyName: property.name.wireValue,
+                    annotations
                 })
             );
         });

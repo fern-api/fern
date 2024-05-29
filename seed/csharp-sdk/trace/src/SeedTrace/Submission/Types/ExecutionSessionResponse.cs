@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 using SeedTrace;
 
 #nullable enable
@@ -13,9 +14,13 @@ public class ExecutionSessionResponse
     [JsonPropertyName("executionSessionUrl")]
     public string? ExecutionSessionUrl { get; init; }
 
-    [JsonPropertyName("language")]
+    [JsonPropertyName("language")JsonConverter(typeof(StringEnumSerializer;
+    <Language;
+    >))]
     public Language Language { get; init; }
 
-    [JsonPropertyName("status")]
+    [JsonPropertyName("status")JsonConverter(typeof(StringEnumSerializer;
+    <ExecutionSessionStatus;
+    >))]
     public ExecutionSessionStatus Status { get; init; }
 }

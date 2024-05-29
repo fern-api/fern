@@ -1,4 +1,5 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
+import { getEnumSerializationAnnotation } from "@fern-api/fern-csharp-model";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { HttpEndpoint, SdkRequestWrapper, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
@@ -78,15 +79,23 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             inlinedRequestBody: (request) => {
                 // TODO(dsinghvi): handle extends of inlined request bodies
                 for (const property of request.properties) {
+                    const type = this.context.csharpTypeMapper.convert({ reference: property.valueType });
+                    const isEnum = this.context.isEnum(property.valueType);
+                    const annotations: csharp.Annotation[] = [];
+                    if (isEnum) {
+                        annotations.push(getEnumSerializationAnnotation({ context: this.context, type }));
+                    }
+
                     class_.addField(
                         csharp.field({
                             name: property.name.name.pascalCase.safeName,
-                            type: this.context.csharpTypeMapper.convert({ reference: property.valueType }),
+                            type,
                             access: "public",
                             get: true,
                             init: true,
                             summary: property.docs,
-                            jsonPropertyName: addJsonAnnotations ? property.name.wireValue : undefined
+                            jsonPropertyName: addJsonAnnotations ? property.name.wireValue : undefined,
+                            annotations: annotations
                         })
                     );
                 }
