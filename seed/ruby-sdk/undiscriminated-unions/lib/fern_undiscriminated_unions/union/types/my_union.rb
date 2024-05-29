@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "json"
+require "set"
 
 module SeedUndiscriminatedUnionsClient
   class Union
@@ -52,6 +53,14 @@ module SeedUndiscriminatedUnionsClient
         rescue StandardError
           # noop
         end
+        begin
+          struct.is_a?(Set) != false || raise("Passed value for field struct is not the expected type, validation failed.")
+          return Set.new(json_object) unless json_object.nil?
+
+          return nil
+        rescue StandardError
+          # noop
+        end
         struct
       end
 
@@ -84,6 +93,11 @@ module SeedUndiscriminatedUnionsClient
         end
         begin
           return obj.is_a?(Array) != false || raise("Passed value for field obj is not the expected type, validation failed.")
+        rescue StandardError
+          # noop
+        end
+        begin
+          return obj.is_a?(Set) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         rescue StandardError
           # noop
         end

@@ -31,6 +31,9 @@ import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.ObjectMethodFactory;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
 import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.utils.TypeReferenceUtils;
+import com.fern.java.utils.TypeReferenceUtils.ContainerTypeEnum;
+import com.fern.java.utils.TypeReferenceUtils.TypeReferenceToName;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -44,6 +47,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
@@ -61,6 +66,13 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
 
     private final UndiscriminatedUnionTypeDeclaration undiscriminatedUnion;
     private final Map<UndiscriminatedUnionMember, TypeName> memberTypeNames;
+    /**
+     * The outer container types that are present in more than one member. For example, if we have two member types with
+     * a container type of List, ContainerTypeEnum.LIST will be present here. These require special method naming to
+     * deconflict due to Java's type erasure.
+     */
+    private final Set<ContainerTypeEnum> duplicatedOuterContainerTypes;
+
     private final ClassName visitorClassName;
     private final ClassName deserializerClassName;
 
@@ -74,13 +86,28 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
                 .collect(Collectors.toMap(
                         Function.identity(),
                         member -> generatorContext.getPoetTypeNameMapper().convertToTypeName(true, member.getType())));
+        this.duplicatedOuterContainerTypes = getDuplicatedOuterContainerTypes(undiscriminatedUnion);
         this.visitorClassName = className.nestedClass("Visitor");
         this.deserializerClassName = className.nestedClass("Deserializer");
+    }
+
+    public static Set<ContainerTypeEnum> getDuplicatedOuterContainerTypes(
+            UndiscriminatedUnionTypeDeclaration undiscriminatedUnion) {
+        return undiscriminatedUnion.getMembers().stream()
+                .map(member -> TypeReferenceUtils.toContainerType(member.getType()))
+                .flatMap(Optional::stream)
+                .collect(Collectors.groupingBy(e -> e, Collectors.counting()))
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getValue() > 1)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toSet());
     }
 
     @Override
     public GeneratedJavaFile generateFile() {
         EqualsMethod equalsMethod = generateEqualsMethod();
+
         TypeSpec.Builder unionTypeSpec = TypeSpec.classBuilder(className)
                 .addAnnotation(AnnotationSpec.builder(JsonDeserialize.class)
                         .addMember("using", "$T.class", deserializerClassName)
@@ -141,7 +168,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
             visitMethod.addStatement(
                     "return $L.$L(($T) this.$L)",
                     "visitor",
-                    VISIT_METHOD_NAME,
+                    getDeConflictedMemberName(member, VISIT_METHOD_NAME),
                     memberTypeNames.get(member),
                     VALUE_FIELD_SPEC.name);
         }
@@ -171,7 +198,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
 
     private TypeSpec getVisitor() {
         List<MethodSpec> visitMethods = undiscriminatedUnion.getMembers().stream()
-                .map(member -> MethodSpec.methodBuilder(VISIT_METHOD_NAME)
+                .map(member -> MethodSpec.methodBuilder(getDeConflictedMemberName(member, VISIT_METHOD_NAME))
                         .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                         .returns(VISITOR_RETURN_TYPE)
                         .addParameter(memberTypeNames.get(member), VALUE_FIELD_SPEC.name)
@@ -189,7 +216,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
         for (int i = 0; i < undiscriminatedUnion.getMembers().size(); ++i) {
             UndiscriminatedUnionMember member =
                     undiscriminatedUnion.getMembers().get(i);
-            staticFactories.add(MethodSpec.methodBuilder(STATIC_FACTORY_METHOD_NAME)
+            staticFactories.add(MethodSpec.methodBuilder(getDeConflictedMemberName(member, STATIC_FACTORY_METHOD_NAME))
                     .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                     .addParameter(memberTypeNames.get(member), VALUE_FIELD_SPEC.name)
                     .addStatement("return new $T($L, $L)", className, VALUE_FIELD_SPEC.name, i)
@@ -197,6 +224,14 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
                     .build());
         }
         return staticFactories;
+    }
+
+    private String getDeConflictedMemberName(UndiscriminatedUnionMember member, String prefix) {
+        Optional<ContainerTypeEnum> containerTypeEnum = TypeReferenceUtils.toContainerType(member.getType());
+        if (containerTypeEnum.isEmpty() || !duplicatedOuterContainerTypes.contains(containerTypeEnum.get())) {
+            return prefix;
+        }
+        return prefix + member.getType().visit(new TypeReferenceToName());
     }
 
     private TypeSpec getDeserializer() {
@@ -231,7 +266,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
                             .beginControlFlow("try")
                             .addStatement(
                                     "return $L($T.$N.convertValue($L, new $T() {}))",
-                                    STATIC_FACTORY_METHOD_NAME,
+                                    getDeConflictedMemberName(member, STATIC_FACTORY_METHOD_NAME),
                                     generatorContext.getPoetClassNameFactory().getObjectMapperClassName(),
                                     ObjectMappersGenerator.JSON_MAPPER_STATIC_FIELD_NAME,
                                     VALUE_FIELD_SPEC.name,
@@ -243,7 +278,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
                             .beginControlFlow("try")
                             .addStatement(
                                     "return $L($T.$N.convertValue($L, $T.class))",
-                                    STATIC_FACTORY_METHOD_NAME,
+                                    getDeConflictedMemberName(member, STATIC_FACTORY_METHOD_NAME),
                                     generatorContext.getPoetClassNameFactory().getObjectMapperClassName(),
                                     ObjectMappersGenerator.JSON_MAPPER_STATIC_FIELD_NAME,
                                     VALUE_FIELD_SPEC.name,
@@ -266,15 +301,13 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
             TypeId typeId = member.getType().getNamed().get().getTypeId();
             TypeDeclaration typeDeclaration =
                     generatorContext.getTypeDeclarations().get(typeId);
-            if (typeDeclaration.getShape().isAlias()
+            return typeDeclaration.getShape().isAlias()
                     && typeDeclaration
                             .getShape()
                             .getAlias()
                             .get()
                             .getResolvedType()
-                            .isContainer()) {
-                return true;
-            }
+                            .isContainer();
         }
         return false;
     }

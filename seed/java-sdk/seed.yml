@@ -49,6 +49,5 @@ allowedFailures:
   - examples
   - exhaustive:local-files
   - trace
-  - undiscriminated-unions
   - unions
   - query-parameters
