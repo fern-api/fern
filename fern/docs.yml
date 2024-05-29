@@ -6,6 +6,12 @@ instances:
         owner: fern-api
         repo: fern
         branch: main
+  - url: fern.docs.dev.buildwithfern.com/learn
+    edit-this-page:
+      github:
+        owner: fern-api
+        repo: fern
+        branch: main
 title: Fern
 
 tabs:

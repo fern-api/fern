@@ -5,7 +5,6 @@ exports[`x-fern-base-path x-fern-base-path docs 1`] = `
   "definitionFiles": {},
   "packageMarkerFile": {},
   "rootApiFile": {
-    "base-path": "/v1",
     "default-environment": "Default",
     "display-name": "Acme API",
     "environments": {
@@ -36,13 +35,12 @@ exports[`x-fern-base-path x-fern-base-path docs 2`] = `
           ],
           "method": "GET",
           "pagination": undefined,
-          "path": "/example",
+          "path": "/v1/example",
         },
       },
     },
   },
   "rootApiFile": {
-    "base-path": "/v1",
     "default-environment": "Default",
     "display-name": "Acme API",
     "environments": {
@@ -61,7 +59,6 @@ exports[`x-fern-base-path x-fern-base-path simple 1`] = `
   "definitionFiles": {},
   "packageMarkerFile": {},
   "rootApiFile": {
-    "base-path": "/v1",
     "default-environment": "Default",
     "display-name": "Acme API",
     "environments": {
@@ -92,13 +89,12 @@ exports[`x-fern-base-path x-fern-base-path simple 2`] = `
           ],
           "method": "GET",
           "pagination": undefined,
-          "path": "/example",
+          "path": "/v1/example",
         },
       },
     },
   },
   "rootApiFile": {
-    "base-path": "/v1",
     "default-environment": "Default",
     "display-name": "Acme API",
     "environments": {

@@ -3,7 +3,7 @@ import { AbsoluteFilePath, dirname, relative, RelativeFilePath } from "@fern-api
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/yaml-schema";
 import { camelCase, isEqual } from "lodash-es";
-import { basename, extname } from "path";
+import path, { basename, extname } from "path";
 
 export interface FernDefinitionBuilder {
     addNavigation({ navigation }: { navigation: string[] }): void;
@@ -82,6 +82,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     private rootApiFile: RawSchemas.RootApiFileSchema;
     private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {};
     private definitionFiles: Record<RelativeFilePath, RawSchemas.DefinitionFileSchema> = {};
+    private basePath: string | undefined = undefined;
 
     public constructor(
         ir: OpenApiIntermediateRepresentation,
@@ -146,7 +147,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     }
 
     public setBasePath(basePath: string): void {
-        this.rootApiFile["base-path"] = basePath;
+        this.basePath = basePath;
     }
 
     public getEnvironmentType(): "single" | "multi" | undefined {
@@ -431,6 +432,47 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                         })
                     )
                 };
+            }
+        }
+
+        const basePath = this.basePath;
+        if (basePath != null) {
+            // substitute package marker file
+            if (this.packageMarkerFile.service != null) {
+                this.packageMarkerFile.service = {
+                    ...this.packageMarkerFile.service,
+                    endpoints: Object.fromEntries(
+                        Object.entries(this.packageMarkerFile.service.endpoints).map(([id, endpoint]) => {
+                            return [
+                                id,
+                                {
+                                    ...endpoint,
+                                    path: path.join(basePath, endpoint.path)
+                                }
+                            ];
+                        })
+                    )
+                };
+            }
+
+            // subsitute definition files
+            for (const [_, file] of Object.entries(this.definitionFiles)) {
+                if (file.service != null) {
+                    file.service = {
+                        ...file.service,
+                        endpoints: Object.fromEntries(
+                            Object.entries(file.service.endpoints).map(([id, endpoint]) => {
+                                return [
+                                    id,
+                                    {
+                                        ...endpoint,
+                                        path: path.join(basePath, endpoint.path)
+                                    }
+                                ];
+                            })
+                        )
+                    };
+                }
             }
         }
 
