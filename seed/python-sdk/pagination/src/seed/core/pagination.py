@@ -20,7 +20,7 @@ T = typing.TypeVar("T")
 # )
 class BasePage(pydantic_v1.BaseModel, typing.Generic[T]):
     has_next: bool
-    items: typing.List[T]
+    items: typing.Optional[typing.List[T]]
 
 
 class SyncPage(BasePage, typing.Generic[T]):
@@ -40,8 +40,9 @@ class SyncPager(SyncPage[T], typing.Generic[T]):
     # brought in by extending the base model
     def __iter__(self) -> typing.Iterator[T]:  # type: ignore
         for page in self.iter_pages():
-            for item in page.items:
-                yield item
+            if page.items is not None:
+                for item in page.items:
+                    yield item
 
     def iter_pages(self) -> typing.Iterator[SyncPage[T]]:
         page: typing.Union[SyncPager[T], None] = self
@@ -64,8 +65,9 @@ class SyncPager(SyncPage[T], typing.Generic[T]):
 class AsyncPager(AsyncPage[T], typing.Generic[T]):
     async def __aiter__(self) -> typing.AsyncIterator[T]:  # type: ignore
         async for page in self.iter_pages():
-            for item in page.items:
-                yield item
+            if page.items is not None:
+                for item in page.items:
+                    yield item
 
     async def iter_pages(self) -> typing.AsyncIterator[AsyncPage[T]]:
         page: typing.Union[AsyncPager[T], None] = self
