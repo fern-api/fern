@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedIdempotencyHeaders;
+using SeedIdempotencyHeaders.Core;
 
 #nullable enable
 
@@ -11,5 +12,6 @@ public class CreatePaymentRequest
     public int Amount { get; init; }
 
     [JsonPropertyName("currency")]
+    [JsonConverter(typeof(StringEnumSerializer<Currency>))]
     public Currency Currency { get; init; }
 }

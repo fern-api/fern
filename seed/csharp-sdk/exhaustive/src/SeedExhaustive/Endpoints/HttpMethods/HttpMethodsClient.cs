@@ -25,7 +25,7 @@ public class HttpMethodsClient
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<ObjectWithOptionalField> TestPostAsync(ObjectWithRequiredField request)
@@ -43,7 +43,7 @@ public class HttpMethodsClient
         {
             return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<ObjectWithOptionalField> TestPutAsync(
@@ -64,7 +64,7 @@ public class HttpMethodsClient
         {
             return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<ObjectWithOptionalField> TestPatchAsync(
@@ -85,7 +85,7 @@ public class HttpMethodsClient
         {
             return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<bool> TestDeleteAsync(string id)
@@ -98,6 +98,6 @@ public class HttpMethodsClient
         {
             return JsonSerializer.Deserialize<bool>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

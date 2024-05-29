@@ -10,7 +10,7 @@ from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 class GetTokenRequest(pydantic_v1.BaseModel):
     client_id: str
     client_secret: str
-    grant_type: typing.Literal["client_credentials"]
+    grant_type: typing.Literal["client_credentials"] = "client_credentials"
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

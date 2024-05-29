@@ -29,6 +29,6 @@ public class AuthClient
         {
             return JsonSerializer.Deserialize<TokenResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

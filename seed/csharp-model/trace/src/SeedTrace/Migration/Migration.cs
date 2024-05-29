@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -11,5 +12,6 @@ public class Migration
     public string Name { get; init; }
 
     [JsonPropertyName("status")]
+    [JsonConverter(typeof(StringEnumSerializer<MigrationStatus>))]
     public MigrationStatus Status { get; init; }
 }

@@ -10,8 +10,8 @@ from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 class GetTokenRequest(pydantic_v1.BaseModel):
     client_id: str
     client_secret: str
-    audience: typing.Literal["https://api.example.com"]
-    grant_type: typing.Literal["client_credentials"]
+    audience: typing.Literal["https://api.example.com"] = "https://api.example.com"
+    grant_type: typing.Literal["client_credentials"] = "client_credentials"
     scope: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:

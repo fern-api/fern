@@ -8,8 +8,8 @@ from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
 
 class CreateUserRequest(pydantic_v1.BaseModel):
-    type: typing.Literal["CreateUserRequest"] = pydantic_v1.Field(alias="_type")
-    version: typing.Literal["v1"] = pydantic_v1.Field(alias="_version")
+    type: typing.Literal["CreateUserRequest"] = pydantic_v1.Field(alias="_type", default="CreateUserRequest")
+    version: typing.Literal["v1"] = pydantic_v1.Field(alias="_version", default="v1")
     name: str
 
     def json(self, **kwargs: typing.Any) -> str:

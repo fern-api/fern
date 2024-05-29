@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.6] - 2024-05-29
+
+- Improvement: literal values are now all defaulted such that users are not required to plug in a redundant value.
+
 ## [2.5.5] - 2024-05-29
 
 - Fix: Optional lists returned from pagination endpoints are now appropriately flattened such that the `Pager` return types are correctly `Pager[ListItem]` as opposed to `Pager[List[ListItem]]`.

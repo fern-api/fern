@@ -29,6 +29,6 @@ public class InlinedClient
         {
             return JsonSerializer.Deserialize<SendResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

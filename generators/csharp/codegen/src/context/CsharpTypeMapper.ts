@@ -8,6 +8,8 @@ import { AbstractCsharpGeneratorContext } from "./AbstractCsharpGeneratorContext
 export declare namespace CsharpTypeMapper {
     interface Args {
         reference: TypeReference;
+        /* Defaults to false */
+        unboxOptionals?: boolean;
     }
 }
 
@@ -18,10 +20,13 @@ export class CsharpTypeMapper {
         this.context = context;
     }
 
-    public convert({ reference }: CsharpTypeMapper.Args): Type {
+    public convert({ reference, unboxOptionals }: CsharpTypeMapper.Args): Type {
         switch (reference.type) {
             case "container":
-                return this.convertContainer({ container: reference.container });
+                return this.convertContainer({
+                    container: reference.container,
+                    unboxOptionals: unboxOptionals ?? false
+                });
             case "named":
                 return this.convertNamed({ named: reference });
             case "primitive":
@@ -41,7 +46,13 @@ export class CsharpTypeMapper {
         });
     }
 
-    private convertContainer({ container }: { container: ContainerType }): Type {
+    private convertContainer({
+        container,
+        unboxOptionals
+    }: {
+        container: ContainerType;
+        unboxOptionals: boolean;
+    }): Type {
         switch (container.type) {
             case "list":
                 return Type.list(this.convert({ reference: container.list }));
@@ -53,7 +64,9 @@ export class CsharpTypeMapper {
             case "set":
                 return Type.set(this.convert({ reference: container.set }));
             case "optional":
-                return Type.optional(this.convert({ reference: container.optional }));
+                return unboxOptionals
+                    ? this.convert({ reference: container.optional, unboxOptionals })
+                    : Type.optional(this.convert({ reference: container.optional }));
             case "literal":
                 return this.convertLiteral({ literal: container.literal });
             default:

@@ -29,6 +29,6 @@ public class ReferenceClient
         {
             return JsonSerializer.Deserialize<SendResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

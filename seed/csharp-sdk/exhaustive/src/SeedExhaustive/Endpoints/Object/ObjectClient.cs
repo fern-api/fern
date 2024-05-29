@@ -20,7 +20,7 @@ public class ObjectClient
         if (response.StatusCode >= 200 && response.StatusCode < 400) {
         return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody);
             }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<ObjectWithRequiredField> GetAndReturnWithRequiredFieldAsync(ObjectWithRequiredField request) {
@@ -30,7 +30,7 @@ public class ObjectClient
         if (response.StatusCode >= 200 && response.StatusCode < 400) {
         return JsonSerializer.Deserialize<ObjectWithRequiredField>(responseBody);
             }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<ObjectWithMapOfMap> GetAndReturnWithMapOfMapAsync(ObjectWithMapOfMap request) {
@@ -40,7 +40,7 @@ public class ObjectClient
         if (response.StatusCode >= 200 && response.StatusCode < 400) {
         return JsonSerializer.Deserialize<ObjectWithMapOfMap>(responseBody);
             }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<NestedObjectWithOptionalField> GetAndReturnNestedWithOptionalFieldAsync(NestedObjectWithOptionalField request) {
@@ -50,7 +50,7 @@ public class ObjectClient
         if (response.StatusCode >= 200 && response.StatusCode < 400) {
         return JsonSerializer.Deserialize<NestedObjectWithOptionalField>(responseBody);
             }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsync(string string, NestedObjectWithRequiredField request) {
@@ -60,7 +60,7 @@ public class ObjectClient
         if (response.StatusCode >= 200 && response.StatusCode < 400) {
         return JsonSerializer.Deserialize<NestedObjectWithRequiredField>(responseBody);
             }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsListAsync(List<NestedObjectWithRequiredField> request) {
@@ -70,7 +70,7 @@ public class ObjectClient
         if (response.StatusCode >= 200 && response.StatusCode < 400) {
         return JsonSerializer.Deserialize<NestedObjectWithRequiredField>(responseBody);
             }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
 }

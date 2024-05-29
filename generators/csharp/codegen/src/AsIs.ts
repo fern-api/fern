@@ -1,3 +1,5 @@
+export const STRING_ENUM_SERIALIZER_CLASS_NAME = "StringEnumSerializer";
+
 export enum AsIsFiles {
     EnumConverter = "EnumConverter.Template.cs",
     OneOfJsonConverter = "OneOfJsonConverter.Template.cs",
@@ -8,5 +10,5 @@ export enum AsIsFiles {
     UsingCs = "Using.cs",
     RawClient = "RawClient.Template.cs",
     CiYaml = "github-ci.yml",
-    JsonEnumMemberStringEnumConverter = "JsonEnumMemberStringEnumConverter.cs"
+    StringEnumSerializer = "StringEnumSerializer.cs"
 }
