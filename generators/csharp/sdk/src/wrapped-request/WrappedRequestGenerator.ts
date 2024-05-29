@@ -95,7 +95,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                             init: true,
                             summary: property.docs,
                             jsonPropertyName: addJsonAnnotations ? property.name.wireValue : undefined,
-                            annotations: annotations
+                            annotations
                         })
                     );
                 }

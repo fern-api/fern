@@ -10,5 +10,5 @@ export enum AsIsFiles {
     UsingCs = "Using.cs",
     RawClient = "RawClient.Template.cs",
     CiYaml = "github-ci.yml",
-    StringEnumSerializer = `StringEnumSerializer.cs`
+    StringEnumSerializer = "StringEnumSerializer.cs"
 }

@@ -7,6 +7,7 @@ export function getEnumSerializationAnnotation({
     context,
     enumReference
 }: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     context: AbstractCsharpGeneratorContext<any>;
     enumReference: TypeReference;
 }): csharp.Annotation {
