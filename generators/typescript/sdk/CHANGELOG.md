@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   configuration arguments. For example: 
   
   ```yaml
+  extraPeerDependencies:
+    "openai": "^4.47.1"
+  extraPeerDependenciesMeta:
+    "openai":
+      optional: true
   ```
 
 ## [0.20.4] - 2024-05-29
