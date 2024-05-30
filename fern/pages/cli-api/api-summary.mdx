@@ -1,0 +1,43 @@
+---
+title: 'API Overview'
+subtitle: Manage Docs, SDKs, and code snippets using Fern's public-facing API.
+description: 'Overview of the Fern API including usage and authentication'
+---
+
+<Aside>
+    <Tip>
+        API access is available on paid plans. Please schedule a [demo](https://buildwithfern.com/contact) or [email us](mailto:support@buildwithfern.com) to get started.
+    </Tip>
+</Aside>
+
+The Fern API allows you to interact programatically with Fern Docs, SDKs, and code snippets via a RESTful API. 
+
+Check out the [CLI Reference](/learn/cli-api/cli-reference/cli-overview) to interact with Fern from the command line.
+
+## Authentication
+
+Fern API requests require a bearer token for authentication. Use the CLI command [`fern token`](/learn/cli-api/cli-reference/commands#fern-token) to generate a bearer token. Tokens do not expire. 
+
+## Accessing Fern API
+
+Fern maintains official API clients for Node.js and Python. We recommend using these clients, though the API supports any language or framework that sends HTTP requests.
+
+<CardGroup cols={2}>
+    <Card 
+        title='Python' 
+        icon={<img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python logo"/>} 
+        href='https://github.com/fern-api/node-sdk'
+    >
+    API client
+    </Card>
+
+    <Card 
+        title='Node.js/TypeScript' 
+        icon={<img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg" alt="Node.js logo"/>} 
+        href='https://github.com/fern-api/python-sdk'
+    >
+    API client
+    </Card>
+</CardGroup>
+
+<Tip>Want an SDK in another language? [Let us know!](mailto:support@buildwithfern.com)</Tip>

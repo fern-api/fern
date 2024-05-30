@@ -1,3 +1,4 @@
+import { Readable } from "stream";
 import { RUNTIME } from "../runtime";
 
 interface CrossPlatformFormData {
@@ -28,7 +29,7 @@ class FormDataRequestBody {
             if (this.encoder == null) {
                 await this.setup();
             }
-            return (await import("node:stream")).Readable.from(this.encoder);
+            return Readable.from(this.encoder);
         }
     }
 

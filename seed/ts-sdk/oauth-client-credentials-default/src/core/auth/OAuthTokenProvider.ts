@@ -44,6 +44,7 @@ export class OAuthTokenProvider {
             clientId: await core.Supplier.get(this._clientId),
             clientSecret: await core.Supplier.get(this._clientSecret),
         });
+
         this._accessToken = tokenResponse.accessToken;
         return this._accessToken;
     }
