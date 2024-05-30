@@ -51,6 +51,11 @@ function addTestCommand(cli: Argv) {
                     demandOption: false,
                     description: "Runs on all fixtures if not provided"
                 })
+                .option("outputFolder", {
+                    string: true,
+                    demandOption: false,
+                    description: "Runs on a specific output folder. Only relevant if there are >1 folders configured."
+                })
                 .option("keepDocker", {
                     type: "boolean",
                     demandOption: false,
@@ -112,7 +117,8 @@ function addTestCommand(cli: Argv) {
                     testGenerator({
                         generator,
                         runner: testRunner,
-                        fixtures: argv.fixture
+                        fixtures: argv.fixture,
+                        outputFolder: argv.outputFolder
                     })
                 );
             }

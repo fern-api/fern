@@ -28,9 +28,15 @@ class ClientConfiguration(pydantic.BaseModel):
         extra = pydantic.Extra.forbid
 
 
+class DependencyCusomConfig(pydantic.BaseModel):
+    version: str
+    optional: bool
+
+
 class SDKCustomConfig(pydantic.BaseModel):
-    extra_dependencies: Dict[str, str] = {}
+    extra_dependencies: Dict[str, Union[str, DependencyCusomConfig]] = {}
     extra_dev_dependencies: Dict[str, str] = {}
+    extras: Dict[str, List[str]] = {}
     skip_formatting: bool = False
     client: ClientConfiguration = ClientConfiguration()
     include_union_utils: bool = False
