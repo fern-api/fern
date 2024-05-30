@@ -85,11 +85,13 @@ class SdkGenerator(AbstractGenerator):
             raise RuntimeError("client_location.exported_filename must end in .py")
 
         for dep, value in custom_config.extra_dependencies.items():
-            if type(value) is str: 
+            if type(value) is str:
                 project.add_dependency(dependency=AST.Dependency(name=dep, version=value))
-            elif isinstance(value, DependencyCusomConfig): 
-                project.add_dependency(dependency=AST.Dependency(name=dep, version=value.version, optional=value.optional))
-        
+            elif isinstance(value, DependencyCusomConfig):
+                project.add_dependency(
+                    dependency=AST.Dependency(name=dep, version=value.version, optional=value.optional)
+                )
+
         project.add_extra(custom_config.extras)
 
         for dep, version in custom_config.extra_dev_dependencies.items():

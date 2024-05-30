@@ -172,7 +172,7 @@ class Project:
                 github_output_mode=self._github_output_mode,
                 pypi_metadata=self._pypi_metadata,
                 license_=self.license_,
-                extras=self._extras
+                extras=self._extras,
             )
             py_project_toml.write()
 

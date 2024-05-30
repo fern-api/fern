@@ -17,19 +17,19 @@ export async function testGenerator({
     runner,
     generator,
     fixtures,
-    variant,
+    outputFolder
 }: {
     runner: TestRunner;
     generator: GeneratorWorkspace;
     fixtures: string[];
-    variant?: string;
+    outputFolder?: string;
 }): Promise<boolean> {
     const testCases: Promise<TestRunner.TestResult>[] = [];
     for (const fixture of fixtures) {
         const config = generator.workspaceConfig.fixtures?.[fixture];
         if (config != null) {
             for (const instance of config) {
-                if (variant != null && instance.outputFolder !== variant) {
+                if (outputFolder != null && instance.outputFolder !== outputFolder) {
                     continue;
                 }
                 testCases.push(

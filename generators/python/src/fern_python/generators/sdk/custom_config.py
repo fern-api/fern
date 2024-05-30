@@ -32,6 +32,7 @@ class DependencyCusomConfig(pydantic.BaseModel):
     version: str
     optional: bool
 
+
 class SDKCustomConfig(pydantic.BaseModel):
     extra_dependencies: Dict[str, Union[str, DependencyCusomConfig]] = {}
     extra_dev_dependencies: Dict[str, str] = {}
