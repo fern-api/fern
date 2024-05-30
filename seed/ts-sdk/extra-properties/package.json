@@ -9,7 +9,7 @@
         "format": "prettier . --write --ignore-unknown",
         "build": "tsc",
         "prepack": "cp -rv dist/. .",
-        "test": "fern test --command='jest'"
+        "test": "jest"
     },
     "dependencies": {
         "url-join": "4.0.1",
