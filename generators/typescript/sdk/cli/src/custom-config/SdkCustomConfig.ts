@@ -26,4 +26,5 @@ export interface SdkCustomConfig {
     retainOriginalCasing: boolean | undefined;
     allowExtraFields: boolean | undefined;
     inlineFileProperties: boolean | undefined;
+    exportAsProject: boolean;
 }
