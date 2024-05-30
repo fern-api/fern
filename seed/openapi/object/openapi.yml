@@ -120,4 +120,8 @@ components:
       required:
         - id
         - value
+    Empty:
+      title: Empty
+      type: object
+      properties: {}
   securitySchemes: {}

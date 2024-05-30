@@ -2266,6 +2266,47 @@
                 "message": null
             },
             "docs": null
+        },
+        "type_:Empty": {
+            "name": {
+                "name": {
+                    "originalName": "Empty",
+                    "camelCase": {
+                        "unsafeName": "empty",
+                        "safeName": "empty"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "empty",
+                        "safeName": "empty"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EMPTY",
+                        "safeName": "EMPTY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Empty",
+                        "safeName": "Empty"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "typeId": "type_:Empty"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": []
+            },
+            "examples": [],
+            "referencedTypes": [],
+            "availability": {
+                "status": "GENERAL_AVAILABILITY",
+                "message": null
+            },
+            "docs": null
         }
     },
     "errors": {},
@@ -2279,7 +2320,8 @@
         "service": null,
         "types": [
             "type_:Type",
-            "type_:Name"
+            "type_:Name",
+            "type_:Empty"
         ],
         "errors": [],
         "subpackages": [],
@@ -2332,7 +2374,8 @@
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
             "type_:Type",
-            "type_:Name"
+            "type_:Name",
+            "type_:Empty"
         ]
     },
     "services": {}

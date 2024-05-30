@@ -2674,6 +2674,44 @@
             ],
             "availability": null,
             "docs": null
+        },
+        "type_:Empty": {
+            "name": {
+                "name": {
+                    "originalName": "Empty",
+                    "camelCase": {
+                        "unsafeName": "empty",
+                        "safeName": "empty"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "empty",
+                        "safeName": "empty"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EMPTY",
+                        "safeName": "EMPTY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Empty",
+                        "safeName": "Empty"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "typeId": "type_:Empty"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": []
+            },
+            "referencedTypes": [],
+            "examples": [],
+            "availability": null,
+            "docs": null
         }
     },
     "errors": {},
@@ -2713,7 +2751,8 @@
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
             "type_:Type",
-            "type_:Name"
+            "type_:Name",
+            "type_:Empty"
         ]
     },
     "webhookGroups": {},
@@ -2727,7 +2766,8 @@
         "service": null,
         "types": [
             "type_:Type",
-            "type_:Name"
+            "type_:Name",
+            "type_:Empty"
         ],
         "errors": [],
         "subpackages": [],

@@ -2,3 +2,4 @@
 
 require_relative "fern_object/types/type"
 require_relative "fern_object/types/name"
+require_relative "fern_object/types/empty"

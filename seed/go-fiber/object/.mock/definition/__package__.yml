@@ -69,3 +69,6 @@ types:
         value:
           id: name-sdfg8ajk
           value: name
+
+  Empty:
+    properties: {}

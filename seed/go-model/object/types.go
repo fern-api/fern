@@ -10,6 +10,38 @@ import (
 	time "time"
 )
 
+type Empty struct {
+	extraProperties map[string]interface{}
+}
+
+func (e *Empty) GetExtraProperties() map[string]interface{} {
+	return e.extraProperties
+}
+
+func (e *Empty) UnmarshalJSON(data []byte) error {
+	type unmarshaler Empty
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = Empty(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+
+	return nil
+}
+
+func (e *Empty) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
 type Name struct {
 	Id    string `json:"id" url:"id"`
 	Value string `json:"value" url:"value"`
