@@ -202,8 +202,9 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
                 mavenGithubPublishInfo.flatMap(MavenGithubPublishInfo::getSignature)));
         // write files to disk
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
-        runCommandBlocking(new String[] {"./gradlew", "wrapper"}, outputDirectory, Collections.emptyMap());
-        runCommandBlocking(new String[] {"./gradlew", "spotlessApply"}, outputDirectory, Collections.emptyMap());
+        runCommandBlocking(
+                new String[] {"gradle", "wrapper", "--gradle-version", "8.7"}, outputDirectory, Collections.emptyMap());
+        runCommandBlocking(new String[] {"gradle", "spotlessApply"}, outputDirectory, Collections.emptyMap());
     }
 
     public abstract void runInGithubModeHook(
