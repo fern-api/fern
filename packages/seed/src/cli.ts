@@ -51,6 +51,10 @@ function addTestCommand(cli: Argv) {
                     demandOption: false,
                     description: "Runs on all fixtures if not provided"
                 })
+                .option("variant", {
+                    string: true,
+                    demandOption: false
+                })
                 .option("keepDocker", {
                     type: "boolean",
                     demandOption: false,
@@ -112,7 +116,8 @@ function addTestCommand(cli: Argv) {
                     testGenerator({
                         generator,
                         runner: testRunner,
-                        fixtures: argv.fixture
+                        fixtures: argv.fixture,
+                        variant: argv.variant
                     })
                 );
             }
