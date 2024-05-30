@@ -15,6 +15,8 @@ export const SdkCustomConfigSchema = z.strictObject({
     skipResponseValidation: z.optional(z.boolean()),
     extraDependencies: z.optional(z.record(z.string())),
     extraDevDependencies: z.optional(z.record(z.string())),
+    extraPeerDependencies: z.optional(z.record(z.string())),
+    extraPeerDependenciesMeta: z.optional(z.record(z.any())),
     treatUnknownAsAny: z.optional(z.boolean()),
     noSerdeLayer: z.optional(z.boolean()),
     noOptionalProperties: z.optional(z.boolean()),

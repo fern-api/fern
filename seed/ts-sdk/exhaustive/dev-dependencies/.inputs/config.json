@@ -29,6 +29,14 @@
         },
         "extraDevDependencies": {
             "jest": "^29.7.0"
+        },
+        "extraPeerDependencies": {
+            "openai": "^4.47.1"
+        },
+        "extraPeerDependenciesMeta": {
+            "openai": {
+                "optional": true
+            }
         }
     },
     "workspaceName": "exhaustive",
