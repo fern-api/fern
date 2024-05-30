@@ -1,10 +1,16 @@
 #!/bin/bash
 
 # Desired Gradle version
-GRADLE_VERSION=8.3
+GRADLE_VERSION=8.7
 
 # Function to install sdkman if not present and load it
 install_and_load_sdkman() {
+    # Try sourcing sdkman-init.sh first
+    if [ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]; then
+        source "$HOME/.sdkman/bin/sdkman-init.sh"
+    fi
+
+    # Check if sdk command is available
     if ! command -v sdk &> /dev/null
     then
         echo "sdkman is not installed. Installing sdkman..."
