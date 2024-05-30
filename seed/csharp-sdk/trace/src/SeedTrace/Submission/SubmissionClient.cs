@@ -31,7 +31,7 @@ public class SubmissionClient
         {
             return JsonSerializer.Deserialize<ExecutionSessionResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -47,7 +47,7 @@ public class SubmissionClient
         {
             return JsonSerializer.Deserialize<ExecutionSessionResponse?>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -70,6 +70,6 @@ public class SubmissionClient
         {
             return JsonSerializer.Deserialize<GetExecutionSessionStateResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

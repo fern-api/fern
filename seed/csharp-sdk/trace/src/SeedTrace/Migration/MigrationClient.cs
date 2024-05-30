@@ -35,6 +35,6 @@ public class MigrationClient
         {
             return JsonSerializer.Deserialize<List<Migration>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

@@ -69,13 +69,17 @@ def validate_field(response: typing.Any, json_expectation: typing.Any, type_expe
     elif isinstance(type_expectation, tuple):
         container_expectation = type_expectation[0]
         contents_expectation = type_expectation[1]
-        json_expectation = {
-            cast_field(
-                key, contents_expectation.get(idx)[0] if isinstance(contents_expectation, dict) else None
-            ): cast_field(value, contents_expectation.get(idx)[1] if isinstance(contents_expectation, dict) else None)
-            for idx, (key, value) in enumerate(json_expectation.items())
-        }
-        json_expectation = cast_field(json_expectation, container_expectation)
+        if isinstance(contents_expectation, dict):
+            json_expectation = {
+                cast_field(
+                    key, contents_expectation.get(idx)[0] if contents_expectation.get(idx) is not None else None  # type: ignore
+                ): cast_field(
+                    value, contents_expectation.get(idx)[1] if contents_expectation.get(idx) is not None else None  # type: ignore
+                )
+                for idx, (key, value) in enumerate(json_expectation.items())
+            }
+        else:
+            json_expectation = cast_field(json_expectation, container_expectation)
     elif type_expectation is not None:
         json_expectation = cast_field(json_expectation, type_expectation)
 

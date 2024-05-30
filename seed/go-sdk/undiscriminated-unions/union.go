@@ -14,6 +14,7 @@ type MyUnion struct {
 	Integer         int
 	IntegerList     []int
 	IntegerListList [][]int
+	StringSet       []string
 }
 
 func (m *MyUnion) UnmarshalJSON(data []byte) error {
@@ -42,6 +43,11 @@ func (m *MyUnion) UnmarshalJSON(data []byte) error {
 		m.IntegerListList = valueIntegerListList
 		return nil
 	}
+	var valueStringSet []string
+	if err := json.Unmarshal(data, &valueStringSet); err == nil {
+		m.StringSet = valueStringSet
+		return nil
+	}
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, m)
 }
 
@@ -61,6 +67,9 @@ func (m MyUnion) MarshalJSON() ([]byte, error) {
 	if m.IntegerListList != nil {
 		return json.Marshal(m.IntegerListList)
 	}
+	if m.StringSet != nil {
+		return json.Marshal(m.StringSet)
+	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", m)
 }
 
@@ -70,6 +79,7 @@ type MyUnionVisitor interface {
 	VisitInteger(int) error
 	VisitIntegerList([]int) error
 	VisitIntegerListList([][]int) error
+	VisitStringSet([]string) error
 }
 
 func (m *MyUnion) Accept(visitor MyUnionVisitor) error {
@@ -87,6 +97,9 @@ func (m *MyUnion) Accept(visitor MyUnionVisitor) error {
 	}
 	if m.IntegerListList != nil {
 		return visitor.VisitIntegerListList(m.IntegerListList)
+	}
+	if m.StringSet != nil {
+		return visitor.VisitStringSet(m.StringSet)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", m)
 }

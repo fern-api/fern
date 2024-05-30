@@ -44,6 +44,6 @@ public class UserClient
         {
             return JsonSerializer.Deserialize<User>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

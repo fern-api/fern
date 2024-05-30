@@ -1,5 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { generatorsYml } from "@fern-api/configuration";
+import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspaceMetadata } from "@fern-api/workspace-loader";
 import { downloadSnippetsForTask } from "./downloadSnippetsForTask";
@@ -10,6 +12,7 @@ export interface RemoteGenerationForAPIWorkspaceResponse {
 }
 
 export async function runRemoteGenerationForAPIWorkspace({
+    projectConfig,
     organization,
     workspaceGetter,
     context,
@@ -17,6 +20,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     shouldLogS3Url,
     token
 }: {
+    projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
     workspaceGetter: (
         sdkLanguage: generatorsYml.GenerationLanguage | undefined
@@ -52,6 +56,7 @@ export async function runRemoteGenerationForAPIWorkspace({
                     return;
                 } else {
                     const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({
+                        projectConfig,
                         organization,
                         workspace: workspaceMetadata.workspace,
                         interactiveTaskContext,
@@ -66,7 +71,6 @@ export async function runRemoteGenerationForAPIWorkspace({
                     });
                     if (remoteTaskHandlerResponse != null && remoteTaskHandlerResponse.createdSnippets) {
                         snippetsProducedBy.push(generatorInvocation);
-
                         if (
                             generatorInvocation.absolutePathToLocalSnippets != null &&
                             remoteTaskHandlerResponse.snippetsS3PreSignedReadUrl != null

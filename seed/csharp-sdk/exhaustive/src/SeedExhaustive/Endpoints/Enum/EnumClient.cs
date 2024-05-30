@@ -30,6 +30,6 @@ public class EnumClient
         {
             return JsonSerializer.Deserialize<WeatherReport>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

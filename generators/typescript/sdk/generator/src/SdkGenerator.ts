@@ -98,6 +98,8 @@ export declare namespace SdkGenerator {
         targetRuntime: JavaScriptRuntime;
         extraDependencies: Record<string, string>;
         extraDevDependencies: Record<string, string>;
+        extraPeerDependencies: Record<string, string>;
+        extraPeerDependenciesMeta: Record<string, unknown>;
         treatUnknownAsAny: boolean;
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
@@ -302,7 +304,10 @@ export class SdkGenerator {
         });
         this.requestWrapperGenerator = new RequestWrapperGenerator();
         this.environmentsGenerator = new EnvironmentsGenerator();
-        this.oauthTokenProviderGenerator = new OAuthTokenProviderGenerator(intermediateRepresentation);
+        this.oauthTokenProviderGenerator = new OAuthTokenProviderGenerator({
+            intermediateRepresentation,
+            neverThrowErrors: this.config.neverThrowErrors
+        });
         this.sdkClientClassGenerator = new SdkClientClassGenerator({
             intermediateRepresentation,
             errorResolver: this.errorResolver,
@@ -454,6 +459,8 @@ export class SdkGenerator {
                   tsMorphProject: this.project,
                   extraDependencies: this.config.extraDependencies,
                   extraDevDependencies: this.config.extraDevDependencies,
+                  extraPeerDependencies: this.config.extraPeerDependencies,
+                  extraPeerDependenciesMeta: this.config.extraPeerDependenciesMeta,
                   extraFiles: this.extraFiles,
                   extraScripts: this.extraScripts
               })
@@ -464,6 +471,8 @@ export class SdkGenerator {
                   outputEsm: this.config.outputEsm,
                   extraDependencies: this.config.extraDependencies,
                   extraDevDependencies: this.config.extraDevDependencies,
+                  extraPeerDependencies: this.config.extraPeerDependencies,
+                  extraPeerDependenciesMeta: this.config.extraPeerDependenciesMeta,
                   extraFiles: this.extraFiles,
                   extraScripts: this.extraScripts,
                   resolutions: {}

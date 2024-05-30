@@ -29,7 +29,7 @@ public class PaymentClient
         {
             return JsonSerializer.Deserialize<Guid>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async void DeleteAsync(string paymentId)

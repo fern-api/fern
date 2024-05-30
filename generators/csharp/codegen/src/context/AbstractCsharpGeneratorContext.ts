@@ -9,9 +9,13 @@ import {
     ObjectTypeDeclaration,
     TypeDeclaration,
     TypeId,
+    TypeReference,
+    UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
+import { csharp } from "..";
+import { ONE_OF_SERIALIZER_CLASS_NAME, STRING_ENUM_SERIALIZER_CLASS_NAME } from "../AsIs";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { CsharpProject } from "../project";
 import { CORE_DIRECTORY_NAME } from "../project/CsharpProject";
@@ -65,6 +69,27 @@ export abstract class AbstractCsharpGeneratorContext<
         return `${this.namespace}.Test`;
     }
 
+    public getStringEnumSerializerClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: STRING_ENUM_SERIALIZER_CLASS_NAME
+        });
+    }
+
+    public getOneOfSerializerClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: ONE_OF_SERIALIZER_CLASS_NAME
+        });
+    }
+
+    public getOneOfClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: "OneOf",
+            name: "OneOf"
+        });
+    }
+
     public getPascalCaseSafeName(name: Name): string {
         return name.pascalCase.safeName;
     }
@@ -79,6 +104,39 @@ export abstract class AbstractCsharpGeneratorContext<
 
     public getCoreDirectory(): RelativeFilePath {
         return RelativeFilePath.of(CORE_DIRECTORY_NAME);
+    }
+
+    public getAsUndiscriminatedUnionTypeDeclaration(
+        reference: TypeReference
+    ): UndiscriminatedUnionTypeDeclaration | undefined {
+        if (reference.type === "container" && reference.container.type === "optional") {
+            return this.getAsUndiscriminatedUnionTypeDeclaration(reference.container.optional);
+        }
+        if (reference.type !== "named") {
+            return undefined;
+        }
+
+        let declaration = this.getTypeDeclarationOrThrow(reference.typeId);
+        if (declaration.shape.type === "undiscriminatedUnion") {
+            return declaration.shape;
+        }
+
+        // handle aliases by visiting resolved types
+        if (declaration.shape.type === "alias") {
+            if (declaration.shape.resolvedType.type === "named") {
+                declaration = this.getTypeDeclarationOrThrow(reference.typeId);
+                if (declaration.shape.type === "undiscriminatedUnion") {
+                    return declaration.shape;
+                }
+            } else if (
+                declaration.shape.resolvedType.type === "container" &&
+                declaration.shape.resolvedType.container.type === "optional"
+            ) {
+                return this.getAsUndiscriminatedUnionTypeDeclaration(declaration.shape.resolvedType.container.optional);
+            }
+        }
+
+        return undefined;
     }
 
     public abstract getAsIsFiles(): string[];

@@ -24,7 +24,7 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<Movie>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<string> CreateMovieAsync(Movie request)
@@ -42,7 +42,7 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<Metadata> GetMetadataAsync(GetMetadataRequest request)
@@ -74,7 +74,7 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<Metadata>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<Response> GetResponseAsync()
@@ -87,6 +87,6 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<Response>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }
