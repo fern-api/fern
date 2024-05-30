@@ -47,7 +47,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             includeContentHeadersOnFileDownloadResponse: parsed?.includeContentHeadersOnFileDownloadResponse ?? false,
             noSerdeLayer,
             noOptionalProperties: parsed?.noOptionalProperties ?? false,
-            includeApiReference: parsed?.includeApiReference ?? false
+            includeApiReference: parsed?.includeApiReference ?? false,
+            exportAsProject: parsed?.exportAsProject ?? false
         };
     }
 
@@ -117,5 +118,9 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
 
     protected outputSourceFiles(customConfig: SdkCustomConfig): boolean {
         return customConfig.outputSourceFiles;
+    }
+
+    protected exportAsProject(customConfig: SdkCustomConfig): boolean {
+        return customConfig.exportAsProject;
     }
 }

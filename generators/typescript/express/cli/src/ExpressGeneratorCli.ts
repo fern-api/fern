@@ -73,4 +73,8 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
     protected outputSourceFiles(customConfig: ExpressCustomConfig): boolean {
         return customConfig.outputSourceFiles;
     }
+
+    protected exportAsProject(customConfig: ExpressCustomConfig): boolean {
+        return false;
+    }
 }
