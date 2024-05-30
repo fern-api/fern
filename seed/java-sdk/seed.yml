@@ -11,6 +11,7 @@ local:
   workingDirectory: generators/java
   buildCommand:
     - ./gradlew :sdk:distTar
+    - chmod +x global-gradle.sh && ./global-gradle.sh # needs to be installed globally for now in order to generated Gradle Wrapper in each snapshot
     - cd sdk
     - tar -xvf build/distributions/sdk.tar -C .
   runCommand: cd sdk/sdk && java -cp sdk.jar:lib/* com.fern.java.client.Cli
