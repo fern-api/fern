@@ -115,7 +115,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 tolerateRepublish: customConfig.tolerateRepublish,
                 allowExtraFields: customConfig.allowExtraFields ?? false,
                 inlineFileProperties: customConfig.inlineFileProperties ?? false,
-                writeUnitTests: config.writeUnitTests,
+                writeUnitTests: false,
                 executionEnvironment: this.exectuionEnvironment(config)
             }
         });
