@@ -12,6 +12,8 @@ export declare namespace TypescriptProject {
         tsMorphProject: Project;
         extraFiles: Record<string, string>;
         extraDependencies: Record<string, string>;
+        extraPeerDependencies: Record<string, string>;
+        extraPeerDependenciesMeta: Record<string, unknown>;
         extraDevDependencies: Record<string, string>;
         extraScripts: Record<string, string>;
     }
@@ -27,6 +29,8 @@ export abstract class TypescriptProject {
     public extraFiles: Record<string, string>;
     protected extraDependencies: Record<string, string>;
     protected extraDevDependencies: Record<string, string>;
+    protected extraPeerDependenciesMeta: Record<string, unknown>;
+    protected extraPeerDependencies: Record<string, string>;
     protected extraScripts: Record<string, string>;
 
     constructor({
@@ -34,13 +38,17 @@ export abstract class TypescriptProject {
         extraDependencies,
         extraDevDependencies,
         extraFiles,
-        extraScripts
+        extraScripts,
+        extraPeerDependencies,
+        extraPeerDependenciesMeta
     }: TypescriptProject.Init) {
         this.tsMorphProject = tsMorphProject;
         this.extraDependencies = extraDependencies;
         this.extraDevDependencies = extraDevDependencies;
         this.extraFiles = extraFiles;
         this.extraScripts = extraScripts;
+        this.extraPeerDependenciesMeta = extraPeerDependenciesMeta;
+        this.extraPeerDependencies = extraPeerDependencies;
     }
 
     public async persist(): Promise<PersistedTypescriptProject> {

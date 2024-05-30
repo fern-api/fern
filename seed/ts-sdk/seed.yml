@@ -55,6 +55,11 @@ fixtures:
           lodash-es: "^4.17.21"
         extraDevDependencies:
           jest: "^29.7.0"
+        extraPeerDependencies:
+          "openai": "^4.47.1"
+        extraPeerDependenciesMeta:
+          "openai":
+            optional: true
       outputFolder: dev-dependencies
   error-property:
     - customConfig:
