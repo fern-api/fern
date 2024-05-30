@@ -1,11 +1,78 @@
 import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import {
+    DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
+    generatorsYml,
+    GENERATORS_CONFIGURATION_FILENAME
+} from "@fern-api/configuration";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
-import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { TaskContext } from "@fern-api/task-context";
+import {
+    APIWorkspace,
+    convertOpenApiWorkspaceToFernWorkspace,
+    FernWorkspaceMetadata
+} from "@fern-api/workspace-loader";
+import { join } from "path";
 import { CliContext } from "../../cli-context/CliContext";
-import { PREVIEW_DIRECTORY } from "../../constants";
+import { GROUP_CLI_OPTION, PREVIEW_DIRECTORY } from "../../constants";
+import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues";
 import { generateWorkspace } from "./generateAPIWorkspace";
+
+async function getFernWorkspace(
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined,
+    groupName: string | undefined,
+    apiWorkspace: APIWorkspace,
+    context: TaskContext,
+    preview: boolean
+): Promise<FernWorkspaceMetadata | undefined> {
+    let fernWorkspace;
+    if (apiWorkspace.type === "fern") {
+        fernWorkspace = apiWorkspace;
+    } else {
+        apiWorkspace.specs = apiWorkspace.specs.map((spec) => ({ ...spec, sdkLanguage }));
+        fernWorkspace = await convertOpenApiWorkspaceToFernWorkspace(apiWorkspace, context);
+    }
+    if (fernWorkspace.generatorsConfiguration == null) {
+        context.logger.warn("This workspaces has no generators.yml");
+        return;
+    }
+
+    if (fernWorkspace.generatorsConfiguration.groups.length === 0) {
+        context.logger.warn(`This workspaces has no groups specified in ${GENERATORS_CONFIGURATION_FILENAME}`);
+        return;
+    }
+
+    const absolutePathToPreview = preview
+        ? AbsoluteFilePath.of(join(fernWorkspace.absoluteFilepath, RelativeFilePath.of(PREVIEW_DIRECTORY)))
+        : undefined;
+
+    if (absolutePathToPreview != null) {
+        context.logger.info(`Writing preview to ${absolutePathToPreview}`);
+    }
+
+    await validateAPIWorkspaceAndLogIssues({ workspace: fernWorkspace, context, logWarnings: false });
+
+    const groupNameOrDefault = groupName ?? fernWorkspace.generatorsConfiguration?.defaultGroup;
+    if (groupNameOrDefault == null) {
+        return context.failAndThrow(
+            `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}`
+        );
+    }
+
+    const group = fernWorkspace.generatorsConfiguration?.groups.find(
+        (otherGroup) => otherGroup.groupName === groupNameOrDefault
+    );
+    if (group == null) {
+        return context.failAndThrow(`Group '${groupNameOrDefault}' does not exist.`);
+    }
+
+    return {
+        workspace: fernWorkspace,
+        absolutePathToPreview,
+        group
+    };
+}
 
 export async function generateAPIWorkspaces({
     project,
@@ -68,31 +135,22 @@ export async function generateAPIWorkspaces({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                const fernWorkspace: FernWorkspace =
-                    workspace.type === "fern"
-                        ? workspace
-                        : await convertOpenApiWorkspaceToFernWorkspace(workspace, context);
-
-                const absolutePathToPreview = preview
-                    ? join(fernWorkspace.absoluteFilepath, RelativeFilePath.of(PREVIEW_DIRECTORY))
-                    : undefined;
-
-                if (absolutePathToPreview != null) {
-                    context.logger.info(`Writing preview to ${absolutePathToPreview}`);
-                }
+                const fernWorkspaceGetter: (
+                    sdkLanguage: generatorsYml.GenerationLanguage | undefined
+                ) => Promise<FernWorkspaceMetadata | undefined> = async (
+                    sdkLanguage: generatorsYml.GenerationLanguage | undefined
+                ) => getFernWorkspace(sdkLanguage, groupName, workspace, context, preview);
 
                 await generateWorkspace({
                     organization: project.config.organization,
-                    workspace: fernWorkspace,
+                    workspaceGetter: fernWorkspaceGetter,
                     projectConfig: project.config,
                     context,
                     version,
-                    groupName,
                     shouldLogS3Url,
                     token,
                     useLocalDocker,
-                    keepDocker,
-                    absolutePathToPreview
+                    keepDocker
                 });
             });
         })

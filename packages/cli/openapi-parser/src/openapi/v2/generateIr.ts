@@ -1,3 +1,4 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV2 } from "openapi-types";
@@ -19,7 +20,7 @@ export async function generateIr({
     audiences: string[];
     shouldUseTitleAsName: boolean;
     shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
-    sdkLanguage: "python" | undefined;
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<OpenApiIntermediateRepresentation> {
     const conversionResult = await convertObj(openApi, {});
     return generateIrFromV3({

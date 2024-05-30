@@ -1,3 +1,4 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -19,7 +20,7 @@ export interface Spec {
 
 export interface SpecImportSettings {
     audiences: string[];
-    sdkLanguage: "python" | undefined;
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
     shouldUseTitleAsName: boolean;
     shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
 }

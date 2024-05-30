@@ -1,6 +1,5 @@
-import { Audiences } from "@fern-api/configuration";
+import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
-import { generatorsYml } from "@fern-api/configuration";
 import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-migrations";
 import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { Project } from "@fern-api/project-loader";
@@ -31,10 +30,13 @@ export async function generateIrForWorkspaces({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                const fernWorkspace =
-                    workspace.type === "oss"
-                        ? await convertOpenApiWorkspaceToFernWorkspace(workspace, context)
-                        : workspace;
+                let fernWorkspace: FernWorkspace;
+                if (workspace.type == "fern") {
+                    fernWorkspace = workspace;
+                } else {
+                    workspace.specs = workspace.specs.map((spec) => ({ ...spec, sdkLanguage: generationLanguage }));
+                    fernWorkspace = await convertOpenApiWorkspaceToFernWorkspace(workspace, context);
+                }
 
                 const intermediateRepresentation = await getIntermediateRepresentation({
                     workspace: fernWorkspace,

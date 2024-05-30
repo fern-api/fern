@@ -1,3 +1,4 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { Logger } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
@@ -15,7 +16,7 @@ export abstract class AbstractAsyncAPIV2ParserContext implements SchemaParserCon
     public DUMMY: SchemaParserContext;
     public shouldUseTitleAsName: boolean;
     public shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
-    public sdkLanguage: "python" | undefined;
+    public sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 
     constructor({
         document,
@@ -28,7 +29,7 @@ export abstract class AbstractAsyncAPIV2ParserContext implements SchemaParserCon
         taskContext: TaskContext;
         shouldUseTitleAsName: boolean;
         shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
-        sdkLanguage: "python" | undefined;
+        sdkLanguage: generatorsYml.GenerationLanguage | undefined;
     }) {
         this.document = document;
         this.taskContext = taskContext;
@@ -118,8 +119,17 @@ export abstract class AbstractAsyncAPIV2ParserContext implements SchemaParserCon
         times: number
     ): void;
 
+    public abstract storeDiscriminatedUnionMetadata(
+        schema: OpenAPIV3.ReferenceObject,
+        discrminant: string,
+        discriminantValue: string
+    ): void;
+
     public getShouldUseUndiscriminatedUnionsForDiscriminated(): boolean {
-        return this.shouldUseUndiscriminatedUnionsForDiscriminated && this.sdkLanguage === "python";
+        return (
+            this.shouldUseUndiscriminatedUnionsForDiscriminated &&
+            this.sdkLanguage === generatorsYml.GenerationLanguage.PYTHON
+        );
     }
 }
 
@@ -135,7 +145,7 @@ export class AsyncAPIV2ParserContext extends AbstractAsyncAPIV2ParserContext {
         taskContext: TaskContext;
         shouldUseTitleAsName: boolean;
         shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
-        sdkLanguage: "python" | undefined;
+        sdkLanguage: generatorsYml.GenerationLanguage | undefined;
     }) {
         super({
             document,
@@ -155,6 +165,14 @@ export class AsyncAPIV2ParserContext extends AbstractAsyncAPIV2ParserContext {
     }
 
     markReferencedByDiscriminatedUnion(schema: OpenAPIV3.ReferenceObject, discrminant: string, times: number): void {
+        return;
+    }
+
+    storeDiscriminatedUnionMetadata(
+        schema: OpenAPIV3.ReferenceObject,
+        discrminant: string,
+        discriminantValue: string
+    ): void {
         return;
     }
 }

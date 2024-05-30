@@ -36,7 +36,7 @@ export interface Spec {
 
 export interface SpecImportSettings {
     audiences: string[];
-    sdkLanguage: "python" | undefined;
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
     shouldUseTitleAsName: boolean;
     shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
 }
@@ -80,4 +80,10 @@ export interface FernDefinition {
 
 export interface OnDiskNamedDefinitionFile extends ParsedFernFile<DefinitionFileSchema> {
     absoluteFilepath: AbsoluteFilePath;
+}
+
+export interface FernWorkspaceMetadata {
+    workspace: FernWorkspace;
+    absolutePathToPreview: AbsoluteFilePath | undefined;
+    group: generatorsYml.GeneratorGroup;
 }

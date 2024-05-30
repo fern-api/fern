@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`open api parser gen-yml-make-undisc-unions parse open api 1`] = `
+{
+  "basePath": null,
+  "channel": [],
+  "description": "The Batch API provides access to Hume models through an asynchronous job-based interface. You can submit a job to have many different files processed in parallel. The status of a job can then be checked with the job ID. Email notifications are available to alert on completed jobs.",
+  "endpoints": [],
+  "globalHeaders": [],
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "nonRequestReferencedSchemas": [],
+  "schemas": {
+    "UnionJob": {
+      "type": "oneOf",
+      "value": {
+        "description": null,
+        "generatedName": "UnionJob",
+        "groupName": null,
+        "nameOverride": null,
+        "schemas": [
+          {
+            "description": null,
+            "generatedName": "ComponentsSchemasUnionJobJobEmbeddingGeneration",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "UnionJob_Job<EmbeddingGeneration>",
+            "type": "reference",
+          },
+          {
+            "description": null,
+            "generatedName": "ComponentsSchemasUnionJobJobInference",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "UnionJob_Job<Inference>",
+            "type": "reference",
+          },
+          {
+            "description": null,
+            "generatedName": "ComponentsSchemasUnionJobJobTlInference",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "UnionJob_Job<TlInference>",
+            "type": "reference",
+          },
+          {
+            "description": null,
+            "generatedName": "ComponentsSchemasUnionJobJobTraining",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "UnionJob_Job<Training>",
+            "type": "reference",
+          },
+        ],
+        "type": "undisciminated",
+      },
+    },
+  },
+  "securitySchemes": {},
+  "servers": [],
+  "tags": {
+    "orderedTagIds": null,
+    "tagsById": {},
+  },
+  "title": "Hume AI Batch API",
+  "variables": {},
+  "webhooks": [],
+}
+`;

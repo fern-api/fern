@@ -1,8 +1,13 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { SchemaId } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { SchemaParserContext } from "../../schema/SchemaParserContext";
-import { AbstractOpenAPIV3ParserContext, DiscriminatedUnionReference } from "./AbstractOpenAPIV3ParserContext";
+import {
+    AbstractOpenAPIV3ParserContext,
+    DiscriminatedUnionMetadata,
+    DiscriminatedUnionReference
+} from "./AbstractOpenAPIV3ParserContext";
 import { DummyOpenAPIV3ParserContext } from "./DummyOpenAPIV3ParserContext";
 
 export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
@@ -12,6 +17,8 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
     private singleRequestReferencedSchemas: Set<SchemaId> = new Set();
 
     private discrminatedUnionReferences: Record<string, DiscriminatedUnionReference> = {};
+
+    private discrminatedUnionMetadata: Record<string, DiscriminatedUnionMetadata> = {};
 
     private schemasToExclude: Set<SchemaId> = new Set();
 
@@ -28,7 +35,7 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
         authHeaders: Set<string>;
         shouldUseTitleAsName: boolean;
         shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
-        sdkLanguage: "python" | undefined;
+        sdkLanguage: generatorsYml.GenerationLanguage | undefined;
     }) {
         super({
             document,
@@ -81,6 +88,25 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
         schema: OpenAPIV3.ReferenceObject
     ): DiscriminatedUnionReference | undefined {
         return this.discrminatedUnionReferences[schema.$ref];
+    }
+
+    public storeDiscriminatedUnionMetadata(
+        schema: OpenAPIV3.ReferenceObject,
+        discrminant: string,
+        discriminantValue: string
+    ): void {
+        const existingMetadata = this.discrminatedUnionMetadata[schema.$ref];
+        if (existingMetadata != null) {
+            existingMetadata.discriminants.set(discrminant, discriminantValue);
+        } else {
+            this.discrminatedUnionMetadata[schema.$ref] = {
+                discriminants: new Map([[discrminant, discriminantValue]])
+            };
+        }
+    }
+
+    public getDiscriminatedUnionMetadata(schema: OpenAPIV3.ReferenceObject): DiscriminatedUnionMetadata | undefined {
+        return this.discrminatedUnionMetadata[schema.$ref];
     }
 
     public excludeSchema(schemaId: SchemaId): void {

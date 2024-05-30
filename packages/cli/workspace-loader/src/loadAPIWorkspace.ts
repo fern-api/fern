@@ -82,7 +82,10 @@ export async function loadAPIWorkspace({
                 absoluteFilepathToOverrides,
                 settings: {
                     audiences: definition.audiences ?? [],
-                    shouldUseTitleAsName: definition.shouldUseTitleAsName ?? true
+                    shouldUseTitleAsName: definition.settings?.shouldUseTitleAsName ?? true,
+                    shouldUseUndiscriminatedUnionsForDiscriminated:
+                        definition.settings?.shouldUseUndiscriminatedUnionsForDiscriminated ?? false,
+                    sdkLanguage: undefined
                 }
             });
         }

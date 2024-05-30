@@ -1,3 +1,4 @@
+import { generatorsYml } from "@fern-api/configuration";
 import {
     HeaderWithExample,
     PathParameterWithExample,
@@ -36,7 +37,7 @@ export function parseAsyncAPI({
 }: {
     document: AsyncAPIV2.Document;
     taskContext: TaskContext;
-    sdkLanguage: "python" | undefined;
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
     shouldUseTitleAsName: boolean;
     shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
 }): AsyncAPIIntermediateRepresentation {
