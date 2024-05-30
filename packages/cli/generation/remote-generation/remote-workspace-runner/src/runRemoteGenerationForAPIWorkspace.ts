@@ -1,5 +1,5 @@
 import { FernToken } from "@fern-api/auth";
-import { generatorsYml } from "@fern-api/configuration";
+import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
@@ -12,6 +12,7 @@ export interface RemoteGenerationForAPIWorkspaceResponse {
 }
 
 export async function runRemoteGenerationForAPIWorkspace({
+    projectConfig,
     organization,
     workspace,
     context,
@@ -22,6 +23,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     whitelabel,
     absolutePathToPreview
 }: {
+    projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
     workspace: FernWorkspace;
     context: TaskContext;
@@ -44,6 +46,7 @@ export async function runRemoteGenerationForAPIWorkspace({
         ...generatorGroup.generators.map((generatorInvocation) =>
             context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
                 const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({
+                    projectConfig,
                     organization,
                     workspace,
                     interactiveTaskContext,
