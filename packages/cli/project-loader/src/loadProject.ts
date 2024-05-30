@@ -1,4 +1,10 @@
-import { APIS_DIRECTORY, fernConfigJson, FERN_DIRECTORY, getFernDirectory } from "@fern-api/configuration";
+import {
+    APIS_DIRECTORY,
+    fernConfigJson,
+    FERN_DIRECTORY,
+    generatorsYml,
+    getFernDirectory
+} from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { APIWorkspace, loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader";
@@ -19,6 +25,7 @@ export declare namespace loadProject {
         defaultToAllApiWorkspaces: boolean;
         context: TaskContext;
         nameOverride?: string;
+        sdkLanguage?: generatorsYml.GenerationLanguage;
     }
 }
 
@@ -28,7 +35,8 @@ export async function loadProject({
     commandLineApiWorkspace,
     defaultToAllApiWorkspaces,
     context,
-    nameOverride
+    nameOverride,
+    sdkLanguage
 }: loadProject.Args): Promise<Project> {
     const fernDirectory = await getFernDirectory(nameOverride);
     if (fernDirectory == null) {
@@ -41,7 +49,8 @@ export async function loadProject({
         cliVersion,
         context,
         commandLineApiWorkspace,
-        defaultToAllApiWorkspaces
+        defaultToAllApiWorkspaces,
+        sdkLanguage
     });
 
     return {
@@ -57,7 +66,8 @@ export async function loadApis({
     context,
     cliVersion,
     commandLineApiWorkspace,
-    defaultToAllApiWorkspaces
+    defaultToAllApiWorkspaces,
+    sdkLanguage
 }: {
     cliName: string;
     fernDirectory: AbsoluteFilePath;
@@ -65,6 +75,7 @@ export async function loadApis({
     cliVersion: string;
     commandLineApiWorkspace: string | undefined;
     defaultToAllApiWorkspaces: boolean;
+    sdkLanguage?: generatorsYml.GenerationLanguage;
 }): Promise<APIWorkspace[]> {
     const apisDirectory = join(fernDirectory, RelativeFilePath.of(APIS_DIRECTORY));
     const apisDirectoryExists = await doesPathExist(apisDirectory);
@@ -115,7 +126,8 @@ export async function loadApis({
                     absolutePathToWorkspace: join(apisDirectory, RelativeFilePath.of(workspaceDirectoryName)),
                     context,
                     cliVersion,
-                    workspaceName: workspaceDirectoryName
+                    workspaceName: workspaceDirectoryName,
+                    sdkLanguage
                 });
                 if (workspace.didSucceed) {
                     apiWorkspaces.push(workspace.workspace);
@@ -133,7 +145,8 @@ export async function loadApis({
         absolutePathToWorkspace: fernDirectory,
         context,
         cliVersion,
-        workspaceName: undefined
+        workspaceName: undefined,
+        sdkLanguage
     });
     if (workspace.didSucceed) {
         return [workspace.workspace];

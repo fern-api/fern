@@ -30,11 +30,22 @@ export async function generateIrForWorkspaces({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                cliContext.logger.info(`Generating IR for workspace ${workspace.name}`);
                 let fernWorkspace: FernWorkspace;
                 if (workspace.type == "fern") {
+                    cliContext.logger.info(`Found a fern workspace`);
                     fernWorkspace = workspace;
                 } else {
-                    workspace.specs = workspace.specs.map((spec) => ({ ...spec, sdkLanguage: generationLanguage }));
+                    workspace.specs = workspace.specs.map((spec) => ({
+                        ...spec,
+                        settings: {
+                            audiences: spec.settings?.audiences ?? [],
+                            shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true,
+                            shouldUseUndiscriminatedUnionsForDiscriminated:
+                                spec.settings?.shouldUseUndiscriminatedUnionsForDiscriminated ?? false,
+                            sdkLanguage: generationLanguage
+                        }
+                    }));
                     fernWorkspace = await convertOpenApiWorkspaceToFernWorkspace(workspace, context);
                 }
 

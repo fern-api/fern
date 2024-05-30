@@ -449,7 +449,8 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             await generateIrForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
-                    defaultToAllApiWorkspaces: false
+                    defaultToAllApiWorkspaces: false,
+                    sdkLanguage: argv.language
                 }),
                 irFilepath: resolve(cwd(), argv.pathToOutput),
                 cliContext,
@@ -473,6 +474,10 @@ function addOpenAPIIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                     description: "Path to write intermediate representation (IR)",
                     demandOption: true
                 })
+                .option("language", {
+                    choices: Object.values(generatorsYml.GenerationLanguage),
+                    description: "Generate IR for a particular language"
+                })
                 .option("api", {
                     string: true,
                     description: "Only run the command on the provided API"
@@ -481,10 +486,12 @@ function addOpenAPIIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
             await generateOpenAPIIrForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
-                    defaultToAllApiWorkspaces: false
+                    defaultToAllApiWorkspaces: false,
+                    sdkLanguage: argv.language
                 }),
                 irFilepath: resolve(cwd(), argv.pathToOutput),
-                cliContext
+                cliContext,
+                generationLanguage: argv.language
             });
         }
     );
@@ -916,14 +923,16 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
 async function loadProjectAndRegisterWorkspacesWithContext(
     cliContext: CliContext,
     args: Omit<loadProject.Args, "context" | "cliName" | "cliVersion">,
-    registerDocsWorkspace = false
+    registerDocsWorkspace = false,
+    sdkLanguage?: generatorsYml.GenerationLanguage
 ): Promise<Project> {
     const context = cliContext.addTask().start();
     const project = await loadProject({
         ...args,
         cliName: cliContext.environment.cliName,
         cliVersion: cliContext.environment.packageVersion,
-        context
+        context,
+        sdkLanguage
     });
     context.finish();
 

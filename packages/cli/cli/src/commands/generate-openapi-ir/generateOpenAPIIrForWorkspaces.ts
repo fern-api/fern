@@ -1,3 +1,4 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { serialization } from "@fern-api/openapi-ir-sdk";
 import { parse } from "@fern-api/openapi-parser";
@@ -9,11 +10,13 @@ import { CliContext } from "../../cli-context/CliContext";
 export async function generateOpenAPIIrForWorkspaces({
     project,
     irFilepath,
-    cliContext
+    cliContext,
+    generationLanguage
 }: {
     project: Project;
     irFilepath: AbsoluteFilePath;
     cliContext: CliContext;
+    generationLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
@@ -23,6 +26,16 @@ export async function generateOpenAPIIrForWorkspaces({
                     return;
                 }
 
+                workspace.specs = workspace.specs.map((spec) => ({
+                    ...spec,
+                    settings: {
+                        audiences: spec.settings?.audiences ?? [],
+                        shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true,
+                        shouldUseUndiscriminatedUnionsForDiscriminated:
+                            spec.settings?.shouldUseUndiscriminatedUnionsForDiscriminated ?? false,
+                        sdkLanguage: generationLanguage
+                    }
+                }));
                 const openAPIIr = await parse({
                     workspace,
                     taskContext: context
