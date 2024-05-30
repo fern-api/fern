@@ -90,7 +90,6 @@ function addTestCommand(cli: Argv) {
                 }
                 let testRunner;
                 const scriptRunner = new ScriptRunner(generator);
-
                 if (argv.local && generator.workspaceConfig.local != null) {
                     testRunner = new LocalTestRunner({
                         generator,
