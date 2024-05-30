@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.5] - 2024-05-30
+
+- Fix: Types without fields are now generated with builders. Previously, they were not, which made them impossible to
+  initialize.
+
 ## [0.9.4] - 2024-05-28
 
 - Fix: The SDK now generates undiscriminated unions with de-conflicted method signatures. Previously, certain
