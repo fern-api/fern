@@ -16,17 +16,22 @@ export const FIXTURES = readDirectories(path.join(__dirname, FERN_DIRECTORY, API
 export async function testGenerator({
     runner,
     generator,
-    fixtures
+    fixtures,
+    outputFolder
 }: {
     runner: TestRunner;
     generator: GeneratorWorkspace;
     fixtures: string[];
+    outputFolder?: string;
 }): Promise<boolean> {
     const testCases: Promise<TestRunner.TestResult>[] = [];
     for (const fixture of fixtures) {
         const config = generator.workspaceConfig.fixtures?.[fixture];
         if (config != null) {
             for (const instance of config) {
+                if (outputFolder != null && instance.outputFolder !== outputFolder) {
+                    continue;
+                }
                 testCases.push(
                     runner.run({
                         fixture,

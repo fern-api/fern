@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import typing
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import List, Optional, Set, cast
@@ -40,6 +41,7 @@ class PyProjectToml:
         pypi_metadata: Optional[PypiMetadata],
         github_output_mode: Optional[GithubOutputMode],
         license_: Optional[LicenseConfig],
+        extras: typing.Dict[str, List[str]] = {},
     ):
         self._poetry_block = PyProjectToml.PoetryBlock(
             name=name,
@@ -52,6 +54,7 @@ class PyProjectToml:
         self._dependency_manager = dependency_manager
         self._path = path
         self._python_version = python_version
+        self._extras = extras
 
     def write(self) -> None:
         blocks: List[PyProjectToml.Block] = [
@@ -67,6 +70,15 @@ class PyProjectToml:
         content = ""
         for block in blocks:
             content += block.to_string()
+
+        if len(self._extras) > 0:
+            content += f"""
+[tool.poetry.extras]
+"""
+            for key, vals in self._extras.items():
+                stringified_vals = ", ".join([f'"{val}"' for val in vals])
+                content += f"{key}=[{stringified_vals}]\n"
+
         with open(os.path.join(self._path, "pyproject.toml"), "w") as f:
             f.write(content)
 
@@ -177,14 +189,16 @@ packages = [
             deps = ""
             for dep in sorted(dependencies, key=lambda dep: dep.name):
                 compatiblity = dep.compatibility
-                # TODO(dsinghvi): assert all enum cases are visited
-                print(dep.compatibility)
-                if compatiblity == DependencyCompatibility.EXACT:
-                    print(f"{dep.name} is exact")
-                    deps += f'{dep.name.replace(".", "-")} = "{dep.version}"\n'
-                elif compatiblity == DependencyCompatibility.GREATER_THAN_OR_EQUAL:
-                    print(f"{dep.name} is greater than or equal")
-                    deps += f'{dep.name.replace(".", "-")} = ">={dep.version}"\n'
+                is_optional = dep.optional
+                version = dep.version
+                name = dep.name.replace(".", "-")
+                if compatiblity == DependencyCompatibility.GREATER_THAN_OR_EQUAL:
+                    version = f">={dep.version}"
+
+                if is_optional:
+                    deps += f'{name} = {{ version="{version}", optional = true}}\n'
+                else:
+                    deps += f'{name} = "{version}"\n'
             return deps
 
         def to_string(self) -> str:

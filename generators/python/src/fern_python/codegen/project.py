@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import typing
 from dataclasses import dataclass
 from pathlib import Path
 from types import TracebackType
@@ -67,6 +68,7 @@ class Project:
         self._github_output_mode = github_output_mode
         self._pypi_metadata = pypi_metadata
         self.license_ = license_
+        self._extras: typing.Dict[str, List[str]] = {}
 
     def add_init_exports(self, path: AST.ModulePath, exports: List[ModuleExport]) -> None:
         self._module_manager.register_additional_exports(path, exports)
@@ -76,6 +78,9 @@ class Project:
 
     def add_dev_dependency(self, dependency: AST.Dependency) -> None:
         self._dependency_manager.add_dev_dependency(dependency)
+
+    def add_extra(self, extra: typing.Dict[str, List[str]]) -> None:
+        self._extras = extra
 
     def set_generate_readme(self, generate_readme: bool) -> None:
         self._generate_readme = generate_readme
@@ -167,6 +172,7 @@ class Project:
                 github_output_mode=self._github_output_mode,
                 pypi_metadata=self._pypi_metadata,
                 license_=self.license_,
+                extras=self._extras,
             )
             py_project_toml.write()
 
