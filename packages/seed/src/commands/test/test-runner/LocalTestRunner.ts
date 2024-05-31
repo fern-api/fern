@@ -1,14 +1,15 @@
 import { SNIPPET_JSON_FILENAME, SNIPPET_TEMPLATES_JSON_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { getGeneratorConfig, getIntermediateRepresentation } from "@fern-api/local-workspace-runner";
 import { LocalTaskHandler } from "@fern-api/local-workspace-runner/src/LocalTaskHandler";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { readFile, writeFile } from "fs/promises";
+import { writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 import { LocalBuildInfo } from "../../../config/api";
 import { runScript } from "../../../runScript";
-import { INPUTS_DIRECTORY_NAME } from "../../../utils/constants";
+import { DUMMY_ORGANIZATION } from "../../../utils/constants";
+import { getGeneratorInvocation } from "../../../utils/getGeneratorInvocation";
 import { TestRunner } from "./TestRunner";
 
 export class LocalTestRunner extends TestRunner {
@@ -28,22 +29,82 @@ export class LocalTestRunner extends TestRunner {
         }
     }
 
-    async runGenerator({ outputDir, taskContext }: TestRunner.DoRunArgs): Promise<void> {
-        const localConfig = await this.getLocalConfigOrthrow();
-        const localOutputDirectory = await tmp.dir();
-        const localGeneratorConfigFile = await tmp.file();
-        const generatorConfig = await this.getLocalGeneratorConfig({
-            outputDir,
-            localOutputDir: AbsoluteFilePath.of(localOutputDirectory.path)
-        });
-        await writeFile(localGeneratorConfigFile.path, JSON.stringify(generatorConfig, undefined, 2));
-        taskContext.logger.info(`Wrote generator config to ${localGeneratorConfigFile.path}`);
+    async runGenerator({
+        outputDir,
+        taskContext,
+        fernWorkspace,
+        fixture,
+        language,
+        customConfig,
+        publishConfig,
+        outputMode,
+        irVersion,
+        publishMetadata
+    }: TestRunner.DoRunArgs): Promise<void> {
+        const generatorConfigFile = await tmp.file();
+        const absolutePathToGeneratorConfig = AbsoluteFilePath.of(generatorConfigFile.path);
 
+        const irFile = await tmp.file();
+        const absolutePathToIntermediateRepresentation = AbsoluteFilePath.of(irFile.path);
+
+        const localOutputDirectory = await tmp.dir();
+        const absolutePathToLocalOutputDirectory = AbsoluteFilePath.of(localOutputDirectory.path);
+
+        const generatorInvocation = getGeneratorInvocation({
+            absolutePathToOutput: absolutePathToIntermediateRepresentation,
+            docker: this.getParsedDockerName(),
+            language,
+            customConfig,
+            publishConfig,
+            outputMode,
+            fixtureName: fixture,
+            irVersion,
+            publishMetadata
+        });
+        const ir = await getIntermediateRepresentation({
+            workspace: fernWorkspace,
+            audiences: {
+                type: "all"
+            },
+            context: taskContext,
+            irVersionOverride: irVersion,
+            generatorInvocation
+        });
+        let generatorConfig = getGeneratorConfig({
+            generatorInvocation,
+            customConfig,
+            workspaceName: this.generator.workspaceName,
+            outputVersion: undefined,
+            organization: DUMMY_ORGANIZATION,
+            absolutePathToSnippetTemplates: undefined,
+            writeUnitTests: true,
+            generateOauthClients: true,
+            generatePaginatedClients: true,
+            absolutePathToSnippet: AbsoluteFilePath.of(
+                join(absolutePathToLocalOutputDirectory, RelativeFilePath.of(SNIPPET_JSON_FILENAME))
+            )
+        }).config;
+        generatorConfig = {
+            ...generatorConfig,
+            output: {
+                ...generatorConfig.output,
+                path: absolutePathToLocalOutputDirectory,
+                snippetFilepath: join(absolutePathToLocalOutputDirectory, RelativeFilePath.of(SNIPPET_JSON_FILENAME))
+            }
+        };
+
+        await writeFile(absolutePathToIntermediateRepresentation, JSON.stringify(ir, undefined, 4));
+        taskContext.logger.info(`Wrote IR to ${absolutePathToIntermediateRepresentation}`);
+
+        await writeFile(absolutePathToGeneratorConfig, JSON.stringify(generatorConfig, undefined, 2));
+        taskContext.logger.info(`Wrote generator config to ${absolutePathToGeneratorConfig}`);
+
+        const localConfig = await this.getLocalConfigOrthrow();
         const workingDir = AbsoluteFilePath.of(
             path.join(__dirname, RelativeFilePath.of("../../.."), RelativeFilePath.of(localConfig.workingDirectory))
         );
         const result = await runScript({
-            commands: [`${localConfig.runCommand} ${localGeneratorConfigFile.path}`],
+            commands: [`${localConfig.runCommand} ${absolutePathToGeneratorConfig}`],
             doNotPipeOutput: false,
             logger: taskContext.logger,
             workingDir: workingDir,
@@ -73,38 +134,6 @@ export class LocalTestRunner extends TestRunner {
             await localTaskHandler.copyGeneratedFiles();
             taskContext.logger.info(`Wrote generated files to ${outputDir}`);
         }
-    }
-
-    /**
-     * A local generator config is written with modified paths to
-     * the IR and output directories to match the user's machine.
-     *
-     * For example, instead of the ir living at `/fern/input/ir.json` it may live at
-     * `/Users/<username>/fern/seed/csharp/imdb/.inputs/ir.json`.
-     */
-    private async getLocalGeneratorConfig({
-        outputDir,
-        localOutputDir
-    }: {
-        outputDir: AbsoluteFilePath;
-        localOutputDir: AbsoluteFilePath;
-    }): Promise<FernGeneratorExec.GeneratorConfig> {
-        const absoluteFilepathToGeneratorConfig = join(
-            outputDir,
-            RelativeFilePath.of(INPUTS_DIRECTORY_NAME),
-            RelativeFilePath.of("config.json")
-        );
-        const rawContents = await readFile(absoluteFilepathToGeneratorConfig, "utf8");
-        const generatorConfig = JSON.parse(rawContents) as FernGeneratorExec.GeneratorConfig;
-        return {
-            ...generatorConfig,
-            irFilepath: join(outputDir, RelativeFilePath.of(INPUTS_DIRECTORY_NAME), RelativeFilePath.of("ir.json")),
-            output: {
-                ...generatorConfig.output,
-                path: localOutputDir,
-                snippetFilepath: join(localOutputDir, RelativeFilePath.of(SNIPPET_JSON_FILENAME))
-            }
-        };
     }
 
     private async getLocalConfigOrthrow(): Promise<LocalBuildInfo> {

@@ -136,49 +136,6 @@ function addTestCommand(cli: Argv) {
     );
 }
 
-function addWriteInputsCommand(cli: Argv) {
-    cli.command(
-        "write-inputs",
-        "Rewrites the .inputs directory for each workspace",
-        (yargs) =>
-            yargs
-                .option("generator", {
-                    type: "array",
-                    string: true,
-                    demandOption: false,
-                    description: "Generator to write inputs for"
-                })
-                .option("fixture", {
-                    type: "array",
-                    string: true,
-                    default: FIXTURES,
-                    choices: FIXTURES,
-                    demandOption: false,
-                    description: "Runs on all fixtures if not provided"
-                })
-                .option("log-level", {
-                    default: LogLevel.Info,
-                    choices: LOG_LEVELS
-                }),
-        async (argv) => {
-            const generators = await loadGeneratorWorkspaces();
-            const promises: Promise<void>[] = [];
-            for (const generator of generators) {
-                if (argv.workspace != null && !argv.generator?.includes(generator.workspaceName)) {
-                    continue;
-                }
-                const promise = rewriteInputsForWorkspace({
-                    generator,
-                    fixtures: argv.fixture,
-                    taskContextFactory: new TaskContextFactory(argv["log-level"])
-                });
-                promises.push(promise);
-            }
-            await Promise.all(promises);
-        }
-    );
-}
-
 function addRunCommand(cli: Argv) {
     cli.command(
         "run",
