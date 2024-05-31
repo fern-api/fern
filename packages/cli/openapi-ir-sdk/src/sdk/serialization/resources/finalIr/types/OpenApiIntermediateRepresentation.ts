@@ -43,6 +43,9 @@ export const OpenApiIntermediateRepresentation: core.serialization.ObjectSchema<
     globalHeaders: core.serialization
         .list(core.serialization.lazyObject(async () => (await import("../../..")).GlobalHeader))
         .optional(),
+    idempotencyHeaders: core.serialization
+        .list(core.serialization.lazyObject(async () => (await import("../../..")).IdempotencyHeader))
+        .optional(),
 });
 
 export declare namespace OpenApiIntermediateRepresentation {
@@ -62,5 +65,6 @@ export declare namespace OpenApiIntermediateRepresentation {
         nonRequestReferencedSchemas: serializers.SchemaId.Raw[];
         securitySchemes: Record<serializers.SecuritySchemeId.Raw, serializers.SecurityScheme.Raw>;
         globalHeaders?: serializers.GlobalHeader.Raw[] | null;
+        idempotencyHeaders?: serializers.IdempotencyHeader.Raw[] | null;
     }
 }

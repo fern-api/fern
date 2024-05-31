@@ -32,6 +32,7 @@ import { FernOpenAPIExtension } from "./extensions/fernExtensions";
 import { getFernBasePath } from "./extensions/getFernBasePath";
 import { getFernGroups } from "./extensions/getFernGroups";
 import { getGlobalHeaders } from "./extensions/getGlobalHeaders";
+import { getIdempotencyHeaders } from "./extensions/getIdempotencyHeaders";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
 import { hasIncompleteExample } from "./hasIncompleteExample";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
@@ -74,6 +75,7 @@ export function generateIr({
     const context = new OpenAPIV3ParserContext({ document: openApi, taskContext, authHeaders, shouldUseTitleAsName });
     const variables = getVariableDefinitions(openApi);
     const globalHeaders = getGlobalHeaders(openApi);
+    const idempotencyHeaders = getIdempotencyHeaders(openApi);
 
     const endpointsWithExample: EndpointWithExample[] = [];
     const webhooks: Webhook[] = [];
@@ -264,7 +266,8 @@ export function generateIr({
         hasEndpointsMarkedInternal: endpoints.some((endpoint) => endpoint.internal),
         nonRequestReferencedSchemas: context.getReferencedSchemas(),
         variables,
-        globalHeaders
+        globalHeaders,
+        idempotencyHeaders
     };
 
     return ir;

@@ -19,6 +19,7 @@ types:
     properties:
       authed: boolean
       internal: optional<boolean>
+      idempotent: optional<boolean>
       method: finalIr.HttpMethod
       availability: optional<finalIr.EndpointAvailability>
       audiences: list<string>

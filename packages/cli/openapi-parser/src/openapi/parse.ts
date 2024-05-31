@@ -59,6 +59,7 @@ export async function parse({
         nonRequestReferencedSchemas: new Set(),
         securitySchemes: {},
         globalHeaders: [],
+        idempotencyHeaders: [],
         groups: {}
     };
 
@@ -155,6 +156,8 @@ function merge(
             ...ir2.securitySchemes
         },
         globalHeaders: ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined,
+        idempotencyHeaders:
+            ir1.idempotencyHeaders != null ? [...ir1.idempotencyHeaders, ...(ir2.idempotencyHeaders ?? [])] : undefined,
         groups: {
             ...ir1.groups,
             ...ir2.groups
