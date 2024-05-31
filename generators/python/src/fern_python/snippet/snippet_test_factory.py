@@ -133,28 +133,24 @@ class SnippetTestFactory:
             and param.constructor_parameter_name != "_token_getter_override"
         ]
 
+        _kwargs = []
         param_names = [param.constructor_parameter_name for param in client.parameters]
         if "_token_getter_override" in param_names:
-            non_url_params.append(self._write_envvar_parameter("_token_getter_override", "ENV__TOKEN_GETTER_OVERRIDE"))
+            _kwargs.append(("_token_getter_override", AST.Expression('lambda: os.getenv("ENV_TOKEN", "token")'),))
 
         if self._generated_environment is None:
             non_url_params.append(self._write_envvar_parameter("base_url", self.TEST_URL_ENVVAR, "base_url"))
+        else:
+            _kwargs.append((
+                    "environment",
+                    AST.Expression(self._enviroment(self._generated_environment)),
+                ))
+
         return AST.ClassInstantiation(
             class_=client.class_reference,
             # TODO: how can we do this in a more connected + typesafe way
             args=non_url_params,
-            kwargs=[
-                (
-                    "environment",
-                    AST.Expression(self._enviroment(self._generated_environment)),
-                ),
-                (
-                    "_token_getter_override",
-                    AST.Expression('lamdbda: os.getenv("ENV_TOKEN", "token")'),
-                ),
-            ]
-            if self._generated_environment is not None
-            else None,
+            kwargs=_kwargs,
         )
 
     def _generate_client_fixture(self) -> None:
