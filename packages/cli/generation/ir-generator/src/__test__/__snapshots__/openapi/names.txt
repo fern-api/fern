@@ -1135,7 +1135,7 @@ exports[`generate IR from OpenAPI 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "4b8f7ea4-dc45-4eb8-844d-225c9affe232",
+              "id": "70c45408-a22c-404e-bcf4-4401d8e6b115",
               "name": null,
               "queryParameters": [
                 {
@@ -1164,11 +1164,20 @@ exports[`generate IR from OpenAPI 1`] = `
                   "value": {
                     "jsonExample": true,
                     "shape": {
-                      "primitive": {
-                        "boolean": true,
-                        "type": "boolean",
+                      "container": {
+                        "optional": {
+                          "jsonExample": true,
+                          "shape": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "optional",
                       },
-                      "type": "primitive",
+                      "type": "container",
                     },
                   },
                 },

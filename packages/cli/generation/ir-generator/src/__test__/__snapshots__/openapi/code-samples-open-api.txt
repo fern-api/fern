@@ -719,7 +719,7 @@ axios.request(options).then(function (response) {
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "a860b59e-adc7-412f-a8a9-eb4b59658b58",
+              "id": "46400c32-d00a-493d-bd16-d73055f6d261",
               "name": null,
               "queryParameters": [
                 {
@@ -748,11 +748,20 @@ axios.request(options).then(function (response) {
                   "value": {
                     "jsonExample": true,
                     "shape": {
-                      "primitive": {
-                        "boolean": true,
-                        "type": "boolean",
+                      "container": {
+                        "optional": {
+                          "jsonExample": true,
+                          "shape": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "optional",
                       },
-                      "type": "primitive",
+                      "type": "container",
                     },
                   },
                 },

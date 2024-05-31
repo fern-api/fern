@@ -4130,7 +4130,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/mock@workspace:packages/cli/mock"
   dependencies:
-    "@fern-api/core-utils": "workspace:*"
     "@fern-api/ir-sdk": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@types/express": ^4.17.20

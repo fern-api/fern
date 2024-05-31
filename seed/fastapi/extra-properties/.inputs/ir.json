@@ -613,7 +613,7 @@
                                                     }
                                                 }
                                             },
-                                            "jsonExample": "\"CreateUserRequest\""
+                                            "jsonExample": "CreateUserRequest"
                                         },
                                         "originalTypeDeclaration": null
                                     },
@@ -650,7 +650,7 @@
                                                     }
                                                 }
                                             },
-                                            "jsonExample": "\"v1\""
+                                            "jsonExample": "v1"
                                         },
                                         "originalTypeDeclaration": null
                                     },
@@ -693,8 +693,8 @@
                                     }
                                 ],
                                 "jsonExample": {
-                                    "_type": "\"CreateUserRequest\"",
-                                    "_version": "\"v1\"",
+                                    "_type": "CreateUserRequest",
+                                    "_version": "v1",
                                     "name": "string"
                                 }
                             },
