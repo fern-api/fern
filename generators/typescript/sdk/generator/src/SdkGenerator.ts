@@ -168,7 +168,6 @@ export class SdkGenerator {
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private jestTestGenerator: JestTestGenerator;
     private FdrClient: FdrSnippetTemplateClient | undefined;
-    private generatedOAuthClients = false;
 
     constructor({
         namespaceExport,
@@ -363,7 +362,8 @@ export class SdkGenerator {
 
         if (this.config.neverThrowErrors) {
             this.generateEndpointErrorUnion();
-        } else {
+        }
+        if (!this.config.neverThrowErrors || this.generateOAuthClients) {
             this.generateGenericAPISdkError();
             this.generateTimeoutSdkError();
             if (this.config.includeSerdeLayer) {
@@ -382,7 +382,6 @@ export class SdkGenerator {
             const oauthScheme = this.intermediateRepresentation.auth.schemes.find((scheme) => scheme.type === "oauth");
             if (oauthScheme != null && oauthScheme.type === "oauth") {
                 this.generateOAuthTokenProvider(oauthScheme);
-                this.generatedOAuthClients = true;
             }
         }
 
