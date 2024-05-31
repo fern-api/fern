@@ -159,7 +159,9 @@ class EndpointFunctionGenerator:
                 endpoint=self._endpoint,
                 named_parameters=self._named_parameters,
                 path_parameters=self._endpoint.all_path_parameters,
-                snippet=endpoint_snippets[0].snippet if endpoint_snippets is not None else None,
+                snippet=endpoint_snippets[0].snippet
+                if endpoint_snippets is not None and len(endpoint_snippets) > 0
+                else None,
             ),
             signature=AST.FunctionSignature(
                 parameters=unnamed_parameters,
