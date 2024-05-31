@@ -11,5 +11,5 @@ public class StoreTracedTestCaseRequest
     public TestCaseResultWithStdout Result { get; init; }
 
     [JsonPropertyName("traceResponses")]
-    public List<TraceResponse> TraceResponses { get; init; }
+    public IEnumerable<TraceResponse> TraceResponses { get; init; }
 }

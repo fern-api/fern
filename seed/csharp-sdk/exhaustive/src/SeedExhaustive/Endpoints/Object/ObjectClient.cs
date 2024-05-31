@@ -63,7 +63,7 @@ public class ObjectClient
         throw new Exception(responseBody);
     }
 
-    public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsListAsync(List<NestedObjectWithRequiredField> request) {
+    public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsListAsync(IEnumerable<NestedObjectWithRequiredField> request) {
         var response = await _client.MakeRequestAsync(new RawClient.ApiRequest{
                 Method = HttpMethod.Post, Path = "/get-and-return-nested-with-required-field-list", Body = request});
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
