@@ -13,8 +13,8 @@ class SnippetRegistry:
     def __init__(self) -> None:
         self._snippets: Dict[ir_types.TypeId, AST.Expression] = {}
         self._endpoint_snippets: Dict[ir_types.EndpointId, AST.Expression] = {}
-        self._sync_client_endpoint_snippets: Dict[ir_types.EndpointId, EndpointExpression] = {}
-        self._async_client_endpoint_snippets: Dict[ir_types.EndpointId, EndpointExpression] = {}
+        self._sync_client_endpoint_snippets: Dict[ir_types.EndpointId, List[EndpointExpression]] = {}
+        self._async_client_endpoint_snippets: Dict[ir_types.EndpointId, List[EndpointExpression]] = {}
 
     def snippets(self) -> Optional[generator_exec.Snippets]:
         if (
@@ -29,22 +29,24 @@ class SnippetRegistry:
             types[generator_exec.TypeId(typeId.get_as_str())] = self._expression_to_snippet_str(expr)
 
         endpoints: List[generator_exec.Endpoint] = []
-        for endpointId, sync_endpoint_expression in self._sync_client_endpoint_snippets.items():
-            endpoints.append(
-                generator_exec.Endpoint(
-                    id=sync_endpoint_expression.endpoint_id,
-                    snippet=generator_exec.EndpointSnippet.factory.python(
-                        value=generator_exec.PythonEndpointSnippet(
-                            sync_client=self._expression_to_snippet_str(sync_endpoint_expression.expr),
-                            async_client=self._expression_to_snippet_str(
-                                self._async_client_endpoint_snippets[endpointId].expr
+        for endpointId, sync_endpoint_expressions in self._sync_client_endpoint_snippets.items():
+            for idx, expression in enumerate(sync_endpoint_expressions):
+                endpoints.append(
+                    generator_exec.Endpoint(
+                        id=expression.endpoint_id,
+                        example_identifier=expression.example_id,
+                        snippet=generator_exec.EndpointSnippet.factory.python(
+                            value=generator_exec.PythonEndpointSnippet(
+                                sync_client=self._expression_to_snippet_str(expression.expr),
+                                async_client=self._expression_to_snippet_str(
+                                    self._async_client_endpoint_snippets[endpointId][idx].expr
+                                )
+                                if endpointId in self._async_client_endpoint_snippets
+                                else "",
                             )
-                            if endpointId in self._async_client_endpoint_snippets
-                            else "",
-                        )
-                    ),
+                        ),
+                    )
                 )
-            )
 
         return generator_exec.Snippets(
             types=types,
@@ -62,21 +64,33 @@ class SnippetRegistry:
         self,
         endpoint: ir_types.HttpEndpoint,
         expr: AST.Expression,
+        example_id: str,
     ) -> None:
-        self._async_client_endpoint_snippets[endpoint.id] = EndpointExpression(
-            endpoint_id=self._endpoint_to_identifier(endpoint),
-            expr=expr,
+        init = self._async_client_endpoint_snippets.get(endpoint.id) or []
+        init.append(
+            EndpointExpression(
+                endpoint_id=self._endpoint_to_identifier(endpoint),
+                expr=expr,
+                example_id=example_id,
+            )
         )
+        self._async_client_endpoint_snippets[endpoint.id] = init
 
     def register_sync_client_endpoint_snippet(
         self,
         endpoint: ir_types.HttpEndpoint,
         expr: AST.Expression,
+        example_id: str,
     ) -> None:
-        self._sync_client_endpoint_snippets[endpoint.id] = EndpointExpression(
-            endpoint_id=self._endpoint_to_identifier(endpoint),
-            expr=expr,
+        init = self._sync_client_endpoint_snippets.get(endpoint.id) or []
+        init.append(
+            EndpointExpression(
+                endpoint_id=self._endpoint_to_identifier(endpoint),
+                expr=expr,
+                example_id=example_id,
+            )
         )
+        self._sync_client_endpoint_snippets[endpoint.id] = init
 
     def _endpoint_to_identifier(
         self,

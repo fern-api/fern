@@ -1,3 +1,5 @@
+import json
+
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, Tuple, Union
 
@@ -40,10 +42,16 @@ HTTPX_PRIMITIVE_DATA_TYPES = set(
 
 
 @dataclass
+class GeneratedEndpointFunctionSnippet:
+    example_id: str
+    snippet: AST.Expression
+
+
+@dataclass
 class GeneratedEndpointFunction:
     function: AST.FunctionDeclaration
     is_default_body_parameter_used: bool
-    snippet: Optional[AST.Expression]
+    snippets: List[GeneratedEndpointFunctionSnippet]
 
 
 class EndpointFunctionGenerator:
@@ -137,7 +145,7 @@ class EndpointFunctionGenerator:
             else False
         )
 
-        endpoint_snippet = self._generate_endpoint_snippet(
+        endpoint_snippets = self._generate_endpoint_snippets(
             package=self._package,
             service=self._service,
             endpoint=self._endpoint,
@@ -153,7 +161,7 @@ class EndpointFunctionGenerator:
                 endpoint=self._endpoint,
                 named_parameters=self._named_parameters,
                 path_parameters=self._endpoint.all_path_parameters,
-                snippet=endpoint_snippet,
+                snippet=endpoint_snippets[0].snippet if endpoint_snippets is not None else None,
             ),
             signature=AST.FunctionSignature(
                 parameters=unnamed_parameters,
@@ -174,7 +182,7 @@ class EndpointFunctionGenerator:
         return GeneratedEndpointFunction(
             function=function_declaration,
             is_default_body_parameter_used=self.request_body_parameters is not None,
-            snippet=endpoint_snippet,
+            snippets=endpoint_snippets or [],
         )
 
     def _get_endpoint_return_type(self) -> AST.TypeHint:
@@ -495,7 +503,7 @@ class EndpointFunctionGenerator:
             request_parameter_names=self._request_parameter_name_rewrites,
         ).generate_snippet()
 
-    def _generate_endpoint_snippet(
+    def _generate_endpoint_snippets(
         self,
         package: ir_types.Package,
         service: ir_types.HttpService,
@@ -503,7 +511,7 @@ class EndpointFunctionGenerator:
         generated_root_client: GeneratedRootClient,
         snippet_writer: SnippetWriter,
         is_async: bool,
-    ) -> Optional[AST.Expression]:
+    ) -> Optional[List[GeneratedEndpointFunctionSnippet]]:
         if len(endpoint.examples) == 0:
             return None
 
@@ -512,49 +520,65 @@ class EndpointFunctionGenerator:
         user_provided_examples = list(
             filter(lambda ex: ex.get_as_union().example_type == "userProvided", endpoint.examples)
         )
-        example = endpoint.examples[0]
-        if len(user_provided_examples) > 0:
-            example = user_provided_examples[0]
+        snippets: List[GeneratedEndpointFunctionSnippet] = []
+        for example in user_provided_examples:
 
-        endpoint_snippet_generator = EndpointFunctionSnippetGenerator(
-            context=self._context,
-            snippet_writer=snippet_writer,
-            service=service,
-            endpoint=endpoint,
-            example=example,
-            path_parameter_names=self._path_parameter_names,
-            request_parameter_names=self._request_parameter_name_rewrites,
-        )
+            if len(user_provided_examples) > 0:
+                example = user_provided_examples[0]
 
-        endpoint_snippet = endpoint_snippet_generator.generate_snippet()
+            endpoint_snippet_generator = EndpointFunctionSnippetGenerator(
+                context=self._context,
+                snippet_writer=snippet_writer,
+                service=service,
+                endpoint=endpoint,
+                example=example,
+                path_parameter_names=self._path_parameter_names,
+                request_parameter_names=self._request_parameter_name_rewrites,
+            )
 
-        response_name = "response"
-        endpoint_usage = endpoint_snippet_generator.generate_usage(is_async=is_async, response_name=response_name)
+            endpoint_snippet = endpoint_snippet_generator.generate_snippet()
 
-        def write(writer: AST.NodeWriter) -> None:
-            if is_async:
-                writer.write_node(generated_root_client.async_instantiation)
-            else:
-                writer.write_node(generated_root_client.sync_instantiation)
-            writer.write_line()
+            response_name = "response"
+            endpoint_usage = endpoint_snippet_generator.generate_usage(is_async=is_async, response_name=response_name)
 
-            if endpoint_usage is not None:
-                writer.write(f"{response_name} = ")
-            if is_async:
-                writer.write("await ")
-
-            writer.write("client.")
-            writer.write(self._get_subpackage_client_accessor(package))
-
-            writer.write_node(endpoint_snippet)
-
-            if endpoint_usage is not None:
+            def write(writer: AST.NodeWriter) -> None:
+                if is_async:
+                    writer.write_node(generated_root_client.async_instantiation)
+                else:
+                    writer.write_node(generated_root_client.sync_instantiation)
                 writer.write_line()
-                writer.write_node(endpoint_usage)
 
-            writer.write_newline_if_last_line_not()
+                if endpoint_usage is not None:
+                    writer.write(f"{response_name} = ")
+                if is_async:
+                    writer.write("await ")
 
-        return AST.Expression(AST.CodeWriter(write))
+                writer.write("client.")
+                writer.write(self._get_subpackage_client_accessor(package))
+
+                writer.write_node(endpoint_snippet)
+
+                if endpoint_usage is not None:
+                    writer.write_line()
+                    writer.write_node(endpoint_usage)
+
+                writer.write_newline_if_last_line_not()
+
+            example_raw = example.get_as_union()
+            id = example_raw.name.original_name if example_raw.name is not None else "default"
+            print("id", id)
+            print("example_raw.name", example_raw.name)  # type: ignore
+            if example_raw.name is not None: 
+                print("example_raw.name.original_name", example_raw.name.original_name)
+            snippets.append(
+                GeneratedEndpointFunctionSnippet(
+                    # We default the example id to `default` if one isn't specified. Ideally it should always be specified
+                    example_id=example_raw.name.original_name if example_raw.name is not None else "default",
+                    snippet=AST.Expression(AST.CodeWriter(write)),
+                )
+            )
+
+        return snippets
 
     def _get_subpackage_client_accessor(
         self,
