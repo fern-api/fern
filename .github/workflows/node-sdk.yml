@@ -15,10 +15,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup node
-        uses: actions/setup-node@v3
-
-      - name: Download Fern
+      - name: Install the Fern CLI
         run: npm install -g fern-api
 
       - name: Release Node SDK
