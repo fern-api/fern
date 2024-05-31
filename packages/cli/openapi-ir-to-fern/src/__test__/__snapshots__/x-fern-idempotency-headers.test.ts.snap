@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`x-fern-idempotency-headers x-fern-idempotency-headers docs 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "send": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": "string",
+              },
+            },
+          ],
+          "idempotent": true,
+          "method": "POST",
+          "pagination": undefined,
+          "path": "/send",
+          "request": {
+            "body": {
+              "properties": {
+                "send": {
+                  "audiences": [
+                    "public",
+                  ],
+                  "docs": undefined,
+                  "type": "optional<boolean>",
+                },
+              },
+            },
+            "headers": undefined,
+            "name": "SendRequest",
+            "query-parameters": undefined,
+          },
+          "response": {
+            "docs": "Success!",
+            "type": "string",
+          },
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test extension \`x-fern-audiences\` alongside \`x-fern-streaming\`.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "idempotency-headers": {
+      "Idempotency-Key": {
+        "name": "idempotencyKey",
+        "type": "optional<string>",
+      },
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`x-fern-idempotency-headers x-fern-idempotency-headers simple 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "send": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": "string",
+              },
+            },
+          ],
+          "idempotent": true,
+          "method": "POST",
+          "pagination": undefined,
+          "path": "/send",
+          "request": {
+            "body": {
+              "properties": {
+                "send": {
+                  "audiences": [
+                    "public",
+                  ],
+                  "docs": undefined,
+                  "type": "optional<boolean>",
+                },
+              },
+            },
+            "headers": undefined,
+            "name": "SendRequest",
+            "query-parameters": undefined,
+          },
+          "response": {
+            "docs": "Success!",
+            "type": "string",
+          },
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test extension \`x-fern-audiences\` alongside \`x-fern-streaming\`.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "idempotency-headers": {
+      "Idempotency-Key": {
+        "name": "idempotencyKey",
+        "type": "optional<string>",
+      },
+    },
+    "name": "api",
+  },
+}
+`;

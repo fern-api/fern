@@ -37,6 +37,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
       ],
       "generatedRequestName": "GetExampleRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": null,
@@ -170,6 +171,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [
     "Schema1",
     "Schema2",

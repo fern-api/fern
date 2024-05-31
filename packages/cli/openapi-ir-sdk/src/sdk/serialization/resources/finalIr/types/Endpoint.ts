@@ -11,6 +11,7 @@ export const Endpoint: core.serialization.ObjectSchema<serializers.Endpoint.Raw,
         .objectWithoutOptionalProperties({
             authed: core.serialization.boolean(),
             internal: core.serialization.boolean().optional(),
+            idempotent: core.serialization.boolean().optional(),
             method: core.serialization.lazy(async () => (await import("../../..")).HttpMethod),
             availability: core.serialization
                 .lazy(async () => (await import("../../..")).EndpointAvailability)
@@ -52,6 +53,7 @@ export declare namespace Endpoint {
     interface Raw extends serializers.WithDescription.Raw {
         authed: boolean;
         internal?: boolean | null;
+        idempotent?: boolean | null;
         method: serializers.HttpMethod.Raw;
         availability?: serializers.EndpointAvailability.Raw | null;
         audiences: string[];

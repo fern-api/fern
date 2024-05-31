@@ -5,6 +5,7 @@ import { buildAuthSchemes } from "./buildAuthSchemes";
 import { buildChannel } from "./buildChannel";
 import { buildEnvironments } from "./buildEnvironments";
 import { buildGlobalHeaders } from "./buildGlobalHeaders";
+import { buildIdempotencyHeaders } from "./buildIdempotencyHeaders";
 import { buildServices } from "./buildServices";
 import { buildTypeDeclaration } from "./buildTypeDeclaration";
 import { buildVariables } from "./buildVariables";
@@ -22,6 +23,7 @@ export const ERROR_DECLARATIONS_FILENAME = RelativeFilePath.of(FERN_PACKAGE_MARK
 export function buildFernDefinition(context: OpenApiIrConverterContext): FernDefinition {
     buildEnvironments(context);
     buildGlobalHeaders(context);
+    buildIdempotencyHeaders(context);
     buildAuthSchemes(context);
     buildVariables(context);
     if (context.ir.basePath != null) {
