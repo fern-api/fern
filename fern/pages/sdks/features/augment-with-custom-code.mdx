@@ -90,9 +90,11 @@ list them out in `.fernignore`. Fern won't override any files that you add in `.
       package com.example.helper;
 
       public class Helper {
+
         public static void myHelper() {
           System.out.println("Hello World!");
         }
+
       }
       ```
 
@@ -114,9 +116,11 @@ list them out in `.fernignore`. Fern won't override any files that you add in `.
       import com.example.helper.Helper;
 
       public class Main {
+
         public static void main(String[] args) {
           Helper.myHelper();
         }
+
       }
       ```
     </Steps>
@@ -237,7 +241,7 @@ Fern generated client and add whatever methods you want.
 
       ### Update `.fernignore`
 
-      Add the client.py `.fernignore`.
+      Add the `client.py` to `.fernignore`.
 
       <CodeBlock title=".fernignore">
         ```yaml
@@ -270,11 +274,11 @@ Fern generated client and add whatever methods you want.
             client-class-name: BaseClient 
       ```
 
-      ### Create a new file `src/main/java/com/example/wrapper/MyClient.java`
-      You can extended the Fern client and add whatever methods you want.
+      ### Create a new file `src/main/java/com/example/MyClient.java`
+      You can extend the Fern client and add whatever methods you want.
 
       ```java
-      package com.example.wrapper;
+      package com.example;
 
       import com.example.client.BaseClient;
 
@@ -289,11 +293,11 @@ Fern generated client and add whatever methods you want.
 
       ### Update `.fernignore`
 
-      Add the `wrapper` directory to `.fernignore`.
+      Add the `MyClient.java` to `.fernignore`.
 
       <CodeBlock title=".fernignore">
         ```yaml
-        + src/main/java/com/example/wrapper
+        + src/main/java/com/example/MyClient.java
         ```
       </CodeBlock>
 
