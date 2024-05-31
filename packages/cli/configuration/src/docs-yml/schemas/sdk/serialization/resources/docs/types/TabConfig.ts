@@ -6,19 +6,12 @@ import * as serializers from "../../..";
 import * as FernDocsConfig from "../../../../api";
 import * as core from "../../../../core";
 
-export const TabConfig: core.serialization.ObjectSchema<serializers.TabConfig.Raw, FernDocsConfig.TabConfig> =
-    core.serialization.object({
-        displayName: core.serialization.property("display-name", core.serialization.string()),
-        icon: core.serialization.string().optional(),
-        slug: core.serialization.string().optional(),
-        href: core.serialization.string().optional(),
-    });
+export const TabConfig: core.serialization.Schema<serializers.TabConfig.Raw, FernDocsConfig.TabConfig> =
+    core.serialization.undiscriminatedUnion([
+        core.serialization.lazyObject(async () => (await import("../../..")).TabSectionConfig),
+        core.serialization.lazyObject(async () => (await import("../../..")).TabLinkConfig),
+    ]);
 
 export declare namespace TabConfig {
-    interface Raw {
-        "display-name": string;
-        icon?: string | null;
-        slug?: string | null;
-        href?: string | null;
-    }
+    type Raw = serializers.TabSectionConfig.Raw | serializers.TabLinkConfig.Raw;
 }

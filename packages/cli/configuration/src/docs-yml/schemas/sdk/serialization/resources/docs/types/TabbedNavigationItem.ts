@@ -6,19 +6,20 @@ import * as serializers from "../../..";
 import * as FernDocsConfig from "../../../../api";
 import * as core from "../../../../core";
 
-export const TabbedNavigationItem: core.serialization.ObjectSchema<
+export const TabbedNavigationItem: core.serialization.Schema<
     serializers.TabbedNavigationItem.Raw,
     FernDocsConfig.TabbedNavigationItem
-> = core.serialization.object({
-    tab: core.serialization.lazy(async () => (await import("../../..")).TabId),
-    layout: core.serialization
-        .list(core.serialization.lazy(async () => (await import("../../..")).NavigationItem))
-        .optional(),
-});
+> = core.serialization.undiscriminatedUnion([
+    core.serialization.lazyObject(async () => (await import("../../..")).TabbedLayoutNavigationItem),
+    core.serialization.lazyObject(async () => (await import("../../..")).TabbedLinkNavigationItemV1),
+    core.serialization.lazyObject(async () => (await import("../../..")).TabbedLinkNavigationItemV2),
+    core.serialization.lazyObject(async () => (await import("../../..")).TabbedChangelogNavigationItem),
+]);
 
 export declare namespace TabbedNavigationItem {
-    interface Raw {
-        tab: serializers.TabId.Raw;
-        layout?: serializers.NavigationItem.Raw[] | null;
-    }
+    type Raw =
+        | serializers.TabbedLayoutNavigationItem.Raw
+        | serializers.TabbedLinkNavigationItemV1.Raw
+        | serializers.TabbedLinkNavigationItemV2.Raw
+        | serializers.TabbedChangelogNavigationItem.Raw;
 }

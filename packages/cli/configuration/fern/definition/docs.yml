@@ -39,16 +39,24 @@ types:
   TabId: string
 
   TabConfig:
+    discriminated: false
+    union:
+      - TabSectionConfig
+      - TabLinkConfig
+
+  TabSectionConfig:
+    availability: deprecated
     properties:
       display-name: string
       icon: optional<string>
       slug: optional<string>
-      href:
-        type: optional<string>
-        docs: |
-          If `href` is set, clicking on the tab will redirect to the given URL.
 
-          Tabs with `href` must not have children in the navigation config.
+  TabLinkConfig:
+    availability: deprecated
+    properties:
+      display-name: string
+      href: string
+      icon: optional<string>
 
   DocsInstances:
     properties:
@@ -155,11 +163,48 @@ types:
     type: list<TabbedNavigationItem>
 
   TabbedNavigationItem:
+    discriminated: false
+    union:
+      - TabbedLayoutNavigationItem
+      - TabbedLinkNavigationItemV1
+      - TabbedLinkNavigationItemV2
+      - TabbedChangelogNavigationItem
+
+  TabbedLayoutNavigationItem:
     properties:
       tab: TabId
-      layout:
-        type: optional<list<NavigationItem>>
-        docs: If `href` is set, `layout` must be null.
+      layout: list<NavigationItem>
+      icon: optional<string>
+      hidden: optional<boolean>
+      skip-slug: optional<boolean>
+      slug: optional<string>
+
+  TabbedLinkNavigationItemV1:
+    availability: deprecated
+    properties:
+      tab: TabId
+
+  TabbedLinkNavigationItemV2:
+    extends: LinkConfiguration
+    properties:
+      icon: optional<string>
+
+  TabbedChangelogNavigationItem:
+    properties:
+      changelog: string
+      overview:
+        type: optional<string>
+        docs: |
+          The relative path to the markdown file that will be displayed at the top of the changelog page.
+      path:
+        type: optional<string>
+        default: ./changelog
+        docs: |
+          The relative path to the changelog directory. If not set, the default path is `./changelog`.
+      slug: optional<string>
+      icon: optional<string>
+      hidden: optional<boolean>
+      skip-slug: optional<boolean>
 
   NavigationItem:
     discriminated: false

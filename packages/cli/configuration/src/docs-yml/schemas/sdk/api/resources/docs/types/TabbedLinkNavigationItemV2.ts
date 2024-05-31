@@ -4,4 +4,6 @@
 
 import * as FernDocsConfig from "../../..";
 
-export type TabConfig = FernDocsConfig.TabSectionConfig | FernDocsConfig.TabLinkConfig;
+export interface TabbedLinkNavigationItemV2 extends FernDocsConfig.LinkConfiguration {
+    icon?: string;
+}

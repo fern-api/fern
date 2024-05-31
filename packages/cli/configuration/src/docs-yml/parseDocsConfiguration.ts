@@ -18,11 +18,12 @@ import {
     ParsedDocsConfiguration,
     ParsedMetadataConfig,
     TabbedDocsNavigation,
+    TabbedNavigation,
     TypographyConfig,
     UntabbedDocsNavigation,
     VersionInfo
 } from "./ParsedDocsConfiguration";
-import { FernDocsConfig as RawDocs, NavigationConfig, Serializer, VersionConfig } from "./schemas";
+import { FernDocsConfig as RawDocs, Serializer } from "./schemas";
 
 export async function parseDocsConfiguration({
     rawDocsConfiguration,
@@ -71,7 +72,8 @@ export async function parseDocsConfiguration({
         navigation: rawNavigation,
         absolutePathToFernFolder,
         absolutePathToConfig: absoluteFilepathToDocsConfig,
-        context
+        context,
+        tabs
     });
 
     const pagesPromise = convertedNavigationPromise.then((convertedNavigation) =>
@@ -115,7 +117,6 @@ export async function parseDocsConfiguration({
         pages,
 
         /* navigation */
-        tabs,
         navigation,
         navbarLinks: convertNavbarLinks(navbarLinks),
         footerLinks: convertFooterLinks(footerLinks),
@@ -294,20 +295,23 @@ async function getNavigationConfiguration({
     navigation,
     absolutePathToFernFolder,
     absolutePathToConfig,
-    context
+    context,
+    tabs
 }: {
-    versions?: VersionConfig[];
-    navigation?: NavigationConfig;
+    versions?: RawDocs.VersionConfig[];
+    navigation?: RawDocs.NavigationConfig;
     absolutePathToFernFolder: AbsoluteFilePath;
     absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
+    tabs: Record<string, RawDocs.TabConfig> | undefined;
 }): Promise<DocsNavigationConfiguration> {
     if (navigation != null) {
         return await convertNavigationConfiguration({
             rawNavigationConfig: navigation,
             absolutePathToFernFolder,
             absolutePathToConfig,
-            context
+            context,
+            tabs
         });
     } else if (versions != null) {
         const versionedNavbars: VersionInfo[] = [];
@@ -319,7 +323,8 @@ async function getNavigationConfiguration({
                 rawNavigationConfig: result.navigation,
                 absolutePathToFernFolder,
                 absolutePathToConfig: absoluteFilepathToVersionFile,
-                context
+                context,
+                tabs: result.tabs
             });
             versionedNavbars.push({
                 tabs: result.tabs,
@@ -442,34 +447,78 @@ async function convertNavigationConfiguration({
     rawNavigationConfig,
     absolutePathToFernFolder,
     absolutePathToConfig,
-    context
+    context,
+    tabs
 }: {
     rawNavigationConfig: RawDocs.NavigationConfig;
     absolutePathToFernFolder: AbsoluteFilePath;
     absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
+    tabs: Record<string, RawDocs.TabConfig> | undefined;
 }): Promise<UntabbedDocsNavigation | TabbedDocsNavigation> {
-    if (isTabbedNavigationConfig(rawNavigationConfig)) {
+    if (RawDocs.utils.isTabbedNavigationConfig(rawNavigationConfig)) {
         const tabbedNavigationItems = await Promise.all(
-            rawNavigationConfig.map(async (item) => {
-                if (item.layout == null) {
-                    return { tab: item.tab };
-                }
-                const layout = await Promise.all(
-                    item.layout.map((item) =>
-                        convertNavigationItem({
-                            rawConfig: item,
-                            absolutePathToFernFolder,
-                            absolutePathToConfig,
-                            context
-                        })
-                    )
-                );
-                return {
-                    tab: item.tab,
-                    layout
-                };
-            })
+            rawNavigationConfig.map((item) =>
+                RawDocs.utils.visitTabbedNavigationItem<Promise<TabbedNavigation>>(item, {
+                    layout: async (layout) => {
+                        const maybeTabConfig = tabs?.[layout.tab];
+                        const tabConfig =
+                            maybeTabConfig != null && RawDocs.utils.isTabSectionConfig(maybeTabConfig)
+                                ? maybeTabConfig
+                                : undefined;
+                        return {
+                            type: "tab",
+                            title: tabConfig?.displayName ?? layout.tab,
+                            slug: layout.slug ?? tabConfig?.slug,
+                            hidden: layout.hidden,
+                            icon: layout.icon ?? tabConfig?.icon,
+                            skipUrlSlug: layout.skipSlug,
+                            layout: await Promise.all(
+                                layout.layout.map((item) =>
+                                    convertNavigationItem({
+                                        rawConfig: item,
+                                        absolutePathToFernFolder,
+                                        absolutePathToConfig,
+                                        context
+                                    })
+                                )
+                            )
+                        };
+                    },
+                    linkV1: async (link) => {
+                        const maybeTabConfig = tabs?.[link.tab];
+                        const tabConfig =
+                            maybeTabConfig != null && RawDocs.utils.isTabLinkConfig(maybeTabConfig)
+                                ? maybeTabConfig
+                                : undefined;
+                        if (tabConfig == null) {
+                            throw new Error(`Tab config for ${link.tab} not found`);
+                        }
+                        return {
+                            type: "link",
+                            title: tabConfig.displayName,
+                            url: tabConfig.href,
+                            icon: tabConfig.icon
+                        };
+                    },
+                    linkV2: async (link) => ({
+                        type: "link",
+                        title: link.link,
+                        url: link.href,
+                        icon: link.icon
+                    }),
+                    changelog: async (changelog) => ({
+                        type: "changelog",
+                        title: changelog.changelog,
+                        directory: resolveFilepath(changelog.path ?? "./changelog", absolutePathToConfig),
+                        overviewPageId: resolveFilepath(changelog.overview, absolutePathToConfig),
+                        icon: changelog.icon,
+                        hidden: changelog.hidden,
+                        slug: changelog.slug,
+                        skipUrlSlug: changelog.skipSlug
+                    })
+                })
+            )
         );
         return {
             type: "tabbed",
@@ -632,17 +681,6 @@ export function resolveFilepath(
         return undefined;
     }
     return resolve(dirname(absoluteFilepathToDocsConfig), unresolvedFilepath);
-}
-
-function isTabbedNavigationConfig(
-    navigationConfig: RawDocs.NavigationConfig
-): navigationConfig is RawDocs.TabbedNavigationConfig {
-    return (
-        Array.isArray(navigationConfig) &&
-        navigationConfig.length > 0 &&
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        (navigationConfig[0] as RawDocs.TabbedNavigationItem).tab != null
-    );
 }
 
 function convertNavbarLinks(navbarLinks: RawDocs.NavbarLink[] | undefined): DocsV1Write.NavbarLink[] | undefined {

@@ -32,7 +32,7 @@ export class DocsDefinitionResolver {
         private docsWorkspace: DocsWorkspace,
         private fernWorkspaces: FernWorkspace[],
         private taskContext: TaskContext,
-        private editThisPage: docsYml.RawSchemas.EditThisPageConfig | undefined,
+        private editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined,
         private uploadFiles: (files: FilePathPair[]) => Promise<UploadedFile[]>,
         private registerApi: (opts: {
             ir: IntermediateRepresentation;
@@ -40,17 +40,17 @@ export class DocsDefinitionResolver {
         }) => Promise<string>
     ) {}
 
-    private _parsedDocsConfig: WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> | undefined;
+    #parsedDocsConfig: WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> | undefined;
     private get parsedDocsConfig(): WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> {
-        if (this._parsedDocsConfig == null) {
+        if (this.#parsedDocsConfig == null) {
             throw new Error("parsedDocsConfig is not set");
         }
-        return this._parsedDocsConfig;
+        return this.#parsedDocsConfig;
     }
-    private collectedFileIds = new Map<AbsoluteFilePath, string>();
-    private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
+    #collectedFileIds = new Map<AbsoluteFilePath, string>();
+    #markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
-        this._parsedDocsConfig = await docsYml.parseDocsConfiguration({
+        this.#parsedDocsConfig = await docsYml.parseDocsConfiguration({
             rawDocsConfiguration: this.docsWorkspace.config,
             context: this.taskContext,
             absolutePathToFernFolder: this.docsWorkspace.absoluteFilepath,
@@ -67,7 +67,7 @@ export class DocsDefinitionResolver {
 
         // create a map of markdown files to their URL pathnames
         // this will be used to resolve relative markdown links to their final URLs
-        this.markdownFilesToFullSlugs = this.getMarkdownFilesToFullSlugs(this.parsedDocsConfig.pages);
+        this.#markdownFilesToFullSlugs = this.getMarkdownFilesToFullSlugs(this.parsedDocsConfig.pages);
 
         // replaces all instances of <Markdown src="path/to/file.md" /> with the content of the referenced markdown file
         // this should happen before we parse image paths, as the referenced markdown files may contain images.
@@ -108,7 +108,7 @@ export class DocsDefinitionResolver {
         const uploadedFiles = await this.uploadFiles(filesToUpload);
 
         uploadedFiles.forEach((uploadedFile) => {
-            this.collectedFileIds.set(uploadedFile.absoluteFilePath, uploadedFile.fileId);
+            this.#collectedFileIds.set(uploadedFile.absoluteFilePath, uploadedFile.fileId);
         });
 
         // postprocess markdown files after uploading all images to replace the image paths in the markdown files with the fileIDs
@@ -116,10 +116,10 @@ export class DocsDefinitionResolver {
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = replaceImagePathsAndUrls(
                 markdown,
-                this.collectedFileIds,
+                this.#collectedFileIds,
                 // convert slugs to full URL pathnames
                 new Map(
-                    Array.from(this.markdownFilesToFullSlugs.entries()).map(([key, value]) => {
+                    Array.from(this.#markdownFilesToFullSlugs.entries()).map(([key, value]) => {
                         return [key, urlJoin(basePath, value)];
                     })
                 ),
@@ -230,7 +230,7 @@ export class DocsDefinitionResolver {
                 return { items };
             }
             case "tabbed": {
-                return this.convertTabbedNavigation(this.parsedDocsConfig.navigation.items, this.parsedDocsConfig.tabs);
+                return this.convertTabbedNavigation(this.parsedDocsConfig.navigation.items);
             }
             case "versioned": {
                 const versions = await Promise.all(
@@ -268,7 +268,7 @@ export class DocsDefinitionResolver {
                     icon: item.icon,
                     id: this.toRelativeFilepath(item.absolutePath),
                     urlSlugOverride: item.slug,
-                    fullSlug: this.markdownFilesToFullSlugs.get(item.absolutePath)?.split("/"),
+                    fullSlug: this.#markdownFilesToFullSlugs.get(item.absolutePath)?.split("/"),
                     hidden: item.hidden
                 };
             }
@@ -343,7 +343,7 @@ export class DocsDefinitionResolver {
                         item.summaryAbsolutePath,
                         item.navigation,
                         this.docsWorkspace.absoluteFilepathToDocsConfig,
-                        this.markdownFilesToFullSlugs
+                        this.#markdownFilesToFullSlugs
                     ),
                     flattened: item.flattened
                 };
@@ -377,9 +377,9 @@ export class DocsDefinitionResolver {
                 };
             }
             case "tabbed": {
-                const tabbedItem = await this.convertTabbedNavigation(navigationConfig.items, tabs);
+                const tabbedItem = await this.convertTabbedNavigation(navigationConfig.items);
                 return {
-                    tabs: tabbedItem.tabs
+                    tabsV2: tabbedItem.tabsV2
                 };
             }
             default:
@@ -388,49 +388,36 @@ export class DocsDefinitionResolver {
     }
 
     private async convertTabbedNavigation(
-        items: docsYml.TabbedNavigation[],
-        tabs: Record<string, docsYml.RawSchemas.TabConfig> | undefined
-    ): Promise<{ tabs: DocsV1Write.NavigationTab[] }> {
+        items: docsYml.TabbedNavigation[]
+    ): Promise<{ tabsV2: DocsV1Write.NavigationTabV2[] }> {
         const convertedTabs = await Promise.all(
-            items.map(async (tabbedItem) => {
-                const tabConfig = tabs?.[tabbedItem.tab];
-                if (tabConfig == null) {
-                    throw new Error(`Couldn't find config for tab id ${tabbedItem.tab}`);
-                }
-
-                if (tabConfig.href != null) {
-                    if (tabbedItem.layout != null) {
-                        throw new Error(
-                            `Tab ${tabConfig.displayName} contains an external link (href), and should not have any items`
-                        );
-                    }
-
-                    return {
-                        title: tabConfig.displayName,
-                        icon: tabConfig.icon,
-                        url: tabConfig.href
-                    };
-                }
-
-                if (tabbedItem.layout == null) {
-                    throw new Error(
-                        `Tab ${tabConfig.displayName} does not contain an external link (href), and should have items`
-                    );
-                }
-
-                const tabbedItems = await Promise.all(
-                    tabbedItem.layout.map((item) => this.convertNavigationItem(item))
-                );
-
-                return {
-                    title: tabConfig.displayName,
-                    icon: tabConfig.icon,
-                    items: tabbedItems,
-                    urlSlugOverride: tabConfig.slug
-                };
-            })
+            items.map(async (tabbedItem) =>
+                visitDiscriminatedUnion(tabbedItem, "type")._visit<Promise<DocsV1Write.NavigationTabV2>>({
+                    tab: async (tab) => ({
+                        type: "group",
+                        title: tab.title,
+                        items: await Promise.all(tab.layout.map((item) => this.convertNavigationItem(item))),
+                        icon: tab.icon,
+                        hidden: tab.hidden,
+                        urlSlugOverride: tab.slug
+                    }),
+                    link: async (tab) => ({
+                        type: "link",
+                        title: tab.title,
+                        icon: tab.icon,
+                        url: tab.url
+                    }),
+                    changelog: async () => ({
+                        type: "changelog",
+                        description: undefined,
+                        pageId: undefined,
+                        items: []
+                    }),
+                    _other: () => this.taskContext.failAndThrow("Invalid tabbed navigation configuration")
+                })
+            )
         );
-        return { tabs: convertedTabs };
+        return { tabsV2: convertedTabs };
     }
 
     private getFileId(filepath: AbsoluteFilePath): DocsV1Write.FileId;
@@ -439,7 +426,7 @@ export class DocsDefinitionResolver {
         if (filepath == null) {
             return undefined;
         }
-        const fileId = this.collectedFileIds.get(filepath);
+        const fileId = this.#collectedFileIds.get(filepath);
         if (fileId == null) {
             return this.taskContext.failAndThrow("Failed to locate file after uploading: " + filepath);
         }

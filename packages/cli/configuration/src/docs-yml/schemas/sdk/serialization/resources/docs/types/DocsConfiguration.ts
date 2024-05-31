@@ -17,7 +17,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     tabs: core.serialization
         .record(
             core.serialization.lazy(async () => (await import("../../..")).TabId),
-            core.serialization.lazyObject(async () => (await import("../../..")).TabConfig)
+            core.serialization.lazy(async () => (await import("../../..")).TabConfig)
         )
         .optional(),
     versions: core.serialization

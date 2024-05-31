@@ -2,17 +2,16 @@ import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { Audiences } from "../commons";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
-import { DocsInstances, TabConfig, VersionAvailability } from "./schemas";
+import { FernDocsConfig } from "./schemas";
 
 export interface ParsedDocsConfiguration {
-    instances: DocsInstances[];
+    instances: FernDocsConfig.DocsInstances[];
     title: string | undefined;
 
     /* filepath of page to contents */
     pages: Record<RelativeFilePath, string>;
 
     /* navigation */
-    tabs?: Record<RelativeFilePath, TabConfig>;
     navigation: DocsNavigationConfiguration;
     navbarLinks: DocsV1Write.NavbarLink[] | undefined;
     footerLinks: DocsV1Write.FooterLink[] | undefined;
@@ -131,10 +130,10 @@ export interface VersionedDocsNavigation {
 }
 
 export interface VersionInfo {
-    tabs?: Record<RelativeFilePath, TabConfig>;
+    tabs?: Record<RelativeFilePath, FernDocsConfig.TabConfig>;
     navigation: UntabbedDocsNavigation | TabbedDocsNavigation;
     version: string;
-    availability: VersionAvailability | undefined;
+    availability: FernDocsConfig.VersionAvailability | undefined;
     slug: string | undefined;
 }
 
@@ -142,9 +141,36 @@ export type DocsNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNav
 
 export type UnversionedNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNavigation;
 
-export interface TabbedNavigation {
-    tab: string;
-    layout?: DocsNavigationItem[];
+export type TabbedNavigation = TabbedNavigation.Tab | TabbedNavigation.Link | TabbedNavigation.Changelog;
+
+export declare namespace TabbedNavigation {
+    export interface Tab {
+        type: "tab";
+        title: string;
+        slug: string | undefined;
+        hidden: boolean | undefined;
+        icon: string | undefined;
+        skipUrlSlug: boolean | undefined;
+        layout: DocsNavigationItem[];
+    }
+
+    export interface Link {
+        type: "link";
+        title: string;
+        url: string;
+        icon: string | undefined;
+    }
+
+    export interface Changelog {
+        type: "changelog";
+        title: string | undefined;
+        directory: AbsoluteFilePath;
+        overviewPageId: AbsoluteFilePath | undefined;
+        icon: string | undefined;
+        hidden: boolean | undefined;
+        slug: string | undefined;
+        skipUrlSlug: boolean | undefined;
+    }
 }
 
 export type DocsNavigationItem =
