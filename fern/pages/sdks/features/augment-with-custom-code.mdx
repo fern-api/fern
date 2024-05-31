@@ -82,10 +82,49 @@ list them out in `.fernignore`. Fern won't override any files that you add in `.
       ```
     </Steps>
   </Tab>
+  <Tab title="Java">
+    <Steps>
+      ### Create a new file `src/main/java/<package>/Helper.java`
+
+      ```java
+      package com.example.helper;
+
+      public class Helper {
+        public static void myHelper() {
+          System.out.println("Hello World!");
+        }
+      }
+      ```
+
+      ### Add `src/main/java/<package>/Helper.java` to `.fernignore`
+
+      <CodeBlock title=".fernignore">
+        ```yaml
+        #  Specify files that shouldn't be modified by Fern
+
+        + src/main/java/<package>/Helper.java
+        ```
+      </CodeBlock>
+
+      ### Consume the helper
+
+      Now your users can consume the helper function by importing it from the SDK:
+
+      ```java
+      import com.example.helper.Helper;
+
+      public class Main {
+        public static void main(String[] args) {
+          Helper.myHelper();
+        }
+      }
+      ```
+    </Steps>
+  </Tab>
 </Tabs>
 
 <Note>
-  While the examples above only show TypeScript and Python, they can be extrapolated to 
+  While the examples above only show TypeScript, Python, and Java, they can be extrapolated to
   any language. 
 </Note>
 
@@ -219,6 +258,52 @@ Fern generated client and add whatever methods you want.
       See an example from ElevenLabs using this process in their [Python SDK](https://github.com/elevenlabs/elevenlabs-python/blob/main/src/elevenlabs/client.py). 
     </Note>
   </Tab>
+  <Tab title="Java">
+    <Steps>
+      ### Rename the Fern-generated client
+      We suggest naming your Fern-generated client something like `BaseClient`to reflect that this client will be extended.
+
+      ```yml {4}
+      - name: fernapi/fern-java-sdk
+          version: "..."
+          config:
+            client-class-name: BaseClient 
+      ```
+
+      ### Create a new file `src/main/java/com/example/wrapper/MyClient.java`
+      You can extended the Fern client and add whatever methods you want.
+
+      ```java
+      package com.example.wrapper;
+
+      import com.example.client.BaseClient;
+
+      public class MyClient extends BaseClient { // extend the Fern generated client
+
+        public void myHelper() {
+          System.out.println("Hello World!");
+        }
+
+      }
+      ```
+
+      ### Update `.fernignore`
+
+      Add the `wrapper` directory to `.fernignore`.
+
+      <CodeBlock title=".fernignore">
+        ```yaml
+        + src/main/java/com/example/wrapper
+        ```
+      </CodeBlock>
+
+      ### Consume the method
+
+      ```java
+      client.myHelper();
+      ```
+    </Steps>
+</Tab>
 </Tabs>
 
 ## Custom Dependencies
