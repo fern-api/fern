@@ -37,7 +37,7 @@ export class MockServer {
         this.port = port;
 
         // Map of endpoint path to map of HTTP method to endpoints that fall into both
-        const endpointGroups: Map<string, Map<string, HttpEndpoint[]>> = new Map();
+        const endpointGroups: Map<string, Map<string, HttpEndpoint[]>> = new Map<string, Map<string, HttpEndpoint[]>>();
 
         for (const service of Object.values(ir.services)) {
             for (const endpoint of service.endpoints) {
