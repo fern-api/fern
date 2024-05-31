@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.20.7] - 2024-05-31
+
+- Fix: Simplify the error handling introduced in `0.20.6` so that it more easily
+  handles endpoints that include structured errors.
+
 ## [0.20.6] - 2024-05-31
 
 - Fix: This updates the behavior of the failure condition introduced in `0.20.2`; the SDK
@@ -13,9 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.20.5] - 2024-05-30
 
-- Improvement: Support setting `extraPeerDependencies` and `extraPeerDependenciesMeta` as 
-  configuration arguments. For example: 
-  
+- Improvement: Support setting `extraPeerDependencies` and `extraPeerDependenciesMeta` as
+  configuration arguments. For example:
+
   ```yaml
   extraPeerDependencies:
     "openai": "^4.47.1"

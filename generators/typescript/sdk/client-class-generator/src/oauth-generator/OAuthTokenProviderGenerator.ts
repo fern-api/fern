@@ -292,30 +292,7 @@ export class OAuthTokenProviderGenerator {
         }
         const errorType = this.getGenericSdkErrorType({ context });
         return code`if (!tokenResponse.ok) {
-                switch (tokenResponse.error.content.reason) {
-                    case "non-json":
-                        throw new ${errorType}({
-                            statusCode: tokenResponse.error.content.statusCode,
-                            message: tokenResponse.error.content.rawBody
-                        });
-                    case "status-code":
-                        throw new ${errorType}({
-                            statusCode: tokenResponse.error.content.statusCode,
-                            body: tokenResponse.error.content.body
-                        });
-                    case "timeout":
-                        throw new ${errorType}({
-                            message: "Failed to retrieve access token; request timed out"
-                        });
-                    case "unknown":
-                        throw new ${errorType}({
-                            message: tokenResponse.error.content.errorMessage
-                        });
-                    default:
-                        throw new ${errorType}({
-                            message: "Failed to retrieve access token"
-                        });
-                }
+                throw new ${errorType}({ body: tokenResponse.error });
             }`;
     }
 
