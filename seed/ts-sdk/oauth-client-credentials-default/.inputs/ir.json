@@ -769,7 +769,7 @@
                                                     }
                                                 }
                                             },
-                                            "jsonExample": "\"client_credentials\""
+                                            "jsonExample": "client_credentials"
                                         },
                                         "originalTypeDeclaration": null
                                     }
@@ -777,7 +777,7 @@
                                 "jsonExample": {
                                     "client_id": "string",
                                     "client_secret": "string",
-                                    "grant_type": "\"client_credentials\""
+                                    "grant_type": "client_credentials"
                                 }
                             },
                             "name": null,
