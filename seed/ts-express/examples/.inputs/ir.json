@@ -19855,83 +19855,287 @@
                             "name": null,
                             "codeSamples": null,
                             "response": {
-                                "type": "error",
-                                "error": {
-                                    "name": {
-                                        "originalName": "NotFoundError",
-                                        "camelCase": {
-                                            "unsafeName": "notFoundError",
-                                            "safeName": "notFoundError"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "not_found_error",
-                                            "safeName": "not_found_error"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "NOT_FOUND_ERROR",
-                                            "safeName": "NOT_FOUND_ERROR"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "NotFoundError",
-                                            "safeName": "NotFoundError"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            {
-                                                "originalName": "types",
-                                                "camelCase": {
-                                                    "unsafeName": "types",
-                                                    "safeName": "types"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "types",
-                                                    "safeName": "types"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "TYPES",
-                                                    "safeName": "TYPES"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Types",
-                                                    "safeName": "Types"
-                                                }
-                                            }
-                                        ],
-                                        "packagePath": [],
-                                        "file": {
-                                            "originalName": "types",
-                                            "camelCase": {
-                                                "unsafeName": "types",
-                                                "safeName": "types"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "types",
-                                                "safeName": "types"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "TYPES",
-                                                "safeName": "TYPES"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Types",
-                                                "safeName": "Types"
-                                            }
-                                        }
-                                    },
-                                    "errorId": "error_types:NotFoundError"
-                                },
+                                "type": "ok",
                                 "body": {
                                     "shape": {
-                                        "type": "primitive",
-                                        "primitive": {
-                                            "type": "string",
-                                            "string": {
-                                                "original": "A file with that name was not found!"
-                                            }
+                                        "type": "named",
+                                        "typeName": {
+                                            "name": {
+                                                "originalName": "File",
+                                                "camelCase": {
+                                                    "unsafeName": "file",
+                                                    "safeName": "file"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "file",
+                                                    "safeName": "file"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "FILE",
+                                                    "safeName": "FILE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "File",
+                                                    "safeName": "File_"
+                                                }
+                                            },
+                                            "fernFilepath": {
+                                                "allParts": [
+                                                    {
+                                                        "originalName": "types",
+                                                        "camelCase": {
+                                                            "unsafeName": "types",
+                                                            "safeName": "types"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "types",
+                                                            "safeName": "types"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "TYPES",
+                                                            "safeName": "TYPES"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Types",
+                                                            "safeName": "Types"
+                                                        }
+                                                    }
+                                                ],
+                                                "packagePath": [],
+                                                "file": {
+                                                    "originalName": "types",
+                                                    "camelCase": {
+                                                        "unsafeName": "types",
+                                                        "safeName": "types"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "types",
+                                                        "safeName": "types"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "TYPES",
+                                                        "safeName": "TYPES"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Types",
+                                                        "safeName": "Types"
+                                                    }
+                                                }
+                                            },
+                                            "typeId": "type_types:File"
+                                        },
+                                        "shape": {
+                                            "type": "object",
+                                            "properties": [
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "name",
+                                                            "camelCase": {
+                                                                "unsafeName": "name",
+                                                                "safeName": "name"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "name",
+                                                                "safeName": "name"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "NAME",
+                                                                "safeName": "NAME"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Name",
+                                                                "safeName": "Name"
+                                                            }
+                                                        },
+                                                        "wireValue": "name"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "file.txt"
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "file.txt"
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "name": {
+                                                            "originalName": "File",
+                                                            "camelCase": {
+                                                                "unsafeName": "file",
+                                                                "safeName": "file"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "file",
+                                                                "safeName": "file"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "FILE",
+                                                                "safeName": "FILE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "File",
+                                                                "safeName": "File_"
+                                                            }
+                                                        },
+                                                        "fernFilepath": {
+                                                            "allParts": [
+                                                                {
+                                                                    "originalName": "types",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "types",
+                                                                        "safeName": "types"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "types",
+                                                                        "safeName": "types"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "TYPES",
+                                                                        "safeName": "TYPES"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Types",
+                                                                        "safeName": "Types"
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "packagePath": [],
+                                                            "file": {
+                                                                "originalName": "types",
+                                                                "camelCase": {
+                                                                    "unsafeName": "types",
+                                                                    "safeName": "types"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "types",
+                                                                    "safeName": "types"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "TYPES",
+                                                                    "safeName": "TYPES"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Types",
+                                                                    "safeName": "Types"
+                                                                }
+                                                            }
+                                                        },
+                                                        "typeId": "type_types:File"
+                                                    }
+                                                },
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "contents",
+                                                            "camelCase": {
+                                                                "unsafeName": "contents",
+                                                                "safeName": "contents"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "contents",
+                                                                "safeName": "contents"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "CONTENTS",
+                                                                "safeName": "CONTENTS"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Contents",
+                                                                "safeName": "Contents"
+                                                            }
+                                                        },
+                                                        "wireValue": "contents"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "..."
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "..."
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "name": {
+                                                            "originalName": "File",
+                                                            "camelCase": {
+                                                                "unsafeName": "file",
+                                                                "safeName": "file"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "file",
+                                                                "safeName": "file"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "FILE",
+                                                                "safeName": "FILE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "File",
+                                                                "safeName": "File_"
+                                                            }
+                                                        },
+                                                        "fernFilepath": {
+                                                            "allParts": [
+                                                                {
+                                                                    "originalName": "types",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "types",
+                                                                        "safeName": "types"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "types",
+                                                                        "safeName": "types"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "TYPES",
+                                                                        "safeName": "TYPES"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Types",
+                                                                        "safeName": "Types"
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "packagePath": [],
+                                                            "file": {
+                                                                "originalName": "types",
+                                                                "camelCase": {
+                                                                    "unsafeName": "types",
+                                                                    "safeName": "types"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "types",
+                                                                    "safeName": "types"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "TYPES",
+                                                                    "safeName": "TYPES"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Types",
+                                                                    "safeName": "Types"
+                                                                }
+                                                            }
+                                                        },
+                                                        "typeId": "type_types:File"
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
-                                    "jsonExample": "A file with that name was not found!"
+                                    "jsonExample": {
+                                        "name": "file.txt",
+                                        "contents": "..."
+                                    }
                                 }
                             },
                             "docs": null
@@ -27324,10 +27528,19 @@
                                     },
                                     "value": {
                                         "shape": {
-                                            "type": "primitive",
-                                            "primitive": {
-                                                "type": "boolean",
-                                                "boolean": true
+                                            "type": "container",
+                                            "container": {
+                                                "type": "optional",
+                                                "optional": {
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "boolean",
+                                                            "boolean": true
+                                                        }
+                                                    },
+                                                    "jsonExample": true
+                                                }
                                             }
                                         },
                                         "jsonExample": true
@@ -27358,11 +27571,20 @@
                                     },
                                     "value": {
                                         "shape": {
-                                            "type": "primitive",
-                                            "primitive": {
-                                                "type": "string",
-                                                "string": {
-                                                    "original": "string"
+                                            "type": "container",
+                                            "container": {
+                                                "type": "optional",
+                                                "optional": {
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "string",
+                                                            "string": {
+                                                                "original": "string"
+                                                            }
+                                                        }
+                                                    },
+                                                    "jsonExample": "string"
                                                 }
                                             }
                                         },

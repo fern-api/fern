@@ -1148,7 +1148,7 @@
                                                 }
                                             }
                                         },
-                                        "jsonExample": "\"02-12-2024\""
+                                        "jsonExample": "02-12-2024"
                                     }
                                 },
                                 {
@@ -3179,7 +3179,7 @@
                                                 }
                                             }
                                         },
-                                        "jsonExample": "\"123\""
+                                        "jsonExample": "123"
                                     }
                                 }
                             ],
@@ -4123,7 +4123,7 @@
                                                 }
                                             }
                                         },
-                                        "jsonExample": "\"You are a helpful assistant\""
+                                        "jsonExample": "You are a helpful assistant"
                                     }
                                 },
                                 {
