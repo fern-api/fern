@@ -274,7 +274,6 @@ export function convertSchemaObject(
                 groupName
             });
         }
-        // TODO: We can handle descriptions within primitives just fine.
         return wrapPrimitive({
             nameOverride,
             generatedName,
