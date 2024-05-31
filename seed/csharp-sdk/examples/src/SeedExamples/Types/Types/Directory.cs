@@ -11,8 +11,8 @@ public class Directory
     public string Name { get; init; }
 
     [JsonPropertyName("files")]
-    public List<File>? Files { get; init; }
+    public IEnumerable<File>? Files { get; init; }
 
     [JsonPropertyName("directories")]
-    public List<Directory>? Directories { get; init; }
+    public IEnumerable<Directory>? Directories { get; init; }
 }

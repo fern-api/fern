@@ -11,5 +11,5 @@ public class ProblemFiles
     public FileInfo SolutionFile { get; init; }
 
     [JsonPropertyName("readOnlyFiles")]
-    public List<FileInfo> ReadOnlyFiles { get; init; }
+    public IEnumerable<FileInfo> ReadOnlyFiles { get; init; }
 }

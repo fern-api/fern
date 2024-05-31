@@ -11,5 +11,5 @@ public class TestCase
     public string Id { get; init; }
 
     [JsonPropertyName("params")]
-    public List<VariableValue> Params { get; init; }
+    public IEnumerable<VariableValue> Params { get; init; }
 }

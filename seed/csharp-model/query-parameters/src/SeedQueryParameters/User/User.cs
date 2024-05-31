@@ -10,5 +10,5 @@ public class User
     public string Name { get; init; }
 
     [JsonPropertyName("tags")]
-    public List<string> Tags { get; init; }
+    public IEnumerable<string> Tags { get; init; }
 }

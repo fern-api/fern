@@ -8,5 +8,5 @@ namespace SeedTrace;
 public class WorkspaceSubmissionStatusV2
 {
     [JsonPropertyName("updates")]
-    public List<WorkspaceSubmissionUpdate> Updates { get; init; }
+    public IEnumerable<WorkspaceSubmissionUpdate> Updates { get; init; }
 }

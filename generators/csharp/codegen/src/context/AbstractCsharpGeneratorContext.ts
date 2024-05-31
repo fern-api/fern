@@ -15,7 +15,11 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
 import { csharp } from "..";
-import { ONE_OF_SERIALIZER_CLASS_NAME, STRING_ENUM_SERIALIZER_CLASS_NAME } from "../AsIs";
+import {
+    COLLECTION_ITEM_SERIALIZER_CLASS_NAME,
+    ONE_OF_SERIALIZER_CLASS_NAME,
+    STRING_ENUM_SERIALIZER_CLASS_NAME
+} from "../AsIs";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { CsharpProject } from "../project";
 import { CORE_DIRECTORY_NAME } from "../project/CsharpProject";
@@ -76,17 +80,30 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
-    public getOneOfSerializerClassReference(): csharp.ClassReference {
+    public getCollectionItemSerializerReference(
+        itemType: csharp.ClassReference,
+        serializer: csharp.ClassReference
+    ): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.getCoreNamespace(),
-            name: ONE_OF_SERIALIZER_CLASS_NAME
+            name: COLLECTION_ITEM_SERIALIZER_CLASS_NAME,
+            generics: [csharp.Type.reference(itemType), csharp.Type.reference(serializer)]
         });
     }
 
-    public getOneOfClassReference(): csharp.ClassReference {
+    public getOneOfSerializerClassReference(oneof: csharp.ClassReference): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: ONE_OF_SERIALIZER_CLASS_NAME,
+            generics: [csharp.Type.reference(oneof)]
+        });
+    }
+
+    public getOneOfClassReference(generics: csharp.Type[]): csharp.ClassReference {
         return csharp.classReference({
             namespace: "OneOf",
-            name: "OneOf"
+            name: "OneOf",
+            generics
         });
     }
 
@@ -108,17 +125,27 @@ export abstract class AbstractCsharpGeneratorContext<
 
     public getAsUndiscriminatedUnionTypeDeclaration(
         reference: TypeReference
-    ): UndiscriminatedUnionTypeDeclaration | undefined {
+    ): { declaration: UndiscriminatedUnionTypeDeclaration; isList: boolean } | undefined {
         if (reference.type === "container" && reference.container.type === "optional") {
             return this.getAsUndiscriminatedUnionTypeDeclaration(reference.container.optional);
         }
+        if (reference.type === "container" && reference.container.type === "list") {
+            const maybeDeclaration = this.getAsUndiscriminatedUnionTypeDeclaration(reference.container.list);
+            if (maybeDeclaration != null) {
+                return {
+                    ...maybeDeclaration,
+                    isList: true
+                };
+            }
+        }
+
         if (reference.type !== "named") {
             return undefined;
         }
 
         let declaration = this.getTypeDeclarationOrThrow(reference.typeId);
         if (declaration.shape.type === "undiscriminatedUnion") {
-            return declaration.shape;
+            return { declaration: declaration.shape, isList: false };
         }
 
         // handle aliases by visiting resolved types
@@ -126,7 +153,7 @@ export abstract class AbstractCsharpGeneratorContext<
             if (declaration.shape.resolvedType.type === "named") {
                 declaration = this.getTypeDeclarationOrThrow(reference.typeId);
                 if (declaration.shape.type === "undiscriminatedUnion") {
-                    return declaration.shape;
+                    return { declaration: declaration.shape, isList: false };
                 }
             } else if (
                 declaration.shape.resolvedType.type === "container" &&

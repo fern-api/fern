@@ -17,5 +17,5 @@ public class ListUsersPaginationResponse
     public int TotalCount { get; init; }
 
     [JsonPropertyName("data")]
-    public List<User> Data { get; init; }
+    public IEnumerable<User> Data { get; init; }
 }

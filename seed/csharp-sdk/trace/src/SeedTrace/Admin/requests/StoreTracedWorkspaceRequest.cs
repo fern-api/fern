@@ -11,5 +11,5 @@ public class StoreTracedWorkspaceRequest
     public WorkspaceRunDetails WorkspaceRunDetails { get; init; }
 
     [JsonPropertyName("traceResponses")]
-    public List<TraceResponse> TraceResponses { get; init; }
+    public IEnumerable<TraceResponse> TraceResponses { get; init; }
 }

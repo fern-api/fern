@@ -15,5 +15,5 @@ public class TraceResponsesPage
     public int? Offset { get; init; }
 
     [JsonPropertyName("traceResponses")]
-    public List<TraceResponse> TraceResponses { get; init; }
+    public IEnumerable<TraceResponse> TraceResponses { get; init; }
 }

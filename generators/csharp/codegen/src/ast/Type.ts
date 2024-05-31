@@ -136,7 +136,7 @@ export class Type extends AstNode {
                 writer.write("object");
                 break;
             case "list":
-                writer.write("List<");
+                writer.write("IEnumerable<");
                 this.internalType.value.write(writer);
                 writer.write(">");
                 break;
@@ -157,8 +157,7 @@ export class Type extends AstNode {
                 writer.write("?");
                 break;
             case "reference":
-                writer.addReference(this.internalType.value);
-                writer.write(this.internalType.value.name);
+                writer.writeNode(this.internalType.value);
                 break;
             case "coreReference":
                 writer.write(this.internalType.value.name);
