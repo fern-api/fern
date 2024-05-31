@@ -124,10 +124,57 @@ exports[`migrateFromV40ToV39 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "97db3358-4aa2-440b-bf7e-94a9bf44159d",
+              "id": "d20d5310-9e8c-4efa-85b2-eccae86f655a",
               "name": undefined,
               "queryParameters": [],
-              "request": undefined,
+              "request": {
+                "_visit": [Function],
+                "jsonExample": {
+                  "name": "string",
+                },
+                "properties": [
+                  {
+                    "name": {
+                      "name": {
+                        "camelCase": {
+                          "safeName": "name",
+                          "unsafeName": "name",
+                        },
+                        "originalName": "name",
+                        "pascalCase": {
+                          "safeName": "Name",
+                          "unsafeName": "Name",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "NAME",
+                          "unsafeName": "NAME",
+                        },
+                        "snakeCase": {
+                          "safeName": "name",
+                          "unsafeName": "name",
+                        },
+                      },
+                      "wireValue": "name",
+                    },
+                    "originalTypeDeclaration": undefined,
+                    "value": {
+                      "jsonExample": "string",
+                      "shape": {
+                        "_visit": [Function],
+                        "primitive": {
+                          "_visit": [Function],
+                          "string": {
+                            "original": "string",
+                          },
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  },
+                ],
+                "type": "inlinedRequestBody",
+              },
               "response": {
                 "_visit": [Function],
                 "body": {

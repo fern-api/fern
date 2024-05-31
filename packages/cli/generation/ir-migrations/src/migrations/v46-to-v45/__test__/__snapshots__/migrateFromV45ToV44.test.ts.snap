@@ -949,7 +949,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "b68dd890-f98e-474a-9cb9-951004043a18",
+              "id": "340d88bb-1dbc-495e-a6e2-d18428a8bfd4",
               "name": undefined,
               "queryParameters": [
                 {
@@ -2686,7 +2686,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "6627c950-16a4-4af7-a1e2-6eba72b8e196",
+              "id": "1c0a3c16-39ab-4b12-82b9-e339b06f5fa6",
               "name": undefined,
               "queryParameters": [
                 {
@@ -3951,7 +3951,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "3dac698b-6a2e-4deb-b9bb-74cb5ec0d38f",
+              "id": "80f89327-a2ab-495d-beb3-eb32e1ad2744",
               "name": undefined,
               "queryParameters": [
                 {

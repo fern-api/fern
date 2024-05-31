@@ -155,12 +155,9 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "6b8ecb9a-9e48-441f-99ec-d8ea04ffb948",
+              "id": "44f1d19d-e55a-4ab9-b83e-6a9a1012cfa1",
               "name": undefined,
               "queryParameters": [],
-<<<<<<< HEAD
-              "request": undefined,
-=======
               "request": {
                 "_visit": [Function],
                 "jsonExample": {
@@ -380,7 +377,6 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
                 ],
                 "type": "inlinedRequestBody",
               },
->>>>>>> main
               "response": {
                 "_visit": [Function],
                 "body": {
@@ -1185,12 +1181,9 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "a7863ba6-e740-40a2-8c3f-5f4d465e8987",
+              "id": "0db3886c-aca2-4cb1-a5ff-55eae086523c",
               "name": undefined,
               "queryParameters": [],
-<<<<<<< HEAD
-              "request": undefined,
-=======
               "request": {
                 "_visit": [Function],
                 "jsonExample": {
@@ -1450,7 +1443,6 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
                 ],
                 "type": "inlinedRequestBody",
               },
->>>>>>> main
               "response": {
                 "_visit": [Function],
                 "body": {
@@ -3060,7 +3052,7 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
                 },
               ],
               "exampleType": "generated",
-              "id": "08b936bb-2245-46c9-847c-c046b425d6b5",
+              "id": "399a8078-27f0-433d-9ee9-99c7bcd6f5f5",
               "name": undefined,
               "queryParameters": [
                 {
@@ -3738,10 +3730,6 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
                     },
                     "shape": {
                       "_visit": [Function],
-<<<<<<< HEAD
-                      "type": "unknown",
-                      "unknown": undefined,
-=======
                       "container": {
                         "_visit": [Function],
                         "optional": {
@@ -3751,15 +3739,12 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
                           "shape": {
                             "_visit": [Function],
                             "type": "unknown",
-                            "unknown": {
-                              "key": "value",
-                            },
+                            "unknown": undefined,
                           },
                         },
                         "type": "optional",
                       },
                       "type": "container",
->>>>>>> main
                     },
                   },
                 },
@@ -4342,7 +4327,7 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "8076875a-d4d8-469a-a055-008500dd4a54",
+              "id": "12d94ef4-32eb-44a8-913b-19f5c3ee6c90",
               "name": undefined,
               "queryParameters": [
                 {

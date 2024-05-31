@@ -250,7 +250,20 @@ function convertEndpointExamples(v46ETs: IrVersions.V46.HttpEndpointExample[]): 
             serviceHeaders: convertHeaders(et.serviceHeaders),
             endpointHeaders: convertHeaders(et.endpointHeaders),
             queryParameters: convertQueryParameters(et.queryParameters),
-            request: undefined,
+            request: et.request?._visit<IrVersions.V45.ExampleRequestBody>({
+                inlinedRequestBody: (value) =>
+                    IrVersions.V45.ExampleRequestBody.inlinedRequestBody({
+                        ...value,
+                        properties: value.properties.map((prop) => ({
+                            ...prop,
+                            value: convertExampleTypeReference(prop.value)
+                        }))
+                    }),
+                reference: (value) => IrVersions.V45.ExampleRequestBody.reference(convertExampleTypeReference(value)),
+                _other: (value) => {
+                    throw new Error(`Unexpected value: ${value}`);
+                }
+            }),
             response: et.response._visit<IrVersions.V45.ExampleResponse>({
                 ok: (value) =>
                     IrVersions.V45.ExampleResponse.ok(
