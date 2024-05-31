@@ -1,0 +1,147 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`anyOf anyOf docs 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "Get": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": {
+                  "value": 1.1,
+                },
+              },
+            },
+          ],
+          "method": "GET",
+          "pagination": undefined,
+          "path": "/get",
+          "request": {
+            "body": {
+              "properties": {
+                "id": {
+                  "default": undefined,
+                  "docs": "An optional string value.
+",
+                  "type": "optional<string>",
+                  "validation": undefined,
+                },
+              },
+            },
+            "headers": undefined,
+            "name": "Request",
+            "query-parameters": undefined,
+          },
+          "response": {
+            "docs": "A simple API response.",
+            "type": "Response",
+          },
+        },
+      },
+    },
+    "types": {
+      "Response": {
+        "docs": "A generic response type used throughout the API.
+",
+        "properties": {
+          "value": {
+            "default": undefined,
+            "docs": "An optional numerical value.
+",
+            "type": "optional<double>",
+            "validation": undefined,
+          },
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test spec for \`description\` settings defined in anyOf.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`anyOf anyOf simple 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "Get": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": {
+                  "value": 1.1,
+                },
+              },
+            },
+          ],
+          "method": "GET",
+          "pagination": undefined,
+          "path": "/get",
+          "request": {
+            "body": {
+              "properties": {
+                "id": {
+                  "default": undefined,
+                  "docs": "An optional string value.
+",
+                  "type": "optional<string>",
+                  "validation": undefined,
+                },
+              },
+            },
+            "headers": undefined,
+            "name": "Request",
+            "query-parameters": undefined,
+          },
+          "response": {
+            "docs": "A simple API response.",
+            "type": "Response",
+          },
+        },
+      },
+    },
+    "types": {
+      "Response": {
+        "docs": "A generic response type used throughout the API.
+",
+        "properties": {
+          "value": {
+            "default": undefined,
+            "docs": "An optional numerical value.
+",
+            "type": "optional<double>",
+            "validation": undefined,
+          },
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test spec for \`description\` settings defined in anyOf.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
