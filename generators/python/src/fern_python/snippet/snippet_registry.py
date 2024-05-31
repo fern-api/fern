@@ -62,6 +62,7 @@ class SnippetRegistry:
 
     def register_async_client_endpoint_snippet(
         self,
+        *,
         endpoint: ir_types.HttpEndpoint,
         expr: AST.Expression,
         example_id: str,
@@ -78,6 +79,7 @@ class SnippetRegistry:
 
     def register_sync_client_endpoint_snippet(
         self,
+        *,
         endpoint: ir_types.HttpEndpoint,
         expr: AST.Expression,
         example_id: str,
