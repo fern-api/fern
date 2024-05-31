@@ -8,5 +8,5 @@ namespace SeedTrace;
 public class ProblemDescription
 {
     [JsonPropertyName("boards")]
-    public List<ProblemDescriptionBoard> Boards { get; init; }
+    public IEnumerable<ProblemDescriptionBoard> Boards { get; init; }
 }

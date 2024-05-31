@@ -11,8 +11,8 @@ public class Node
     public string Name { get; init; }
 
     [JsonPropertyName("nodes")]
-    public List<Node>? Nodes { get; init; }
+    public IEnumerable<Node>? Nodes { get; init; }
 
     [JsonPropertyName("trees")]
-    public List<Tree>? Trees { get; init; }
+    public IEnumerable<Tree>? Trees { get; init; }
 }

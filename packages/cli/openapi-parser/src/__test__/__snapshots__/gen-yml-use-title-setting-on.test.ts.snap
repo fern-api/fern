@@ -9,6 +9,7 @@ exports[`open api parser gen-yml-use-title parse open api 1`] = `
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [],
   "schemas": {
     "SchemaWithALongNameIsRightHereAndNotSomewhereElse": {

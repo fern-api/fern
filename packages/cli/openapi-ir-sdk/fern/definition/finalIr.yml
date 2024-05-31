@@ -25,6 +25,7 @@ types:
         docs: Whether the schema is directly referenced from a response, parameters, or other schemas
       securitySchemes: map<commons.SecuritySchemeId, commons.SecurityScheme>
       globalHeaders: optional<list<GlobalHeader>>
+      idempotencyHeaders: optional<list<IdempotencyHeader>>
 
   SdkGroupInfo:
     properties:
@@ -36,6 +37,13 @@ types:
       header: string
       name: optional<string>
       optional: optional<boolean>
+      env: optional<string>
+      schema: optional<Schema>
+  
+  IdempotencyHeader:
+    properties:
+      header: string
+      name: optional<string>
       env: optional<string>
       schema: optional<Schema>
 
@@ -116,6 +124,7 @@ types:
     properties:
       authed: boolean
       internal: optional<boolean>
+      idempotent: optional<boolean>
       method: HttpMethod
       availability: optional<EndpointAvailability>
       audiences: list<string>

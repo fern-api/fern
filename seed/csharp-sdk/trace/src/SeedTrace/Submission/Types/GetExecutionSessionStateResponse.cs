@@ -14,5 +14,5 @@ public class GetExecutionSessionStateResponse
     public int? NumWarmingInstances { get; init; }
 
     [JsonPropertyName("warmingSessionIds")]
-    public List<string> WarmingSessionIds { get; init; }
+    public IEnumerable<string> WarmingSessionIds { get; init; }
 }

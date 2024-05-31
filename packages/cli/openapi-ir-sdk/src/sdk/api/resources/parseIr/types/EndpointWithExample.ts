@@ -7,6 +7,7 @@ import * as FernOpenapiIr from "../../..";
 export interface EndpointWithExample extends FernOpenapiIr.WithDescription {
     authed: boolean;
     internal: boolean | undefined;
+    idempotent: boolean | undefined;
     method: FernOpenapiIr.HttpMethod;
     availability: FernOpenapiIr.EndpointAvailability | undefined;
     audiences: string[];

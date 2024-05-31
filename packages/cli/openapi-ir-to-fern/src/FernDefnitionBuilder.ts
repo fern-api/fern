@@ -16,6 +16,8 @@ export interface FernDefinitionBuilder {
 
     addGlobalHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void;
 
+    addIdempotencyHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void;
+
     addVariable({ name, schema }: { name: string; schema: RawSchemas.VariableDeclarationSchema }): void;
 
     addEnvironment({ name, schema }: { name: string; schema: RawSchemas.EnvironmentSchema }): void;
@@ -177,6 +179,13 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             this.rootApiFile.headers = {};
         }
         this.rootApiFile.headers[name] = schema;
+    }
+
+    public addIdempotencyHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void {
+        if (this.rootApiFile["idempotency-headers"] == null) {
+            this.rootApiFile["idempotency-headers"] = {};
+        }
+        this.rootApiFile["idempotency-headers"][name] = schema;
     }
 
     public addVariable({ name, schema }: { name: string; schema: RawSchemas.VariableDeclarationSchema }): void {

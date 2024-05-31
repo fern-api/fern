@@ -12,5 +12,5 @@ public class DefaultProvidedFile
     public FileInfoV2 File { get; init; }
 
     [JsonPropertyName("relatedTypes")]
-    public List<VariableType> RelatedTypes { get; init; }
+    public IEnumerable<VariableType> RelatedTypes { get; init; }
 }

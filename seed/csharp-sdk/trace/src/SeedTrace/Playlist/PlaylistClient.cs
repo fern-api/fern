@@ -47,7 +47,7 @@ public class PlaylistClient
     /// <summary>
     /// Returns the user's playlists
     /// </summary>
-    public async Task<List<Playlist>> GetPlaylistsAsync(GetPlaylistsRequest request)
+    public async Task<IEnumerable<Playlist>> GetPlaylistsAsync(GetPlaylistsRequest request)
     {
         var _query = new Dictionary<string, object>()
         {
@@ -74,7 +74,7 @@ public class PlaylistClient
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<Playlist>>(responseBody);
+            return JsonSerializer.Deserialize<IEnumerable<Playlist>>(responseBody);
         }
         throw new Exception(responseBody);
     }

@@ -14,7 +14,7 @@ public class WorkspaceSubmitRequest
     public Language Language { get; init; }
 
     [JsonPropertyName("submissionFiles")]
-    public List<SubmissionFileInfo> SubmissionFiles { get; init; }
+    public IEnumerable<SubmissionFileInfo> SubmissionFiles { get; init; }
 
     [JsonPropertyName("userId")]
     public string? UserId { get; init; }
