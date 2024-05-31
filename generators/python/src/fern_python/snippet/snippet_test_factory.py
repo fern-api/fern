@@ -136,15 +136,22 @@ class SnippetTestFactory:
         _kwargs = []
         param_names = [param.constructor_parameter_name for param in client.parameters]
         if "_token_getter_override" in param_names:
-            _kwargs.append(("_token_getter_override", AST.Expression('lambda: os.getenv("ENV_TOKEN", "token")'),))
+            _kwargs.append(
+                (
+                    "_token_getter_override",
+                    AST.Expression('lambda: os.getenv("ENV_TOKEN", "token")'),
+                )
+            )
 
         if self._generated_environment is None:
             non_url_params.append(self._write_envvar_parameter("base_url", self.TEST_URL_ENVVAR, "base_url"))
         else:
-            _kwargs.append((
+            _kwargs.append(
+                (
                     "environment",
                     AST.Expression(self._enviroment(self._generated_environment)),
-                ))
+                )
+            )
 
         return AST.ClassInstantiation(
             class_=client.class_reference,

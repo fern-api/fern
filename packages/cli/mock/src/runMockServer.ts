@@ -52,7 +52,7 @@ export class MockServer {
         }
 
         const listGroups = Array.from(endpointGroups);
-        const sortedEndpoints = listGroups.sort(this.sortExpressPaths);
+        const sortedEndpoints = listGroups.sort((a, b) => this.sortExpressPaths(a, b));
 
         for (const [endpointPath, methodToEndpoints] of sortedEndpoints) {
             for (const [method, endpoints] of methodToEndpoints) {
