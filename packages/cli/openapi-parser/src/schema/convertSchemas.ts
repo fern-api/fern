@@ -274,6 +274,7 @@ export function convertSchemaObject(
                 groupName
             });
         }
+        // TODO: We can handle descriptions within primitives just fine.
         return wrapPrimitive({
             nameOverride,
             generatedName,
@@ -541,9 +542,11 @@ export function convertSchemaObject(
             const [firstSchema, secondSchema] = schema.anyOf;
             if (firstSchema != null && secondSchema != null) {
                 if (!isReferenceObject(firstSchema) && (firstSchema.type as unknown) === "null") {
-                    return convertSchema(secondSchema, true, context, breadcrumbs);
+                    const convertedSchema = convertSchema(secondSchema, true, context, breadcrumbs);
+                    return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
                 } else if (!isReferenceObject(secondSchema) && (secondSchema.type as unknown) === "null") {
-                    return convertSchema(firstSchema, true, context, breadcrumbs);
+                    const convertedSchema = convertSchema(firstSchema, true, context, breadcrumbs);
+                    return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
                 }
             }
         }
@@ -733,23 +736,19 @@ function maybeInjectDescriptionOrGroupName(
             description,
             groupName
         });
-    } else if (schema.type === "optional" && schema.value.type === "reference") {
+    } else if (schema.type === "optional") {
         return SchemaWithExample.optional({
             nameOverride: schema.nameOverride,
             generatedName: schema.generatedName,
-            value: SchemaWithExample.reference({
-                ...schema.value
-            }),
+            value: schema.value,
             description,
             groupName
         });
-    } else if (schema.type === "nullable" && schema.value.type === "reference") {
+    } else if (schema.type === "nullable") {
         return SchemaWithExample.nullable({
             nameOverride: schema.nameOverride,
             generatedName: schema.generatedName,
-            value: SchemaWithExample.reference({
-                ...schema.value
-            }),
+            value: schema.value,
             description,
             groupName
         });
