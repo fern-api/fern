@@ -109,7 +109,7 @@ export function convertHttpOperation({
     return {
         summary: operation.summary,
         internal: getExtension<boolean>(operation, OpenAPIExtension.INTERNAL),
-        idempotent: idempotent,
+        idempotent,
         audiences: getExtension<string[]>(operation, FernOpenAPIExtension.AUDIENCES) ?? [],
         operationId:
             operation.operationId != null && suffix != null
