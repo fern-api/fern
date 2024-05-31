@@ -11,9 +11,13 @@ from seed.client import (
 
 @pytest.fixture
 def client() -> SeedOauthClientCredentialsEnvironmentVariables:
-    return SeedOauthClientCredentialsEnvironmentVariables(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+    return SeedOauthClientCredentialsEnvironmentVariables(
+        _token_getter_override=os.getenv("ENV__TOKEN_GETTER_OVERRIDE"), base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )
 
 
 @pytest.fixture
 def async_client() -> AsyncSeedOauthClientCredentialsEnvironmentVariables:
-    return AsyncSeedOauthClientCredentialsEnvironmentVariables(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+    return AsyncSeedOauthClientCredentialsEnvironmentVariables(
+        _token_getter_override=os.getenv("ENV__TOKEN_GETTER_OVERRIDE"), base_url=os.getenv("TESTS_BASE_URL", "base_url")
+    )

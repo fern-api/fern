@@ -11,6 +11,7 @@ def client() -> SeedOauthClientCredentials:
     return SeedOauthClientCredentials(
         client_id=os.getenv("ENV_CLIENT_ID", "client_id"),
         client_secret=os.getenv("ENV_CLIENT_SECRET", "client_secret"),
+        _token_getter_override=os.getenv("ENV__TOKEN_GETTER_OVERRIDE"),
         base_url=os.getenv("TESTS_BASE_URL", "base_url"),
     )
 
@@ -20,5 +21,6 @@ def async_client() -> AsyncSeedOauthClientCredentials:
     return AsyncSeedOauthClientCredentials(
         client_id=os.getenv("ENV_CLIENT_ID", "client_id"),
         client_secret=os.getenv("ENV_CLIENT_SECRET", "client_secret"),
+        _token_getter_override=os.getenv("ENV__TOKEN_GETTER_OVERRIDE"),
         base_url=os.getenv("TESTS_BASE_URL", "base_url"),
     )

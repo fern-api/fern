@@ -128,7 +128,9 @@ class SnippetTestFactory:
                 param.constructor_parameter_name,
             )
             for param in client.parameters
-            if param.constructor_parameter_name != "base_url" and param.constructor_parameter_name != "environment" and param.constructor_parameter_name != "_token_getter_override"
+            if param.constructor_parameter_name != "base_url"
+            and param.constructor_parameter_name != "environment"
+            and param.constructor_parameter_name != "_token_getter_override"
         ]
 
         param_names = [param.constructor_parameter_name for param in client.parameters]
@@ -145,10 +147,11 @@ class SnippetTestFactory:
                 (
                     "environment",
                     AST.Expression(self._enviroment(self._generated_environment)),
-                ),(
+                ),
+                (
                     "_token_getter_override",
-                    AST.Expression("lamdbda: os.getenv(\"ENV_TOKEN\", \"token\")"),
-                )
+                    AST.Expression('lamdbda: os.getenv("ENV_TOKEN", "token")'),
+                ),
             ]
             if self._generated_environment is not None
             else None,
