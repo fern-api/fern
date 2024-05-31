@@ -827,7 +827,7 @@
                                                     }
                                                 }
                                             },
-                                            "jsonExample": "\"https://api.example.com\""
+                                            "jsonExample": "https://api.example.com"
                                         },
                                         "originalTypeDeclaration": null
                                     },
@@ -864,7 +864,7 @@
                                                     }
                                                 }
                                             },
-                                            "jsonExample": "\"client_credentials\""
+                                            "jsonExample": "client_credentials"
                                         },
                                         "originalTypeDeclaration": null
                                     },
@@ -909,8 +909,8 @@
                                 "jsonExample": {
                                     "client_id": "string",
                                     "client_secret": "string",
-                                    "audience": "\"https://api.example.com\"",
-                                    "grant_type": "\"client_credentials\"",
+                                    "audience": "https://api.example.com",
+                                    "grant_type": "client_credentials",
                                     "scope": "string"
                                 }
                             },
@@ -1856,7 +1856,7 @@
                                                     }
                                                 }
                                             },
-                                            "jsonExample": "\"https://api.example.com\""
+                                            "jsonExample": "https://api.example.com"
                                         },
                                         "originalTypeDeclaration": null
                                     },
@@ -1893,7 +1893,7 @@
                                                     }
                                                 }
                                             },
-                                            "jsonExample": "\"refresh_token\""
+                                            "jsonExample": "refresh_token"
                                         },
                                         "originalTypeDeclaration": null
                                     },
@@ -1939,8 +1939,8 @@
                                     "client_id": "string",
                                     "client_secret": "string",
                                     "refresh_token": "string",
-                                    "audience": "\"https://api.example.com\"",
-                                    "grant_type": "\"refresh_token\"",
+                                    "audience": "https://api.example.com",
+                                    "grant_type": "refresh_token",
                                     "scope": "string"
                                 }
                             },

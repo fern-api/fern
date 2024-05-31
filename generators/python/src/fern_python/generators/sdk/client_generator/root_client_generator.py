@@ -26,6 +26,7 @@ from ..environment_generators import (
 from .constants import DEFAULT_BODY_PARAMETER_VALUE
 from .endpoint_function_generator import EndpointFunctionGenerator
 from .generated_root_client import GeneratedRootClient, RootClient
+from .oauth_token_provider_generator import OAuthTokenProviderGenerator
 
 
 @dataclass
@@ -56,6 +57,7 @@ class RootClientGenerator:
     RESPONSE_JSON_VARIABLE = EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE
 
     GET_BASEURL_FUNCTION_NAME = "_get_base_url"
+    TOKEN_GETTER_PARAM_NAME = "_token_getter_override"
 
     def __init__(
         self,
@@ -120,6 +122,14 @@ class RootClientGenerator:
                             instantiation=AST.Expression(f'client_secret="YOUR_CLIENT_SECRET"'),
                         )
                     )
+            self._root_client_constructor_params.append(
+                ConstructorParameter(
+                    constructor_parameter_name=self.TOKEN_GETTER_PARAM_NAME,
+                    private_member_name=self.TOKEN_GETTER_PARAM_NAME,
+                    type_hint=AST.TypeHint.optional(AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_())),
+                )
+            )
+
 
     def generate(self, source_file: SourceFile) -> GeneratedRootClient:
         exported_client_class_name = self._context.get_class_name_for_exported_root_client()
@@ -467,6 +477,13 @@ class RootClientGenerator:
                         else None,
                     ),
                 )
+            parameters.append(
+                    RootClientConstructorParameter(
+                        constructor_parameter_name=self.TOKEN_GETTER_PARAM_NAME,
+                        type_hint=AST.TypeHint.optional(AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_())),
+                        initializer=AST.Expression("None"),
+                    ),
+                )
 
         parameters.append(
             RootClientConstructorParameter(
@@ -698,7 +715,7 @@ class RootClientGenerator:
             client_wrapper_constructor_kwargs.append(
                 (
                     "token",
-                    AST.Expression(f"oauth_token_provider.get_token"),
+                    AST.Expression(f"{self.TOKEN_GETTER_PARAM_NAME} if {self.TOKEN_GETTER_PARAM_NAME} is not None else oauth_token_provider.get_token"),
                 )
             )
 
