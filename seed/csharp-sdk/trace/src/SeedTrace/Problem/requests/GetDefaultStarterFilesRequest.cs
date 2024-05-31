@@ -8,7 +8,7 @@ namespace SeedTrace;
 public class GetDefaultStarterFilesRequest
 {
     [JsonPropertyName("inputParams")]
-    public List<VariableTypeAndName> InputParams { get; init; }
+    public IEnumerable<VariableTypeAndName> InputParams { get; init; }
 
     [JsonPropertyName("outputType")]
     public VariableType OutputType { get; init; }

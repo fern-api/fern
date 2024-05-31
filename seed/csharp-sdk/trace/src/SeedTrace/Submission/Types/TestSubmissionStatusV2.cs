@@ -9,7 +9,7 @@ namespace SeedTrace;
 public class TestSubmissionStatusV2
 {
     [JsonPropertyName("updates")]
-    public List<TestSubmissionUpdate> Updates { get; init; }
+    public IEnumerable<TestSubmissionUpdate> Updates { get; init; }
 
     [JsonPropertyName("problemId")]
     public string ProblemId { get; init; }

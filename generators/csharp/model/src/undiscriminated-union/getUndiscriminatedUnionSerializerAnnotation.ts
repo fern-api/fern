@@ -9,12 +9,31 @@ import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
  */
 export function getUndiscriminatedUnionSerializerAnnotation({
     context,
-    undiscriminatedUnionDeclaration
+    undiscriminatedUnionDeclaration,
+    isList
 }: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     context: AbstractCsharpGeneratorContext<any>;
     undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration;
+    isList: boolean;
 }): csharp.Annotation {
+    if (isList) {
+        return csharp.annotation({
+            reference: csharp.classReference({
+                name: "JsonConverter",
+                namespace: "System.Text.Json.Serialization"
+            }),
+            argument: csharp.codeblock((writer) => {
+                writer.write("typeof(");
+
+                const oneOf = getOneOf({ context, undiscriminatedUnionDeclaration });
+                const oneOfSerializer = getOneOfSerializer({ context, undiscriminatedUnionDeclaration });
+                const collectionSerializer = context.getCollectionItemSerializerReference(oneOf, oneOfSerializer);
+                writer.writeNode(collectionSerializer);
+                writer.write(")");
+            })
+        });
+    }
     return csharp.annotation({
         reference: csharp.classReference({
             name: "JsonConverter",
@@ -22,24 +41,36 @@ export function getUndiscriminatedUnionSerializerAnnotation({
         }),
         argument: csharp.codeblock((writer) => {
             writer.write("typeof(");
-
-            writer.writeNode(context.getOneOfSerializerClassReference());
-            writer.write("<");
-
-            writer.writeNode(context.getOneOfClassReference());
-            writer.write("<");
-            undiscriminatedUnionDeclaration.members.forEach((member, idx) => {
-                const type = context.csharpTypeMapper.convert({ reference: member.type, unboxOptionals: true });
-                writer.writeNode(type);
-                if (idx < undiscriminatedUnionDeclaration.members.length - 1) {
-                    writer.write(", ");
-                }
-            });
-            writer.write(">");
-
-            writer.write(">");
-
+            const oneOfSerializer = getOneOfSerializer({ context, undiscriminatedUnionDeclaration });
+            writer.writeNode(oneOfSerializer);
             writer.write(")");
         })
     });
+}
+
+function getOneOfSerializer({
+    context,
+    undiscriminatedUnionDeclaration
+}: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    context: AbstractCsharpGeneratorContext<any>;
+    undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration;
+}): csharp.ClassReference {
+    const oneOf = getOneOf({ context, undiscriminatedUnionDeclaration });
+    return context.getOneOfSerializerClassReference(oneOf);
+}
+
+function getOneOf({
+    context,
+    undiscriminatedUnionDeclaration
+}: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    context: AbstractCsharpGeneratorContext<any>;
+    undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration;
+}): csharp.ClassReference {
+    return context.getOneOfClassReference(
+        undiscriminatedUnionDeclaration.members.map((member) => {
+            return context.csharpTypeMapper.convert({ reference: member.type, unboxOptionals: true });
+        })
+    );
 }

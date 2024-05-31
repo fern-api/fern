@@ -87,7 +87,8 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         annotations.push(
                             getUndiscriminatedUnionSerializerAnnotation({
                                 context: this.context,
-                                undiscriminatedUnionDeclaration: maybeUndiscriminatedUnion
+                                undiscriminatedUnionDeclaration: maybeUndiscriminatedUnion.declaration,
+                                isList: maybeUndiscriminatedUnion.isList
                             })
                         );
                     }

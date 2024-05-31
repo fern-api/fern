@@ -8,5 +8,5 @@ namespace SeedTrace;
 public class MapValue
 {
     [JsonPropertyName("keyValuePairs")]
-    public List<KeyValuePair> KeyValuePairs { get; init; }
+    public IEnumerable<KeyValuePair> KeyValuePairs { get; init; }
 }
