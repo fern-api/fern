@@ -113,4 +113,42 @@ overwritten by Fern.
           ```
         </Steps>
   </Tab>
+      <Tab title="Java">
+      <Steps>
+          ### Create `src/test/java/com/example/MyClientTest.java`
+
+          ```java
+          package com.example;
+
+          import static org.junit.jupiter.api.Assertions.assertEquals;
+          import org.junit.jupiter.api.Test;
+          import com.example.wrapper.MyClient;
+
+          public class MyClientTest {
+
+            @Test
+            public void testSomething() {
+              MyClient client = new MyClient();
+              var response = client.getResource().get();
+              assertEquals("something", response.getSomething());
+            }
+
+          }
+          ```
+
+          ### Run your test
+
+          ```bash
+          ./gradlew test --tests com.example.MyClientTest
+          ```
+
+          ### `.fernignore` your test file
+          
+          ```yaml .fernignore
+          # Specify any files that shouldn't be modified by Fern
+          + src/test/java/com/example/MyClientTest.java
+          ```
+        </Steps>
+  </Tab>
+  
 </Tabs>
