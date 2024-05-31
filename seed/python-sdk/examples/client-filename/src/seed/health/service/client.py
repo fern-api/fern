@@ -43,7 +43,7 @@ class ServiceClient:
             environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
         client.health.service.check(
-            id="id-2sdx82h",
+            id="id-3tey93i",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -161,7 +161,7 @@ class AsyncServiceClient:
             environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
         await client.health.service.check(
-            id="id-2sdx82h",
+            id="id-3tey93i",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

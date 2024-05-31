@@ -73,21 +73,21 @@
                 "identifier_override": "endpoint_health/service.check"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.health.service.check(\n    id=\"id-2sdx82h\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nawait client.health.service.check(\n    id=\"id-2sdx82h\",\n)\n",
+                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.health.service.check(\n    id=\"id-3tey93i\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nawait client.health.service.check(\n    id=\"id-3tey93i\",\n)\n",
                 "type": "python"
             }
         },
         {
-            "example_identifier": "Example0",
+            "example_identifier": "Example2",
             "id": {
                 "path": "/check/{id}",
                 "method": "GET",
                 "identifier_override": "endpoint_health/service.check"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.health.service.check(\n    id=\"id-2sdx82h\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nawait client.health.service.check(\n    id=\"id-2sdx82h\",\n)\n",
+                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.health.service.check(\n    id=\"id-3tey93i\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nawait client.health.service.check(\n    id=\"id-3tey93i\",\n)\n",
                 "type": "python"
             }
         },
