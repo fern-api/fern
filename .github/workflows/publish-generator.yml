@@ -836,6 +836,8 @@ jobs:
           push: true
           labels: version=${{env.VERSION}}
           tags: fernapi/fern-go-sdk:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-go-sdk:latest') || '' }}
+          secrets: |
+            "go_repository_read_token=${{ secrets.GO_REPOSITORY_READ_TOKEN }}"
 
   go-model:
     runs-on: ubuntu-latest
@@ -885,6 +887,8 @@ jobs:
           push: true
           labels: version=${{env.VERSION}}
           tags: fernapi/fern-go-model:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-go-model:latest') || '' }}
+          secrets: |
+            "go_repository_read_token=${{ secrets.GO_REPOSITORY_READ_TOKEN }}"
 
   go-fiber:
     runs-on: ubuntu-latest
@@ -934,6 +938,8 @@ jobs:
           push: true
           labels: version=${{env.VERSION}}
           tags: fernapi/fern-go-fiber:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-go-fiber:latest') || '' }}
+          secrets: |
+            "go_repository_read_token=${{ secrets.GO_REPOSITORY_READ_TOKEN }}"
 
   csharp-model:
     runs-on: ubuntu-latest
