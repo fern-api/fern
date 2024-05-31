@@ -33,7 +33,7 @@ export async function generateIrForWorkspaces({
                 cliContext.logger.info(`Generating IR for workspace ${workspace.name}`);
                 let fernWorkspace: FernWorkspace;
                 if (workspace.type === "fern") {
-                    cliContext.logger.info(`Found a fern workspace`);
+                    cliContext.logger.info("Found a fern workspace");
                     fernWorkspace = workspace;
                 } else {
                     workspace.specs = workspace.specs.map((spec) => ({
