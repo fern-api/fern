@@ -51,8 +51,56 @@ export class MockServer {
             }
         }
 
+        // Sort the paths with a priority for literal path parts over parameters
+        // e.g. /movie/:movieId should come after /movie/123, such that express
+        // can match the exact endpoint before the variable one (/movie/:movieId)
+        const sortExpressPaths = (
+            endpoint1: [string, Map<string, HttpEndpoint[]>],
+            endpoint2: [string, Map<string, HttpEndpoint[]>]
+        ): number => {
+            const path1 = endpoint1[0];
+            const path2 = endpoint2[0];
+
+            // Split the paths into components
+            const components1 = path1.split("/");
+            const components2 = path2.split("/");
+
+            // If one path is a prefix of the other, the shorter one should come first
+            if (components1.length !== components2.length) {
+                return components1.length - components2.length;
+            }
+
+            for (let i = 0; i < Math.min(components1.length, components2.length); i++) {
+                const comp1 = components1[i];
+                const comp2 = components2[i];
+
+                if (comp1 === comp2) {
+                    continue; // If they are the same, move to the next component
+                }
+
+                if (comp1 == null || comp2 == null) {
+                    return comp1 == null ? -1 : 1;
+                }
+
+                // Literal takes precedence over parameter
+                const isComp1Param = comp1.startsWith(":");
+                const isComp2Param = comp2.startsWith(":");
+
+                if (isComp1Param && !isComp2Param) {
+                    return 1;
+                } else if (!isComp1Param && isComp2Param) {
+                    return -1;
+                } else {
+                    // Lexicographical comparison if both are literals or both are parameters
+                    return comp1.localeCompare(comp2);
+                }
+            }
+
+            return 0;
+        };
+
         const listGroups = Array.from(endpointGroups);
-        const sortedEndpoints = listGroups.sort((a, b) => this.sortExpressPaths(a, b));
+        const sortedEndpoints = listGroups.sort(sortExpressPaths);
 
         for (const [endpointPath, methodToEndpoints] of sortedEndpoints) {
             for (const [method, endpoints] of methodToEndpoints) {
@@ -75,54 +123,6 @@ export class MockServer {
                 }
             }
         }
-    }
-
-    // Sort the paths with a priority for literal path parts over parameters
-    // e.g. /movie/:movieId should come after /movie/123, such that express
-    // can match the exact endpoint before the variable one (/movie/:movieId)
-    sortExpressPaths(
-        endpoint1: [string, Map<string, HttpEndpoint[]>],
-        endpoint2: [string, Map<string, HttpEndpoint[]>]
-    ): number {
-        const path1 = endpoint1[0];
-        const path2 = endpoint2[0];
-
-        // Split the paths into components
-        const components1 = path1.split("/");
-        const components2 = path2.split("/");
-
-        // If one path is a prefix of the other, the shorter one should come first
-        if (components1.length !== components2.length) {
-            return components1.length - components2.length;
-        }
-
-        for (let i = 0; i < Math.min(components1.length, components2.length); i++) {
-            const comp1 = components1[i];
-            const comp2 = components2[i];
-
-            if (comp1 === comp2) {
-                continue; // If they are the same, move to the next component
-            }
-
-            if (comp1 == null || comp2 == null) {
-                return comp1 == null ? -1 : 1;
-            }
-
-            // Literal takes precedence over parameter
-            const isComp1Param = comp1.startsWith(":");
-            const isComp2Param = comp2.startsWith(":");
-
-            if (isComp1Param && !isComp2Param) {
-                return 1;
-            } else if (!isComp1Param && isComp2Param) {
-                return -1;
-            } else {
-                // Lexicographical comparison if both are literals or both are parameters
-                return comp1.localeCompare(comp2);
-            }
-        }
-
-        return 0;
     }
 
     public stop(): void {
