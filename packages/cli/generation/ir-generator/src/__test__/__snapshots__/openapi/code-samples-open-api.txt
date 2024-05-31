@@ -746,11 +746,20 @@ axios.request(options).then(function (response) {
                   "value": {
                     "jsonExample": true,
                     "shape": {
-                      "primitive": {
-                        "boolean": true,
-                        "type": "boolean",
+                      "container": {
+                        "optional": {
+                          "jsonExample": true,
+                          "shape": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "optional",
                       },
-                      "type": "primitive",
+                      "type": "container",
                     },
                   },
                 },
