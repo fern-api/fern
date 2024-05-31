@@ -4,6 +4,7 @@
 
 import * as core from "../../core";
 import { Auth } from "../../api/resources/auth/client/Client";
+import * as errors from "../../errors/index";
 
 /**
  * The OAuthTokenProvider retrieves an OAuth access token, refreshing it as needed.
@@ -45,7 +46,30 @@ export class OAuthTokenProvider {
             clientSecret: await core.Supplier.get(this._clientSecret),
         });
         if (!tokenResponse.ok) {
-            return this._accessToken ?? "";
+            switch (tokenResponse.error.content.reason) {
+                case "non-json":
+                    throw new errors.SeedOauthClientCredentialsError({
+                        statusCode: tokenResponse.error.content.statusCode,
+                        message: tokenResponse.error.content.rawBody,
+                    });
+                case "status-code":
+                    throw new errors.SeedOauthClientCredentialsError({
+                        statusCode: tokenResponse.error.content.statusCode,
+                        body: tokenResponse.error.content.body,
+                    });
+                case "timeout":
+                    throw new errors.SeedOauthClientCredentialsError({
+                        message: "Failed to retrieve access token; request timed out",
+                    });
+                case "unknown":
+                    throw new errors.SeedOauthClientCredentialsError({
+                        message: tokenResponse.error.content.errorMessage,
+                    });
+                default:
+                    throw new errors.SeedOauthClientCredentialsError({
+                        message: "Failed to retrieve access token",
+                    });
+            }
         }
         this._accessToken = tokenResponse.body.accessToken;
         this._expiresAt = this.getExpiresAt(tokenResponse.body.expiresIn, this.BUFFER_IN_MINUTES);
