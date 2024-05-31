@@ -29,6 +29,7 @@ export function convertHttpOperation({
 }): EndpointWithExample {
     const { document, operation, path, method, baseBreadcrumbs, sdkMethodName } = operationContext;
 
+    const idempotent = getExtension<boolean>(operation, FernOpenAPIExtension.IDEMPOTENT);
     const requestNameOverride = getExtension<string>(operation, [
         FernOpenAPIExtension.REQUEST_NAME_V1,
         FernOpenAPIExtension.REQUEST_NAME_V2
@@ -108,6 +109,7 @@ export function convertHttpOperation({
     return {
         summary: operation.summary,
         internal: getExtension<boolean>(operation, OpenAPIExtension.INTERNAL),
+        idempotent: idempotent,
         audiences: getExtension<string[]>(operation, FernOpenAPIExtension.AUDIENCES) ?? [],
         operationId:
             operation.operationId != null && suffix != null

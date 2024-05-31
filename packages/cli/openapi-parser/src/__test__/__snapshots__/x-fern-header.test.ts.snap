@@ -15,6 +15,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "examples": [],
       "generatedRequestName": "UserGetStreamRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "get_stream",
@@ -166,6 +167,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       ],
       "generatedRequestName": "UserGetRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "get",
@@ -260,6 +262,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [
     "StreamUser",
     "User",
