@@ -1578,7 +1578,7 @@ exports[`ir {"name":"file-upload"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "ef282239-e05f-4b34-8390-82f61b0c00fd",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -8027,7 +8027,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "86e0e02b-cd69-4628-98cb-ca623306882f",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/b",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -8157,7 +8157,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "66e67eae-6412-4b77-83d5-15835148f98a",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -9954,7 +9954,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
-                            "id": "96b20afd-ea11-4d39-99e9-8d99bd1d31e9",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -11186,7 +11186,7 @@ exports[`ir {"name":"packages"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "52f67edb-2768-43c9-a924-f1cd14446e4e",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -12556,7 +12556,7 @@ exports[`ir {"name":"response-property"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "5c46e713-6ea1-4677-bddb-eec2c0de4fa4",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/movie",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -12982,7 +12982,7 @@ exports[`ir {"name":"response-property"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "25c57eda-bc11-4745-a5db-3ac91626d415",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/movie",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -13977,7 +13977,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "8cb5fa0d-68f4-45a1-a7ea-caa6b11d67d6",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -14224,7 +14224,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                         },
                         {
                             "exampleType": "generated",
-                            "id": "8cb5fa0d-68f4-45a1-a7ea-caa6b11d67d6",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -17079,7 +17079,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                         },
                         {
                             "exampleType": "generated",
-                            "id": "b2040c59-af9f-4b2a-af74-99cc6f148856",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -17550,7 +17550,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                         },
                         {
                             "exampleType": "generated",
-                            "id": "b2040c59-af9f-4b2a-af74-99cc6f148856",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -18021,7 +18021,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                         },
                         {
                             "exampleType": "generated",
-                            "id": "b2040c59-af9f-4b2a-af74-99cc6f148856",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -25527,7 +25527,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "91028fc7-c05e-4086-8d99-5ae81e28b827",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -25774,7 +25774,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
-                            "id": "91028fc7-c05e-4086-8d99-5ae81e28b827",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -27399,7 +27399,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
-                            "id": "21fc3aa7-8218-46cb-bf5d-7c07c56a9936",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -27870,7 +27870,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
-                            "id": "21fc3aa7-8218-46cb-bf5d-7c07c56a9936",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -28341,7 +28341,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
-                            "id": "21fc3aa7-8218-46cb-bf5d-7c07c56a9936",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -30309,7 +30309,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
-                            "id": "282d5553-23e8-4e91-a49d-5854414c3965",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/",
                             "rootPathParameters": [
                                 {
@@ -30964,7 +30964,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
-                            "id": "282d5553-23e8-4e91-a49d-5854414c3965",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/",
                             "rootPathParameters": [
                                 {
@@ -31619,7 +31619,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
-                            "id": "282d5553-23e8-4e91-a49d-5854414c3965",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/",
                             "rootPathParameters": [
                                 {
@@ -31882,7 +31882,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
-                            "id": "282d5553-23e8-4e91-a49d-5854414c3965",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/",
                             "rootPathParameters": [
                                 {
@@ -32496,7 +32496,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "a9585457-1e91-4a70-a01b-3601f6266f90",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/",
                             "rootPathParameters": [
                                 {
@@ -32660,7 +32660,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
-                            "id": "a9585457-1e91-4a70-a01b-3601f6266f90",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/",
                             "rootPathParameters": [
                                 {
@@ -33469,7 +33469,7 @@ exports[`ir {"name":"streaming"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "08146172-5ad5-4948-9ffc-bb44cb3d8bb5",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/streaming",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -33704,7 +33704,7 @@ exports[`ir {"name":"streaming"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "9d0e2a67-20b1-437b-b70b-c8fb8d749baa",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/maybe-streaming",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -34462,7 +34462,7 @@ exports[`ir {"name":"variables"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "55acf17d-46e6-41b7-a26f-3e22e207f1de",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/",
                             "rootPathParameters": [
                                 {

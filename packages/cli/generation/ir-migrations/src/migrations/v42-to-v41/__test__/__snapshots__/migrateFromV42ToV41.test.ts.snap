@@ -488,7 +488,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "78a9ae41-7e17-40db-9718-c1ebe31846e0",
+              "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
               "name": undefined,
               "queryParameters": [],
               "request": {
@@ -1514,7 +1514,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "2b16b013-5469-4cef-ae5c-45ca7ae95c4e",
+              "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
               "name": undefined,
               "queryParameters": [],
               "request": {
@@ -3385,7 +3385,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                 },
               ],
               "exampleType": "generated",
-              "id": "f6dc28d2-6a27-4b52-a342-4051c24f9972",
+              "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
               "name": undefined,
               "queryParameters": [
                 {
@@ -4660,7 +4660,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "e3231faf-bc58-4e23-a346-b461f1dda111",
+              "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
               "name": undefined,
               "queryParameters": [
                 {

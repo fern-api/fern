@@ -468,7 +468,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "ff85bed1-6392-40d3-bd05-a49a80536930",
+                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],

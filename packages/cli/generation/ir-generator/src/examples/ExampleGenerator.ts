@@ -41,7 +41,6 @@ import {
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-api/ir-sdk";
-import { v4 as uuidv4 } from "uuid";
 
 interface HttpParameterExample {
     name: NameAndWireValue;
@@ -187,7 +186,7 @@ export class ExampleGenerator {
     ): Omit<HttpEndpointExample, "response" | "type" | "_visit" | "exampleType"> {
         const examples = endpoint.examples;
         return {
-            id: uuidv4(),
+            id: "5de04949-6f1b-4560-b4d4-c454c473cf33",
             url: endpoint.path.head,
             rootPathParameters: rootPathParameters.map((p) =>
                 this.generatePathParameterExample({

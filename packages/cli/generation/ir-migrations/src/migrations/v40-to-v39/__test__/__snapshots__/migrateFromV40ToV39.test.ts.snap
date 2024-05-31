@@ -124,7 +124,7 @@ exports[`migrateFromV40ToV39 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "d20d5310-9e8c-4efa-85b2-eccae86f655a",
+              "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
               "name": undefined,
               "queryParameters": [],
               "request": {
