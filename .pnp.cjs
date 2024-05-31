@@ -7204,7 +7204,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/cli/mock/",\
           "packageDependencies": [\
             ["@fern-api/mock", "workspace:packages/cli/mock"],\
-            ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/ir-sdk", "workspace:packages/ir-sdk"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@types/express", "npm:4.17.20"],\
