@@ -2553,66 +2553,57 @@
                                     },
                                     "value": {
                                         "shape": {
-                                            "type": "container",
-                                            "container": {
-                                                "type": "optional",
-                                                "optional": {
-                                                    "shape": {
-                                                        "type": "named",
-                                                        "typeName": {
-                                                            "name": {
-                                                                "originalName": "Operand",
-                                                                "camelCase": {
-                                                                    "unsafeName": "operand",
-                                                                    "safeName": "operand"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "operand",
-                                                                    "safeName": "operand"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "OPERAND",
-                                                                    "safeName": "OPERAND"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "Operand",
-                                                                    "safeName": "Operand"
-                                                                }
-                                                            },
-                                                            "fernFilepath": {
-                                                                "allParts": [],
-                                                                "packagePath": [],
-                                                                "file": null
-                                                            },
-                                                            "typeId": "type_:Operand"
+                                            "type": "named",
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "Operand",
+                                                    "camelCase": {
+                                                        "unsafeName": "operand",
+                                                        "safeName": "operand"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "operand",
+                                                        "safeName": "operand"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "OPERAND",
+                                                        "safeName": "OPERAND"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Operand",
+                                                        "safeName": "Operand"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "typeId": "type_:Operand"
+                                            },
+                                            "shape": {
+                                                "type": "enum",
+                                                "value": {
+                                                    "name": {
+                                                        "originalName": "GREATER_THAN",
+                                                        "camelCase": {
+                                                            "unsafeName": "greaterThan",
+                                                            "safeName": "greaterThan"
                                                         },
-                                                        "shape": {
-                                                            "type": "enum",
-                                                            "value": {
-                                                                "name": {
-                                                                    "originalName": "GREATER_THAN",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "greaterThan",
-                                                                        "safeName": "greaterThan"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "greater_than",
-                                                                        "safeName": "greater_than"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "GREATER_THAN",
-                                                                        "safeName": "GREATER_THAN"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "GreaterThan",
-                                                                        "safeName": "GreaterThan"
-                                                                    }
-                                                                },
-                                                                "wireValue": ">"
-                                                            }
+                                                        "snakeCase": {
+                                                            "unsafeName": "greater_than",
+                                                            "safeName": "greater_than"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "GREATER_THAN",
+                                                            "safeName": "GREATER_THAN"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "GreaterThan",
+                                                            "safeName": "GreaterThan"
                                                         }
                                                     },
-                                                    "jsonExample": ">"
+                                                    "wireValue": ">"
                                                 }
                                             }
                                         },
@@ -2757,99 +2748,90 @@
                                     },
                                     "value": {
                                         "shape": {
-                                            "type": "container",
-                                            "container": {
-                                                "type": "optional",
-                                                "optional": {
+                                            "type": "named",
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "ColorOrOperand",
+                                                    "camelCase": {
+                                                        "unsafeName": "colorOrOperand",
+                                                        "safeName": "colorOrOperand"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "color_or_operand",
+                                                        "safeName": "color_or_operand"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "COLOR_OR_OPERAND",
+                                                        "safeName": "COLOR_OR_OPERAND"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "ColorOrOperand",
+                                                        "safeName": "ColorOrOperand"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "typeId": "type_:ColorOrOperand"
+                                            },
+                                            "shape": {
+                                                "type": "undiscriminatedUnion",
+                                                "index": 0,
+                                                "singleUnionType": {
                                                     "shape": {
                                                         "type": "named",
                                                         "typeName": {
-                                                            "name": {
-                                                                "originalName": "ColorOrOperand",
-                                                                "camelCase": {
-                                                                    "unsafeName": "colorOrOperand",
-                                                                    "safeName": "colorOrOperand"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "color_or_operand",
-                                                                    "safeName": "color_or_operand"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "COLOR_OR_OPERAND",
-                                                                    "safeName": "COLOR_OR_OPERAND"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "ColorOrOperand",
-                                                                    "safeName": "ColorOrOperand"
-                                                                }
-                                                            },
+                                                            "typeId": "type_:Color",
                                                             "fernFilepath": {
                                                                 "allParts": [],
                                                                 "packagePath": [],
                                                                 "file": null
                                                             },
-                                                            "typeId": "type_:ColorOrOperand"
+                                                            "name": {
+                                                                "originalName": "Color",
+                                                                "camelCase": {
+                                                                    "unsafeName": "color",
+                                                                    "safeName": "color"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "color",
+                                                                    "safeName": "color"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "COLOR",
+                                                                    "safeName": "COLOR"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Color",
+                                                                    "safeName": "Color"
+                                                                }
+                                                            }
                                                         },
                                                         "shape": {
-                                                            "type": "undiscriminatedUnion",
-                                                            "index": 0,
-                                                            "singleUnionType": {
-                                                                "shape": {
-                                                                    "type": "named",
-                                                                    "typeName": {
-                                                                        "typeId": "type_:Color",
-                                                                        "fernFilepath": {
-                                                                            "allParts": [],
-                                                                            "packagePath": [],
-                                                                            "file": null
-                                                                        },
-                                                                        "name": {
-                                                                            "originalName": "Color",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "color",
-                                                                                "safeName": "color"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "color",
-                                                                                "safeName": "color"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "COLOR",
-                                                                                "safeName": "COLOR"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Color",
-                                                                                "safeName": "Color"
-                                                                            }
-                                                                        }
+                                                            "type": "enum",
+                                                            "value": {
+                                                                "name": {
+                                                                    "originalName": "RED",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "red",
+                                                                        "safeName": "red"
                                                                     },
-                                                                    "shape": {
-                                                                        "type": "enum",
-                                                                        "value": {
-                                                                            "name": {
-                                                                                "originalName": "RED",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "red",
-                                                                                    "safeName": "red"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "red",
-                                                                                    "safeName": "red"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "RED",
-                                                                                    "safeName": "RED"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Red",
-                                                                                    "safeName": "Red"
-                                                                                }
-                                                                            },
-                                                                            "wireValue": "red"
-                                                                        }
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "red",
+                                                                        "safeName": "red"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "RED",
+                                                                        "safeName": "RED"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Red",
+                                                                        "safeName": "Red"
                                                                     }
                                                                 },
-                                                                "jsonExample": "red"
+                                                                "wireValue": "red"
                                                             }
                                                         }
                                                     },
@@ -3608,66 +3590,57 @@
                                     },
                                     "value": {
                                         "shape": {
-                                            "type": "container",
-                                            "container": {
-                                                "type": "optional",
-                                                "optional": {
-                                                    "shape": {
-                                                        "type": "named",
-                                                        "typeName": {
-                                                            "name": {
-                                                                "originalName": "Operand",
-                                                                "camelCase": {
-                                                                    "unsafeName": "operand",
-                                                                    "safeName": "operand"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "operand",
-                                                                    "safeName": "operand"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "OPERAND",
-                                                                    "safeName": "OPERAND"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "Operand",
-                                                                    "safeName": "Operand"
-                                                                }
-                                                            },
-                                                            "fernFilepath": {
-                                                                "allParts": [],
-                                                                "packagePath": [],
-                                                                "file": null
-                                                            },
-                                                            "typeId": "type_:Operand"
+                                            "type": "named",
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "Operand",
+                                                    "camelCase": {
+                                                        "unsafeName": "operand",
+                                                        "safeName": "operand"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "operand",
+                                                        "safeName": "operand"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "OPERAND",
+                                                        "safeName": "OPERAND"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Operand",
+                                                        "safeName": "Operand"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "typeId": "type_:Operand"
+                                            },
+                                            "shape": {
+                                                "type": "enum",
+                                                "value": {
+                                                    "name": {
+                                                        "originalName": "GREATER_THAN",
+                                                        "camelCase": {
+                                                            "unsafeName": "greaterThan",
+                                                            "safeName": "greaterThan"
                                                         },
-                                                        "shape": {
-                                                            "type": "enum",
-                                                            "value": {
-                                                                "name": {
-                                                                    "originalName": "GREATER_THAN",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "greaterThan",
-                                                                        "safeName": "greaterThan"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "greater_than",
-                                                                        "safeName": "greater_than"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "GREATER_THAN",
-                                                                        "safeName": "GREATER_THAN"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "GreaterThan",
-                                                                        "safeName": "GreaterThan"
-                                                                    }
-                                                                },
-                                                                "wireValue": ">"
-                                                            }
+                                                        "snakeCase": {
+                                                            "unsafeName": "greater_than",
+                                                            "safeName": "greater_than"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "GREATER_THAN",
+                                                            "safeName": "GREATER_THAN"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "GreaterThan",
+                                                            "safeName": "GreaterThan"
                                                         }
                                                     },
-                                                    "jsonExample": ">"
+                                                    "wireValue": ">"
                                                 }
                                             }
                                         },
@@ -3818,99 +3791,90 @@
                                     },
                                     "value": {
                                         "shape": {
-                                            "type": "container",
-                                            "container": {
-                                                "type": "optional",
-                                                "optional": {
+                                            "type": "named",
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "ColorOrOperand",
+                                                    "camelCase": {
+                                                        "unsafeName": "colorOrOperand",
+                                                        "safeName": "colorOrOperand"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "color_or_operand",
+                                                        "safeName": "color_or_operand"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "COLOR_OR_OPERAND",
+                                                        "safeName": "COLOR_OR_OPERAND"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "ColorOrOperand",
+                                                        "safeName": "ColorOrOperand"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "typeId": "type_:ColorOrOperand"
+                                            },
+                                            "shape": {
+                                                "type": "undiscriminatedUnion",
+                                                "index": 0,
+                                                "singleUnionType": {
                                                     "shape": {
                                                         "type": "named",
                                                         "typeName": {
-                                                            "name": {
-                                                                "originalName": "ColorOrOperand",
-                                                                "camelCase": {
-                                                                    "unsafeName": "colorOrOperand",
-                                                                    "safeName": "colorOrOperand"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "color_or_operand",
-                                                                    "safeName": "color_or_operand"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "COLOR_OR_OPERAND",
-                                                                    "safeName": "COLOR_OR_OPERAND"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "ColorOrOperand",
-                                                                    "safeName": "ColorOrOperand"
-                                                                }
-                                                            },
+                                                            "typeId": "type_:Color",
                                                             "fernFilepath": {
                                                                 "allParts": [],
                                                                 "packagePath": [],
                                                                 "file": null
                                                             },
-                                                            "typeId": "type_:ColorOrOperand"
+                                                            "name": {
+                                                                "originalName": "Color",
+                                                                "camelCase": {
+                                                                    "unsafeName": "color",
+                                                                    "safeName": "color"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "color",
+                                                                    "safeName": "color"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "COLOR",
+                                                                    "safeName": "COLOR"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Color",
+                                                                    "safeName": "Color"
+                                                                }
+                                                            }
                                                         },
                                                         "shape": {
-                                                            "type": "undiscriminatedUnion",
-                                                            "index": 0,
-                                                            "singleUnionType": {
-                                                                "shape": {
-                                                                    "type": "named",
-                                                                    "typeName": {
-                                                                        "typeId": "type_:Color",
-                                                                        "fernFilepath": {
-                                                                            "allParts": [],
-                                                                            "packagePath": [],
-                                                                            "file": null
-                                                                        },
-                                                                        "name": {
-                                                                            "originalName": "Color",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "color",
-                                                                                "safeName": "color"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "color",
-                                                                                "safeName": "color"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "COLOR",
-                                                                                "safeName": "COLOR"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Color",
-                                                                                "safeName": "Color"
-                                                                            }
-                                                                        }
+                                                            "type": "enum",
+                                                            "value": {
+                                                                "name": {
+                                                                    "originalName": "RED",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "red",
+                                                                        "safeName": "red"
                                                                     },
-                                                                    "shape": {
-                                                                        "type": "enum",
-                                                                        "value": {
-                                                                            "name": {
-                                                                                "originalName": "RED",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "red",
-                                                                                    "safeName": "red"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "red",
-                                                                                    "safeName": "red"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "RED",
-                                                                                    "safeName": "RED"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Red",
-                                                                                    "safeName": "Red"
-                                                                                }
-                                                                            },
-                                                                            "wireValue": "red"
-                                                                        }
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "red",
+                                                                        "safeName": "red"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "RED",
+                                                                        "safeName": "RED"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Red",
+                                                                        "safeName": "Red"
                                                                     }
                                                                 },
-                                                                "jsonExample": "red"
+                                                                "wireValue": "red"
                                                             }
                                                         }
                                                     },
@@ -4389,66 +4353,57 @@
                                     },
                                     "value": {
                                         "shape": {
-                                            "type": "container",
-                                            "container": {
-                                                "type": "optional",
-                                                "optional": {
-                                                    "shape": {
-                                                        "type": "named",
-                                                        "typeName": {
-                                                            "name": {
-                                                                "originalName": "Operand",
-                                                                "camelCase": {
-                                                                    "unsafeName": "operand",
-                                                                    "safeName": "operand"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "operand",
-                                                                    "safeName": "operand"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "OPERAND",
-                                                                    "safeName": "OPERAND"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "Operand",
-                                                                    "safeName": "Operand"
-                                                                }
-                                                            },
-                                                            "fernFilepath": {
-                                                                "allParts": [],
-                                                                "packagePath": [],
-                                                                "file": null
-                                                            },
-                                                            "typeId": "type_:Operand"
+                                            "type": "named",
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "Operand",
+                                                    "camelCase": {
+                                                        "unsafeName": "operand",
+                                                        "safeName": "operand"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "operand",
+                                                        "safeName": "operand"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "OPERAND",
+                                                        "safeName": "OPERAND"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Operand",
+                                                        "safeName": "Operand"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "typeId": "type_:Operand"
+                                            },
+                                            "shape": {
+                                                "type": "enum",
+                                                "value": {
+                                                    "name": {
+                                                        "originalName": "GREATER_THAN",
+                                                        "camelCase": {
+                                                            "unsafeName": "greaterThan",
+                                                            "safeName": "greaterThan"
                                                         },
-                                                        "shape": {
-                                                            "type": "enum",
-                                                            "value": {
-                                                                "name": {
-                                                                    "originalName": "GREATER_THAN",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "greaterThan",
-                                                                        "safeName": "greaterThan"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "greater_than",
-                                                                        "safeName": "greater_than"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "GREATER_THAN",
-                                                                        "safeName": "GREATER_THAN"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "GreaterThan",
-                                                                        "safeName": "GreaterThan"
-                                                                    }
-                                                                },
-                                                                "wireValue": ">"
-                                                            }
+                                                        "snakeCase": {
+                                                            "unsafeName": "greater_than",
+                                                            "safeName": "greater_than"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "GREATER_THAN",
+                                                            "safeName": "GREATER_THAN"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "GreaterThan",
+                                                            "safeName": "GreaterThan"
                                                         }
                                                     },
-                                                    "jsonExample": ">"
+                                                    "wireValue": ">"
                                                 }
                                             }
                                         },
@@ -4599,99 +4554,90 @@
                                     },
                                     "value": {
                                         "shape": {
-                                            "type": "container",
-                                            "container": {
-                                                "type": "optional",
-                                                "optional": {
+                                            "type": "named",
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "ColorOrOperand",
+                                                    "camelCase": {
+                                                        "unsafeName": "colorOrOperand",
+                                                        "safeName": "colorOrOperand"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "color_or_operand",
+                                                        "safeName": "color_or_operand"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "COLOR_OR_OPERAND",
+                                                        "safeName": "COLOR_OR_OPERAND"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "ColorOrOperand",
+                                                        "safeName": "ColorOrOperand"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "typeId": "type_:ColorOrOperand"
+                                            },
+                                            "shape": {
+                                                "type": "undiscriminatedUnion",
+                                                "index": 0,
+                                                "singleUnionType": {
                                                     "shape": {
                                                         "type": "named",
                                                         "typeName": {
-                                                            "name": {
-                                                                "originalName": "ColorOrOperand",
-                                                                "camelCase": {
-                                                                    "unsafeName": "colorOrOperand",
-                                                                    "safeName": "colorOrOperand"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "color_or_operand",
-                                                                    "safeName": "color_or_operand"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "COLOR_OR_OPERAND",
-                                                                    "safeName": "COLOR_OR_OPERAND"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "ColorOrOperand",
-                                                                    "safeName": "ColorOrOperand"
-                                                                }
-                                                            },
+                                                            "typeId": "type_:Color",
                                                             "fernFilepath": {
                                                                 "allParts": [],
                                                                 "packagePath": [],
                                                                 "file": null
                                                             },
-                                                            "typeId": "type_:ColorOrOperand"
+                                                            "name": {
+                                                                "originalName": "Color",
+                                                                "camelCase": {
+                                                                    "unsafeName": "color",
+                                                                    "safeName": "color"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "color",
+                                                                    "safeName": "color"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "COLOR",
+                                                                    "safeName": "COLOR"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Color",
+                                                                    "safeName": "Color"
+                                                                }
+                                                            }
                                                         },
                                                         "shape": {
-                                                            "type": "undiscriminatedUnion",
-                                                            "index": 0,
-                                                            "singleUnionType": {
-                                                                "shape": {
-                                                                    "type": "named",
-                                                                    "typeName": {
-                                                                        "typeId": "type_:Color",
-                                                                        "fernFilepath": {
-                                                                            "allParts": [],
-                                                                            "packagePath": [],
-                                                                            "file": null
-                                                                        },
-                                                                        "name": {
-                                                                            "originalName": "Color",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "color",
-                                                                                "safeName": "color"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "color",
-                                                                                "safeName": "color"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "COLOR",
-                                                                                "safeName": "COLOR"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Color",
-                                                                                "safeName": "Color"
-                                                                            }
-                                                                        }
+                                                            "type": "enum",
+                                                            "value": {
+                                                                "name": {
+                                                                    "originalName": "RED",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "red",
+                                                                        "safeName": "red"
                                                                     },
-                                                                    "shape": {
-                                                                        "type": "enum",
-                                                                        "value": {
-                                                                            "name": {
-                                                                                "originalName": "RED",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "red",
-                                                                                    "safeName": "red"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "red",
-                                                                                    "safeName": "red"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "RED",
-                                                                                    "safeName": "RED"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Red",
-                                                                                    "safeName": "Red"
-                                                                                }
-                                                                            },
-                                                                            "wireValue": "red"
-                                                                        }
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "red",
+                                                                        "safeName": "red"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "RED",
+                                                                        "safeName": "RED"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Red",
+                                                                        "safeName": "Red"
                                                                     }
                                                                 },
-                                                                "jsonExample": "red"
+                                                                "wireValue": "red"
                                                             }
                                                         }
                                                     },

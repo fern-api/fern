@@ -222,47 +222,34 @@
                                 "shape": {
                                     "type": "container",
                                     "container": {
-                                        "type": "optional",
-                                        "optional": {
-                                            "shape": {
-                                                "type": "container",
-                                                "container": {
-                                                    "type": "map",
-                                                    "map": [
-                                                        {
-                                                            "key": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "string"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "string"
-                                                            },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "unknown",
-                                                                    "unknown": {
-                                                                        "key": "value"
-                                                                    }
-                                                                },
-                                                                "jsonExample": {
-                                                                    "key": "value"
-                                                                }
+                                        "type": "map",
+                                        "map": [
+                                            {
+                                                "key": {
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "string",
+                                                            "string": {
+                                                                "original": "string"
                                                             }
                                                         }
-                                                    ]
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "string": {
-                                                    "key": "value"
+                                                    },
+                                                    "jsonExample": "string"
+                                                },
+                                                "value": {
+                                                    "shape": {
+                                                        "type": "unknown",
+                                                        "unknown": {
+                                                            "key": "value"
+                                                        }
+                                                    },
+                                                    "jsonExample": {
+                                                        "key": "value"
+                                                    }
                                                 }
                                             }
-                                        }
+                                        ]
                                     }
                                 },
                                 "jsonExample": {

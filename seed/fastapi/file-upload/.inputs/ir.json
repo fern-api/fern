@@ -1244,20 +1244,11 @@
                                     },
                                     "value": {
                                         "shape": {
-                                            "type": "container",
-                                            "container": {
-                                                "type": "optional",
-                                                "optional": {
-                                                    "shape": {
-                                                        "type": "primitive",
-                                                        "primitive": {
-                                                            "type": "string",
-                                                            "string": {
-                                                                "original": "string"
-                                                            }
-                                                        }
-                                                    },
-                                                    "jsonExample": "string"
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
                                                 }
                                             }
                                         },
@@ -1323,19 +1314,10 @@
                                     },
                                     "value": {
                                         "shape": {
-                                            "type": "container",
-                                            "container": {
-                                                "type": "optional",
-                                                "optional": {
-                                                    "shape": {
-                                                        "type": "primitive",
-                                                        "primitive": {
-                                                            "type": "integer",
-                                                            "integer": 1
-                                                        }
-                                                    },
-                                                    "jsonExample": 1
-                                                }
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "integer",
+                                                "integer": 1
                                             }
                                         },
                                         "jsonExample": 1
@@ -1402,20 +1384,11 @@
                                     },
                                     "value": {
                                         "shape": {
-                                            "type": "container",
-                                            "container": {
-                                                "type": "optional",
-                                                "optional": {
-                                                    "shape": {
-                                                        "type": "primitive",
-                                                        "primitive": {
-                                                            "type": "string",
-                                                            "string": {
-                                                                "original": "string"
-                                                            }
-                                                        }
-                                                    },
-                                                    "jsonExample": "string"
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
                                                 }
                                             }
                                         },

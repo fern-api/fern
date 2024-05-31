@@ -19421,7 +19421,25 @@
                     "idempotent": false,
                     "examples": [
                         {
-                            "name": null,
+                            "name": {
+                                "originalName": "Example0",
+                                "camelCase": {
+                                    "unsafeName": "example0",
+                                    "safeName": "example0"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "example_0",
+                                    "safeName": "example_0"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "EXAMPLE_0",
+                                    "safeName": "EXAMPLE_0"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Example0",
+                                    "safeName": "Example0"
+                                }
+                            },
                             "url": "//check/id-2sdx82h",
                             "rootPathParameters": [],
                             "endpointPathParameters": [
@@ -19456,6 +19474,75 @@
                                             }
                                         },
                                         "jsonExample": "id-2sdx82h"
+                                    }
+                                }
+                            ],
+                            "servicePathParameters": [],
+                            "endpointHeaders": [],
+                            "serviceHeaders": [],
+                            "queryParameters": [],
+                            "request": null,
+                            "response": {
+                                "type": "ok",
+                                "body": null
+                            },
+                            "codeSamples": null,
+                            "docs": null
+                        },
+                        {
+                            "name": {
+                                "originalName": "Example2",
+                                "camelCase": {
+                                    "unsafeName": "example2",
+                                    "safeName": "example2"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "example_2",
+                                    "safeName": "example_2"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "EXAMPLE_2",
+                                    "safeName": "EXAMPLE_2"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Example2",
+                                    "safeName": "Example2"
+                                }
+                            },
+                            "url": "//check/id-3tey93i",
+                            "rootPathParameters": [],
+                            "endpointPathParameters": [
+                                {
+                                    "name": {
+                                        "originalName": "id",
+                                        "camelCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "ID",
+                                            "safeName": "ID"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Id",
+                                            "safeName": "Id"
+                                        }
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "id-3tey93i"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "id-3tey93i"
                                     }
                                 }
                             ],
@@ -19529,7 +19616,25 @@
                     "idempotent": false,
                     "examples": [
                         {
-                            "name": null,
+                            "name": {
+                                "originalName": "Example0",
+                                "camelCase": {
+                                    "unsafeName": "example0",
+                                    "safeName": "example0"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "example_0",
+                                    "safeName": "example_0"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "EXAMPLE_0",
+                                    "safeName": "EXAMPLE_0"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Example0",
+                                    "safeName": "Example0"
+                                }
+                            },
                             "url": "//ping",
                             "rootPathParameters": [],
                             "endpointPathParameters": [],
