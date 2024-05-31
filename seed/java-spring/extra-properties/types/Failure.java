@@ -4,11 +4,18 @@
 
 package types;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonDeserialize(
+    builder = Failure.Builder.class
+)
 public final class Failure {
   private Failure() {
   }
@@ -27,5 +34,25 @@ public final class Failure {
   @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
+  }
+
+  public static Builder builder() {
+    return new Builder();
+  }
+
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  public static final class Builder {
+    private Builder() {
+    }
+
+    public Builder from(Failure other) {
+      return this;
+    }
+
+    public Failure build() {
+      return new Failure();
+    }
   }
 }
