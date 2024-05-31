@@ -666,9 +666,7 @@ public final class BuilderGenerator {
             }
         }
 
-        if (nonRequiredFields.isEmpty() && requiredFields.isEmpty()) {
-            return Optional.empty();
-        } else if (requiredFields.isEmpty()) {
+        if (requiredFields.isEmpty()) {
             return Optional.of(DefaultBuilderConfig.builder()
                     .addAllProperties(objectPropertyWithFields)
                     .build());
