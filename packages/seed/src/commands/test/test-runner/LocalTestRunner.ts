@@ -51,7 +51,7 @@ export class LocalTestRunner extends TestRunner {
         const absolutePathToLocalOutputDirectory = AbsoluteFilePath.of(localOutputDirectory.path);
 
         const generatorInvocation = getGeneratorInvocation({
-            absolutePathToOutput: absolutePathToIntermediateRepresentation,
+            absolutePathToOutput: absolutePathToLocalOutputDirectory,
             docker: this.getParsedDockerName(),
             language,
             customConfig,
@@ -86,6 +86,7 @@ export class LocalTestRunner extends TestRunner {
         }).config;
         generatorConfig = {
             ...generatorConfig,
+            irFilepath: absolutePathToIntermediateRepresentation,
             output: {
                 ...generatorConfig.output,
                 path: absolutePathToLocalOutputDirectory,
