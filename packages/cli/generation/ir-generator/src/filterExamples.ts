@@ -122,6 +122,8 @@ function filterExampleTypeReference({
                         )
                     )
                 }),
+                // This is just a primitive, don't do anything
+                literal: () => exampleTypeReference,
                 _other: () => {
                     throw new Error("Received unknown type for example.");
                 }

@@ -41,6 +41,7 @@ import {
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-api/ir-sdk";
+import { v4 as uuidv4 } from "uuid";
 
 interface HttpParameterExample {
     name: NameAndWireValue;
@@ -186,6 +187,7 @@ export class ExampleGenerator {
     ): Omit<HttpEndpointExample, "response" | "type" | "_visit" | "exampleType"> {
         const examples = endpoint.examples;
         return {
+            id: uuidv4(),
             url: endpoint.path.head,
             rootPathParameters: rootPathParameters.map((p) =>
                 this.generatePathParameterExample({
@@ -704,12 +706,16 @@ export class ExampleGenerator {
             case "boolean":
                 return {
                     jsonExample: `${literal.boolean}`,
-                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(literal.boolean))
+                    shape: ExampleTypeReferenceShape.container(
+                        ExampleContainer.literal(ExamplePrimitive.boolean(literal.boolean))
+                    )
                 };
             case "string":
                 return {
                     jsonExample: `"${literal.string}"`,
-                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.string({ original: literal.string }))
+                    shape: ExampleTypeReferenceShape.container(
+                        ExampleContainer.literal(ExamplePrimitive.string({ original: literal.string }))
+                    )
                 };
             default:
                 assertNever(literal);

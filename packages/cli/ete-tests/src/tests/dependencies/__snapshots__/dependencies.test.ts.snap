@@ -468,6 +468,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
+                            "id": "9a553998-2fad-46d1-a9c2-982cd33b2909",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -839,4 +840,4 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `2695212`;
+exports[`dependencies file dependencies 1`] = `2699388`;

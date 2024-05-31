@@ -152,6 +152,7 @@ exports[`migrateFromV43ToV42 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
+              "id": "7e44f6ed-0aff-41f9-9328-5c433c545390",
               "name": undefined,
               "queryParameters": [
                 {

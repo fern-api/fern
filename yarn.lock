@@ -3897,6 +3897,7 @@ __metadata:
     "@types/node": ^18.7.18
     "@types/prettier": ^2.7.1
     "@types/url-join": 4.0.1
+    "@types/uuid": ^9.0.8
     depcheck: ^1.4.6
     eslint: ^8.56.0
     jest: ^29.7.0
@@ -3906,6 +3907,7 @@ __metadata:
     prettier: ^2.7.1
     typescript: 4.6.4
     url-join: ^5.0.0
+    uuid: ^9.0.1
   languageName: unknown
   linkType: soft
 
@@ -3961,6 +3963,7 @@ __metadata:
     "@fern-fern/ir-v42-sdk": 0.0.1
     "@fern-fern/ir-v43-sdk": 0.0.1
     "@fern-fern/ir-v44-sdk": 0.0.1
+    "@fern-fern/ir-v45-sdk": 0.0.3
     "@fern-fern/ir-v5-model": 0.0.3
     "@fern-fern/ir-v6-model": 0.0.33
     "@fern-fern/ir-v7-model": 0.0.2
@@ -5056,6 +5059,13 @@ __metadata:
   version: 0.0.1
   resolution: "@fern-fern/ir-v44-sdk@npm:0.0.1"
   checksum: 4c77796649a63fb5d4bb4846d5445be9fa9ddec6df49dd4aa602c48cab7f27ec010667256a31225290e645cc927a01c38e0e63371dff2c87bf7acd311dbb9ba2
+  languageName: node
+  linkType: hard
+
+"@fern-fern/ir-v45-sdk@npm:0.0.3":
+  version: 0.0.3
+  resolution: "@fern-fern/ir-v45-sdk@npm:0.0.3"
+  checksum: 44a07b00c46d8630812ffd4a0337e9cf284541ca58bcf84b7420f8371496c1312c4b688090ab0191dc14e17f345a94f0bac093a75e758287966bb777e3742cd4
   languageName: node
   linkType: hard
 

@@ -1,3 +1,3 @@
 name: ir
 docs: |
- Add status codes to http responses. 
+ Add a literal type to the example type definition.

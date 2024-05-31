@@ -155,216 +155,10 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
+              "id": "6b8ecb9a-9e48-441f-99ec-d8ea04ffb948",
               "name": undefined,
               "queryParameters": [],
-              "request": {
-                "_visit": [Function],
-                "jsonExample": {
-                  "audience": ""https://api.example.com"",
-                  "client_id": "string",
-                  "client_secret": "string",
-                  "grant_type": ""client_credentials"",
-                  "scope": "string",
-                },
-                "properties": [
-                  {
-                    "name": {
-                      "name": {
-                        "camelCase": {
-                          "safeName": "clientID",
-                          "unsafeName": "clientID",
-                        },
-                        "originalName": "client_id",
-                        "pascalCase": {
-                          "safeName": "ClientID",
-                          "unsafeName": "ClientID",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "CLIENT_ID",
-                          "unsafeName": "CLIENT_ID",
-                        },
-                        "snakeCase": {
-                          "safeName": "client_id",
-                          "unsafeName": "client_id",
-                        },
-                      },
-                      "wireValue": "client_id",
-                    },
-                    "originalTypeDeclaration": undefined,
-                    "value": {
-                      "jsonExample": "string",
-                      "shape": {
-                        "_visit": [Function],
-                        "primitive": {
-                          "_visit": [Function],
-                          "string": {
-                            "original": "string",
-                          },
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                  },
-                  {
-                    "name": {
-                      "name": {
-                        "camelCase": {
-                          "safeName": "clientSecret",
-                          "unsafeName": "clientSecret",
-                        },
-                        "originalName": "client_secret",
-                        "pascalCase": {
-                          "safeName": "ClientSecret",
-                          "unsafeName": "ClientSecret",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "CLIENT_SECRET",
-                          "unsafeName": "CLIENT_SECRET",
-                        },
-                        "snakeCase": {
-                          "safeName": "client_secret",
-                          "unsafeName": "client_secret",
-                        },
-                      },
-                      "wireValue": "client_secret",
-                    },
-                    "originalTypeDeclaration": undefined,
-                    "value": {
-                      "jsonExample": "string",
-                      "shape": {
-                        "_visit": [Function],
-                        "primitive": {
-                          "_visit": [Function],
-                          "string": {
-                            "original": "string",
-                          },
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                  },
-                  {
-                    "name": {
-                      "name": {
-                        "camelCase": {
-                          "safeName": "audience",
-                          "unsafeName": "audience",
-                        },
-                        "originalName": "audience",
-                        "pascalCase": {
-                          "safeName": "Audience",
-                          "unsafeName": "Audience",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "AUDIENCE",
-                          "unsafeName": "AUDIENCE",
-                        },
-                        "snakeCase": {
-                          "safeName": "audience",
-                          "unsafeName": "audience",
-                        },
-                      },
-                      "wireValue": "audience",
-                    },
-                    "originalTypeDeclaration": undefined,
-                    "value": {
-                      "jsonExample": ""https://api.example.com"",
-                      "shape": {
-                        "_visit": [Function],
-                        "primitive": {
-                          "_visit": [Function],
-                          "string": {
-                            "original": "https://api.example.com",
-                          },
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                  },
-                  {
-                    "name": {
-                      "name": {
-                        "camelCase": {
-                          "safeName": "grantType",
-                          "unsafeName": "grantType",
-                        },
-                        "originalName": "grant_type",
-                        "pascalCase": {
-                          "safeName": "GrantType",
-                          "unsafeName": "GrantType",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "GRANT_TYPE",
-                          "unsafeName": "GRANT_TYPE",
-                        },
-                        "snakeCase": {
-                          "safeName": "grant_type",
-                          "unsafeName": "grant_type",
-                        },
-                      },
-                      "wireValue": "grant_type",
-                    },
-                    "originalTypeDeclaration": undefined,
-                    "value": {
-                      "jsonExample": ""client_credentials"",
-                      "shape": {
-                        "_visit": [Function],
-                        "primitive": {
-                          "_visit": [Function],
-                          "string": {
-                            "original": "client_credentials",
-                          },
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                  },
-                  {
-                    "name": {
-                      "name": {
-                        "camelCase": {
-                          "safeName": "scope",
-                          "unsafeName": "scope",
-                        },
-                        "originalName": "scope",
-                        "pascalCase": {
-                          "safeName": "Scope",
-                          "unsafeName": "Scope",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "SCOPE",
-                          "unsafeName": "SCOPE",
-                        },
-                        "snakeCase": {
-                          "safeName": "scope",
-                          "unsafeName": "scope",
-                        },
-                      },
-                      "wireValue": "scope",
-                    },
-                    "originalTypeDeclaration": undefined,
-                    "value": {
-                      "jsonExample": "string",
-                      "shape": {
-                        "_visit": [Function],
-                        "primitive": {
-                          "_visit": [Function],
-                          "string": {
-                            "original": "string",
-                          },
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                  },
-                ],
-                "type": "inlinedRequestBody",
-              },
+              "request": undefined,
               "response": {
                 "_visit": [Function],
                 "body": {
@@ -1158,256 +952,10 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
+              "id": "a7863ba6-e740-40a2-8c3f-5f4d465e8987",
               "name": undefined,
               "queryParameters": [],
-              "request": {
-                "_visit": [Function],
-                "jsonExample": {
-                  "audience": ""https://api.example.com"",
-                  "client_id": "string",
-                  "client_secret": "string",
-                  "grant_type": ""refresh_token"",
-                  "refresh_token": "string",
-                  "scope": "string",
-                },
-                "properties": [
-                  {
-                    "name": {
-                      "name": {
-                        "camelCase": {
-                          "safeName": "clientID",
-                          "unsafeName": "clientID",
-                        },
-                        "originalName": "client_id",
-                        "pascalCase": {
-                          "safeName": "ClientID",
-                          "unsafeName": "ClientID",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "CLIENT_ID",
-                          "unsafeName": "CLIENT_ID",
-                        },
-                        "snakeCase": {
-                          "safeName": "client_id",
-                          "unsafeName": "client_id",
-                        },
-                      },
-                      "wireValue": "client_id",
-                    },
-                    "originalTypeDeclaration": undefined,
-                    "value": {
-                      "jsonExample": "string",
-                      "shape": {
-                        "_visit": [Function],
-                        "primitive": {
-                          "_visit": [Function],
-                          "string": {
-                            "original": "string",
-                          },
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                  },
-                  {
-                    "name": {
-                      "name": {
-                        "camelCase": {
-                          "safeName": "clientSecret",
-                          "unsafeName": "clientSecret",
-                        },
-                        "originalName": "client_secret",
-                        "pascalCase": {
-                          "safeName": "ClientSecret",
-                          "unsafeName": "ClientSecret",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "CLIENT_SECRET",
-                          "unsafeName": "CLIENT_SECRET",
-                        },
-                        "snakeCase": {
-                          "safeName": "client_secret",
-                          "unsafeName": "client_secret",
-                        },
-                      },
-                      "wireValue": "client_secret",
-                    },
-                    "originalTypeDeclaration": undefined,
-                    "value": {
-                      "jsonExample": "string",
-                      "shape": {
-                        "_visit": [Function],
-                        "primitive": {
-                          "_visit": [Function],
-                          "string": {
-                            "original": "string",
-                          },
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                  },
-                  {
-                    "name": {
-                      "name": {
-                        "camelCase": {
-                          "safeName": "refreshToken",
-                          "unsafeName": "refreshToken",
-                        },
-                        "originalName": "refresh_token",
-                        "pascalCase": {
-                          "safeName": "RefreshToken",
-                          "unsafeName": "RefreshToken",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "REFRESH_TOKEN",
-                          "unsafeName": "REFRESH_TOKEN",
-                        },
-                        "snakeCase": {
-                          "safeName": "refresh_token",
-                          "unsafeName": "refresh_token",
-                        },
-                      },
-                      "wireValue": "refresh_token",
-                    },
-                    "originalTypeDeclaration": undefined,
-                    "value": {
-                      "jsonExample": "string",
-                      "shape": {
-                        "_visit": [Function],
-                        "primitive": {
-                          "_visit": [Function],
-                          "string": {
-                            "original": "string",
-                          },
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                  },
-                  {
-                    "name": {
-                      "name": {
-                        "camelCase": {
-                          "safeName": "audience",
-                          "unsafeName": "audience",
-                        },
-                        "originalName": "audience",
-                        "pascalCase": {
-                          "safeName": "Audience",
-                          "unsafeName": "Audience",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "AUDIENCE",
-                          "unsafeName": "AUDIENCE",
-                        },
-                        "snakeCase": {
-                          "safeName": "audience",
-                          "unsafeName": "audience",
-                        },
-                      },
-                      "wireValue": "audience",
-                    },
-                    "originalTypeDeclaration": undefined,
-                    "value": {
-                      "jsonExample": ""https://api.example.com"",
-                      "shape": {
-                        "_visit": [Function],
-                        "primitive": {
-                          "_visit": [Function],
-                          "string": {
-                            "original": "https://api.example.com",
-                          },
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                  },
-                  {
-                    "name": {
-                      "name": {
-                        "camelCase": {
-                          "safeName": "grantType",
-                          "unsafeName": "grantType",
-                        },
-                        "originalName": "grant_type",
-                        "pascalCase": {
-                          "safeName": "GrantType",
-                          "unsafeName": "GrantType",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "GRANT_TYPE",
-                          "unsafeName": "GRANT_TYPE",
-                        },
-                        "snakeCase": {
-                          "safeName": "grant_type",
-                          "unsafeName": "grant_type",
-                        },
-                      },
-                      "wireValue": "grant_type",
-                    },
-                    "originalTypeDeclaration": undefined,
-                    "value": {
-                      "jsonExample": ""refresh_token"",
-                      "shape": {
-                        "_visit": [Function],
-                        "primitive": {
-                          "_visit": [Function],
-                          "string": {
-                            "original": "refresh_token",
-                          },
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                  },
-                  {
-                    "name": {
-                      "name": {
-                        "camelCase": {
-                          "safeName": "scope",
-                          "unsafeName": "scope",
-                        },
-                        "originalName": "scope",
-                        "pascalCase": {
-                          "safeName": "Scope",
-                          "unsafeName": "Scope",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "SCOPE",
-                          "unsafeName": "SCOPE",
-                        },
-                        "snakeCase": {
-                          "safeName": "scope",
-                          "unsafeName": "scope",
-                        },
-                      },
-                      "wireValue": "scope",
-                    },
-                    "originalTypeDeclaration": undefined,
-                    "value": {
-                      "jsonExample": "string",
-                      "shape": {
-                        "_visit": [Function],
-                        "primitive": {
-                          "_visit": [Function],
-                          "string": {
-                            "original": "string",
-                          },
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                  },
-                ],
-                "type": "inlinedRequestBody",
-              },
+              "request": undefined,
               "response": {
                 "_visit": [Function],
                 "body": {
@@ -2355,6 +1903,7 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
                 },
               ],
               "exampleType": "userProvided",
+              "id": undefined,
               "name": undefined,
               "queryParameters": [
                 {
@@ -3005,6 +2554,7 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
                 },
               ],
               "exampleType": "generated",
+              "id": "08b936bb-2245-46c9-847c-c046b425d6b5",
               "name": undefined,
               "queryParameters": [
                 {
@@ -3672,9 +3222,7 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
                     "shape": {
                       "_visit": [Function],
                       "type": "unknown",
-                      "unknown": {
-                        "key": "value",
-                      },
+                      "unknown": undefined,
                     },
                   },
                 },
@@ -4257,6 +3805,7 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
+              "id": "8076875a-d4d8-469a-a055-008500dd4a54",
               "name": undefined,
               "queryParameters": [
                 {

@@ -194,6 +194,7 @@ axios.request(options).then(function (response) {
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "userProvided",
+              "id": null,
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -718,6 +719,7 @@ axios.request(options).then(function (response) {
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
+              "id": "a860b59e-adc7-412f-a8a9-eb4b59658b58",
               "name": null,
               "queryParameters": [
                 {

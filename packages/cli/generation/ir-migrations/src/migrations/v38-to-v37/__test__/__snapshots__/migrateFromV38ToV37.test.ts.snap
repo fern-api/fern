@@ -124,56 +124,10 @@ exports[`migrateFromV38ToV37 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
+              "id": "431263c5-cae1-4275-bbc3-b1ab0b43bc8f",
               "name": undefined,
               "queryParameters": [],
-              "request": {
-                "_visit": [Function],
-                "jsonExample": {
-                  "query": "string",
-                },
-                "properties": [
-                  {
-                    "name": {
-                      "name": {
-                        "camelCase": {
-                          "safeName": "query",
-                          "unsafeName": "query",
-                        },
-                        "originalName": "query",
-                        "pascalCase": {
-                          "safeName": "Query",
-                          "unsafeName": "Query",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "QUERY",
-                          "unsafeName": "QUERY",
-                        },
-                        "snakeCase": {
-                          "safeName": "query",
-                          "unsafeName": "query",
-                        },
-                      },
-                      "wireValue": "query",
-                    },
-                    "originalTypeDeclaration": undefined,
-                    "value": {
-                      "jsonExample": "string",
-                      "shape": {
-                        "_visit": [Function],
-                        "primitive": {
-                          "_visit": [Function],
-                          "string": {
-                            "original": "string",
-                          },
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                  },
-                ],
-                "type": "inlinedRequestBody",
-              },
+              "request": undefined,
               "response": {
                 "_visit": [Function],
                 "body": undefined,

@@ -5,6 +5,7 @@ import { ExampleTypeReferenceSchema } from "./ExampleTypeReferenceSchema";
 import { WithNameAndDocsSchema } from "./WithNameAndDocsSchema";
 
 export const ExampleEndpointCallSchema = WithNameAndDocsSchema.extend({
+    id: z.optional(z.string()),
     "path-parameters": z.optional(z.record(z.string(), ExampleTypeReferenceSchema)),
     "query-parameters": z.optional(z.record(z.string(), ExampleTypeReferenceSchema)),
     headers: z.optional(z.record(z.string(), ExampleTypeReferenceSchema)),

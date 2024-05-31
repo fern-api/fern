@@ -151,6 +151,7 @@ exports[`migrateFromV44ToV43 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "userProvided",
+              "id": undefined,
               "name": undefined,
               "queryParameters": [],
               "request": undefined,
@@ -732,6 +733,7 @@ exports[`migrateFromV44ToV43 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
+              "id": "e183f630-093a-4941-911a-4490a86e5103",
               "name": undefined,
               "queryParameters": [
                 {
@@ -1571,6 +1573,7 @@ exports[`migrateFromV44ToV43 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "userProvided",
+              "id": undefined,
               "name": undefined,
               "queryParameters": [],
               "request": undefined,
@@ -1591,6 +1594,7 @@ exports[`migrateFromV44ToV43 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
+              "id": "fcc8e9b6-cdcb-47ec-8193-b8d57dc633b7",
               "name": undefined,
               "queryParameters": [
                 {
@@ -1870,6 +1874,7 @@ exports[`migrateFromV44ToV43 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "userProvided",
+              "id": undefined,
               "name": undefined,
               "queryParameters": [],
               "request": undefined,
@@ -1890,6 +1895,7 @@ exports[`migrateFromV44ToV43 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
+              "id": "8769bcdc-3367-42b3-9745-d4aaa0c76d39",
               "name": undefined,
               "queryParameters": [
                 {

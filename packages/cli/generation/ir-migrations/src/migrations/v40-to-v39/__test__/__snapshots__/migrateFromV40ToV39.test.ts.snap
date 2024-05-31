@@ -124,56 +124,10 @@ exports[`migrateFromV40ToV39 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
+              "id": "97db3358-4aa2-440b-bf7e-94a9bf44159d",
               "name": undefined,
               "queryParameters": [],
-              "request": {
-                "_visit": [Function],
-                "jsonExample": {
-                  "name": "string",
-                },
-                "properties": [
-                  {
-                    "name": {
-                      "name": {
-                        "camelCase": {
-                          "safeName": "name",
-                          "unsafeName": "name",
-                        },
-                        "originalName": "name",
-                        "pascalCase": {
-                          "safeName": "Name",
-                          "unsafeName": "Name",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "NAME",
-                          "unsafeName": "NAME",
-                        },
-                        "snakeCase": {
-                          "safeName": "name",
-                          "unsafeName": "name",
-                        },
-                      },
-                      "wireValue": "name",
-                    },
-                    "originalTypeDeclaration": undefined,
-                    "value": {
-                      "jsonExample": "string",
-                      "shape": {
-                        "_visit": [Function],
-                        "primitive": {
-                          "_visit": [Function],
-                          "string": {
-                            "original": "string",
-                          },
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                  },
-                ],
-                "type": "inlinedRequestBody",
-              },
+              "request": undefined,
               "response": {
                 "_visit": [Function],
                 "body": {

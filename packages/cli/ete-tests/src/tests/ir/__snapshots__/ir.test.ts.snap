@@ -1578,6 +1578,7 @@ exports[`ir {"name":"file-upload"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
+                            "id": "0bed6e05-a851-4c4d-aaa5-8016a073e46f",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -7953,6 +7954,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
+                            "id": "603ae5ee-d748-40d7-9805-cc94a43308d7",
                             "url": "/a",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -8025,6 +8027,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
+                            "id": "5a3064e8-8d56-4bc5-bec4-d0d9e4b5214f",
                             "url": "/b",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -8154,6 +8157,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
+                            "id": "c47a1b50-d109-4689-9481-439844cbf8cc",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -9498,6 +9502,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "userProvided",
+                            "id": null,
                             "name": null,
                             "url": "/nested",
                             "rootPathParameters": [],
@@ -9949,6 +9954,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
+                            "id": "9809eae6-5fcb-4b7c-bcd5-6826fa0f9ff7",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -11180,6 +11186,7 @@ exports[`ir {"name":"packages"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
+                            "id": "07450d57-a8b2-495c-a151-4ccc709683cc",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -12549,6 +12556,7 @@ exports[`ir {"name":"response-property"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
+                            "id": "59b6c8d4-f288-4046-be8f-284fc92bbd67",
                             "url": "/movie",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -12974,6 +12982,7 @@ exports[`ir {"name":"response-property"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
+                            "id": "afe0d523-5763-470e-a93a-a1ea3799a368",
                             "url": "/movie",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -13968,6 +13977,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
+                            "id": "711c70de-526e-41bd-839b-46d2c8b3de87",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -14214,6 +14224,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                         },
                         {
                             "exampleType": "generated",
+                            "id": "711c70de-526e-41bd-839b-46d2c8b3de87",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -16138,6 +16149,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                     "examples": [
                         {
                             "exampleType": "userProvided",
+                            "id": null,
                             "name": null,
                             "url": "/movies",
                             "rootPathParameters": [
@@ -16608,6 +16620,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                         },
                         {
                             "exampleType": "userProvided",
+                            "id": null,
                             "name": null,
                             "url": "/movies",
                             "rootPathParameters": [
@@ -17066,6 +17079,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                         },
                         {
                             "exampleType": "generated",
+                            "id": "9276571c-f04d-4505-a9f4-e456ed900c79",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -17536,6 +17550,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                         },
                         {
                             "exampleType": "generated",
+                            "id": "9276571c-f04d-4505-a9f4-e456ed900c79",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -18006,6 +18021,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                         },
                         {
                             "exampleType": "generated",
+                            "id": "9276571c-f04d-4505-a9f4-e456ed900c79",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -25511,6 +25527,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
+                            "id": "8561fee4-2aa1-4112-9a9b-30973ae47917",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -25757,6 +25774,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
+                            "id": "8561fee4-2aa1-4112-9a9b-30973ae47917",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -26451,6 +26469,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "userProvided",
+                            "id": null,
                             "name": null,
                             "url": "/movies",
                             "rootPathParameters": [
@@ -26921,6 +26940,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "exampleType": "userProvided",
+                            "id": null,
                             "name": null,
                             "url": "/movies",
                             "rootPathParameters": [
@@ -27379,6 +27399,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
+                            "id": "fbc462d0-d176-4944-9c7e-023ea066e5c0",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -27849,6 +27870,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
+                            "id": "fbc462d0-d176-4944-9c7e-023ea066e5c0",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -28319,6 +28341,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
+                            "id": "fbc462d0-d176-4944-9c7e-023ea066e5c0",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -29357,6 +29380,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "userProvided",
+                            "id": null,
                             "name": null,
                             "url": "/movies/id-123",
                             "rootPathParameters": [
@@ -30011,6 +30035,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "exampleType": "userProvided",
+                            "id": null,
                             "name": null,
                             "url": "/movies/id-123",
                             "rootPathParameters": [
@@ -30284,6 +30309,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
+                            "id": "d899949a-6d7c-4d24-a64b-3ccab5d5ccbd",
                             "url": "/",
                             "rootPathParameters": [
                                 {
@@ -30938,6 +30964,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
+                            "id": "d899949a-6d7c-4d24-a64b-3ccab5d5ccbd",
                             "url": "/",
                             "rootPathParameters": [
                                 {
@@ -31211,6 +31238,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
+                            "id": "d899949a-6d7c-4d24-a64b-3ccab5d5ccbd",
                             "url": "/",
                             "rootPathParameters": [
                                 {
@@ -31473,6 +31501,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
+                            "id": "d899949a-6d7c-4d24-a64b-3ccab5d5ccbd",
                             "url": "/",
                             "rootPathParameters": [
                                 {
@@ -32086,6 +32115,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
+                            "id": "90f70320-1cbc-49ee-a700-1dcb738e2290",
                             "url": "/",
                             "rootPathParameters": [
                                 {
@@ -32249,6 +32279,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
+                            "id": "90f70320-1cbc-49ee-a700-1dcb738e2290",
                             "url": "/",
                             "rootPathParameters": [
                                 {
@@ -33057,6 +33088,7 @@ exports[`ir {"name":"streaming"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
+                            "id": "2d094def-b047-4537-b8be-d001d01c02ea",
                             "url": "/streaming",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -33291,6 +33323,7 @@ exports[`ir {"name":"streaming"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
+                            "id": "9f4e6e45-027d-456d-a1ff-755bdb41241c",
                             "url": "/maybe-streaming",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -34048,6 +34081,7 @@ exports[`ir {"name":"variables"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
+                            "id": "023b9f1c-6715-46bb-8d53-8a78a69c1bff",
                             "url": "/",
                             "rootPathParameters": [
                                 {
