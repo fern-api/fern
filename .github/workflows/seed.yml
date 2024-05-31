@@ -28,7 +28,7 @@ jobs:
       go: ${{ steps.filter.outputs.go }}
       csharp: ${{ steps.filter.outputs.csharp }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v2
         id: filter
         with:
