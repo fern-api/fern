@@ -987,10 +987,19 @@
                                         },
                                         "value": {
                                             "shape": {
-                                                "type": "primitive",
-                                                "primitive": {
-                                                    "type": "integer",
-                                                    "integer": 1
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "optional",
+                                                    "optional": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "integer",
+                                                                "integer": 1
+                                                            }
+                                                        },
+                                                        "jsonExample": 1
+                                                    }
                                                 }
                                             },
                                             "jsonExample": 1
@@ -1305,10 +1314,19 @@
                                                     },
                                                     "value": {
                                                         "shape": {
-                                                            "type": "primitive",
-                                                            "primitive": {
-                                                                "type": "integer",
-                                                                "integer": 1
+                                                            "type": "container",
+                                                            "container": {
+                                                                "type": "optional",
+                                                                "optional": {
+                                                                    "shape": {
+                                                                        "type": "primitive",
+                                                                        "primitive": {
+                                                                            "type": "integer",
+                                                                            "integer": 1
+                                                                        }
+                                                                    },
+                                                                    "jsonExample": 1
+                                                                }
                                                             }
                                                         },
                                                         "jsonExample": 1
