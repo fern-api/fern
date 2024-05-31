@@ -198,19 +198,21 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         generatedTypes.getTypes().values().forEach(this::addGeneratedFile);
         generatedTypes.getInterfaces().values().forEach(this::addGeneratedFile);
 
-        Optional<OAuthScheme> maybeOAuthScheme = context.getIr().getAuth().getSchemes().stream()
-                .map(AuthScheme::getOauth)
-                .flatMap(Optional::stream)
-                .findFirst();
+        Optional<GeneratedJavaFile> generatedOAuthTokenSupplier = Optional.empty();
+        if (context.getGeneratorConfig().getGenerateOauthClients()) {
+            Optional<OAuthScheme> maybeOAuthScheme = context.getIr().getAuth().getSchemes().stream()
+                    .map(AuthScheme::getOauth)
+                    .flatMap(Optional::stream)
+                    .findFirst();
+            generatedOAuthTokenSupplier = maybeOAuthScheme.map(it -> new OAuthTokenSupplierGenerator(
+                            context,
+                            it.getConfiguration()
+                                    .getClientCredentials()
+                                    .orElseThrow(() ->
+                                            new RuntimeException("Only client credentials oAuth scheme supported")))
+                    .generateFile());
+        }
 
-        Optional<GeneratedJavaFile> generatedOAuthTokenSupplier =
-                maybeOAuthScheme.map(it -> new OAuthTokenSupplierGenerator(
-                                context,
-                                it.getConfiguration()
-                                        .getClientCredentials()
-                                        .orElseThrow(() ->
-                                                new RuntimeException("Only client credentials oAuth scheme supported")))
-                        .generateFile());
         generatedOAuthTokenSupplier.ifPresent(this::addGeneratedFile);
 
         // subpackage clients
