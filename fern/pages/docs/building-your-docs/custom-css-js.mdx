@@ -1,44 +1,14 @@
 ---
 title: Fully customize your docs
-subtitle: Add custom CSS, JavaScript, and components. 
+subtitle: Add custom CSS, global JavaScript, and components. 
 description: Add brand-specific styling, user interactions. and components to make your docs your own.
 ---
 
-<Note>Custom CSS & JS are available on the Business plan. Add Custom Components with Enterprise.</Note>
+<Note>Custom CSS & JS are available on the Business plan. Adding Custom Components is available on the Enterprise plan.</Note>
 
 ## Custom CSS
 
-You can add custom CSS to your docs to further customize the look and feel. Add a `styles.css` file and include it in your `fern/` project:
-
-<CodeBlock title="Add the styles.css file">
-```diff {5}
-  fern/
-  ├─ openapi/
-  ├─ pages/
-  ├─ images/
-+ ├─ styles.css
-  ├─ docs.yml
-  └─ fern.config.json
-```
-</CodeBlock>
-
-In `docs.yml`, specify the path to the `styles.css` file:
-
-<CodeBlock title="docs.yml">
-```yaml
-css: ./styles.css
-```
-</CodeBlock>
-
-You can also specify multiple custom CSS files:
-
-<CodeBlock title="docs.yml">
-```yaml
-css:
-  - ./css/header-styles.css
-  - ./css/footer-styles.css
-```
-</CodeBlock>
+You can add custom CSS to your docs to further customize the look and feel. The defined class names are applied across all MDX files.
 
 Here's an example of what you can do with custom CSS:
 
@@ -99,6 +69,47 @@ Here's an example of what you can do with custom CSS:
 ```
 </CodeBlock>
 
+<Steps>
+### Create `styles.css`
+
+Add a `styles.css` file and include it in your `fern/` project:
+
+<CodeBlock title="Add the styles.css file">
+```diff {5}
+  fern/
+  ├─ openapi/
+  ├─ pages/
+  ├─ images/
++ ├─ styles.css
+  ├─ docs.yml
+  └─ fern.config.json
+```
+</CodeBlock>
+
+### Edit `docs.yml`
+
+In `docs.yml`, specify the path to the `styles.css` file:
+
+<CodeBlock title="docs.yml">
+```yaml
+css: ./styles.css
+```
+</CodeBlock>
+
+### Add multiple custom CSS files (optional)
+
+You can specify any number of custom CSS files:
+
+<CodeBlock title="docs.yml">
+```yaml
+css:
+  - ./css/header-styles.css
+  - ./css/footer-styles.css
+```
+</CodeBlock>
+
+</Steps>
+
 <Note>
 For customizing the background, logo, font, and layout of your Docs via Fern's built-in styling, 
 check out [Customize Styling](/learn/docs/building-your-docs/customize-styling). 
@@ -106,7 +117,7 @@ check out [Customize Styling](/learn/docs/building-your-docs/customize-styling).
 
 ## Custom JavaScript
 
-Customize the behavior of your Docs site by injecting custom JavaScript. Add a `custom.js` file and include it in your `fern/` project:
+Customize the behavior of your Docs site by injecting custom JavaScript globally. Add a `custom.js` file and include it in your `fern/` project:
 
 <CodeBlock title="Add the styles.css file">
 ```diff {5}
@@ -223,5 +234,5 @@ ReactDOM.render(
 - For your hosted Docs site, you may need to update your CD steps to include building the react-app.
 
 <Info>
-This approach is subject to change as we make improvements to the plugin architecture
+This approach is subject to change, with notice, as we make improvements to the plugin architecture.
 </Info>
