@@ -4,6 +4,7 @@
     },
     "endpoints": [
         {
+            "example_identifier": "default",
             "id": {
                 "path": "/users/{userId}",
                 "method": "GET",
@@ -16,6 +17,7 @@
             }
         },
         {
+            "example_identifier": "default",
             "id": {
                 "path": "/users",
                 "method": "POST",
