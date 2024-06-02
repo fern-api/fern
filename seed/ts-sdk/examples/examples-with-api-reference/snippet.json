@@ -13,6 +13,17 @@
         },
         {
             "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_.echo"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesClient } from \"@fern/examples\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.echo(\"Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines\");\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/file/notification/{notificationId}",
                 "method": "GET",
                 "identifier_override": "endpoint_file/notification/service.getException"
@@ -20,6 +31,17 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedExamplesClient } from \"@fern/examples\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.file.notification.service.getException(\"notification-hsy129x\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/file/notification/{notificationId}",
+                "method": "GET",
+                "identifier_override": "endpoint_file/notification/service.getException"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesClient } from \"@fern/examples\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.file.notification.service.getException(\"string\");\n"
             }
         },
         {
@@ -35,6 +57,28 @@
         },
         {
             "id": {
+                "path": "/file/{filename}",
+                "method": "GET",
+                "identifier_override": "endpoint_file/service.getFile"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesClient } from \"@fern/examples\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.file.service.getFile(\"string\", {\n    xFileApiVersion: \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/file/{filename}",
+                "method": "GET",
+                "identifier_override": "endpoint_file/service.getFile"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesClient } from \"@fern/examples\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.file.service.getFile(\"string\", {\n    xFileApiVersion: \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/check/{id}",
                 "method": "GET",
                 "identifier_override": "endpoint_health/service.check"
@@ -42,6 +86,41 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedExamplesClient } from \"@fern/examples\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.health.service.check(\"id-2sdx82h\");\n"
+            },
+            "example_identifier": "Example0"
+        },
+        {
+            "id": {
+                "path": "/check/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_health/service.check"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesClient } from \"@fern/examples\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.health.service.check(\"id-3tey93i\");\n"
+            },
+            "example_identifier": "Example2"
+        },
+        {
+            "id": {
+                "path": "/check/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_health/service.check"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesClient } from \"@fern/examples\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.health.service.check(\"string\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/check/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_health/service.check"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesClient } from \"@fern/examples\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.health.service.check(\"string\");\n"
             }
         },
         {
@@ -53,6 +132,29 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedExamplesClient } from \"@fern/examples\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.health.service.ping();\n"
+            },
+            "example_identifier": "Example0"
+        },
+        {
+            "id": {
+                "path": "/ping",
+                "method": "GET",
+                "identifier_override": "endpoint_health/service.ping"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesClient } from \"@fern/examples\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.health.service.ping();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/movie/{movieId}",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getMovie"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesClient } from \"@fern/examples\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.service.getMovie(\"movie-c06a4ad7\");\n"
             }
         },
         {
@@ -79,6 +181,17 @@
         },
         {
             "id": {
+                "path": "/movie",
+                "method": "POST",
+                "identifier_override": "endpoint_service.createMovie"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesClient } from \"@fern/examples\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.service.createMovie({\n    id: \"movie-c06a4ad7\",\n    prequel: \"movie-cv9b914f\",\n    title: \"The Boy and the Heron\",\n    from: \"Hayao Miyazaki\",\n    rating: 8,\n    type: \"movie\",\n    tag: \"tag-wf9as23d\",\n    metadata: {\n        \"actors\": [\n            \"Christian Bale\",\n            \"Florence Pugh\",\n            \"Willem Dafoe\"\n        ],\n        \"releaseDate\": \"2023-12-08\",\n        \"ratings\": {\n            \"rottenTomatoes\": 97,\n            \"imdb\": 7.6\n        }\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/metadata",
                 "method": "GET",
                 "identifier_override": "endpoint_service.getMetadata"
@@ -86,6 +199,28 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedExamplesClient } from \"@fern/examples\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.service.getMetadata({\n    xApiVersion: \"0.0.1\",\n    shallow: false,\n    tag: \"development\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/metadata",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getMetadata"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesClient } from \"@fern/examples\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.service.getMetadata({\n    xApiVersion: \"string\",\n    shallow: true,\n    tag: \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/response",
+                "method": "POST",
+                "identifier_override": "endpoint_service.getResponse"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesClient } from \"@fern/examples\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.service.getResponse();\n"
             }
         },
         {

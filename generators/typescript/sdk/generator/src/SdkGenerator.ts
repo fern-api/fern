@@ -789,64 +789,10 @@ export class SdkGenerator {
                     }
                 }
 
-                const example = endpoint.examples[0];
-                if (example != null) {
-                    const snippet = this.withSnippet({
-                        run: ({ sourceFile, importsManager }): ts.Node[] | undefined => {
-                            return this.runWithSnippet({
-                                sourceFile,
-                                importsManager,
-                                rootPackage,
-                                packageId,
-                                endpoint,
-                                example,
-                                includeImports: true
-                            });
-                        },
-                        includeImports: true
-                    });
-                    if (snippet != null) {
-                        this.endpointSnippets.push({
-                            id: {
-                                path: FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(endpoint)),
-                                method: endpoint.method,
-                                identifierOverride: endpoint.id
-                            },
-                            snippet: FernGeneratorExec.EndpointSnippet.typescript({
-                                client: snippet
-                            })
-                        });
-                    }
-
-                    if (serviceReference !== undefined) {
-                        let returnType = undefined;
-                        let endpointClientAccess: ts.Expression | undefined = undefined;
-                        const parameters: ReferenceParameterDeclaration[] = [];
-                        const referenceSnippet = this.withSnippet({
+                for (const example of endpoint.examples) {
+                    if (example != null) {
+                        const snippet = this.withSnippet({
                             run: ({ sourceFile, importsManager }): ts.Node[] | undefined => {
-                                const context = this.generateSdkContext(
-                                    { sourceFile, importsManager },
-                                    { isForSnippet: true }
-                                );
-                                const clientClass = context.sdkClientClass.getGeneratedSdkClientClass(packageId);
-                                const endpointDetailed = clientClass.getEndpoint({ context, endpointId: endpoint.id });
-                                const returnTypeNode = endpointDetailed?.getSignature(context).returnTypeWithoutPromise;
-                                returnType =
-                                    returnTypeNode !== undefined ? getTextOfTsNode(returnTypeNode) : returnTypeNode;
-                                parameters.push(
-                                    ...(endpointDetailed?.getSignature(context).parameters.map((param) => {
-                                        return {
-                                            name: param.name,
-                                            type: param.type?.toString() ?? "unknown",
-                                            description: param.docs
-                                        };
-                                    }) ?? [])
-                                );
-
-                                endpointClientAccess = clientClass.accessFromRootClient({
-                                    referenceToRootClient: context.sdkInstanceReferenceForSnippet
-                                });
-
                                 return this.runWithSnippet({
                                     sourceFile,
                                     importsManager,
@@ -854,28 +800,91 @@ export class SdkGenerator {
                                     packageId,
                                     endpoint,
                                     example,
-                                    includeImports: false
+                                    includeImports: true
                                 });
                             },
-                            includeImports: false
+                            includeImports: true
                         });
-
-                        let statement = undefined;
-                        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                        if (endpointClientAccess !== undefined) {
-                            statement = getTextOfTsNode(endpointClientAccess);
+                        if (snippet != null) {
+                            const endpointSnippet: FernGeneratorExec.Endpoint = {
+                                id: {
+                                    path: FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(endpoint)),
+                                    method: endpoint.method,
+                                    identifierOverride: endpoint.id
+                                },
+                                snippet: FernGeneratorExec.EndpointSnippet.typescript({
+                                    client: snippet
+                                })
+                            };
+                            if (example.name?.originalName != null) {
+                                endpointSnippet.exampleIdentifier = example.name?.originalName;
+                            }
+                            this.endpointSnippets.push(endpointSnippet);
                         }
 
-                        serviceReference.addEndpoint({
-                            // clientPath: getTextOfTsNode(statement),
-                            clientPath: statement,
-                            functionPath: serviceFilepath,
-                            functionName: this.getEndpointFunctionName(endpoint),
-                            returnType,
-                            parameters,
-                            codeSnippet: referenceSnippet,
-                            description: endpoint.docs
-                        });
+                        if (serviceReference !== undefined) {
+                            let returnType = undefined;
+                            let endpointClientAccess: ts.Expression | undefined = undefined;
+                            const parameters: ReferenceParameterDeclaration[] = [];
+                            const referenceSnippet = this.withSnippet({
+                                run: ({ sourceFile, importsManager }): ts.Node[] | undefined => {
+                                    const context = this.generateSdkContext(
+                                        { sourceFile, importsManager },
+                                        { isForSnippet: true }
+                                    );
+                                    const clientClass = context.sdkClientClass.getGeneratedSdkClientClass(packageId);
+                                    const endpointDetailed = clientClass.getEndpoint({
+                                        context,
+                                        endpointId: endpoint.id
+                                    });
+                                    const returnTypeNode =
+                                        endpointDetailed?.getSignature(context).returnTypeWithoutPromise;
+                                    returnType =
+                                        returnTypeNode !== undefined ? getTextOfTsNode(returnTypeNode) : returnTypeNode;
+                                    parameters.push(
+                                        ...(endpointDetailed?.getSignature(context).parameters.map((param) => {
+                                            return {
+                                                name: param.name,
+                                                type: param.type?.toString() ?? "unknown",
+                                                description: param.docs
+                                            };
+                                        }) ?? [])
+                                    );
+
+                                    endpointClientAccess = clientClass.accessFromRootClient({
+                                        referenceToRootClient: context.sdkInstanceReferenceForSnippet
+                                    });
+
+                                    return this.runWithSnippet({
+                                        sourceFile,
+                                        importsManager,
+                                        rootPackage,
+                                        packageId,
+                                        endpoint,
+                                        example,
+                                        includeImports: false
+                                    });
+                                },
+                                includeImports: false
+                            });
+
+                            let statement = undefined;
+                            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                            if (endpointClientAccess !== undefined) {
+                                statement = getTextOfTsNode(endpointClientAccess);
+                            }
+
+                            serviceReference.addEndpoint({
+                                // clientPath: getTextOfTsNode(statement),
+                                clientPath: statement,
+                                functionPath: serviceFilepath,
+                                functionName: this.getEndpointFunctionName(endpoint),
+                                returnType,
+                                parameters,
+                                codeSnippet: referenceSnippet,
+                                description: endpoint.docs
+                            });
+                        }
                     }
                 }
             }
