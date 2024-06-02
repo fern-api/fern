@@ -27,6 +27,9 @@ tabs:
   sdks:
     display-name: SDKs
     slug: sdks
+  servers:
+    display-name: Servers
+    slug: servers
   cli-api:
     display-name: CLI & API Reference
     slug: cli-api
@@ -271,6 +274,20 @@ navigation:
             path: ./pages/docs/components/endpoint-response-snippet.mdx
             icon: "turn-down"
             slug: response-snippet
+  - tab: servers
+    layout: 
+      - section: Introduction
+        contents:
+          - page: What is server code generation?
+            path: ./pages/servers/introduction.mdx
+      - section: Server Frameworks
+        contents:
+          - page: FastAPI server
+            path: ./pages/servers/fastapi.mdx
+          - page: Spring server 
+            path: ./pages/servers/spring.mdx
+          - page: Express server
+            path: ./pages/servers/express.mdx
   - tab: cli-api
     layout:
       - section: CLI Reference
