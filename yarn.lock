@@ -3895,6 +3895,7 @@ __metadata:
     "@types/jest-specific-snapshot": ^0.5.7
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
+    "@types/object-hash": ^3.0.6
     "@types/prettier": ^2.7.1
     "@types/url-join": 4.0.1
     depcheck: ^1.4.6
@@ -3902,6 +3903,7 @@ __metadata:
     jest: ^29.7.0
     jest-specific-snapshot: ^8.0.0
     lodash-es: ^4.17.21
+    object-hash: ^3.0.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
@@ -7491,6 +7493,13 @@ __metadata:
   version: 2.4.1
   resolution: "@types/normalize-package-data@npm:2.4.1"
   checksum: e87bccbf11f95035c89a132b52b79ce69a1e3652fe55962363063c9c0dae0fe2477ebc585e03a9652adc6f381d24ba5589cc5e51849df4ced3d3e004a7d40ed5
+  languageName: node
+  linkType: hard
+
+"@types/object-hash@npm:^3.0.6":
+  version: 3.0.6
+  resolution: "@types/object-hash@npm:3.0.6"
+  checksum: 2c7979d4e540af817b99c09fb4c2fed1c0b0e14342df474d8dcde4165a82c440b038341fd66fe998d9f86acdd5cccc65ba8092315e39e7c2114f945fa70aaa56
   languageName: node
   linkType: hard
 

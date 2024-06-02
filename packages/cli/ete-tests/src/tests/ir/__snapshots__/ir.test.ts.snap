@@ -1578,7 +1578,6 @@ exports[`ir {"name":"file-upload"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -1596,6 +1595,7 @@ exports[`ir {"name":"file-upload"} 1`] = `
                                     "value": null
                                 }
                             },
+                            "id": "c38c6fa40fc9f218268c8f066fe87af2cf02a872",
                             "docs": null
                         }
                     ],
@@ -7954,7 +7954,6 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/a",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -7972,6 +7971,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                                     "value": null
                                 }
                             },
+                            "id": "bf20f6ddd21e97cbd9f08dc4549e1ac81dc9c5d7",
                             "docs": null
                         }
                     ],
@@ -8027,7 +8027,6 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/b",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -8045,6 +8044,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                                     "value": null
                                 }
                             },
+                            "id": "8153489db4f4064771c2f56e73a18046df6ab697",
                             "docs": null
                         }
                     ],
@@ -8157,7 +8157,6 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -8175,6 +8174,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                                     "value": null
                                 }
                             },
+                            "id": "c38c6fa40fc9f218268c8f066fe87af2cf02a872",
                             "docs": null
                         }
                     ],
@@ -9954,7 +9954,6 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -10402,6 +10401,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                                     }
                                 }
                             },
+                            "id": "b5d3b8f8aef802c855f026f7917984301c0e1822",
                             "docs": null
                         }
                     ],
@@ -11186,7 +11186,6 @@ exports[`ir {"name":"packages"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -11204,6 +11203,7 @@ exports[`ir {"name":"packages"} 1`] = `
                                     "value": null
                                 }
                             },
+                            "id": "c38c6fa40fc9f218268c8f066fe87af2cf02a872",
                             "docs": null
                         }
                     ],
@@ -12556,7 +12556,6 @@ exports[`ir {"name":"response-property"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/movie",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -12764,6 +12763,7 @@ exports[`ir {"name":"response-property"} 1`] = `
                                     }
                                 }
                             },
+                            "id": "44ac70cd3e4b857e7e5c83e3902c4de4d4efe3fa",
                             "docs": null
                         }
                     ],
@@ -12982,7 +12982,6 @@ exports[`ir {"name":"response-property"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/movie",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -13023,6 +13022,7 @@ exports[`ir {"name":"response-property"} 1`] = `
                                     }
                                 }
                             },
+                            "id": "5fcf52423391272882204b99db956e94d1a3991e",
                             "docs": null
                         }
                     ],
@@ -13977,7 +13977,6 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -14220,11 +14219,11 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                                     }
                                 }
                             },
+                            "id": "d6f41548e3d4afec88a6d1834715b95de66a9c89",
                             "docs": null
                         },
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -14518,6 +14517,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                                 },
                                 "body": null
                             },
+                            "id": "5eb2e9960c632a9f9909b042062d084d093e11e5",
                             "docs": null
                         }
                     ],
@@ -17079,7 +17079,6 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                         },
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -17546,11 +17545,11 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                     }
                                 }
                             },
+                            "id": "dc2bfadea020e4746d4531276def98eb5b62c2fe",
                             "docs": null
                         },
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -18017,11 +18016,11 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                     }
                                 }
                             },
+                            "id": "dc2bfadea020e4746d4531276def98eb5b62c2fe",
                             "docs": null
                         },
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -18465,6 +18464,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                 },
                                 "body": null
                             },
+                            "id": "c1c786f510e264af49260c38558b32f383be7602",
                             "docs": null
                         }
                     ],
@@ -25527,7 +25527,6 @@ exports[`ir {"name":"simple"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -25770,11 +25769,11 @@ exports[`ir {"name":"simple"} 1`] = `
                                     }
                                 }
                             },
+                            "id": "d6f41548e3d4afec88a6d1834715b95de66a9c89",
                             "docs": null
                         },
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -26068,6 +26067,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                 },
                                 "body": null
                             },
+                            "id": "5eb2e9960c632a9f9909b042062d084d093e11e5",
                             "docs": null
                         }
                     ],
@@ -27399,7 +27399,6 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -27866,11 +27865,11 @@ exports[`ir {"name":"simple"} 1`] = `
                                     }
                                 }
                             },
+                            "id": "dc2bfadea020e4746d4531276def98eb5b62c2fe",
                             "docs": null
                         },
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -28337,11 +28336,11 @@ exports[`ir {"name":"simple"} 1`] = `
                                     }
                                 }
                             },
+                            "id": "dc2bfadea020e4746d4531276def98eb5b62c2fe",
                             "docs": null
                         },
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -28785,6 +28784,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                 },
                                 "body": null
                             },
+                            "id": "c1c786f510e264af49260c38558b32f383be7602",
                             "docs": null
                         }
                     ],
@@ -30309,7 +30309,6 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/",
                             "rootPathParameters": [
                                 {
@@ -30960,11 +30959,11 @@ exports[`ir {"name":"simple"} 1`] = `
                                     }
                                 }
                             },
+                            "id": "3f8437641cb290e74951d0af1bfa15edabe7294c",
                             "docs": null
                         },
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/",
                             "rootPathParameters": [
                                 {
@@ -31615,11 +31614,11 @@ exports[`ir {"name":"simple"} 1`] = `
                                     }
                                 }
                             },
+                            "id": "27c6af12a6c2ef6223a2804653fe09cd6e53e9aa",
                             "docs": null
                         },
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/",
                             "rootPathParameters": [
                                 {
@@ -31878,11 +31877,11 @@ exports[`ir {"name":"simple"} 1`] = `
                                 },
                                 "body": null
                             },
+                            "id": "3c39a86922857356f30e01784181c8548b8f6030",
                             "docs": null
                         },
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/",
                             "rootPathParameters": [
                                 {
@@ -32141,6 +32140,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                 },
                                 "body": null
                             },
+                            "id": "276671d59ba1fc54dcc3748ad5aef2ce19ee4142",
                             "docs": null
                         }
                     ],
@@ -32496,7 +32496,6 @@ exports[`ir {"name":"simple"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/",
                             "rootPathParameters": [
                                 {
@@ -32656,11 +32655,11 @@ exports[`ir {"name":"simple"} 1`] = `
                                     "value": null
                                 }
                             },
+                            "id": "76ae237a65398710123a6bb1c66a83e01891af82",
                             "docs": null
                         },
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/",
                             "rootPathParameters": [
                                 {
@@ -32882,6 +32881,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                 },
                                 "body": null
                             },
+                            "id": "22550a7ed6dbcbf8b93f234fba07e71089061a05",
                             "docs": null
                         }
                     ],
@@ -33469,7 +33469,6 @@ exports[`ir {"name":"streaming"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/streaming",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -33512,6 +33511,7 @@ exports[`ir {"name":"streaming"} 1`] = `
                                     ]
                                 }
                             },
+                            "id": "28d96d04f3ee55a70545ac4abb0d27dec0a3377e",
                             "docs": null
                         }
                     ],
@@ -33704,7 +33704,6 @@ exports[`ir {"name":"streaming"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/maybe-streaming",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -33789,6 +33788,7 @@ exports[`ir {"name":"streaming"} 1`] = `
                                     ]
                                 }
                             },
+                            "id": "a0cad8db0d1cc0ba82b905e6bf3273197e650a2f",
                             "docs": null
                         }
                     ],
@@ -34462,7 +34462,6 @@ exports[`ir {"name":"variables"} 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "/",
                             "rootPathParameters": [
                                 {
@@ -34696,6 +34695,7 @@ exports[`ir {"name":"variables"} 1`] = `
                                     "value": null
                                 }
                             },
+                            "id": "cb09cd9a9281e261e8d4518b1af814e6adfa813c",
                             "docs": null
                         }
                     ],

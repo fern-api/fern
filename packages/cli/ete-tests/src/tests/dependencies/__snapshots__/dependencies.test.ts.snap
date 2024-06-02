@@ -468,7 +468,6 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "id": "5de04949-6f1b-4560-b4d4-c454c473cf33",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -486,6 +485,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                                     "value": null
                                 }
                             },
+                            "id": "c38c6fa40fc9f218268c8f066fe87af2cf02a872",
                             "docs": null
                         }
                     ],
@@ -840,4 +840,4 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `2715243`;
+exports[`dependencies file dependencies 1`] = `2715399`;
