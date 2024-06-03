@@ -6560,7 +6560,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generator-commons", "workspace:generators/commons"],\
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
-            ["@fern-fern/ir-sdk", "npm:32.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:43.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
@@ -6753,7 +6753,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/csharp-codegen", "workspace:generators/csharp/codegen"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generator-commons", "workspace:generators/commons"],\
-            ["@fern-fern/ir-sdk", "npm:0.0.3318"],\
+            ["@fern-fern/ir-sdk", "npm:43.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:b567308d600cc49ad0dcf5ee9f761adc5572b914144f87bbc3284c71fbc29382723507bb61a8e531e29275684fd9c09310bc363ee648e9b47f4ea2c53497d2c8#npm:3.0.0-rc.14"],\
@@ -6781,7 +6781,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generator-commons", "workspace:generators/commons"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.845"],\
-            ["@fern-fern/ir-sdk", "npm:0.0.3318"],\
+            ["@fern-fern/ir-sdk", "npm:43.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
@@ -6811,7 +6811,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/ruby-codegen", "workspace:generators/ruby/codegen"],\
             ["@fern-api/ruby-generator-cli", "workspace:generators/ruby/cli"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.845"],\
-            ["@fern-fern/ir-sdk", "npm:32.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:43.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:b567308d600cc49ad0dcf5ee9f761adc5572b914144f87bbc3284c71fbc29382723507bb61a8e531e29275684fd9c09310bc363ee648e9b47f4ea2c53497d2c8#npm:3.0.0-rc.14"],\
@@ -6841,7 +6841,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/ruby-codegen", "workspace:generators/ruby/codegen"],\
             ["@fern-api/ruby-generator-cli", "workspace:generators/ruby/cli"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.845"],\
-            ["@fern-fern/ir-sdk", "npm:32.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:43.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:b567308d600cc49ad0dcf5ee9f761adc5572b914144f87bbc3284c71fbc29382723507bb61a8e531e29275684fd9c09310bc363ee648e9b47f4ea2c53497d2c8#npm:3.0.0-rc.14"],\
@@ -6888,7 +6888,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.845"],\
-            ["@fern-fern/ir-sdk", "npm:0.0.3294"],\
+            ["@fern-fern/ir-sdk", "npm:43.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
@@ -7234,7 +7234,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/openapi-generator", "workspace:generators/openapi"],\
             ["@fern-api/generator-commons", "workspace:generators/commons"],\
-            ["@fern-fern/ir-sdk", "npm:0.0.2828"],\
+            ["@fern-fern/ir-sdk", "npm:43.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/lodash-es", "npm:4.17.12"],\
@@ -7363,7 +7363,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/postman-generator", "workspace:generators/postman"],\
             ["@fern-api/generator-commons", "workspace:generators/commons"],\
-            ["@fern-fern/ir-sdk", "npm:0.0.2828"],\
+            ["@fern-fern/ir-sdk", "npm:43.0.0"],\
             ["@fern-fern/postman-sdk", "npm:0.0.46"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash", "npm:4.17.4"],\
@@ -7496,7 +7496,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/ruby-codegen", "workspace:generators/ruby/codegen"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.845"],\
-            ["@fern-fern/ir-sdk", "npm:32.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:43.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
@@ -7521,7 +7521,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/generator-commons", "workspace:generators/commons"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
-            ["@fern-fern/ir-sdk", "npm:32.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:43.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
@@ -7870,34 +7870,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/ir-sdk", [\
-        ["npm:0.0.2828", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-ir-sdk-npm-0.0.2828-43f6c61c8e-5fa0842320.zip/node_modules/@fern-fern/ir-sdk/",\
-          "packageDependencies": [\
-            ["@fern-fern/ir-sdk", "npm:0.0.2828"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:0.0.3294", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-ir-sdk-npm-0.0.3294-fcd876af76-f7efe8a483.zip/node_modules/@fern-fern/ir-sdk/",\
-          "packageDependencies": [\
-            ["@fern-fern/ir-sdk", "npm:0.0.3294"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:0.0.3318", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-ir-sdk-npm-0.0.3318-69da6b3965-1dd2cc9ab7.zip/node_modules/@fern-fern/ir-sdk/",\
-          "packageDependencies": [\
-            ["@fern-fern/ir-sdk", "npm:0.0.3318"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:32.0.0", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-ir-sdk-npm-32.0.0-c4c011ca33-6822a030ff.zip/node_modules/@fern-fern/ir-sdk/",\
-          "packageDependencies": [\
-            ["@fern-fern/ir-sdk", "npm:32.0.0"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:43.0.0", {\
           "packageLocation": "./.yarn/cache/@fern-fern-ir-sdk-npm-43.0.0-9b4ba5b316-c5f09e2f21.zip/node_modules/@fern-fern/ir-sdk/",\
           "packageDependencies": [\

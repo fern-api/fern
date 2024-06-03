@@ -3520,7 +3520,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
-    "@fern-fern/ir-sdk": ^32
+    "@fern-fern/ir-sdk": ^43
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
@@ -3700,7 +3700,7 @@ __metadata:
     "@fern-api/csharp-codegen": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
-    "@fern-fern/ir-sdk": 0.0.3318
+    "@fern-fern/ir-sdk": 43.0.0
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
@@ -3728,7 +3728,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.845
-    "@fern-fern/ir-sdk": 0.0.3318
+    "@fern-fern/ir-sdk": 43.0.0
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
@@ -3758,7 +3758,7 @@ __metadata:
     "@fern-api/ruby-codegen": "workspace:*"
     "@fern-api/ruby-generator-cli": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.845
-    "@fern-fern/ir-sdk": ^32
+    "@fern-fern/ir-sdk": ^43
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
@@ -3788,7 +3788,7 @@ __metadata:
     "@fern-api/ruby-codegen": "workspace:*"
     "@fern-api/ruby-generator-cli": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.845
-    "@fern-fern/ir-sdk": ^32
+    "@fern-fern/ir-sdk": ^43
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
@@ -3833,7 +3833,7 @@ __metadata:
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.845
-    "@fern-fern/ir-sdk": 0.0.3294
+    "@fern-fern/ir-sdk": 43.0.0
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -4155,7 +4155,7 @@ __metadata:
   resolution: "@fern-api/openapi-generator@workspace:generators/openapi"
   dependencies:
     "@fern-api/generator-commons": "workspace:*"
-    "@fern-fern/ir-sdk": 0.0.2828
+    "@fern-fern/ir-sdk": 43.0.0
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.12
@@ -4276,7 +4276,7 @@ __metadata:
   resolution: "@fern-api/postman-generator@workspace:generators/postman"
   dependencies:
     "@fern-api/generator-commons": "workspace:*"
-    "@fern-fern/ir-sdk": 0.0.2828
+    "@fern-fern/ir-sdk": 43.0.0
     "@fern-fern/postman-sdk": 0.0.46
     "@types/jest": ^29.0.3
     "@types/lodash": ^4.17.4
@@ -4403,7 +4403,7 @@ __metadata:
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.845
-    "@fern-fern/ir-sdk": ^32
+    "@fern-fern/ir-sdk": ^43
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
@@ -4426,7 +4426,7 @@ __metadata:
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
-    "@fern-fern/ir-sdk": ^32
+    "@fern-fern/ir-sdk": ^43
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -4754,38 +4754,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-sdk@npm:0.0.2828":
-  version: 0.0.2828
-  resolution: "@fern-fern/ir-sdk@npm:0.0.2828"
-  checksum: 5fa08423209d8c7b8d9d60be822eeae3d955ac893d61abdaf3ba36750f98f1a4969480a3bc65294e59444fec43defa34f0b3f71fe5a55d90faa0c04658c5d918
-  languageName: node
-  linkType: hard
-
-"@fern-fern/ir-sdk@npm:0.0.3294":
-  version: 0.0.3294
-  resolution: "@fern-fern/ir-sdk@npm:0.0.3294"
-  checksum: f7efe8a48396243a0fabc0efbbe15217f0aa1e5fa7380e0636c2aab47c2eab1a13c3a79d6ca863ddc928773a18f325985030cfe58c353a6dce828dc06ec8724a
-  languageName: node
-  linkType: hard
-
-"@fern-fern/ir-sdk@npm:0.0.3318":
-  version: 0.0.3318
-  resolution: "@fern-fern/ir-sdk@npm:0.0.3318"
-  checksum: 1dd2cc9ab77e70b19da1b0d70cc9c912ab94f8e72d43f67ff3ebf10ed26e5b37f73894f1c5f48fa13efd0f32deceab3eb1ff20a6fc980467a8ee2e8c54bdb60b
-  languageName: node
-  linkType: hard
-
-"@fern-fern/ir-sdk@npm:43.0.0, @fern-fern/ir-sdk@npm:^43.0.0":
+"@fern-fern/ir-sdk@npm:43.0.0, @fern-fern/ir-sdk@npm:^43, @fern-fern/ir-sdk@npm:^43.0.0":
   version: 43.0.0
   resolution: "@fern-fern/ir-sdk@npm:43.0.0"
   checksum: c5f09e2f213c72603a4f04728b0b9c5ae8f5a159acf179c6d05c6a98b1764d11fbb4552528fe4b4bf7d62ca38e4c3da0118adeebf20ac48ffa207c83aef99f12
-  languageName: node
-  linkType: hard
-
-"@fern-fern/ir-sdk@npm:^32":
-  version: 32.0.0
-  resolution: "@fern-fern/ir-sdk@npm:32.0.0"
-  checksum: 6822a030ff7b0a1f2d8965d9b5d8227430c3d4c5e4d4125384c436521b2218fa540f195b7f3f91cd47a80fd4efedd6ba6d67e901f090435416db545086615515
   languageName: node
   linkType: hard
 
