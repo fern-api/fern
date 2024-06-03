@@ -791,6 +791,7 @@ class EndpointFunctionGenerator:
                 return AST.Expression(
                     f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.GET_ENVIRONMENT_METHOD_NAME}().{url_reference}"
                 )
+        return None
 
     def _get_headers_for_endpoint(
         self,
