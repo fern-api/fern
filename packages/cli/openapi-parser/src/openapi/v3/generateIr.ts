@@ -1,3 +1,4 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { assertNever, isNonNullish } from "@fern-api/core-utils";
 import {
     Endpoint,
@@ -5,6 +6,8 @@ import {
     EndpointWithExample,
     ErrorExample,
     HttpError,
+    LiteralSchemaValue,
+    ObjectPropertyWithExample,
     ObjectSchema,
     OpenApiIntermediateRepresentation,
     Schema,
@@ -20,6 +23,7 @@ import { getExtension } from "../../getExtension";
 import { convertSchema } from "../../schema/convertSchemas";
 import { convertToFullExample } from "../../schema/examples/convertToFullExample";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
+import { getGeneratedTypeName } from "../../schema/utils/getSchemaName";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext";
 import { convertPathItem } from "./converters/convertPathItem";
@@ -43,13 +47,17 @@ export function generateIr({
     taskContext,
     disableExamples,
     audiences,
-    shouldUseTitleAsName
+    shouldUseTitleAsName,
+    shouldUseUndiscriminatedUnionsWithLiterals,
+    sdkLanguage
 }: {
     openApi: OpenAPIV3.Document;
     taskContext: TaskContext;
     disableExamples: boolean | undefined;
     audiences: string[];
     shouldUseTitleAsName: boolean;
+    shouldUseUndiscriminatedUnionsWithLiterals: boolean;
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): OpenApiIntermediateRepresentation {
     openApi = runResolutions({ openapi: openApi });
 
@@ -72,7 +80,14 @@ export function generateIr({
             return null;
         })
     );
-    const context = new OpenAPIV3ParserContext({ document: openApi, taskContext, authHeaders, shouldUseTitleAsName });
+    const context = new OpenAPIV3ParserContext({
+        document: openApi,
+        taskContext,
+        authHeaders,
+        shouldUseTitleAsName,
+        shouldUseUndiscriminatedUnionsWithLiterals,
+        sdkLanguage
+    });
     const variables = getVariableDefinitions(openApi);
     const globalHeaders = getGlobalHeaders(openApi);
     const idempotencyHeaders = getIdempotencyHeaders(openApi);
@@ -140,9 +155,12 @@ export function generateIr({
             .filter((entry) => entry.length > 0)
     );
 
+    // Remove discriminants from discriminated unions since Fern handles this in the IR.
     const schemasWithoutDiscriminants = maybeRemoveDiscriminantsFromSchemas(schemasWithExample, context);
+    // Add them back when declared as union metadata, as that means we're treating discriminated unions as undiscriminated unions.
+    const schemasWithDiscriminants = maybeAddBackDiscriminantsFromSchemas(schemasWithoutDiscriminants, context);
     const schemas: Record<string, Schema> = {};
-    for (const [key, schemaWithExample] of Object.entries(schemasWithoutDiscriminants)) {
+    for (const [key, schemaWithExample] of Object.entries(schemasWithDiscriminants)) {
         const schema = convertSchemaWithExampleToSchema(schemaWithExample);
         if (context.isSchemaExcluded(key)) {
             continue;
@@ -321,6 +339,56 @@ function maybeRemoveDiscriminantsFromSchemas(
                 })
             };
         }
+    }
+    return result;
+}
+
+function maybeAddBackDiscriminantsFromSchemas(
+    schemas: Record<string, SchemaWithExample>,
+    context: AbstractOpenAPIV3ParserContext
+): Record<string, SchemaWithExample> {
+    const result: Record<string, SchemaWithExample> = {};
+    for (const [schemaId, schema] of Object.entries(schemas)) {
+        if (schema.type !== "object") {
+            result[schemaId] = schema;
+            continue;
+        }
+        const referenceToSchema: OpenAPIV3.ReferenceObject = {
+            $ref: `#/components/schemas/${schemaId}`
+        };
+        const metadata = context.getDiscriminatedUnionMetadata(referenceToSchema);
+        if (metadata == null) {
+            result[schemaId] = schema;
+            continue;
+        }
+
+        const propertiesWithDiscriminants: ObjectPropertyWithExample[] = [];
+        for (const property of schema.properties) {
+            if (metadata.discriminants.has(property.key)) {
+                const discriminantValue = metadata.discriminants.get(property.key);
+                if (discriminantValue != null) {
+                    propertiesWithDiscriminants.push({
+                        ...property,
+                        schema: SchemaWithExample.literal({
+                            nameOverride: undefined,
+                            generatedName: getGeneratedTypeName([schema.generatedName, discriminantValue]),
+                            value: LiteralSchemaValue.string(discriminantValue),
+                            groupName: undefined,
+                            description: undefined
+                        })
+                    });
+                }
+            } else {
+                propertiesWithDiscriminants.push(property);
+            }
+        }
+
+        const schemaWithoutDiscriminants: SchemaWithExample.Object_ = {
+            ...schema,
+            type: "object",
+            properties: propertiesWithDiscriminants
+        };
+        result[schemaId] = schemaWithoutDiscriminants;
     }
     return result;
 }

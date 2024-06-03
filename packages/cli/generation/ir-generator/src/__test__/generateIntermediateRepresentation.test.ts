@@ -31,7 +31,8 @@ it("generate IR", async () => {
         absolutePathToWorkspace: AbsoluteFilePath.of(FHIR_DIR),
         context: createMockTaskContext(),
         cliVersion: "0.0.0",
-        workspaceName: "fhir"
+        workspaceName: "fhir",
+        sdkLanguage: undefined
     });
     if (fhirWorkspace.didSucceed) {
         apiWorkspaces.push(fhirWorkspace.workspace);

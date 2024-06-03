@@ -63,7 +63,8 @@ async function writeDefinitionForOpenAPIWorkspace({
             workspace: {
                 specs: [spec]
             },
-            taskContext: context
+            taskContext: context,
+            sdkLanguage: undefined
         });
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let existingOverrides: any = {};

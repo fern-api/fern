@@ -20,7 +20,10 @@ import { convertEnum } from "./convertEnum";
 import { convertLiteral } from "./convertLiteral";
 import { convertNumber } from "./convertNumber";
 import { convertObject } from "./convertObject";
-import { convertUndiscriminatedOneOf } from "./convertUndiscriminatedOneOf";
+import {
+    convertUndiscriminatedOneOf,
+    convertUndiscriminatedOneOfWithDiscriminant
+} from "./convertUndiscriminatedOneOf";
 import { getDefaultAsNumber, getDefaultAsString } from "./defaults/getDefault";
 import { getExampleAsArray, getExampleAsBoolean, getExampleAsNumber, getExamplesString } from "./examples/getExample";
 import { SchemaParserContext } from "./SchemaParserContext";
@@ -418,29 +421,8 @@ export function convertSchemaObject(
         });
     }
 
-    // handle object with discriminant
     if (schema.type === "object" && schema.discriminator != null && schema.discriminator.mapping != null) {
-        return convertDiscriminatedOneOf({
-            nameOverride,
-            generatedName,
-            breadcrumbs,
-            description,
-            discriminator: schema.discriminator,
-            properties: schema.properties ?? {},
-            required: schema.required,
-            wrapAsNullable,
-            context,
-            groupName
-        });
-    }
-
-    // handle oneOf
-    if (schema.oneOf != null && schema.oneOf.length > 0) {
-        if (
-            schema.discriminator != null &&
-            schema.discriminator.mapping != null &&
-            Object.keys(schema.discriminator.mapping).length > 0
-        ) {
+        if (!context.shouldUseUndiscriminatedUnionsWithLiterals) {
             return convertDiscriminatedOneOf({
                 nameOverride,
                 generatedName,
@@ -453,6 +435,50 @@ export function convertSchemaObject(
                 context,
                 groupName
             });
+        } else {
+            return convertUndiscriminatedOneOfWithDiscriminant({
+                nameOverride,
+                generatedName,
+                description,
+                wrapAsNullable,
+                context,
+                groupName,
+                discriminator: schema.discriminator
+            });
+        }
+    }
+
+    // handle oneOf
+    if (schema.oneOf != null && schema.oneOf.length > 0) {
+        if (
+            schema.discriminator != null &&
+            schema.discriminator.mapping != null &&
+            Object.keys(schema.discriminator.mapping).length > 0
+        ) {
+            if (!context.shouldUseUndiscriminatedUnionsWithLiterals) {
+                return convertDiscriminatedOneOf({
+                    nameOverride,
+                    generatedName,
+                    breadcrumbs,
+                    description,
+                    discriminator: schema.discriminator,
+                    properties: schema.properties ?? {},
+                    required: schema.required,
+                    wrapAsNullable,
+                    context,
+                    groupName
+                });
+            } else {
+                return convertUndiscriminatedOneOfWithDiscriminant({
+                    nameOverride,
+                    generatedName,
+                    description,
+                    wrapAsNullable,
+                    context,
+                    groupName,
+                    discriminator: schema.discriminator
+                });
+            }
         } else if (schema.oneOf.length === 1 && schema.oneOf[0] != null) {
             const convertedSchema = convertSchema(
                 schema.oneOf[0],
@@ -489,7 +515,7 @@ export function convertSchemaObject(
             }
 
             const maybeDiscriminant = getDiscriminant({ schemas: schema.oneOf, context });
-            if (maybeDiscriminant != null) {
+            if (maybeDiscriminant != null && !context.shouldUseUndiscriminatedUnionsWithLiterals) {
                 return convertDiscriminatedOneOfWithVariants({
                     nameOverride,
                     generatedName,
@@ -554,7 +580,7 @@ export function convertSchemaObject(
             schemas: schema.anyOf,
             context
         });
-        if (maybeDiscriminant != null) {
+        if (maybeDiscriminant != null && !context.shouldUseUndiscriminatedUnionsWithLiterals) {
             return convertDiscriminatedOneOfWithVariants({
                 nameOverride,
                 generatedName,
