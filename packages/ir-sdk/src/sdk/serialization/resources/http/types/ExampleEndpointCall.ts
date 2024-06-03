@@ -11,6 +11,7 @@ export const ExampleEndpointCall: core.serialization.ObjectSchema<
     FernIr.ExampleEndpointCall
 > = core.serialization
     .objectWithoutOptionalProperties({
+        id: core.serialization.string().optional(),
         name: core.serialization.lazyObject(async () => (await import("../../..")).Name).optional(),
         url: core.serialization.string(),
         rootPathParameters: core.serialization.list(
@@ -41,6 +42,7 @@ export const ExampleEndpointCall: core.serialization.ObjectSchema<
 
 export declare namespace ExampleEndpointCall {
     interface Raw extends serializers.WithDocs.Raw {
+        id?: string | null;
         name?: serializers.Name.Raw | null;
         url: string;
         rootPathParameters: serializers.ExamplePathParameter.Raw[];

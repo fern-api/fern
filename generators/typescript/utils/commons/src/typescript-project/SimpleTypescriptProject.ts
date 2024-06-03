@@ -171,7 +171,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 };
             }
             if (
-                Object.keys(this.dependencies[DependencyType.PEER]).length > 0 &&
+                Object.keys(this.dependencies[DependencyType.PEER]).length > 0 ||
                 Object.keys(this.extraPeerDependencies).length > 0
             ) {
                 draft.peerDependencies = {

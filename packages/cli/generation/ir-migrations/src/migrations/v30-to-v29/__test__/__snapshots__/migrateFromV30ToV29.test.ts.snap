@@ -187,6 +187,7 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
                 },
               ],
               "exampleType": "userProvided",
+              "id": undefined,
               "name": undefined,
               "queryParameters": [
                 {
