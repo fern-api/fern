@@ -5,11 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.8.0] - 2024-06-03
+
+- Improvement: Endpoint function request logic has been abstracted into the request function of the wrapped httpx client.
+
 ## [2.7.0] - 2024-05-30
 
 - Improvement: The generator now outputs an `exampleId` alongside each generated snippet so that
-  we can correlate snippets with the relevant examples. This is useful for retrieving examples from 
-  Fern's API and making sure that you can show multiple snippets in the generated docs. 
+  we can correlate snippets with the relevant examples. This is useful for retrieving examples from
+  Fern's API and making sure that you can show multiple snippets in the generated docs.
 
 ## [2.6.1] - 2024-05-31
 
