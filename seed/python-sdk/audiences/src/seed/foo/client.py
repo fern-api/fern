@@ -5,10 +5,7 @@ from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import pydantic_v1
-from ..core.query_encoder import encode_query
-from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from .types.importing_type import ImportingType
 from .types.optional_string import OptionalString
@@ -58,47 +55,12 @@ class FooClient:
             private_property=1,
         )
         """
-        _request: typing.Dict[str, typing.Any] = {}
-        if public_property is not OMIT:
-            _request["publicProperty"] = public_property
-        if private_property is not OMIT:
-            _request["privateProperty"] = private_property
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
-            url=self._client_wrapper.get_base_url(),
-            params=encode_query(
-                jsonable_encoder(
-                    remove_none_from_dict(
-                        {
-                            "optionalString": optional_string,
-                            **(
-                                request_options.get("additional_query_parameters", {})
-                                if request_options is not None
-                                else {}
-                            ),
-                        }
-                    )
-                )
-            ),
-            json=jsonable_encoder(_request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(_request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            params={"optionalString": optional_string},
+            json={"publicProperty": public_property, "privateProperty": private_property},
+            request_options=request_options,
+            omit=OMIT,
         )
         if 200 <= _response.status_code < 300:
             return pydantic_v1.parse_obj_as(ImportingType, _response.json())  # type: ignore
@@ -150,47 +112,12 @@ class AsyncFooClient:
             private_property=1,
         )
         """
-        _request: typing.Dict[str, typing.Any] = {}
-        if public_property is not OMIT:
-            _request["publicProperty"] = public_property
-        if private_property is not OMIT:
-            _request["privateProperty"] = private_property
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
-            url=self._client_wrapper.get_base_url(),
-            params=encode_query(
-                jsonable_encoder(
-                    remove_none_from_dict(
-                        {
-                            "optionalString": optional_string,
-                            **(
-                                request_options.get("additional_query_parameters", {})
-                                if request_options is not None
-                                else {}
-                            ),
-                        }
-                    )
-                )
-            ),
-            json=jsonable_encoder(_request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(_request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            params={"optionalString": optional_string},
+            json={"publicProperty": public_property, "privateProperty": private_property},
+            request_options=request_options,
+            omit=OMIT,
         )
         if 200 <= _response.status_code < 300:
             return pydantic_v1.parse_obj_as(ImportingType, _response.json())  # type: ignore
