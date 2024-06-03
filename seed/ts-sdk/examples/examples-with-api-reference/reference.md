@@ -310,6 +310,89 @@ await seedExamples.health.service.check("id-2sdx82h");
 </dl>
 </details>
 
+<details><summary> <code>seedExamples.health.service.<a href="./src/api/resources/health/resources/service/client/Client.ts">check</a>(id) -> void</code> </summary>
+
+<dl>
+
+<dd>
+
+#### 📝 Description
+
+<dl>
+
+<dd>
+
+<dl>
+
+<dd>
+
+This endpoint checks the health of a resource.
+
+</dd>
+
+</dl>
+
+</dd>
+
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+
+<dd>
+
+<dl>
+
+<dd>
+
+```ts
+await seedExamples.health.service.check("id-3tey93i");
+```
+
+</dd>
+
+</dl>
+
+</dd>
+
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+
+<dd>
+
+<dl>
+
+<dd>
+
+**id: `string`** — The id to check
+
+</dd>
+
+</dl>
+
+<dl>
+
+<dd>
+
+**requestOptions: `Service.RequestOptions`**
+
+</dd>
+
+</dl>
+
+</dd>
+
+</dl>
+
+</dd>
+
+</dl>
+</details>
+
 <details><summary> <code>seedExamples.health.service.<a href="./src/api/resources/health/resources/service/client/Client.ts">ping</a>() -> boolean</code> </summary>
 
 <dl>

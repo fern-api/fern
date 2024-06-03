@@ -13,7 +13,6 @@ from .abstract_request_body_parameters import AbstractRequestBodyParameters
 from .flattened_request_body_parameter_utils import (
     are_any_properties_optional_in_inlined_request,
     get_json_body_for_inlined_request,
-    get_pre_fetch_statements_for_inlined_request,
 )
 
 
@@ -112,16 +111,15 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
 
     def get_json_body(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.Expression]:
         return get_json_body_for_inlined_request(
-            self._context, self._get_properties(), self._are_any_properties_optional
+            self._context,
+            self._get_properties(),
         )
 
     def get_files(self) -> Optional[AST.Expression]:
         return None
 
     def get_pre_fetch_statements(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.CodeWriter]:
-        return get_pre_fetch_statements_for_inlined_request(
-            self._context, self._get_properties(), self._are_any_properties_optional
-        )
+        return None
 
     def is_default_body_parameter_used(self) -> bool:
         return self._are_any_properties_optional
