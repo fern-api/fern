@@ -10,17 +10,6 @@
                 "type": "typescript",
                 "client": "import { SeedErrorPropertyClient } from \"@fern/error-property\";\n\nconst seedErrorProperty = new SeedErrorPropertyClient;\nawait seedErrorProperty.propertyBasedError.throwError();\n"
             }
-        },
-        {
-            "id": {
-                "path": "/property-based-error",
-                "method": "GET",
-                "identifier_override": "endpoint_property-based-error.ThrowError"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedErrorPropertyClient } from \"@fern/error-property\";\n\nconst seedErrorProperty = new SeedErrorPropertyClient;\nawait seedErrorProperty.propertyBasedError.throwError();\n"
-            }
         }
     ],
     "types": {}

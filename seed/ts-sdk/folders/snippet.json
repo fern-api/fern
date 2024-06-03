@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient;\nawait seedApi.foo();\n"
+                "client": "import { SeedFoldersClient } from \"@fern/folders\";\n\nconst seedFolders = new SeedFoldersClient;\nawait seedFolders.foo();\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient;\nawait seedApi.a.b.foo();\n"
+                "client": "import { SeedFoldersClient } from \"@fern/folders\";\n\nconst seedFolders = new SeedFoldersClient;\nawait seedFolders.a.b.foo();\n"
             }
         },
         {
@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient;\nawait seedApi.a.c.foo();\n"
+                "client": "import { SeedFoldersClient } from \"@fern/folders\";\n\nconst seedFolders = new SeedFoldersClient;\nawait seedFolders.a.c.foo();\n"
             }
         },
         {
@@ -41,7 +41,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient;\nawait seedApi.folder.foo();\n"
+                "client": "import { SeedFoldersClient } from \"@fern/folders\";\n\nconst seedFolders = new SeedFoldersClient;\nawait seedFolders.folder.foo();\n"
             }
         },
         {
@@ -52,7 +52,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient;\nawait seedApi.folder.service.endpoint();\n"
+                "client": "import { SeedFoldersClient } from \"@fern/folders\";\n\nconst seedFolders = new SeedFoldersClient;\nawait seedFolders.folder.service.endpoint();\n"
             }
         },
         {
@@ -63,18 +63,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient;\nawait seedApi.folder.service.unknownRequest({\n    \"key\": \"value\"\n});\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/service",
-                "method": "POST",
-                "identifier_override": "endpoint_folder/service.unknownRequest"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient;\nawait seedApi.folder.service.unknownRequest({\n    \"key\": \"value\"\n});\n"
+                "client": "import { SeedFoldersClient } from \"@fern/folders\";\n\nconst seedFolders = new SeedFoldersClient;\nawait seedFolders.folder.service.unknownRequest({\n    \"key\": \"value\"\n});\n"
             }
         }
     ],

@@ -168,39 +168,6 @@
         {
             "id": {
                 "path": "/v2/playlist/{serviceParam}/{playlistId}",
-                "method": "GET",
-                "identifier_override": "endpoint_playlist.getPlaylist"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.playlist.getPlaylist(1, SeedTrace.PlaylistId(\"string\"));\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/v2/playlist/{serviceParam}/{playlistId}",
-                "method": "GET",
-                "identifier_override": "endpoint_playlist.getPlaylist"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.playlist.getPlaylist(1, SeedTrace.PlaylistId(\"string\"));\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/v2/playlist/{serviceParam}/{playlistId}",
-                "method": "PUT",
-                "identifier_override": "endpoint_playlist.updatePlaylist"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.playlist.updatePlaylist(1, SeedTrace.PlaylistId(\"string\"), {\n    name: \"string\",\n    problems: [SeedTrace.ProblemId(\"string\")]\n});\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/v2/playlist/{serviceParam}/{playlistId}",
                 "method": "PUT",
                 "identifier_override": "endpoint_playlist.updatePlaylist"
             },

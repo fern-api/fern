@@ -13,17 +13,6 @@
         },
         {
             "id": {
-                "path": "/inlined",
-                "method": "POST",
-                "identifier_override": "endpoint_inlined-request.send"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedEnumClient, SeedEnum } from \"@fern/enum\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.inlinedRequest.send({\n    operand: SeedEnum.Operand.GreaterThan,\n    operandOrColor: SeedEnum.Color.Red\n});\n"
-            }
-        },
-        {
-            "id": {
                 "path": "/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
                 "method": "POST",
                 "identifier_override": "endpoint_path-param.send"
@@ -35,17 +24,6 @@
         },
         {
             "id": {
-                "path": "/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
-                "method": "POST",
-                "identifier_override": "endpoint_path-param.send"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedEnumClient, SeedEnum } from \"@fern/enum\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.pathParam.send(SeedEnum.Operand.GreaterThan, SeedEnum.Operand.GreaterThan, SeedEnum.Color.Red, SeedEnum.Color.Red);\n"
-            }
-        },
-        {
-            "id": {
                 "path": "/query",
                 "method": "POST",
                 "identifier_override": "endpoint_query-param.send"
@@ -53,17 +31,6 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedEnumClient, SeedEnum } from \"@fern/enum\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.queryParam.send({\n    operand: SeedEnum.Operand.GreaterThan,\n    operandOrColor: SeedEnum.Color.Red\n});\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/query",
-                "method": "POST",
-                "identifier_override": "endpoint_query-param.send"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedEnumClient, SeedEnum } from \"@fern/enum\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.queryParam.send({\n    operand: SeedEnum.Operand.GreaterThan,\n    maybeOperand: SeedEnum.Operand.GreaterThan,\n    operandOrColor: SeedEnum.Color.Red,\n    maybeOperandOrColor: SeedEnum.Color.Red\n});\n"
             }
         },
         {
