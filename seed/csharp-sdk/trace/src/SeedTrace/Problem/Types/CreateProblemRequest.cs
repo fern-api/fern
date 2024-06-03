@@ -17,13 +17,13 @@ public class CreateProblemRequest
     public Dictionary<Language, ProblemFiles> Files { get; init; }
 
     [JsonPropertyName("inputParams")]
-    public List<VariableTypeAndName> InputParams { get; init; }
+    public IEnumerable<VariableTypeAndName> InputParams { get; init; }
 
     [JsonPropertyName("outputType")]
     public VariableType OutputType { get; init; }
 
     [JsonPropertyName("testcases")]
-    public List<TestCaseWithExpectedResult> Testcases { get; init; }
+    public IEnumerable<TestCaseWithExpectedResult> Testcases { get; init; }
 
     [JsonPropertyName("methodName")]
     public string MethodName { get; init; }

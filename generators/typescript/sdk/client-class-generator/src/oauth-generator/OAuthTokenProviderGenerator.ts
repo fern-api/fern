@@ -149,6 +149,7 @@ export class OAuthTokenProviderGenerator {
                 })}
 
                 ${this.getRefreshMethod({
+                    context,
                     getTokenEndpoint: endpoint,
                     requestProperties,
                     responseProperties
@@ -165,6 +166,10 @@ export class OAuthTokenProviderGenerator {
         return code`
             import * as core from "../../core";
         `;
+    }
+
+    private getGenericSdkErrorType({ context }: { context: SdkContext }): string {
+        return getTextOfTsNode(context.genericAPISdkError.getReferenceToGenericAPISdkError().getEntityName());
     }
 
     private getProperties({
@@ -235,10 +240,12 @@ export class OAuthTokenProviderGenerator {
     }
 
     private getRefreshMethod({
+        context,
         getTokenEndpoint,
         requestProperties,
         responseProperties
     }: {
+        context: SdkContext;
         getTokenEndpoint: HttpEndpoint;
         requestProperties: OAuthAccessTokenRequestProperties;
         responseProperties: OAuthAccessTokenResponseProperties;
@@ -248,7 +255,7 @@ export class OAuthTokenProviderGenerator {
         const accessTokenProperty = this.responsePropertyToDotDelimitedAccessor({
             responseProperty: responseProperties.accessToken
         });
-        const handleNeverThrowErrors = this.getNeverThrowErrorsHandler();
+        const handleNeverThrowErrors = this.getNeverThrowErrorsHandler({ context });
         if (responseProperties.expiresIn != null) {
             const expiresInProperty = this.responsePropertyToDotDelimitedAccessor({
                 responseProperty: responseProperties.expiresIn
@@ -279,12 +286,14 @@ export class OAuthTokenProviderGenerator {
         `;
     }
 
-    private getNeverThrowErrorsHandler(): Code {
-        return this.neverThrowErrors
-            ? code`if (!tokenResponse.ok) {
-                return this._accessToken ?? "";
-            }`
-            : code``;
+    private getNeverThrowErrorsHandler({ context }: { context: SdkContext }): Code {
+        if (!this.neverThrowErrors) {
+            return code``;
+        }
+        const errorType = this.getGenericSdkErrorType({ context });
+        return code`if (!tokenResponse.ok) {
+                throw new ${errorType}({ body: tokenResponse.error });
+            }`;
     }
 
     private getExpiresAtMethod({

@@ -8,7 +8,8 @@ export type ExampleContainer =
     | FernIr.ExampleContainer.List
     | FernIr.ExampleContainer.Set
     | FernIr.ExampleContainer.Optional
-    | FernIr.ExampleContainer.Map;
+    | FernIr.ExampleContainer.Map
+    | FernIr.ExampleContainer.Literal;
 
 export declare namespace ExampleContainer {
     interface List extends _Utils {
@@ -31,6 +32,11 @@ export declare namespace ExampleContainer {
         map: FernIr.ExampleKeyValuePair[];
     }
 
+    interface Literal extends _Utils {
+        type: "literal";
+        literal: FernIr.ExamplePrimitive;
+    }
+
     interface _Utils {
         _visit: <_Result>(visitor: FernIr.ExampleContainer._Visitor<_Result>) => _Result;
     }
@@ -40,6 +46,7 @@ export declare namespace ExampleContainer {
         set: (value: FernIr.ExampleTypeReference[]) => _Result;
         optional: (value: FernIr.ExampleTypeReference | undefined) => _Result;
         map: (value: FernIr.ExampleKeyValuePair[]) => _Result;
+        literal: (value: FernIr.ExamplePrimitive) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -97,6 +104,19 @@ export const ExampleContainer = {
         };
     },
 
+    literal: (value: FernIr.ExamplePrimitive): FernIr.ExampleContainer.Literal => {
+        return {
+            literal: value,
+            type: "literal",
+            _visit: function <_Result>(
+                this: FernIr.ExampleContainer.Literal,
+                visitor: FernIr.ExampleContainer._Visitor<_Result>
+            ) {
+                return FernIr.ExampleContainer._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(value: FernIr.ExampleContainer, visitor: FernIr.ExampleContainer._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "list":
@@ -107,6 +127,8 @@ export const ExampleContainer = {
                 return visitor.optional(value.optional);
             case "map":
                 return visitor.map(value.map);
+            case "literal":
+                return visitor.literal(value.literal);
             default:
                 return visitor._other(value as any);
         }

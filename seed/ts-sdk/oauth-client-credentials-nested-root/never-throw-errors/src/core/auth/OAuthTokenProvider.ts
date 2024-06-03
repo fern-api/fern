@@ -4,6 +4,7 @@
 
 import * as core from "../../core";
 import { Auth } from "../../api/resources/auth/client/Client";
+import * as errors from "../../errors/index";
 
 /**
  * The OAuthTokenProvider retrieves an OAuth access token, refreshing it as needed.
@@ -45,7 +46,7 @@ export class OAuthTokenProvider {
             clientSecret: await core.Supplier.get(this._clientSecret),
         });
         if (!tokenResponse.ok) {
-            return this._accessToken ?? "";
+            throw new errors.SeedOauthClientCredentialsError({ body: tokenResponse.error });
         }
         this._accessToken = tokenResponse.body.accessToken;
         this._expiresAt = this.getExpiresAt(tokenResponse.body.expiresIn, this.BUFFER_IN_MINUTES);

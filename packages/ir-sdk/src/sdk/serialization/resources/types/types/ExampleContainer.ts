@@ -29,6 +29,9 @@ export const ExampleContainer: core.serialization.Schema<serializers.ExampleCont
                     core.serialization.lazyObject(async () => (await import("../../..")).ExampleKeyValuePair)
                 ),
             }),
+            literal: core.serialization.object({
+                literal: core.serialization.lazy(async () => (await import("../../..")).ExamplePrimitive),
+            }),
         })
         .transform<FernIr.ExampleContainer>({
             transform: (value) => {
@@ -41,6 +44,8 @@ export const ExampleContainer: core.serialization.Schema<serializers.ExampleCont
                         return FernIr.ExampleContainer.optional(value.optional);
                     case "map":
                         return FernIr.ExampleContainer.map(value.map);
+                    case "literal":
+                        return FernIr.ExampleContainer.literal(value.literal);
                     default:
                         return value as FernIr.ExampleContainer;
                 }
@@ -49,7 +54,12 @@ export const ExampleContainer: core.serialization.Schema<serializers.ExampleCont
         });
 
 export declare namespace ExampleContainer {
-    type Raw = ExampleContainer.List | ExampleContainer.Set | ExampleContainer.Optional | ExampleContainer.Map;
+    type Raw =
+        | ExampleContainer.List
+        | ExampleContainer.Set
+        | ExampleContainer.Optional
+        | ExampleContainer.Map
+        | ExampleContainer.Literal;
 
     interface List {
         type: "list";
@@ -69,5 +79,10 @@ export declare namespace ExampleContainer {
     interface Map {
         type: "map";
         map: serializers.ExampleKeyValuePair.Raw[];
+    }
+
+    interface Literal {
+        type: "literal";
+        literal: serializers.ExamplePrimitive.Raw;
     }
 }

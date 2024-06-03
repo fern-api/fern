@@ -15,7 +15,9 @@ public class ContainerClient
         _client = client;
     }
 
-    public async Task<List<string>> GetAndReturnListOfPrimitivesAsync(List<string> request)
+    public async Task<IEnumerable<string>> GetAndReturnListOfPrimitivesAsync(
+        IEnumerable<string> request
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -28,13 +30,13 @@ public class ContainerClient
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<string>>(responseBody);
+            return JsonSerializer.Deserialize<IEnumerable<string>>(responseBody);
         }
         throw new Exception(responseBody);
     }
 
-    public async Task<List<ObjectWithRequiredField>> GetAndReturnListOfObjectsAsync(
-        List<ObjectWithRequiredField> request
+    public async Task<IEnumerable<ObjectWithRequiredField>> GetAndReturnListOfObjectsAsync(
+        IEnumerable<ObjectWithRequiredField> request
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -48,7 +50,7 @@ public class ContainerClient
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<ObjectWithRequiredField>>(responseBody);
+            return JsonSerializer.Deserialize<IEnumerable<ObjectWithRequiredField>>(responseBody);
         }
         throw new Exception(responseBody);
     }

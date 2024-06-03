@@ -14,7 +14,7 @@ public class SubmitRequestV2
     public Language Language { get; init; }
 
     [JsonPropertyName("submissionFiles")]
-    public List<SubmissionFileInfo> SubmissionFiles { get; init; }
+    public IEnumerable<SubmissionFileInfo> SubmissionFiles { get; init; }
 
     [JsonPropertyName("problemId")]
     public string ProblemId { get; init; }

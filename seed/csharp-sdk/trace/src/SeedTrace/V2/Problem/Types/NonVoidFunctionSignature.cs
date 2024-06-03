@@ -9,7 +9,7 @@ namespace SeedTrace.V2;
 public class NonVoidFunctionSignature
 {
     [JsonPropertyName("parameters")]
-    public List<Parameter> Parameters { get; init; }
+    public IEnumerable<Parameter> Parameters { get; init; }
 
     [JsonPropertyName("returnType")]
     public VariableType ReturnType { get; init; }

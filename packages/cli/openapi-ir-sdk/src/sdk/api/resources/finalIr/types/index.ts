@@ -1,6 +1,7 @@
 export * from "./OpenApiIntermediateRepresentation";
 export * from "./SdkGroupInfo";
 export * from "./GlobalHeader";
+export * from "./IdempotencyHeader";
 export * from "./Tags";
 export * from "./HttpError";
 export * from "./Webhook";

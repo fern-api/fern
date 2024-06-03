@@ -4,7 +4,6 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { cp, mkdir, writeFile } from "fs/promises";
 import path from "path";
-import { writeInputs } from "../../../commands/rewrite-inputs/rewriteInputsForWorkspace";
 import { FixtureConfigurations, OutputMode } from "../../../config/api";
 import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces";
 import { Semaphore } from "../../../Semaphore";
@@ -198,22 +197,6 @@ export abstract class TestRunner {
                     outputFolder,
                     metrics
                 };
-            } finally {
-                writeInputs({
-                    absolutePathToOutput: outputDir,
-                    fernWorkspace,
-                    taskContext,
-                    docker: this.getParsedDockerName(),
-                    language,
-                    customConfig,
-                    publishConfig,
-                    outputMode,
-                    fixtureName: fixture,
-                    irVersion,
-                    publishMetadata,
-                    workspaceName: fernWorkspace.name,
-                    context: taskContext
-                });
             }
 
             if (this.skipScripts) {

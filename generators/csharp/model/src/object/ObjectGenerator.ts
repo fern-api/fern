@@ -33,7 +33,8 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                 annotations.push(
                     getUndiscriminatedUnionSerializerAnnotation({
                         context: this.context,
-                        undiscriminatedUnionDeclaration: maybeUndiscriminatedUnion
+                        undiscriminatedUnionDeclaration: maybeUndiscriminatedUnion.declaration,
+                        isList: maybeUndiscriminatedUnion.isList
                     })
                 );
             }

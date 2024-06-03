@@ -5,11 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.20.5] - 2024-05-29
+## [0.20.9] - 2024-06-02
 
-- Improvement: Support setting `extraPeerDependencies` and `extraPeerDependenciesMeta` as 
-  configuration arguments. For example: 
-  
+- Fix: TypeScript generator outputs code snippets that have `example-identifier` embedded. 
+
+## [0.20.8] - 2024-06-02
+
+- Improvement: TypeScript projects were skipping added peer dependencies in certain cases,
+  now those are fixed.
+
+## [0.20.7] - 2024-05-31
+
+- Fix: Simplify the error handling introduced in `0.20.6` so that it more easily
+  handles endpoints that include structured errors.
+
+## [0.20.6] - 2024-05-31
+
+- Fix: This updates the behavior of the failure condition introduced in `0.20.2`; the SDK
+  now throws an error whenever we fail to refresh an access token even if `neverThrowErrors`
+  is set. We treat this failure as a systematic exception, so it's OK to throw in this case.
+
+## [0.20.5] - 2024-05-30
+
+- Improvement: Support setting `extraPeerDependencies` and `extraPeerDependenciesMeta` as
+  configuration arguments. For example:
+
   ```yaml
   extraPeerDependencies:
     "openai": "^4.47.1"

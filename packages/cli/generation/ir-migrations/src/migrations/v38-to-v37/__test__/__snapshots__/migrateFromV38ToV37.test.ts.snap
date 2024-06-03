@@ -124,6 +124,7 @@ exports[`migrateFromV38ToV37 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
+              "id": "3fae9e62275adc35433156ba8e4c69eeb43360ae",
               "name": undefined,
               "queryParameters": [],
               "request": {

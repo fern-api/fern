@@ -119,14 +119,14 @@ class ClientGenerator:
                 ):
                     self._is_default_body_parameter_used = True
 
-                if generated_endpoint_function.snippet is not None:
+                for snippet in generated_endpoint_function.snippets or []:
                     if is_async:
                         self._snippet_registry.register_async_client_endpoint_snippet(
-                            endpoint=endpoint, expr=generated_endpoint_function.snippet
+                            endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
                         )
                     else:
                         self._snippet_registry.register_sync_client_endpoint_snippet(
-                            endpoint=endpoint, expr=generated_endpoint_function.snippet
+                            endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
                         )
 
         return class_declaration

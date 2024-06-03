@@ -191,6 +191,7 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                 },
               ],
               "exampleType": "userProvided",
+              "id": undefined,
               "name": undefined,
               "queryParameters": [
                 {

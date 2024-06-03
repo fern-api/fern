@@ -2,7 +2,6 @@ import { generatorsYml } from "@fern-api/configuration";
 import { runLocalGenerationForSeed } from "@fern-api/local-workspace-runner";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import path from "path";
-import { writeInputs } from "../../../commands/rewrite-inputs/rewriteInputsForWorkspace";
 import { runScript } from "../../../runScript";
 import { ALL_AUDIENCES, DUMMY_ORGANIZATION } from "../../../utils/constants";
 import { getGeneratorInvocation } from "../../../utils/getGeneratorInvocation";
@@ -74,22 +73,6 @@ export class DockerTestRunner extends TestRunner {
             });
         } catch (e) {
             throw e;
-        } finally {
-            await writeInputs({
-                absolutePathToOutput: outputDir,
-                fernWorkspace,
-                taskContext,
-                docker: this.getParsedDockerName(),
-                language,
-                customConfig,
-                publishConfig,
-                outputMode,
-                fixtureName: fixture,
-                irVersion,
-                publishMetadata,
-                workspaceName: fernWorkspace.name,
-                context: taskContext
-            });
         }
     }
 }

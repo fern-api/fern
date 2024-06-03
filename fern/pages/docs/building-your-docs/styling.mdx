@@ -67,7 +67,7 @@ Just like `accentPrimary`, you can specify the background color in `docs.yml` us
 Customize the background image by including the image(s) in your `fern/` project and specifying the path in `docs.yml`. The PNG, SVG, and JPG image formats are supported.
 
 <CodeBlock title="Add the images">
-```diff
+```diff {4-6}
   fern/
   ├─ openapi/
   ├─ pages/
@@ -143,7 +143,7 @@ You can specify custom fonts for your documentation website. The supported file 
 Include the custom fonts in your `fern/` project:
 
 <CodeBlock title="Example custom fonts">
-```diff
+```diff {6-9}
   fern/
   ├─ fern.config.json
   ├─ generators.yml
@@ -234,98 +234,3 @@ layout:
   content-alignment: left
 ```
 </Tab>
-
-## Custom CSS
-
-<Note>Custom CSS is available on the Business plan.</Note>
-
-You can add custom CSS to your docs to further customize the look and feel. Add a `styles.css` file and include it in your `fern/` project:
-
-<Tab title="Add the styles.css file">
-```diff
-  fern/
-  ├─ openapi/
-  ├─ pages/
-  ├─ images/
-+ ├─ styles.css
-  ├─ docs.yml
-  └─ fern.config.json
-```
-</Tab>
-
-In `docs.yml`, specify the path to the `styles.css` file:
-
-<Tab title="Example specifying custom CSS in docs.yml">
-```yaml
-css: ./docs/styles.css
-```
-</Tab>
-
-Here's an example of what you can do with custom CSS:
-
-<Tab title="Example styles.css">
-```css
-
-.petstore-table {
-    background-color: white;
-    border: 1px solid #DEDEE1;
-    border-radius: 4px;
-}
-
-.dark .petstore-table { 
-    background-color: #1e1e1e;
-    border: 1px solid #2e2e2e;
-}
-
-.petstore-table thead {
-    position: sticky;
-    top: 0;
-}
-
-.petstore-table thead tr {
-    background-color: #edecee;
-    border: 1px solid #DEDEE1;
-    border-radius: 4px 4px 0px 0px;
-}
-
-.dark .petstore-table thead tr {
-    background-color: #2e2e2e;
-    border: 1px solid #2e2e2e;
-}
-
-.petstore-table th {
-    padding: 6px;
-}
-
-.petstore-table tbody td {
-    padding: 6px;
-}
-
-.petstore-table tbody tr:nth-child(odd) {
-    border: 1px solid #DEDEE1;
-}
-.petstore-table tbody tr:nth-child(even) {
-    border: 1px solid #DEDEE1;
-    background-color: #f7f6f8;
-}
-
-.dark .petstore-table tbody tr:nth-child(odd) {
-    border: 1px solid #2e2e2e;
-}
-
-.dark .petstore-table tbody tr:nth-child(even) {
-    border: 1px solid #2e2e2e;
-    background-color: #2e2e2e;
-}
-```
-</Tab>
-
-## Custom JavaScript
-
-<Note>Custom JS is available on the Business plan.</Note>
-
-## Header and footer
-
-<Note>Custom Components is available on the Enterprise plan.</Note>
-
-You can bring your own UI components and replace the default components. The `header` and `footer` are the most common components to replace. You can replace any component in the docs, including the sidebar, tabs, search bar, and more.

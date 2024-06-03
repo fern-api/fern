@@ -55,14 +55,14 @@ export class CsharpTypeMapper {
     }): Type {
         switch (container.type) {
             case "list":
-                return Type.list(this.convert({ reference: container.list }));
+                return Type.list(this.convert({ reference: container.list, unboxOptionals: true }));
             case "map":
                 return Type.map(
                     this.convert({ reference: container.keyType }),
                     this.convert({ reference: container.valueType })
                 );
             case "set":
-                return Type.set(this.convert({ reference: container.set }));
+                return Type.set(this.convert({ reference: container.set, unboxOptionals: true }));
             case "optional":
                 return unboxOptionals
                     ? this.convert({ reference: container.optional, unboxOptionals })

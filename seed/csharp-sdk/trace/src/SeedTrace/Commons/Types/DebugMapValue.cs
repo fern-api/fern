@@ -8,5 +8,5 @@ namespace SeedTrace;
 public class DebugMapValue
 {
     [JsonPropertyName("keyValuePairs")]
-    public List<DebugKeyValuePairs> KeyValuePairs { get; init; }
+    public IEnumerable<DebugKeyValuePairs> KeyValuePairs { get; init; }
 }

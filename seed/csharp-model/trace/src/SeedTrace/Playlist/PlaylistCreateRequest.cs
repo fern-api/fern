@@ -10,5 +10,5 @@ public class PlaylistCreateRequest
     public string Name { get; init; }
 
     [JsonPropertyName("problems")]
-    public List<string> Problems { get; init; }
+    public IEnumerable<string> Problems { get; init; }
 }

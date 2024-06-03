@@ -356,6 +356,31 @@ export const FernOpenAPIExtension = {
     FERN_GLOBAL_HEADERS: "x-fern-global-headers",
 
     /**
+     * Allows users to specify which headers are idempotent.
+     *
+     * x-fern-idempotency-headers:
+     *  - header: our_api_key
+     *    name: api_key
+     *    optional: true
+     *  - header: telemetry_id
+     *    env: MY_ENVVAR
+     *  - header: X-API-Version
+     *    name: version
+     *    type: literal<"2.10"> # The type of the header to use
+     */
+    FERN_IDEMPOTENCY_HEADERS: "x-fern-idempotency-headers",
+
+    /**
+     * Mark a particular endpoint as idempotent.
+     *
+     * paths:
+     *  send:
+     *    post:
+     *      x-fern-idempotent: true
+     */
+    IDEMPOTENT: "x-fern-idempotent",
+
+    /**
      * Allows a user to configure the property name for the schema.
      */
     FERN_PROPERTY_NAME: "x-fern-property-name"

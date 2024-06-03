@@ -106,8 +106,10 @@ paths:
           schema:
             type: string
           examples:
-            Example1:
+            Example0:
               value: id-2sdx82h
+            Example2:
+              value: id-3tey93i
       responses:
         '204':
           description: ''
@@ -128,7 +130,7 @@ paths:
               schema:
                 type: boolean
               examples:
-                Example1:
+                Example0:
                   value: true
       security:
         - BearerAuth: []

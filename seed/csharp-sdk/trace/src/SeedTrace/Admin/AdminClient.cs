@@ -89,7 +89,7 @@ public class AdminClient
     public async void StoreTracedTestCaseV2Async(
         Guid submissionId,
         string testCaseId,
-        List<TraceResponseV2> request
+        IEnumerable<TraceResponseV2> request
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -117,7 +117,10 @@ public class AdminClient
         );
     }
 
-    public async void StoreTracedWorkspaceV2Async(Guid submissionId, List<TraceResponseV2> request)
+    public async void StoreTracedWorkspaceV2Async(
+        Guid submissionId,
+        IEnumerable<TraceResponseV2> request
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest

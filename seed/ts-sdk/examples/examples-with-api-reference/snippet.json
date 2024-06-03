@@ -42,7 +42,20 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedExamplesClient } from \"@fern/examples\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.health.service.check(\"id-2sdx82h\");\n"
-            }
+            },
+            "example_identifier": "Example0"
+        },
+        {
+            "id": {
+                "path": "/check/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_health/service.check"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesClient } from \"@fern/examples\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.health.service.check(\"id-3tey93i\");\n"
+            },
+            "example_identifier": "Example2"
         },
         {
             "id": {
@@ -53,7 +66,8 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedExamplesClient } from \"@fern/examples\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.health.service.ping();\n"
-            }
+            },
+            "example_identifier": "Example0"
         },
         {
             "id": {
