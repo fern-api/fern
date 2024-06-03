@@ -17,6 +17,7 @@ export async function generateIrForWorkspaces({
     generationLanguage,
     audiences,
     version,
+    keywords,
     smartCasing
 }: {
     project: Project;
@@ -25,6 +26,7 @@ export async function generateIrForWorkspaces({
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
     audiences: Audiences;
     version: string | undefined;
+    keywords: string[] | undefined;
     smartCasing: boolean;
 }): Promise<void> {
     await Promise.all(
@@ -57,6 +59,7 @@ export async function generateIrForWorkspaces({
                     workspace: fernWorkspace,
                     context,
                     generationLanguage,
+                    keywords,
                     smartCasing,
                     disableExamples: false,
                     audiences,
@@ -79,6 +82,7 @@ async function getIntermediateRepresentation({
     context,
     generationLanguage,
     audiences,
+    keywords,
     smartCasing,
     disableExamples,
     version
@@ -86,6 +90,7 @@ async function getIntermediateRepresentation({
     workspace: FernWorkspace;
     context: TaskContext;
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
+    keywords: string[] | undefined;
     smartCasing: boolean;
     disableExamples: boolean;
     audiences: Audiences;
@@ -96,6 +101,7 @@ async function getIntermediateRepresentation({
         context,
         generationLanguage,
         audiences,
+        keywords,
         smartCasing,
         disableExamples
     });

@@ -24,6 +24,7 @@ export async function getIntermediateRepresentation({
         workspace,
         audiences,
         generationLanguage: generatorInvocation.language,
+        keywords: generatorInvocation.keywords,
         smartCasing: generatorInvocation.smartCasing,
         disableExamples: generatorInvocation.disableExamples
     });

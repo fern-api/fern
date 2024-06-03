@@ -4,6 +4,7 @@ import { constructCasingsGenerator } from "../casings/CasingsGenerator";
 describe("casingsGenerator", () => {
     const casingsGenerator = constructCasingsGenerator({
         generationLanguage: undefined,
+        keywords: undefined,
         smartCasing: true
     });
     it("simple", () => {
