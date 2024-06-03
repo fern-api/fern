@@ -3,6 +3,7 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { getUndiscriminatedUnionSerializerAnnotation } from "../undiscriminated-union/getUndiscriminatedUnionSerializerAnnotation";
 
 export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly classReference: csharp.ClassReference;
@@ -26,6 +27,18 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
 
         const properties = this.context.flattenedProperties.get(typeId) ?? this.objectDeclaration.properties;
         properties.forEach((property) => {
+            const annotations: csharp.Annotation[] = [];
+            const maybeUndiscriminatedUnion = this.context.getAsUndiscriminatedUnionTypeDeclaration(property.valueType);
+            if (maybeUndiscriminatedUnion != null) {
+                annotations.push(
+                    getUndiscriminatedUnionSerializerAnnotation({
+                        context: this.context,
+                        undiscriminatedUnionDeclaration: maybeUndiscriminatedUnion.declaration,
+                        isList: maybeUndiscriminatedUnion.isList
+                    })
+                );
+            }
+
             class_.addField(
                 csharp.field({
                     name: this.getPropertyName({ className: this.classReference.name, objectProperty: property }),
@@ -34,7 +47,8 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                     get: true,
                     init: true,
                     summary: property.docs,
-                    jsonPropertyName: property.name.wireValue
+                    jsonPropertyName: property.name.wireValue,
+                    annotations
                 })
             );
         });

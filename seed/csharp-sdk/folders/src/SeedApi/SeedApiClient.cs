@@ -2,6 +2,8 @@ using SeedApi;
 using SeedApi.A;
 using SeedApi.Folder;
 
+#nullable enable
+
 namespace SeedApi;
 
 public partial class SeedApiClient

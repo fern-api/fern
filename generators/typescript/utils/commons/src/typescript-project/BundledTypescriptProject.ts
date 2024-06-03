@@ -276,8 +276,19 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
                     ...this.extraDependencies
                 };
             }
-            if (Object.keys(this.dependencies[DependencyType.PEER]).length > 0) {
-                draft.peerDependencies = this.dependencies[DependencyType.PEER];
+            if (
+                Object.keys(this.dependencies[DependencyType.PEER]).length > 0 ||
+                Object.keys(this.extraPeerDependencies).length > 0
+            ) {
+                draft.peerDependencies = {
+                    ...this.dependencies[DependencyType.PEER],
+                    ...this.extraPeerDependencies
+                };
+            }
+            if (Object.keys(this.extraPeerDependenciesMeta).length > 0) {
+                draft.peerDependenciesMeta = {
+                    ...this.extraPeerDependenciesMeta
+                };
             }
             draft.devDependencies = {
                 ...this.dependencies[DependencyType.DEV],

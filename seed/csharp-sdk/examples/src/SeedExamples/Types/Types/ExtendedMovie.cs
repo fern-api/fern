@@ -1,11 +1,13 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace SeedExamples;
 
 public class ExtendedMovie
 {
     [JsonPropertyName("cast")]
-    public List<string> Cast { get; init; }
+    public IEnumerable<string> Cast { get; init; }
 
     [JsonPropertyName("id")]
     public string Id { get; init; }

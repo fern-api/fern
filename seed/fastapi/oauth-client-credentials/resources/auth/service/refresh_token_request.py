@@ -11,8 +11,8 @@ class RefreshTokenRequest(pydantic_v1.BaseModel):
     client_id: str
     client_secret: str
     refresh_token: str
-    audience: typing.Literal["https://api.example.com"]
-    grant_type: typing.Literal["refresh_token"]
+    audience: typing.Literal["https://api.example.com"] = "https://api.example.com"
+    grant_type: typing.Literal["refresh_token"] = "refresh_token"
     scope: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:

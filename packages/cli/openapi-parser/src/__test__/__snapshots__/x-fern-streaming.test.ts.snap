@@ -116,6 +116,7 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
       ],
       "generatedRequestName": "CreateChatCompletionStreamRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "create_chat_completion_stream",
@@ -907,6 +908,7 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
       ],
       "generatedRequestName": "CreateChatCompletionRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "create_chat_completion",
@@ -1658,6 +1660,7 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [
     "Function",
     "ChatMessage",

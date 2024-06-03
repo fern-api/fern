@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedIdempotencyHeaders;
 
+#nullable enable
+
 namespace SeedIdempotencyHeaders;
 
 public class PaymentClient
@@ -27,7 +29,7 @@ public class PaymentClient
         {
             return JsonSerializer.Deserialize<Guid>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async void DeleteAsync(string paymentId)

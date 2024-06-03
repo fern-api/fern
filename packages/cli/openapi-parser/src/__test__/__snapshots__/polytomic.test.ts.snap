@@ -331,6 +331,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           },
         },
       ],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "api/v2.CreateConnection",
@@ -388,6 +389,7 @@ exports[`polytomic polytomic parse open api 1`] = `
   ],
   "groups": {},
   "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [
     "ApiError",
     "RestErrResponse",

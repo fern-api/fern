@@ -1,7 +1,13 @@
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+using SeedTrace;
+using SeedTrace.Core;
+
+#nullable enable
 
 namespace SeedTrace;
 
+[JsonConverter(typeof(StringEnumSerializer<RunningSubmissionState>))]
 public enum RunningSubmissionState
 {
     [EnumMember(Value = "QUEUEING_SUBMISSION")]

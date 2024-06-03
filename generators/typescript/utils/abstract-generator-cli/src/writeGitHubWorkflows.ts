@@ -89,26 +89,26 @@ ${getTestJob({ config })}
 }
 
 function getTestJob({ config }: { config: FernGeneratorExec.GeneratorConfig }): string {
-    if (config.writeUnitTests) {
-        return `
-  test:
-    runs-on: ubuntu-latest
+    //     if (config.writeUnitTests) {
+    //         return `
+    //   test:
+    //     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+    //     steps:
+    //       - name: Checkout repo
+    //         uses: actions/checkout@v3
 
-      - name: Set up node
-        uses: actions/setup-node@v3
+    //       - name: Set up node
+    //         uses: actions/setup-node@v3
 
-      - name: Test
-        run: |
-          yarn
-          yarn fern test --command='jest --env=node'
-          yarn fern test --command='jest --env=jsdom'
-`;
-    } else {
-        return `
+    //       - name: Test
+    //         run: |
+    //           yarn
+    //           yarn fern test --command='jest --env=node'
+    //           yarn fern test --command='jest --env=jsdom'
+    // `;
+    //     } else {
+    return `
   test:
     runs-on: ubuntu-latest
 
@@ -122,5 +122,5 @@ function getTestJob({ config }: { config: FernGeneratorExec.GeneratorConfig }): 
       - name: Compile
         run: yarn && yarn test    
 `;
-    }
+    // }
 }

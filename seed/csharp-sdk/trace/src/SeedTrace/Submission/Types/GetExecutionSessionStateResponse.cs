@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class GetExecutionSessionStateResponse
@@ -12,5 +14,5 @@ public class GetExecutionSessionStateResponse
     public int? NumWarmingInstances { get; init; }
 
     [JsonPropertyName("warmingSessionIds")]
-    public List<string> WarmingSessionIds { get; init; }
+    public IEnumerable<string> WarmingSessionIds { get; init; }
 }

@@ -1,5 +1,7 @@
 using SeedPackageYml;
 
+#nullable enable
+
 namespace SeedPackageYml;
 
 public class ServiceClient

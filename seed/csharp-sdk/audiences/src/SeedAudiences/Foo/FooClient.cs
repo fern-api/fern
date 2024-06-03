@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedAudiences;
 
+#nullable enable
+
 namespace SeedAudiences;
 
 public class FooClient
@@ -32,6 +34,6 @@ public class FooClient
         {
             return JsonSerializer.Deserialize<ImportingType>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

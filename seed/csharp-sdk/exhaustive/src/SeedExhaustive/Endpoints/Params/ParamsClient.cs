@@ -2,6 +2,8 @@ using System.Text.Json;
 using SeedExhaustive;
 using SeedExhaustive.Endpoints;
 
+#nullable enable
+
 namespace SeedExhaustive.Endpoints;
 
 public class ParamsClient
@@ -26,7 +28,7 @@ public class ParamsClient
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -103,6 +105,6 @@ public class ParamsClient
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

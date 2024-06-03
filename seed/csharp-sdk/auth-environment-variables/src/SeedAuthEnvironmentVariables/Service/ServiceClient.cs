@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedAuthEnvironmentVariables;
 
+#nullable enable
+
 namespace SeedAuthEnvironmentVariables;
 
 public class ServiceClient
@@ -25,7 +27,7 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -50,6 +52,6 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

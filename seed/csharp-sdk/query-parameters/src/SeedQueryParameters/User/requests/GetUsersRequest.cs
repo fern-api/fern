@@ -1,5 +1,7 @@
 using SeedQueryParameters;
 
+#nullable enable
+
 namespace SeedQueryParameters;
 
 public class GetUsersRequest

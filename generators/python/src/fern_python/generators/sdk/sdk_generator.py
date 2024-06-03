@@ -29,7 +29,7 @@ from .client_generator.client_generator import ClientGenerator
 from .client_generator.generated_root_client import GeneratedRootClient
 from .client_generator.oauth_token_provider_generator import OAuthTokenProviderGenerator
 from .client_generator.root_client_generator import RootClientGenerator
-from .custom_config import SDKCustomConfig
+from .custom_config import DependencyCusomConfig, SDKCustomConfig
 from .environment_generators import (
     GeneratedEnvironment,
     MultipleBaseUrlsEnvironmentGenerator,
@@ -84,8 +84,15 @@ class SdkGenerator(AbstractGenerator):
         if not custom_config.client.exported_filename.endswith(".py"):
             raise RuntimeError("client_location.exported_filename must end in .py")
 
-        for dep, version in custom_config.extra_dependencies.items():
-            project.add_dependency(dependency=AST.Dependency(name=dep, version=version))
+        for dep, value in custom_config.extra_dependencies.items():
+            if type(value) is str:
+                project.add_dependency(dependency=AST.Dependency(name=dep, version=value))
+            elif isinstance(value, DependencyCusomConfig):
+                project.add_dependency(
+                    dependency=AST.Dependency(name=dep, version=value.version, optional=value.optional)
+                )
+
+        project.add_extra(custom_config.extras)
 
         for dep, version in custom_config.extra_dev_dependencies.items():
             project.add_dev_dependency(dependency=AST.Dependency(name=dep, version=version))

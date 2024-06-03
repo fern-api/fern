@@ -43,7 +43,7 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-sdk": "^0.0.552",
-    "@fern-fern/generator-exec-sdk": "^0.0.837",
+    "@fern-fern/generator-exec-sdk": "^0.0.845",
     "@types/pretty-ms": "^5.0.1",
     "chalk": "^5.0.1",
     "console-table-printer": "^2.12.0",

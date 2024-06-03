@@ -10,10 +10,7 @@ from fern_python.codegen.ast.nodes.declarations.function.named_function_paramete
 from ...context.sdk_generator_context import SdkGeneratorContext
 from ..constants import DEFAULT_BODY_PARAMETER_VALUE
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
-from .flattened_request_body_parameter_utils import (
-    get_json_body_for_inlined_request,
-    get_pre_fetch_statements_for_inlined_request,
-)
+from .flattened_request_body_parameter_utils import get_json_body_for_inlined_request
 
 
 class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
@@ -163,7 +160,6 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
             else get_json_body_for_inlined_request(
                 self._context,
                 self._get_properties(names_to_deconflict),
-                self._are_any_properties_optional,
             )
         )
 
@@ -176,15 +172,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
         return None
 
     def get_pre_fetch_statements(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.CodeWriter]:
-        return (
-            None
-            if not self.should_inline_request_parameters
-            else get_pre_fetch_statements_for_inlined_request(
-                self._context,
-                self._get_properties(names_to_deconflict),
-                self._are_any_properties_optional,
-            )
-        )
+        return None
 
     def is_default_body_parameter_used(self) -> bool:
         return self._are_any_properties_optional

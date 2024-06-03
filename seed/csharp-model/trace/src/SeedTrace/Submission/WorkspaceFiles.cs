@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class WorkspaceFiles
@@ -9,5 +11,5 @@ public class WorkspaceFiles
     public FileInfo MainFile { get; init; }
 
     [JsonPropertyName("readOnlyFiles")]
-    public List<FileInfo> ReadOnlyFiles { get; init; }
+    public IEnumerable<FileInfo> ReadOnlyFiles { get; init; }
 }

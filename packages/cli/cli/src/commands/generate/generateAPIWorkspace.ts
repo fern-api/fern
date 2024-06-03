@@ -73,6 +73,7 @@ export async function generateWorkspace({
         });
     } else {
         await runRemoteGenerationForAPIWorkspace({
+            projectConfig,
             organization,
             workspace,
             context,

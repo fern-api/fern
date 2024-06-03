@@ -44,8 +44,14 @@ fixtures:
           extra_fields: "allow"
       outputFolder: pydantic-extra-fields
     - customConfig:
+        pyproject_python_version: "^3.8.1"
         extra_dependencies:
           boto3: 1.28.57
+          langchain: 
+            version: "^0.1.20"
+            optional: true
+        extras: 
+          telemetry: ["langchain", "boto3"]
       outputFolder: extra_dependencies
     - customConfig:
         pyproject_python_version: "^3.8.1"
@@ -114,6 +120,7 @@ allowedFailures:
   # We don't have oauth tests yet
   - oauth-client-credentials
   - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-nested-root
   # Currently, autogenned examples are not marking some literals as literals and so they're being passed
   # into the method as parameters when they're meant to be omitted (so the tests fail on unrecognized params).
   - examples:no-custom-config

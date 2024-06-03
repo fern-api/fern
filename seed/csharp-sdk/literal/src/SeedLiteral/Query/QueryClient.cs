@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedLiteral;
 
+#nullable enable
+
 namespace SeedLiteral;
 
 public class QueryClient
@@ -33,6 +35,6 @@ public class QueryClient
         {
             return JsonSerializer.Deserialize<SendResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

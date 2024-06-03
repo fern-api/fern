@@ -1,5 +1,7 @@
 using SeedMixedCase;
 
+#nullable enable
+
 namespace SeedMixedCase;
 
 public partial class SeedMixedCaseClient

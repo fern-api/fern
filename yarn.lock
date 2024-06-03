@@ -3727,7 +3727,7 @@ __metadata:
     "@fern-api/fern-csharp-model": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.837
+    "@fern-fern/generator-exec-sdk": ^0.0.845
     "@fern-fern/ir-sdk": 0.0.3318
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.12
@@ -3757,7 +3757,7 @@ __metadata:
     "@fern-api/logging-execa": "workspace:*"
     "@fern-api/ruby-codegen": "workspace:*"
     "@fern-api/ruby-generator-cli": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.837
+    "@fern-fern/generator-exec-sdk": ^0.0.845
     "@fern-fern/ir-sdk": ^32
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3787,7 +3787,7 @@ __metadata:
     "@fern-api/logging-execa": "workspace:*"
     "@fern-api/ruby-codegen": "workspace:*"
     "@fern-api/ruby-generator-cli": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.837
+    "@fern-fern/generator-exec-sdk": ^0.0.845
     "@fern-fern/ir-sdk": ^32
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3832,7 +3832,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.837
+    "@fern-fern/generator-exec-sdk": ^0.0.845
     "@fern-fern/ir-sdk": 0.0.3294
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -4043,7 +4043,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.552
-    "@fern-fern/generator-exec-sdk": ^0.0.837
+    "@fern-fern/generator-exec-sdk": ^0.0.845
     "@types/decompress": ^4.2.7
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -4127,7 +4127,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/mock@workspace:packages/cli/mock"
   dependencies:
-    "@fern-api/core-utils": "workspace:*"
     "@fern-api/ir-sdk": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@types/express": ^4.17.20
@@ -4368,6 +4367,7 @@ __metadata:
     "@fern-fern/fiddle-sdk": ^0.0.552
     "@types/decompress": ^4.2.7
     "@types/jest": ^29.0.3
+    "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.12
     "@types/mime-types": ^2.1.4
     "@types/node": ^18.7.18
@@ -4381,6 +4381,7 @@ __metadata:
     form-data: 4.0.0
     image-size: ^1.1.1
     jest: ^29.7.0
+    js-yaml: ^4.1.0
     lodash-es: ^4.17.21
     mime-types: ^2.1.35
     organize-imports-cli: ^0.10.0
@@ -4398,7 +4399,7 @@ __metadata:
   resolution: "@fern-api/ruby-codegen@workspace:generators/ruby/codegen"
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.837
+    "@fern-fern/generator-exec-sdk": ^0.0.845
     "@fern-fern/ir-sdk": ^32
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.12
@@ -4478,7 +4479,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.552
-    "@fern-fern/generator-exec-sdk": ^0.0.837
+    "@fern-fern/generator-exec-sdk": ^0.0.845
     "@types/find-up": ^4.0.0
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
@@ -4738,15 +4739,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/generator-exec-sdk@npm:^0.0.837":
-  version: 0.0.837
-  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.837"
+"@fern-fern/generator-exec-sdk@npm:^0.0.845":
+  version: 0.0.845
+  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.845"
   dependencies:
     form-data: 4.0.0
     node-fetch: 2.7.0
     qs: 6.11.2
     url-join: 4.0.1
-  checksum: b8e8ee65f87653fe7fa5ae53ecbfb65c183d9fefde4150e2111b05b754be0a9de31f05b841edf731a924e477096a6149e050e1bac641f27790b7797995983077
+  checksum: b21dd6e433684be6c4974adec3b05d36bd6e34ca794fb183c0369482940caa51fe537ce17979d1cc326804a530cd47106ce103160d13aa44914d54269074a486
   languageName: node
   linkType: hard
 
@@ -5149,7 +5150,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/logger": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.837
+    "@fern-fern/generator-exec-sdk": ^0.0.845
     "@fern-fern/ir-sdk": ^43.0.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -5391,7 +5392,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/express-generator-cli@workspace:generators/typescript/express/cli"
   dependencies:
-    "@fern-fern/generator-exec-sdk": ^0.0.837
+    "@fern-fern/generator-exec-sdk": ^0.0.845
     "@fern-fern/ir-sdk": ^43.0.0
     "@fern-typescript/abstract-generator-cli": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
@@ -5749,7 +5750,7 @@ __metadata:
     "@babel/preset-typescript": ^7.24.1
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.837
+    "@fern-fern/generator-exec-sdk": ^0.0.845
     "@fern-fern/ir-sdk": ^43.0.0
     "@fern-fern/snippet-sdk": ^0.0.5434
     "@fern-typescript/commons": "workspace:*"
@@ -12085,20 +12086,21 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jest@npm:^27.0.4":
-  version: 27.0.4
-  resolution: "eslint-plugin-jest@npm:27.0.4"
+"eslint-plugin-jest@npm:^27.9.0":
+  version: 27.9.0
+  resolution: "eslint-plugin-jest@npm:27.9.0"
   dependencies:
     "@typescript-eslint/utils": ^5.10.0
   peerDependencies:
-    "@typescript-eslint/eslint-plugin": ^5.0.0
+    "@typescript-eslint/eslint-plugin": ^5.0.0 || ^6.0.0 || ^7.0.0
     eslint: ^7.0.0 || ^8.0.0
+    jest: "*"
   peerDependenciesMeta:
     "@typescript-eslint/eslint-plugin":
       optional: true
     jest:
       optional: true
-  checksum: 8408d8a53bae946527ac4120865c29b3468cf58d8e5ff3b9c75c5303bb5aa451ac7e04329fc004cf6302f84431e6c6c1f2ba9009b0150d1718df58ea490ed3f5
+  checksum: e2a4b415105408de28ad146818fcc6f4e122f6a39c6b2216ec5c24a80393f1390298b20231b0467bc5fd730f6e24b05b89e1a6a3ce651fc159aa4174ecc233d0
   languageName: node
   linkType: hard
 
@@ -12749,7 +12751,7 @@ env-cmd@toddbluhm/env-cmd:
     eslint: ^8.56.0
     eslint-plugin-deprecation: ^2.0.0
     eslint-plugin-import: ^2.29.0
-    eslint-plugin-jest: ^27.0.4
+    eslint-plugin-jest: ^27.9.0
     eslint-plugin-react: ^7.34.1
     eslint-plugin-react-hooks: ^4.6.0
     eslint-plugin-tailwindcss: ^3.15.1

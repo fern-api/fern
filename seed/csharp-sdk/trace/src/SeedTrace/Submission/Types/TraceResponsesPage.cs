@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class TraceResponsesPage
@@ -13,5 +15,5 @@ public class TraceResponsesPage
     public int? Offset { get; init; }
 
     [JsonPropertyName("traceResponses")]
-    public List<TraceResponse> TraceResponses { get; init; }
+    public IEnumerable<TraceResponse> TraceResponses { get; init; }
 }

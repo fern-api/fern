@@ -55,6 +55,11 @@ fixtures:
           lodash-es: "^4.17.21"
         extraDevDependencies:
           jest: "^29.7.0"
+        extraPeerDependencies:
+          "openai": "^4.47.1"
+        extraPeerDependenciesMeta:
+          "openai":
+            optional: true
       outputFolder: dev-dependencies
   error-property:
     - customConfig:
@@ -117,6 +122,12 @@ fixtures:
     - customConfig:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
+  oauth-client-credentials-nested-root:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        neverThrowErrors: true
+      outputFolder: never-throw-errors
   mixed-case:
     - customConfig: null
       outputFolder: no-custom-config
@@ -142,6 +153,3 @@ allowedFailures:
   - exhaustive:dev-dependencies
   - audiences
   - enum # throws b/c of undiscriminated union examples
-  - oauth-client-credentials
-  - oauth-client-credentials-default
-  - oauth-client-credentials-environment-variables

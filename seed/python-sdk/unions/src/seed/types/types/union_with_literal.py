@@ -10,7 +10,7 @@ from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
 
 class Base(pydantic_v1.BaseModel):
-    base: typing.Literal["base"]
+    base: typing.Literal["base"] = "base"
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

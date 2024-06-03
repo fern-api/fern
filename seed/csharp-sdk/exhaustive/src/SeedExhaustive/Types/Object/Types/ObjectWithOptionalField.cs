@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace SeedExhaustive.Types;
 
 public class ObjectWithOptionalField
@@ -32,7 +34,7 @@ public class ObjectWithOptionalField
     public string? Base64 { get; init; }
 
     [JsonPropertyName("list")]
-    public List<string>? List { get; init; }
+    public IEnumerable<string>? List { get; init; }
 
     [JsonPropertyName("set")]
     public HashSet<string>? Set { get; init; }

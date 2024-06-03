@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedExamples;
 
+#nullable enable
+
 namespace SeedExamples.File.Notification;
 
 public class ServiceClient
@@ -22,6 +24,6 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<Exception>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

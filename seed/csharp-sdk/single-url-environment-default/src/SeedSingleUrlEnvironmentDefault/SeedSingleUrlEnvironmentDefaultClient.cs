@@ -1,5 +1,7 @@
 using SeedSingleUrlEnvironmentDefault;
 
+#nullable enable
+
 namespace SeedSingleUrlEnvironmentDefault;
 
 public partial class SeedSingleUrlEnvironmentDefaultClient

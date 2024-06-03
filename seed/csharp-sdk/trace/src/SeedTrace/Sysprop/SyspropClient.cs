@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class SyspropClient
@@ -33,6 +35,6 @@ public class SyspropClient
         {
             return JsonSerializer.Deserialize<Dictionary<Language, int>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

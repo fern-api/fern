@@ -1,0 +1,42 @@
+---
+title: 'Overview'
+subtitle: Manage and configure your Fern projects, all from the command line.
+description: 'Overview of the Fern CLI including usage, installation, and CI/CD environments'
+---
+
+Use the Fern CLI to manage and test your documentation, SDKs, permissions, and API specification from the terminal or via an automated system. 
+
+Check out the [API Reference](/learn/cli-api/api-reference/) to interact with Fern programmatically.
+
+## Installing Fern CLI
+
+Run the following command to download and install Fern CLI from the [npm](https://www.npmjs.com/) registry. 
+
+```bash
+npm install -g fern-api
+```
+
+## Updating Fern CLI
+
+When there is a newer version of Fern CLI available, running any command will trigger an alert. To update Fern, run the same installation command yet again. 
+
+```bash
+npm install -g fern-api@latest
+```
+
+<Note>
+Run `fern upgrade` to update the Fern CLI *and* your project's generators.
+</Note>
+
+## Checking the version
+
+Use `--version`, shorthand `-v`, to check the Fern CLI version currently being used. 
+
+```bash
+$ fern -v
+0.26.10
+```
+
+## Authentication and CI/CD
+
+Fern CLI requires authentication before accessing an organization’s resources. To authenticate manually, login using GitHub using `fern login`. To enable Fern CLI use in CI/CD environments, and for an example showing how to set up Fern and GitHub Actions, check out [`fern token`](/learn/cli-api/cli-reference/commands#fern-token). 

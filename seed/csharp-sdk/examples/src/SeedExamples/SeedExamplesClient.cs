@@ -3,6 +3,8 @@ using SeedExamples.Commons;
 using SeedExamples.File;
 using SeedExamples.Health;
 
+#nullable enable
+
 namespace SeedExamples;
 
 public partial class SeedExamplesClient

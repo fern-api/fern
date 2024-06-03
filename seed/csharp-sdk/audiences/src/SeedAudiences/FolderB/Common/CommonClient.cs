@@ -1,5 +1,7 @@
 using SeedAudiences;
 
+#nullable enable
+
 namespace SeedAudiences.FolderB;
 
 public class CommonClient

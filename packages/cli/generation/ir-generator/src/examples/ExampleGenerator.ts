@@ -376,7 +376,8 @@ export class ExampleGenerator {
         response: HttpResponseBody | undefined;
         maybeResponse: ExampleResponse | undefined;
     }): ExampleResponse {
-        if (maybeResponse != null) {
+        // If there's an empty example, we should ignore it, but if it's populated, just return that.
+        if (maybeResponse != null && maybeResponse.type === "ok" && maybeResponse.value?.value != null) {
             return maybeResponse;
         }
 
@@ -641,7 +642,7 @@ export class ExampleGenerator {
             case "map":
                 return this.generateExampleTypeReferenceMap(containerType, depth + 1);
             case "optional":
-                return this.generateExampleTypeReference(containerType.optional, depth + 1);
+                return this.generateExampleTypeReferenceOptional(containerType.optional, depth + 1);
             case "set":
                 return this.generateExampleTypeReferenceSet(containerType.set, depth + 1);
             case "literal":
@@ -649,6 +650,14 @@ export class ExampleGenerator {
             default:
                 assertNever(containerType);
         }
+    }
+
+    private generateExampleTypeReferenceOptional(typeReference: TypeReference, depth: number): ExampleTypeReference {
+        const exampleTypeReference = this.generateExampleTypeReference(typeReference, depth);
+        return {
+            jsonExample: exampleTypeReference.jsonExample,
+            shape: ExampleTypeReferenceShape.container(ExampleContainer.optional(exampleTypeReference))
+        };
     }
 
     private generateExampleTypeReferenceList(typeReference: TypeReference, depth: number): ExampleTypeReference {
@@ -708,7 +717,7 @@ export class ExampleGenerator {
                 };
             case "string":
                 return {
-                    jsonExample: `"${literal.string}"`,
+                    jsonExample: `${literal.string}`,
                     shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.string({ original: literal.string }))
                 };
             default:

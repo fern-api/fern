@@ -1,5 +1,7 @@
 using SeedUndiscriminatedUnions;
 
+#nullable enable
+
 namespace SeedUndiscriminatedUnions;
 
 public partial class SeedUndiscriminatedUnionsClient

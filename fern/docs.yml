@@ -6,6 +6,12 @@ instances:
         owner: fern-api
         repo: fern
         branch: main
+  - url: fern.docs.dev.buildwithfern.com/learn
+    edit-this-page:
+      github:
+        owner: fern-api
+        repo: fern
+        branch: main
 title: Fern
 
 tabs:
@@ -176,6 +182,8 @@ navigation:
             path: ./pages/docs/building-your-docs/navigation.mdx
           - page: Customize Styling 
             path: ./pages/docs/building-your-docs/styling.mdx
+          - page: Custom CSS & Global JS
+            path: ./pages/docs/building-your-docs/custom-css-js.mdx
           - page: Pull Request Preview
             path: ./pages/docs/building-your-docs/pr-preview.mdx
           - page: Local Development
@@ -268,13 +276,14 @@ navigation:
       - section: CLI Reference
         contents:
           - page: CLI Overview
-            path: ./pages/cli/overview.mdx
+            path: ./pages/cli-api/overview.mdx
           - page: Global Options
-            path: ./pages/cli/global-options.mdx
+            path: ./pages/cli-api/global-options.mdx
           - page: Commands
-            path: ./pages/cli/commands.mdx
+            path: ./pages/cli-api/commands.mdx
       - api: API Reference
         api-name: public-api
+        summary: ./pages/cli-api/api-summary.mdx
         # audiences:
         #   - external
         # snippets:

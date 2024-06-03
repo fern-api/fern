@@ -251,6 +251,8 @@ export class ExpressGenerator {
             extraDevDependencies: {},
             extraFiles: {},
             extraScripts: {},
+            extraPeerDependencies: {},
+            extraPeerDependenciesMeta: {},
             resolutions: {
                 "@types/mime": "3.0.4"
             }

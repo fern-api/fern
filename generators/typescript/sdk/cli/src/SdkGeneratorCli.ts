@@ -46,6 +46,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             treatUnknownAsAny: parsed?.treatUnknownAsAny ?? false,
             includeContentHeadersOnFileDownloadResponse: parsed?.includeContentHeadersOnFileDownloadResponse ?? false,
             noSerdeLayer,
+            extraPeerDependencies: parsed?.extraPeerDependencies ?? {},
+            extraPeerDependenciesMeta: parsed?.extraPeerDependenciesMeta ?? {},
             noOptionalProperties: parsed?.noOptionalProperties ?? false,
             includeApiReference: parsed?.includeApiReference ?? false,
             tolerateRepublish: parsed?.tolerateRepublish ?? false,
@@ -106,6 +108,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 targetRuntime: this.targetRuntime,
                 extraDevDependencies: customConfig.extraDevDependencies,
                 extraDependencies: customConfig.extraDependencies,
+                extraPeerDependencies: customConfig.extraPeerDependencies ?? {},
+                extraPeerDependenciesMeta: customConfig.extraPeerDependenciesMeta ?? {},
                 treatUnknownAsAny: customConfig.treatUnknownAsAny,
                 includeContentHeadersOnFileDownloadResponse: customConfig.includeContentHeadersOnFileDownloadResponse,
                 includeSerdeLayer: !customConfig.noSerdeLayer,
@@ -115,7 +119,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 tolerateRepublish: customConfig.tolerateRepublish,
                 allowExtraFields: customConfig.allowExtraFields ?? false,
                 inlineFileProperties: customConfig.inlineFileProperties ?? false,
-                writeUnitTests: config.writeUnitTests,
+                writeUnitTests: false,
                 executionEnvironment: this.exectuionEnvironment(config)
             }
         });
