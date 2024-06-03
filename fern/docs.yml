@@ -112,6 +112,8 @@ navigation:
             path: ./pages/sdks/features/idiomatic-method-names.mdx
           - page: Schema validation
             path: ./pages/sdks/features/schema-validation.mdx
+          - page: Discriminated unions
+            path: ./pages/sdks/features/discriminated-unions.mdx
           - page: Multipart form data
             path: ./pages/sdks/features/multipart-form-data.mdx
           - page: Forward compatibility
