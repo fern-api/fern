@@ -98,7 +98,7 @@ async function parseAPIConfiguration(
                         audiences: definition.audiences,
                         settings: {
                             shouldUseTitleAsName: definition.settings?.["use-title"],
-                            shouldUseUndiscriminatedUnionsWithLiterals: definition.settings?.["unions"] === "v1"
+                            shouldUseUndiscriminatedUnionsWithLiterals: definition.settings?.unions === "v1"
                         }
                     });
                 }
@@ -111,7 +111,7 @@ async function parseAPIConfiguration(
                 audiences: apiConfiguration.audiences,
                 settings: {
                     shouldUseTitleAsName: apiConfiguration.settings?.["use-title"],
-                    shouldUseUndiscriminatedUnionsWithLiterals: apiConfiguration.settings?.["unions"] === "v1"
+                    shouldUseUndiscriminatedUnionsWithLiterals: apiConfiguration.settings?.unions === "v1"
                 }
             });
         }
@@ -130,7 +130,7 @@ async function parseAPIConfiguration(
                 audiences: [],
                 settings: {
                     shouldUseTitleAsName: settings?.["use-title"],
-                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.["unions"] === "v1"
+                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1"
                 }
             });
         } else if (openapi != null) {
@@ -141,7 +141,7 @@ async function parseAPIConfiguration(
                 audiences: [],
                 settings: {
                     shouldUseTitleAsName: openapi.settings?.["use-title"],
-                    shouldUseUndiscriminatedUnionsWithLiterals: openapi.settings?.["unions"] === "v1"
+                    shouldUseUndiscriminatedUnionsWithLiterals: openapi.settings?.unions === "v1"
                 }
             });
         }
@@ -154,7 +154,7 @@ async function parseAPIConfiguration(
                 audiences: [],
                 settings: {
                     shouldUseTitleAsName: settings?.["use-title"],
-                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.["unions"] === "v1"
+                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1"
                 }
             });
         }
