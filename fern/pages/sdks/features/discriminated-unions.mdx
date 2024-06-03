@@ -1,33 +1,77 @@
-  ### Discriminated Unions
-  The SDKs natively support discriminated unions. 
+### Discriminated Unions
+The SDKs natively support discriminated unions.
 
-  ```ts maxLines=0 {1}
-  export type Shape = Triangle | Square; 
+<Tabs>
+<Tab title="TypeScript">
 
-  export interface Triangle {
-    type: "triangle";
-    a: number;
-    b: number;
-    c: number;
+```ts maxLines=0 {1}
+export type Shape = Triangle | Square;
+
+export interface Triangle {
+  type: "triangle";
+  a: number;
+  b: number;
+  c: number;
+}
+
+export interface Square {
+  type: "square";
+  /* length of a single side */
+  side: number;
+}
+```
+
+Consumers can easily write branching logic by checking the discriminant.
+
+```ts {4, 6}
+import { Shape } from "sdk";
+
+export function computeArea(shape: Shape): number {
+  if (shape.type === "triangle") {
+    // compute triangle area
+  } else if (shape.type === "square") {
+    // compute square area
   }
+}
+```
 
-  export interface Square {
-    type: "square";
-    /* length of a single side */
-    side: number;
-  }
-  ```
+</Tab>
 
-  Consumers can easily write branching logic by checking the discriminant. 
+<Tab title="Go">
 
-  ```ts {4, 6}
-  import { Shape } from "sdk";
+Go does not have a built-in support for discriminated unions. However, you can define a union struct
+to achieve the same effect:
 
-  export function computeArea(shape: Shape): number {
-    if (shape.type === "triangle") {
+```go maxLines=0 {1-5}
+type Shape struct {
+	Type     string
+	Triangle *Triangle
+	Square   *Square
+}
+
+type Triangle struct {
+	A float64 `json:"a" url:"a"`
+	B float64 `json:"b" url:"b"`
+	C float64 `json:"c" url:"c"`
+}
+
+type Square struct {
+	Length float64 `json:"length" url:"length"`
+}
+```
+
+Consumers can easily write branching logic by checking the discriminant.
+
+```go {3, 5}
+func ComputeArea(shape *Shape) float64 {
+  switch shape.Type {
+    case "triangle":
       // compute triangle area
-    } else if (shape.type === "square") {
+    case "square":
       // compute square area
-    }
   }
-  ```
+}
+```
+
+</Tab>
+</Tabs>
