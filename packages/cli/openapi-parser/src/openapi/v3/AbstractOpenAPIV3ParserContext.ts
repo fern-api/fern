@@ -30,7 +30,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public refOccurrences: Record<string, number>;
     public DUMMY: SchemaParserContext;
     public shouldUseTitleAsName: boolean;
-    public shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
+    public shouldUseUndiscriminatedUnionsWithLiterals: boolean;
     public sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 
     constructor({
@@ -38,14 +38,14 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         taskContext,
         authHeaders,
         shouldUseTitleAsName,
-        shouldUseUndiscriminatedUnionsForDiscriminated,
+        shouldUseUndiscriminatedUnionsWithLiterals,
         sdkLanguage
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
         authHeaders: Set<string>;
         shouldUseTitleAsName: boolean;
-        shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
+        shouldUseUndiscriminatedUnionsWithLiterals: boolean;
         sdkLanguage: generatorsYml.GenerationLanguage | undefined;
     }) {
         this.document = document;
@@ -55,13 +55,11 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         this.refOccurrences = getReferenceOccurrences(document);
         this.DUMMY = this.getDummy();
         this.shouldUseTitleAsName = shouldUseTitleAsName;
-        this.shouldUseUndiscriminatedUnionsForDiscriminated = shouldUseUndiscriminatedUnionsForDiscriminated;
-        this.sdkLanguage = sdkLanguage;
-    }
-    getShouldUseUndiscriminatedUnionsForDiscriminated(): boolean {
-        return (
-            this.shouldUseUndiscriminatedUnionsForDiscriminated &&
-            this.sdkLanguage === generatorsYml.GenerationLanguage.PYTHON
+        this.shouldUseUndiscriminatedUnionsWithLiterals =
+            shouldUseUndiscriminatedUnionsWithLiterals && sdkLanguage === generatorsYml.GenerationLanguage.PYTHON;
+
+        throw new Error(
+            `Found config ${shouldUseUndiscriminatedUnionsWithLiterals} ${sdkLanguage} \n${this.shouldUseUndiscriminatedUnionsWithLiterals}`
         );
     }
 
@@ -215,7 +213,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         times: number
     ): void;
 
-    public abstract storeDiscriminatedUnionMetadata(
+    public abstract markSchemaWithDiscriminantValue(
         schema: OpenAPIV3.ReferenceObject,
         discrminant: string,
         discriminantValue: string

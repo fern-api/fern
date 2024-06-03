@@ -41,12 +41,16 @@ export async function generateIrForWorkspaces({
                         settings: {
                             audiences: spec.settings?.audiences ?? [],
                             shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true,
-                            shouldUseUndiscriminatedUnionsForDiscriminated:
-                                spec.settings?.shouldUseUndiscriminatedUnionsForDiscriminated ?? false,
-                            sdkLanguage: generationLanguage
+                            shouldUseUndiscriminatedUnionsWithLiterals:
+                                spec.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false
                         }
                     }));
-                    fernWorkspace = await convertOpenApiWorkspaceToFernWorkspace(workspace, context);
+                    fernWorkspace = await convertOpenApiWorkspaceToFernWorkspace(
+                        workspace,
+                        context,
+                        false,
+                        generationLanguage
+                    );
                 }
 
                 const intermediateRepresentation = await getIntermediateRepresentation({

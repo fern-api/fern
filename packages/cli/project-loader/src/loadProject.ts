@@ -75,7 +75,7 @@ export async function loadApis({
     cliVersion: string;
     commandLineApiWorkspace: string | undefined;
     defaultToAllApiWorkspaces: boolean;
-    sdkLanguage?: generatorsYml.GenerationLanguage;
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<APIWorkspace[]> {
     const apisDirectory = join(fernDirectory, RelativeFilePath.of(APIS_DIRECTORY));
     const apisDirectoryExists = await doesPathExist(apisDirectory);

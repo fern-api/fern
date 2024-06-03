@@ -28,7 +28,7 @@ export async function loadAPIWorkspace({
     context: TaskContext;
     cliVersion: string;
     workspaceName: string | undefined;
-    sdkLanguage?: generatorsYml.GenerationLanguage;
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<WorkspaceLoader.Result> {
     const generatorsConfiguration = await generatorsYml.loadGeneratorsConfiguration({
         absolutePathToWorkspace,
@@ -85,9 +85,8 @@ export async function loadAPIWorkspace({
                 settings: {
                     audiences: definition.audiences ?? [],
                     shouldUseTitleAsName: definition.settings?.shouldUseTitleAsName ?? true,
-                    shouldUseUndiscriminatedUnionsForDiscriminated:
-                        definition.settings?.shouldUseUndiscriminatedUnionsForDiscriminated ?? false,
-                    sdkLanguage
+                    shouldUseUndiscriminatedUnionsWithLiterals:
+                        definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false
                 }
             });
         }
@@ -175,7 +174,8 @@ export async function loadAPIWorkspace({
         dependenciesConfiguration,
         structuralValidationResult,
         context,
-        cliVersion
+        cliVersion,
+        sdkLanguage
     });
     if (!processPackageMarkersResult.didSucceed) {
         return processPackageMarkersResult;

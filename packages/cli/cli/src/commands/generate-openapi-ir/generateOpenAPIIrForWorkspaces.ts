@@ -11,12 +11,12 @@ export async function generateOpenAPIIrForWorkspaces({
     project,
     irFilepath,
     cliContext,
-    generationLanguage
+    sdkLanguage
 }: {
     project: Project;
     irFilepath: AbsoluteFilePath;
     cliContext: CliContext;
-    generationLanguage: generatorsYml.GenerationLanguage | undefined;
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
@@ -31,14 +31,14 @@ export async function generateOpenAPIIrForWorkspaces({
                     settings: {
                         audiences: spec.settings?.audiences ?? [],
                         shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true,
-                        shouldUseUndiscriminatedUnionsForDiscriminated:
-                            spec.settings?.shouldUseUndiscriminatedUnionsForDiscriminated ?? false,
-                        sdkLanguage: generationLanguage
+                        shouldUseUndiscriminatedUnionsWithLiterals:
+                            spec.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false
                     }
                 }));
                 const openAPIIr = await parse({
                     workspace,
-                    taskContext: context
+                    taskContext: context,
+                    sdkLanguage
                 });
 
                 const irOutputFilePath = path.resolve(irFilepath);

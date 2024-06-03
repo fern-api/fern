@@ -15,11 +15,9 @@ export const APIDefinitionSettingsSchema = z.object({
         .describe(
             "Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to true."
         ),
-    "use-undiscriminated-unions-with-literals": z
-        .optional(z.boolean())
-        .describe(
-            "Whether to use the undiscriminated unions with defaulted literal fields as discriminated unions. Defaults to false."
-        )
+    unions: z
+        .optional(z.enum(["v1"]))
+        .describe("What version of union generation to use, this will grow over time. Defaults to v0.")
 });
 
 /**

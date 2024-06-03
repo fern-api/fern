@@ -422,7 +422,7 @@ export function convertSchemaObject(
     }
 
     if (schema.type === "object" && schema.discriminator != null && schema.discriminator.mapping != null) {
-        if (!context.getShouldUseUndiscriminatedUnionsForDiscriminated()) {
+        if (!context.shouldUseUndiscriminatedUnionsWithLiterals) {
             return convertDiscriminatedOneOf({
                 nameOverride,
                 generatedName,
@@ -455,7 +455,7 @@ export function convertSchemaObject(
             schema.discriminator.mapping != null &&
             Object.keys(schema.discriminator.mapping).length > 0
         ) {
-            if (!context.getShouldUseUndiscriminatedUnionsForDiscriminated()) {
+            if (!context.shouldUseUndiscriminatedUnionsWithLiterals) {
                 return convertDiscriminatedOneOf({
                     nameOverride,
                     generatedName,
@@ -515,7 +515,7 @@ export function convertSchemaObject(
             }
 
             const maybeDiscriminant = getDiscriminant({ schemas: schema.oneOf, context });
-            if (maybeDiscriminant != null && !context.getShouldUseUndiscriminatedUnionsForDiscriminated()) {
+            if (maybeDiscriminant != null && !context.shouldUseUndiscriminatedUnionsWithLiterals) {
                 return convertDiscriminatedOneOfWithVariants({
                     nameOverride,
                     generatedName,
@@ -578,7 +578,7 @@ export function convertSchemaObject(
             schemas: schema.anyOf,
             context
         });
-        if (maybeDiscriminant != null && !context.getShouldUseUndiscriminatedUnionsForDiscriminated()) {
+        if (maybeDiscriminant != null && !context.shouldUseUndiscriminatedUnionsWithLiterals) {
             return convertDiscriminatedOneOfWithVariants({
                 nameOverride,
                 generatedName,

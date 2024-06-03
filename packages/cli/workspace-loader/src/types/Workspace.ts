@@ -36,9 +36,8 @@ export interface Spec {
 
 export interface SpecImportSettings {
     audiences: string[];
-    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
     shouldUseTitleAsName: boolean;
-    shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
+    shouldUseUndiscriminatedUnionsWithLiterals: boolean;
 }
 export interface APIChangelog {
     files: ChangelogFile[];

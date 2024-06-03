@@ -126,7 +126,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
             $ref: schema
         };
         const subtypeReference = convertReferenceObject(subtypeReferenceSchema, false, context, [schema]);
-        context.storeDiscriminatedUnionMetadata(subtypeReferenceSchema, discriminator.propertyName, discriminantValue);
+        context.markSchemaWithDiscriminantValue(subtypeReferenceSchema, discriminator.propertyName, discriminantValue);
 
         // If the reference is an object (which I think it has to be?), add the discriminant value as a property
         if (subtypeReference.type === "object") {

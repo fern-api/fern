@@ -141,7 +141,8 @@ export abstract class TestRunner {
         const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
             absolutePathToAPIDefinition,
             taskContext,
-            fixture
+            fixture,
+            sdkLanguage: language
         });
         if (fernWorkspace == null) {
             return {

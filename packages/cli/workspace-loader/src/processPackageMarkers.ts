@@ -1,4 +1,4 @@
-import { dependenciesYml } from "@fern-api/configuration";
+import { dependenciesYml, generatorsYml } from "@fern-api/configuration";
 import { entries, keys } from "@fern-api/core-utils";
 import { dirname, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
@@ -29,12 +29,14 @@ export async function processPackageMarkers({
     dependenciesConfiguration,
     structuralValidationResult,
     context,
-    cliVersion
+    cliVersion,
+    sdkLanguage
 }: {
     dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
     structuralValidationResult: validateStructureOfYamlFiles.SuccessfulResult;
     context: TaskContext;
     cliVersion: string;
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<processPackageMarkers.Return> {
     const packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>> = {};
     const importedDefinitions: Record<RelativeFilePath, FernDefinition> = {};
@@ -67,7 +69,8 @@ export async function processPackageMarkers({
                             dependenciesConfiguration,
                             context,
                             rootApiFile: structuralValidationResult.rootApiFile.contents,
-                            cliVersion
+                            cliVersion,
+                            sdkLanguage
                         });
                         if (loadDependencyResult.didSucceed) {
                             importedDefinitions[dirname(pathOfPackageMarker)] = loadDependencyResult.definition;

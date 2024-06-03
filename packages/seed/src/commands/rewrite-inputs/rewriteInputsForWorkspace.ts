@@ -22,11 +22,13 @@ import { TaskContextFactory } from "../test/TaskContextFactory";
 export async function rewriteInputsForWorkspace({
     generator,
     fixtures,
-    taskContextFactory
+    taskContextFactory,
+    sdkLanguage
 }: {
     generator: GeneratorWorkspace;
     fixtures: string[];
     taskContextFactory: TaskContextFactory;
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<void> {
     for (const fixture of fixtures) {
         const fixtureConfig = generator.workspaceConfig.fixtures?.[fixture];
@@ -43,7 +45,8 @@ export async function rewriteInputsForWorkspace({
                 const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
                     absolutePathToAPIDefinition,
                     taskContext,
-                    fixture
+                    fixture,
+                    sdkLanguage
                 });
                 if (fernWorkspace == null) {
                     taskContext.logger.error("Failed to load workspace.");
@@ -80,7 +83,8 @@ export async function rewriteInputsForWorkspace({
             const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
                 absolutePathToAPIDefinition,
                 taskContext,
-                fixture
+                fixture,
+                sdkLanguage
             });
             if (fernWorkspace == null) {
                 taskContext.logger.error("Failed to load workspace.");

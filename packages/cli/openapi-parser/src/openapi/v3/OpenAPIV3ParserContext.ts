@@ -27,14 +27,14 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
         taskContext,
         authHeaders,
         shouldUseTitleAsName,
-        shouldUseUndiscriminatedUnionsForDiscriminated,
+        shouldUseUndiscriminatedUnionsWithLiterals,
         sdkLanguage
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
         authHeaders: Set<string>;
         shouldUseTitleAsName: boolean;
-        shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
+        shouldUseUndiscriminatedUnionsWithLiterals: boolean;
         sdkLanguage: generatorsYml.GenerationLanguage | undefined;
     }) {
         super({
@@ -42,7 +42,7 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
             taskContext,
             authHeaders,
             shouldUseTitleAsName,
-            shouldUseUndiscriminatedUnionsForDiscriminated,
+            shouldUseUndiscriminatedUnionsWithLiterals,
             sdkLanguage
         });
     }
@@ -90,7 +90,7 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
         return this.discrminatedUnionReferences[schema.$ref];
     }
 
-    public storeDiscriminatedUnionMetadata(
+    public markSchemaWithDiscriminantValue(
         schema: OpenAPIV3.ReferenceObject,
         discrminant: string,
         discriminantValue: string

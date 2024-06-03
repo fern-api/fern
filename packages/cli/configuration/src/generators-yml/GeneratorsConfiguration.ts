@@ -23,7 +23,7 @@ export interface SingleNamespaceAPIDefinition {
 
 export interface APIDefinitionSettings {
     shouldUseTitleAsName: boolean | undefined;
-    shouldUseUndiscriminatedUnionsForDiscriminated: boolean | undefined;
+    shouldUseUndiscriminatedUnionsWithLiterals: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {

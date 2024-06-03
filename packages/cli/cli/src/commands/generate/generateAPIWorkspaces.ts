@@ -30,8 +30,7 @@ async function getFernWorkspace(
     if (apiWorkspace.type === "fern") {
         fernWorkspace = apiWorkspace;
     } else {
-        apiWorkspace.specs = apiWorkspace.specs.map((spec) => ({ ...spec, sdkLanguage }));
-        fernWorkspace = await convertOpenApiWorkspaceToFernWorkspace(apiWorkspace, context);
+        fernWorkspace = await convertOpenApiWorkspaceToFernWorkspace(apiWorkspace, context, false, sdkLanguage);
     }
     if (fernWorkspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");

@@ -1,3 +1,4 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import yargs, { Argv } from "yargs";
@@ -159,6 +160,10 @@ function addWriteInputsCommand(cli: Argv) {
                 .option("log-level", {
                     default: LogLevel.Info,
                     choices: LOG_LEVELS
+                })
+                .option("language", {
+                    choices: Object.values(generatorsYml.GenerationLanguage),
+                    description: "Write the inputs for a particular SDK language"
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
@@ -170,7 +175,8 @@ function addWriteInputsCommand(cli: Argv) {
                 const promise = rewriteInputsForWorkspace({
                     generator,
                     fixtures: argv.fixture,
-                    taskContextFactory: new TaskContextFactory(argv["log-level"])
+                    taskContextFactory: new TaskContextFactory(argv["log-level"]),
+                    sdkLanguage: argv.language
                 });
                 promises.push(promise);
             }

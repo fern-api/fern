@@ -31,8 +31,7 @@ export function testParseOpenAPI(
             const settings = {
                 shouldUseTitleAsName: useTitle ?? true,
                 audiences: [],
-                shouldUseUndiscriminatedUnionsForDiscriminated: useUndiscriminatedUnions ?? false,
-                sdkLanguage
+                shouldUseUndiscriminatedUnionsWithLiterals: useUndiscriminatedUnions ?? false
             };
             const specs = [];
             if (absolutePathToOpenAPI != null) {
@@ -54,7 +53,8 @@ export function testParseOpenAPI(
                 workspace: {
                     specs
                 },
-                taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER })
+                taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER }),
+                sdkLanguage
             });
             const openApiIrJson = await serialization.OpenApiIntermediateRepresentation.jsonOrThrow(openApiIr, {
                 skipValidation: true

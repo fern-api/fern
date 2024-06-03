@@ -33,13 +33,13 @@ export function parseAsyncAPI({
     taskContext,
     sdkLanguage,
     shouldUseTitleAsName,
-    shouldUseUndiscriminatedUnionsForDiscriminated
+    shouldUseUndiscriminatedUnionsWithLiterals
 }: {
     document: AsyncAPIV2.Document;
     taskContext: TaskContext;
     sdkLanguage: generatorsYml.GenerationLanguage | undefined;
     shouldUseTitleAsName: boolean;
-    shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
+    shouldUseUndiscriminatedUnionsWithLiterals: boolean;
 }): AsyncAPIIntermediateRepresentation {
     const breadcrumbs: string[] = [];
     if (document.tags?.[0] != null) {
@@ -52,7 +52,7 @@ export function parseAsyncAPI({
         document,
         taskContext,
         shouldUseTitleAsName,
-        shouldUseUndiscriminatedUnionsForDiscriminated,
+        shouldUseUndiscriminatedUnionsWithLiterals,
         sdkLanguage
     });
 

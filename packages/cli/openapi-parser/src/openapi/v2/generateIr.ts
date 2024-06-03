@@ -11,7 +11,7 @@ export async function generateIr({
     disableExamples,
     audiences,
     shouldUseTitleAsName,
-    shouldUseUndiscriminatedUnionsForDiscriminated,
+    shouldUseUndiscriminatedUnionsWithLiterals,
     sdkLanguage
 }: {
     openApi: OpenAPIV2.Document;
@@ -19,7 +19,7 @@ export async function generateIr({
     disableExamples: boolean | undefined;
     audiences: string[];
     shouldUseTitleAsName: boolean;
-    shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
+    shouldUseUndiscriminatedUnionsWithLiterals: boolean;
     sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<OpenApiIntermediateRepresentation> {
     const conversionResult = await convertObj(openApi, {});
@@ -29,7 +29,7 @@ export async function generateIr({
         disableExamples,
         audiences,
         shouldUseTitleAsName,
-        shouldUseUndiscriminatedUnionsForDiscriminated,
+        shouldUseUndiscriminatedUnionsWithLiterals,
         sdkLanguage
     });
 }

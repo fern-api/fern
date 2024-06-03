@@ -75,7 +75,7 @@ async function parseAPIConfiguration(
                 origin: undefined,
                 overrides: undefined,
                 audiences: [],
-                settings: { shouldUseTitleAsName: undefined, shouldUseUndiscriminatedUnionsForDiscriminated: undefined }
+                settings: { shouldUseTitleAsName: undefined, shouldUseUndiscriminatedUnionsWithLiterals: undefined }
             });
         } else if (Array.isArray(apiConfiguration)) {
             for (const definition of apiConfiguration) {
@@ -87,7 +87,7 @@ async function parseAPIConfiguration(
                         audiences: [],
                         settings: {
                             shouldUseTitleAsName: undefined,
-                            shouldUseUndiscriminatedUnionsForDiscriminated: undefined
+                            shouldUseUndiscriminatedUnionsWithLiterals: undefined
                         }
                     });
                 } else {
@@ -98,8 +98,7 @@ async function parseAPIConfiguration(
                         audiences: definition.audiences,
                         settings: {
                             shouldUseTitleAsName: definition.settings?.["use-title"],
-                            shouldUseUndiscriminatedUnionsForDiscriminated:
-                                definition.settings?.["use-undiscriminated-unions-with-literals"]
+                            shouldUseUndiscriminatedUnionsWithLiterals: definition.settings?.["unions"] === "v1"
                         }
                     });
                 }
@@ -112,8 +111,7 @@ async function parseAPIConfiguration(
                 audiences: apiConfiguration.audiences,
                 settings: {
                     shouldUseTitleAsName: apiConfiguration.settings?.["use-title"],
-                    shouldUseUndiscriminatedUnionsForDiscriminated:
-                        apiConfiguration.settings?.["use-undiscriminated-unions-with-literals"]
+                    shouldUseUndiscriminatedUnionsWithLiterals: apiConfiguration.settings?.["unions"] === "v1"
                 }
             });
         }
@@ -132,8 +130,7 @@ async function parseAPIConfiguration(
                 audiences: [],
                 settings: {
                     shouldUseTitleAsName: settings?.["use-title"],
-                    shouldUseUndiscriminatedUnionsForDiscriminated:
-                        settings?.["use-undiscriminated-unions-with-literals"]
+                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.["unions"] === "v1"
                 }
             });
         } else if (openapi != null) {
@@ -144,8 +141,7 @@ async function parseAPIConfiguration(
                 audiences: [],
                 settings: {
                     shouldUseTitleAsName: openapi.settings?.["use-title"],
-                    shouldUseUndiscriminatedUnionsForDiscriminated:
-                        openapi.settings?.["use-undiscriminated-unions-with-literals"]
+                    shouldUseUndiscriminatedUnionsWithLiterals: openapi.settings?.["unions"] === "v1"
                 }
             });
         }
@@ -158,8 +154,7 @@ async function parseAPIConfiguration(
                 audiences: [],
                 settings: {
                     shouldUseTitleAsName: settings?.["use-title"],
-                    shouldUseUndiscriminatedUnionsForDiscriminated:
-                        settings?.["use-undiscriminated-unions-with-literals"]
+                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.["unions"] === "v1"
                 }
             });
         }

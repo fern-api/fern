@@ -20,9 +20,8 @@ export interface Spec {
 
 export interface SpecImportSettings {
     audiences: string[];
-    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
     shouldUseTitleAsName: boolean;
-    shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
+    shouldUseUndiscriminatedUnionsWithLiterals: boolean;
 }
 
 export interface RawOpenAPIFile {
@@ -37,12 +36,14 @@ export interface RawAsyncAPIFile {
 
 export async function parse({
     workspace,
-    taskContext
+    taskContext,
+    sdkLanguage
 }: {
     workspace: {
         specs: Spec[];
     };
     taskContext: TaskContext;
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<OpenApiIntermediateRepresentation> {
     let ir: OpenApiIntermediateRepresentation = {
         title: undefined,
@@ -80,9 +81,9 @@ export async function parse({
                     disableExamples: false,
                     audiences: spec.settings?.audiences ?? [],
                     shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true,
-                    shouldUseUndiscriminatedUnionsForDiscriminated:
-                        spec.settings?.shouldUseUndiscriminatedUnionsForDiscriminated ?? false,
-                    sdkLanguage: spec.settings?.sdkLanguage
+                    shouldUseUndiscriminatedUnionsWithLiterals:
+                        spec.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
+                    sdkLanguage
                 });
                 ir = merge(ir, openapiIr);
             } else if (isOpenApiV2(openApiDocument)) {
@@ -92,9 +93,9 @@ export async function parse({
                     disableExamples: false,
                     audiences: spec.settings?.audiences ?? [],
                     shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true,
-                    shouldUseUndiscriminatedUnionsForDiscriminated:
-                        spec.settings?.shouldUseUndiscriminatedUnionsForDiscriminated ?? false,
-                    sdkLanguage: spec.settings?.sdkLanguage
+                    shouldUseUndiscriminatedUnionsWithLiterals:
+                        spec.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
+                    sdkLanguage
                 });
                 ir = merge(ir, openapiIr);
             }
@@ -109,9 +110,9 @@ export async function parse({
                 document: asyncAPI,
                 taskContext,
                 shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true,
-                shouldUseUndiscriminatedUnionsForDiscriminated:
-                    spec.settings?.shouldUseUndiscriminatedUnionsForDiscriminated ?? false,
-                sdkLanguage: spec.settings?.sdkLanguage
+                shouldUseUndiscriminatedUnionsWithLiterals:
+                    spec.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
+                sdkLanguage
             });
             if (parsedAsyncAPI.channel != null) {
                 ir.channel.push(parsedAsyncAPI.channel);

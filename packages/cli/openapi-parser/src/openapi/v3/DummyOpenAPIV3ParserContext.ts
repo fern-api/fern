@@ -15,7 +15,7 @@ export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext 
             taskContext,
             authHeaders: new Set(),
             shouldUseTitleAsName: false,
-            shouldUseUndiscriminatedUnionsForDiscriminated: false,
+            shouldUseUndiscriminatedUnionsWithLiterals: false,
             sdkLanguage: undefined
         });
     }
@@ -58,7 +58,7 @@ export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext 
         return false;
     }
 
-    public storeDiscriminatedUnionMetadata(
+    public markSchemaWithDiscriminantValue(
         _schema: OpenAPIV3.ReferenceObject,
         _discrminant: string,
         _discriminantValue: string
