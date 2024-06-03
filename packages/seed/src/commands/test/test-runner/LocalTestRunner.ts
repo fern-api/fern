@@ -3,6 +3,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { getGeneratorConfig, getIntermediateRepresentation } from "@fern-api/local-workspace-runner";
 import { LocalTaskHandler } from "@fern-api/local-workspace-runner/src/LocalTaskHandler";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
+import * as GeneratorExecSerialization from "@fern-fern/generator-exec-sdk/serialization";
 import { writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
@@ -97,7 +98,10 @@ export class LocalTestRunner extends TestRunner {
         await writeFile(absolutePathToIntermediateRepresentation, JSON.stringify(ir, undefined, 4));
         taskContext.logger.info(`Wrote IR to ${absolutePathToIntermediateRepresentation}`);
 
-        await writeFile(absolutePathToGeneratorConfig, JSON.stringify(generatorConfig, undefined, 2));
+        await writeFile(
+            absolutePathToGeneratorConfig,
+            JSON.stringify(await GeneratorExecSerialization.GeneratorConfig.jsonOrThrow(generatorConfig), undefined, 2)
+        );
         taskContext.logger.info(`Wrote generator config to ${absolutePathToGeneratorConfig}`);
 
         const localConfig = await this.getLocalConfigOrthrow();
