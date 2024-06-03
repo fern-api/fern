@@ -19,9 +19,6 @@ INITIAL_RETRY_DELAY_SECONDS = 0.5
 MAX_RETRY_DELAY_SECONDS = 10
 MAX_RETRY_DELAY_SECONDS_FROM_HEADER = 30
 
-# Generic to represent the underlying type of the HTTP response
-T = typing.TypeVar("T")
-
 
 def _parse_retry_after(response_headers: httpx.Headers) -> typing.Optional[float]:
     """
