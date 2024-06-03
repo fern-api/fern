@@ -24,15 +24,13 @@ export function constructCasingsGenerator({
     keywords: string[] | undefined;
     smartCasing: boolean;
 }): CasingsGenerator {
-    const keywordSet: Set<string> | undefined = keywords != null ? new Set(keywords) : undefined;
     const casingsGenerator: CasingsGenerator = {
         generateName: (name, opts) => {
             const generateSafeAndUnsafeString = (unsafeString: string): SafeAndUnsafeString => ({
                 unsafeName: unsafeString,
-                safeName: sanitizeNameForLanguage({
+                safeName: sanitizeName({
                     name: unsafeString,
-                    generationLanguage,
-                    keywords: keywordSet
+                    keywords: getKeywords({ generationLanguage, keywords })
                 })
             });
 
@@ -103,26 +101,33 @@ export function constructCasingsGenerator({
     return casingsGenerator;
 }
 
-function sanitizeNameForLanguage({
-    name,
-    generationLanguage,
-    keywords
-}: {
-    name: string;
-    generationLanguage: generatorsYml.GenerationLanguage | undefined;
-    keywords: Set<string> | undefined;
-}): string {
-    if (generationLanguage == null) {
+function sanitizeName({ name, keywords }: { name: string; keywords: Set<string> | undefined }): string {
+    if (keywords == null) {
         return name;
     }
-    const reservedKeywords = keywords != null ? keywords : RESERVED_KEYWORDS[generationLanguage];
-    if (reservedKeywords.has(name)) {
+    if (keywords.has(name)) {
         return name + "_";
     } else if (startsWithNumber(name)) {
         return "_" + name;
     } else {
         return name;
     }
+}
+
+function getKeywords({
+    generationLanguage,
+    keywords
+}: {
+    generationLanguage: generatorsYml.GenerationLanguage | undefined;
+    keywords: string[] | undefined;
+}): Set<string> | undefined {
+    if (keywords != null) {
+        return new Set(keywords);
+    }
+    if (generationLanguage != null) {
+        return RESERVED_KEYWORDS[generationLanguage];
+    }
+    return undefined;
 }
 
 const STARTS_WITH_NUMBER = /^[0-9]/;
