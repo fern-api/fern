@@ -486,7 +486,8 @@ function addOpenAPIIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
             await generateOpenAPIIrForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
-                    defaultToAllApiWorkspaces: false
+                    defaultToAllApiWorkspaces: false,
+                    sdkLanguage: argv.language
                 }),
                 irFilepath: resolve(cwd(), argv.pathToOutput),
                 cliContext,

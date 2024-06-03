@@ -57,10 +57,6 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         this.shouldUseTitleAsName = shouldUseTitleAsName;
         this.shouldUseUndiscriminatedUnionsWithLiterals =
             shouldUseUndiscriminatedUnionsWithLiterals && sdkLanguage === generatorsYml.GenerationLanguage.PYTHON;
-
-        throw new Error(
-            `Found config ${shouldUseUndiscriminatedUnionsWithLiterals} ${sdkLanguage} \n${this.shouldUseUndiscriminatedUnionsWithLiterals}`
-        );
     }
 
     public getNumberOfOccurrencesForRef(schema: OpenAPIV3.ReferenceObject): number {

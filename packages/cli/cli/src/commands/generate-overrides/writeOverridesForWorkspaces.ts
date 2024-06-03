@@ -1,4 +1,3 @@
-import { generatorsYml } from "@fern-api/configuration";
 import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { getEndpointLocation } from "@fern-api/openapi-ir-to-fern";
 import { parse } from "@fern-api/openapi-parser";
@@ -25,8 +24,7 @@ export async function writeOverridesForWorkspaces({
                     await writeDefinitionForOpenAPIWorkspace({
                         workspace,
                         context,
-                        includeModels,
-                        sdkLanguage: undefined
+                        includeModels
                     });
                 } else {
                     context.logger.warn("Skipping fern workspace definition generation");
@@ -54,13 +52,11 @@ async function readExistingOverrides(overridesFilepath: string, context: TaskCon
 async function writeDefinitionForOpenAPIWorkspace({
     workspace,
     includeModels,
-    context,
-    sdkLanguage
+    context
 }: {
     workspace: OSSWorkspace;
     includeModels: boolean;
     context: TaskContext;
-    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<void> {
     for (const spec of workspace.specs) {
         const ir = await parse({
@@ -68,7 +64,7 @@ async function writeDefinitionForOpenAPIWorkspace({
                 specs: [spec]
             },
             taskContext: context,
-            sdkLanguage
+            sdkLanguage: undefined
         });
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let existingOverrides: any = {};
