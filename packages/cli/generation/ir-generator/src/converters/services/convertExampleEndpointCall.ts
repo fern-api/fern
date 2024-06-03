@@ -67,6 +67,7 @@ export function convertExampleEndpointCall({
         workspace
     });
     return HttpEndpointExample.userProvided({
+        id: example.id,
         name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
         docs: example.docs,
         url: buildUrl({ service, endpoint, example, pathParams: convertedPathParameters }),

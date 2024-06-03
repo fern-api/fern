@@ -1,0 +1,75 @@
+types:
+  User:
+    properties:
+      name: string
+      type: literal<"goose">
+
+  ListUsersResponse:
+    properties:
+      users: list<User>
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    list:
+      method: GET
+      path: /list
+      request:
+        name: ListRequest
+        query-parameters:
+          big: bigint
+          pageNum: integer
+      response:
+        status-code: 201
+        type: ListUsersResponse
+      examples:
+        - request:
+            pageNum: 1
+          response:
+            body:
+              users:
+                - name: Alice
+                  type: goose
+                - name: Bob
+                  type: goose
+    listStream:
+      method: GET
+      path: /list/stream
+      request:
+        name: ListRequest
+        query-parameters:
+          pageNum: integer
+      response-stream: User
+      examples:
+        - request:
+            pageNum: 1
+          response:
+            stream:
+              - name: Alice
+                type: goose
+              - name: Bob
+                type: goose
+
+    listStreamSse:
+      method: GET
+      path: /list/sse
+      request:
+        name: ListRequest
+        query-parameters:
+          pageNum: integer
+      response-stream:
+        type: User
+        format: sse
+      examples:
+        - id: 151c7ad3-7a05-46f1-bff6-f373ef401960
+          request:
+            pageNum: 1
+          response:
+            stream:
+              - event: data
+                data:
+                  name: Alice
+              - event: data
+                data:
+                  name: Bob

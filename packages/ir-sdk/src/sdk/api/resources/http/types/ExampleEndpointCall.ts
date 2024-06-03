@@ -5,6 +5,7 @@
 import * as FernIr from "../../..";
 
 export interface ExampleEndpointCall extends FernIr.WithDocs {
+    id: string | undefined;
     name: FernIr.Name | undefined;
     url: string;
     rootPathParameters: FernIr.ExamplePathParameter[];

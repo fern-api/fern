@@ -41,6 +41,7 @@ import {
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-api/ir-sdk";
+import hash from "object-hash";
 
 interface HttpParameterExample {
     name: NameAndWireValue;
@@ -183,7 +184,7 @@ export class ExampleGenerator {
         rootPathParameters: PathParameter[],
         servicePathParameters: PathParameter[],
         serviceHeaders: HttpHeader[]
-    ): Omit<HttpEndpointExample, "response" | "type" | "_visit" | "exampleType"> {
+    ): Omit<HttpEndpointExample, "id" | "response" | "type" | "_visit" | "exampleType"> {
         const examples = endpoint.examples;
         return {
             url: endpoint.path.head,
@@ -267,35 +268,48 @@ export class ExampleGenerator {
             servicePathParameters,
             serviceHeaders
         );
-        const successExamples = endpoint.examples.map(({ response }) =>
-            HttpEndpointExample.generated({
+        const successExamples = endpoint.examples.map(({ response }) => {
+            const exampleContent = {
                 ...exampleWithoutResponse,
                 response: this.generateSuccessResponseExample({
                     response: endpoint.response?.body,
                     maybeResponse: response
                 })
-            })
-        );
+            };
+            return HttpEndpointExample.generated({
+                ...exampleContent,
+                id: hash(exampleContent)
+            });
+        });
 
         // If there are no examples, we should generate a default success example
         if (successExamples.length === 0) {
+            const exampleContent = {
+                ...exampleWithoutResponse,
+                response: this.generateSuccessResponseExample({
+                    response: endpoint.response?.body,
+                    maybeResponse: undefined
+                })
+            };
             successExamples.push(
                 HttpEndpointExample.generated({
-                    ...exampleWithoutResponse,
-                    response: this.generateSuccessResponseExample({
-                        response: endpoint.response?.body,
-                        maybeResponse: undefined
-                    })
+                    ...exampleContent,
+                    id: hash(exampleContent)
                 })
             );
         }
 
-        const errorExamples = endpoint.errors.map((e) =>
-            HttpEndpointExample.generated({
+        const errorExamples = endpoint.errors.map((e) => {
+            const exampleContent = {
                 ...exampleWithoutResponse,
                 response: this.generateErrorResponseExample(e)
-            })
-        );
+            };
+            return HttpEndpointExample.generated({
+                ...exampleContent,
+                id: hash(exampleContent)
+            });
+        });
+
         return [...successExamples, ...errorExamples];
     }
 
@@ -713,12 +727,16 @@ export class ExampleGenerator {
             case "boolean":
                 return {
                     jsonExample: `${literal.boolean}`,
-                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(literal.boolean))
+                    shape: ExampleTypeReferenceShape.container(
+                        ExampleContainer.literal(ExamplePrimitive.boolean(literal.boolean))
+                    )
                 };
             case "string":
                 return {
                     jsonExample: `${literal.string}`,
-                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.string({ original: literal.string }))
+                    shape: ExampleTypeReferenceShape.container(
+                        ExampleContainer.literal(ExamplePrimitive.string({ original: literal.string }))
+                    )
                 };
             default:
                 assertNever(literal);
