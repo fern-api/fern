@@ -449,7 +449,8 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             await generateIrForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
-                    defaultToAllApiWorkspaces: false
+                    defaultToAllApiWorkspaces: false,
+                    sdkLanguage: argv.language
                 }),
                 irFilepath: resolve(cwd(), argv.pathToOutput),
                 cliContext,
@@ -474,6 +475,10 @@ function addOpenAPIIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                     description: "Path to write intermediate representation (IR)",
                     demandOption: true
                 })
+                .option("language", {
+                    choices: Object.values(generatorsYml.GenerationLanguage),
+                    description: "Generate IR for a particular language"
+                })
                 .option("api", {
                     string: true,
                     description: "Only run the command on the provided API"
@@ -482,10 +487,12 @@ function addOpenAPIIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
             await generateOpenAPIIrForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
-                    defaultToAllApiWorkspaces: false
+                    defaultToAllApiWorkspaces: false,
+                    sdkLanguage: argv.language
                 }),
                 irFilepath: resolve(cwd(), argv.pathToOutput),
-                cliContext
+                cliContext,
+                sdkLanguage: argv.language
             });
         }
     );
@@ -781,6 +788,10 @@ function addTestCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("command", {
                     string: true,
                     description: "The command to run to test your SDK."
+                })
+                .option("language", {
+                    choices: Object.values(generatorsYml.GenerationLanguage),
+                    description: "Run the tests configured to a specific language"
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
@@ -791,9 +802,11 @@ function addTestCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: false,
-                    nameOverride: ".mock"
+                    nameOverride: ".mock",
+                    sdkLanguage: argv.language
                 }),
-                testCommand: argv.command
+                testCommand: argv.command,
+                generationLanguage: argv.language
             });
         }
     );
@@ -866,10 +879,15 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
         "write-definition",
         "Write underlying Fern Definition for OpenAPI specs and API Dependencies.",
         (yargs) =>
-            yargs.option("api", {
-                string: true,
-                description: "Only run the command on the provided API"
-            }),
+            yargs
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API"
+                })
+                .option("language", {
+                    choices: Object.values(generatorsYml.GenerationLanguage),
+                    description: "Write the definition for a particular SDK language"
+                }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
                 command: "fern write-definition"
@@ -877,9 +895,11 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
             await writeDefinitionForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
-                    defaultToAllApiWorkspaces: true
+                    defaultToAllApiWorkspaces: true,
+                    sdkLanguage: argv.language
                 }),
-                cliContext
+                cliContext,
+                sdkLanguage: argv.language
             });
         }
     );

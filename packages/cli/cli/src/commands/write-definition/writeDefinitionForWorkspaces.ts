@@ -1,4 +1,4 @@
-import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/configuration";
+import { DEFINITION_DIRECTORY, generatorsYml, ROOT_API_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
@@ -16,16 +16,18 @@ import { CliContext } from "../../cli-context/CliContext";
 
 export async function writeDefinitionForWorkspaces({
     project,
-    cliContext
+    cliContext,
+    sdkLanguage
 }: {
     project: Project;
     cliContext: CliContext;
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 if (workspace.type === "oss") {
-                    await writeDefinitionForOpenAPIWorkspace({ workspace, context });
+                    await writeDefinitionForOpenAPIWorkspace({ workspace, context, sdkLanguage });
                 } else {
                     await writeDefinitionForFernWorkspace({ workspace, context });
                 }
@@ -60,12 +62,14 @@ async function writeDefinitionForFernWorkspace({
 
 async function writeDefinitionForOpenAPIWorkspace({
     workspace,
-    context
+    context,
+    sdkLanguage
 }: {
     workspace: OSSWorkspace;
     context: TaskContext;
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<void> {
-    const fernWorkspace = await convertOpenApiWorkspaceToFernWorkspace(workspace, context);
+    const fernWorkspace = await convertOpenApiWorkspaceToFernWorkspace(workspace, context, false, sdkLanguage);
     const absolutePathToOutputDirectory = join(
         workspace.absoluteFilepath,
         RelativeFilePath.of(`.${DEFINITION_DIRECTORY}`)

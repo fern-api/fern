@@ -1,3 +1,4 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { MockServer } from "@fern-api/mock";
@@ -10,11 +11,13 @@ import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspa
 export async function testOutput({
     cliContext,
     project,
-    testCommand
+    testCommand,
+    generationLanguage
 }: {
     cliContext: CliContext;
     project: Project;
     testCommand: string | undefined;
+    generationLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<void> {
     cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
@@ -33,7 +36,9 @@ export async function testOutput({
 
     await cliContext.runTaskForWorkspace(workspace, async (context) => {
         const fernWorkspace: FernWorkspace =
-            workspace.type === "fern" ? workspace : await convertOpenApiWorkspaceToFernWorkspace(workspace, context);
+            workspace.type === "fern"
+                ? workspace
+                : await convertOpenApiWorkspaceToFernWorkspace(workspace, context, false, generationLanguage);
 
         await validateAPIWorkspaceAndLogIssues({
             context,
