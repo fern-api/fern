@@ -1,0 +1,79 @@
+---
+title: Express.js
+description: 
+subtite: Generate types and networking logic for your Express server.
+slug: express
+---
+
+Express is a minimal and flexible Node.js web application framework. It is a popular choice for building APIs and web servers.
+
+Fern generates TypeScript types and networking logic for your Express server. This saves you time and adds compile-time safety by guaranteeing that you are serving the exact API that you specified in your API definition.
+
+## What gets generated?
+
+- TypeScript interfaces for your API types
+- Exceptions that you can throw for non-200 responses
+- Interfaces for you to define your business logic
+- All the networking/HTTP logic to call your API
+
+## Getting started 
+
+Clone the [starter repo](https://github.com/fern-api/express-starter/) for Express + React. 
+
+## Demo video
+
+Learn how Fern can be helpful when building an Express server. 
+
+<iframe src="https://www.loom.com/embed/31f4243c4d824c54938bdc4840fbb8ba" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+
+## Getting started 
+
+<CodeBlock title="generators.yml">
+```yaml
+groups:
+  express-server:
+    generators:
+      - name: fernapi/fern-typescript-express
+        version: 0.15.0
+        output:
+            location: local-file-system
+            path: ../app/server
+```
+</CodeBlock>
+
+<Note>Make sure to enable `allowSyntheticDefaultImports` in your `tsconfig.json` when using this generator.</Note>
+
+## Configurations
+
+The following options are supported when generating an Express server.
+
+### `useBrandedStringAliases`
+
+### `treatUnknownAsAny`
+
+### `noSerdeLayer`
+
+### `outputSourceFiles`
+
+### `areImplementationsOptional`
+
+**Type**: boolean **
+Default:** false
+
+By default, the generated register() will require an implementatiion for every service defined in your Fern Definition.
+
+If areImplementationsOptional is enabled, then register() won't require any implementations. Note that this is mildly dangerous: if you forget to include an implementation, then your server behavior may drift from your docs and clients.
+
+### `doNotHandleUnrecognizedErrors`
+
+**Type**: boolean 
+**Default**: false
+
+By default, if you throw a non-Fern error in your endpoint handler, it will be caught by generated code and a `500` response will be returned. No details from the error will be leaked to the client.
+
+If doNotHandleUnrecognizedErrors is enabled and you throw a non-Fern error, the error will be caught and passed on with `next(error)`. It's your responsibility to set up error-catching middleware that handles the error and returns a response to the client.
+
+
+
+
+
