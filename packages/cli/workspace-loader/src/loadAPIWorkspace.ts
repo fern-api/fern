@@ -21,12 +21,14 @@ export async function loadAPIWorkspace({
     absolutePathToWorkspace,
     context,
     cliVersion,
-    workspaceName
+    workspaceName,
+    sdkLanguage
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
     cliVersion: string;
     workspaceName: string | undefined;
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<WorkspaceLoader.Result> {
     const generatorsConfiguration = await generatorsYml.loadGeneratorsConfiguration({
         absolutePathToWorkspace,
@@ -82,7 +84,9 @@ export async function loadAPIWorkspace({
                 absoluteFilepathToOverrides,
                 settings: {
                     audiences: definition.audiences ?? [],
-                    shouldUseTitleAsName: definition.shouldUseTitleAsName ?? true
+                    shouldUseTitleAsName: definition.settings?.shouldUseTitleAsName ?? true,
+                    shouldUseUndiscriminatedUnionsWithLiterals:
+                        definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false
                 }
             });
         }
@@ -170,7 +174,8 @@ export async function loadAPIWorkspace({
         dependenciesConfiguration,
         structuralValidationResult,
         context,
-        cliVersion
+        cliVersion,
+        sdkLanguage
     });
     if (!processPackageMarkersResult.didSucceed) {
         return processPackageMarkersResult;

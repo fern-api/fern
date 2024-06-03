@@ -75,7 +75,7 @@ async function parseAPIConfiguration(
                 origin: undefined,
                 overrides: undefined,
                 audiences: [],
-                shouldUseTitleAsName: undefined
+                settings: { shouldUseTitleAsName: undefined, shouldUseUndiscriminatedUnionsWithLiterals: undefined }
             });
         } else if (Array.isArray(apiConfiguration)) {
             for (const definition of apiConfiguration) {
@@ -85,7 +85,10 @@ async function parseAPIConfiguration(
                         origin: undefined,
                         overrides: undefined,
                         audiences: [],
-                        shouldUseTitleAsName: undefined
+                        settings: {
+                            shouldUseTitleAsName: undefined,
+                            shouldUseUndiscriminatedUnionsWithLiterals: undefined
+                        }
                     });
                 } else {
                     apiDefinitions.push({
@@ -93,7 +96,10 @@ async function parseAPIConfiguration(
                         origin: definition.origin,
                         overrides: definition.overrides,
                         audiences: definition.audiences,
-                        shouldUseTitleAsName: definition.settings?.["use-title"]
+                        settings: {
+                            shouldUseTitleAsName: definition.settings?.["use-title"],
+                            shouldUseUndiscriminatedUnionsWithLiterals: definition.settings?.unions === "v1"
+                        }
                     });
                 }
             }
@@ -103,7 +109,10 @@ async function parseAPIConfiguration(
                 origin: apiConfiguration.origin,
                 overrides: apiConfiguration.overrides,
                 audiences: apiConfiguration.audiences,
-                shouldUseTitleAsName: apiConfiguration.settings?.["use-title"]
+                settings: {
+                    shouldUseTitleAsName: apiConfiguration.settings?.["use-title"],
+                    shouldUseUndiscriminatedUnionsWithLiterals: apiConfiguration.settings?.unions === "v1"
+                }
             });
         }
     } else {
@@ -119,7 +128,10 @@ async function parseAPIConfiguration(
                 origin: apiOrigin,
                 overrides: openapiOverrides,
                 audiences: [],
-                shouldUseTitleAsName: settings?.["use-title"]
+                settings: {
+                    shouldUseTitleAsName: settings?.["use-title"],
+                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1"
+                }
             });
         } else if (openapi != null) {
             apiDefinitions.push({
@@ -127,7 +139,10 @@ async function parseAPIConfiguration(
                 origin: openapi.origin,
                 overrides: openapi.overrides,
                 audiences: [],
-                shouldUseTitleAsName: openapi.settings?.["use-title"]
+                settings: {
+                    shouldUseTitleAsName: openapi.settings?.["use-title"],
+                    shouldUseUndiscriminatedUnionsWithLiterals: openapi.settings?.unions === "v1"
+                }
             });
         }
 
@@ -137,7 +152,10 @@ async function parseAPIConfiguration(
                 origin: apiOrigin,
                 overrides: undefined,
                 audiences: [],
-                shouldUseTitleAsName: settings?.["use-title"]
+                settings: {
+                    shouldUseTitleAsName: settings?.["use-title"],
+                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1"
+                }
             });
         }
     }

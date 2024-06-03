@@ -13,4 +13,13 @@ export interface SchemaParserContext {
     markSchemaAsReferencedByNonRequest(schemaId: SchemaId): void;
     markSchemaAsReferencedByRequest(schemaId: SchemaId): void;
     markReferencedByDiscriminatedUnion(schema: OpenAPIV3.ReferenceObject, discrminant: string, times: number): void;
+
+    shouldUseUndiscriminatedUnionsWithLiterals: boolean;
+    // Schemas marked with a discriminant value will have their discriminants
+    // added as explicitly defaulted literal fields
+    markSchemaWithDiscriminantValue(
+        schema: OpenAPIV3.ReferenceObject,
+        discrminant: string,
+        discriminantValue: string
+    ): void;
 }
