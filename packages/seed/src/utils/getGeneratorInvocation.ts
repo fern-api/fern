@@ -35,6 +35,7 @@ export function getGeneratorInvocation({
         absolutePathToLocalOutput: absolutePathToOutput,
         absolutePathToLocalSnippets: undefined,
         language,
+        keywords: undefined,
         smartCasing: false,
         disableExamples: false,
         irVersionOverride: irVersion,
