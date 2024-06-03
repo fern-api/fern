@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedReservedKeywordsClient } from \"@fern/reserved-keywords\";\n\nconst seedReservedKeywords = new SeedReservedKeywordsClient;\nawait seedReservedKeywords.package.test({\n    for: \"string\"\n});\n"
+                "client": "import { SeedNurseryApiClient } from \"@fern/reserved-keywords\";\n\nconst seedNurseryApi = new SeedNurseryApiClient;\nawait seedNurseryApi.package.test({\n    for: \"string\"\n});\n"
             }
         }
     ],
