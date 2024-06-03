@@ -17,16 +17,23 @@ const CAPITALIZE_INITIALISM: generatorsYml.GenerationLanguage[] = ["go", "ruby"]
 
 export function constructCasingsGenerator({
     generationLanguage,
+    keywords,
     smartCasing
 }: {
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
+    keywords: string[] | undefined;
     smartCasing: boolean;
 }): CasingsGenerator {
+    const keywordSet: Set<string> | undefined = keywords != null ? new Set(keywords) : undefined;
     const casingsGenerator: CasingsGenerator = {
         generateName: (name, opts) => {
             const generateSafeAndUnsafeString = (unsafeString: string): SafeAndUnsafeString => ({
                 unsafeName: unsafeString,
-                safeName: sanitizeNameForLanguage(unsafeString, generationLanguage)
+                safeName: sanitizeNameForLanguage({
+                    name: unsafeString,
+                    generationLanguage,
+                    keywords: keywordSet
+                })
             });
 
             let camelCaseName = camelCase(name);
@@ -96,14 +103,19 @@ export function constructCasingsGenerator({
     return casingsGenerator;
 }
 
-function sanitizeNameForLanguage(
-    name: string,
-    generationLanguage: generatorsYml.GenerationLanguage | undefined
-): string {
+function sanitizeNameForLanguage({
+    name,
+    generationLanguage,
+    keywords
+}: {
+    name: string;
+    generationLanguage: generatorsYml.GenerationLanguage | undefined;
+    keywords: Set<string> | undefined;
+}): string {
     if (generationLanguage == null) {
         return name;
     }
-    const reservedKeywords = RESERVED_KEYWORDS[generationLanguage];
+    const reservedKeywords = keywords != null ? keywords : RESERVED_KEYWORDS[generationLanguage];
     if (reservedKeywords.has(name)) {
         return name + "_";
     } else if (startsWithNumber(name)) {

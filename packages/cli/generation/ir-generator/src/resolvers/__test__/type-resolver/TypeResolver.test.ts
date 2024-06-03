@@ -35,6 +35,7 @@ describe("TypeResolver", () => {
             definitionFile: fooFile.contents,
             casingsGenerator: constructCasingsGenerator({
                 generationLanguage: undefined,
+                keywords: undefined,
                 smartCasing: false
             }),
             rootApiFile: parseResult.workspace.definition.rootApiFile.contents

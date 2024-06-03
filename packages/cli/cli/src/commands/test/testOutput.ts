@@ -45,6 +45,7 @@ export async function testOutput({
             workspace: fernWorkspace,
             audiences: { type: "all" },
             generationLanguage: undefined,
+            keywords: undefined,
             smartCasing: false,
             disableExamples: false
         });

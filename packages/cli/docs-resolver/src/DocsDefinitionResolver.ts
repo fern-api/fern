@@ -294,6 +294,7 @@ export class DocsDefinitionResolver {
                     workspace,
                     audiences: item.audiences,
                     generationLanguage: undefined,
+                    keywords: undefined,
                     smartCasing: false,
                     disableExamples: false
                 });

@@ -197,6 +197,7 @@ async function convertGenerator({
             maybeGroupLevelMetadata,
             maybeTopLevelMetadata
         }),
+        keywords: generator.keywords,
         smartCasing: generator["smart-casing"] ?? false,
         disableExamples: generator["disable-examples"] ?? false,
         absolutePathToLocalOutput:

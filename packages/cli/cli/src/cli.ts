@@ -456,6 +456,7 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 generationLanguage: argv.language,
                 audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" },
                 version: argv.version,
+                keywords: undefined,
                 smartCasing: false
             });
         }

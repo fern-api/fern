@@ -32,6 +32,7 @@ export async function generateFdrApiDefinitionForWorkspaces({
                     context,
                     generationLanguage: undefined,
                     audiences,
+                    keywords: undefined,
                     smartCasing: false,
                     disableExamples: false
                 });
