@@ -3739,7 +3739,9 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
                           "shape": {
                             "_visit": [Function],
                             "type": "unknown",
-                            "unknown": undefined,
+                            "unknown": {
+                              "key": "value",
+                            },
                           },
                         },
                         "type": "optional",

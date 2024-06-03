@@ -84,10 +84,10 @@ export const V46_TO_V45_MIGRATION: IrMigration<
 };
 
 function convertExampleTypeReference(v46ETR: IrVersions.V46.ExampleTypeReference): IrVersions.V45.ExampleTypeReference {
-    if (v46ETR.shape.type === "container") {
-        return {
+    return v46ETR.shape._visit<IrVersions.V45.ExampleTypeReference>({
+        container: (container) => ({
             ...v46ETR,
-            shape: v46ETR.shape.container._visit<IrVersions.V45.ExampleTypeReferenceShape>({
+            shape: container._visit<IrVersions.V45.ExampleTypeReferenceShape>({
                 list: (listValues) =>
                     IrVersions.V45.ExampleTypeReferenceShape.container(
                         IrVersions.V45.ExampleContainer.list(listValues.map((lv) => convertExampleTypeReference(lv)))
@@ -131,20 +131,18 @@ function convertExampleTypeReference(v46ETR: IrVersions.V46.ExampleTypeReference
                     throw new Error(`Unexpected value: ${value}`);
                 }
             })
-        };
-    } else if (v46ETR.shape.type === "named") {
-        return {
+        }),
+        named: (named) => ({
             ...v46ETR,
             shape: IrVersions.V45.ExampleTypeReferenceShape.named({
-                ...v46ETR.shape,
-                shape: convertExampleTypeShape(v46ETR.shape.shape)
+                ...named,
+                shape: convertExampleTypeShape(named.shape)
             })
-        };
-    } else if (v46ETR.shape.type === "primitive") {
-        return {
+        }),
+        primitive: (primitive) => ({
             ...v46ETR,
             shape: IrVersions.V45.ExampleTypeReferenceShape.primitive(
-                v46ETR.shape.primitive._visit<IrVersions.V45.ExamplePrimitive>({
+                primitive._visit<IrVersions.V45.ExamplePrimitive>({
                     string: (str) => IrVersions.V45.ExamplePrimitive.string(str),
                     integer: (num) => IrVersions.V45.ExamplePrimitive.integer(num),
                     double: (num) => IrVersions.V45.ExamplePrimitive.double(num),
@@ -158,10 +156,12 @@ function convertExampleTypeReference(v46ETR: IrVersions.V46.ExampleTypeReference
                     }
                 })
             )
-        };
-    }
-
-    return { ...v46ETR, shape: IrVersions.V45.ExampleTypeReferenceShape.unknown() };
+        }),
+        unknown: (value) => ({ ...v46ETR, shape: IrVersions.V45.ExampleTypeReferenceShape.unknown(value) }),
+        _other: (value) => {
+            throw new Error(`Unexpected value: ${value}`);
+        }
+    });
 }
 
 function convertExampleObjectType(v46EOT: IrVersions.V46.ExampleObjectType): IrVersions.V45.ExampleObjectType {
