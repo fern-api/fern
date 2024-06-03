@@ -61,8 +61,10 @@ export const omitDeepBy: OmitDeepBy = (object: any, cb: any) => {
         }
 
         const temp = {};
-        // eslint-disable-next-line no-restricted-syntax
-        for (const [key, value] of Object.entries(object)) {
+        // eslint-disable-next-line no-restricted-syntax @typescript-eslint/consistent-indexed-object-style
+        for (const [key, value] of Object.entries<{
+            [x: string]: PropertyName | object;
+        }>(object)) {
             // eslint-disable-next-line  @typescript-eslint/no-explicit-any
             (temp as any)[key] = omitDeepBy(value, cb);
         }
