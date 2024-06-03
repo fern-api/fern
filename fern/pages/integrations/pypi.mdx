@@ -1,0 +1,30 @@
+---
+title: Integrating PyPI
+---
+
+To authenticate and integrate the Python Package Index within your Python SDK, you'll need to create an PyPI token and add it to your repository. 
+
+<AccordionGroup>
+<Accordion title='Creating a PyPI token'>
+<Steps>
+### Log into [PyPI](https://pypi.org/)
+### Click on your profile picture and navigate to the **Account settings** page
+### Scroll down to the **API tokens** section and click **Create API token**
+### Name token and set scope to the relevant projects
+### Create token
+<Note title='Save your token'>
+Be sure to save the generated token - it won't be displayed after you leave the page. 
+</Note>
+</Steps>
+</Accordion>
+
+<Accordion title='Adding tokens to your GitHub repository'>
+<Steps>
+### Open your Fern repository
+### Navigate to **Settings**
+### Under the Security section, open **Secrets and variables** > **Actions**
+### Add **New repository secret**
+### Name secret, add token, and click **Add secret**
+</Steps>
+</Accordion>
+</AccordionGroup>
