@@ -6954,6 +6954,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest-specific-snapshot", "npm:0.5.7"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
+            ["@types/object-hash", "npm:3.0.6"],\
             ["@types/prettier", "npm:2.7.3"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["depcheck", "npm:1.4.6"],\
@@ -6961,6 +6962,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
             ["jest-specific-snapshot", "virtual:8a76149279d527dc42458201c3444f0e08bb8ef2b7cbf4f32fc7e89d242b47183703ea44d1dad80bf1fea71f560f9b94f46bf42448e2ea552c04d3003cead412#npm:8.0.0"],\
             ["lodash-es", "npm:4.17.21"],\
+            ["object-hash", "npm:3.0.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
@@ -7022,6 +7024,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/ir-v42-sdk", "npm:0.0.1"],\
             ["@fern-fern/ir-v43-sdk", "npm:0.0.1"],\
             ["@fern-fern/ir-v44-sdk", "npm:0.0.1"],\
+            ["@fern-fern/ir-v45-sdk", "npm:0.0.3"],\
             ["@fern-fern/ir-v5-model", "npm:0.0.3"],\
             ["@fern-fern/ir-v6-model", "npm:0.0.33"],\
             ["@fern-fern/ir-v7-model", "npm:0.0.2"],\
@@ -8249,6 +8252,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@fern-fern-ir-v44-sdk-npm-0.0.1-3ea51f82a6-4c77796649.zip/node_modules/@fern-fern/ir-v44-sdk/",\
           "packageDependencies": [\
             ["@fern-fern/ir-v44-sdk", "npm:0.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fern-fern/ir-v45-sdk", [\
+        ["npm:0.0.3", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-ir-v45-sdk-npm-0.0.3-4a05ffcba2-44a07b00c4.zip/node_modules/@fern-fern/ir-v45-sdk/",\
+          "packageDependencies": [\
+            ["@fern-fern/ir-v45-sdk", "npm:0.0.3"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -10960,6 +10972,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-normalize-package-data-npm-2.4.1-c31c56ae6a-e87bccbf11.zip/node_modules/@types/normalize-package-data/",\
           "packageDependencies": [\
             ["@types/normalize-package-data", "npm:2.4.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/object-hash", [\
+        ["npm:3.0.6", {\
+          "packageLocation": "./.yarn/cache/@types-object-hash-npm-3.0.6-d23422290d-2c7979d4e5.zip/node_modules/@types/object-hash/",\
+          "packageDependencies": [\
+            ["@types/object-hash", "npm:3.0.6"]\
           ],\
           "linkType": "HARD"\
         }]\

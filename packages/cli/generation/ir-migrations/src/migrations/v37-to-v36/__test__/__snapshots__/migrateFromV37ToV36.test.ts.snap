@@ -191,6 +191,7 @@ exports[`migrateFromV37ToV36 snapshot 1`] = `
                 },
               ],
               "exampleType": "userProvided",
+              "id": undefined,
               "name": undefined,
               "queryParameters": [
                 {

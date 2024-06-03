@@ -323,6 +323,9 @@ types:
       map:
         type: list<ExampleKeyValuePair>
         key: map
+      literal:
+        type: ExamplePrimitive
+        key: literal
 
   ExampleKeyValuePair:
     properties:
