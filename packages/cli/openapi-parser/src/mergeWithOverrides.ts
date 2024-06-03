@@ -37,7 +37,7 @@ export async function mergeWithOverrides<T>({
     ) as T;
     // Remove any nullified values
     const filtered = omitDeepBy(merged, isNull) as T;
-    throw new Error(JSON.stringify(filtered, null, 2));
+    return filtered;
 }
 
 // This is essentially lodash's omitBy, but actually running through your object tree.
