@@ -2,7 +2,6 @@
 
 import datetime as dt
 import typing
-import urllib.parse
 import uuid
 from json.decoder import JSONDecodeError
 
@@ -10,8 +9,6 @@ from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.pydantic_utilities import pydantic_v1
-from ...core.query_encoder import encode_query
-from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
 from ...types.object.types.object_with_optional_field import ObjectWithOptionalField
 
@@ -49,26 +46,7 @@ class HttpMethodsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            method="GET",
-            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{jsonable_encoder(id)}"),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            f"http-methods/{jsonable_encoder(id)}", method="GET", request_options=request_options
         )
         if 200 <= _response.status_code < 300:
             return pydantic_v1.parse_obj_as(str, _response.json())  # type: ignore
@@ -105,34 +83,8 @@ class HttpMethodsClient:
             string="string",
         )
         """
-        _request: typing.Dict[str, typing.Any] = {"string": string}
         _response = self._client_wrapper.httpx_client.request(
-            method="POST",
-            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "http-methods"),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(_request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(_request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            "http-methods", method="POST", json={"string": string}, request_options=request_options, omit=OMIT
         )
         if 200 <= _response.status_code < 300:
             return pydantic_v1.parse_obj_as(ObjectWithOptionalField, _response.json())  # type: ignore
@@ -172,34 +124,12 @@ class HttpMethodsClient:
             string="string",
         )
         """
-        _request: typing.Dict[str, typing.Any] = {"string": string}
         _response = self._client_wrapper.httpx_client.request(
+            f"http-methods/{jsonable_encoder(id)}",
             method="PUT",
-            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{jsonable_encoder(id)}"),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(_request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(_request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            json={"string": string},
+            request_options=request_options,
+            omit=OMIT,
         )
         if 200 <= _response.status_code < 300:
             return pydantic_v1.parse_obj_as(ObjectWithOptionalField, _response.json())  # type: ignore
@@ -296,58 +226,25 @@ class HttpMethodsClient:
             map_={1: "string"},
         )
         """
-        _request: typing.Dict[str, typing.Any] = {}
-        if string is not OMIT:
-            _request["string"] = string
-        if integer is not OMIT:
-            _request["integer"] = integer
-        if long_ is not OMIT:
-            _request["long"] = long_
-        if double is not OMIT:
-            _request["double"] = double
-        if bool_ is not OMIT:
-            _request["bool"] = bool_
-        if datetime is not OMIT:
-            _request["datetime"] = datetime
-        if date is not OMIT:
-            _request["date"] = date
-        if uuid_ is not OMIT:
-            _request["uuid"] = uuid_
-        if base_64 is not OMIT:
-            _request["base64"] = base_64
-        if list_ is not OMIT:
-            _request["list"] = list_
-        if set_ is not OMIT:
-            _request["set"] = set_
-        if map_ is not OMIT:
-            _request["map"] = map_
         _response = self._client_wrapper.httpx_client.request(
+            f"http-methods/{jsonable_encoder(id)}",
             method="PATCH",
-            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{jsonable_encoder(id)}"),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(_request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(_request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            json={
+                "string": string,
+                "integer": integer,
+                "long": long_,
+                "double": double,
+                "bool": bool_,
+                "datetime": datetime,
+                "date": date,
+                "uuid": uuid_,
+                "base64": base_64,
+                "list": list_,
+                "set": set_,
+                "map": map_,
             },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            request_options=request_options,
+            omit=OMIT,
         )
         if 200 <= _response.status_code < 300:
             return pydantic_v1.parse_obj_as(ObjectWithOptionalField, _response.json())  # type: ignore
@@ -383,29 +280,7 @@ class HttpMethodsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            method="DELETE",
-            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{jsonable_encoder(id)}"),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
-            if request_options is not None
-            else None,
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            f"http-methods/{jsonable_encoder(id)}", method="DELETE", request_options=request_options
         )
         if 200 <= _response.status_code < 300:
             return pydantic_v1.parse_obj_as(bool, _response.json())  # type: ignore
@@ -446,26 +321,7 @@ class AsyncHttpMethodsClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            method="GET",
-            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{jsonable_encoder(id)}"),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            f"http-methods/{jsonable_encoder(id)}", method="GET", request_options=request_options
         )
         if 200 <= _response.status_code < 300:
             return pydantic_v1.parse_obj_as(str, _response.json())  # type: ignore
@@ -502,34 +358,8 @@ class AsyncHttpMethodsClient:
             string="string",
         )
         """
-        _request: typing.Dict[str, typing.Any] = {"string": string}
         _response = await self._client_wrapper.httpx_client.request(
-            method="POST",
-            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "http-methods"),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(_request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(_request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            "http-methods", method="POST", json={"string": string}, request_options=request_options, omit=OMIT
         )
         if 200 <= _response.status_code < 300:
             return pydantic_v1.parse_obj_as(ObjectWithOptionalField, _response.json())  # type: ignore
@@ -569,34 +399,12 @@ class AsyncHttpMethodsClient:
             string="string",
         )
         """
-        _request: typing.Dict[str, typing.Any] = {"string": string}
         _response = await self._client_wrapper.httpx_client.request(
+            f"http-methods/{jsonable_encoder(id)}",
             method="PUT",
-            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{jsonable_encoder(id)}"),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(_request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(_request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            json={"string": string},
+            request_options=request_options,
+            omit=OMIT,
         )
         if 200 <= _response.status_code < 300:
             return pydantic_v1.parse_obj_as(ObjectWithOptionalField, _response.json())  # type: ignore
@@ -693,58 +501,25 @@ class AsyncHttpMethodsClient:
             map_={1: "string"},
         )
         """
-        _request: typing.Dict[str, typing.Any] = {}
-        if string is not OMIT:
-            _request["string"] = string
-        if integer is not OMIT:
-            _request["integer"] = integer
-        if long_ is not OMIT:
-            _request["long"] = long_
-        if double is not OMIT:
-            _request["double"] = double
-        if bool_ is not OMIT:
-            _request["bool"] = bool_
-        if datetime is not OMIT:
-            _request["datetime"] = datetime
-        if date is not OMIT:
-            _request["date"] = date
-        if uuid_ is not OMIT:
-            _request["uuid"] = uuid_
-        if base_64 is not OMIT:
-            _request["base64"] = base_64
-        if list_ is not OMIT:
-            _request["list"] = list_
-        if set_ is not OMIT:
-            _request["set"] = set_
-        if map_ is not OMIT:
-            _request["map"] = map_
         _response = await self._client_wrapper.httpx_client.request(
+            f"http-methods/{jsonable_encoder(id)}",
             method="PATCH",
-            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{jsonable_encoder(id)}"),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(_request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(_request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            json={
+                "string": string,
+                "integer": integer,
+                "long": long_,
+                "double": double,
+                "bool": bool_,
+                "datetime": datetime,
+                "date": date,
+                "uuid": uuid_,
+                "base64": base_64,
+                "list": list_,
+                "set": set_,
+                "map": map_,
             },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            request_options=request_options,
+            omit=OMIT,
         )
         if 200 <= _response.status_code < 300:
             return pydantic_v1.parse_obj_as(ObjectWithOptionalField, _response.json())  # type: ignore
@@ -780,29 +555,7 @@ class AsyncHttpMethodsClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            method="DELETE",
-            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{jsonable_encoder(id)}"),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
-            if request_options is not None
-            else None,
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            f"http-methods/{jsonable_encoder(id)}", method="DELETE", request_options=request_options
         )
         if 200 <= _response.status_code < 300:
             return pydantic_v1.parse_obj_as(bool, _response.json())  # type: ignore

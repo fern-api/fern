@@ -7,10 +7,7 @@ import httpx
 
 from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .core.jsonable_encoder import jsonable_encoder
 from .core.pydantic_utilities import pydantic_v1
-from .core.query_encoder import encode_query
-from .core.remove_none_from_dict import remove_none_from_dict
 from .core.request_options import RequestOptions
 from .environment import SeedExamplesEnvironment
 from .file.client import AsyncFileClient, FileClient
@@ -106,27 +103,7 @@ class SeedExamples:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            method="POST",
-            url=self._client_wrapper.get_base_url(),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(request),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            method="POST", json=request, request_options=request_options, omit=OMIT
         )
         if 200 <= _response.status_code < 300:
             return pydantic_v1.parse_obj_as(str, _response.json())  # type: ignore
@@ -222,27 +199,7 @@ class AsyncSeedExamples:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            method="POST",
-            url=self._client_wrapper.get_base_url(),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(request),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            method="POST", json=request, request_options=request_options, omit=OMIT
         )
         if 200 <= _response.status_code < 300:
             return pydantic_v1.parse_obj_as(str, _response.json())  # type: ignore
