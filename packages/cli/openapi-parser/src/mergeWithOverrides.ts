@@ -48,7 +48,9 @@ interface OmitDeepBy {
     <T extends object>(object: T | null | undefined, predicate: ValueKeyIteratee<T[keyof T]>): PartialObject<T>;
 }
 
+// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 export const omitDeepBy: OmitDeepBy = (object: any, cb: any) => {
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     function omitByDeepByOnOwnProps(object: any) {
         if (!Array.isArray(object) && !isPlainObject(object)) {
             return object;
@@ -59,10 +61,11 @@ export const omitDeepBy: OmitDeepBy = (object: any, cb: any) => {
         }
 
         const temp = {};
-        // eslint-disable-next-line no-restricted-syntax
+        // eslint-disable-next-line no-restricted-syntax, consistent-indexed-object-style
         for (const [key, value] of Object.entries<{
             [x: string]: PropertyName | object;
         }>(object)) {
+            // eslint-disable-next-line  @typescript-eslint/no-explicit-any
             (temp as any)[key] = omitDeepBy(value, cb);
         }
         return omitBy(temp, cb);
