@@ -14,6 +14,39 @@
         {
             "id": {
                 "path": "/basic-auth",
+                "method": "GET",
+                "identifier_override": "endpoint_basic-auth.getWithBasicAuth"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedBasicAuthEnvironmentVariablesClient } from \"@fern/basic-auth-environment-variables\";\n\nconst seedBasicAuthEnvironmentVariables = new SeedBasicAuthEnvironmentVariablesClient({ username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\nawait seedBasicAuthEnvironmentVariables.basicAuth.getWithBasicAuth();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/basic-auth",
+                "method": "POST",
+                "identifier_override": "endpoint_basic-auth.postWithBasicAuth"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedBasicAuthEnvironmentVariablesClient } from \"@fern/basic-auth-environment-variables\";\n\nconst seedBasicAuthEnvironmentVariables = new SeedBasicAuthEnvironmentVariablesClient({ username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\nawait seedBasicAuthEnvironmentVariables.basicAuth.postWithBasicAuth({\n    \"key\": \"value\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/basic-auth",
+                "method": "POST",
+                "identifier_override": "endpoint_basic-auth.postWithBasicAuth"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedBasicAuthEnvironmentVariablesClient } from \"@fern/basic-auth-environment-variables\";\n\nconst seedBasicAuthEnvironmentVariables = new SeedBasicAuthEnvironmentVariablesClient({ username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\nawait seedBasicAuthEnvironmentVariables.basicAuth.postWithBasicAuth({\n    \"key\": \"value\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/basic-auth",
                 "method": "POST",
                 "identifier_override": "endpoint_basic-auth.postWithBasicAuth"
             },

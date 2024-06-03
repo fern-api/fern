@@ -65,6 +65,17 @@
                 "type": "typescript",
                 "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient;\nawait seedApi.folder.service.unknownRequest({\n    \"key\": \"value\"\n});\n"
             }
+        },
+        {
+            "id": {
+                "path": "/service",
+                "method": "POST",
+                "identifier_override": "endpoint_folder/service.unknownRequest"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient;\nawait seedApi.folder.service.unknownRequest({\n    \"key\": \"value\"\n});\n"
+            }
         }
     ],
     "types": {}
