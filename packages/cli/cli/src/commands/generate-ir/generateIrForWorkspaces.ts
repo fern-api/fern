@@ -1,4 +1,5 @@
 import { Audiences, generatorsYml } from "@fern-api/configuration";
+import { CasingVersion } from "@fern-api/configuration/src/generators-yml/GeneratorsConfiguration";
 import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-migrations";
 import { serialization as IrSerialization } from "@fern-api/ir-sdk";
@@ -18,7 +19,8 @@ export async function generateIrForWorkspaces({
     audiences,
     version,
     keywords,
-    smartCasing
+    smartCasing,
+    casingVersion
 }: {
     project: Project;
     irFilepath: AbsoluteFilePath;
@@ -28,6 +30,7 @@ export async function generateIrForWorkspaces({
     version: string | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
+    casingVersion: CasingVersion | undefined;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
@@ -61,6 +64,7 @@ export async function generateIrForWorkspaces({
                     generationLanguage,
                     keywords,
                     smartCasing,
+                    casingVersion,
                     disableExamples: false,
                     audiences,
                     version
@@ -84,6 +88,7 @@ async function getIntermediateRepresentation({
     audiences,
     keywords,
     smartCasing,
+    casingVersion,
     disableExamples,
     version
 }: {
@@ -92,6 +97,7 @@ async function getIntermediateRepresentation({
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
+    casingVersion: CasingVersion | undefined;
     disableExamples: boolean;
     audiences: Audiences;
     version: string | undefined;
@@ -103,6 +109,7 @@ async function getIntermediateRepresentation({
         audiences,
         keywords,
         smartCasing,
+        casingVersion,
         disableExamples
     });
 

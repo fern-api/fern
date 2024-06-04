@@ -240,8 +240,8 @@ exports[`generate IR from OpenAPI 1`] = `
                               },
                               "name": {
                                 "camelCase": {
-                                  "safeName": "telemetryGetTelemetryDataResponse",
-                                  "unsafeName": "telemetryGetTelemetryDataResponse",
+                                  "safeName": "TelemetryGetTelemetryDataResponse",
+                                  "unsafeName": "TelemetryGetTelemetryDataResponse",
                                 },
                                 "originalName": "TelemetryGetTelemetryDataResponse",
                                 "pascalCase": {
@@ -348,8 +348,8 @@ exports[`generate IR from OpenAPI 1`] = `
                               },
                               "name": {
                                 "camelCase": {
-                                  "safeName": "telemetryGetTelemetryDataResponse",
-                                  "unsafeName": "telemetryGetTelemetryDataResponse",
+                                  "safeName": "TelemetryGetTelemetryDataResponse",
+                                  "unsafeName": "TelemetryGetTelemetryDataResponse",
                                 },
                                 "originalName": "TelemetryGetTelemetryDataResponse",
                                 "pascalCase": {
@@ -458,8 +458,8 @@ exports[`generate IR from OpenAPI 1`] = `
                               },
                               "name": {
                                 "camelCase": {
-                                  "safeName": "telemetryGetTelemetryDataResponse",
-                                  "unsafeName": "telemetryGetTelemetryDataResponse",
+                                  "safeName": "TelemetryGetTelemetryDataResponse",
+                                  "unsafeName": "TelemetryGetTelemetryDataResponse",
                                 },
                                 "originalName": "TelemetryGetTelemetryDataResponse",
                                 "pascalCase": {
@@ -602,8 +602,8 @@ exports[`generate IR from OpenAPI 1`] = `
                                               },
                                               "name": {
                                                 "camelCase": {
-                                                  "safeName": "telemetryData",
-                                                  "unsafeName": "telemetryData",
+                                                  "safeName": "TelemetryData",
+                                                  "unsafeName": "TelemetryData",
                                                 },
                                                 "originalName": "TelemetryData",
                                                 "pascalCase": {
@@ -749,8 +749,8 @@ exports[`generate IR from OpenAPI 1`] = `
                                               },
                                               "name": {
                                                 "camelCase": {
-                                                  "safeName": "telemetryData",
-                                                  "unsafeName": "telemetryData",
+                                                  "safeName": "TelemetryData",
+                                                  "unsafeName": "TelemetryData",
                                                 },
                                                 "originalName": "TelemetryData",
                                                 "pascalCase": {
@@ -896,8 +896,8 @@ exports[`generate IR from OpenAPI 1`] = `
                                               },
                                               "name": {
                                                 "camelCase": {
-                                                  "safeName": "telemetryData",
-                                                  "unsafeName": "telemetryData",
+                                                  "safeName": "TelemetryData",
+                                                  "unsafeName": "TelemetryData",
                                                 },
                                                 "originalName": "TelemetryData",
                                                 "pascalCase": {
@@ -1024,8 +1024,8 @@ exports[`generate IR from OpenAPI 1`] = `
                                         },
                                         "name": {
                                           "camelCase": {
-                                            "safeName": "telemetryData",
-                                            "unsafeName": "telemetryData",
+                                            "safeName": "TelemetryData",
+                                            "unsafeName": "TelemetryData",
                                           },
                                           "originalName": "TelemetryData",
                                           "pascalCase": {
@@ -1101,8 +1101,8 @@ exports[`generate IR from OpenAPI 1`] = `
                         },
                         "name": {
                           "camelCase": {
-                            "safeName": "telemetryGetTelemetryDataResponse",
-                            "unsafeName": "telemetryGetTelemetryDataResponse",
+                            "safeName": "TelemetryGetTelemetryDataResponse",
+                            "unsafeName": "TelemetryGetTelemetryDataResponse",
                           },
                           "originalName": "TelemetryGetTelemetryDataResponse",
                           "pascalCase": {
@@ -1135,7 +1135,7 @@ exports[`generate IR from OpenAPI 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "fca1600c4ed57b01ff38d7216a739fce0a4df8c8",
+              "id": "b589791c3cf757e0a9d26726b09b54b59db95b2c",
               "name": null,
               "queryParameters": [
                 {
@@ -1269,8 +1269,8 @@ exports[`generate IR from OpenAPI 1`] = `
                               },
                               "name": {
                                 "camelCase": {
-                                  "safeName": "telemetryGetTelemetryDataResponse",
-                                  "unsafeName": "telemetryGetTelemetryDataResponse",
+                                  "safeName": "TelemetryGetTelemetryDataResponse",
+                                  "unsafeName": "TelemetryGetTelemetryDataResponse",
                                 },
                                 "originalName": "TelemetryGetTelemetryDataResponse",
                                 "pascalCase": {
@@ -1377,8 +1377,8 @@ exports[`generate IR from OpenAPI 1`] = `
                               },
                               "name": {
                                 "camelCase": {
-                                  "safeName": "telemetryGetTelemetryDataResponse",
-                                  "unsafeName": "telemetryGetTelemetryDataResponse",
+                                  "safeName": "TelemetryGetTelemetryDataResponse",
+                                  "unsafeName": "TelemetryGetTelemetryDataResponse",
                                 },
                                 "originalName": "TelemetryGetTelemetryDataResponse",
                                 "pascalCase": {
@@ -1487,8 +1487,8 @@ exports[`generate IR from OpenAPI 1`] = `
                               },
                               "name": {
                                 "camelCase": {
-                                  "safeName": "telemetryGetTelemetryDataResponse",
-                                  "unsafeName": "telemetryGetTelemetryDataResponse",
+                                  "safeName": "TelemetryGetTelemetryDataResponse",
+                                  "unsafeName": "TelemetryGetTelemetryDataResponse",
                                 },
                                 "originalName": "TelemetryGetTelemetryDataResponse",
                                 "pascalCase": {
@@ -1631,8 +1631,8 @@ exports[`generate IR from OpenAPI 1`] = `
                                               },
                                               "name": {
                                                 "camelCase": {
-                                                  "safeName": "telemetryData",
-                                                  "unsafeName": "telemetryData",
+                                                  "safeName": "TelemetryData",
+                                                  "unsafeName": "TelemetryData",
                                                 },
                                                 "originalName": "TelemetryData",
                                                 "pascalCase": {
@@ -1778,8 +1778,8 @@ exports[`generate IR from OpenAPI 1`] = `
                                               },
                                               "name": {
                                                 "camelCase": {
-                                                  "safeName": "telemetryData",
-                                                  "unsafeName": "telemetryData",
+                                                  "safeName": "TelemetryData",
+                                                  "unsafeName": "TelemetryData",
                                                 },
                                                 "originalName": "TelemetryData",
                                                 "pascalCase": {
@@ -1925,8 +1925,8 @@ exports[`generate IR from OpenAPI 1`] = `
                                               },
                                               "name": {
                                                 "camelCase": {
-                                                  "safeName": "telemetryData",
-                                                  "unsafeName": "telemetryData",
+                                                  "safeName": "TelemetryData",
+                                                  "unsafeName": "TelemetryData",
                                                 },
                                                 "originalName": "TelemetryData",
                                                 "pascalCase": {
@@ -2053,8 +2053,8 @@ exports[`generate IR from OpenAPI 1`] = `
                                         },
                                         "name": {
                                           "camelCase": {
-                                            "safeName": "telemetryData",
-                                            "unsafeName": "telemetryData",
+                                            "safeName": "TelemetryData",
+                                            "unsafeName": "TelemetryData",
                                           },
                                           "originalName": "TelemetryData",
                                           "pascalCase": {
@@ -2130,8 +2130,8 @@ exports[`generate IR from OpenAPI 1`] = `
                         },
                         "name": {
                           "camelCase": {
-                            "safeName": "telemetryGetTelemetryDataResponse",
-                            "unsafeName": "telemetryGetTelemetryDataResponse",
+                            "safeName": "TelemetryGetTelemetryDataResponse",
+                            "unsafeName": "TelemetryGetTelemetryDataResponse",
                           },
                           "originalName": "TelemetryGetTelemetryDataResponse",
                           "pascalCase": {
@@ -2287,8 +2287,8 @@ exports[`generate IR from OpenAPI 1`] = `
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "telemetryGetTelemetryDataResponse",
-                      "unsafeName": "telemetryGetTelemetryDataResponse",
+                      "safeName": "TelemetryGetTelemetryDataResponse",
+                      "unsafeName": "TelemetryGetTelemetryDataResponse",
                     },
                     "originalName": "TelemetryGetTelemetryDataResponse",
                     "pascalCase": {
@@ -2354,8 +2354,8 @@ exports[`generate IR from OpenAPI 1`] = `
               "type": "wrapper",
               "wrapperName": {
                 "camelCase": {
-                  "safeName": "telemetryGetTelemetryDataRequest",
-                  "unsafeName": "telemetryGetTelemetryDataRequest",
+                  "safeName": "TelemetryGetTelemetryDataRequest",
+                  "unsafeName": "TelemetryGetTelemetryDataRequest",
                 },
                 "originalName": "TelemetryGetTelemetryDataRequest",
                 "pascalCase": {
@@ -2782,8 +2782,8 @@ exports[`generate IR from OpenAPI 1`] = `
         },
         "name": {
           "camelCase": {
-            "safeName": "telemetryData",
-            "unsafeName": "telemetryData",
+            "safeName": "TelemetryData",
+            "unsafeName": "TelemetryData",
           },
           "originalName": "TelemetryData",
           "pascalCase": {
@@ -2989,8 +2989,8 @@ exports[`generate IR from OpenAPI 1`] = `
         },
         "name": {
           "camelCase": {
-            "safeName": "telemetryGetTelemetryDataResponse",
-            "unsafeName": "telemetryGetTelemetryDataResponse",
+            "safeName": "TelemetryGetTelemetryDataResponse",
+            "unsafeName": "TelemetryGetTelemetryDataResponse",
           },
           "originalName": "TelemetryGetTelemetryDataResponse",
           "pascalCase": {
@@ -3217,8 +3217,8 @@ exports[`generate IR from OpenAPI 1`] = `
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "telemetryData",
-                      "unsafeName": "telemetryData",
+                      "safeName": "TelemetryData",
+                      "unsafeName": "TelemetryData",
                     },
                     "originalName": "TelemetryData",
                     "pascalCase": {

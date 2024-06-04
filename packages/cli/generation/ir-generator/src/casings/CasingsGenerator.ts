@@ -1,7 +1,7 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { camelCase, snakeCase, upperFirst, words } from "lodash-es";
+import { camelCase, lowerFirst, snakeCase, upperFirst, words } from "lodash-es";
 import { RESERVED_KEYWORDS } from "./reserved";
 
 export interface CasingsGenerator {
@@ -18,11 +18,13 @@ const CAPITALIZE_INITIALISM: generatorsYml.GenerationLanguage[] = ["go", "ruby"]
 export function constructCasingsGenerator({
     generationLanguage,
     keywords,
-    smartCasing
+    smartCasing,
+    casingVersion
 }: {
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
+    casingVersion: generatorsYml.CasingVersion | undefined;
 }): CasingsGenerator {
     const casingsGenerator: CasingsGenerator = {
         generateName: (name, opts) => {
@@ -37,8 +39,39 @@ export function constructCasingsGenerator({
             let camelCaseName = camelCase(name);
             let pascalCaseName = upperFirst(camelCaseName);
             let snakeCaseName = snakeCase(name);
-            const camelCaseWords = words(camelCaseName);
-            if (smartCasing) {
+
+            if (smartCasing || casingVersion === generatorsYml.CasingVersion.V1) {
+                let camelCaseWords: string[];
+                if (casingVersion === generatorsYml.CasingVersion.V1) {
+                    const basicPreservedWords = getPreservedWords(name);
+                    camelCaseName = lowerFirst(getPreservedWords(name, upperFirst).join(""));
+                    pascalCaseName = upperFirst(camelCaseName);
+
+                    // // In smartCasing, manage numbers next to letters differently:
+                    // // _.snakeCase("v2") = "v_2"
+                    // // smartCasing("v2") = "v2", other examples: "test2This2 2v22" => "test2this2_2v22", "applicationV1" => "application_v1"
+
+                    // Note we still don't really handle numeric characters well, but this should be pretty much parity with the pre-existing way
+                    // that still works with preserving case
+                    snakeCaseName = "";
+                    for (const [idx, word] of basicPreservedWords.entries()) {
+                        const lowerWord = word.toLowerCase();
+                        if (!isNaN(Number(word)) && !lowerWord.endsWith("v")) {
+                            snakeCaseName += lowerWord;
+                        } else if (idx > 0) {
+                            snakeCaseName += `_${lowerWord}`;
+                        } else {
+                            snakeCaseName += lowerWord;
+                        }
+                    }
+                    camelCaseWords = basicPreservedWords;
+                } else {
+                    camelCaseName = camelCase(name);
+                    pascalCaseName = upperFirst(camelCaseName);
+                    snakeCaseName = snakeCase(name);
+                    camelCaseWords = words(camelCaseName);
+                }
+
                 if (
                     !hasAdjacentCommonInitialisms(camelCaseWords) &&
                     (generationLanguage == null || CAPITALIZE_INITIALISM.includes(generationLanguage))
@@ -53,8 +86,9 @@ export function constructCasingsGenerator({
                                 if (isCommonInitialism(word)) {
                                     return word.toUpperCase();
                                 }
+                                return upperFirst(word);
                             }
-                            return word;
+                            return lowerFirst(word);
                         })
                         .join("");
                     pascalCaseName = camelCaseWords
@@ -66,21 +100,10 @@ export function constructCasingsGenerator({
                             if (isCommonInitialism(word)) {
                                 return word.toUpperCase();
                             }
-                            if (index === 0) {
-                                return upperFirst(word);
-                            }
-                            return word;
+                            return upperFirst(word);
                         })
                         .join("");
                 }
-
-                // In smartCasing, manage numbers next to letters differently:
-                // _.snakeCase("v2") = "v_2"
-                // smartCasing("v2") = "v2", other examples: "test2This2 2v22" => "test2this2_2v22", "applicationV1" => "application_v1"
-                snakeCaseName = name
-                    .split(" ")
-                    .map((part) => part.split(/(\d+)/).map(snakeCase).join(""))
-                    .join("_");
             }
 
             return {
@@ -158,6 +181,28 @@ function maybeGetPluralInitialism(name: string): string | undefined {
 function isCommonInitialism(name: string): boolean {
     return COMMON_ITIALISMS.has(name.toUpperCase());
 }
+
+function getPreservedCasing(word: string): string {
+    let newWord = word;
+    // Change each instance to lower to have `words` not split the string
+    new Array(...PRESERVED_CASING).forEach(
+        (casing) => (newWord = newWord.replaceAll(new RegExp(casing, "gi"), `_${casing.toLowerCase()}_`))
+    );
+    return newWord;
+}
+
+function getPreservedWords(name: string, casingAction?: (w: string) => string): string[] {
+    const preservedWordArr = new Array(...PRESERVED_CASING);
+    const preservedWord = getPreservedCasing(name);
+    return words(preservedWord).map((word) => {
+        word = casingAction != null ? casingAction(word) : word;
+        // Now that you've split the word, find and replace with the original casing
+        const preservedCasingInstance = preservedWordArr.find((casing) => casing.toLowerCase() === word.toLowerCase());
+        return preservedCasingInstance ?? word;
+    });
+}
+
+const PRESERVED_CASING = new Set<string>(["OAuth"]);
 
 // For better casing conventions, define the set of common initialisms.
 //

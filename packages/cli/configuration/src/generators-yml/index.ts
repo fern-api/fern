@@ -3,6 +3,7 @@ export { addGenerator, getLatestGeneratorVersion, upgradeGenerator } from "./add
 export { GENERATOR_INVOCATIONS } from "./generatorInvocations";
 export { GeneratorName } from "./GeneratorName";
 export {
+    CasingVersion,
     GenerationLanguage,
     type GeneratorGroup,
     type GeneratorInvocation,

@@ -40,6 +40,10 @@ export interface GeneratorGroup {
     generators: GeneratorInvocation[];
 }
 
+export enum CasingVersion {
+    V0,
+    V1
+}
 export interface GeneratorInvocation {
     name: string;
     irVersionOverride: string | undefined;
@@ -50,6 +54,7 @@ export interface GeneratorInvocation {
     absolutePathToLocalSnippets: AbsoluteFilePath | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
+    casingVersion: CasingVersion | undefined;
     disableExamples: boolean;
     language: GenerationLanguage | undefined;
     publishMetadata: FernFiddle.remoteGen.PublishingMetadata | undefined;

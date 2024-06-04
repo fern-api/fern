@@ -37,6 +37,7 @@ export function getGeneratorInvocation({
         language,
         keywords: undefined,
         smartCasing: false,
+        casingVersion: undefined,
         disableExamples: false,
         irVersionOverride: irVersion,
         publishMetadata: publishMetadata != null ? (publishMetadata as FernFiddle.PublishingMetadata) : undefined

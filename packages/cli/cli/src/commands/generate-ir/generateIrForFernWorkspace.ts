@@ -1,4 +1,5 @@
 import { Audiences, generatorsYml } from "@fern-api/configuration";
+import { CasingVersion } from "@fern-api/configuration/src/generators-yml/GeneratorsConfiguration";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -11,6 +12,7 @@ export async function generateIrForFernWorkspace({
     generationLanguage,
     keywords,
     smartCasing,
+    casingVersion,
     disableExamples,
     audiences
 }: {
@@ -19,6 +21,7 @@ export async function generateIrForFernWorkspace({
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
+    casingVersion: CasingVersion | undefined;
     disableExamples: boolean;
     audiences: Audiences;
 }): Promise<IntermediateRepresentation> {
@@ -28,6 +31,7 @@ export async function generateIrForFernWorkspace({
         generationLanguage,
         keywords,
         smartCasing,
+        casingVersion,
         disableExamples,
         audiences
     });

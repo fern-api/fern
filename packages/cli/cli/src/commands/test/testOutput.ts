@@ -52,6 +52,7 @@ export async function testOutput({
             generationLanguage: undefined,
             keywords: undefined,
             smartCasing: false,
+            casingVersion: undefined,
             disableExamples: false
         });
 

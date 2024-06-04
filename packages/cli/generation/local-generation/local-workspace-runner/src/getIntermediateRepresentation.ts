@@ -26,6 +26,7 @@ export async function getIntermediateRepresentation({
         generationLanguage: generatorInvocation.language,
         keywords: generatorInvocation.keywords,
         smartCasing: generatorInvocation.smartCasing,
+        casingVersion: generatorInvocation.casingVersion,
         disableExamples: generatorInvocation.disableExamples
     });
     context.logger.debug("Generated IR");

@@ -182,8 +182,8 @@ exports[`generate IR from OpenAPI 1`] = `
                                     },
                                     "name": {
                                       "camelCase": {
-                                        "safeName": "notFound",
-                                        "unsafeName": "notFound",
+                                        "safeName": "NotFound",
+                                        "unsafeName": "NotFound",
                                       },
                                       "originalName": "NotFound",
                                       "pascalCase": {
@@ -235,8 +235,8 @@ exports[`generate IR from OpenAPI 1`] = `
                               },
                               "name": {
                                 "camelCase": {
-                                  "safeName": "notFound",
-                                  "unsafeName": "notFound",
+                                  "safeName": "NotFound",
+                                  "unsafeName": "NotFound",
                                 },
                                 "originalName": "NotFound",
                                 "pascalCase": {
@@ -267,8 +267,8 @@ exports[`generate IR from OpenAPI 1`] = `
                         },
                         "name": {
                           "camelCase": {
-                            "safeName": "getExampleResponse",
-                            "unsafeName": "getExampleResponse",
+                            "safeName": "GetExampleResponse",
+                            "unsafeName": "GetExampleResponse",
                           },
                           "originalName": "GetExampleResponse",
                           "pascalCase": {
@@ -301,7 +301,7 @@ exports[`generate IR from OpenAPI 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "8347767cd8e5e6a57028b5bd2333c26fc0e21c09",
+              "id": "099fb9f41288f81db65de527840c6a2f99185a06",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -354,8 +354,8 @@ exports[`generate IR from OpenAPI 1`] = `
                                     },
                                     "name": {
                                       "camelCase": {
-                                        "safeName": "notFound",
-                                        "unsafeName": "notFound",
+                                        "safeName": "NotFound",
+                                        "unsafeName": "NotFound",
                                       },
                                       "originalName": "NotFound",
                                       "pascalCase": {
@@ -407,8 +407,8 @@ exports[`generate IR from OpenAPI 1`] = `
                               },
                               "name": {
                                 "camelCase": {
-                                  "safeName": "notFound",
-                                  "unsafeName": "notFound",
+                                  "safeName": "NotFound",
+                                  "unsafeName": "NotFound",
                                 },
                                 "originalName": "NotFound",
                                 "pascalCase": {
@@ -439,8 +439,8 @@ exports[`generate IR from OpenAPI 1`] = `
                         },
                         "name": {
                           "camelCase": {
-                            "safeName": "getExampleResponse",
-                            "unsafeName": "getExampleResponse",
+                            "safeName": "GetExampleResponse",
+                            "unsafeName": "GetExampleResponse",
                           },
                           "originalName": "GetExampleResponse",
                           "pascalCase": {
@@ -517,8 +517,8 @@ exports[`generate IR from OpenAPI 1`] = `
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "getExampleResponse",
-                      "unsafeName": "getExampleResponse",
+                      "safeName": "GetExampleResponse",
+                      "unsafeName": "GetExampleResponse",
                     },
                     "originalName": "GetExampleResponse",
                     "pascalCase": {
@@ -569,8 +569,8 @@ exports[`generate IR from OpenAPI 1`] = `
         },
         "name": {
           "camelCase": {
-            "safeName": "getExampleResponse",
-            "unsafeName": "getExampleResponse",
+            "safeName": "GetExampleResponse",
+            "unsafeName": "GetExampleResponse",
           },
           "originalName": "GetExampleResponse",
           "pascalCase": {
@@ -607,8 +607,8 @@ exports[`generate IR from OpenAPI 1`] = `
               },
               "name": {
                 "camelCase": {
-                  "safeName": "notFound",
-                  "unsafeName": "notFound",
+                  "safeName": "NotFound",
+                  "unsafeName": "NotFound",
                 },
                 "originalName": "NotFound",
                 "pascalCase": {
@@ -638,8 +638,8 @@ exports[`generate IR from OpenAPI 1`] = `
               },
               "name": {
                 "camelCase": {
-                  "safeName": "schema1",
-                  "unsafeName": "schema1",
+                  "safeName": "Schema1",
+                  "unsafeName": "Schema1",
                 },
                 "originalName": "Schema1",
                 "pascalCase": {
@@ -669,8 +669,8 @@ exports[`generate IR from OpenAPI 1`] = `
               },
               "name": {
                 "camelCase": {
-                  "safeName": "schema2",
-                  "unsafeName": "schema2",
+                  "safeName": "Schema2",
+                  "unsafeName": "Schema2",
                 },
                 "originalName": "Schema2",
                 "pascalCase": {
@@ -704,8 +704,8 @@ exports[`generate IR from OpenAPI 1`] = `
         },
         "name": {
           "camelCase": {
-            "safeName": "notFound",
-            "unsafeName": "notFound",
+            "safeName": "NotFound",
+            "unsafeName": "NotFound",
           },
           "originalName": "NotFound",
           "pascalCase": {
@@ -787,8 +787,8 @@ exports[`generate IR from OpenAPI 1`] = `
         },
         "name": {
           "camelCase": {
-            "safeName": "schema1",
-            "unsafeName": "schema1",
+            "safeName": "Schema1",
+            "unsafeName": "Schema1",
           },
           "originalName": "Schema1",
           "pascalCase": {
@@ -913,8 +913,8 @@ exports[`generate IR from OpenAPI 1`] = `
         },
         "name": {
           "camelCase": {
-            "safeName": "schema2",
-            "unsafeName": "schema2",
+            "safeName": "Schema2",
+            "unsafeName": "Schema2",
           },
           "originalName": "Schema2",
           "pascalCase": {

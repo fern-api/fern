@@ -1,3 +1,4 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { Name } from "@fern-api/ir-sdk";
 import { constructCasingsGenerator } from "../casings/CasingsGenerator";
 
@@ -5,7 +6,8 @@ describe("casingsGenerator", () => {
     const casingsGenerator = constructCasingsGenerator({
         generationLanguage: undefined,
         keywords: undefined,
-        smartCasing: true
+        smartCasing: true,
+        casingVersion: generatorsYml.CasingVersion.V1
     });
     it("simple", () => {
         const expected: Name = {
@@ -223,6 +225,54 @@ describe("casingsGenerator", () => {
         expect(actual).toEqual(expected);
     });
 
+    // it("alphanumeric snake casing with postfix", () => {
+    //     const expected: Name = {
+    //         originalName: "application v1 and 2v22",
+    //         camelCase: {
+    //             safeName: "applicationV1And2V22",
+    //             unsafeName: "applicationV1And2V22"
+    //         },
+    //         pascalCase: {
+    //             safeName: "ApplicationV1And2V22",
+    //             unsafeName: "ApplicationV1And2V22"
+    //         },
+    //         snakeCase: {
+    //             safeName: "application_v1_and_2v22",
+    //             unsafeName: "application_v1_and_2v22"
+    //         },
+    //         screamingSnakeCase: {
+    //             safeName: "APPLICATION_V1_AND_2V22",
+    //             unsafeName: "APPLICATION_V1_AND_2V22"
+    //         }
+    //     };
+    //     const actual = casingsGenerator.generateName(expected.originalName);
+    //     expect(actual).toEqual(expected);
+    // });
+
+    it("S3Bucket", () => {
+        const expected: Name = {
+            originalName: "S3Bucket",
+            camelCase: {
+                safeName: "s3Bucket",
+                unsafeName: "s3Bucket"
+            },
+            pascalCase: {
+                safeName: "S3Bucket",
+                unsafeName: "S3Bucket"
+            },
+            snakeCase: {
+                safeName: "s3_bucket",
+                unsafeName: "s3_bucket"
+            },
+            screamingSnakeCase: {
+                safeName: "S3_BUCKET",
+                unsafeName: "S3_BUCKET"
+            }
+        };
+        const actual = casingsGenerator.generateName(expected.originalName);
+        expect(actual).toEqual(expected);
+    });
+
     it("saml", () => {
         const expected: Name = {
             originalName: "get_saml_code_request",
@@ -241,6 +291,54 @@ describe("casingsGenerator", () => {
             screamingSnakeCase: {
                 safeName: "GET_SAML_CODE_REQUEST",
                 unsafeName: "GET_SAML_CODE_REQUEST"
+            }
+        };
+        const actual = casingsGenerator.generateName(expected.originalName);
+        expect(actual).toEqual(expected);
+    });
+
+    it("preservedCasing", () => {
+        const expected: Name = {
+            originalName: "get_oauth",
+            camelCase: {
+                safeName: "getOAuth",
+                unsafeName: "getOAuth"
+            },
+            pascalCase: {
+                safeName: "GetOAuth",
+                unsafeName: "GetOAuth"
+            },
+            snakeCase: {
+                safeName: "get_oauth",
+                unsafeName: "get_oauth"
+            },
+            screamingSnakeCase: {
+                safeName: "GET_OAUTH",
+                unsafeName: "GET_OAUTH"
+            }
+        };
+        const actual = casingsGenerator.generateName(expected.originalName);
+        expect(actual).toEqual(expected);
+    });
+
+    it("preservedCasing", () => {
+        const expected: Name = {
+            originalName: "geTOAuth",
+            camelCase: {
+                safeName: "geTOAuth",
+                unsafeName: "geTOAuth"
+            },
+            pascalCase: {
+                safeName: "GeTOAuth",
+                unsafeName: "GeTOAuth"
+            },
+            snakeCase: {
+                safeName: "ge_t_oauth",
+                unsafeName: "ge_t_oauth"
+            },
+            screamingSnakeCase: {
+                safeName: "GE_T_OAUTH",
+                unsafeName: "GE_T_OAUTH"
             }
         };
         const actual = casingsGenerator.generateName(expected.originalName);

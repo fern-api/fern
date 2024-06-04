@@ -185,7 +185,8 @@ export class ComplexQueryParamTypeDetector {
             definitionFile: file.definitionFile,
             workspace: this.workspace,
             filepathOfDeclaration: file.relativeFilepath,
-            smartCasing: false
+            smartCasing: false,
+            casingVersion: undefined
         });
         return allPropertiesForObject.some((property) => {
             return this.isComplex({

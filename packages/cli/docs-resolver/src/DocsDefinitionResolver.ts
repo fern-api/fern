@@ -296,6 +296,7 @@ export class DocsDefinitionResolver {
                     generationLanguage: undefined,
                     keywords: undefined,
                     smartCasing: false,
+                    casingVersion: undefined,
                     disableExamples: false
                 });
                 const apiDefinitionId = await this.registerApi({ ir, snippetsConfig });

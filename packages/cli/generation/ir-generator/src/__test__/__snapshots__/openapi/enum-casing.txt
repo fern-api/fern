@@ -177,8 +177,8 @@ exports[`generate IR from OpenAPI 1`] = `
                               },
                               "name": {
                                 "camelCase": {
-                                  "safeName": "exampleResponse",
-                                  "unsafeName": "exampleResponse",
+                                  "safeName": "ExampleResponse",
+                                  "unsafeName": "ExampleResponse",
                                 },
                                 "originalName": "ExampleResponse",
                                 "pascalCase": {
@@ -237,8 +237,8 @@ exports[`generate IR from OpenAPI 1`] = `
                                         },
                                         "name": {
                                           "camelCase": {
-                                            "safeName": "exampleResponseStatus",
-                                            "unsafeName": "exampleResponseStatus",
+                                            "safeName": "ExampleResponseStatus",
+                                            "unsafeName": "ExampleResponseStatus",
                                           },
                                           "originalName": "ExampleResponseStatus",
                                           "pascalCase": {
@@ -295,8 +295,8 @@ exports[`generate IR from OpenAPI 1`] = `
                               },
                               "name": {
                                 "camelCase": {
-                                  "safeName": "exampleResponse",
-                                  "unsafeName": "exampleResponse",
+                                  "safeName": "ExampleResponse",
+                                  "unsafeName": "ExampleResponse",
                                 },
                                 "originalName": "ExampleResponse",
                                 "pascalCase": {
@@ -340,13 +340,13 @@ exports[`generate IR from OpenAPI 1`] = `
                             "name": {
                               "name": {
                                 "camelCase": {
-                                  "safeName": "customFields",
-                                  "unsafeName": "customFields",
+                                  "safeName": "customfields",
+                                  "unsafeName": "customfields",
                                 },
                                 "originalName": "custom_fields",
                                 "pascalCase": {
-                                  "safeName": "CustomFields",
-                                  "unsafeName": "CustomFields",
+                                  "safeName": "Customfields",
+                                  "unsafeName": "Customfields",
                                 },
                                 "screamingSnakeCase": {
                                   "safeName": "CUSTOM_FIELDS",
@@ -367,8 +367,8 @@ exports[`generate IR from OpenAPI 1`] = `
                               },
                               "name": {
                                 "camelCase": {
-                                  "safeName": "exampleResponse",
-                                  "unsafeName": "exampleResponse",
+                                  "safeName": "ExampleResponse",
+                                  "unsafeName": "ExampleResponse",
                                 },
                                 "originalName": "ExampleResponse",
                                 "pascalCase": {
@@ -449,8 +449,8 @@ exports[`generate IR from OpenAPI 1`] = `
                         },
                         "name": {
                           "camelCase": {
-                            "safeName": "exampleResponse",
-                            "unsafeName": "exampleResponse",
+                            "safeName": "ExampleResponse",
+                            "unsafeName": "ExampleResponse",
                           },
                           "originalName": "ExampleResponse",
                           "pascalCase": {
@@ -483,7 +483,7 @@ exports[`generate IR from OpenAPI 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "b7cd984460d409b15aa09c63eef2ffd3dd1c7ad4",
+              "id": "befaf6858d3cfd59631507a0f032f03a7e94b63e",
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -533,8 +533,8 @@ exports[`generate IR from OpenAPI 1`] = `
                               },
                               "name": {
                                 "camelCase": {
-                                  "safeName": "exampleResponse",
-                                  "unsafeName": "exampleResponse",
+                                  "safeName": "ExampleResponse",
+                                  "unsafeName": "ExampleResponse",
                                 },
                                 "originalName": "ExampleResponse",
                                 "pascalCase": {
@@ -593,8 +593,8 @@ exports[`generate IR from OpenAPI 1`] = `
                                         },
                                         "name": {
                                           "camelCase": {
-                                            "safeName": "exampleResponseStatus",
-                                            "unsafeName": "exampleResponseStatus",
+                                            "safeName": "ExampleResponseStatus",
+                                            "unsafeName": "ExampleResponseStatus",
                                           },
                                           "originalName": "ExampleResponseStatus",
                                           "pascalCase": {
@@ -651,8 +651,8 @@ exports[`generate IR from OpenAPI 1`] = `
                               },
                               "name": {
                                 "camelCase": {
-                                  "safeName": "exampleResponse",
-                                  "unsafeName": "exampleResponse",
+                                  "safeName": "ExampleResponse",
+                                  "unsafeName": "ExampleResponse",
                                 },
                                 "originalName": "ExampleResponse",
                                 "pascalCase": {
@@ -696,13 +696,13 @@ exports[`generate IR from OpenAPI 1`] = `
                             "name": {
                               "name": {
                                 "camelCase": {
-                                  "safeName": "customFields",
-                                  "unsafeName": "customFields",
+                                  "safeName": "customfields",
+                                  "unsafeName": "customfields",
                                 },
                                 "originalName": "custom_fields",
                                 "pascalCase": {
-                                  "safeName": "CustomFields",
-                                  "unsafeName": "CustomFields",
+                                  "safeName": "Customfields",
+                                  "unsafeName": "Customfields",
                                 },
                                 "screamingSnakeCase": {
                                   "safeName": "CUSTOM_FIELDS",
@@ -723,8 +723,8 @@ exports[`generate IR from OpenAPI 1`] = `
                               },
                               "name": {
                                 "camelCase": {
-                                  "safeName": "exampleResponse",
-                                  "unsafeName": "exampleResponse",
+                                  "safeName": "ExampleResponse",
+                                  "unsafeName": "ExampleResponse",
                                 },
                                 "originalName": "ExampleResponse",
                                 "pascalCase": {
@@ -805,8 +805,8 @@ exports[`generate IR from OpenAPI 1`] = `
                         },
                         "name": {
                           "camelCase": {
-                            "safeName": "exampleResponse",
-                            "unsafeName": "exampleResponse",
+                            "safeName": "ExampleResponse",
+                            "unsafeName": "ExampleResponse",
                           },
                           "originalName": "ExampleResponse",
                           "pascalCase": {
@@ -883,8 +883,8 @@ exports[`generate IR from OpenAPI 1`] = `
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "exampleResponse",
-                      "unsafeName": "exampleResponse",
+                      "safeName": "ExampleResponse",
+                      "unsafeName": "ExampleResponse",
                     },
                     "originalName": "ExampleResponse",
                     "pascalCase": {
@@ -935,8 +935,8 @@ exports[`generate IR from OpenAPI 1`] = `
         },
         "name": {
           "camelCase": {
-            "safeName": "exampleResponse",
-            "unsafeName": "exampleResponse",
+            "safeName": "ExampleResponse",
+            "unsafeName": "ExampleResponse",
           },
           "originalName": "ExampleResponse",
           "pascalCase": {
@@ -1000,8 +1000,8 @@ exports[`generate IR from OpenAPI 1`] = `
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "exampleResponseStatus",
-                      "unsafeName": "exampleResponseStatus",
+                      "safeName": "ExampleResponseStatus",
+                      "unsafeName": "ExampleResponseStatus",
                     },
                     "originalName": "ExampleResponseStatus",
                     "pascalCase": {
@@ -1071,13 +1071,13 @@ exports[`generate IR from OpenAPI 1`] = `
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "customFields",
-                  "unsafeName": "customFields",
+                  "safeName": "customfields",
+                  "unsafeName": "customfields",
                 },
                 "originalName": "custom_fields",
                 "pascalCase": {
-                  "safeName": "CustomFields",
-                  "unsafeName": "CustomFields",
+                  "safeName": "Customfields",
+                  "unsafeName": "Customfields",
                 },
                 "screamingSnakeCase": {
                   "safeName": "CUSTOM_FIELDS",
@@ -1140,8 +1140,8 @@ exports[`generate IR from OpenAPI 1`] = `
         },
         "name": {
           "camelCase": {
-            "safeName": "exampleResponseStatus",
-            "unsafeName": "exampleResponseStatus",
+            "safeName": "ExampleResponseStatus",
+            "unsafeName": "ExampleResponseStatus",
           },
           "originalName": "ExampleResponseStatus",
           "pascalCase": {
@@ -1230,8 +1230,8 @@ exports[`generate IR from OpenAPI 1`] = `
         },
         "name": {
           "camelCase": {
-            "safeName": "grantTypeEnum",
-            "unsafeName": "grantTypeEnum",
+            "safeName": "GrantTypeEnum",
+            "unsafeName": "GrantTypeEnum",
           },
           "originalName": "GrantTypeEnum",
           "pascalCase": {
@@ -1259,8 +1259,8 @@ exports[`generate IR from OpenAPI 1`] = `
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "urnDevrevParamsOauthGrantTypeTokenIssue",
-                  "unsafeName": "urnDevrevParamsOauthGrantTypeTokenIssue",
+                  "safeName": "UrnDevrevParamsOauthGrantTypeTokenIssue",
+                  "unsafeName": "UrnDevrevParamsOauthGrantTypeTokenIssue",
                 },
                 "originalName": "UrnDevrevParamsOauthGrantTypeTokenIssue",
                 "pascalCase": {
@@ -1285,8 +1285,8 @@ exports[`generate IR from OpenAPI 1`] = `
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "urnIetfParamsOauthGrantTypeTokenExchange",
-                  "unsafeName": "urnIetfParamsOauthGrantTypeTokenExchange",
+                  "safeName": "UrnIetfParamsOauthGrantTypeTokenExchange",
+                  "unsafeName": "UrnIetfParamsOauthGrantTypeTokenExchange",
                 },
                 "originalName": "UrnIetfParamsOauthGrantTypeTokenExchange",
                 "pascalCase": {
