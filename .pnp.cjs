@@ -6375,7 +6375,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/browser-playground", "workspace:generators/typescript/playground/browser"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/node-fetch", "npm:2.6.9"],\
-            ["@types/qs", "npm:6.9.8"],\
+            ["@types/qs", "npm:6.9.15"],\
             ["@types/react", "npm:18.2.57"],\
             ["@types/react-dom", "npm:18.2.19"],\
             ["@types/url-join", "npm:4.0.1"],\
@@ -6388,7 +6388,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["node-fetch", "virtual:25958c3cdea01727abe9184cd62ebdcb7f32f5bd5b1d13e8a0e1d5080a9e9f7be886906e1af797d4fcc43965772a072bf87bbcb6b0a29bf8dd97020f3fa1ccf2#npm:2.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
-            ["qs", "npm:6.11.2"],\
+            ["qs", "npm:6.12.1"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:aaf5cae93349a2cb5a8448703c58e7147e7f1b4c785816d0d3153785fa0e582fbabc70b2fb4e172f3605685b0f81cd3db404d997c060feb327d058028f9183fd#npm:18.2.0"],\
             ["sass", "npm:1.72.0"],\
@@ -7185,7 +7185,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/inquirer", "npm:9.0.3"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/qs", "npm:6.9.8"],\
+            ["@types/qs", "npm:6.9.15"],\
             ["axios", "npm:0.28.0"],\
             ["boxen", "npm:7.0.0"],\
             ["chalk", "npm:5.0.1"],\
@@ -7196,7 +7196,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["open", "npm:8.4.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
-            ["qs", "npm:6.11.2"],\
+            ["qs", "npm:6.12.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -8798,7 +8798,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/node-fetch", "npm:2.6.9"],\
-            ["@types/qs", "npm:6.9.8"],\
+            ["@types/qs", "npm:6.9.15"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
             ["form-data", "npm:4.0.0"],\
@@ -8808,7 +8808,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["node-fetch", "virtual:25958c3cdea01727abe9184cd62ebdcb7f32f5bd5b1d13e8a0e1d5080a9e9f7be886906e1af797d4fcc43965772a072bf87bbcb6b0a29bf8dd97020f3fa1ccf2#npm:2.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
-            ["qs", "npm:6.11.2"],\
+            ["qs", "npm:6.12.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -11007,17 +11007,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/qs", [\
+        ["npm:6.9.15", {\
+          "packageLocation": "./.yarn/cache/@types-qs-npm-6.9.15-aae1b1e2f7-97d8208c2b.zip/node_modules/@types/qs/",\
+          "packageDependencies": [\
+            ["@types/qs", "npm:6.9.15"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:6.9.7", {\
           "packageLocation": "./.yarn/cache/@types-qs-npm-6.9.7-4a3e6ca0d0-7fd6f9c250.zip/node_modules/@types/qs/",\
           "packageDependencies": [\
             ["@types/qs", "npm:6.9.7"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:6.9.8", {\
-          "packageLocation": "./.yarn/cache/@types-qs-npm-6.9.8-34e5143bd2-c28e07d00d.zip/node_modules/@types/qs/",\
-          "packageDependencies": [\
-            ["@types/qs", "npm:6.9.8"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -25213,6 +25213,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/qs-npm-6.12.0-c6571f061c-ba007fb248.zip/node_modules/qs/",\
           "packageDependencies": [\
             ["qs", "npm:6.12.0"],\
+            ["side-channel", "npm:1.0.6"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:6.12.1", {\
+          "packageLocation": "./.yarn/cache/qs-npm-6.12.1-8172168073-aa761d99e6.zip/node_modules/qs/",\
+          "packageDependencies": [\
+            ["qs", "npm:6.12.1"],\
             ["side-channel", "npm:1.0.6"]\
           ],\
           "linkType": "HARD"\
