@@ -276,16 +276,31 @@ navigation:
             slug: response-snippet
   - tab: integrations
     layout: 
+      - section: Documentation Tools
+        contents: 
+          - page: ReadMe Migrator
+            path: ./pages/integrations/documentation-tools/readme-migrator.mdx
+          - page: Mintlify Migrator
+            path: ./pages/integrations/documentation-tools/mintlify-migrator.mdx
       - section: Development Tools
         contents: 
           - page: Vale
-            path: ./pages/integrations/vale.mdx
+            path: ./pages/integrations/development-tools/vale.mdx
+          - page: Postman
+            path: ./pages/integrations/development-tools/postman.mdx
       - section: Package Managers
         contents: 
           - page: npm
-            path: ./pages/integrations/npm.mdx
+            path: ./pages/integrations/package-managers/npm.mdx
           - page: PyPI
-            path: ./pages/integrations/pypi.mdx
+            path: ./pages/integrations/package-managers/pypi.mdx
+          - page: NuGet
+            path: ./pages/integrations/package-managers/nuget.mdx
+          - page: RubyGems
+            path: ./pages/integrations/package-managers/rubygems.mdx
+          - page: Maven Central
+            path: ./pages/integrations/package-managers/maven-central.mdx
+
   - tab: cli-api
     layout:
       - section: CLI Reference
