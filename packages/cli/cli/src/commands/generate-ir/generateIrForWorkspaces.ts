@@ -1,5 +1,4 @@
 import { Audiences, generatorsYml } from "@fern-api/configuration";
-import { CasingVersion } from "@fern-api/configuration/src/generators-yml/GeneratorsConfiguration";
 import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-migrations";
 import { serialization as IrSerialization } from "@fern-api/ir-sdk";
@@ -30,7 +29,7 @@ export async function generateIrForWorkspaces({
     version: string | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
-    casingVersion: CasingVersion | undefined;
+    casingVersion: generatorsYml.CasingVersion | undefined;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {

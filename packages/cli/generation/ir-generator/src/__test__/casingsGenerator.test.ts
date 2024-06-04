@@ -225,29 +225,29 @@ describe("casingsGenerator", () => {
         expect(actual).toEqual(expected);
     });
 
-    // it("alphanumeric snake casing with postfix", () => {
-    //     const expected: Name = {
-    //         originalName: "application v1 and 2v22",
-    //         camelCase: {
-    //             safeName: "applicationV1And2V22",
-    //             unsafeName: "applicationV1And2V22"
-    //         },
-    //         pascalCase: {
-    //             safeName: "ApplicationV1And2V22",
-    //             unsafeName: "ApplicationV1And2V22"
-    //         },
-    //         snakeCase: {
-    //             safeName: "application_v1_and_2v22",
-    //             unsafeName: "application_v1_and_2v22"
-    //         },
-    //         screamingSnakeCase: {
-    //             safeName: "APPLICATION_V1_AND_2V22",
-    //             unsafeName: "APPLICATION_V1_AND_2V22"
-    //         }
-    //     };
-    //     const actual = casingsGenerator.generateName(expected.originalName);
-    //     expect(actual).toEqual(expected);
-    // });
+    it.skip("alphanumeric snake casing with postfix, does not work", () => {
+        const expected: Name = {
+            originalName: "application v1 and 2v22",
+            camelCase: {
+                safeName: "applicationV1And2V22",
+                unsafeName: "applicationV1And2V22"
+            },
+            pascalCase: {
+                safeName: "ApplicationV1And2V22",
+                unsafeName: "ApplicationV1And2V22"
+            },
+            snakeCase: {
+                safeName: "application_v1_and_2v22",
+                unsafeName: "application_v1_and_2v22"
+            },
+            screamingSnakeCase: {
+                safeName: "APPLICATION_V1_AND_2V22",
+                unsafeName: "APPLICATION_V1_AND_2V22"
+            }
+        };
+        const actual = casingsGenerator.generateName(expected.originalName);
+        expect(actual).toEqual(expected);
+    });
 
     it("S3Bucket", () => {
         const expected: Name = {

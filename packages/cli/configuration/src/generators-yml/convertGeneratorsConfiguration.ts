@@ -218,7 +218,8 @@ async function convertGenerator({
         }),
         keywords: generator.keywords,
         smartCasing: generator["smart-casing"] === true,
-        casingVersion: generator.casing === "v1" ? CasingVersion.V1 : undefined,
+        casingVersion:
+            generator.casing === "V1" ? CasingVersion.V1 : generator.casing === "V0" ? CasingVersion.V0 : undefined,
         disableExamples: generator["disable-examples"] ?? false,
         absolutePathToLocalOutput:
             generator.output?.location === "local-file-system"
