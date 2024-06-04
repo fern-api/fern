@@ -84,7 +84,7 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
         AuthSchemeHandler authSchemeHandler =
                 new AuthSchemeHandler(requestOptionsTypeSpec, builderTypeSpec, getHeadersCodeBlock, headerHandler);
         List<RequestOption> fields = new ArrayList<>();
-        for (AuthScheme authScheme : generatorContext.getIr().getAuth().getSchemes()) {
+        for (AuthScheme authScheme : generatorContext.getResolvedAuthSchemes()) {
             RequestOption fieldAndMethods = authScheme.visit(authSchemeHandler);
             // TODO(dsinghvi): Support basic auth and remove null check
             if (fieldAndMethods != null) {

@@ -147,7 +147,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                 .addModifiers(Modifier.PRIVATE);
 
         AuthSchemeHandler authSchemeHandler = new AuthSchemeHandler(clientBuilder, buildMethod);
-        generatorContext.getIr().getAuth().getSchemes().forEach(authScheme -> authScheme.visit(authSchemeHandler));
+        generatorContext.getResolvedAuthSchemes().forEach(authScheme -> authScheme.visit(authSchemeHandler));
         generatorContext.getIr().getHeaders().forEach(httpHeader -> {
             authSchemeHandler.visitNonAuthHeader(HeaderAuthScheme.builder()
                     .name(httpHeader.getName())

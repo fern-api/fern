@@ -11,6 +11,7 @@ import com.fern.irV42.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.AbstractPoetClassNameFactory;
 import com.fern.java.DefaultGeneratorExecClient;
+import com.fern.java.FeatureResolver;
 import com.fern.java.client.generators.ApiErrorGenerator;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
@@ -92,7 +93,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                         .wrappedAliases(customConfig.wrappedAliases())
                         .clientClassName(customConfig.clientClassName())
                         .build(),
-                clientPoetClassNameFactory);
+                clientPoetClassNameFactory,
+                new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes());
         generateClient(context, ir);
     }
 
@@ -105,8 +107,10 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             GithubOutputMode githubOutputMode) {
         ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
                 AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(ir, generatorConfig.getOrganization()));
-        ClientGeneratorContext context =
-                new ClientGeneratorContext(ir, generatorConfig, customConfig, clientPoetClassNameFactory);
+        List<AuthScheme> resolvedAuthSchemes =
+                new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
+        ClientGeneratorContext context = new ClientGeneratorContext(
+                ir, generatorConfig, customConfig, clientPoetClassNameFactory, resolvedAuthSchemes);
         GeneratedRootClient generatedClientWrapper = generateClient(context, ir);
         SampleAppGenerator sampleAppGenerator = new SampleAppGenerator(context, generatedClientWrapper);
         sampleAppGenerator.generateFiles().forEach(this::addGeneratedFile);
@@ -136,8 +140,10 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             GeneratorPublishConfig publishOutputMode) {
         ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
                 AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(ir, generatorConfig.getOrganization()));
-        ClientGeneratorContext context =
-                new ClientGeneratorContext(ir, generatorConfig, customConfig, clientPoetClassNameFactory);
+        List<AuthScheme> resolvedAuthSchemes =
+                new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
+        ClientGeneratorContext context = new ClientGeneratorContext(
+                ir, generatorConfig, customConfig, clientPoetClassNameFactory, resolvedAuthSchemes);
         generateClient(context, ir);
     }
 
@@ -198,11 +204,10 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         generatedTypes.getTypes().values().forEach(this::addGeneratedFile);
         generatedTypes.getInterfaces().values().forEach(this::addGeneratedFile);
 
-        Optional<OAuthScheme> maybeOAuthScheme = context.getIr().getAuth().getSchemes().stream()
+        Optional<OAuthScheme> maybeOAuthScheme = context.getResolvedAuthSchemes().stream()
                 .map(AuthScheme::getOauth)
                 .flatMap(Optional::stream)
                 .findFirst();
-
         Optional<GeneratedJavaFile> generatedOAuthTokenSupplier =
                 maybeOAuthScheme.map(it -> new OAuthTokenSupplierGenerator(
                                 context,
@@ -211,6 +216,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                                         .orElseThrow(() ->
                                                 new RuntimeException("Only client credentials oAuth scheme supported")))
                         .generateFile());
+
         generatedOAuthTokenSupplier.ifPresent(this::addGeneratedFile);
 
         // subpackage clients
