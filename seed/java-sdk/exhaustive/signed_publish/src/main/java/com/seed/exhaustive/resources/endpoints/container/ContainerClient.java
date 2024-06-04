@@ -9,7 +9,6 @@ import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
-import com.seed.exhaustive.core.SeedExhaustiveApiError;
 import com.seed.exhaustive.core.SeedExhaustiveError;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
 import java.io.IOException;
@@ -65,13 +64,6 @@ public class ContainerClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<List<String>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedExhaustiveApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }
@@ -112,13 +104,6 @@ public class ContainerClient {
                         responseBody.string(), new TypeReference<List<ObjectWithRequiredField>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedExhaustiveApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }
@@ -157,13 +142,6 @@ public class ContainerClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<Set<String>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedExhaustiveApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }
@@ -204,13 +182,6 @@ public class ContainerClient {
                         responseBody.string(), new TypeReference<Set<ObjectWithRequiredField>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedExhaustiveApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }
@@ -250,13 +221,6 @@ public class ContainerClient {
                         responseBody.string(), new TypeReference<Map<String, String>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedExhaustiveApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }
@@ -298,13 +262,6 @@ public class ContainerClient {
                         responseBody.string(), new TypeReference<Map<String, ObjectWithRequiredField>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedExhaustiveApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }
@@ -352,13 +309,6 @@ public class ContainerClient {
                         responseBody.string(), new TypeReference<Optional<ObjectWithRequiredField>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedExhaustiveApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }

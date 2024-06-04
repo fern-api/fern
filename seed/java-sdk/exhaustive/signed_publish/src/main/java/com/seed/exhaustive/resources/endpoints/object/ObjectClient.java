@@ -8,7 +8,6 @@ import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
-import com.seed.exhaustive.core.SeedExhaustiveApiError;
 import com.seed.exhaustive.core.SeedExhaustiveError;
 import com.seed.exhaustive.resources.types.object.types.NestedObjectWithOptionalField;
 import com.seed.exhaustive.resources.types.object.types.NestedObjectWithRequiredField;
@@ -70,13 +69,6 @@ public class ObjectClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedExhaustiveApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }
@@ -116,13 +108,6 @@ public class ObjectClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithRequiredField.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedExhaustiveApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }
@@ -161,13 +146,6 @@ public class ObjectClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithMapOfMap.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedExhaustiveApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }
@@ -212,13 +190,6 @@ public class ObjectClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), NestedObjectWithOptionalField.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedExhaustiveApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }
@@ -260,13 +231,6 @@ public class ObjectClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), NestedObjectWithRequiredField.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedExhaustiveApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }
@@ -307,13 +271,6 @@ public class ObjectClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), NestedObjectWithRequiredField.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedExhaustiveApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }

@@ -3,11 +3,9 @@
  */
 package com.seed.bearerTokenEnvironmentVariable.resources.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.bearerTokenEnvironmentVariable.core.ClientOptions;
 import com.seed.bearerTokenEnvironmentVariable.core.ObjectMappers;
 import com.seed.bearerTokenEnvironmentVariable.core.RequestOptions;
-import com.seed.bearerTokenEnvironmentVariable.core.SeedBearerTokenEnvironmentVariableApiError;
 import com.seed.bearerTokenEnvironmentVariable.core.SeedBearerTokenEnvironmentVariableError;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -55,13 +53,6 @@ public class ServiceClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedBearerTokenEnvironmentVariableApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedBearerTokenEnvironmentVariableError("Network error executing HTTP request", e);
         }

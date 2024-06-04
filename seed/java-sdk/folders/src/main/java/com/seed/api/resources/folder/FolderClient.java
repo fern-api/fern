@@ -3,11 +3,8 @@
  */
 package com.seed.api.resources.folder;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.api.core.ClientOptions;
-import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.RequestOptions;
-import com.seed.api.core.SeedApiApiError;
 import com.seed.api.core.SeedApiError;
 import com.seed.api.core.Suppliers;
 import com.seed.api.resources.folder.service.ServiceClient;
@@ -54,13 +51,6 @@ public class FolderClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedApiApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedApiError("Network error executing HTTP request", e);
         }

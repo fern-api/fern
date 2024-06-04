@@ -8,7 +8,6 @@ import com.seed.validation.core.ClientOptions;
 import com.seed.validation.core.MediaTypes;
 import com.seed.validation.core.ObjectMappers;
 import com.seed.validation.core.RequestOptions;
-import com.seed.validation.core.SeedValidationApiError;
 import com.seed.validation.core.SeedValidationError;
 import com.seed.validation.requests.CreateRequest;
 import com.seed.validation.requests.GetRequest;
@@ -61,13 +60,6 @@ public class SeedValidationClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Type.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedValidationApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedValidationError("Network error executing HTTP request", e);
         }
@@ -100,13 +92,6 @@ public class SeedValidationClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Type.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedValidationApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedValidationError("Network error executing HTTP request", e);
         }

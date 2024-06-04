@@ -8,7 +8,6 @@ import com.seed.oauthClientCredentialsDefault.core.ClientOptions;
 import com.seed.oauthClientCredentialsDefault.core.MediaTypes;
 import com.seed.oauthClientCredentialsDefault.core.ObjectMappers;
 import com.seed.oauthClientCredentialsDefault.core.RequestOptions;
-import com.seed.oauthClientCredentialsDefault.core.SeedOauthClientCredentialsDefaultApiError;
 import com.seed.oauthClientCredentialsDefault.core.SeedOauthClientCredentialsDefaultError;
 import com.seed.oauthClientCredentialsDefault.resources.auth.requests.GetTokenRequest;
 import com.seed.oauthClientCredentialsDefault.resources.auth.types.TokenResponse;
@@ -60,13 +59,6 @@ public class AuthClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), TokenResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedOauthClientCredentialsDefaultApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedOauthClientCredentialsDefaultError("Network error executing HTTP request", e);
         }

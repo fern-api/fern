@@ -8,7 +8,6 @@ import com.seed.examples.core.ClientOptions;
 import com.seed.examples.core.MediaTypes;
 import com.seed.examples.core.ObjectMappers;
 import com.seed.examples.core.RequestOptions;
-import com.seed.examples.core.SeedExamplesApiError;
 import com.seed.examples.core.SeedExamplesError;
 import com.seed.examples.core.Suppliers;
 import com.seed.examples.resources.file.FileClient;
@@ -71,13 +70,6 @@ public class SeedExamplesClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedExamplesApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedExamplesError("Network error executing HTTP request", e);
         }

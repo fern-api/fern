@@ -3,11 +3,9 @@
  */
 package com.seed.fileUpload.resources.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.fileUpload.core.ClientOptions;
 import com.seed.fileUpload.core.ObjectMappers;
 import com.seed.fileUpload.core.RequestOptions;
-import com.seed.fileUpload.core.SeedFileUploadApiError;
 import com.seed.fileUpload.core.SeedFileUploadError;
 import com.seed.fileUpload.resources.service.requests.JustFileRequet;
 import com.seed.fileUpload.resources.service.requests.JustFileWithQueryParamsRequet;
@@ -111,13 +109,6 @@ public class ServiceClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedFileUploadApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedFileUploadError("Network error executing HTTP request", e);
         }
@@ -155,13 +146,6 @@ public class ServiceClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedFileUploadApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedFileUploadError("Network error executing HTTP request", e);
         }
@@ -212,13 +196,6 @@ public class ServiceClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedFileUploadApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedFileUploadError("Network error executing HTTP request", e);
         }

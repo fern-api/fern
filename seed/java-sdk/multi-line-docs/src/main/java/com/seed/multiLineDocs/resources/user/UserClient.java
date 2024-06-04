@@ -8,7 +8,6 @@ import com.seed.multiLineDocs.core.ClientOptions;
 import com.seed.multiLineDocs.core.MediaTypes;
 import com.seed.multiLineDocs.core.ObjectMappers;
 import com.seed.multiLineDocs.core.RequestOptions;
-import com.seed.multiLineDocs.core.SeedMultiLineDocsApiError;
 import com.seed.multiLineDocs.core.SeedMultiLineDocsError;
 import com.seed.multiLineDocs.resources.user.requests.CreateUserRequest;
 import com.seed.multiLineDocs.resources.user.types.User;
@@ -61,13 +60,6 @@ public class UserClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedMultiLineDocsApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedMultiLineDocsError("Network error executing HTTP request", e);
         }
@@ -113,13 +105,6 @@ public class UserClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), User.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedMultiLineDocsApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedMultiLineDocsError("Network error executing HTTP request", e);
         }

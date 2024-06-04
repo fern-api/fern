@@ -8,7 +8,6 @@ import com.seed.serverSentEvents.core.ClientOptions;
 import com.seed.serverSentEvents.core.MediaTypes;
 import com.seed.serverSentEvents.core.ObjectMappers;
 import com.seed.serverSentEvents.core.RequestOptions;
-import com.seed.serverSentEvents.core.SeedServerSentEventsApiError;
 import com.seed.serverSentEvents.core.SeedServerSentEventsError;
 import com.seed.serverSentEvents.core.Stream;
 import com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;
@@ -61,13 +60,6 @@ public class CompletionsClient {
                 return new Stream<StreamedCompletion>(StreamedCompletion.class, responseBody.charStream(), "[[DONE]]");
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedServerSentEventsApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedServerSentEventsError("Network error executing HTTP request", e);
         }

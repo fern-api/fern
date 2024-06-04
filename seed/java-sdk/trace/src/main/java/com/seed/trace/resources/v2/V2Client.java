@@ -3,10 +3,9 @@
  */
 package com.seed.trace.resources.v2;
 
-import com.seed.trace.core.ApiError;
 import com.seed.trace.core.ClientOptions;
-import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.core.RequestOptions;
+import com.seed.trace.core.SeedTraceError;
 import com.seed.trace.core.Suppliers;
 import com.seed.trace.resources.v2.problem.ProblemClient;
 import com.seed.trace.resources.v2.v3.V3Client;
@@ -45,22 +44,18 @@ public class V2Client {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
-        try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
-            Response response = client.newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return;
             }
-            throw new ApiError(
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(
-                            responseBody != null ? responseBody.string() : "{}", Object.class));
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SeedTraceError("Network error executing HTTP request", e);
         }
     }
 

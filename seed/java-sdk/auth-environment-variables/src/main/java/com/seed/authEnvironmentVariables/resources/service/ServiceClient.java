@@ -3,11 +3,9 @@
  */
 package com.seed.authEnvironmentVariables.resources.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.authEnvironmentVariables.core.ClientOptions;
 import com.seed.authEnvironmentVariables.core.ObjectMappers;
 import com.seed.authEnvironmentVariables.core.RequestOptions;
-import com.seed.authEnvironmentVariables.core.SeedAuthEnvironmentVariablesApiError;
 import com.seed.authEnvironmentVariables.core.SeedAuthEnvironmentVariablesError;
 import com.seed.authEnvironmentVariables.resources.service.requests.HeaderAuthRequest;
 import java.io.IOException;
@@ -56,13 +54,6 @@ public class ServiceClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedAuthEnvironmentVariablesApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedAuthEnvironmentVariablesError("Network error executing HTTP request", e);
         }
@@ -100,13 +91,6 @@ public class ServiceClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedAuthEnvironmentVariablesApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedAuthEnvironmentVariablesError("Network error executing HTTP request", e);
         }

@@ -3,11 +3,8 @@
  */
 package com.seed.apiWideBasePath.resources.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.apiWideBasePath.core.ClientOptions;
-import com.seed.apiWideBasePath.core.ObjectMappers;
 import com.seed.apiWideBasePath.core.RequestOptions;
-import com.seed.apiWideBasePath.core.SeedApiWideBasePathApiError;
 import com.seed.apiWideBasePath.core.SeedApiWideBasePathError;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -51,13 +48,6 @@ public class ServiceClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedApiWideBasePathApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedApiWideBasePathError("Network error executing HTTP request", e);
         }

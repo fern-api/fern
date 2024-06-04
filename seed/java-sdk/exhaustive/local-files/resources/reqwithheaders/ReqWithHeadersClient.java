@@ -4,17 +4,14 @@
 
 package com.fern.sdk.resources.reqwithheaders;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.core.SeedExhaustiveApiError;
 import com.fern.sdk.core.SeedExhaustiveError;
 import com.fern.sdk.resources.reqwithheaders.requests.ReqWithHeaders;
 import java.io.IOException;
 import java.lang.Exception;
-import java.lang.Object;
 import java.lang.RuntimeException;
 import java.lang.String;
 import okhttp3.Headers;
@@ -66,11 +63,6 @@ public class ReqWithHeadersClient {
         return;
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      try {
-      }
-      catch (JsonProcessingException ignored) {
-      }
-      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
       throw new SeedExhaustiveError("Network error executing HTTP request", e);

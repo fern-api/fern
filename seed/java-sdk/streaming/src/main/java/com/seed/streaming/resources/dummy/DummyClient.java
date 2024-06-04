@@ -8,7 +8,6 @@ import com.seed.streaming.core.ClientOptions;
 import com.seed.streaming.core.MediaTypes;
 import com.seed.streaming.core.ObjectMappers;
 import com.seed.streaming.core.RequestOptions;
-import com.seed.streaming.core.SeedStreamingApiError;
 import com.seed.streaming.core.SeedStreamingError;
 import com.seed.streaming.core.Stream;
 import com.seed.streaming.resources.dummy.requests.GenerateStreamRequestzs;
@@ -61,13 +60,6 @@ public class DummyClient {
                 return new Stream<StreamResponse>(StreamResponse.class, responseBody.charStream(), "\n");
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedStreamingApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedStreamingError("Network error executing HTTP request", e);
         }

@@ -8,7 +8,6 @@ import com.seed.objectsWithImports.core.ClientOptions;
 import com.seed.objectsWithImports.core.MediaTypes;
 import com.seed.objectsWithImports.core.ObjectMappers;
 import com.seed.objectsWithImports.core.RequestOptions;
-import com.seed.objectsWithImports.core.SeedObjectsWithImportsApiError;
 import com.seed.objectsWithImports.core.SeedObjectsWithImportsError;
 import java.io.IOException;
 import java.util.Map;
@@ -67,13 +66,6 @@ public class OptionalClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedObjectsWithImportsApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedObjectsWithImportsError("Network error executing HTTP request", e);
         }

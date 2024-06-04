@@ -3,11 +3,8 @@
  */
 package com.seed.plainText.resources.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.plainText.core.ClientOptions;
-import com.seed.plainText.core.ObjectMappers;
 import com.seed.plainText.core.RequestOptions;
-import com.seed.plainText.core.SeedPlainTextApiError;
 import com.seed.plainText.core.SeedPlainTextError;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -50,13 +47,6 @@ public class ServiceClient {
                 return responseBody.string();
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedPlainTextApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedPlainTextError("Network error executing HTTP request", e);
         }

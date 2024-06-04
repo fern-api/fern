@@ -375,54 +375,57 @@ public abstract class AbstractEndpointWriter {
                             .get(responseError.getError().getErrorId()))
                     .sorted(Comparator.comparingInt(ErrorDeclaration::getStatusCode))
                     .collect(Collectors.toList());
-            boolean multipleErrors = errorDeclarations.size() > 1;
-            httpResponseBuilder.beginControlFlow("try");
-            if (multipleErrors) {
-                httpResponseBuilder.beginControlFlow("switch ($L.code())", getResponseName());
-            }
-            errorDeclarations.forEach(errorDeclaration -> {
-                GeneratedJavaFile generatedError =
-                        generatedErrors.get(errorDeclaration.getName().getErrorId());
-                ClassName errorClassName = generatedError.getClassName();
-                Optional<TypeName> bodyTypeName = errorDeclaration.getType().map(typeReference -> clientGeneratorContext
-                        .getPoetTypeNameMapper()
-                        .convertToTypeName(true, typeReference));
+            if (!errorDeclarations.isEmpty()) {
+                boolean multipleErrors = errorDeclarations.size() > 1;
+                httpResponseBuilder.beginControlFlow("try");
                 if (multipleErrors) {
-                    httpResponseBuilder.add("case $L:", errorDeclaration.getStatusCode());
-                } else {
-                    httpResponseBuilder.beginControlFlow(
-                            "if ($L.code() == $L)", getResponseName(), errorDeclaration.getStatusCode());
+                    httpResponseBuilder.beginControlFlow("switch ($L.code())", getResponseName());
                 }
-                httpResponseBuilder.addStatement(
-                        "throw new $T($T.$L.readValue($L, $T.class))",
-                        errorClassName,
-                        generatedObjectMapper.getClassName(),
-                        generatedObjectMapper.jsonMapperStaticField().name,
-                        getResponseBodyStringName(),
-                        bodyTypeName.orElse(TypeName.get(Object.class)));
-                if (!multipleErrors) {
-                    httpResponseBuilder.endControlFlow();
-                }
-            });
-            if (multipleErrors) {
-                httpResponseBuilder.endControlFlow();
-            }
-            httpResponseBuilder
-                    .endControlFlow()
-                    .beginControlFlow("catch ($T ignored)", JsonProcessingException.class)
-                    .endControlFlow()
-                    .addStatement(
-                            "throw new $T($S + $L.code(), $L.code(), $T.$L.readValue($L, $T.class))",
-                            apiErrorClassName,
-                            "Error with status code ",
-                            getResponseName(),
-                            getResponseName(),
+                errorDeclarations.forEach(errorDeclaration -> {
+                    GeneratedJavaFile generatedError =
+                            generatedErrors.get(errorDeclaration.getName().getErrorId());
+                    ClassName errorClassName = generatedError.getClassName();
+                    Optional<TypeName> bodyTypeName = errorDeclaration
+                            .getType()
+                            .map(typeReference -> clientGeneratorContext
+                                    .getPoetTypeNameMapper()
+                                    .convertToTypeName(true, typeReference));
+                    if (multipleErrors) {
+                        httpResponseBuilder.add("case $L:", errorDeclaration.getStatusCode());
+                    } else {
+                        httpResponseBuilder.beginControlFlow(
+                                "if ($L.code() == $L)", getResponseName(), errorDeclaration.getStatusCode());
+                    }
+                    httpResponseBuilder.addStatement(
+                            "throw new $T($T.$L.readValue($L, $T.class))",
+                            errorClassName,
                             generatedObjectMapper.getClassName(),
                             generatedObjectMapper.jsonMapperStaticField().name,
                             getResponseBodyStringName(),
-                            Object.class);
+                            bodyTypeName.orElse(TypeName.get(Object.class)));
+                    if (!multipleErrors) {
+                        httpResponseBuilder.endControlFlow();
+                    }
+                });
+                if (multipleErrors) {
+                    httpResponseBuilder.endControlFlow();
+                }
+                httpResponseBuilder
+                        .endControlFlow()
+                        .beginControlFlow("catch ($T ignored)", JsonProcessingException.class)
+                        .endControlFlow()
+                        .addStatement(
+                                "throw new $T($S + $L.code(), $L.code(), $T.$L.readValue($L, $T.class))",
+                                apiErrorClassName,
+                                "Error with status code ",
+                                getResponseName(),
+                                getResponseName(),
+                                generatedObjectMapper.getClassName(),
+                                generatedObjectMapper.jsonMapperStaticField().name,
+                                getResponseBodyStringName(),
+                                Object.class);
+            }
         }
-
         httpResponseBuilder
                 .endControlFlow()
                 .beginControlFlow("catch ($T e)", IOException.class)

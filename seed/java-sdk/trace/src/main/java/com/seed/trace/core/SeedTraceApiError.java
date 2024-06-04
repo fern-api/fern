@@ -3,12 +3,13 @@
  */
 package com.seed.trace.core;
 
-public final class ApiError extends RuntimeException {
+public class SeedTraceApiError extends SeedTraceError {
     private final int statusCode;
 
     private final Object body;
 
-    public ApiError(int statusCode, Object body) {
+    public SeedTraceApiError(String message, int statusCode, Object body) {
+        super(message);
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -23,6 +24,6 @@ public final class ApiError extends RuntimeException {
 
     @java.lang.Override
     public String toString() {
-        return "ApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedTraceApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
     }
 }

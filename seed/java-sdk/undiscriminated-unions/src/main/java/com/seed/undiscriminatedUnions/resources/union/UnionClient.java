@@ -8,7 +8,6 @@ import com.seed.undiscriminatedUnions.core.ClientOptions;
 import com.seed.undiscriminatedUnions.core.MediaTypes;
 import com.seed.undiscriminatedUnions.core.ObjectMappers;
 import com.seed.undiscriminatedUnions.core.RequestOptions;
-import com.seed.undiscriminatedUnions.core.SeedUndiscriminatedUnionsApiError;
 import com.seed.undiscriminatedUnions.core.SeedUndiscriminatedUnionsError;
 import com.seed.undiscriminatedUnions.resources.union.types.MyUnion;
 import java.io.IOException;
@@ -58,13 +57,6 @@ public class UnionClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), MyUnion.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-            } catch (JsonProcessingException ignored) {
-            }
-            throw new SeedUndiscriminatedUnionsApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedUndiscriminatedUnionsError("Network error executing HTTP request", e);
         }
