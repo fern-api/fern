@@ -246,8 +246,8 @@ axios.request(options).then(function (response) {
                               },
                               "name": {
                                 "camelCase": {
-                                  "safeName": "TelemetryResponse",
-                                  "unsafeName": "TelemetryResponse",
+                                  "safeName": "telemetryResponse",
+                                  "unsafeName": "telemetryResponse",
                                 },
                                 "originalName": "TelemetryResponse",
                                 "pascalCase": {
@@ -316,8 +316,8 @@ axios.request(options).then(function (response) {
                               },
                               "name": {
                                 "camelCase": {
-                                  "safeName": "TelemetryResponse",
-                                  "unsafeName": "TelemetryResponse",
+                                  "safeName": "telemetryResponse",
+                                  "unsafeName": "telemetryResponse",
                                 },
                                 "originalName": "TelemetryResponse",
                                 "pascalCase": {
@@ -388,8 +388,8 @@ axios.request(options).then(function (response) {
                               },
                               "name": {
                                 "camelCase": {
-                                  "safeName": "TelemetryResponse",
-                                  "unsafeName": "TelemetryResponse",
+                                  "safeName": "telemetryResponse",
+                                  "unsafeName": "telemetryResponse",
                                 },
                                 "originalName": "TelemetryResponse",
                                 "pascalCase": {
@@ -455,8 +455,8 @@ axios.request(options).then(function (response) {
                                               },
                                               "name": {
                                                 "camelCase": {
-                                                  "safeName": "TelemetryData",
-                                                  "unsafeName": "TelemetryData",
+                                                  "safeName": "telemetryData",
+                                                  "unsafeName": "telemetryData",
                                                 },
                                                 "originalName": "TelemetryData",
                                                 "pascalCase": {
@@ -525,8 +525,8 @@ axios.request(options).then(function (response) {
                                               },
                                               "name": {
                                                 "camelCase": {
-                                                  "safeName": "TelemetryData",
-                                                  "unsafeName": "TelemetryData",
+                                                  "safeName": "telemetryData",
+                                                  "unsafeName": "telemetryData",
                                                 },
                                                 "originalName": "TelemetryData",
                                                 "pascalCase": {
@@ -595,8 +595,8 @@ axios.request(options).then(function (response) {
                                               },
                                               "name": {
                                                 "camelCase": {
-                                                  "safeName": "TelemetryData",
-                                                  "unsafeName": "TelemetryData",
+                                                  "safeName": "telemetryData",
+                                                  "unsafeName": "telemetryData",
                                                 },
                                                 "originalName": "TelemetryData",
                                                 "pascalCase": {
@@ -646,8 +646,8 @@ axios.request(options).then(function (response) {
                                         },
                                         "name": {
                                           "camelCase": {
-                                            "safeName": "TelemetryData",
-                                            "unsafeName": "TelemetryData",
+                                            "safeName": "telemetryData",
+                                            "unsafeName": "telemetryData",
                                           },
                                           "originalName": "TelemetryData",
                                           "pascalCase": {
@@ -685,8 +685,8 @@ axios.request(options).then(function (response) {
                         },
                         "name": {
                           "camelCase": {
-                            "safeName": "TelemetryResponse",
-                            "unsafeName": "TelemetryResponse",
+                            "safeName": "telemetryResponse",
+                            "unsafeName": "telemetryResponse",
                           },
                           "originalName": "TelemetryResponse",
                           "pascalCase": {
@@ -719,7 +719,7 @@ axios.request(options).then(function (response) {
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "40d95e3bb71407a4a75cd729e6cf1c53e9edda8d",
+              "id": "7d7fa6320785b72d18722ac6a474d7f8cb82f560",
               "name": null,
               "queryParameters": [
                 {
@@ -815,8 +815,8 @@ axios.request(options).then(function (response) {
                               },
                               "name": {
                                 "camelCase": {
-                                  "safeName": "TelemetryResponse",
-                                  "unsafeName": "TelemetryResponse",
+                                  "safeName": "telemetryResponse",
+                                  "unsafeName": "telemetryResponse",
                                 },
                                 "originalName": "TelemetryResponse",
                                 "pascalCase": {
@@ -885,8 +885,8 @@ axios.request(options).then(function (response) {
                               },
                               "name": {
                                 "camelCase": {
-                                  "safeName": "TelemetryResponse",
-                                  "unsafeName": "TelemetryResponse",
+                                  "safeName": "telemetryResponse",
+                                  "unsafeName": "telemetryResponse",
                                 },
                                 "originalName": "TelemetryResponse",
                                 "pascalCase": {
@@ -957,8 +957,8 @@ axios.request(options).then(function (response) {
                               },
                               "name": {
                                 "camelCase": {
-                                  "safeName": "TelemetryResponse",
-                                  "unsafeName": "TelemetryResponse",
+                                  "safeName": "telemetryResponse",
+                                  "unsafeName": "telemetryResponse",
                                 },
                                 "originalName": "TelemetryResponse",
                                 "pascalCase": {
@@ -1024,8 +1024,8 @@ axios.request(options).then(function (response) {
                                               },
                                               "name": {
                                                 "camelCase": {
-                                                  "safeName": "TelemetryData",
-                                                  "unsafeName": "TelemetryData",
+                                                  "safeName": "telemetryData",
+                                                  "unsafeName": "telemetryData",
                                                 },
                                                 "originalName": "TelemetryData",
                                                 "pascalCase": {
@@ -1094,8 +1094,8 @@ axios.request(options).then(function (response) {
                                               },
                                               "name": {
                                                 "camelCase": {
-                                                  "safeName": "TelemetryData",
-                                                  "unsafeName": "TelemetryData",
+                                                  "safeName": "telemetryData",
+                                                  "unsafeName": "telemetryData",
                                                 },
                                                 "originalName": "TelemetryData",
                                                 "pascalCase": {
@@ -1164,8 +1164,8 @@ axios.request(options).then(function (response) {
                                               },
                                               "name": {
                                                 "camelCase": {
-                                                  "safeName": "TelemetryData",
-                                                  "unsafeName": "TelemetryData",
+                                                  "safeName": "telemetryData",
+                                                  "unsafeName": "telemetryData",
                                                 },
                                                 "originalName": "TelemetryData",
                                                 "pascalCase": {
@@ -1215,8 +1215,8 @@ axios.request(options).then(function (response) {
                                         },
                                         "name": {
                                           "camelCase": {
-                                            "safeName": "TelemetryData",
-                                            "unsafeName": "TelemetryData",
+                                            "safeName": "telemetryData",
+                                            "unsafeName": "telemetryData",
                                           },
                                           "originalName": "TelemetryData",
                                           "pascalCase": {
@@ -1254,8 +1254,8 @@ axios.request(options).then(function (response) {
                         },
                         "name": {
                           "camelCase": {
-                            "safeName": "TelemetryResponse",
-                            "unsafeName": "TelemetryResponse",
+                            "safeName": "telemetryResponse",
+                            "unsafeName": "telemetryResponse",
                           },
                           "originalName": "TelemetryResponse",
                           "pascalCase": {
@@ -1373,8 +1373,8 @@ axios.request(options).then(function (response) {
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "TelemetryResponse",
-                      "unsafeName": "TelemetryResponse",
+                      "safeName": "telemetryResponse",
+                      "unsafeName": "telemetryResponse",
                     },
                     "originalName": "TelemetryResponse",
                     "pascalCase": {
@@ -1440,8 +1440,8 @@ axios.request(options).then(function (response) {
               "type": "wrapper",
               "wrapperName": {
                 "camelCase": {
-                  "safeName": "TelemetryRequest",
-                  "unsafeName": "TelemetryRequest",
+                  "safeName": "telemetryRequest",
+                  "unsafeName": "telemetryRequest",
                 },
                 "originalName": "TelemetryRequest",
                 "pascalCase": {
@@ -1486,8 +1486,8 @@ axios.request(options).then(function (response) {
         },
         "name": {
           "camelCase": {
-            "safeName": "TelemetryData",
-            "unsafeName": "TelemetryData",
+            "safeName": "telemetryData",
+            "unsafeName": "telemetryData",
           },
           "originalName": "TelemetryData",
           "pascalCase": {
@@ -1655,8 +1655,8 @@ axios.request(options).then(function (response) {
         },
         "name": {
           "camelCase": {
-            "safeName": "TelemetryResponse",
-            "unsafeName": "TelemetryResponse",
+            "safeName": "telemetryResponse",
+            "unsafeName": "telemetryResponse",
           },
           "originalName": "TelemetryResponse",
           "pascalCase": {
@@ -1806,8 +1806,8 @@ axios.request(options).then(function (response) {
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "TelemetryData",
-                      "unsafeName": "TelemetryData",
+                      "safeName": "telemetryData",
+                      "unsafeName": "telemetryData",
                     },
                     "originalName": "TelemetryData",
                     "pascalCase": {

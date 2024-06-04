@@ -40,7 +40,12 @@ export function constructCasingsGenerator({
             let pascalCaseName = upperFirst(camelCaseName);
             let snakeCaseName = snakeCase(name);
 
-            if (smartCasing || casingVersion === generatorsYml.CasingVersion.V1) {
+            // generatorsYml.CasingVersion.V0 should effectively be treated as smartCasing
+            if (
+                smartCasing ||
+                casingVersion === generatorsYml.CasingVersion.V0 ||
+                casingVersion === generatorsYml.CasingVersion.V1
+            ) {
                 let camelCaseWords: string[];
                 if (casingVersion === generatorsYml.CasingVersion.V1) {
                     const basicPreservedWords = getPreservedWords(name);
@@ -70,6 +75,14 @@ export function constructCasingsGenerator({
                     pascalCaseName = upperFirst(camelCaseName);
                     snakeCaseName = snakeCase(name);
                     camelCaseWords = words(camelCaseName);
+
+                    // In smartCasing, manage numbers next to letters differently:
+                    // _.snakeCase("v2") = "v_2"
+                    // smartCasing("v2") = "v2", other examples: "test2This2 2v22" => "test2this2_2v22", "applicationV1" => "application_v1"
+                    snakeCaseName = name
+                        .split(" ")
+                        .map((part) => part.split(/(\d+)/).map(snakeCase).join(""))
+                        .join("_");
                 }
 
                 if (
