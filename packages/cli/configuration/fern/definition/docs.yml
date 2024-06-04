@@ -168,7 +168,7 @@ types:
       - TabbedLayoutNavigationItem
       - TabbedLinkNavigationItemV1
       - TabbedLinkNavigationItemV2
-      - TabbedChangelogNavigationItem
+      # - TabbedChangelogNavigationItem
 
   TabbedLayoutNavigationItem:
     properties:
@@ -189,22 +189,23 @@ types:
     properties:
       icon: optional<string>
 
-  TabbedChangelogNavigationItem:
-    properties:
-      changelog: string
-      overview:
-        type: optional<string>
-        docs: |
-          The relative path to the markdown file that will be displayed at the top of the changelog page.
-      path:
-        type: optional<string>
-        default: ./changelog
-        docs: |
-          The relative path to the changelog directory. If not set, the default path is `./changelog`.
-      slug: optional<string>
-      icon: optional<string>
-      hidden: optional<boolean>
-      skip-slug: optional<boolean>
+  # TabbedChangelogNavigationItem:
+  #   availability: in-development
+  #   properties:
+  #     changelog: string
+  #     overview:
+  #       type: optional<string>
+  #       docs: |
+  #         The relative path to the markdown file that will be displayed at the top of the changelog page.
+  #     path:
+  #       type: optional<string>
+  #       default: ./changelog
+  #       docs: |
+  #         The relative path to the changelog directory. If not set, the default path is `./changelog`.
+  #     slug: optional<string>
+  #     icon: optional<string>
+  #     hidden: optional<boolean>
+  #     skip-slug: optional<boolean>
 
   NavigationItem:
     discriminated: false

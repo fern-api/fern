@@ -7,5 +7,4 @@ import * as FernDocsConfig from "../../..";
 export type TabbedNavigationItem =
     | FernDocsConfig.TabbedLayoutNavigationItem
     | FernDocsConfig.TabbedLinkNavigationItemV1
-    | FernDocsConfig.TabbedLinkNavigationItemV2
-    | FernDocsConfig.TabbedChangelogNavigationItem;
+    | FernDocsConfig.TabbedLinkNavigationItemV2;

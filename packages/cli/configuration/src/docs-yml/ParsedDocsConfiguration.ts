@@ -141,7 +141,7 @@ export type DocsNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNav
 
 export type UnversionedNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNavigation;
 
-export type TabbedNavigation = TabbedNavigation.Tab | TabbedNavigation.Link | TabbedNavigation.Changelog;
+export type TabbedNavigation = TabbedNavigation.Tab | TabbedNavigation.Link;
 
 export declare namespace TabbedNavigation {
     export interface Tab {
@@ -161,16 +161,16 @@ export declare namespace TabbedNavigation {
         icon: string | undefined;
     }
 
-    export interface Changelog {
-        type: "changelog";
-        title: string | undefined;
-        directory: AbsoluteFilePath;
-        overviewPageId: AbsoluteFilePath | undefined;
-        icon: string | undefined;
-        hidden: boolean | undefined;
-        slug: string | undefined;
-        skipUrlSlug: boolean | undefined;
-    }
+    // export interface Changelog {
+    //     type: "changelog";
+    //     title: string | undefined;
+    //     directory: AbsoluteFilePath;
+    //     overviewPageId: AbsoluteFilePath | undefined;
+    //     icon: string | undefined;
+    //     hidden: boolean | undefined;
+    //     slug: string | undefined;
+    //     skipUrlSlug: boolean | undefined;
+    // }
 }
 
 export type DocsNavigationItem =

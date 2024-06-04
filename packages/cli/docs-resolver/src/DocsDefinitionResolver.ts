@@ -407,12 +407,12 @@ export class DocsDefinitionResolver {
                         icon: tab.icon,
                         url: tab.url
                     }),
-                    changelog: async () => ({
-                        type: "changelog",
-                        description: undefined,
-                        pageId: undefined,
-                        items: []
-                    }),
+                    // changelog: async () => ({
+                    //     type: "changelog",
+                    //     description: undefined,
+                    //     pageId: undefined,
+                    //     items: []
+                    // }),
                     _other: () => this.taskContext.failAndThrow("Invalid tabbed navigation configuration")
                 })
             )

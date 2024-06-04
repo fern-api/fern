@@ -19,17 +19,17 @@ export function isTabbedLinkNavigationItemV2(
     return (tabConfig as FernDocsConfig.TabbedLinkNavigationItemV2).link != null;
 }
 
-export function isTabbedChangelogNavigationItem(
-    tabConfig: FernDocsConfig.TabbedNavigationItem
-): tabConfig is FernDocsConfig.TabbedChangelogNavigationItem {
-    return (tabConfig as FernDocsConfig.TabbedChangelogNavigationItem).changelog != null;
-}
+// export function isTabbedChangelogNavigationItem(
+//     tabConfig: FernDocsConfig.TabbedNavigationItem
+// ): tabConfig is FernDocsConfig.TabbedChangelogNavigationItem {
+//     return (tabConfig as FernDocsConfig.TabbedChangelogNavigationItem).changelog != null;
+// }
 
 interface Visitor<T> {
     layout: (tabbedLayoutNavigationItem: FernDocsConfig.TabbedLayoutNavigationItem) => T;
     linkV1: (tabbedLinkNavigationItem: FernDocsConfig.TabbedLinkNavigationItemV1) => T;
     linkV2: (tabbedLinkNavigationItem: FernDocsConfig.TabbedLinkNavigationItemV2) => T;
-    changelog: (tabbedChangelogNavigationItem: FernDocsConfig.TabbedChangelogNavigationItem) => T;
+    // changelog: (tabbedChangelogNavigationItem: FernDocsConfig.TabbedChangelogNavigationItem) => T;
 }
 
 export function visitTabbedNavigationItem<T>(tabConfig: FernDocsConfig.TabbedNavigationItem, visitor: Visitor<T>): T {
@@ -39,8 +39,8 @@ export function visitTabbedNavigationItem<T>(tabConfig: FernDocsConfig.TabbedNav
         return visitor.linkV1(tabConfig);
     } else if (isTabbedLinkNavigationItemV2(tabConfig)) {
         return visitor.linkV2(tabConfig);
-    } else if (isTabbedChangelogNavigationItem(tabConfig)) {
-        return visitor.changelog(tabConfig);
+        // } else if (isTabbedChangelogNavigationItem(tabConfig)) {
+        //     return visitor.changelog(tabConfig);
     } else {
         assertNever(tabConfig);
     }

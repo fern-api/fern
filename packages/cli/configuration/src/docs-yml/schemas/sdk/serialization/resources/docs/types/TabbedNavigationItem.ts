@@ -13,13 +13,11 @@ export const TabbedNavigationItem: core.serialization.Schema<
     core.serialization.lazyObject(async () => (await import("../../..")).TabbedLayoutNavigationItem),
     core.serialization.lazyObject(async () => (await import("../../..")).TabbedLinkNavigationItemV1),
     core.serialization.lazyObject(async () => (await import("../../..")).TabbedLinkNavigationItemV2),
-    core.serialization.lazyObject(async () => (await import("../../..")).TabbedChangelogNavigationItem),
 ]);
 
 export declare namespace TabbedNavigationItem {
     type Raw =
         | serializers.TabbedLayoutNavigationItem.Raw
         | serializers.TabbedLinkNavigationItemV1.Raw
-        | serializers.TabbedLinkNavigationItemV2.Raw
-        | serializers.TabbedChangelogNavigationItem.Raw;
+        | serializers.TabbedLinkNavigationItemV2.Raw;
 }

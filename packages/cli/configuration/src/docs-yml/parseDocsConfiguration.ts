@@ -506,17 +506,17 @@ async function convertNavigationConfiguration({
                         title: link.link,
                         url: link.href,
                         icon: link.icon
-                    }),
-                    changelog: async (changelog) => ({
-                        type: "changelog",
-                        title: changelog.changelog,
-                        directory: resolveFilepath(changelog.path ?? "./changelog", absolutePathToConfig),
-                        overviewPageId: resolveFilepath(changelog.overview, absolutePathToConfig),
-                        icon: changelog.icon,
-                        hidden: changelog.hidden,
-                        slug: changelog.slug,
-                        skipUrlSlug: changelog.skipSlug
                     })
+                    // changelog: async (changelog) => ({
+                    //     type: "changelog",
+                    //     title: changelog.changelog,
+                    //     directory: resolveFilepath(changelog.path ?? "./changelog", absolutePathToConfig),
+                    //     overviewPageId: resolveFilepath(changelog.overview, absolutePathToConfig),
+                    //     icon: changelog.icon,
+                    //     hidden: changelog.hidden,
+                    //     slug: changelog.slug,
+                    //     skipUrlSlug: changelog.skipSlug
+                    // })
                 })
             )
         );

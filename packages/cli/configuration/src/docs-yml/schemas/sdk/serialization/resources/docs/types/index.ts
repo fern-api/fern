@@ -18,7 +18,6 @@ export * from "./TabbedNavigationItem";
 export * from "./TabbedLayoutNavigationItem";
 export * from "./TabbedLinkNavigationItemV1";
 export * from "./TabbedLinkNavigationItemV2";
-export * from "./TabbedChangelogNavigationItem";
 export * from "./NavigationItem";
 export * from "./LogoConfiguration";
 export * from "./BackgroundImageConfiguration";
