@@ -273,14 +273,6 @@ navigation:
             path: ./pages/docs/components/endpoint-response-snippet.mdx
             icon: "turn-down"
             slug: response-snippet
-  - tab: integrations
-    layout: 
-      - page: Vale
-        path: ./pages/integrations/vale.mdx
-      - page: npm
-        path: ./pages/integrations/npm.mdx
-      - page: PyPI
-        path: ./pages/integrations/pypi.mdx
   - tab: cli-api
     layout:
       - section: CLI Reference
