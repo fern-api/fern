@@ -13,6 +13,7 @@ import (
 	"github.com/fern-api/fern-go/internal/coordinator"
 	"github.com/fern-api/fern-go/internal/fern/ir"
 	fernir "github.com/fern-api/fern-go/internal/fern/ir"
+	"github.com/fern-api/fern-go/internal/generatorcli"
 	generatorexec "github.com/fern-api/generator-exec-go"
 )
 
@@ -32,6 +33,7 @@ const (
 
 // Generator represents the Go code generator.
 type Generator struct {
+	cli         *generatorcli.Client
 	config      *Config
 	coordinator *coordinator.Client
 }
@@ -106,7 +108,12 @@ func NewFile(coordinator *coordinator.Client, filename string, content []byte) *
 
 // New returns a new *Generator.
 func New(config *Config, coordinator *coordinator.Client) (*Generator, error) {
+	cli, err := generatorcli.New(coordinator)
+	if err != nil {
+		return nil, err
+	}
 	return &Generator{
+		cli:         cli,
 		config:      config,
 		coordinator: coordinator,
 	}, nil
