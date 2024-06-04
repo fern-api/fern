@@ -399,7 +399,8 @@ export class DocsDefinitionResolver {
                         items: await Promise.all(tab.layout.map((item) => this.convertNavigationItem(item))),
                         icon: tab.icon,
                         hidden: tab.hidden,
-                        urlSlugOverride: tab.slug
+                        urlSlugOverride: tab.slug,
+                        skipUrlSlug: tab.skipUrlSlug
                     }),
                     link: async (tab) => ({
                         type: "link",
