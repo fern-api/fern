@@ -8,9 +8,9 @@ import com.seed.customAuth.core.ClientOptions;
 import com.seed.customAuth.core.MediaTypes;
 import com.seed.customAuth.core.ObjectMappers;
 import com.seed.customAuth.core.RequestOptions;
-import com.seed.customAuth.errors.ApiError;
-import com.seed.customAuth.errors.BadRequestError;
-import com.seed.customAuth.errors.UnauthorizedRequestError;
+import com.seed.customAuth.errors.AirwallexApiError;
+import com.seed.customAuth.errors.BadRequestErrorAirwallex;
+import com.seed.customAuth.errors.UnauthorizedRequestErrorAirwallex;
 import com.seed.customAuth.resources.errors.types.UnauthorizedRequestErrorBody;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -59,22 +59,11 @@ public class CustomAuthClient {
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            switch (response.code()) {
-                case 400:
-                    throw new BadRequestError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-                case 401:
-                    try {
-                        throw new UnauthorizedRequestError(ObjectMappers.JSON_MAPPER.readValue(
-                                responseBodyString, UnauthorizedRequestErrorBody.class));
-                    } catch (JsonProcessingException ignored) {
-                    }
-                default:
-                    throw new ApiError(
-                            "Default",
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-            }
+            throw new AirwallexApiError(
+                "Default",
+                response.code(),
+                ObjectMappers.JSON_MAPPER.readValue(
+                    responseBody != null ? responseBody.string() : "{}", Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -119,21 +108,19 @@ public class CustomAuthClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            switch (response.code()) {
-                case 400:
-                    throw new BadRequestError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-                case 401:
-                    try {
-                        throw new UnauthorizedRequestError(ObjectMappers.JSON_MAPPER.readValue(
-                                responseBodyString, UnauthorizedRequestErrorBody.class));
-                    } catch (JsonProcessingException ignored) {
-                    }
-                default:
-                    throw new ApiError(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-            }
+            try {
+                switch (response.code()) {
+                    case 400:
+                        throw new BadRequestErrorAirwallex(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    case 401:
+                        throw new UnauthorizedRequestErrorAirwallex(ObjectMappers.JSON_MAPPER.readValue(
+                            responseBodyString, UnauthorizedRequestErrorBody.class));
+                }
+            } catch (JsonProcessingException ignored) {}
+            throw new AirwallexApiError(
+                "Error with status code " + response.code(),
+                response.code(),
+                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

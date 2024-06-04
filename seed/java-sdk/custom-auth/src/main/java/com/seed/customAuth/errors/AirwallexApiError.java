@@ -3,12 +3,12 @@
  */
 package com.seed.customAuth.errors;
 
-public class ApiError extends RuntimeException {
+public class AirwallexApiError extends AirwallexError {
     private final int statusCode;
 
     private final Object body;
 
-    public ApiError(String message, int statusCode, Object body) {
+    public AirwallexApiError(String message, int statusCode, Object body) {
         super(message);
         this.statusCode = statusCode;
         this.body = body;
