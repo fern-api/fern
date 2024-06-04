@@ -15,19 +15,23 @@ export async function getAllPages({
             return combineMaps(
                 await Promise.all(
                     navigation.items.map(async (tab) => {
-                        if (tab.layout == null) {
-                            return {};
+                        switch (tab.type) {
+                            case "tab":
+                                return combineMaps(
+                                    await Promise.all(
+                                        tab.layout.map(async (item) => {
+                                            return await getAllPagesFromNavigationItem({
+                                                item,
+                                                absolutePathToFernFolder
+                                            });
+                                        })
+                                    )
+                                );
+                            case "link":
+                                return {};
+                            default:
+                                assertNever(tab);
                         }
-                        return combineMaps(
-                            await Promise.all(
-                                tab.layout.map(async (item) => {
-                                    return await getAllPagesFromNavigationItem({
-                                        item,
-                                        absolutePathToFernFolder
-                                    });
-                                })
-                            )
-                        );
                     })
                 )
             );

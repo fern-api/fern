@@ -1,4 +1,9 @@
 import { docsYml } from "@fern-api/configuration";
+import {
+    isTabbedNavigationConfig,
+    visitTabbedNavigationItem
+} from "@fern-api/configuration/src/docs-yml/schemas/utils";
+import { noop } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -199,22 +204,26 @@ async function visitNavigation({
     nodePath: NodePath;
     absoluteFilepathToConfiguration: AbsoluteFilePath;
 }): Promise<void> {
-    if (navigationConfigIsTabbed(navigation)) {
+    if (isTabbedNavigationConfig(navigation)) {
         await Promise.all(
-            navigation.map(async (tab, tabIdx) => {
-                if (tab.layout != null) {
-                    await Promise.all(
-                        tab.layout.map(async (item, itemIdx) => {
-                            await visitNavigationItem({
-                                navigationItem: item,
-                                visitor,
-                                nodePath: [...nodePath, `${tabIdx}`, "layout", `${itemIdx}`],
-                                absoluteFilepathToConfiguration
-                            });
-                        })
-                    );
-                }
-            })
+            navigation.map((tab, tabIdx) =>
+                visitTabbedNavigationItem(tab, {
+                    layout: ({ layout }) => {
+                        return Promise.all(
+                            layout.map(async (item, itemIdx) => {
+                                await visitNavigationItem({
+                                    navigationItem: item,
+                                    visitor,
+                                    nodePath: [...nodePath, `${tabIdx}`, "layout", `${itemIdx}`],
+                                    absoluteFilepathToConfiguration
+                                });
+                            })
+                        );
+                    },
+                    linkV1: noop,
+                    linkV2: noop
+                })
+            )
         );
     } else {
         await Promise.all(
@@ -285,10 +294,4 @@ function navigationItemIsSection(
 ): item is docsYml.RawSchemas.SectionConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (item as docsYml.RawSchemas.SectionConfiguration).section != null;
-}
-
-function navigationConfigIsTabbed(
-    config: docsYml.RawSchemas.NavigationConfig
-): config is docsYml.RawSchemas.TabbedNavigationConfig {
-    return (config as docsYml.RawSchemas.TabbedNavigationConfig)[0]?.tab != null;
 }

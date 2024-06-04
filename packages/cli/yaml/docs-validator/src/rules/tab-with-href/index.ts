@@ -1,4 +1,8 @@
-import { docsYml } from "@fern-api/configuration";
+import {
+    isTabbedNavigationConfig,
+    isTabLinkConfig,
+    visitTabbedNavigationItem
+} from "@fern-api/configuration/src/docs-yml/schemas/utils";
 import { Rule, RuleViolation } from "../../Rule";
 
 export const TabWithHrefRule: Rule = {
@@ -16,30 +20,40 @@ export const TabWithHrefRule: Rule = {
 
                 if (isTabbedNavigationConfig(config.navigation)) {
                     for (const tabItem of config.navigation) {
-                        const tabConfig = tabs[tabItem.tab];
-                        if (tabConfig == null) {
-                            ruleViolations.push({
-                                severity: "error",
-                                message: `Tab "${tabItem.tab}" is missing from the tabs configuration.`
-                            });
-                            continue;
-                        }
+                        visitTabbedNavigationItem(tabItem, {
+                            layout: (layout) => {
+                                const tabConfig = tabs[layout.tab];
+                                if (tabConfig == null) {
+                                    ruleViolations.push({
+                                        severity: "error",
+                                        message: `Tab "${layout.tab}" is missing from the tabs configuration.`
+                                    });
+                                } else if (isTabLinkConfig(tabConfig)) {
+                                    ruleViolations.push({
+                                        severity: "error",
+                                        message: `Tab "${layout.tab}" is a link and cannot contain a layout.`
+                                    });
+                                }
+                            },
+                            linkV1: (link) => {
+                                const tabConfig = tabs[link.tab];
 
-                        if (tabConfig.href != null && tabItem.layout != null) {
-                            ruleViolations.push({
-                                severity: "error",
-                                message: `Tab "${tabItem.tab}" has both a href and layout. Only one should be used.`
-                            });
-                            continue;
-                        }
-
-                        if (tabConfig.href == null && tabItem.layout == null) {
-                            ruleViolations.push({
-                                severity: "error",
-                                message: `Tab "${tabItem.tab}" is missing a href or layout.`
-                            });
-                            continue;
-                        }
+                                if (tabConfig == null) {
+                                    ruleViolations.push({
+                                        severity: "error",
+                                        message: `Tab "${link.tab}" is missing from the tabs configuration.`
+                                    });
+                                } else if (!isTabLinkConfig(tabConfig)) {
+                                    ruleViolations.push({
+                                        severity: "error",
+                                        message: `Tab "${link.tab}" is expected to contain a href.`
+                                    });
+                                }
+                            },
+                            linkV2: () => {
+                                // Do nothing
+                            }
+                        });
                     }
                 }
 
@@ -48,14 +62,3 @@ export const TabWithHrefRule: Rule = {
         };
     }
 };
-
-function isTabbedNavigationConfig(
-    navigationConfig: docsYml.RawSchemas.NavigationConfig
-): navigationConfig is docsYml.RawSchemas.TabbedNavigationConfig {
-    return (
-        Array.isArray(navigationConfig) &&
-        navigationConfig.length > 0 &&
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        (navigationConfig[0] as docsYml.RawSchemas.TabbedNavigationItem).tab != null
-    );
-}
