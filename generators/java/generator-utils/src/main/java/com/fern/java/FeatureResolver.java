@@ -14,9 +14,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-/**
- * Resolve
- */
 public class FeatureResolver {
 
     public static final AuthScheme DEFAULT_BEARER_AUTH = AuthScheme.bearer(BearerAuthScheme.builder()
@@ -53,9 +50,7 @@ public class FeatureResolver {
         this.generatorExecClient = generatorExecClient;
     }
 
-    /**
-     * Replace OAuth scheme with a bearer token scheme if the generator config doesn't allow OAuth.
-     */
+    /** Replace OAuth scheme with a bearer token scheme if the generator config doesn't allow OAuth. */
     public List<AuthScheme> getResolvedAuthSchemes() {
         List<AuthScheme> schemes = ir.getAuth().getSchemes();
         Optional<OAuthScheme> maybeOAuthScheme = schemes.stream()
