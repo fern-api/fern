@@ -10,8 +10,8 @@ import com.seed.customAuth.core.ObjectMappers;
 import com.seed.customAuth.core.RequestOptions;
 import com.seed.customAuth.errors.AirwallexApiError;
 import com.seed.customAuth.errors.AirwallexError;
-import com.seed.customAuth.errors.BadRequestErrorAirwallex;
-import com.seed.customAuth.errors.UnauthorizedRequestErrorAirwallex;
+import com.seed.customAuth.errors.AirwallexBadRequestError;
+import com.seed.customAuth.errors.AirwallexUnauthorizedError;
 import com.seed.customAuth.resources.errors.types.UnauthorizedRequestErrorBody;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -111,10 +111,10 @@ public class CustomAuthClient {
             try {
                 switch (response.code()) {
                     case 400:
-                        throw new BadRequestErrorAirwallex(
+                        throw new AirwallexBadRequestError(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
                     case 401:
-                        throw new UnauthorizedRequestErrorAirwallex(ObjectMappers.JSON_MAPPER.readValue(
+                        throw new AirwallexUnauthorizedError(ObjectMappers.JSON_MAPPER.readValue(
                                 responseBodyString, UnauthorizedRequestErrorBody.class));
                 }
             } catch (JsonProcessingException ignored) {
