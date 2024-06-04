@@ -30,11 +30,11 @@ Learn how Fern can be helpful when building an Express server.
 
 <Steps>
 
-### Step 1: Define your API 
+### Define your API 
 
 Define your API using OpenAPI or the Fern Definition.
 
-### Step 2: Add the Express generator 
+### Add the Express generator 
 
 Add the Express server generator to your `generators.yml` file.
 
@@ -51,13 +51,12 @@ groups:
 ```
 </CodeBlock>
 
-### Step 3: Generate code
-
+### 
 Run the [CLI](../cli-api/overview.mdx#) command `fern generate --group express-server`. 
 
 <Note>Make sure to enable `allowSyntheticDefaultImports` in your `tsconfig.json` when using this generator.</Note>
 
-### Step 4: Implement the functions 
+### Implement the functions 
 
 Provide the business logic by implementing each function. For example, if we were implenting the IMDb API, we would implement the `get_movie` function.
 
@@ -77,13 +76,13 @@ class MoviesService(AbstractMoviesService):
 ```
 </CodeBlock>
 
-### Step 5: Run the server
+### Run the server
 
 ```bash
 $ poetry run start
 ```
 
-### Step 6: Call the API 🚀
+### Call the API 🚀
 
 ```bash
 $ curl --location --request GET --silent 'localhost:8080/movies/titanic' | jq .
