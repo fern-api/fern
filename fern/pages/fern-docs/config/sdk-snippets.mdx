@@ -20,11 +20,11 @@ TypeScript, Python, Go, and Ruby are the SDK code snippet languages supported to
 
 To configure SDK snippets, you'll need to name your SDKs in `generators.yml` and then reference that name in `docs.yml`. In the following example, We'll use `your-organization` as the package name because it is a common practice. For example, Stripe calls their npm package `stripe` and Twilio calls their PyPI package `twilio`.
 
-### Step 1: Add examples to your API definition.
+### Add examples to your API definition
 
 In order to generate code snippets, Fern needs to read request examples from your API definition. If you're using a Fern Definition, you can follow [these instructions](/learn/api-definition/fern/examples). If you're using an OpenAPI Specification, you can follow [these instructions](https://swagger.io/docs/specification/adding-examples/).
 
-### Step 2: Define a package name for your SDK(s).
+### Define a package name for your SDK(s)
 
 <CodeBlock title="generators.yml">
 ```yaml
@@ -58,7 +58,7 @@ groups:
 ```
 </CodeBlock>
 
-### Step 3: Add the package name to your docs configuration.
+### Add the package name to your docs configuration
 
 <CodeBlock title="docs.yml">
 ```yaml 

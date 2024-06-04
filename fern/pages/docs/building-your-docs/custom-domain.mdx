@@ -18,7 +18,7 @@ To host your documentation on a subdomain, i.e. `docs.mydomain.com`, you need to
 
 <Steps>
 
-### Step 1: Update the domain in `docs.yml`
+### Update the domain in `docs.yml`
 
 ```yaml
 instances:
@@ -29,7 +29,7 @@ instances:
 Merge your changes into `main`. [Here's an example](https://github.com/octoml/fern-config/blob/389b67679953856ba0716537981a6d749635556f/fern/docs.yml#L1-L3 ).
 
 
-### Step 2: Create a CNAME record
+### Create a CNAME record
 
 1. Log in to your domain registrar's dashboard.
 2. Navigate to the DNS settings for your domain.
@@ -38,13 +38,13 @@ Merge your changes into `main`. [Here's an example](https://github.com/octoml/fe
    - **Name**: `docs` (or any subdomain you want to use)
    - **Value**: `cname.vercel-dns.com.`
 
-### Step 3: Reach out to us
+### Reach out to us
 
 Once you've completed the steps above, reach out via your dedicated Slack channel or [email](mailto:support@buildwithfern.com).
 
 You may need to create a TXT record to verify your domain. If you do, we'll provide you with the record to add.
 
-### Step 4: Verify the setup
+### Verify the setup
 
 Once we've completed the setup on our end, you should be able to access your documentation at `docs.mydomain.com`. SSL will be automatically provisioned for your domain, but it may take a few minutes to propagate globally.
 
@@ -59,7 +59,7 @@ To host your documentation on a subpath, i.e. `mydomain.com/docs`, you need to e
 
 <Steps>
 
-### Step 1: Configure the `url` in `docs.yml`
+### Configure the `url` in `docs.yml`
 
 Append that subpath to the end of the `url`. This example use `docs` for the subpath, but you can use any word you like, such as `reference` or `developer`.
 
@@ -70,7 +70,7 @@ instances:
 ```
 </CodeBlock>
 
-### Step 2: Configure the `custom-domain`
+### Configure the `custom-domain`
 
 Below the `url`, add a `custom-domain` key as shown in the examples below.
 
@@ -84,13 +84,13 @@ instances:
 
 [Here's an example.](https://github.com/fern-api/fern/blob/7d8631c6119787a8aaccb4ba49837e73c985db28/fern/docs.yml#L1-L3)
 
-### Step 3: Update the Fern Docs site
+### Update the Fern Docs site
 
 If you created your Fern Docs site using one of our [Docs Quickstarts](/learn/docs/getting-started/quickstart), push the changes you made to your GitHub repository. This runs a GitHub Action to update the site with your new configuration.
 
 If you need to update your Fern Docs site manually, run `fern generate --docs`.
 
-### Step 4: Create DNS records to point at Fern Docs
+### Create DNS records to point at Fern Docs
 
 This feature is available on the Fern Docs Starter plan and above. Reach out to [sales@buildwithfern.com](mailto:sales@buildwithfern.com) to set up your subscription and obtain DNS records information for your domain registrar. 
 
