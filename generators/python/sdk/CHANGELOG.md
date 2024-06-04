@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.8.1] - 2024-06-04
+
+- Fix: The parameter comment/documentation for timeouts on the root client now reflects the custom timeout passed through within configuration.
+
 ## [2.8.0] - 2024-06-03
 
 - Improvement: Endpoint function request logic has been abstracted into the request function of the wrapped httpx client.
