@@ -34,10 +34,11 @@ public final class AuthToSpringParameterSpecConverter {
 
     public List<ParameterSpec> getAuthParameters(HttpEndpoint httpEndpoint) {
         ApiAuth apiAuth = generatorContext.getIr().getAuth();
-        if (!httpEndpoint.getAuth() || apiAuth.getSchemes().isEmpty()) {
+        List<AuthScheme> schemes = generatorContext.getResolvedAuthSchemes();
+        if (!httpEndpoint.getAuth() || schemes.isEmpty()) {
             return Collections.emptyList();
-        } else if (apiAuth.getSchemes().size() == 1) {
-            AuthScheme authScheme = apiAuth.getSchemes().get(0);
+        } else if (schemes.size() == 1) {
+            AuthScheme authScheme = schemes.get(0);
             ParameterSpec parameterSpec =
                     authScheme.visit(new AuthSchemeParameterSpec(generatedAuthFiles, "auth", false));
             return Collections.singletonList(parameterSpec);
