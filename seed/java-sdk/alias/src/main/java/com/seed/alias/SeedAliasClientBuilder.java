@@ -6,18 +6,18 @@ package com.seed.alias;
 import com.seed.alias.core.ClientOptions;
 import com.seed.alias.core.Environment;
 
-public final class SeedJavaSdkClientBuilder {
+public final class SeedAliasClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
 
-    public SeedJavaSdkClientBuilder url(String url) {
+    public SeedAliasClientBuilder url(String url) {
         this.environment = Environment.custom(url);
         return this;
     }
 
-    public SeedJavaSdkClient build() {
+    public SeedAliasClient build() {
         clientOptionsBuilder.environment(this.environment);
-        return new SeedJavaSdkClient(clientOptionsBuilder.build());
+        return new SeedAliasClient(clientOptionsBuilder.build());
     }
 }

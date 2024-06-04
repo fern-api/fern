@@ -5,14 +5,14 @@ package com.seed.alias;
 
 import com.seed.alias.core.ClientOptions;
 
-public class SeedJavaSdkClient {
+public class SeedAliasClient {
     protected final ClientOptions clientOptions;
 
-    public SeedJavaSdkClient(ClientOptions clientOptions) {
+    public SeedAliasClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
     }
 
-    public static SeedJavaSdkClientBuilder builder() {
-        return new SeedJavaSdkClientBuilder();
+    public static SeedAliasClientBuilder builder() {
+        return new SeedAliasClientBuilder();
     }
 }
