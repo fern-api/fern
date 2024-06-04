@@ -3341,7 +3341,7 @@ __metadata:
   dependencies:
     "@types/node": ^18.7.18
     "@types/node-fetch": 2.6.9
-    "@types/qs": 6.9.8
+    "@types/qs": 6.9.15
     "@types/react": ^18.2.43
     "@types/react-dom": ^18.2.17
     "@types/url-join": 4.0.1
@@ -3354,7 +3354,7 @@ __metadata:
     node-fetch: 2.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    qs: 6.11.2
+    qs: 6.12.1
     react: ^18.2.0
     react-dom: ^18.2.0
     sass: ^1.72.0
@@ -4110,7 +4110,7 @@ __metadata:
     "@types/inquirer": ^9.0.3
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
-    "@types/qs": 6.9.8
+    "@types/qs": 6.9.15
     axios: ^0.28.0
     boxen: ^7.0.0
     chalk: ^5.0.1
@@ -4121,7 +4121,7 @@ __metadata:
     open: ^8.4.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    qs: 6.11.2
+    qs: 6.12.1
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -5548,7 +5548,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/node-fetch": 2.6.9
-    "@types/qs": 6.9.8
+    "@types/qs": 6.9.15
     depcheck: ^1.4.6
     eslint: ^8.56.0
     form-data: 4.0.0
@@ -5558,7 +5558,7 @@ __metadata:
     node-fetch: 2.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    qs: 6.11.2
+    qs: 6.12.1
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -7522,10 +7522,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/qs@npm:6.9.8":
-  version: 6.9.8
-  resolution: "@types/qs@npm:6.9.8"
-  checksum: c28e07d00d07970e5134c6eed184a0189b8a4649e28fdf36d9117fe671c067a44820890de6bdecef18217647a95e9c6aebdaaae69f5fe4b0bec9345db885f77e
+"@types/qs@npm:6.9.15":
+  version: 6.9.15
+  resolution: "@types/qs@npm:6.9.15"
+  checksum: 97d8208c2b82013b618e7a9fc14df6bd40a73e1385ac479b6896bafc7949a46201c15f42afd06e86a05e914f146f495f606b6fb65610cc60cf2e0ff743ec38a2
   languageName: node
   linkType: hard
 
@@ -20056,6 +20056,15 @@ env-cmd@toddbluhm/env-cmd:
   dependencies:
     side-channel: ^1.0.6
   checksum: ba007fb2488880b9c6c3df356fe6888b9c1f4c5127552edac214486cfe83a332de09a5c40d490d79bb27bef977ba1085a8497512ff52eaac72e26564f77ce908
+  languageName: node
+  linkType: hard
+
+"qs@npm:6.12.1":
+  version: 6.12.1
+  resolution: "qs@npm:6.12.1"
+  dependencies:
+    side-channel: ^1.0.6
+  checksum: aa761d99e65b6936ba2dd2187f2d9976afbcda38deb3ff1b3fe331d09b0c578ed79ca2abdde1271164b5be619c521ec7db9b34c23f49a074e5921372d16242d5
   languageName: node
   linkType: hard
 
