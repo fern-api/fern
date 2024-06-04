@@ -27,6 +27,9 @@ tabs:
   sdks:
     display-name: SDKs
     slug: sdks
+  integrations: 
+    display-name: Integrations
+    slug: integrations
   cli-api:
     display-name: CLI & API Reference
     slug: cli-api
@@ -201,8 +204,6 @@ navigation:
             slug: write-markdown
           - page: Frontmatter
             path: ./pages/fern-docs/content/front-matter.mdx
-          - page: Reusable snippets
-            path: ./pages/fern-docs/content/reusable-snippets.mdx
 
       - section: API References
         contents:
@@ -275,12 +276,16 @@ navigation:
             slug: response-snippet
   - tab: integrations
     layout: 
-      - page: Vale
-        path: ./pages/integrations/vale.mdx
-      - page: npm
-        path: ./pages/integrations/npm.mdx
-      - page: PyPI
-        path: ./pages/integrations/pypi.mdx
+      - section: Development Tools
+        contents: 
+          - page: Vale
+            path: ./pages/integrations/vale.mdx
+      - section: Package Managers
+        contents: 
+          - page: npm
+            path: ./pages/integrations/npm.mdx
+          - page: PyPI
+            path: ./pages/integrations/pypi.mdx
   - tab: cli-api
     layout:
       - section: CLI Reference
