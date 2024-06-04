@@ -4,15 +4,18 @@
 
 package com.fern.sdk.resources.noauth;
 
-import com.fern.sdk.core.ApiError;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
+import com.fern.sdk.core.SeedExhaustiveApiError;
+import com.fern.sdk.core.SeedExhaustiveError;
+import com.fern.sdk.resources.generalerrors.errors.SeedExhaustiveBadRequestBody;
+import com.fern.sdk.resources.generalerrors.types.BadObjectRequestInfo;
 import java.io.IOException;
-import java.lang.Exception;
 import java.lang.Object;
-import java.lang.RuntimeException;
+import java.lang.String;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -47,8 +50,8 @@ public class NoAuthClient {
     try {
       body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
-    catch(Exception e) {
-      throw new RuntimeException(e);
+    catch(JsonProcessingException e) {
+      throw new SeedExhaustiveError("Failed to serialize request", e);
     }
     Request okhttpRequest = new Request.Builder()
       .url(httpUrl)
@@ -56,20 +59,27 @@ public class NoAuthClient {
       .headers(Headers.of(clientOptions.headers(requestOptions)))
       .addHeader("Content-Type", "application/json")
       .build();
-    try {
-      OkHttpClient client = clientOptions.httpClient();
-      if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-        client = clientOptions.httpClientWithTimeout(requestOptions);
-      }
-      Response response = client.newCall(okhttpRequest).execute();
+    OkHttpClient client = clientOptions.httpClient();
+    if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+      client = clientOptions.httpClientWithTimeout(requestOptions);
+    }
+    try (Response response = client.newCall(okhttpRequest).execute()) {
       ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class);
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBody != null ? responseBody.string() : "{}", Object.class));
+      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+      try {
+        if (response.code() == 400) {
+          throw new SeedExhaustiveBadRequestBody(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BadObjectRequestInfo.class));
+        }
+      }
+      catch (JsonProcessingException ignored) {
+      }
+      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new SeedExhaustiveError("Network error executing HTTP request", e);
     }
   }
 }

@@ -4,17 +4,17 @@
 
 package com.fern.sdk.resources.endpoints.container;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fern.sdk.core.ApiError;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
+import com.fern.sdk.core.SeedExhaustiveApiError;
+import com.fern.sdk.core.SeedExhaustiveError;
 import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
 import java.io.IOException;
-import java.lang.Exception;
 import java.lang.Object;
-import java.lang.RuntimeException;
 import java.lang.String;
 import java.util.List;
 import java.util.Map;
@@ -49,8 +49,8 @@ public class ContainerClient {
     try {
       body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
-    catch(Exception e) {
-      throw new RuntimeException(e);
+    catch(JsonProcessingException e) {
+      throw new SeedExhaustiveError("Failed to serialize request", e);
     }
     Request okhttpRequest = new Request.Builder()
       .url(httpUrl)
@@ -58,20 +58,24 @@ public class ContainerClient {
       .headers(Headers.of(clientOptions.headers(requestOptions)))
       .addHeader("Content-Type", "application/json")
       .build();
-    try {
-      OkHttpClient client = clientOptions.httpClient();
-      if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-        client = clientOptions.httpClientWithTimeout(requestOptions);
-      }
-      Response response = client.newCall(okhttpRequest).execute();
+    OkHttpClient client = clientOptions.httpClient();
+    if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+      client = clientOptions.httpClientWithTimeout(requestOptions);
+    }
+    try (Response response = client.newCall(okhttpRequest).execute()) {
       ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<List<String>>() {});
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBody != null ? responseBody.string() : "{}", Object.class));
+      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+      try {
+      }
+      catch (JsonProcessingException ignored) {
+      }
+      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new SeedExhaustiveError("Network error executing HTTP request", e);
     }
   }
 
@@ -90,8 +94,8 @@ public class ContainerClient {
     try {
       body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
-    catch(Exception e) {
-      throw new RuntimeException(e);
+    catch(JsonProcessingException e) {
+      throw new SeedExhaustiveError("Failed to serialize request", e);
     }
     Request okhttpRequest = new Request.Builder()
       .url(httpUrl)
@@ -99,20 +103,24 @@ public class ContainerClient {
       .headers(Headers.of(clientOptions.headers(requestOptions)))
       .addHeader("Content-Type", "application/json")
       .build();
-    try {
-      OkHttpClient client = clientOptions.httpClient();
-      if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-        client = clientOptions.httpClientWithTimeout(requestOptions);
-      }
-      Response response = client.newCall(okhttpRequest).execute();
+    OkHttpClient client = clientOptions.httpClient();
+    if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+      client = clientOptions.httpClientWithTimeout(requestOptions);
+    }
+    try (Response response = client.newCall(okhttpRequest).execute()) {
       ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<List<ObjectWithRequiredField>>() {});
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBody != null ? responseBody.string() : "{}", Object.class));
+      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+      try {
+      }
+      catch (JsonProcessingException ignored) {
+      }
+      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new SeedExhaustiveError("Network error executing HTTP request", e);
     }
   }
 
@@ -130,8 +138,8 @@ public class ContainerClient {
     try {
       body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
-    catch(Exception e) {
-      throw new RuntimeException(e);
+    catch(JsonProcessingException e) {
+      throw new SeedExhaustiveError("Failed to serialize request", e);
     }
     Request okhttpRequest = new Request.Builder()
       .url(httpUrl)
@@ -139,20 +147,24 @@ public class ContainerClient {
       .headers(Headers.of(clientOptions.headers(requestOptions)))
       .addHeader("Content-Type", "application/json")
       .build();
-    try {
-      OkHttpClient client = clientOptions.httpClient();
-      if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-        client = clientOptions.httpClientWithTimeout(requestOptions);
-      }
-      Response response = client.newCall(okhttpRequest).execute();
+    OkHttpClient client = clientOptions.httpClient();
+    if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+      client = clientOptions.httpClientWithTimeout(requestOptions);
+    }
+    try (Response response = client.newCall(okhttpRequest).execute()) {
       ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<Set<String>>() {});
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBody != null ? responseBody.string() : "{}", Object.class));
+      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+      try {
+      }
+      catch (JsonProcessingException ignored) {
+      }
+      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new SeedExhaustiveError("Network error executing HTTP request", e);
     }
   }
 
@@ -171,8 +183,8 @@ public class ContainerClient {
     try {
       body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
-    catch(Exception e) {
-      throw new RuntimeException(e);
+    catch(JsonProcessingException e) {
+      throw new SeedExhaustiveError("Failed to serialize request", e);
     }
     Request okhttpRequest = new Request.Builder()
       .url(httpUrl)
@@ -180,20 +192,24 @@ public class ContainerClient {
       .headers(Headers.of(clientOptions.headers(requestOptions)))
       .addHeader("Content-Type", "application/json")
       .build();
-    try {
-      OkHttpClient client = clientOptions.httpClient();
-      if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-        client = clientOptions.httpClientWithTimeout(requestOptions);
-      }
-      Response response = client.newCall(okhttpRequest).execute();
+    OkHttpClient client = clientOptions.httpClient();
+    if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+      client = clientOptions.httpClientWithTimeout(requestOptions);
+    }
+    try (Response response = client.newCall(okhttpRequest).execute()) {
       ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<Set<ObjectWithRequiredField>>() {});
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBody != null ? responseBody.string() : "{}", Object.class));
+      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+      try {
+      }
+      catch (JsonProcessingException ignored) {
+      }
+      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new SeedExhaustiveError("Network error executing HTTP request", e);
     }
   }
 
@@ -211,8 +227,8 @@ public class ContainerClient {
     try {
       body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
-    catch(Exception e) {
-      throw new RuntimeException(e);
+    catch(JsonProcessingException e) {
+      throw new SeedExhaustiveError("Failed to serialize request", e);
     }
     Request okhttpRequest = new Request.Builder()
       .url(httpUrl)
@@ -220,20 +236,24 @@ public class ContainerClient {
       .headers(Headers.of(clientOptions.headers(requestOptions)))
       .addHeader("Content-Type", "application/json")
       .build();
-    try {
-      OkHttpClient client = clientOptions.httpClient();
-      if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-        client = clientOptions.httpClientWithTimeout(requestOptions);
-      }
-      Response response = client.newCall(okhttpRequest).execute();
+    OkHttpClient client = clientOptions.httpClient();
+    if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+      client = clientOptions.httpClientWithTimeout(requestOptions);
+    }
+    try (Response response = client.newCall(okhttpRequest).execute()) {
       ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<Map<String, String>>() {});
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBody != null ? responseBody.string() : "{}", Object.class));
+      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+      try {
+      }
+      catch (JsonProcessingException ignored) {
+      }
+      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new SeedExhaustiveError("Network error executing HTTP request", e);
     }
   }
 
@@ -252,8 +272,8 @@ public class ContainerClient {
     try {
       body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
-    catch(Exception e) {
-      throw new RuntimeException(e);
+    catch(JsonProcessingException e) {
+      throw new SeedExhaustiveError("Failed to serialize request", e);
     }
     Request okhttpRequest = new Request.Builder()
       .url(httpUrl)
@@ -261,20 +281,24 @@ public class ContainerClient {
       .headers(Headers.of(clientOptions.headers(requestOptions)))
       .addHeader("Content-Type", "application/json")
       .build();
-    try {
-      OkHttpClient client = clientOptions.httpClient();
-      if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-        client = clientOptions.httpClientWithTimeout(requestOptions);
-      }
-      Response response = client.newCall(okhttpRequest).execute();
+    OkHttpClient client = clientOptions.httpClient();
+    if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+      client = clientOptions.httpClientWithTimeout(requestOptions);
+    }
+    try (Response response = client.newCall(okhttpRequest).execute()) {
       ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<Map<String, ObjectWithRequiredField>>() {});
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBody != null ? responseBody.string() : "{}", Object.class));
+      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+      try {
+      }
+      catch (JsonProcessingException ignored) {
+      }
+      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new SeedExhaustiveError("Network error executing HTTP request", e);
     }
   }
 
@@ -300,8 +324,8 @@ public class ContainerClient {
         body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
       }
     }
-    catch(Exception e) {
-      throw new RuntimeException(e);
+    catch(JsonProcessingException e) {
+      throw new SeedExhaustiveError("Failed to serialize request", e);
     }
     Request okhttpRequest = new Request.Builder()
       .url(httpUrl)
@@ -309,20 +333,24 @@ public class ContainerClient {
       .headers(Headers.of(clientOptions.headers(requestOptions)))
       .addHeader("Content-Type", "application/json")
       .build();
-    try {
-      OkHttpClient client = clientOptions.httpClient();
-      if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-        client = clientOptions.httpClientWithTimeout(requestOptions);
-      }
-      Response response = client.newCall(okhttpRequest).execute();
+    OkHttpClient client = clientOptions.httpClient();
+    if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+      client = clientOptions.httpClientWithTimeout(requestOptions);
+    }
+    try (Response response = client.newCall(okhttpRequest).execute()) {
       ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<Optional<ObjectWithRequiredField>>() {});
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBody != null ? responseBody.string() : "{}", Object.class));
+      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+      try {
+      }
+      catch (JsonProcessingException ignored) {
+      }
+      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new SeedExhaustiveError("Network error executing HTTP request", e);
     }
   }
 }
