@@ -1,7 +1,7 @@
 ---
-title: Express.js
-description: 
-subtite: Generate types and networking logic for your Express server.
+title: Express Server
+description: Generate Express Node.js server code from an API specification including OpenAPI, Swagger, AsyncAPI, and Fern Definition.
+subtite: Generate types and networking logic for your Node.js Express server.
 slug: express
 ---
 
@@ -9,14 +9,14 @@ Express is a minimal and flexible Node.js web application framework. It is a pop
 
 Fern generates TypeScript types and networking logic for your Express server. This saves you time and adds compile-time safety by guaranteeing that you are serving the exact API that you specified in your API definition.
 
-## What gets generated?
+## What Fern generates
 
 - TypeScript interfaces for your API types
 - Exceptions that you can throw for non-200 responses
 - Interfaces for you to define your business logic
 - All the networking/HTTP logic to call your API
 
-## Getting started 
+## Use the starter repository 
 
 Clone the [starter repo](https://github.com/fern-api/express-starter/) for Express + React. 
 
@@ -27,6 +27,16 @@ Learn how Fern can be helpful when building an Express server.
 <iframe src="https://www.loom.com/embed/31f4243c4d824c54938bdc4840fbb8ba" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
 
 ## Getting started 
+
+<Steps>
+
+### Step 1: Define your API 
+
+Define your API using OpenAPI or the Fern Definition.
+
+### Step 2: Add the Express generator 
+
+Add the Express server generator to your `generators.yml` file.
 
 <CodeBlock title="generators.yml">
 ```yaml
@@ -41,39 +51,113 @@ groups:
 ```
 </CodeBlock>
 
+### Step 3: Generate code
+
+Run the [CLI](../cli-api/overview.mdx#) command `fern generate --group express-server`. 
+
 <Note>Make sure to enable `allowSyntheticDefaultImports` in your `tsconfig.json` when using this generator.</Note>
 
-## Configurations
+### Step 4: Implement the functions 
 
-The following options are supported when generating an Express server.
+Provide the business logic by implementing each function. For example, if we were implenting the IMDb API, we would implement the `get_movie` function.
 
-### `useBrandedStringAliases`
+<CodeBlock title="src/movies_service.py">
+```python
+from .generated.fern import AbstractMoviesService, Movie, MovieDoesNotExistError, MovieId
 
-### `treatUnknownAsAny`
+class MoviesService(AbstractMoviesService):
+    def get_movie(self, *, movie_id: str) -> Movie:
+        if movie_id == "titanic":
+            return Movie(
+                id=MovieId.from_str("titantic"),
+                title="Titanic",
+                rating=9.8,
+            )
+        raise MovieDoesNotExistError(MovieId.from_str(movie_id))
+```
+</CodeBlock>
 
-### `noSerdeLayer`
+### Step 5: Run the server
 
-### `outputSourceFiles`
+```bash
+$ poetry run start
+```
 
-### `areImplementationsOptional`
+### Step 6: Call the API 🚀
 
-**Type**: boolean **
-Default:** false
+```bash
+$ curl --location --request GET --silent 'localhost:8080/movies/titanic' | jq .
+{
+  "id": "titantic",
+  "title": "Titanic",
+  "rating": 9.8
+}
 
-By default, the generated register() will require an implementatiion for every service defined in your Fern Definition.
+$ curl --location --request GET --silent 'localhost:8080/movies/oceans-11' | jq .
+{
+  "error": "MovieDoesNotExistError",
+  "errorInstanceId": "f6e1d69c-bf97-42d5-bc89-5e42773e3880",
+  "content": "oceans-11"
+}
+```
 
-If areImplementationsOptional is enabled, then register() won't require any implementations. Note that this is mildly dangerous: if you forget to include an implementation, then your server behavior may drift from your docs and clients.
+</Steps>
 
-### `doNotHandleUnrecognizedErrors`
+## Advanced Configurations
 
-**Type**: boolean 
-**Default**: false
+Tailor the `config` of the Express server generator to your needs. The default values for all options are `false`.
 
-By default, if you throw a non-Fern error in your endpoint handler, it will be caught by generated code and a `500` response will be returned. No details from the error will be leaked to the client.
+```yaml
+    useBrandedStringAliases:
+        type: boolean
+        docs: When enabled, string aliases are generated as branded strings. This makes each alias feel like its own type and improves compile-time safety.
+    areImplementationsOptional: boolean
+    doNotHandleUnrecognizedErrors: boolean
+    includeUtilsOnUnionMembers: boolean
+    includeOtherInUnionTypes: boolean
+    treatUnknownAsAny: 
+        type: boolean
+        docs: When enabled, unknown types at runtime are generated into TypeScript using the `any` type.
+    noSerdeLayer: 
+        type: boolean
+        docs: | 
+            Allows you to control whether (de-)serialization code is generated. When true, the client uses JSON.parse() and JSON.stringify() instead.
+            
+            By default, the generated client includes a layer for serializing requests and deserializing responses. This has three benefits:
 
-If doNotHandleUnrecognizedErrors is enabled and you throw a non-Fern error, the error will be caught and passed on with `next(error)`. It's your responsibility to set up error-catching middleware that handles the error and returns a response to the client.
+            1. The client validates requests and response at runtime, client-side.
+            2. The client can support complex types, like Date and Set.
+            3. The generated types can stray from the wire/JSON representation to be more idiomatic. For example, when `noSerdeLayer` is disabled, all properties are camelCase, even if the server is expecting snake_case.
+    skipRequestValidation: boolean
+    skipResponseValidation: 
+        type: boolean
+        docs: By default, this config is set to false and the client will throw an error if the response from the server doesn't match the expected type (based on how the response is modeled in the API definition). Set this config to true to never throw an error if the response is misshapen. Rather, the client will log the issue using console.warn and return the data (cast to the expected response type).
+    outputEsm: 
+        type: boolean
+        docs: Allows you to control whether the generated TypeScript targets `CommonJS` or `esnext`. By default, the generated TypeScript targets `CommonJS`.
+    outputSourceFiles: 
+        type: boolean
+        docs: When disabled (default), the generator outputs .js and d.ts files. When enabled, the generator outputs raw TypeScript files.
+    retainOriginalCasing: boolean
+    allowExtraFields: boolean
+```
 
+<Note>The configuration options are accessible in [`ExpressCustomConfig.ts`](https://github.com/fern-api/fern/blob/main/generators/typescript/express/cli/src/custom-config/ExpressCustomConfig.ts).</Note>
 
+### Example Configuration
 
-
-
+<CodeBlock title="generators.yml">
+```diff
+groups:
+  express-server:
+    generators:
+      - name: fernapi/fern-typescript-express
+        version: 0.15.0
+        output:
+            location: local-file-system
+            path: ../app/server
++       config:
++           useBrandedStringAliases: true
++           noSerdeLayer: true
+```
+</CodeBlock>

@@ -1,0 +1,123 @@
+---
+title: Spring Server
+description: Generate Spring Boot server code from an API specification including OpenAPI, Swagger, AsyncAPI, and Fern Definition.
+subtite: Generate types and networking logic for your Java Spring Boot server.
+slug: spring
+---
+
+Spring Boot is a popular Java framework for building APIs and web servers. It is a framework widely used in the Java community.
+
+Fern outputs types and networking logic for your Spring Boot server. This saves you time and adds compile-time safety by guaranteeing that you are serving the exact API that you specified in your API definition.
+
+## What Fern generates
+
+- Java classes for your API types
+- Exceptions that you can throw for non-200 responses
+- Abstract classes for you to define your business logic
+- All the networking/HTTP logic to call your API
+
+## Use the starter repository 
+
+Clone the [starter repo](https://github.com/fern-api/spring-starter/) for Spring + React. 
+
+## Demo video
+
+Learn how Fern can be helpful when building a Spring server. 
+
+<iframe src="https://www.loom.com/share/42de542022de4e55a1349383c7a465eb" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+
+## Getting started
+
+<Steps>
+
+### Step 1: Define your API 
+
+Define your API using OpenAPI or the Fern Definition.
+
+### Step 2: Add the Spring generator 
+
+Add the Spring server generator to your `generators.yml` file.
+
+<CodeBlock title="generators.yml">
+```yaml
+groups:
+  spring-server:
+    generators:
+      - name: fernapi/fern-java-spring
+        version: 0.8.3
+        output:
+            location: local-file-system
+            path: ../app/server
+```
+</CodeBlock>
+
+### Step 3: Generate code
+
+Run the [CLI](../cli-api/overview.mdx#) command `fern generate --group spring-server`. 
+
+### Step 4: Implement the functions 
+
+Provide the business logic by implementing each function.
+
+### Step 5: Run the server
+
+```bash
+// if using Maven
+$ mvn spring-boot:run
+
+// if using Gradle
+$ gradle bootRun
+```
+
+### Step 6: Call the API 🚀
+
+```bash
+$ curl --location --request GET --silent 'localhost:8080/movies/titanic' | jq .
+{
+  "id": "titantic",
+  "title": "Titanic",
+  "rating": 9.8
+}
+
+$ curl --location --request GET --silent 'localhost:8080/movies/oceans-11' | jq .
+{
+  "error": "MovieDoesNotExistError",
+  "errorInstanceId": "f6e1d69c-bf97-42d5-bc89-5e42773e3880",
+  "content": "oceans-11"
+}
+```
+
+</Steps>
+
+## Advanced Configurations
+
+Tailor the `config` of the Spring Boot server generator to your needs.
+
+```yaml
+wrappedAliases: 
+    type: boolean
+    default: true
+enablePublicConstructors: 
+    type: boolean
+    default: false
+```
+
+<Note>The configuration options are accessible in [`SpringCustomConfig.java`](https://github.com/fern-api/fern/blob/main/generators/java/spring/src/main/java/com/fern/java/spring/SpringCustomConfig.java).</Note>
+
+### Example Configuration
+
+<CodeBlock title="generators.yml">
+```diff
+groups:
+  spring-server:
+    generators:
+      - name: fernapi/fern-java-spring
+        version: 0.8.3
+        output:
+            location: local-file-system
+            path: ../app/server
++       config:
++           wrappedAliases: false
++           enablePublicConstructors: true
+```
+</CodeBlock>
