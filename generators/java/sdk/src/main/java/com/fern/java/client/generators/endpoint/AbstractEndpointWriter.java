@@ -16,9 +16,12 @@
 
 package com.fern.java.client.generators.endpoint;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fern.irV42.model.commons.ErrorId;
 import com.fern.irV42.model.commons.TypeId;
 import com.fern.irV42.model.environment.EnvironmentBaseUrlId;
+import com.fern.irV42.model.errors.ErrorDeclaration;
 import com.fern.irV42.model.http.BytesRequest;
 import com.fern.irV42.model.http.FileDownloadResponse;
 import com.fern.irV42.model.http.FileProperty;
@@ -62,6 +65,7 @@ import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass
 import com.fern.java.client.generators.endpoint.HttpUrlBuilder.PathParamInfo;
 import com.fern.java.client.generators.visitors.FilePropertyIsOptional;
 import com.fern.java.generators.object.EnrichedObjectProperty;
+import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.utils.JavaDocUtils;
 import com.squareup.javapoet.ClassName;
@@ -74,6 +78,7 @@ import com.squareup.javapoet.TypeName;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -104,6 +109,7 @@ public abstract class AbstractEndpointWriter {
     private final Set<String> endpointParameterNames = new HashSet<>();
     protected final ClassName baseErrorClassName;
     protected final ClassName apiErrorClassName;
+    private final Map<ErrorId, GeneratedJavaFile> generatedErrors;
 
     public AbstractEndpointWriter(
             HttpService httpService,
@@ -112,7 +118,8 @@ public abstract class AbstractEndpointWriter {
             ClientGeneratorContext clientGeneratorContext,
             FieldSpec clientOptionsField,
             GeneratedClientOptions generatedClientOptions,
-            GeneratedEnvironmentsClass generatedEnvironmentsClass) {
+            GeneratedEnvironmentsClass generatedEnvironmentsClass,
+            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         this.httpService = httpService;
         this.httpEndpoint = httpEndpoint;
         this.clientOptionsField = clientOptionsField;
@@ -133,6 +140,7 @@ public abstract class AbstractEndpointWriter {
                 .getApiErrorClassName(
                         clientGeneratorContext.getGeneratorConfig().getOrganization(),
                         clientGeneratorContext.getGeneratorConfig().getWorkspaceName());
+        this.generatedErrors = generatedErrors;
     }
 
     public static CodeBlock stringify(String reference, TypeName typeName) {
@@ -351,16 +359,70 @@ public abstract class AbstractEndpointWriter {
         }
         httpResponseBuilder.endControlFlow();
         httpResponseBuilder.addStatement(
-                "throw new $T($S + $L.code(), $L.code(), $T.$L.readValue($L != null ? $L.string() : \"{}\", $T.class))",
-                apiErrorClassName,
-                "Error with status code ",
-                getResponseName(),
-                getResponseName(),
-                generatedObjectMapper.getClassName(),
-                generatedObjectMapper.jsonMapperStaticField().name,
+                "$T $L = $L != null ? $L.string() : $S",
+                String.class,
+                getResponseBodyStringName(),
                 getResponseBodyName(),
                 getResponseBodyName(),
-                Object.class);
+                "{}");
+
+        // map to status-specific errors
+        if (clientGeneratorContext.getIr().getErrorDiscriminationStrategy().isStatusCode()) {
+            List<ErrorDeclaration> errorDeclarations = httpEndpoint.getErrors().get().stream()
+                    .map(responseError -> clientGeneratorContext
+                            .getIr()
+                            .getErrors()
+                            .get(responseError.getError().getErrorId()))
+                    .sorted(Comparator.comparingInt(ErrorDeclaration::getStatusCode))
+                    .collect(Collectors.toList());
+            boolean multipleErrors = errorDeclarations.size() > 1;
+            httpResponseBuilder.beginControlFlow("try");
+            if (multipleErrors) {
+                httpResponseBuilder.beginControlFlow("switch ($L.code())", getResponseName());
+            }
+            errorDeclarations.forEach(errorDeclaration -> {
+                GeneratedJavaFile generatedError =
+                        generatedErrors.get(errorDeclaration.getName().getErrorId());
+                ClassName errorClassName = generatedError.getClassName();
+                Optional<TypeName> bodyTypeName = errorDeclaration.getType().map(typeReference -> clientGeneratorContext
+                        .getPoetTypeNameMapper()
+                        .convertToTypeName(true, typeReference));
+                if (multipleErrors) {
+                    httpResponseBuilder.add("case $L:", errorDeclaration.getStatusCode());
+                } else {
+                    httpResponseBuilder.beginControlFlow(
+                            "if ($L.code() == $L)", getResponseName(), errorDeclaration.getStatusCode());
+                }
+                httpResponseBuilder.addStatement(
+                        "throw new $T($T.$L.readValue($L, $T.class))",
+                        errorClassName,
+                        generatedObjectMapper.getClassName(),
+                        generatedObjectMapper.jsonMapperStaticField().name,
+                        getResponseBodyStringName(),
+                        bodyTypeName.orElse(TypeName.get(Object.class)));
+                if (!multipleErrors) {
+                    httpResponseBuilder.endControlFlow();
+                }
+            });
+            if (multipleErrors) {
+                httpResponseBuilder.endControlFlow();
+            }
+        }
+        httpResponseBuilder
+                .endControlFlow()
+                .beginControlFlow("catch ($T ignored)", JsonProcessingException.class)
+                .endControlFlow()
+                .addStatement(
+                        "throw new $T($S + $L.code(), $L.code(), $T.$L.readValue($L, $T.class))",
+                        apiErrorClassName,
+                        "Error with status code ",
+                        getResponseName(),
+                        getResponseName(),
+                        generatedObjectMapper.getClassName(),
+                        generatedObjectMapper.jsonMapperStaticField().name,
+                        getResponseBodyStringName(),
+                        Object.class);
+
         httpResponseBuilder
                 .endControlFlow()
                 .beginControlFlow("catch ($T e)", IOException.class)
@@ -407,6 +469,10 @@ public abstract class AbstractEndpointWriter {
 
     private String getResponseBodyName() {
         return getVariableName("responseBody");
+    }
+
+    private String getResponseBodyStringName() {
+        return getVariableName("responseBodyString");
     }
 
     protected final String getOkhttpRequestName() {

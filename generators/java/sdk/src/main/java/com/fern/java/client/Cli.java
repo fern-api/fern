@@ -32,7 +32,6 @@ import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.StreamGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
-import com.fern.java.output.GeneratedFile;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.output.GeneratedResourcesJavaFile;
@@ -215,12 +214,12 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         generatedTypes.getInterfaces().values().forEach(this::addGeneratedFile);
 
         // errors
-        Map<ErrorId, GeneratedFile> generatedErrors = KeyedStream.stream(
+        Map<ErrorId, GeneratedJavaFile> generatedErrors = KeyedStream.stream(
                         context.getIr().getErrors())
                 .map(errorDeclaration -> {
                     ErrorGenerator errorGenerator =
                             new ErrorGenerator(context, generatedApiErrorFile, errorDeclaration);
-                    GeneratedFile exception = errorGenerator.generateFile();
+                    GeneratedJavaFile exception = errorGenerator.generateFile();
                     this.addGeneratedFile(exception);
                     return exception;
                 })
@@ -255,7 +254,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                     generatedSuppliersFile,
                     generatedEnvironmentsClass,
                     generatedRequestOptions,
-                    generatedTypes.getInterfaces());
+                    generatedTypes.getInterfaces(),
+                    generatedErrors);
             GeneratedClient generatedClient = httpServiceClientGenerator.generateFile();
             this.addGeneratedFile(generatedClient);
             generatedClient.wrappedRequests().forEach(this::addGeneratedFile);
@@ -271,7 +271,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 generatedEnvironmentsClass,
                 generatedRequestOptions,
                 generatedTypes.getInterfaces(),
-                generatedOAuthTokenSupplier);
+                generatedOAuthTokenSupplier,
+                generatedErrors);
         GeneratedRootClient generatedRootClient = rootClientGenerator.generateFile();
         this.addGeneratedFile(generatedRootClient);
         this.addGeneratedFile(generatedRootClient.builderClass());

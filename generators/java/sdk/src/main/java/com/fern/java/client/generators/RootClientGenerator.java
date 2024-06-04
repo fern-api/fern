@@ -25,6 +25,7 @@ import com.fern.irV42.model.auth.OAuthClientCredentials;
 import com.fern.irV42.model.auth.OAuthConfiguration;
 import com.fern.irV42.model.auth.OAuthScheme;
 import com.fern.irV42.model.commons.EndpointReference;
+import com.fern.irV42.model.commons.ErrorId;
 import com.fern.irV42.model.commons.TypeId;
 import com.fern.irV42.model.ir.Subpackage;
 import com.fern.irV42.model.types.Literal;
@@ -64,6 +65,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
     private final ClassName builderName;
     private final GeneratedJavaFile requestOptionsFile;
+    private final Map<ErrorId, GeneratedJavaFile> generatedErrors;
 
     public RootClientGenerator(
             AbstractGeneratorContext<?, ?> generatorContext,
@@ -74,7 +76,8 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
             GeneratedJavaFile requestOptionsFile,
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
-            Optional<GeneratedJavaFile> generatedOAuthTokenSupplier) {
+            Optional<GeneratedJavaFile> generatedOAuthTokenSupplier,
+            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         super(
                 generatorContext
                         .getPoetClassNameFactory()
@@ -90,6 +93,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
         this.generatedEnvironmentsClass = generatedEnvironmentsClass;
         this.allGeneratedInterfaces = allGeneratedInterfaces;
         this.generatedOAuthTokenSupplier = generatedOAuthTokenSupplier;
+        this.generatedErrors = generatedErrors;
         this.builderName = ClassName.get(className.packageName(), className.simpleName() + "Builder");
         this.requestOptionsFile = requestOptionsFile;
     }
@@ -105,7 +109,8 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                 allGeneratedInterfaces,
                 generatedSuppliersFile,
                 requestOptionsFile,
-                generatorContext.getIr().getRootPackage());
+                generatorContext.getIr().getRootPackage(),
+                generatedErrors);
         Result result = clientGeneratorUtils.buildClients();
 
         TypeSpec builderTypeSpec = getClientBuilder();

@@ -4,7 +4,6 @@ import com.fern.irV42.model.errors.ErrorDeclaration;
 import com.fern.irV42.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
-import com.fern.java.output.GeneratedFile;
 import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -38,7 +37,7 @@ public class ErrorGenerator extends AbstractFileGenerator {
     }
 
     @Override
-    public GeneratedFile generateFile() {
+    public GeneratedJavaFile generateFile() {
         TypeSpec.Builder errorTypeSpecBuilder = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .superclass(baseErrorClass.getClassName());
