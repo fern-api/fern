@@ -36,24 +36,24 @@ groups:
         output:
           location: pypi
           token: ${PYPI_TOKEN}
-          package-name: YOUR_ORGANIZATION # <---- add this field
+          package-name: your-package-name # <---- add this field
         ...
      - name: fernapi/fern-typescript-node-sdk
         version: 0.20.9
         output:
           location: npm
           token: ${NPM_TOKEN}
-          package-name: YOUR_ORGANIZATION # <---- add this field
+          package-name: your-package-name # <---- add this field
      - name: fernapi/fern-ruby-sdk
         version: 0.6.3
         output:
           location: rubygems
           token: ${RUBYGEMS_TOKEN}
-          package-name: YOUR_ORGANIZATION # <---- add this field
+          package-name: your-package-name # <---- add this field
      - name: fernapi/fern-go-sdk
         version: 0.22.0
         github:
-          repository: YOUR_ORGANIZATION/YOUR_ORGANIZATION-go # <---- add this field
+          repository: your-organization/your-repository # <---- add this field
         ...        
 ```
 </CodeBlock>
@@ -65,10 +65,10 @@ groups:
 navigation:
   - api: API Reference
     snippets:
-      python: YOUR_ORGANIZATION  # <---- needs to match the naming in generators.yml
-      typescript: YOUR_ORGANIZATION 
-      ruby: YOUR_ORGANIZATION
-      go: https://github.com/YOUR_ORGANIZATION/YOUR_ORGANIZATION-go
+      python: your-package-name  # <---- needs to match the naming in generators.yml
+      typescript: your-package-name
+      ruby: your-package-name
+      go: https://github.com/your-organization/your-repository # <---- needs the https://github.com/ prefix
 ```
 </CodeBlock>
 
