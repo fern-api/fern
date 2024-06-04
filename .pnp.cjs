@@ -6472,7 +6472,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["tar", "npm:6.2.1"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
-            ["validate-npm-package-name", "npm:4.0.0"],\
+            ["validate-npm-package-name", "npm:5.0.1"],\
             ["yargs", "npm:17.7.2"]\
           ],\
           "linkType": "SOFT"\
@@ -13315,14 +13315,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/builtins-npm-1.0.3-f09d2d57f2-47ce94f7ee.zip/node_modules/builtins/",\
           "packageDependencies": [\
             ["builtins", "npm:1.0.3"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:5.0.1", {\
-          "packageLocation": "./.yarn/cache/builtins-npm-5.0.1-6d4820dd76-66d204657f.zip/node_modules/builtins/",\
-          "packageDependencies": [\
-            ["builtins", "npm:5.0.1"],\
-            ["semver", "npm:7.3.8"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -29361,11 +29353,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:4.0.0", {\
-          "packageLocation": "./.yarn/cache/validate-npm-package-name-npm-4.0.0-3f82c77ef8-a32fd537ba.zip/node_modules/validate-npm-package-name/",\
+        ["npm:5.0.1", {\
+          "packageLocation": "./.yarn/cache/validate-npm-package-name-npm-5.0.1-5af9a082cd-0d583a1af2.zip/node_modules/validate-npm-package-name/",\
           "packageDependencies": [\
-            ["validate-npm-package-name", "npm:4.0.0"],\
-            ["builtins", "npm:5.0.1"]\
+            ["validate-npm-package-name", "npm:5.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\
