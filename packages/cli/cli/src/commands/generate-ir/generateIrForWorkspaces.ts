@@ -96,7 +96,7 @@ async function getIntermediateRepresentation({
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
-    casingVersion: CasingVersion | undefined;
+    casingVersion: generatorsYml.CasingVersion | undefined;
     disableExamples: boolean;
     audiences: Audiences;
     version: string | undefined;
