@@ -9,7 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Improvement: We now generate Exception types for all errors that are defined in the IR. Generated clients with an 
   error discrimination strategy of "status code" will throw one of these typed Exceptions based on the status code of 
-  error responses.
+  error responses. Example error type:
+  ```java
+  public final class MyCompanyAuthBadRequest extends MyCompanyAuthApiError {
+    public MyCompanyAuthBadRequest(Object body) {
+        super("BadRequest", 400, body);
+    }
+  }
+  ```
 
 ## [0.8.1] - 2024-05-30
 
