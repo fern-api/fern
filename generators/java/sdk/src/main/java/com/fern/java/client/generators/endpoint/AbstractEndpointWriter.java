@@ -102,6 +102,8 @@ public abstract class AbstractEndpointWriter {
     private final GeneratedObjectMapper generatedObjectMapper;
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
     private final Set<String> endpointParameterNames = new HashSet<>();
+    protected final ClassName baseErrorClassName;
+    protected final ClassName apiErrorClassName;
 
     public AbstractEndpointWriter(
             HttpService httpService,
@@ -121,6 +123,16 @@ public abstract class AbstractEndpointWriter {
         this.endpointMethodBuilder = MethodSpec.methodBuilder(
                         httpEndpoint.getName().get().getCamelCase().getSafeName())
                 .addModifiers(Modifier.PUBLIC);
+        this.baseErrorClassName = clientGeneratorContext
+                .getPoetClassNameFactory()
+                .getBaseErrorClassName(
+                        clientGeneratorContext.getGeneratorConfig().getOrganization(),
+                        clientGeneratorContext.getGeneratorConfig().getWorkspaceName());
+        this.apiErrorClassName = clientGeneratorContext
+                .getPoetClassNameFactory()
+                .getApiErrorClassName(
+                        clientGeneratorContext.getGeneratorConfig().getOrganization(),
+                        clientGeneratorContext.getGeneratorConfig().getWorkspaceName());
     }
 
     public static CodeBlock stringify(String reference, TypeName typeName) {
@@ -301,7 +313,6 @@ public abstract class AbstractEndpointWriter {
     public final CodeBlock getResponseParserCodeBlock() {
         String defaultedClientName = "client";
         CodeBlock.Builder httpResponseBuilder = CodeBlock.builder()
-                .beginControlFlow("try")
                 // Default the request client
                 .addStatement(
                         "$T $L = $N.$N()",
@@ -321,8 +332,8 @@ public abstract class AbstractEndpointWriter {
                         generatedClientOptions.httpClientWithTimeout(),
                         REQUEST_OPTIONS_PARAMETER_NAME)
                 .endControlFlow()
-                .addStatement(
-                        "$T $L = $N.newCall($L).execute()",
+                .beginControlFlow(
+                        "try ($T $L = $N.newCall($L).execute())",
                         Response.class,
                         getResponseName(),
                         defaultedClientName,
@@ -340,8 +351,10 @@ public abstract class AbstractEndpointWriter {
         }
         httpResponseBuilder.endControlFlow();
         httpResponseBuilder.addStatement(
-                "throw new $T($L.code(), $T.$L.readValue($L != null ? $L.string() : \"{}\", $T.class))",
-                clientGeneratorContext.getPoetClassNameFactory().getApiErrorClassName(),
+                "throw new $T($S + $L.code(), $L.code(), $T.$L.readValue($L != null ? $L.string() : \"{}\", $T.class))",
+                apiErrorClassName,
+                "Error with status code ",
+                getResponseName(),
                 getResponseName(),
                 generatedObjectMapper.getClassName(),
                 generatedObjectMapper.jsonMapperStaticField().name,
@@ -351,7 +364,7 @@ public abstract class AbstractEndpointWriter {
         httpResponseBuilder
                 .endControlFlow()
                 .beginControlFlow("catch ($T e)", IOException.class)
-                .addStatement("throw new $T(e)", RuntimeException.class)
+                .addStatement("throw new $T($S, e)", baseErrorClassName, "Network error executing HTTP request")
                 .endControlFlow()
                 .build();
         return httpResponseBuilder.build();

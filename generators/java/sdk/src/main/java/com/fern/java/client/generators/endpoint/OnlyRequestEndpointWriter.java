@@ -16,6 +16,7 @@
 
 package com.fern.java.client.generators.endpoint;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.irV42.model.http.BytesRequest;
 import com.fern.irV42.model.http.HttpEndpoint;
 import com.fern.irV42.model.http.HttpRequestBodyReference;
@@ -283,8 +284,8 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                 codeBlock.endControlFlow();
             }
             codeBlock
-                    .beginControlFlow("catch($T e)", Exception.class)
-                    .addStatement("throw new $T(e)", RuntimeException.class)
+                    .beginControlFlow("catch($T e)", JsonProcessingException.class)
+                    .addStatement("throw new $T($S, e)", baseErrorClassName, "Failed to serialize request")
                     .endControlFlow();
             return null;
         }
