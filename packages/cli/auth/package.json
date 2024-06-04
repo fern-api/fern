@@ -33,7 +33,7 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/venus-api-sdk": "0.0.38",
     "jsonwebtoken": "^9.0.2",
-    "jwks-rsa": "^3.0.0"
+    "jwks-rsa": "^3.1.0"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
