@@ -130,7 +130,7 @@ public class CustomAuthClient {
                     }
                 default:
                     throw new ApiError(
-                            "ApiError",
+                            "Error with status code " + response.code(),
                             response.code(),
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
             }
