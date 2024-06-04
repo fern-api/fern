@@ -92,22 +92,22 @@ public class CustomAuthClient {
      */
     public boolean postWithCustomAuth(Object request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-            .newBuilder()
-            .addPathSegments("custom-auth")
-            .build();
+                .newBuilder()
+                .addPathSegments("custom-auth")
+                .build();
         RequestBody body;
         try {
             body = RequestBody.create(
-                ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
-            .url(httpUrl)
-            .method("POST", body)
-            .headers(Headers.of(clientOptions.headers(requestOptions)))
-            .addHeader("Content-Type", "application/json")
-            .build();
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
         try {
             OkHttpClient client = clientOptions.httpClient();
             if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -125,14 +125,14 @@ public class CustomAuthClient {
                 case 401:
                     try {
                         throw new UnauthorizedRequestError(ObjectMappers.JSON_MAPPER.readValue(
-                            responseBodyString, UnauthorizedRequestErrorBody.class));
+                                responseBodyString, UnauthorizedRequestErrorBody.class));
                     } catch (JsonProcessingException ignored) {
                     }
                 default:
                     throw new ApiError(
-                        "ApiError",
-                        response.code(),
-                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                            "ApiError",
+                            response.code(),
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
