@@ -9,6 +9,7 @@ import com.seed.customAuth.core.MediaTypes;
 import com.seed.customAuth.core.ObjectMappers;
 import com.seed.customAuth.core.RequestOptions;
 import com.seed.customAuth.errors.AirwallexApiError;
+import com.seed.customAuth.errors.AirwallexError;
 import com.seed.customAuth.errors.BadRequestErrorAirwallex;
 import com.seed.customAuth.errors.UnauthorizedRequestErrorAirwallex;
 import com.seed.customAuth.resources.errors.types.UnauthorizedRequestErrorBody;
@@ -60,10 +61,10 @@ public class CustomAuthClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class);
             }
             throw new AirwallexApiError(
-                "Default",
-                response.code(),
-                ObjectMappers.JSON_MAPPER.readValue(
-                    responseBody != null ? responseBody.string() : "{}", Object.class));
+                    "Default",
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(
+                            responseBody != null ? responseBody.string() : "{}", Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -88,8 +89,8 @@ public class CustomAuthClient {
         try {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new AirwallexError("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -97,12 +98,11 @@ public class CustomAuthClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
-            Response response = client.newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class);
@@ -111,18 +111,20 @@ public class CustomAuthClient {
             try {
                 switch (response.code()) {
                     case 400:
-                        throw new BadRequestErrorAirwallex(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                        throw new BadRequestErrorAirwallex(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
                     case 401:
                         throw new UnauthorizedRequestErrorAirwallex(ObjectMappers.JSON_MAPPER.readValue(
-                            responseBodyString, UnauthorizedRequestErrorBody.class));
+                                responseBodyString, UnauthorizedRequestErrorBody.class));
                 }
-            } catch (JsonProcessingException ignored) {}
+            } catch (JsonProcessingException ignored) {
+            }
             throw new AirwallexApiError(
-                "Error with status code " + response.code(),
-                response.code(),
-                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new AirwallexError("Network error executing HTTP request", e);
         }
     }
 }
