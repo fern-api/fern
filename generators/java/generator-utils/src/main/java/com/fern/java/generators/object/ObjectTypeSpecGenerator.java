@@ -174,7 +174,7 @@ public final class ObjectTypeSpecGenerator {
                             ObjectMappersGenerator.STRINGIFY_METHOD_NAME)
                     .build();
         }
-        return ObjectMethodFactory.createToStringMethod(
+        return ObjectMethodFactory.createToStringMethodFromFieldSpecs(
                 objectClassName,
                 allEnrichedProperties.stream()
                         .map(EnrichedObjectProperty::fieldSpec)

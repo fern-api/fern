@@ -6,6 +6,7 @@ import com.fern.irV42.model.http.HttpService;
 import com.fern.irV42.model.http.SdkRequestWrapper;
 import com.fern.irV42.model.ir.Subpackage;
 import com.fern.java.AbstractNonModelPoetClassNameFactory;
+import com.fern.java.utils.CasingUtils;
 import com.squareup.javapoet.ClassName;
 import java.util.List;
 import java.util.Optional;
@@ -16,22 +17,23 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
         super(packagePrefixTokens);
     }
 
-    public ClassName getErrorClassName(ErrorDeclaration errorDeclaration) {
+    public ClassName getErrorClassName(ErrorDeclaration errorDeclaration, String organization, String workspaceName) {
         String packageName = getErrorsPackageName(errorDeclaration.getName().getFernFilepath());
         return ClassName.get(
                 packageName,
-                errorDeclaration.getName().getName().getPascalCase().getSafeName());
+                getBaseNamePrefix(organization, workspaceName)
+                        + errorDeclaration.getName().getName().getPascalCase().getSafeName());
     }
 
     public ClassName getRetryInterceptorClassName() {
         return ClassName.get(getCorePackage(), "RetryInterceptor");
     }
 
-    public final ClassName getRequestOptionsClassName() {
+    public ClassName getRequestOptionsClassName() {
         return ClassName.get(getCorePackage(), "RequestOptions");
     }
 
-    public final ClassName getIdempotentRequestOptionsClassName() {
+    public ClassName getIdempotentRequestOptionsClassName() {
         return ClassName.get(getCorePackage(), "IdempotentRequestOptions");
     }
 
@@ -51,8 +53,17 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
                 packageName, sdkRequestWrapper.getWrapperName().getPascalCase().getSafeName());
     }
 
-    public ClassName getApiErrorClassName() {
-        return getCoreClassName("ApiError");
+    public ClassName getApiErrorClassName(String organization, String workspaceName) {
+        return getCoreClassName(getBaseNamePrefix(organization, workspaceName) + "ApiError");
+    }
+
+    public ClassName getBaseErrorClassName(String organization, String workspaceName) {
+        return getCoreClassName(getBaseNamePrefix(organization, workspaceName) + "Error");
+    }
+
+    public static String getBaseNamePrefix(String organization, String workspaceName) {
+        return CasingUtils.convertKebabCaseToUpperCamelCase(organization)
+                + CasingUtils.convertKebabCaseToUpperCamelCase(workspaceName);
     }
 
     private static String getClientName(FernFilepath fernFilepath) {
