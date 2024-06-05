@@ -72,7 +72,7 @@ public class UsersClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedPaginationApiError(
@@ -124,7 +124,7 @@ public class UsersClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedPaginationApiError(
@@ -165,7 +165,7 @@ public class UsersClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersExtendedResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersExtendedResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedPaginationApiError(
@@ -206,7 +206,7 @@ public class UsersClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UsernameCursor.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UsernameCursor.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedPaginationApiError(
@@ -246,7 +246,7 @@ public class UsersClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UsernameContainer.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UsernameContainer.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedPaginationApiError(

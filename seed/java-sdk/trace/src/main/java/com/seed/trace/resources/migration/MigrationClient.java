@@ -52,7 +52,7 @@ public class MigrationClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(
+                return ObjectMappers.JSON_MAPPER.readValue(
                         responseBody.string(), new TypeReference<List<Migration>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";

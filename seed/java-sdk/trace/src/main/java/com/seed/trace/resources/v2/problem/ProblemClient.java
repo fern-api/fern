@@ -56,7 +56,7 @@ public class ProblemClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(
+                return ObjectMappers.JSON_MAPPER.readValue(
                         responseBody.string(), new TypeReference<List<LightweightProblemInfoV2>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -98,7 +98,7 @@ public class ProblemClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(
+                return ObjectMappers.JSON_MAPPER.readValue(
                         responseBody.string(), new TypeReference<List<ProblemInfoV2>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -141,7 +141,7 @@ public class ProblemClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ProblemInfoV2.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ProblemInfoV2.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedTraceApiError(
@@ -185,7 +185,7 @@ public class ProblemClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ProblemInfoV2.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ProblemInfoV2.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedTraceApiError(

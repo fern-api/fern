@@ -67,7 +67,7 @@ public class ProblemClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), CreateProblemResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), CreateProblemResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedTraceApiError(
@@ -117,7 +117,7 @@ public class ProblemClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UpdateProblemResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UpdateProblemResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedTraceApiError(
@@ -207,7 +207,7 @@ public class ProblemClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GetDefaultStarterFilesResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GetDefaultStarterFilesResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedTraceApiError(

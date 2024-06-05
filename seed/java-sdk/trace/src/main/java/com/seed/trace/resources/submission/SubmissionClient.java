@@ -59,7 +59,7 @@ public class SubmissionClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ExecutionSessionResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ExecutionSessionResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedTraceApiError(
@@ -100,7 +100,7 @@ public class SubmissionClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(
+                return ObjectMappers.JSON_MAPPER.readValue(
                         responseBody.string(), new TypeReference<Optional<ExecutionSessionResponse>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -177,7 +177,7 @@ public class SubmissionClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(
+                return ObjectMappers.JSON_MAPPER.readValue(
                         responseBody.string(), GetExecutionSessionStateResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";

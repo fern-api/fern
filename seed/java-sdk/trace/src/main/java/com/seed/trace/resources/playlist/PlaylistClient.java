@@ -74,7 +74,7 @@ public class PlaylistClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Playlist.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Playlist.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedTraceApiError(
@@ -125,7 +125,7 @@ public class PlaylistClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(
+                return ObjectMappers.JSON_MAPPER.readValue(
                         responseBody.string(), new TypeReference<List<Playlist>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -168,7 +168,7 @@ public class PlaylistClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Playlist.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Playlist.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedTraceApiError(
@@ -232,7 +232,7 @@ public class PlaylistClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(
+                return ObjectMappers.JSON_MAPPER.readValue(
                         responseBody.string(), new TypeReference<Optional<Playlist>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";

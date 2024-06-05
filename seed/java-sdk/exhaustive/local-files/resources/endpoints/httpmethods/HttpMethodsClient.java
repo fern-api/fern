@@ -54,7 +54,7 @@ public class HttpMethodsClient {
     try (Response response = client.newCall(okhttpRequest).execute()) {
       ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
-        returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
+        return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
       throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
@@ -94,7 +94,7 @@ public class HttpMethodsClient {
     try (Response response = client.newCall(okhttpRequest).execute()) {
       ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
-        returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class);
+        return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
       throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
@@ -135,7 +135,7 @@ public class HttpMethodsClient {
     try (Response response = client.newCall(okhttpRequest).execute()) {
       ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
-        returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class);
+        return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
       throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
@@ -180,7 +180,7 @@ public class HttpMethodsClient {
     try (Response response = client.newCall(okhttpRequest).execute()) {
       ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
-        returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class);
+        return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
       throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
@@ -213,7 +213,7 @@ public class HttpMethodsClient {
     try (Response response = client.newCall(okhttpRequest).execute()) {
       ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
-        returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class);
+        return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
       throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));

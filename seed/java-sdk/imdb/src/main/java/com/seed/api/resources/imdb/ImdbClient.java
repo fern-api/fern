@@ -65,7 +65,7 @@ public class ImdbClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedApiApiError(
@@ -100,7 +100,7 @@ public class ImdbClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Movie.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Movie.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {

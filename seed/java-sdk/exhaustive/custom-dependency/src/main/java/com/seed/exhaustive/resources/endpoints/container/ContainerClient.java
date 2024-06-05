@@ -62,7 +62,7 @@ public class ContainerClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<List<String>>() {});
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<List<String>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedExhaustiveApiError(
@@ -105,7 +105,7 @@ public class ContainerClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(
+                return ObjectMappers.JSON_MAPPER.readValue(
                         responseBody.string(), new TypeReference<List<ObjectWithRequiredField>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -148,7 +148,7 @@ public class ContainerClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<Set<String>>() {});
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<Set<String>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedExhaustiveApiError(
@@ -191,7 +191,7 @@ public class ContainerClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(
+                return ObjectMappers.JSON_MAPPER.readValue(
                         responseBody.string(), new TypeReference<Set<ObjectWithRequiredField>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -234,7 +234,7 @@ public class ContainerClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(
+                return ObjectMappers.JSON_MAPPER.readValue(
                         responseBody.string(), new TypeReference<Map<String, String>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -279,7 +279,7 @@ public class ContainerClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(
+                return ObjectMappers.JSON_MAPPER.readValue(
                         responseBody.string(), new TypeReference<Map<String, ObjectWithRequiredField>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -330,7 +330,7 @@ public class ContainerClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                returnObjectMappers.JSON_MAPPER.readValue(
+                return ObjectMappers.JSON_MAPPER.readValue(
                         responseBody.string(), new TypeReference<Optional<ObjectWithRequiredField>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";

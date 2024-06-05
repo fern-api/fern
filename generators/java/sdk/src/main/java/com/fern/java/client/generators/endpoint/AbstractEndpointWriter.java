@@ -602,7 +602,7 @@ public abstract class AbstractEndpointWriter {
             if (isProperty) {
                 httpResponseBuilder.add("$T $L = ", responseType, getParsedResponseVariableName());
             } else {
-                httpResponseBuilder.add("return");
+                httpResponseBuilder.add("return ");
             }
             if (body.getResponseBodyType().isContainer() || isAliasContainer(body.getResponseBodyType())) {
                 httpResponseBuilder.addStatement(
