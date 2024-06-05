@@ -321,7 +321,7 @@ describe("casingsGenerator", () => {
         expect(actual).toEqual(expected);
     });
 
-    it("preservedCasing", () => {
+    it("preservedCasing when originally camel case", () => {
         const expected: Name = {
             originalName: "geTOAuth",
             camelCase: {
