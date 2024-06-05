@@ -138,6 +138,7 @@ export abstract class TestRunner {
         const outputMode = configuration?.outputMode ?? this.generator.workspaceConfig.defaultOutputMode;
         const irVersion = this.generator.workspaceConfig.irVersion;
         const publishMetadata = configuration?.publishMetadata ?? undefined;
+        const readme = configuration?.readmeConfig ?? undefined;
         const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
             absolutePathToAPIDefinition,
             taskContext,
@@ -180,8 +181,7 @@ export abstract class TestRunner {
                     outputFolder,
                     keepDocker: this.keepDocker,
                     publishMetadata,
-                    // TODO: Support readme fixtures in seed.
-                    readme: undefined
+                    readme
                 });
                 generationStopwatch.stop();
                 metrics.generationTime = generationStopwatch.duration();

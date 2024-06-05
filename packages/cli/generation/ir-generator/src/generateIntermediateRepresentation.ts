@@ -6,6 +6,7 @@ import {
     HttpEndpoint,
     IntermediateRepresentation,
     PathParameterLocation,
+    ReadmeConfig,
     ResponseErrors,
     ServiceId,
     ServiceTypeReferenceInfo,
@@ -26,6 +27,7 @@ import { convertWebhookGroup } from "./converters/convertWebhookGroup";
 import { constructHttpPath } from "./converters/services/constructHttpPath";
 import { convertHttpHeader, convertHttpService, convertPathParameters } from "./converters/services/convertHttpService";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
+import { EndpointSet } from "./EndpointSet";
 import { ExampleGenerator } from "./examples/ExampleGenerator";
 import { constructFernFileContext, constructRootApiFileContext, FernFileContext } from "./FernFileContext";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
@@ -49,7 +51,8 @@ export async function generateIntermediateRepresentation({
     keywords,
     smartCasing,
     disableExamples,
-    audiences
+    audiences,
+    readme
 }: {
     workspace: FernWorkspace;
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
@@ -57,6 +60,7 @@ export async function generateIntermediateRepresentation({
     smartCasing: boolean;
     disableExamples: boolean;
     audiences: Audiences;
+    readme: generatorsYml.ReadmeSchema | undefined;
 }): Promise<IntermediateRepresentation> {
     const casingsGenerator = constructCasingsGenerator({ generationLanguage, keywords, smartCasing });
 
@@ -146,7 +150,7 @@ export async function generateIntermediateRepresentation({
         },
         webhookGroups: {},
         websocketChannels: {},
-        reamdeConfig: undefined
+        readmeConfig: undefined
     };
 
     const packageTreeGenerator = new PackageTreeGenerator();
@@ -364,6 +368,9 @@ export async function generateIntermediateRepresentation({
         filteredIr
     );
 
+    // Now that the IR is filtered for audiences, we can resolve the README.md configuration.
+    // This ensures that the README.md configuration is only resolved for the audiences that are present in the IR.
+
     const isAuthMandatory =
         workspace.definition.rootApiFile.contents.auth != null &&
         Object.values(intermediateRepresentationForAudiences.services).every((service) => {
@@ -382,6 +389,9 @@ export async function generateIntermediateRepresentation({
         return service.endpoints.some((endpoint) => endpoint.response?.body?.type === "fileDownload");
     });
 
+    const endpointSet = new EndpointSet(intermediateRepresentationForAudiences.services);
+    const readmeConfig = readme != null ? convertReadmeConfig({ endpointSet, readme }) : undefined;
+
     return {
         ...intermediateRepresentationForAudiences,
         ...packageTreeGenerator.build(filteredIr),
@@ -395,7 +405,8 @@ export async function generateIntermediateRepresentation({
                 sdkName: "X-Fern-SDK-Name",
                 sdkVersion: "X-Fern-SDK-Version"
             }
-        }
+        },
+        readmeConfig
     };
 }
 
@@ -510,5 +521,33 @@ function filterServiceTypeReferenceInfoForAudiences(
     return {
         sharedTypes: serviceTypeReferenceInfo.sharedTypes.filter((typeId) => filteredIr.hasTypeId(typeId)),
         typesReferencedOnlyByService: filteredTypesReferencedOnlyByService
+    };
+}
+
+function convertReadmeConfig({
+    endpointSet,
+    readme
+}: {
+    endpointSet: EndpointSet;
+    readme: generatorsYml.ReadmeSchema;
+}): ReadmeConfig {
+    return {
+        apiReferenceLink: readme.apiReferenceLink,
+        bannerLink: readme.bannerLink,
+        defaultEndpoint:
+            readme.defaultEndpoint != null
+                ? endpointSet.getEndpointForReadmeOrThrow(readme.defaultEndpoint).id
+                : undefined,
+        features:
+            readme.features != null
+                ? Object.fromEntries(
+                      Object.entries(readme.features).map(([featureId, endpoints]) => {
+                          return [
+                              featureId,
+                              endpoints.map((endpoint) => endpointSet.getEndpointForReadmeOrThrow(endpoint).id)
+                          ];
+                      })
+                  )
+                : undefined
     };
 }

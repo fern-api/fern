@@ -18,7 +18,8 @@ export async function generateIrForWorkspaces({
     audiences,
     version,
     keywords,
-    smartCasing
+    smartCasing,
+    readme
 }: {
     project: Project;
     irFilepath: AbsoluteFilePath;
@@ -28,6 +29,7 @@ export async function generateIrForWorkspaces({
     version: string | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
+    readme: generatorsYml.ReadmeSchema | undefined;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
@@ -63,7 +65,8 @@ export async function generateIrForWorkspaces({
                     smartCasing,
                     disableExamples: false,
                     audiences,
-                    version
+                    version,
+                    readme
                 });
 
                 const irOutputFilePath = path.resolve(irFilepath);
@@ -85,7 +88,8 @@ async function getIntermediateRepresentation({
     keywords,
     smartCasing,
     disableExamples,
-    version
+    version,
+    readme
 }: {
     workspace: FernWorkspace;
     context: TaskContext;
@@ -95,6 +99,7 @@ async function getIntermediateRepresentation({
     disableExamples: boolean;
     audiences: Audiences;
     version: string | undefined;
+    readme: generatorsYml.ReadmeSchema | undefined;
 }): Promise<unknown> {
     const intermediateRepresentation = await generateIrForFernWorkspace({
         workspace,
@@ -103,7 +108,8 @@ async function getIntermediateRepresentation({
         audiences,
         keywords,
         smartCasing,
-        disableExamples
+        disableExamples,
+        readme
     });
 
     if (version == null) {
