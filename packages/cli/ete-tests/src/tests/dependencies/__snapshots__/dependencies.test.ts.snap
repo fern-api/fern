@@ -537,6 +537,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
     },
     "webhookGroups": {},
     "websocketChannels": {},
+    "reamdeConfig": null,
     "subpackages": {
         "subpackage_imported": {
             "name": {
@@ -840,4 +841,4 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `2715399`;
+exports[`dependencies file dependencies 1`] = `2715425`;
