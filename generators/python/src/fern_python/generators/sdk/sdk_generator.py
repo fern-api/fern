@@ -1,5 +1,5 @@
 import json
-from typing import Optional, Sequence, Tuple, Union, cast
+from typing import Literal, Optional, Sequence, Tuple, Union, cast
 from uuid import uuid4
 
 import fern.ir.resources as ir_types
@@ -39,6 +39,9 @@ from .error_generator.error_generator import ErrorGenerator
 
 
 class SdkGenerator(AbstractGenerator):
+    def project_type(self) -> Literal["sdk", "pydantic", "fastapi"]:
+        return "sdk"
+
     def should_format_files(
         self,
         *,
