@@ -58,7 +58,7 @@ public class SeedValidationClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Type.class);
+                returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Type.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedValidationApiError(
@@ -94,7 +94,7 @@ public class SeedValidationClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Type.class);
+                returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Type.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedValidationApiError(

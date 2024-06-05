@@ -59,7 +59,7 @@ public class EnumClient {
     try (Response response = client.newCall(okhttpRequest).execute()) {
       ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
-        return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), WeatherReport.class);
+        returnObjectMappers.JSON_MAPPER.readValue(responseBody.string(), WeatherReport.class);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
       throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
