@@ -16,6 +16,7 @@
 
 package com.fern.java.client.generators.endpoint;
 
+import com.fern.irV42.model.commons.ErrorId;
 import com.fern.irV42.model.commons.NameAndWireValue;
 import com.fern.irV42.model.http.FileProperty;
 import com.fern.irV42.model.http.HttpEndpoint;
@@ -37,6 +38,7 @@ import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.client.generators.visitors.FilePropertyIsOptional;
 import com.fern.java.client.generators.visitors.GetFilePropertyKey;
 import com.fern.java.generators.object.EnrichedObjectProperty;
+import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
@@ -75,7 +77,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             ClientGeneratorContext clientGeneratorContext,
             SdkRequest sdkRequest,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
-            GeneratedWrappedRequest generatedWrappedRequest) {
+            GeneratedWrappedRequest generatedWrappedRequest,
+            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         super(
                 httpService,
                 httpEndpoint,
@@ -83,7 +86,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 clientGeneratorContext,
                 clientOptionsField,
                 generatedClientOptions,
-                generatedEnvironmentsClass);
+                generatedEnvironmentsClass,
+                generatedErrors);
         this.httpEndpoint = httpEndpoint;
         this.clientGeneratorContext = clientGeneratorContext;
         this.generatedWrappedRequest = generatedWrappedRequest;

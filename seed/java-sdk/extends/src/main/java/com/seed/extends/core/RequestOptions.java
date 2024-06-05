@@ -43,12 +43,13 @@ public final class RequestOptions {
 
     private TimeUnit timeoutTimeUnit = TimeUnit.SECONDS;
 
-    public Builder timeout(Optional<Integer> timeout) {
-      this.timeout = timeout;
+    public Builder timeout(Integer timeout) {
+      this.timeout = Optional.of(timeout);
       return this;
     }
 
-    public Builder timeoutTimeUnit(TimeUnit timeoutTimeUnit) {
+    public Builder timeout(Integer timeout, TimeUnit timeoutTimeUnit) {
+      this.timeout = Optional.of(timeout);
       this.timeoutTimeUnit = timeoutTimeUnit;
       return this;
     }
