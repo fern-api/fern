@@ -122,7 +122,7 @@ export async function convertHttpService({
                               )
                             : [],
                     requestBody: convertHttpRequestBody({ request: endpoint.request, file }),
-                    sdkRequest: convertHttpSdkRequest({
+                    sdkRequest: await convertHttpSdkRequest({
                         service: serviceDefinition,
                         request: endpoint.request,
                         file,
@@ -132,18 +132,20 @@ export async function convertHttpService({
                     errors: [...convertResponseErrors({ errors: endpoint.errors, file }), ...globalErrors],
                     examples:
                         endpoint.examples != null
-                            ? endpoint.examples.map((example) =>
-                                  convertExampleEndpointCall({
-                                      service: serviceDefinition,
-                                      endpoint,
-                                      example,
-                                      typeResolver,
-                                      errorResolver,
-                                      exampleResolver,
-                                      variableResolver,
-                                      file,
-                                      workspace
-                                  })
+                            ? await Promise.all(
+                                  endpoint.examples.map((example) =>
+                                      convertExampleEndpointCall({
+                                          service: serviceDefinition,
+                                          endpoint,
+                                          example,
+                                          typeResolver,
+                                          errorResolver,
+                                          exampleResolver,
+                                          variableResolver,
+                                          file,
+                                          workspace
+                                      })
+                                  )
                               )
                             : [],
                     pagination: await convertPagination({

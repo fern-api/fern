@@ -10,7 +10,7 @@ import { getViolationsForMisshapenExample } from "./getViolationsForMisshapenExa
 import { validateObjectExample } from "./validateObjectExample";
 import { validateTypeReferenceExample } from "./validateTypeReferenceExample";
 
-export function validateUnionExample({
+export async function validateUnionExample({
     typeName,
     rawUnion,
     example,
@@ -26,7 +26,7 @@ export function validateUnionExample({
     exampleResolver: ExampleResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): ExampleViolation[] {
+}): Promise<ExampleViolation[]> {
     if (!isPlainObject(example)) {
         return getViolationsForMisshapenExample(example, "an object");
     }
@@ -66,7 +66,7 @@ export function validateUnionExample({
         return getRuleViolationForExtraProperties(nonDiscriminantPropertyExamples);
     }
 
-    const resolvedType = typeResolver.resolveType({
+    const resolvedType = await typeResolver.resolveType({
         type,
         file
     });
@@ -77,7 +77,7 @@ export function validateUnionExample({
     }
 
     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
-        return validateObjectExample({
+        return await validateObjectExample({
             typeName,
             typeNameForBreadcrumb: typeName,
             rawObject: resolvedType.declaration,

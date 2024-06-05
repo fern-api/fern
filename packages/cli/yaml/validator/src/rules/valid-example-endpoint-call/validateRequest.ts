@@ -3,7 +3,7 @@ import { FernWorkspace } from "@fern-api/workspace-loader";
 import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
 import { RuleViolation } from "../../Rule";
 
-export function validateRequest({
+export async function validateRequest({
     example,
     endpoint,
     typeResolver,
@@ -17,7 +17,7 @@ export function validateRequest({
     exampleResolver: ExampleResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): RuleViolation[] {
+}): Promise<RuleViolation[]> {
     const violations: RuleViolation[] = [];
 
     const body = typeof endpoint.request !== "string" ? endpoint.request?.body : endpoint.request;
@@ -31,19 +31,21 @@ export function validateRequest({
         }
     } else if (isInlineRequestBody(body)) {
         violations.push(
-            ...ExampleValidators.validateObjectExample({
-                typeName: undefined,
-                typeNameForBreadcrumb: "<Inlined Request>",
-                rawObject: {
-                    extends: body.extends,
-                    properties: body.properties ?? {}
-                },
-                file,
-                typeResolver,
-                exampleResolver,
-                workspace,
-                example
-            }).map((val): RuleViolation => {
+            ...(
+                await ExampleValidators.validateObjectExample({
+                    typeName: undefined,
+                    typeNameForBreadcrumb: "<Inlined Request>",
+                    rawObject: {
+                        extends: body.extends,
+                        properties: body.properties ?? {}
+                    },
+                    file,
+                    typeResolver,
+                    exampleResolver,
+                    workspace,
+                    example
+                })
+            ).map((val): RuleViolation => {
                 return { severity: "error", message: val.message };
             })
         );

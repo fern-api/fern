@@ -7,8 +7,8 @@ import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName";
 import { ObjectPathItem, ResolvedType } from "./ResolvedType";
 
 export interface TypeResolver {
-    resolveType: (args: { type: string; file: FernFileContext }) => ResolvedType | undefined;
-    resolveTypeOrThrow: (args: { type: string; file: FernFileContext }) => ResolvedType;
+    resolveType: (args: { type: string; file: FernFileContext }) => Promise<ResolvedType | undefined>;
+    resolveTypeOrThrow: (args: { type: string; file: FernFileContext }) => Promise<ResolvedType>;
     getDeclarationOfNamedType: (args: {
         referenceToNamedType: string;
         file: FernFileContext;
@@ -17,8 +17,11 @@ export interface TypeResolver {
         referenceToNamedType: string;
         file: FernFileContext;
     }) => Promise<RawTypeDeclarationInfo>;
-    resolveNamedType: (args: { referenceToNamedType: string; file: FernFileContext }) => ResolvedType | undefined;
-    resolveNamedTypeOrThrow: (args: { referenceToNamedType: string; file: FernFileContext }) => ResolvedType;
+    resolveNamedType: (args: {
+        referenceToNamedType: string;
+        file: FernFileContext;
+    }) => Promise<ResolvedType | undefined>;
+    resolveNamedTypeOrThrow: (args: { referenceToNamedType: string; file: FernFileContext }) => Promise<ResolvedType>;
 }
 
 export interface RawTypeDeclarationInfo {
@@ -30,8 +33,8 @@ export interface RawTypeDeclarationInfo {
 export class TypeResolverImpl implements TypeResolver {
     constructor(private readonly workspace: FernWorkspace) {}
 
-    public resolveTypeOrThrow({ type, file }: { type: string; file: FernFileContext }): ResolvedType {
-        const resolvedType = this.resolveType({ type, file });
+    public async resolveTypeOrThrow({ type, file }: { type: string; file: FernFileContext }): Promise<ResolvedType> {
+        const resolvedType = await this.resolveType({ type, file });
         if (resolvedType == null) {
             throw new Error("Cannot resolve type: " + type + " in file " + file.relativeFilepath);
         }
@@ -69,7 +72,7 @@ export class TypeResolverImpl implements TypeResolver {
         if (parsedReference == null) {
             return undefined;
         }
-        const definitionFile = getDefinitionFile(this.workspace, parsedReference.relativeFilepath);
+        const definitionFile = await getDefinitionFile(this.workspace, parsedReference.relativeFilepath);
         if (definitionFile == null) {
             return undefined;
         }
@@ -91,7 +94,7 @@ export class TypeResolverImpl implements TypeResolver {
         };
     }
 
-    public resolveType({
+    public async resolveType({
         type,
         file,
         objectPath = []
@@ -99,75 +102,84 @@ export class TypeResolverImpl implements TypeResolver {
         type: string;
         file: FernFileContext;
         objectPath?: ObjectPathItem[];
-    }): ResolvedType | undefined {
-        return recursivelyVisitRawTypeReference<ResolvedType | undefined>({
+    }): Promise<ResolvedType | undefined> {
+        return recursivelyVisitRawTypeReference<Promise<ResolvedType | undefined>>({
             type,
             _default: undefined,
             validation: undefined,
             visitor: {
-                primitive: (primitive) => ({
+                primitive: async (primitive) => ({
                     _type: "primitive",
                     primitive,
                     originalTypeReference: TypeReference.primitive(primitive)
                 }),
-                unknown: () => ({ _type: "unknown", originalTypeReference: TypeReference.unknown() }),
-                map: ({ keyType, valueType }) =>
-                    keyType != null && valueType != null
+                unknown: async () => ({ _type: "unknown", originalTypeReference: TypeReference.unknown() }),
+                map: async ({ keyType, valueType }) => {
+                    const k = await keyType;
+                    const v = await valueType;
+                    return k != null && v != null
                         ? {
                               _type: "container",
                               container: {
                                   _type: "map",
-                                  keyType,
-                                  valueType
+                                  keyType: k,
+                                  valueType: v
                               },
                               originalTypeReference: TypeReference.container(
                                   ContainerType.map({
-                                      keyType: keyType.originalTypeReference,
-                                      valueType: valueType.originalTypeReference
+                                      keyType: k.originalTypeReference,
+                                      valueType: v.originalTypeReference
                                   })
                               )
                           }
-                        : undefined,
-                list: (itemType) =>
-                    itemType != null
+                        : undefined;
+                },
+                list: async (itemType) => {
+                    const item = await itemType;
+                    return item != null
                         ? {
                               _type: "container",
                               container: {
                                   _type: "list",
-                                  itemType
+                                  itemType: item
                               },
                               originalTypeReference: TypeReference.container(
-                                  ContainerType.list(itemType.originalTypeReference)
+                                  ContainerType.list(item.originalTypeReference)
                               )
                           }
-                        : undefined,
-                optional: (itemType) =>
-                    itemType != null
+                        : undefined;
+                },
+                optional: async (itemType) => {
+                    const item = await itemType;
+                    return item != null
                         ? {
                               _type: "container",
                               container: {
                                   _type: "optional",
-                                  itemType
+                                  itemType: item
                               },
                               originalTypeReference: TypeReference.container(
-                                  ContainerType.optional(itemType.originalTypeReference)
+                                  ContainerType.optional(item.originalTypeReference)
                               )
                           }
-                        : undefined,
-                set: (itemType) =>
-                    itemType != null
+                        : undefined;
+                },
+                set: async (itemType) => {
+                    const item = await itemType;
+                    return item != null
                         ? {
                               _type: "container",
                               container: {
                                   _type: "set",
-                                  itemType
+                                  itemType: item
                               },
                               originalTypeReference: TypeReference.container(
-                                  ContainerType.set(itemType.originalTypeReference)
+                                  ContainerType.set(item.originalTypeReference)
                               )
                           }
-                        : undefined,
-                literal: (literal) => ({
+                        : undefined;
+                },
+                literal: async (literal) => ({
                     _type: "container",
                     container: {
                         _type: "literal",
@@ -175,8 +187,8 @@ export class TypeResolverImpl implements TypeResolver {
                     },
                     originalTypeReference: TypeReference.container(ContainerType.literal(literal))
                 }),
-                named: (referenceToNamedType) => {
-                    const maybeDeclaration = this.getDeclarationOfNamedType({
+                named: async (referenceToNamedType) => {
+                    const maybeDeclaration = await this.getDeclarationOfNamedType({
                         referenceToNamedType,
                         file
                     });
@@ -201,7 +213,7 @@ export class TypeResolverImpl implements TypeResolver {
                         return undefined;
                     }
 
-                    return this.resolveNamedTypeFromDeclaration({
+                    return await this.resolveNamedTypeFromDeclaration({
                         referenceToNamedType,
                         referencedIn: file,
                         rawDeclaration: maybeDeclaration,
@@ -212,28 +224,28 @@ export class TypeResolverImpl implements TypeResolver {
         });
     }
 
-    public resolveNamedTypeOrThrow({
+    public async resolveNamedTypeOrThrow({
         referenceToNamedType,
         file
     }: {
         referenceToNamedType: string;
         file: FernFileContext;
-    }): ResolvedType {
-        const resolvedType = this.resolveNamedType({ referenceToNamedType, file });
+    }): Promise<ResolvedType> {
+        const resolvedType = await this.resolveNamedType({ referenceToNamedType, file });
         if (resolvedType == null) {
             throw new Error("Cannot resolve type: " + referenceToNamedType);
         }
         return resolvedType;
     }
 
-    public resolveNamedType({
+    public async resolveNamedType({
         referenceToNamedType,
         file
     }: {
         referenceToNamedType: string;
         file: FernFileContext;
-    }): ResolvedType | undefined {
-        const maybeDeclaration = this.getDeclarationOfNamedType({
+    }): Promise<ResolvedType | undefined> {
+        const maybeDeclaration = await this.getDeclarationOfNamedType({
             referenceToNamedType,
             file
         });
@@ -247,7 +259,7 @@ export class TypeResolverImpl implements TypeResolver {
         });
     }
 
-    private resolveNamedTypeFromDeclaration({
+    private async resolveNamedTypeFromDeclaration({
         referenceToNamedType,
         referencedIn,
         rawDeclaration,
@@ -257,7 +269,7 @@ export class TypeResolverImpl implements TypeResolver {
         referenceToNamedType: string;
         rawDeclaration: RawTypeDeclarationInfo;
         objectPath?: ObjectPathItem[];
-    }): ResolvedType | undefined {
+    }): Promise<ResolvedType | undefined> {
         const { declaration, file: fileOfResolvedDeclaration } = rawDeclaration;
 
         if (isRawAliasDefinition(declaration)) {
@@ -278,7 +290,7 @@ export class TypeResolverImpl implements TypeResolver {
             return undefined;
         }
 
-        const definitionFile = getDefinitionFile(this.workspace, fileOfResolvedDeclaration.relativeFilepath);
+        const definitionFile = await getDefinitionFile(this.workspace, fileOfResolvedDeclaration.relativeFilepath);
         if (definitionFile == null) {
             return undefined;
         }

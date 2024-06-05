@@ -8,7 +8,7 @@ import { convertReferenceHttpRequestBody } from "./convertHttpRequestBody";
 export const DEFAULT_REQUEST_PARAMETER_NAME = "request";
 export const DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER = "body";
 
-export function convertHttpSdkRequest({
+export async function convertHttpSdkRequest({
     request,
     service,
     file,
@@ -18,8 +18,8 @@ export function convertHttpSdkRequest({
     service: RawSchemas.HttpServiceSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): SdkRequest | undefined {
-    const shape = convertHttpSdkRequestShape({ request, service, file, typeResolver });
+}): Promise<SdkRequest | undefined> {
+    const shape = await convertHttpSdkRequestShape({ request, service, file, typeResolver });
     if (shape == null) {
         return undefined;
     }
@@ -29,7 +29,7 @@ export function convertHttpSdkRequest({
     };
 }
 
-function convertHttpSdkRequestShape({
+async function convertHttpSdkRequestShape({
     service,
     request,
     file,
@@ -39,7 +39,7 @@ function convertHttpSdkRequestShape({
     request: string | RawSchemas.HttpRequestSchema | null | undefined;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): SdkRequestShape | undefined {
+}): Promise<SdkRequestShape | undefined> {
     const constructWrapper = () => {
         if (typeof request === "string" || request?.name == null) {
             throw new Error("Name is missing for request wrapper");
@@ -64,8 +64,8 @@ function convertHttpSdkRequestShape({
 
     const { body } = request;
     if (
-        doesRequestHaveNonBodyProperties({ request, file, typeResolver }) ||
-        (body != null && isInlineRequestBody(body))
+        (await doesRequestHaveNonBodyProperties({ request, file, typeResolver })) ||
+        (body != null && (await isInlineRequestBody(body)))
     ) {
         return constructWrapper();
     }
@@ -103,7 +103,7 @@ export function getSdkJustRequestBodyType({
     );
 }
 
-export function doesRequestHaveNonBodyProperties({
+export async function doesRequestHaveNonBodyProperties({
     request,
     file,
     typeResolver
@@ -111,13 +111,13 @@ export function doesRequestHaveNonBodyProperties({
     request: RawSchemas.HttpRequestSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): boolean {
+}): Promise<boolean> {
     const { headers = {}, "query-parameters": queryParameters = {} } = request;
 
-    return !areAllHeadersLiteral({ headers, file, typeResolver }) || size(queryParameters) > 0;
+    return !(await areAllHeadersLiteral({ headers, file, typeResolver })) || size(queryParameters) > 0;
 }
 
-function areAllHeadersLiteral({
+async function areAllHeadersLiteral({
     headers,
     file,
     typeResolver
@@ -125,16 +125,16 @@ function areAllHeadersLiteral({
     headers: Record<string, string | RawSchemas.HttpHeaderSchema>;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): boolean {
+}): Promise<boolean> {
     return (
-        Object.values(headers).filter((header) => {
+        (await Object.values(headers).filter(async (header) => {
             const headerType = typeof header === "string" ? header : header.type;
-            const resolvedType = typeResolver.resolveTypeOrThrow({
+            const resolvedType = await typeResolver.resolveTypeOrThrow({
                 type: headerType,
                 file
             });
             const isLiteral = resolvedType._type === "container" && resolvedType.container._type === "literal";
             return !isLiteral;
-        }).length === 0
+        }).length) === 0
     );
 }

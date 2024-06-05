@@ -17,7 +17,7 @@ export async function convertOAuthTokenEndpoint({
     file: FernFileContext;
     tokenEndpoint: TokenEndpoint;
 }): Promise<OAuthTokenEndpoint | undefined> {
-    const resolvedEndpoint = endpointResolver.resolveEndpointOrThrow({
+    const resolvedEndpoint = await endpointResolver.resolveEndpointOrThrow({
         endpoint: tokenEndpoint.endpoint,
         file
     });

@@ -9,7 +9,7 @@ interface SeenTypeNames {
     hasTypeNameBeenSeen: (typeName: DeclaredTypeName) => boolean;
 }
 
-export function getReferencedTypesFromRawDeclaration({
+export async function getReferencedTypesFromRawDeclaration({
     typeDeclaration,
     file,
     typeResolver,
@@ -19,7 +19,7 @@ export function getReferencedTypesFromRawDeclaration({
     file: FernFileContext;
     typeResolver: TypeResolver;
     seenTypeNames?: SeenTypeNames;
-}): DeclaredTypeName[] {
+}): Promise<DeclaredTypeName[]> {
     const rawTypeReferences = visitRawTypeDeclaration<string[]>(typeDeclaration, {
         alias: (aliasDeclaration) => {
             return [typeof aliasDeclaration === "string" ? aliasDeclaration : aliasDeclaration.type];
@@ -89,18 +89,18 @@ export function getReferencedTypesFromRawDeclaration({
 
                 referencedTypes.push(parsedTypeName);
 
-                const maybeDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
+                const maybeDeclaration = await typeResolver.getDeclarationOfNamedTypeOrThrow({
                     referenceToNamedType: rawName,
                     file
                 });
 
                 referencedTypes.push(
-                    ...getReferencedTypesFromRawDeclaration({
+                    ...(await getReferencedTypesFromRawDeclaration({
                         typeDeclaration: maybeDeclaration.declaration,
                         file: maybeDeclaration.file,
                         typeResolver,
                         seenTypeNames
-                    })
+                    }))
                 );
             }
         }

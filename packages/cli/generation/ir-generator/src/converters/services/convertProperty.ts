@@ -70,7 +70,7 @@ export async function getNestedObjectPropertyFromObjectSchema({
         objectSchema,
         property: propertyComponents[0] ?? ""
     });
-    const resolvedTypeProperty = typeResolver.resolveTypeOrThrow({
+    const resolvedTypeProperty = await typeResolver.resolveTypeOrThrow({
         type: propertyType,
         file
     });
@@ -151,7 +151,7 @@ async function getAllPropertiesForExtendedType({
     file: FernFileContext;
     extendedType: string;
 }): Promise<Record<string, string>> {
-    const resolvedType = typeResolver.resolveNamedTypeOrThrow({
+    const resolvedType = await typeResolver.resolveNamedTypeOrThrow({
         referenceToNamedType: extendedType,
         file
     });

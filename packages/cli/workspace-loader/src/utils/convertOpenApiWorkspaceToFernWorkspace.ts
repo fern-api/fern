@@ -5,7 +5,7 @@ import { parse } from "@fern-api/openapi-parser";
 import { TaskContext } from "@fern-api/task-context";
 import yaml from "js-yaml";
 import { mapValues as mapValuesLodash } from "lodash-es";
-import { FernWorkspace, OSSWorkspace } from "../types/Workspace";
+import { FernDefinition, FernWorkspace, OSSWorkspace } from "../types/Workspace";
 
 export async function convertToFernWorkspace(
     openapiWorkspace: OSSWorkspace,
@@ -13,6 +13,8 @@ export async function convertToFernWorkspace(
     enableUniqueErrorsPerEndpoint = false,
     sdkLanguage: generatorsYml.GenerationLanguage | undefined
 ): Promise<FernWorkspace> {
+    const workspaceDefinitionCache = new Map<string, FernDefinition>();
+
     return {
         type: "fern",
         name: openapiWorkspace.name,
@@ -23,6 +25,10 @@ export async function convertToFernWorkspace(
         },
         workspaceName: openapiWorkspace.workspaceName,
         getDefinition: async (language?: generatorsYml.GenerationLanguage) => {
+            const languageKey = language ?? sdkLanguage ?? "default";
+            if (workspaceDefinitionCache.has(languageKey)) {
+                return workspaceDefinitionCache.get(languageKey)!;
+            }
             const openApiIr = await parse({
                 workspace: openapiWorkspace,
                 taskContext: context,
@@ -34,7 +40,7 @@ export async function convertToFernWorkspace(
                 enableUniqueErrorsPerEndpoint
             });
 
-            return {
+            const workspaceDefinition = {
                 // these files doesn't live on disk, so there's no absolute filepath
                 absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
                 rootApiFile: {
@@ -58,6 +64,9 @@ export async function convertToFernWorkspace(
                 packageMarkers: {},
                 importedDefinitions: {}
             };
+
+            workspaceDefinitionCache.set(languageKey, workspaceDefinition);
+            return workspaceDefinition;
         },
         changelog: openapiWorkspace.changelog
     };

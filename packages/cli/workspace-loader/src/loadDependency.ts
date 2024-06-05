@@ -127,7 +127,7 @@ async function validateLocalDependencyAndGetDefinition({
             ? loadDependencyWorkspaceResult.workspace
             : await convertToFernWorkspace(loadDependencyWorkspaceResult.workspace, context, false, sdkLanguage);
 
-    return workspaceOfDependency.getDefinition(sdkLanguage);
+    return await workspaceOfDependency.getDefinition(sdkLanguage);
 }
 
 async function validateVersionedDependencyAndGetDefinition({

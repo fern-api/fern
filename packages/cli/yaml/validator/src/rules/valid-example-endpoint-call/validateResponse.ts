@@ -10,7 +10,7 @@ import { RawSchemas, visitExampleResponseSchema } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { RuleViolation } from "../../Rule";
 
-export function validateResponse({
+export async function validateResponse({
     example,
     endpoint,
     typeResolver,
@@ -26,9 +26,9 @@ export function validateResponse({
     file: FernFileContext;
     workspace: FernWorkspace;
     errorResolver: ErrorResolver;
-}): RuleViolation[] {
+}): Promise<RuleViolation[]> {
     if (example == null) {
-        return validateBodyResponse({
+        return await validateBodyResponse({
             example: {},
             endpoint,
             typeResolver,
@@ -39,15 +39,24 @@ export function validateResponse({
         });
     }
     return visitExampleResponseSchema(endpoint, example, {
-        body: (example) =>
-            validateBodyResponse({ example, endpoint, typeResolver, exampleResolver, file, workspace, errorResolver }),
-        stream: (example) =>
+        body: async (example) =>
+            await validateBodyResponse({
+                example,
+                endpoint,
+                typeResolver,
+                exampleResolver,
+                file,
+                workspace,
+                errorResolver
+            }),
+        stream: async (example) =>
             validateStreamResponse({ example, endpoint, typeResolver, exampleResolver, file, workspace }),
-        events: (example) => validateSseResponse({ example, endpoint, typeResolver, exampleResolver, file, workspace })
+        events: async (example) =>
+            validateSseResponse({ example, endpoint, typeResolver, exampleResolver, file, workspace })
     });
 }
 
-function validateBodyResponse({
+async function validateBodyResponse({
     example,
     endpoint,
     typeResolver,
@@ -63,7 +72,7 @@ function validateBodyResponse({
     file: FernFileContext;
     workspace: FernWorkspace;
     errorResolver: ErrorResolver;
-}): RuleViolation[] {
+}): Promise<RuleViolation[]> {
     const violations: RuleViolation[] = [];
     if (example.error == null) {
         if (endpoint.response != null) {
@@ -91,7 +100,7 @@ function validateBodyResponse({
             });
         }
     } else {
-        const errorDeclaration = errorResolver.getDeclaration(example.error, file);
+        const errorDeclaration = await errorResolver.getDeclaration(example.error, file);
 
         // if error doesn't exist. this will be caught by another rule
         if (errorDeclaration != null) {

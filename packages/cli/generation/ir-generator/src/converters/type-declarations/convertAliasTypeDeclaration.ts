@@ -10,7 +10,7 @@ import {
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 
-export function convertAliasTypeDeclaration({
+export async function convertAliasTypeDeclaration({
     alias,
     file,
     typeResolver
@@ -18,15 +18,15 @@ export function convertAliasTypeDeclaration({
     alias: string | RawSchemas.AliasSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): Type {
+}): Promise<Type> {
     const aliasOfStr = typeof alias === "string" ? alias : alias.type;
     return Type.alias({
         aliasOf: file.parseTypeReference(alias),
-        resolvedType: constructResolvedTypeReference({ aliasOf: aliasOfStr, file, typeResolver })
+        resolvedType: await constructResolvedTypeReference({ aliasOf: aliasOfStr, file, typeResolver })
     });
 }
 
-function constructResolvedTypeReference({
+async function constructResolvedTypeReference({
     aliasOf,
     file,
     typeResolver
@@ -34,8 +34,8 @@ function constructResolvedTypeReference({
     aliasOf: string;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): ResolvedTypeReference {
-    const resolvedType = typeResolver.resolveTypeOrThrow({ type: aliasOf, file });
+}): Promise<ResolvedTypeReference> {
+    const resolvedType = await typeResolver.resolveTypeOrThrow({ type: aliasOf, file });
     switch (resolvedType._type) {
         case "primitive":
             return ResolvedTypeReference.primitive(resolvedType.originalTypeReference.primitive);

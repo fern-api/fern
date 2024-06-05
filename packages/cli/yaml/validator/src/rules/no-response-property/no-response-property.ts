@@ -16,7 +16,7 @@ export const NoResponsePropertyRule: Rule = {
         const typeResolver = new TypeResolverImpl(workspace);
         return {
             definitionFile: {
-                httpEndpoint: async async ({ endpoint }, { relativeFilepath, contents }) => {
+                httpEndpoint: async ({ endpoint }, { relativeFilepath, contents }) => {
                     const { response } = endpoint;
                     if (response == null) {
                         return [];

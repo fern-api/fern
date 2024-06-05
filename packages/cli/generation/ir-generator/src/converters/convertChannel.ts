@@ -3,7 +3,6 @@ import {
     ExampleHeader,
     ExampleInlinedRequestBodyProperty,
     ExamplePathParameter,
-    ExampleWebSocketMessage,
     ExampleWebSocketMessageBody,
     ExampleWebSocketSession,
     Name,
@@ -103,75 +102,81 @@ export async function convertChannel({
                   )
                 : [],
         messages: Object.values(messages),
-        examples: (channel.examples ?? []).map((example): ExampleWebSocketSession => {
-            const convertedPathParameters = convertChannelPathParameters({
-                channel,
-                example,
-                typeResolver,
-                exampleResolver,
-                variableResolver,
-                file,
-                workspace
-            });
-            return {
-                name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
-                docs: example.docs,
-                url: buildUrl({ channel, example, pathParams: convertedPathParameters }),
-                ...convertedPathParameters,
-                ...convertHeaders({ channel, example, typeResolver, exampleResolver, file, workspace }),
-                queryParameters:
-                    example["query-parameters"] != null
-                        ? Object.entries(example["query-parameters"]).map(([wireKey, value]) => {
-                              const queryParameterDeclaration = channel["query-parameters"]?.[wireKey];
-                              if (queryParameterDeclaration == null) {
-                                  throw new Error(`Query parameter ${wireKey} does not exist`);
-                              }
-                              return {
-                                  name: file.casingsGenerator.generateNameAndWireValue({
-                                      name: getQueryParameterName({
-                                          queryParameterKey: wireKey,
-                                          queryParameter: queryParameterDeclaration
-                                      }).name,
-                                      wireValue: wireKey
-                                  }),
-                                  value: convertTypeReferenceExample({
-                                      example: value,
-                                      rawTypeBeingExemplified:
-                                          typeof queryParameterDeclaration === "string"
-                                              ? queryParameterDeclaration
-                                              : queryParameterDeclaration.type,
-                                      typeResolver,
-                                      exampleResolver,
-                                      fileContainingRawTypeReference: file,
-                                      fileContainingExample: file,
-                                      workspace
+        examples: await Promise.all(
+            (channel.examples ?? []).map(async (example): Promise<Promise<ExampleWebSocketSession>> => {
+                const convertedPathParameters = await convertChannelPathParameters({
+                    channel,
+                    example,
+                    typeResolver,
+                    exampleResolver,
+                    variableResolver,
+                    file,
+                    workspace
+                });
+                return {
+                    name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
+                    docs: example.docs,
+                    url: buildUrl({ channel, example, pathParams: convertedPathParameters }),
+                    ...convertedPathParameters,
+                    ...(await convertHeaders({ channel, example, typeResolver, exampleResolver, file, workspace })),
+                    queryParameters:
+                        example["query-parameters"] != null
+                            ? await Promise.all(
+                                  Object.entries(example["query-parameters"]).map(async ([wireKey, value]) => {
+                                      const queryParameterDeclaration = channel["query-parameters"]?.[wireKey];
+                                      if (queryParameterDeclaration == null) {
+                                          throw new Error(`Query parameter ${wireKey} does not exist`);
+                                      }
+                                      return {
+                                          name: file.casingsGenerator.generateNameAndWireValue({
+                                              name: await getQueryParameterName({
+                                                  queryParameterKey: wireKey,
+                                                  queryParameter: queryParameterDeclaration
+                                              }).name,
+                                              wireValue: wireKey
+                                          }),
+                                          value: await convertTypeReferenceExample({
+                                              example: value,
+                                              rawTypeBeingExemplified:
+                                                  typeof queryParameterDeclaration === "string"
+                                                      ? queryParameterDeclaration
+                                                      : queryParameterDeclaration.type,
+                                              typeResolver,
+                                              exampleResolver,
+                                              fileContainingRawTypeReference: file,
+                                              fileContainingExample: file,
+                                              workspace
+                                          })
+                                      };
                                   })
-                              };
-                          })
-                        : [],
-                messages: example.messages.map((messageExample): ExampleWebSocketMessage => {
-                    const message = channel.messages?.[messageExample.type];
-                    if (message == null) {
-                        throw new Error(`Message ${messageExample.type} does not exist`);
-                    }
-                    return {
-                        type: messageExample.type,
-                        body: convertExampleWebSocketMessageBody({
-                            message,
-                            example: messageExample.body,
-                            typeResolver,
-                            exampleResolver,
-                            file,
-                            workspace
+                              )
+                            : [],
+                    messages: await Promise.all(
+                        example.messages.map(async (messageExample) => {
+                            const message = channel.messages?.[messageExample.type];
+                            if (message == null) {
+                                throw new Error(`Message ${messageExample.type} does not exist`);
+                            }
+                            return {
+                                type: messageExample.type,
+                                body: await convertExampleWebSocketMessageBody({
+                                    message,
+                                    example: messageExample.body,
+                                    typeResolver,
+                                    exampleResolver,
+                                    file,
+                                    workspace
+                                })
+                            };
                         })
-                    };
-                })
-            };
-        })
+                    )
+                };
+            })
+        )
     };
 }
 
-function convertExampleWebSocketMessageBody({
+async function convertExampleWebSocketMessageBody({
     message,
     example,
     typeResolver,
@@ -185,10 +190,10 @@ function convertExampleWebSocketMessageBody({
     exampleResolver: ExampleResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): ExampleWebSocketMessageBody {
+}): Promise<ExampleWebSocketMessageBody> {
     if (!isInlineMessageBody(message.body)) {
         return ExampleWebSocketMessageBody.reference(
-            convertTypeReferenceExample({
+            await convertTypeReferenceExample({
                 example,
                 rawTypeBeingExemplified: typeof message.body !== "string" ? message.body.type : message.body,
                 typeResolver,
@@ -213,7 +218,7 @@ function convertExampleWebSocketMessageBody({
                     name: getPropertyName({ propertyKey: wireKey, property: inlinedRequestPropertyDeclaration }).name,
                     wireValue: wireKey
                 }),
-                value: convertTypeReferenceExample({
+                value: await convertTypeReferenceExample({
                     example: propertyExample,
                     rawTypeBeingExemplified:
                         typeof inlinedRequestPropertyDeclaration !== "string"
@@ -228,7 +233,7 @@ function convertExampleWebSocketMessageBody({
                 originalTypeDeclaration: undefined
             });
         } else {
-            const originalTypeDeclaration = getOriginalTypeDeclarationForPropertyFromExtensions({
+            const originalTypeDeclaration = await getOriginalTypeDeclarationForPropertyFromExtensions({
                 extends_: message.body.extends,
                 wirePropertyKey: wireKey,
                 typeResolver,
@@ -243,7 +248,7 @@ function convertExampleWebSocketMessageBody({
                         .name,
                     wireValue: wireKey
                 }),
-                value: convertTypeReferenceExample({
+                value: await convertTypeReferenceExample({
                     example: propertyExample,
                     rawTypeBeingExemplified:
                         typeof originalTypeDeclaration.rawPropertyType === "string"
@@ -261,7 +266,7 @@ function convertExampleWebSocketMessageBody({
     }
 
     return ExampleWebSocketMessageBody.inlinedBody({
-        jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({ example, file }).resolvedExample,
+        jsonExample: (await exampleResolver.resolveAllReferencesInExampleOrThrow({ example, file })).resolvedExample,
         properties: exampleProperties
     });
 }
@@ -300,7 +305,7 @@ export function isReferencedWebhookPayloadSchema(
     return (payload as RawSchemas.WebSocketChannelReferencedMessageSchema).type != null;
 }
 
-function convertChannelPathParameters({
+async function convertChannelPathParameters({
     channel,
     example,
     typeResolver,
@@ -316,10 +321,10 @@ function convertChannelPathParameters({
     variableResolver: VariableResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): Pick<ExampleWebSocketSession, "pathParameters"> {
+}): Promise<Pick<ExampleWebSocketSession, "pathParameters">> {
     const pathParameters: ExamplePathParameter[] = [];
 
-    const buildExamplePathParameter = ({
+    const buildExamplePathParameter = async ({
         name,
         pathParameterDeclaration,
         examplePathParameter
@@ -335,7 +340,7 @@ function convertChannelPathParameters({
         });
         return {
             name,
-            value: convertTypeReferenceExample({
+            value: await convertTypeReferenceExample({
                 example: examplePathParameter,
                 rawTypeBeingExemplified: resolvedPathParameter.rawType,
                 typeResolver,
@@ -354,7 +359,7 @@ function convertChannelPathParameters({
 
             if (pathParameterDeclaration != null) {
                 pathParameters.push(
-                    buildExamplePathParameter({
+                    await buildExamplePathParameter({
                         name: file.casingsGenerator.generateName(key),
                         pathParameterDeclaration,
                         examplePathParameter
@@ -369,7 +374,7 @@ function convertChannelPathParameters({
     return { pathParameters };
 }
 
-function convertHeaders({
+async function convertHeaders({
     channel,
     example,
     typeResolver,
@@ -383,7 +388,7 @@ function convertHeaders({
     exampleResolver: ExampleResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): Pick<ExampleWebSocketSession, "headers"> {
+}): Promise<Pick<ExampleWebSocketSession, "headers">> {
     const headers: ExampleHeader[] = [];
 
     if (example.headers != null) {
@@ -395,7 +400,7 @@ function convertHeaders({
                         name: getHeaderName({ headerKey: wireKey, header: headerDeclaration }).name,
                         wireValue: wireKey
                     }),
-                    value: convertTypeReferenceExample({
+                    value: await convertTypeReferenceExample({
                         example: exampleHeader,
                         rawTypeBeingExemplified:
                             typeof headerDeclaration === "string" ? headerDeclaration : headerDeclaration.type,

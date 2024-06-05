@@ -10,7 +10,7 @@ import { validateObjectExample } from "./validateObjectExample";
 import { validateUndiscriminatedUnionExample } from "./validateUndiscriminatedUnionExample";
 import { validateUnionExample } from "./validateUnionExample";
 
-export function validateTypeExample({
+export async function validateTypeExample({
     typeName,
     typeDeclaration,
     file,
@@ -26,9 +26,9 @@ export function validateTypeExample({
     exampleResolver: ExampleResolver;
     example: RawSchemas.ExampleTypeValueSchema;
     workspace: FernWorkspace;
-}): ExampleViolation[] {
+}): Promise<ExampleViolation[]> {
     return visitRawTypeDeclaration(typeDeclaration, {
-        alias: (rawAlias) => {
+        alias: async (rawAlias) => {
             return validateAliasExample({
                 rawAlias,
                 file,
@@ -38,14 +38,14 @@ export function validateTypeExample({
                 workspace
             });
         },
-        enum: (rawEnum) => {
+        enum: async (rawEnum) => {
             return validateEnumExample({
                 rawEnum,
                 example
             });
         },
-        object: (rawObject) => {
-            return validateObjectExample({
+        object: async (rawObject) => {
+            return await validateObjectExample({
                 typeName,
                 typeNameForBreadcrumb: typeName,
                 rawObject,
@@ -56,8 +56,8 @@ export function validateTypeExample({
                 workspace
             });
         },
-        discriminatedUnion: (rawUnion) => {
-            return validateUnionExample({
+        discriminatedUnion: async (rawUnion) => {
+            return await validateUnionExample({
                 typeName,
                 rawUnion,
                 example,
@@ -67,7 +67,7 @@ export function validateTypeExample({
                 workspace
             });
         },
-        undiscriminatedUnion: (rawUnion) => {
+        undiscriminatedUnion: async (rawUnion) => {
             return validateUndiscriminatedUnionExample({
                 rawUnion,
                 example,

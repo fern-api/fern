@@ -7,7 +7,7 @@ import { TypeResolver } from "../resolvers/TypeResolver";
 import { parseErrorName } from "../utils/parseErrorName";
 import { convertTypeReferenceExample } from "./type-declarations/convertExampleType";
 
-export function convertErrorDeclaration({
+export async function convertErrorDeclaration({
     errorName,
     errorDeclaration,
     file,
@@ -21,18 +21,20 @@ export function convertErrorDeclaration({
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
-}): ErrorDeclaration {
+}): Promise<ErrorDeclaration> {
     const examples: FernIr.ExampleError[] = [];
     if (errorDeclaration.type != null && errorDeclaration.examples != null) {
         for (const example of errorDeclaration.examples) {
             examples.push({
                 name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
                 docs: example.docs,
-                jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({
-                    example: example.value,
-                    file
-                }).resolvedExample,
-                shape: convertTypeReferenceExample({
+                jsonExample: (
+                    await exampleResolver.resolveAllReferencesInExampleOrThrow({
+                        example: example.value,
+                        file
+                    })
+                ).resolvedExample,
+                shape: await convertTypeReferenceExample({
                     example: example.value,
                     rawTypeBeingExemplified: errorDeclaration.type,
                     fileContainingRawTypeReference: file,

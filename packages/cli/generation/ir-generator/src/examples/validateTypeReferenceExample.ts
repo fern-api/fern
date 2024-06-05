@@ -25,7 +25,7 @@ const ISO_8601_REGEX =
 // https://ihateregex.io/expr/uuid/
 const UUID_REGEX = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/;
 
-export function validateTypeReferenceExample({
+export async function validateTypeReferenceExample({
     rawTypeReference,
     example,
     typeResolver,
@@ -39,11 +39,11 @@ export function validateTypeReferenceExample({
     exampleResolver: ExampleResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): ExampleViolation[] {
+}): Promise<ExampleViolation[]> {
     if (typeof example === "string" && example.startsWith(EXAMPLE_REFERENCE_PREFIX)) {
         // if it's a reference to another example, we just need to compare the
         // expected type with the referenced type
-        const resolvedExpectedType = typeResolver.resolveType({
+        const resolvedExpectedType = await typeResolver.resolveType({
             type: rawTypeReference,
             file
         });
@@ -58,7 +58,7 @@ export function validateTypeReferenceExample({
         if (parsedExampleReference == null) {
             return [];
         }
-        const resolvedActualType = typeResolver.resolveNamedType({
+        const resolvedActualType = await typeResolver.resolveNamedType({
             referenceToNamedType: parsedExampleReference.rawTypeReference,
             file
         });
@@ -83,9 +83,9 @@ export function validateTypeReferenceExample({
         _default: undefined,
         validation: undefined,
         visitor: {
-            primitive: (primitiveType) => validatePrimitiveExample({ primitiveType, example }),
-            named: (referenceToNamedType) => {
-                const declaration = typeResolver.getDeclarationOfNamedType({
+            primitive: async (primitiveType) => validatePrimitiveExample({ primitiveType, example }),
+            named: async (referenceToNamedType) => {
+                const declaration = await typeResolver.getDeclarationOfNamedType({
                     referenceToNamedType,
                     file
                 });
@@ -95,7 +95,7 @@ export function validateTypeReferenceExample({
                     return [];
                 }
 
-                return validateTypeExample({
+                return await validateTypeExample({
                     typeName: declaration.typeName,
                     typeDeclaration: declaration.declaration,
                     file: declaration.file,
@@ -105,45 +105,54 @@ export function validateTypeReferenceExample({
                     workspace
                 });
             },
-            map: ({ keyType, valueType }) => {
+            map: async ({ keyType, valueType }) => {
                 if (!isPlainObject(example)) {
                     return getViolationsForMisshapenExample(example, "a map");
                 }
-                return Object.entries(example).flatMap(([exampleKey, exampleValue]) => [
-                    ...validateTypeReferenceExample({
-                        rawTypeReference: keyType,
-                        example: exampleKey,
-                        typeResolver,
-                        exampleResolver,
-                        file,
-                        workspace
-                    }),
-                    ...validateTypeReferenceExample({
-                        rawTypeReference: valueType,
-                        example: exampleValue,
-                        typeResolver,
-                        exampleResolver,
-                        file,
-                        workspace
-                    })
-                ]);
+                return (
+                    await Promise.all(
+                        Object.entries(example).flatMap(async ([exampleKey, exampleValue]) => [
+                            ...(await validateTypeReferenceExample({
+                                rawTypeReference: keyType,
+                                example: exampleKey,
+                                typeResolver,
+                                exampleResolver,
+                                file,
+                                workspace
+                            })),
+                            ...(await validateTypeReferenceExample({
+                                rawTypeReference: valueType,
+                                example: exampleValue,
+                                typeResolver,
+                                exampleResolver,
+                                file,
+                                workspace
+                            }))
+                        ])
+                    )
+                ).flat();
             },
-            list: (itemType) => {
+            list: async (itemType) => {
                 if (!Array.isArray(example)) {
                     return getViolationsForMisshapenExample(example, "a list");
                 }
-                return example.flatMap((exampleItem) =>
-                    validateTypeReferenceExample({
-                        rawTypeReference: itemType,
-                        example: exampleItem,
-                        typeResolver,
-                        exampleResolver,
-                        file,
-                        workspace
-                    })
-                );
+                return (
+                    await Promise.all(
+                        example.map(
+                            async (exampleItem) =>
+                                await validateTypeReferenceExample({
+                                    rawTypeReference: itemType,
+                                    example: exampleItem,
+                                    typeResolver,
+                                    exampleResolver,
+                                    file,
+                                    workspace
+                                })
+                        )
+                    )
+                ).flat();
             },
-            set: (itemType) => {
+            set: async (itemType) => {
                 if (!Array.isArray(example)) {
                     return getViolationsForMisshapenExample(example, "a list");
                 }
@@ -160,22 +169,24 @@ export function validateTypeReferenceExample({
                     ];
                 }
 
-                return example.flatMap((exampleItem) =>
-                    validateTypeReferenceExample({
-                        rawTypeReference: itemType,
-                        example: exampleItem,
-                        typeResolver,
-                        exampleResolver,
-                        file,
-                        workspace
-                    })
-                );
+                return (
+                    await Promise.all(
+                        example.map(
+                            async (exampleItem) =>
+                                await validateTypeReferenceExample({
+                                    rawTypeReference: itemType,
+                                    example: exampleItem,
+                                    typeResolver,
+                                    exampleResolver,
+                                    file,
+                                    workspace
+                                })
+                        )
+                    )
+                ).flat();
             },
-            optional: (itemType) => {
-                if (example == null) {
-                    return [];
-                }
-                return validateTypeReferenceExample({
+            optional: async (itemType) => {
+                return await validateTypeReferenceExample({
                     rawTypeReference: itemType,
                     example,
                     typeResolver,
@@ -184,10 +195,10 @@ export function validateTypeReferenceExample({
                     workspace
                 });
             },
-            unknown: () => {
+            unknown: async () => {
                 return [];
             },
-            literal: (expectedLiteral) => {
+            literal: async (expectedLiteral) => {
                 switch (expectedLiteral.type) {
                     case "boolean":
                         return createValidator(

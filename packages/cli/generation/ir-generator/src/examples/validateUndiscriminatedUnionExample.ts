@@ -6,7 +6,7 @@ import { TypeResolver } from "../resolvers/TypeResolver";
 import { ExampleViolation } from "./exampleViolation";
 import { validateTypeReferenceExample } from "./validateTypeReferenceExample";
 
-export function validateUndiscriminatedUnionExample({
+export async function validateUndiscriminatedUnionExample({
     rawUnion,
     example,
     typeResolver,
@@ -20,10 +20,10 @@ export function validateUndiscriminatedUnionExample({
     exampleResolver: ExampleResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): ExampleViolation[] {
+}): Promise<ExampleViolation[]> {
     const violations: ExampleViolation[] = [];
     for (const member of rawUnion.union) {
-        const violationsForMember = validateTypeReferenceExample({
+        const violationsForMember = await validateTypeReferenceExample({
             rawTypeReference: typeof member === "string" ? member : member.type,
             example,
             typeResolver,

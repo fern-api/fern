@@ -4,8 +4,8 @@ import { parseReferenceToEndpointName } from "../utils/parseReferenceToEndpointN
 import { ResolvedEndpoint } from "./ResolvedEndpoint";
 
 export interface EndpointResolver {
-    resolveEndpoint: (args: { endpoint: string; file: FernFileContext }) => ResolvedEndpoint | undefined;
-    resolveEndpointOrThrow: (args: { endpoint: string; file: FernFileContext }) => ResolvedEndpoint;
+    resolveEndpoint: (args: { endpoint: string; file: FernFileContext }) => Promise<ResolvedEndpoint | undefined>;
+    resolveEndpointOrThrow: (args: { endpoint: string; file: FernFileContext }) => Promise<ResolvedEndpoint>;
 }
 
 interface RawEndpointInfo {
@@ -16,22 +16,28 @@ interface RawEndpointInfo {
 export class EndpointResolverImpl implements EndpointResolver {
     constructor(private readonly workspace: FernWorkspace) {}
 
-    public resolveEndpointOrThrow({ endpoint, file }: { endpoint: string; file: FernFileContext }): ResolvedEndpoint {
-        const resolvedEndpoint = this.resolveEndpoint({ endpoint, file });
+    public async resolveEndpointOrThrow({
+        endpoint,
+        file
+    }: {
+        endpoint: string;
+        file: FernFileContext;
+    }): Promise<ResolvedEndpoint> {
+        const resolvedEndpoint = await this.resolveEndpoint({ endpoint, file });
         if (resolvedEndpoint == null) {
             throw new Error("Cannot resolve endpoint: " + endpoint + " in file " + file.relativeFilepath);
         }
         return resolvedEndpoint;
     }
 
-    public resolveEndpoint({
+    public async resolveEndpoint({
         endpoint,
         file
     }: {
         endpoint: string;
         file: FernFileContext;
-    }): ResolvedEndpoint | undefined {
-        const maybeDeclaration = this.getDeclarationOfEndpoint({
+    }): Promise<ResolvedEndpoint | undefined> {
+        const maybeDeclaration = await this.getDeclarationOfEndpoint({
             referenceToEndpoint: endpoint,
             file
         });
@@ -49,13 +55,13 @@ export class EndpointResolverImpl implements EndpointResolver {
         };
     }
 
-    public getDeclarationOfEndpoint({
+    public async getDeclarationOfEndpoint({
         referenceToEndpoint,
         file
     }: {
         referenceToEndpoint: string;
         file: FernFileContext;
-    }): RawEndpointInfo | undefined {
+    }): Promise<RawEndpointInfo | undefined> {
         const parsedReference = parseReferenceToEndpointName({
             reference: referenceToEndpoint,
             referencedIn: file.relativeFilepath,
@@ -64,7 +70,7 @@ export class EndpointResolverImpl implements EndpointResolver {
         if (parsedReference == null) {
             return undefined;
         }
-        const definitionFile = getDefinitionFile(this.workspace, parsedReference.relativeFilepath);
+        const definitionFile = await getDefinitionFile(this.workspace, parsedReference.relativeFilepath);
         if (definitionFile == null) {
             return undefined;
         }
@@ -78,7 +84,7 @@ export class EndpointResolverImpl implements EndpointResolver {
                 relativeFilepath: parsedReference.relativeFilepath,
                 definitionFile,
                 casingsGenerator: file.casingsGenerator,
-                rootApiFile: this.workspace.definition.rootApiFile.contents
+                rootApiFile: (await this.workspace.getDefinition()).rootApiFile.contents
             })
         };
     }

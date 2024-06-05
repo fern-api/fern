@@ -14,13 +14,13 @@ import { validateResponse } from "./validateResponse";
 
 export const ValidExampleEndpointCallRule: Rule = {
     name: "valid-example-endpoint-call",
-    create: ({ workspace }) => {
+    create: async ({ workspace }) => {
         const typeResolver = new TypeResolverImpl(workspace);
         const errorResolver = new ErrorResolverImpl(workspace);
         const exampleResolver = new ExampleResolverImpl(typeResolver);
         const variableResolver = new VariableResolverImpl();
 
-        const workspaceDefinitionRootFile = await workspace.getDefinition();
+        const workspaceDefinitionRootFile = (await workspace.getDefinition()).rootApiFile;
 
         return {
             definitionFile: {
@@ -94,8 +94,8 @@ export const ValidExampleEndpointCallRule: Rule = {
                         })
                     });
                 },
-                exampleRequest: ({ endpoint, example }, { relativeFilepath, contents: definitionFile }) => {
-                    return validateRequest({
+                exampleRequest: async ({ endpoint, example }, { relativeFilepath, contents: definitionFile }) => {
+                    return await validateRequest({
                         example,
                         endpoint,
                         typeResolver,
@@ -109,8 +109,8 @@ export const ValidExampleEndpointCallRule: Rule = {
                         workspace
                     });
                 },
-                exampleResponse: ({ endpoint, example }, { relativeFilepath, contents: definitionFile }) => {
-                    return validateResponse({
+                exampleResponse: async ({ endpoint, example }, { relativeFilepath, contents: definitionFile }) => {
+                    return await validateResponse({
                         example,
                         endpoint,
                         typeResolver,

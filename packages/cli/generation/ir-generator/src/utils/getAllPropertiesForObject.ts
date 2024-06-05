@@ -89,7 +89,7 @@ export async function getAllPropertiesForObject({
         for (const [propertyKey, propertyDeclaration] of Object.entries(objectDeclaration.properties)) {
             const propertyType =
                 typeof propertyDeclaration === "string" ? propertyDeclaration : propertyDeclaration.type;
-            const resolvedPropertyType = typeResolver.resolveType({ type: propertyType, file });
+            const resolvedPropertyType = await typeResolver.resolveType({ type: propertyType, file });
             if (resolvedPropertyType != null) {
                 properties.push({
                     wireKey: propertyKey,
@@ -110,7 +110,7 @@ export async function getAllPropertiesForObject({
         const extensions =
             typeof objectDeclaration.extends === "string" ? [objectDeclaration.extends] : objectDeclaration.extends;
         for (const extension of extensions) {
-            const resolvedTypeOfExtension = typeResolver.resolveNamedType({
+            const resolvedTypeOfExtension = await typeResolver.resolveNamedType({
                 referenceToNamedType: extension,
                 file
             });
@@ -119,7 +119,7 @@ export async function getAllPropertiesForObject({
                 resolvedTypeOfExtension?._type === "named" &&
                 isRawObjectDefinition(resolvedTypeOfExtension.declaration)
             ) {
-                const definitionFile = getDefinitionFile(workspace, resolvedTypeOfExtension.filepath);
+                const definitionFile = await getDefinitionFile(workspace, resolvedTypeOfExtension.filepath);
                 if (definitionFile != null) {
                     properties.push(
                         ...(await getAllPropertiesForObject({
@@ -169,7 +169,7 @@ export async function getAllPropertiesForType({
     typeResolver: TypeResolver;
     smartCasing: boolean;
 }): Promise<ObjectPropertyWithPath[]> {
-    const resolvedType = typeResolver.resolveNamedType({
+    const resolvedType = await typeResolver.resolveNamedType({
         referenceToNamedType: typeName,
         file: constructFernFileContext({
             relativeFilepath: filepathOfDeclaration,

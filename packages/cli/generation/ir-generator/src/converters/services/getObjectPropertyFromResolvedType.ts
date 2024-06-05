@@ -99,7 +99,7 @@ async function getAllPropertiesForExtendedType(
     file: FernFileContext,
     typeResolver: TypeResolver
 ): Promise<Record<string, ObjectProperty>> {
-    const resolvedType = typeResolver.resolveNamedTypeOrThrow({
+    const resolvedType = await typeResolver.resolveNamedTypeOrThrow({
         referenceToNamedType: extendedType,
         file
     });

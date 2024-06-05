@@ -7,33 +7,33 @@ export interface ExampleResolver {
     resolveAllReferencesInExample: (args: {
         example: unknown;
         file: FernFileContext;
-    }) => { resolvedExample: unknown } | undefined;
-    resolveAllReferencesInExampleOrThrow: (args: { example: unknown; file: FernFileContext }) => {
+    }) => Promise<{ resolvedExample: unknown } | undefined>;
+    resolveAllReferencesInExampleOrThrow: (args: { example: unknown; file: FernFileContext }) => Promise<{
         resolvedExample: unknown;
-    };
+    }>;
     resolveExample: (args: {
         example: unknown;
         file: FernFileContext;
-    }) => { resolvedExample: unknown; file: FernFileContext } | undefined;
-    resolveExampleOrThrow: (args: { example: unknown; file: FernFileContext }) => {
+    }) => Promise<{ resolvedExample: unknown; file: FernFileContext } | undefined>;
+    resolveExampleOrThrow: (args: { example: unknown; file: FernFileContext }) => Promise<{
         resolvedExample: unknown;
         file: FernFileContext;
-    };
+    }>;
     parseExampleReference: (exampleReference: string) => { rawTypeReference: string; exampleName: string } | undefined;
 }
 
 export class ExampleResolverImpl implements ExampleResolver {
     constructor(private readonly typeResolver: TypeResolver) {}
 
-    public resolveAllReferencesInExample({
+    public async resolveAllReferencesInExample({
         example,
         file
     }: {
         example: unknown;
         file: FernFileContext;
-    }): { resolvedExample: unknown } | undefined {
+    }): Promise<{ resolvedExample: unknown } | undefined> {
         if (typeof example === "string") {
-            const resolvedExample = this.resolveExample({
+            const resolvedExample = await this.resolveExample({
                 example,
                 file
             });
@@ -47,7 +47,7 @@ export class ExampleResolverImpl implements ExampleResolver {
         } else if (isPlainObject(example)) {
             const newExample: typeof example = {};
             for (const [exampleKey, exampleValue] of Object.entries(example)) {
-                const resolvedExampleValue = this.resolveAllReferencesInExample({ example: exampleValue, file });
+                const resolvedExampleValue = await this.resolveAllReferencesInExample({ example: exampleValue, file });
                 if (resolvedExampleValue == null) {
                     return undefined;
                 }
@@ -57,7 +57,7 @@ export class ExampleResolverImpl implements ExampleResolver {
         } else if (Array.isArray(example)) {
             const newExample = [];
             for (const exampleItem of example) {
-                const resolvedExampleItem = this.resolveAllReferencesInExample({ example: exampleItem, file });
+                const resolvedExampleItem = await this.resolveAllReferencesInExample({ example: exampleItem, file });
                 if (resolvedExampleItem == null) {
                     return undefined;
                 }
@@ -69,23 +69,29 @@ export class ExampleResolverImpl implements ExampleResolver {
         return { resolvedExample: example };
     }
 
-    public resolveAllReferencesInExampleOrThrow({ example, file }: { example: unknown; file: FernFileContext }): {
+    public async resolveAllReferencesInExampleOrThrow({
+        example,
+        file
+    }: {
+        example: unknown;
+        file: FernFileContext;
+    }): Promise<{
         resolvedExample: unknown;
-    } {
-        const resolvedExample = this.resolveAllReferencesInExample({ example, file });
+    }> {
+        const resolvedExample = await this.resolveAllReferencesInExample({ example, file });
         if (resolvedExample == null) {
             throw new Error("Failed to resolve examples");
         }
         return resolvedExample;
     }
 
-    public resolveExample({
+    public async resolveExample({
         example,
         file
     }: {
         example: unknown;
         file: FernFileContext;
-    }): { resolvedExample: unknown; file: FernFileContext } | undefined {
+    }): Promise<{ resolvedExample: unknown; file: FernFileContext } | undefined> {
         if (typeof example !== "string") {
             return {
                 resolvedExample: example,
@@ -113,7 +119,7 @@ export class ExampleResolverImpl implements ExampleResolver {
             return undefined;
         }
 
-        const typeDeclaration = this.typeResolver.getDeclarationOfNamedType({
+        const typeDeclaration = await this.typeResolver.getDeclarationOfNamedType({
             referenceToNamedType: parsedExampleReference.rawTypeReference,
             file
         });
@@ -134,11 +140,11 @@ export class ExampleResolverImpl implements ExampleResolver {
         return this.resolveExample({ example: resolvedExample.value, file: typeDeclaration.file });
     }
 
-    public resolveExampleOrThrow({ example, file }: { example: unknown; file: FernFileContext }): {
+    public async resolveExampleOrThrow({ example, file }: { example: unknown; file: FernFileContext }): Promise<{
         resolvedExample: unknown;
         file: FernFileContext;
-    } {
-        const resolvedExample = this.resolveExample({ example, file });
+    }> {
+        const resolvedExample = await this.resolveExample({ example, file });
         if (resolvedExample == null) {
             throw new Error("Cannot resolve example: " + example);
         }

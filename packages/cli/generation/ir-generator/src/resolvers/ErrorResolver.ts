@@ -42,7 +42,7 @@ export class ErrorResolverImpl implements ErrorResolver {
             return undefined;
         }
 
-        const definitionFile = getDefinitionFile(this.workspace, parsedReference.relativeFilepath);
+        const definitionFile = await getDefinitionFile(this.workspace, parsedReference.relativeFilepath);
         if (definitionFile == null) {
             return undefined;
         }

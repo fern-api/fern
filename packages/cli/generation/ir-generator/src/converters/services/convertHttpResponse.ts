@@ -91,7 +91,7 @@ async function convertJsonResponse(
     typeResolver: TypeResolver
 ): Promise<HttpResponseBody> {
     const responseBodyType = file.parseTypeReference(response);
-    const resolvedType = typeResolver.resolveTypeOrThrow({
+    const resolvedType = await typeResolver.resolveTypeOrThrow({
         type: typeof response !== "string" ? response.type : response,
         file
     });

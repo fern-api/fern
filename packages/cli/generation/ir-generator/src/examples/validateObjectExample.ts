@@ -10,7 +10,7 @@ import { ExampleViolation } from "./exampleViolation";
 import { getViolationsForMisshapenExample } from "./getViolationsForMisshapenExample";
 import { validateTypeReferenceExample } from "./validateTypeReferenceExample";
 
-export function validateObjectExample({
+export async function validateObjectExample({
     typeName,
     typeNameForBreadcrumb,
     rawObject,
@@ -29,14 +29,14 @@ export function validateObjectExample({
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
-}): ExampleViolation[] {
+}): Promise<ExampleViolation[]> {
     if (!isPlainObject(example)) {
         return getViolationsForMisshapenExample(example, "an object");
     }
 
     const violations: ExampleViolation[] = [];
 
-    const allPropertiesForObject = getAllPropertiesForObject({
+    const allPropertiesForObject = await getAllPropertiesForObject({
         typeName,
         objectDeclaration: rawObject,
         typeResolver,
@@ -75,12 +75,12 @@ export function validateObjectExample({
                 message: `Unexpected property "${exampleKey}"`
             });
         } else {
-            const definitionFile = getDefinitionFile(workspace, propertyWithPath.filepathOfDeclaration);
+            const definitionFile = await getDefinitionFile(workspace, propertyWithPath.filepathOfDeclaration);
             if (definitionFile == null) {
                 throw new Error("Service file does not exist for property: " + propertyWithPath.wireKey);
             }
             violations.push(
-                ...validateTypeReferenceExample({
+                ...(await validateTypeReferenceExample({
                     rawTypeReference: propertyWithPath.propertyType,
                     example: exampleValue,
                     file: constructFernFileContext({
@@ -92,7 +92,7 @@ export function validateObjectExample({
                     workspace,
                     typeResolver,
                     exampleResolver
-                })
+                }))
             );
         }
     }

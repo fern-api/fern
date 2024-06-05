@@ -35,7 +35,7 @@ import { getPropertyName } from "../type-declarations/convertObjectTypeDeclarati
 import { getHeaderName, resolvePathParameterOrThrow } from "./convertHttpService";
 import { getQueryParameterName } from "./convertQueryParameter";
 
-export function convertExampleEndpointCall({
+export async function convertExampleEndpointCall({
     service,
     endpoint,
     example,
@@ -55,8 +55,8 @@ export function convertExampleEndpointCall({
     variableResolver: VariableResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): HttpEndpointExample {
-    const convertedPathParameters = convertPathParameters({
+}): Promise<HttpEndpointExample> {
+    const convertedPathParameters = await convertPathParameters({
         service,
         endpoint,
         example,
@@ -72,42 +72,44 @@ export function convertExampleEndpointCall({
         docs: example.docs,
         url: buildUrl({ service, endpoint, example, pathParams: convertedPathParameters }),
         ...convertedPathParameters,
-        ...convertHeaders({ service, endpoint, example, typeResolver, exampleResolver, file, workspace }),
+        ...(await convertHeaders({ service, endpoint, example, typeResolver, exampleResolver, file, workspace })),
         queryParameters:
             example["query-parameters"] != null
-                ? Object.entries(example["query-parameters"]).map(([wireKey, value]) => {
-                      const queryParameterDeclaration =
-                          typeof endpoint.request !== "string"
-                              ? endpoint.request?.["query-parameters"]?.[wireKey]
-                              : undefined;
-                      if (queryParameterDeclaration == null) {
-                          throw new Error(`Query parameter ${wireKey} does not exist`);
-                      }
-                      return {
-                          name: file.casingsGenerator.generateNameAndWireValue({
-                              name: getQueryParameterName({
-                                  queryParameterKey: wireKey,
-                                  queryParameter: queryParameterDeclaration
-                              }).name,
-                              wireValue: wireKey
-                          }),
-                          value: convertTypeReferenceExample({
-                              example: value,
-                              rawTypeBeingExemplified:
-                                  typeof queryParameterDeclaration === "string"
-                                      ? queryParameterDeclaration
-                                      : queryParameterDeclaration.type,
-                              typeResolver,
-                              exampleResolver,
-                              fileContainingRawTypeReference: file,
-                              fileContainingExample: file,
-                              workspace
-                          })
-                      };
-                  })
+                ? await Promise.all(
+                      Object.entries(example["query-parameters"]).map(async ([wireKey, value]) => {
+                          const queryParameterDeclaration =
+                              typeof endpoint.request !== "string"
+                                  ? endpoint.request?.["query-parameters"]?.[wireKey]
+                                  : undefined;
+                          if (queryParameterDeclaration == null) {
+                              throw new Error(`Query parameter ${wireKey} does not exist`);
+                          }
+                          return {
+                              name: file.casingsGenerator.generateNameAndWireValue({
+                                  name: getQueryParameterName({
+                                      queryParameterKey: wireKey,
+                                      queryParameter: queryParameterDeclaration
+                                  }).name,
+                                  wireValue: wireKey
+                              }),
+                              value: await convertTypeReferenceExample({
+                                  example: value,
+                                  rawTypeBeingExemplified:
+                                      typeof queryParameterDeclaration === "string"
+                                          ? queryParameterDeclaration
+                                          : queryParameterDeclaration.type,
+                                  typeResolver,
+                                  exampleResolver,
+                                  fileContainingRawTypeReference: file,
+                                  fileContainingExample: file,
+                                  workspace
+                              })
+                          };
+                      })
+                  )
                 : [],
-        request: convertExampleRequestBody({ endpoint, example, typeResolver, exampleResolver, file, workspace }),
-        response: convertExampleResponse({
+        request: await convertExampleRequestBody({ endpoint, example, typeResolver, exampleResolver, file, workspace }),
+        response: await convertExampleResponse({
             endpoint,
             example,
             typeResolver,
@@ -164,7 +166,7 @@ function removeSdkAlias(sdk: RawSchemas.SupportedSdkLanguageSchema): SupportedSd
     }
 }
 
-function convertPathParameters({
+async function convertPathParameters({
     service,
     endpoint,
     example,
@@ -182,12 +184,12 @@ function convertPathParameters({
     variableResolver: VariableResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): Pick<ExampleEndpointCall, "rootPathParameters" | "endpointPathParameters" | "servicePathParameters"> {
+}): Promise<Pick<ExampleEndpointCall, "rootPathParameters" | "endpointPathParameters" | "servicePathParameters">> {
     const rootPathParameters: ExamplePathParameter[] = [];
     const servicePathParameters: ExamplePathParameter[] = [];
     const endpointPathParameters: ExamplePathParameter[] = [];
 
-    const buildExamplePathParameter = ({
+    const buildExamplePathParameter = async ({
         name,
         pathParameterDeclaration,
         examplePathParameter
@@ -203,7 +205,7 @@ function convertPathParameters({
         });
         return {
             name,
-            value: convertTypeReferenceExample({
+            value: await convertTypeReferenceExample({
                 example: examplePathParameter,
                 rawTypeBeingExemplified: resolvedPathParameter.rawType,
                 typeResolver,
@@ -223,7 +225,7 @@ function convertPathParameters({
 
             if (rootPathParameterDeclaration != null) {
                 rootPathParameters.push(
-                    buildExamplePathParameter({
+                    await buildExamplePathParameter({
                         name: file.casingsGenerator.generateName(key),
                         pathParameterDeclaration: rootPathParameterDeclaration,
                         examplePathParameter
@@ -231,7 +233,7 @@ function convertPathParameters({
                 );
             } else if (endpointPathParameterDeclaration != null) {
                 endpointPathParameters.push(
-                    buildExamplePathParameter({
+                    await buildExamplePathParameter({
                         name: file.casingsGenerator.generateName(key),
                         pathParameterDeclaration: endpointPathParameterDeclaration,
                         examplePathParameter
@@ -239,7 +241,7 @@ function convertPathParameters({
                 );
             } else if (servicePathParameterDeclaration != null) {
                 servicePathParameters.push(
-                    buildExamplePathParameter({
+                    await buildExamplePathParameter({
                         name: file.casingsGenerator.generateName(key),
                         pathParameterDeclaration: servicePathParameterDeclaration,
                         examplePathParameter
@@ -258,7 +260,7 @@ function convertPathParameters({
     };
 }
 
-function convertHeaders({
+async function convertHeaders({
     service,
     endpoint,
     example,
@@ -274,7 +276,7 @@ function convertHeaders({
     exampleResolver: ExampleResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): Pick<ExampleEndpointCall, "endpointHeaders" | "serviceHeaders"> {
+}): Promise<Pick<ExampleEndpointCall, "endpointHeaders" | "serviceHeaders">> {
     const serviceHeaders: ExampleHeader[] = [];
     const endpointHeaders: ExampleHeader[] = [];
 
@@ -289,7 +291,7 @@ function convertHeaders({
                         name: getHeaderName({ headerKey: wireKey, header: endpointHeaderDeclaration }).name,
                         wireValue: wireKey
                     }),
-                    value: convertTypeReferenceExample({
+                    value: await convertTypeReferenceExample({
                         example: exampleHeader,
                         rawTypeBeingExemplified:
                             typeof endpointHeaderDeclaration === "string"
@@ -308,7 +310,7 @@ function convertHeaders({
                         name: getHeaderName({ headerKey: wireKey, header: serviceHeaderDeclaration }).name,
                         wireValue: wireKey
                     }),
-                    value: convertTypeReferenceExample({
+                    value: await convertTypeReferenceExample({
                         example: exampleHeader,
                         rawTypeBeingExemplified:
                             typeof serviceHeaderDeclaration === "string"
@@ -333,7 +335,7 @@ function convertHeaders({
     };
 }
 
-function convertExampleRequestBody({
+async function convertExampleRequestBody({
     endpoint,
     example,
     typeResolver,
@@ -347,7 +349,7 @@ function convertExampleRequestBody({
     exampleResolver: ExampleResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): ExampleRequestBody | undefined {
+}): Promise<ExampleRequestBody | undefined> {
     const requestType = typeof endpoint.request !== "string" ? endpoint.request?.body : endpoint.request;
     if (requestType == null) {
         return undefined;
@@ -359,7 +361,7 @@ function convertExampleRequestBody({
 
     if (!isInlineRequestBody(requestType)) {
         return ExampleRequestBody.reference(
-            convertTypeReferenceExample({
+            await convertTypeReferenceExample({
                 example: example.request,
                 rawTypeBeingExemplified: typeof requestType !== "string" ? requestType.type : requestType,
                 typeResolver,
@@ -396,7 +398,7 @@ function convertExampleRequestBody({
                     name: getPropertyName({ propertyKey: wireKey, property: inlinedRequestPropertyDeclaration }).name,
                     wireValue: wireKey
                 }),
-                value: convertTypeReferenceExample({
+                value: await convertTypeReferenceExample({
                     example: propertyExample,
                     rawTypeBeingExemplified:
                         typeof inlinedRequestPropertyDeclaration !== "string"
@@ -411,7 +413,7 @@ function convertExampleRequestBody({
                 originalTypeDeclaration: undefined
             });
         } else {
-            const originalTypeDeclaration = getOriginalTypeDeclarationForPropertyFromExtensions({
+            const originalTypeDeclaration = await getOriginalTypeDeclarationForPropertyFromExtensions({
                 extends_: requestType.extends,
                 wirePropertyKey: wireKey,
                 typeResolver,
@@ -426,7 +428,7 @@ function convertExampleRequestBody({
                         .name,
                     wireValue: wireKey
                 }),
-                value: convertTypeReferenceExample({
+                value: await convertTypeReferenceExample({
                     example: propertyExample,
                     rawTypeBeingExemplified:
                         typeof originalTypeDeclaration.rawPropertyType === "string"
@@ -444,13 +446,13 @@ function convertExampleRequestBody({
     }
 
     return ExampleRequestBody.inlinedRequestBody({
-        jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({ example: example.request, file })
+        jsonExample: (await exampleResolver.resolveAllReferencesInExampleOrThrow({ example: example.request, file }))
             .resolvedExample,
         properties: exampleProperties
     });
 }
 
-function convertExampleResponse({
+async function convertExampleResponse({
     endpoint,
     example,
     typeResolver,
@@ -466,14 +468,14 @@ function convertExampleResponse({
     exampleResolver: ExampleResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): ExampleResponse {
+}): Promise<ExampleResponse> {
     if (example.response == null) {
         return ExampleResponse.ok(ExampleEndpointSuccessResponse.body(undefined));
     }
-    return visitExampleResponseSchema(endpoint, example.response, {
-        body: (example) => {
+    return await visitExampleResponseSchema(endpoint, example.response, {
+        body: async (example) => {
             if (example.error != null) {
-                const errorDeclaration = errorResolver.getDeclarationOrThrow(example.error, file);
+                const errorDeclaration = await errorResolver.getDeclarationOrThrow(example.error, file);
                 return ExampleResponse.error({
                     error: parseErrorName({
                         errorName: example.error,
@@ -481,7 +483,7 @@ function convertExampleResponse({
                     }),
                     body:
                         errorDeclaration.declaration.type != null
-                            ? convertTypeReferenceExample({
+                            ? await convertTypeReferenceExample({
                                   example: example.body,
                                   rawTypeBeingExemplified: errorDeclaration.declaration.type,
                                   typeResolver,
@@ -496,63 +498,74 @@ function convertExampleResponse({
 
             return ExampleResponse.ok(
                 ExampleEndpointSuccessResponse.body(
-                    convertExampleResponseBody({ endpoint, example, typeResolver, exampleResolver, file, workspace })
+                    await convertExampleResponseBody({
+                        endpoint,
+                        example,
+                        typeResolver,
+                        exampleResolver,
+                        file,
+                        workspace
+                    })
                 )
             );
         },
-        stream: (example) => {
+        stream: async (example) => {
             const rawTypeBeingExemplified =
                 typeof endpoint["response-stream"] === "string"
                     ? endpoint["response-stream"]
                     : endpoint["response-stream"]?.type;
             return ExampleResponse.ok(
                 ExampleEndpointSuccessResponse.stream(
-                    example.stream
-                        .map((data) => {
-                            if (rawTypeBeingExemplified == null) {
-                                return undefined;
-                            }
+                    (
+                        await Promise.all(
+                            example.stream.map((data) => {
+                                if (rawTypeBeingExemplified == null) {
+                                    return undefined;
+                                }
 
-                            return convertTypeReferenceExample({
-                                example: data,
-                                rawTypeBeingExemplified,
-                                typeResolver,
-                                exampleResolver,
-                                fileContainingRawTypeReference: file,
-                                fileContainingExample: file,
-                                workspace
-                            });
-                        })
-                        .filter(isNonNullish)
+                                return convertTypeReferenceExample({
+                                    example: data,
+                                    rawTypeBeingExemplified,
+                                    typeResolver,
+                                    exampleResolver,
+                                    fileContainingRawTypeReference: file,
+                                    fileContainingExample: file,
+                                    workspace
+                                });
+                            })
+                        )
+                    ).filter(isNonNullish)
                 )
             );
         },
-        events: (example) => {
+        events: async (example) => {
             const rawTypeBeingExemplified =
                 typeof endpoint["response-stream"] === "string"
                     ? endpoint["response-stream"]
                     : endpoint["response-stream"]?.type;
             return ExampleResponse.ok(
                 ExampleEndpointSuccessResponse.sse(
-                    example.stream
-                        .map(({ event, data }) => {
-                            if (rawTypeBeingExemplified == null) {
-                                return undefined;
-                            }
+                    (
+                        await Promise.all(
+                            example.stream.map(async ({ event, data }) => {
+                                if (rawTypeBeingExemplified == null) {
+                                    return undefined;
+                                }
 
-                            const convertedExample = convertTypeReferenceExample({
-                                example: data,
-                                rawTypeBeingExemplified,
-                                typeResolver,
-                                exampleResolver,
-                                fileContainingRawTypeReference: file,
-                                fileContainingExample: file,
-                                workspace
-                            });
+                                const convertedExample = await convertTypeReferenceExample({
+                                    example: data,
+                                    rawTypeBeingExemplified,
+                                    typeResolver,
+                                    exampleResolver,
+                                    fileContainingRawTypeReference: file,
+                                    fileContainingExample: file,
+                                    workspace
+                                });
 
-                            return { event, data: convertedExample };
-                        })
-                        .filter(isNonNullish)
+                                return { event, data: convertedExample };
+                            })
+                        )
+                    ).filter(isNonNullish)
                 )
             );
         }
