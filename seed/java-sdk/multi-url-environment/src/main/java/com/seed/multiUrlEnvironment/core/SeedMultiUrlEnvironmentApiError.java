@@ -4,12 +4,15 @@
 package com.seed.multiUrlEnvironment.core;
 
 public class SeedMultiUrlEnvironmentApiError extends SeedMultiUrlEnvironmentError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedMultiUrlEnvironmentApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedMultiUrlEnvironmentApiError extends SeedMultiUrlEnvironmentErro
 
     @java.lang.Override
     public String toString() {
-        return "SeedMultiUrlEnvironmentApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedMultiUrlEnvironmentApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: "
+                + body + "}";
     }
 }

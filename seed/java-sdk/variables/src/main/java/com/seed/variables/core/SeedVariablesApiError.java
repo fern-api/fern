@@ -4,12 +4,15 @@
 package com.seed.variables.core;
 
 public class SeedVariablesApiError extends SeedVariablesError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedVariablesApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedVariablesApiError extends SeedVariablesError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedVariablesApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedVariablesApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body
+                + "}";
     }
 }

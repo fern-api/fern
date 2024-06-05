@@ -4,12 +4,15 @@
 package com.seed.audiences.core;
 
 public class SeedAudiencesApiError extends SeedAudiencesError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedAudiencesApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedAudiencesApiError extends SeedAudiencesError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedAudiencesApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedAudiencesApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body
+                + "}";
     }
 }

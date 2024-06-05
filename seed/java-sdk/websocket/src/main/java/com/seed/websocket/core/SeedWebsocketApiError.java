@@ -4,12 +4,15 @@
 package com.seed.websocket.core;
 
 public class SeedWebsocketApiError extends SeedWebsocketError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedWebsocketApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedWebsocketApiError extends SeedWebsocketError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedWebsocketApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedWebsocketApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body
+                + "}";
     }
 }

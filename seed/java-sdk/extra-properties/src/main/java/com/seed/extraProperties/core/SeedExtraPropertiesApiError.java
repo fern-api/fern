@@ -4,12 +4,15 @@
 package com.seed.extraProperties.core;
 
 public class SeedExtraPropertiesApiError extends SeedExtraPropertiesError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedExtraPropertiesApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedExtraPropertiesApiError extends SeedExtraPropertiesError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedExtraPropertiesApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedExtraPropertiesApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: "
+                + body + "}";
     }
 }

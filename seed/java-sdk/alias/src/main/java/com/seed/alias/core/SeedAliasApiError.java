@@ -4,12 +4,15 @@
 package com.seed.alias.core;
 
 public class SeedAliasApiError extends SeedAliasError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedAliasApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,6 @@ public class SeedAliasApiError extends SeedAliasError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedAliasApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedAliasApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body + "}";
     }
 }

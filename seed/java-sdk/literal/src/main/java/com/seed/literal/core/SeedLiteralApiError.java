@@ -4,12 +4,15 @@
 package com.seed.literal.core;
 
 public class SeedLiteralApiError extends SeedLiteralError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedLiteralApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,6 @@ public class SeedLiteralApiError extends SeedLiteralError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedLiteralApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedLiteralApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body + "}";
     }
 }

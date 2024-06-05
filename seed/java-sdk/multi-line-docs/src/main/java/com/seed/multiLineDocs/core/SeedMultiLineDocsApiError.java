@@ -4,12 +4,15 @@
 package com.seed.multiLineDocs.core;
 
 public class SeedMultiLineDocsApiError extends SeedMultiLineDocsError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedMultiLineDocsApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedMultiLineDocsApiError extends SeedMultiLineDocsError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedMultiLineDocsApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedMultiLineDocsApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body
+                + "}";
     }
 }

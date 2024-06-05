@@ -4,12 +4,15 @@
 package com.seed.examples.core;
 
 public class SeedExamplesApiError extends SeedExamplesError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedExamplesApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedExamplesApiError extends SeedExamplesError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedExamplesApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedExamplesApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body
+                + "}";
     }
 }

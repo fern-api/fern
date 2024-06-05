@@ -4,12 +4,15 @@
 package com.seed.nurseryApi.core;
 
 public class SeedNurseryApiApiError extends SeedNurseryApiError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedNurseryApiApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedNurseryApiApiError extends SeedNurseryApiError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedNurseryApiApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedNurseryApiApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body
+                + "}";
     }
 }

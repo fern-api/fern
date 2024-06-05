@@ -4,12 +4,15 @@
 package com.seed.trace.core;
 
 public class SeedTraceApiError extends SeedTraceError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedTraceApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,6 @@ public class SeedTraceApiError extends SeedTraceError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedTraceApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedTraceApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body + "}";
     }
 }

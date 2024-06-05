@@ -4,12 +4,15 @@
 package com.seed.basicAuth.core;
 
 public class SeedBasicAuthApiError extends SeedBasicAuthError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedBasicAuthApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedBasicAuthApiError extends SeedBasicAuthError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedBasicAuthApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedBasicAuthApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body
+                + "}";
     }
 }

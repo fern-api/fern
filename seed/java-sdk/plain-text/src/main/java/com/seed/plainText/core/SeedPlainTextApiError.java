@@ -4,12 +4,15 @@
 package com.seed.plainText.core;
 
 public class SeedPlainTextApiError extends SeedPlainTextError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedPlainTextApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedPlainTextApiError extends SeedPlainTextError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedPlainTextApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedPlainTextApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body
+                + "}";
     }
 }

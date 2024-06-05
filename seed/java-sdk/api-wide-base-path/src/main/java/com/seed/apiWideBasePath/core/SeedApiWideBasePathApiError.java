@@ -4,12 +4,15 @@
 package com.seed.apiWideBasePath.core;
 
 public class SeedApiWideBasePathApiError extends SeedApiWideBasePathError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedApiWideBasePathApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedApiWideBasePathApiError extends SeedApiWideBasePathError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedApiWideBasePathApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedApiWideBasePathApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: "
+                + body + "}";
     }
 }

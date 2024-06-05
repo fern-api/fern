@@ -30,6 +30,10 @@ import javax.lang.model.element.Modifier;
 
 public final class ApiErrorGenerator extends AbstractFileGenerator {
 
+    private static final FieldSpec MESSAGE_FIELD_SPEC = FieldSpec.builder(
+                    String.class, "message", Modifier.PRIVATE, Modifier.FINAL)
+            .build();
+
     private static final FieldSpec STATUS_CODE_FIELD_SPEC = FieldSpec.builder(
                     int.class, "statusCode", Modifier.PRIVATE, Modifier.FINAL)
             .build();
@@ -38,7 +42,6 @@ public final class ApiErrorGenerator extends AbstractFileGenerator {
                     Object.class, "body", Modifier.PRIVATE, Modifier.FINAL)
             .build();
 
-    private static final String MESSAGE_PARAMETER_NAME = "message";
     private final GeneratedJavaFile generatedBaseErrorFile;
 
     public ApiErrorGenerator(ClientGeneratorContext generatorContext, GeneratedJavaFile generatedBaseErrorFile) {
@@ -57,24 +60,26 @@ public final class ApiErrorGenerator extends AbstractFileGenerator {
         TypeSpec apiErrorTypeSpec = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC)
                 .superclass(generatedBaseErrorFile.getClassName())
+                .addField(MESSAGE_FIELD_SPEC)
                 .addField(STATUS_CODE_FIELD_SPEC)
                 .addField(BODY_FIELD_SPEC)
                 .addMethod(MethodSpec.constructorBuilder()
                         .addModifiers(Modifier.PUBLIC)
-                        .addParameter(ParameterSpec.builder(String.class, MESSAGE_PARAMETER_NAME)
+                        .addParameter(ParameterSpec.builder(MESSAGE_FIELD_SPEC.type, MESSAGE_FIELD_SPEC.name)
                                 .build())
                         .addParameter(ParameterSpec.builder(STATUS_CODE_FIELD_SPEC.type, STATUS_CODE_FIELD_SPEC.name)
                                 .build())
                         .addParameter(ParameterSpec.builder(BODY_FIELD_SPEC.type, BODY_FIELD_SPEC.name)
                                 .build())
-                        .addStatement("super($L)", MESSAGE_PARAMETER_NAME)
+                        .addStatement("super($L)", MESSAGE_FIELD_SPEC.name)
+                        .addStatement("this.$L = $L", MESSAGE_FIELD_SPEC.name, MESSAGE_FIELD_SPEC.name)
                         .addStatement("this.$L = $L", STATUS_CODE_FIELD_SPEC.name, STATUS_CODE_FIELD_SPEC.name)
                         .addStatement("this.$L = $L", BODY_FIELD_SPEC.name, BODY_FIELD_SPEC.name)
                         .build())
                 .addMethod(createGetter(STATUS_CODE_FIELD_SPEC))
                 .addMethod(createGetter(BODY_FIELD_SPEC))
                 .addMethod(ObjectMethodFactory.createToStringMethod(
-                        className, List.of(STATUS_CODE_FIELD_SPEC, BODY_FIELD_SPEC)))
+                        className, List.of(MESSAGE_FIELD_SPEC, STATUS_CODE_FIELD_SPEC, BODY_FIELD_SPEC)))
                 .build();
         JavaFile apiErrorFile =
                 JavaFile.builder(className.packageName(), apiErrorTypeSpec).build();

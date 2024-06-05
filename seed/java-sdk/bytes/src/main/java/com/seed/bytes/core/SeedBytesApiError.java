@@ -4,12 +4,15 @@
 package com.seed.bytes.core;
 
 public class SeedBytesApiError extends SeedBytesError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedBytesApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,6 @@ public class SeedBytesApiError extends SeedBytesError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedBytesApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedBytesApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body + "}";
     }
 }

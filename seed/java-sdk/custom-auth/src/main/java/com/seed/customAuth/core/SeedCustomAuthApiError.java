@@ -4,12 +4,15 @@
 package com.seed.customAuth.core;
 
 public class SeedCustomAuthApiError extends SeedCustomAuthError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedCustomAuthApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedCustomAuthApiError extends SeedCustomAuthError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedCustomAuthApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedCustomAuthApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body
+                + "}";
     }
 }

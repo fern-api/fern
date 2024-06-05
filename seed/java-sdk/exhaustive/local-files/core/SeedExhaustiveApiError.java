@@ -8,12 +8,15 @@ import java.lang.Object;
 import java.lang.String;
 
 public class SeedExhaustiveApiError extends SeedExhaustiveError {
+  private final String message;
+
   private final int statusCode;
 
   private final Object body;
 
   public SeedExhaustiveApiError(String message, int statusCode, Object body) {
     super(message);
+    this.message = message;
     this.statusCode = statusCode;
     this.body = body;
   }
@@ -28,6 +31,6 @@ public class SeedExhaustiveApiError extends SeedExhaustiveError {
 
   @java.lang.Override
   public String toString() {
-    return "SeedExhaustiveApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+    return "SeedExhaustiveApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body + "}";
   }
 }

@@ -4,12 +4,15 @@
 package com.seed.unknownAsAny.core;
 
 public class SeedUnknownAsAnyApiError extends SeedUnknownAsAnyError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedUnknownAsAnyApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedUnknownAsAnyApiError extends SeedUnknownAsAnyError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedUnknownAsAnyApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedUnknownAsAnyApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body
+                + "}";
     }
 }

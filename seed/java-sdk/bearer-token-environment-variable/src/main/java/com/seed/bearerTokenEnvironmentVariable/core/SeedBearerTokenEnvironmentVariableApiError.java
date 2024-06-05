@@ -4,12 +4,15 @@
 package com.seed.bearerTokenEnvironmentVariable.core;
 
 public class SeedBearerTokenEnvironmentVariableApiError extends SeedBearerTokenEnvironmentVariableError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedBearerTokenEnvironmentVariableApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedBearerTokenEnvironmentVariableApiError extends SeedBearerTokenE
 
     @java.lang.Override
     public String toString() {
-        return "SeedBearerTokenEnvironmentVariableApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedBearerTokenEnvironmentVariableApiError{" + "message: " + message + ", statusCode: " + statusCode
+                + ", body: " + body + "}";
     }
 }

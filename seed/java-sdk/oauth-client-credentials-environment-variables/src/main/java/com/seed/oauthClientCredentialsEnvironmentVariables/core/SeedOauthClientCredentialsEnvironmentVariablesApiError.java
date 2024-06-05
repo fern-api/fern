@@ -5,12 +5,15 @@ package com.seed.oauthClientCredentialsEnvironmentVariables.core;
 
 public class SeedOauthClientCredentialsEnvironmentVariablesApiError
         extends SeedOauthClientCredentialsEnvironmentVariablesError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedOauthClientCredentialsEnvironmentVariablesApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -25,7 +28,7 @@ public class SeedOauthClientCredentialsEnvironmentVariablesApiError
 
     @java.lang.Override
     public String toString() {
-        return "SeedOauthClientCredentialsEnvironmentVariablesApiError{" + "statusCode: " + statusCode + ", body: "
-                + body + "}";
+        return "SeedOauthClientCredentialsEnvironmentVariablesApiError{" + "message: " + message + ", statusCode: "
+                + statusCode + ", body: " + body + "}";
     }
 }

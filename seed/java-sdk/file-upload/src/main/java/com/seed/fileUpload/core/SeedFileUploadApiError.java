@@ -4,12 +4,15 @@
 package com.seed.fileUpload.core;
 
 public class SeedFileUploadApiError extends SeedFileUploadError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedFileUploadApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedFileUploadApiError extends SeedFileUploadError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedFileUploadApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedFileUploadApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body
+                + "}";
     }
 }

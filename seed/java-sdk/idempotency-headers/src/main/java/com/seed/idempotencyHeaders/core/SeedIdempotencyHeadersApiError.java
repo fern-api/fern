@@ -4,12 +4,15 @@
 package com.seed.idempotencyHeaders.core;
 
 public class SeedIdempotencyHeadersApiError extends SeedIdempotencyHeadersError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedIdempotencyHeadersApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedIdempotencyHeadersApiError extends SeedIdempotencyHeadersError 
 
     @java.lang.Override
     public String toString() {
-        return "SeedIdempotencyHeadersApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedIdempotencyHeadersApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: "
+                + body + "}";
     }
 }

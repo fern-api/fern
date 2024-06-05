@@ -4,12 +4,15 @@
 package com.seed.validation.core;
 
 public class SeedValidationApiError extends SeedValidationError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedValidationApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedValidationApiError extends SeedValidationError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedValidationApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedValidationApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body
+                + "}";
     }
 }

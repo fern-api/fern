@@ -4,12 +4,15 @@
 package com.seed.singleUrlEnvironmentDefault.core;
 
 public class SeedSingleUrlEnvironmentDefaultApiError extends SeedSingleUrlEnvironmentDefaultError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedSingleUrlEnvironmentDefaultApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedSingleUrlEnvironmentDefaultApiError extends SeedSingleUrlEnviro
 
     @java.lang.Override
     public String toString() {
-        return "SeedSingleUrlEnvironmentDefaultApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedSingleUrlEnvironmentDefaultApiError{" + "message: " + message + ", statusCode: " + statusCode
+                + ", body: " + body + "}";
     }
 }

@@ -4,12 +4,15 @@
 package com.seed.queryParameters.core;
 
 public class SeedQueryParametersApiError extends SeedQueryParametersError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedQueryParametersApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedQueryParametersApiError extends SeedQueryParametersError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedQueryParametersApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedQueryParametersApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: "
+                + body + "}";
     }
 }

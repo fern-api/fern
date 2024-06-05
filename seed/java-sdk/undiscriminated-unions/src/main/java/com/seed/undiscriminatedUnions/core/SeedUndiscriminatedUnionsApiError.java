@@ -4,12 +4,15 @@
 package com.seed.undiscriminatedUnions.core;
 
 public class SeedUndiscriminatedUnionsApiError extends SeedUndiscriminatedUnionsError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedUndiscriminatedUnionsApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedUndiscriminatedUnionsApiError extends SeedUndiscriminatedUnions
 
     @java.lang.Override
     public String toString() {
-        return "SeedUndiscriminatedUnionsApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedUndiscriminatedUnionsApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: "
+                + body + "}";
     }
 }

@@ -4,12 +4,15 @@
 package com.seed.mixedCase.core;
 
 public class SeedMixedCaseApiError extends SeedMixedCaseError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedMixedCaseApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedMixedCaseApiError extends SeedMixedCaseError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedMixedCaseApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedMixedCaseApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body
+                + "}";
     }
 }

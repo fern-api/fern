@@ -4,12 +4,15 @@
 package com.seed.serverSentEvents.core;
 
 public class SeedServerSentEventsApiError extends SeedServerSentEventsError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedServerSentEventsApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedServerSentEventsApiError extends SeedServerSentEventsError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedServerSentEventsApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedServerSentEventsApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: "
+                + body + "}";
     }
 }

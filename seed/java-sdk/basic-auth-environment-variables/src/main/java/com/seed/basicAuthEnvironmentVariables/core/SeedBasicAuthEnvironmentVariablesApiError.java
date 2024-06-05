@@ -4,12 +4,15 @@
 package com.seed.basicAuthEnvironmentVariables.core;
 
 public class SeedBasicAuthEnvironmentVariablesApiError extends SeedBasicAuthEnvironmentVariablesError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedBasicAuthEnvironmentVariablesApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedBasicAuthEnvironmentVariablesApiError extends SeedBasicAuthEnvi
 
     @java.lang.Override
     public String toString() {
-        return "SeedBasicAuthEnvironmentVariablesApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedBasicAuthEnvironmentVariablesApiError{" + "message: " + message + ", statusCode: " + statusCode
+                + ", body: " + body + "}";
     }
 }

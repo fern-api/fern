@@ -4,12 +4,15 @@
 package com.seed.packageYml.core;
 
 public class SeedPackageYmlApiError extends SeedPackageYmlError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedPackageYmlApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedPackageYmlApiError extends SeedPackageYmlError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedPackageYmlApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedPackageYmlApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body
+                + "}";
     }
 }

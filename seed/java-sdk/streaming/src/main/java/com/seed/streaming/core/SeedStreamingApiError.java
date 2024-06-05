@@ -4,12 +4,15 @@
 package com.seed.streaming.core;
 
 public class SeedStreamingApiError extends SeedStreamingError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedStreamingApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedStreamingApiError extends SeedStreamingError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedStreamingApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedStreamingApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body
+                + "}";
     }
 }

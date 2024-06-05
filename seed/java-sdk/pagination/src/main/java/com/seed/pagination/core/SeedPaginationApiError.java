@@ -4,12 +4,15 @@
 package com.seed.pagination.core;
 
 public class SeedPaginationApiError extends SeedPaginationError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedPaginationApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedPaginationApiError extends SeedPaginationError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedPaginationApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedPaginationApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body
+                + "}";
     }
 }

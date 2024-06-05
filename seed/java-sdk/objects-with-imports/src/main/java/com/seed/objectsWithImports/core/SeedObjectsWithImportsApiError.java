@@ -4,12 +4,15 @@
 package com.seed.objectsWithImports.core;
 
 public class SeedObjectsWithImportsApiError extends SeedObjectsWithImportsError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedObjectsWithImportsApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedObjectsWithImportsApiError extends SeedObjectsWithImportsError 
 
     @java.lang.Override
     public String toString() {
-        return "SeedObjectsWithImportsApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedObjectsWithImportsApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: "
+                + body + "}";
     }
 }

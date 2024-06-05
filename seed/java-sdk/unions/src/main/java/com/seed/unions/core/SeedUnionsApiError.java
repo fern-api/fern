@@ -4,12 +4,15 @@
 package com.seed.unions.core;
 
 public class SeedUnionsApiError extends SeedUnionsError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedUnionsApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,6 @@ public class SeedUnionsApiError extends SeedUnionsError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedUnionsApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedUnionsApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body + "}";
     }
 }

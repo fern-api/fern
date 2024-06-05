@@ -4,12 +4,15 @@
 package com.seed.oauthClientCredentialsDefault.core;
 
 public class SeedOauthClientCredentialsDefaultApiError extends SeedOauthClientCredentialsDefaultError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedOauthClientCredentialsDefaultApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedOauthClientCredentialsDefaultApiError extends SeedOauthClientCr
 
     @java.lang.Override
     public String toString() {
-        return "SeedOauthClientCredentialsDefaultApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedOauthClientCredentialsDefaultApiError{" + "message: " + message + ", statusCode: " + statusCode
+                + ", body: " + body + "}";
     }
 }

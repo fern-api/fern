@@ -4,12 +4,15 @@
 package com.seed.noEnvironment.core;
 
 public class SeedNoEnvironmentApiError extends SeedNoEnvironmentError {
+    private final String message;
+
     private final int statusCode;
 
     private final Object body;
 
     public SeedNoEnvironmentApiError(String message, int statusCode, Object body) {
         super(message);
+        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
@@ -24,6 +27,7 @@ public class SeedNoEnvironmentApiError extends SeedNoEnvironmentError {
 
     @java.lang.Override
     public String toString() {
-        return "SeedNoEnvironmentApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedNoEnvironmentApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body
+                + "}";
     }
 }
