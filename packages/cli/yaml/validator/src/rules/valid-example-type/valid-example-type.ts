@@ -19,7 +19,7 @@ export const ValidExampleTypeRule: Rule = {
                     { typeName, typeDeclaration, example },
                     { relativeFilepath, contents: definitionFile }
                 ) => {
-                    const violations = ExampleValidators.validateTypeExample({
+                    const violations = await ExampleValidators.validateTypeExample({
                         typeName,
                         typeDeclaration,
                         example: example.value,

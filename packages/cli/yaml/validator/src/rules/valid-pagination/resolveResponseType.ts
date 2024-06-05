@@ -1,7 +1,7 @@
 import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 import { RawSchemas } from "@fern-api/yaml-schema";
 
-export function resolveResponseType({
+export async function resolveResponseType({
     endpoint,
     typeResolver,
     file
@@ -9,12 +9,12 @@ export function resolveResponseType({
     endpoint: RawSchemas.HttpEndpointSchema;
     typeResolver: TypeResolver;
     file: FernFileContext;
-}): ResolvedType | undefined {
+}): Promise<ResolvedType | undefined> {
     const responseType = typeof endpoint.response !== "string" ? endpoint.response?.type : endpoint.response;
     if (responseType == null) {
         return undefined;
     }
-    return typeResolver.resolveType({
+    return await typeResolver.resolveType({
         type: responseType,
         file
     });

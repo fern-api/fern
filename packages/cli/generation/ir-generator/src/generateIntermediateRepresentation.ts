@@ -197,7 +197,7 @@ export async function generateIntermediateRepresentation({
                 }
             },
 
-            errors: (errors) => {
+            errors: async (errors) => {
                 if (errors == null) {
                     return;
                 }
@@ -206,7 +206,7 @@ export async function generateIntermediateRepresentation({
                     throw new Error("error-discrimination is missing in api.yml but there are declared errors.");
                 }
                 for (const [errorName, errorDeclaration] of Object.entries(errors)) {
-                    const convertedErrorDeclaration = convertErrorDeclaration({
+                    const convertedErrorDeclaration = await convertErrorDeclaration({
                         errorName,
                         errorDeclaration,
                         file,

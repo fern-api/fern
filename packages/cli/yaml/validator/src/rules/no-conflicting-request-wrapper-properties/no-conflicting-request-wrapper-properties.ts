@@ -19,11 +19,11 @@ import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 
 export const NoConflictingRequestWrapperPropertiesRule: Rule = {
     name: "no-conflicting-request-wrapper-properties",
-    create: ({ workspace }) => {
+    create: async ({ workspace }) => {
         return {
             definitionFile: {
-                httpEndpoint: ({ endpoint, service }, { contents: definitionFile, relativeFilepath }) => {
-                    const nameToProperties = getRequestWrapperPropertiesByName({
+                httpEndpoint: async ({ endpoint, service }, { contents: definitionFile, relativeFilepath }) => {
+                    const nameToProperties = await getRequestWrapperPropertiesByName({
                         endpoint,
                         service,
                         relativeFilepath,
@@ -42,9 +42,14 @@ export const NoConflictingRequestWrapperPropertiesRule: Rule = {
                                 `Multiple request properties have the name ${chalk.bold(
                                     name
                                 )}. This is not suitable for code generation. Use the "name" property to deconflict.\n` +
-                                propertiesWithName
-                                    .map((property) => `  - ${convertRequestWrapperPropertyToString(property)}`)
-                                    .join("\n")
+                                (
+                                    await Promise.all(
+                                        propertiesWithName.map(
+                                            async (property) =>
+                                                `  - ${await convertRequestWrapperPropertyToString(property)}`
+                                        )
+                                    )
+                                ).join("\n")
                         });
                     }
 
@@ -163,7 +168,7 @@ async function getRequestWrapperPropertiesByName({
         }
 
         if (endpoint.request.body != null && isInlineRequestBody(endpoint.request.body)) {
-            const allProperties = getAllPropertiesForObject({
+            const allProperties = await getAllPropertiesForObject({
                 typeName: undefined,
                 objectDeclaration: {
                     extends: endpoint.request.body.extends,

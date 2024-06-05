@@ -77,15 +77,17 @@ async function validateBodyResponse({
     if (example.error == null) {
         if (endpoint.response != null) {
             violations.push(
-                ...ExampleValidators.validateTypeReferenceExample({
-                    rawTypeReference:
-                        typeof endpoint.response !== "string" ? endpoint.response.type : endpoint.response,
-                    example: example.body,
-                    typeResolver,
-                    exampleResolver,
-                    file,
-                    workspace
-                }).map((val): RuleViolation => {
+                ...(
+                    await ExampleValidators.validateTypeReferenceExample({
+                        rawTypeReference:
+                            typeof endpoint.response !== "string" ? endpoint.response.type : endpoint.response,
+                        example: example.body,
+                        typeResolver,
+                        exampleResolver,
+                        file,
+                        workspace
+                    })
+                ).map((val): RuleViolation => {
                     return {
                         severity: "error",
                         message: val.message
@@ -123,14 +125,16 @@ async function validateBodyResponse({
 
             if (errorDeclaration.declaration.type != null) {
                 violations.push(
-                    ...ExampleValidators.validateTypeReferenceExample({
-                        rawTypeReference: errorDeclaration.declaration.type,
-                        example: example.body,
-                        typeResolver,
-                        exampleResolver,
-                        file: errorDeclaration.file,
-                        workspace
-                    }).map((val): RuleViolation => {
+                    ...(
+                        await ExampleValidators.validateTypeReferenceExample({
+                            rawTypeReference: errorDeclaration.declaration.type,
+                            example: example.body,
+                            typeResolver,
+                            exampleResolver,
+                            file: errorDeclaration.file,
+                            workspace
+                        })
+                    ).map((val): RuleViolation => {
                         return { severity: "error", message: val.message };
                     })
                 );
@@ -146,7 +150,7 @@ async function validateBodyResponse({
     return violations;
 }
 
-function validateStreamResponse({
+async function validateStreamResponse({
     example,
     endpoint,
     typeResolver,
@@ -160,7 +164,7 @@ function validateStreamResponse({
     typeResolver: TypeResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): RuleViolation[] {
+}): Promise<RuleViolation[]> {
     const violations: RuleViolation[] = [];
     if (endpoint["response-stream"] == null) {
         violations.push({
@@ -174,17 +178,19 @@ function validateStreamResponse({
     ) {
         for (const event of example.stream) {
             violations.push(
-                ...ExampleValidators.validateTypeReferenceExample({
-                    rawTypeReference:
-                        typeof endpoint["response-stream"] !== "string"
-                            ? endpoint["response-stream"].type
-                            : endpoint["response-stream"],
-                    example: event,
-                    typeResolver,
-                    exampleResolver,
-                    file,
-                    workspace
-                }).map((val): RuleViolation => {
+                ...(
+                    await ExampleValidators.validateTypeReferenceExample({
+                        rawTypeReference:
+                            typeof endpoint["response-stream"] !== "string"
+                                ? endpoint["response-stream"].type
+                                : endpoint["response-stream"],
+                        example: event,
+                        typeResolver,
+                        exampleResolver,
+                        file,
+                        workspace
+                    })
+                ).map((val): RuleViolation => {
                     return { severity: "error", message: val.message };
                 })
             );
@@ -200,7 +206,7 @@ function validateStreamResponse({
     return violations;
 }
 
-function validateSseResponse({
+async function validateSseResponse({
     example,
     endpoint,
     typeResolver,
@@ -214,7 +220,7 @@ function validateSseResponse({
     typeResolver: TypeResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): RuleViolation[] {
+}): Promise<RuleViolation[]> {
     const violations: RuleViolation[] = [];
     if (endpoint["response-stream"] == null) {
         violations.push({
@@ -224,17 +230,19 @@ function validateSseResponse({
     } else if (typeof endpoint["response-stream"] !== "string" && endpoint["response-stream"].format === "sse") {
         for (const event of example.stream) {
             violations.push(
-                ...ExampleValidators.validateTypeReferenceExample({
-                    rawTypeReference:
-                        typeof endpoint["response-stream"] !== "string"
-                            ? endpoint["response-stream"].type
-                            : endpoint["response-stream"],
-                    example: event.data,
-                    typeResolver,
-                    exampleResolver,
-                    file,
-                    workspace
-                }).map((val): RuleViolation => {
+                ...(
+                    await ExampleValidators.validateTypeReferenceExample({
+                        rawTypeReference:
+                            typeof endpoint["response-stream"] !== "string"
+                                ? endpoint["response-stream"].type
+                                : endpoint["response-stream"],
+                        example: event.data,
+                        typeResolver,
+                        exampleResolver,
+                        file,
+                        workspace
+                    })
+                ).map((val): RuleViolation => {
                     return { severity: "error", message: val.message };
                 })
             );

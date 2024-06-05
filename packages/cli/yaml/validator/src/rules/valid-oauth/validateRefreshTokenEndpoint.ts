@@ -12,7 +12,7 @@ import {
     validateRefreshTokenResponseProperty
 } from "./validateUtils";
 
-export function validateRefreshTokenEndpoint({
+export async function validateRefreshTokenEndpoint({
     endpointId,
     endpoint,
     typeResolver,
@@ -24,7 +24,7 @@ export function validateRefreshTokenEndpoint({
     typeResolver: TypeResolver;
     file: FernFileContext;
     refreshEndpoint: RawSchemas.OAuthRefreshTokenEndpointSchema;
-}): RuleViolation[] {
+}): Promise<RuleViolation[]> {
     const violations: RuleViolation[] = [];
 
     const maybeRefreshToken = refreshEndpoint["request-properties"]?.["refresh-token"];
@@ -56,7 +56,7 @@ export function validateRefreshTokenEndpoint({
         }
     }
 
-    const resolvedResponseType = resolveResponseType({ endpoint, typeResolver, file });
+    const resolvedResponseType = await resolveResponseType({ endpoint, typeResolver, file });
     if (resolvedResponseType == null) {
         violations.push({
             severity: "error",

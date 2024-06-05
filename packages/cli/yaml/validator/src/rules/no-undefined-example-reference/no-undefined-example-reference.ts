@@ -10,7 +10,7 @@ export const NoUndefinedExampleReferenceRule: Rule = {
 
         return {
             definitionFile: {
-                exampleTypeReference: (exampleReference, { relativeFilepath, contents }) => {
+                exampleTypeReference: async (exampleReference, { relativeFilepath, contents }) => {
                     if (exampleResolver.parseExampleReference(exampleReference) == null) {
                         return [
                             {

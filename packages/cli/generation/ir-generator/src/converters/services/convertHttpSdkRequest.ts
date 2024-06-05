@@ -65,7 +65,7 @@ async function convertHttpSdkRequestShape({
     const { body } = request;
     if (
         (await doesRequestHaveNonBodyProperties({ request, file, typeResolver })) ||
-        (body != null && (await isInlineRequestBody(body)))
+        (body != null && isInlineRequestBody(body))
     ) {
         return constructWrapper();
     }

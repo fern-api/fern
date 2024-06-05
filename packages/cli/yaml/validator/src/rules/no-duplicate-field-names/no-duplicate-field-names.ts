@@ -40,9 +40,9 @@ export const NoDuplicateFieldNamesRule: Rule = {
                             }
                         },
 
-                        object: (objectDeclaration) => {
+                        object: async (objectDeclaration) => {
                             const typeNameString = getTypeDeclarationNameAsString(typeName);
-                            const allProperties = getAllPropertiesForObject({
+                            const allProperties = await getAllPropertiesForObject({
                                 typeName: typeNameString,
                                 objectDeclaration,
                                 filepathOfDeclaration: relativeFilepath,
@@ -74,7 +74,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
 
                         undiscriminatedUnion: () => [],
 
-                        discriminatedUnion: (unionDeclaration) => {
+                        discriminatedUnion: async (unionDeclaration) => {
                             const duplicateNames = getDuplicateNames(
                                 Object.entries(unionDeclaration.union),
                                 ([unionKey, rawSingleUnionType]) =>
@@ -96,7 +96,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                         : undefined;
 
                                 if (specifiedType != null) {
-                                    const resolvedType = typeResolver.resolveType({
+                                    const resolvedType = await typeResolver.resolveType({
                                         type: specifiedType,
                                         file: constructFernFileContext({
                                             relativeFilepath,
@@ -116,11 +116,14 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                         isRawObjectDefinition(resolvedType.declaration)
                                     ) {
                                         const discriminantName = getUnionDiscriminantName(unionDeclaration).name;
-                                        const definitionFile = getDefinitionFile(workspace, resolvedType.filepath);
+                                        const definitionFile = await getDefinitionFile(
+                                            workspace,
+                                            resolvedType.filepath
+                                        );
                                         if (definitionFile == null) {
                                             continue;
                                         }
-                                        const propertiesOnObject = getAllPropertiesForObject({
+                                        const propertiesOnObject = await getAllPropertiesForObject({
                                             typeName: resolvedType.rawName,
                                             objectDeclaration: resolvedType.declaration,
                                             filepathOfDeclaration: resolvedType.filepath,

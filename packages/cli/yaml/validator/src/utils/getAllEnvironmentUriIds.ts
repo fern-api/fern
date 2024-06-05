@@ -1,7 +1,7 @@
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { isRawMultipleBaseUrlsEnvironment } from "@fern-api/yaml-schema";
 
-export async function getAllEnvironmentUrlIds(workspace: FernWorkspace): string[] {
+export async function getAllEnvironmentUrlIds(workspace: FernWorkspace): Promise<string[]> {
     const workspaceDefinition = await workspace.getDefinition();
     if (workspaceDefinition.rootApiFile.contents.environments == null) {
         return [];

@@ -36,7 +36,7 @@ export function validateResultsProperty({
     });
 }
 
-export function validateQueryParameterProperty({
+export async function validateQueryParameterProperty({
     endpointId,
     endpoint,
     typeResolver,
@@ -50,7 +50,7 @@ export function validateQueryParameterProperty({
     file: FernFileContext;
     queryParameterProperty: string;
     propertyValidator: ResponsePropertyValidator;
-}): RuleViolation[] {
+}): Promise<RuleViolation[]> {
     const violations: RuleViolation[] = [];
 
     const queryPropertyComponents = getRequestPropertyComponents(queryParameterProperty);
@@ -98,7 +98,7 @@ export function validateQueryParameterProperty({
     }
 
     const queryParameterType = typeof queryParameter !== "string" ? queryParameter.type : queryParameter;
-    const resolvedQueryParameterType = typeResolver.resolveType({
+    const resolvedQueryParameterType = await typeResolver.resolveType({
         type: queryParameterType,
         file
     });
@@ -168,7 +168,7 @@ export function validateResponseProperty({
     return violations;
 }
 
-function isValidResultsProperty({
+async function isValidResultsProperty({
     typeResolver,
     file,
     resolvedType,
@@ -178,8 +178,8 @@ function isValidResultsProperty({
     file: FernFileContext;
     resolvedType: ResolvedType | undefined;
     propertyComponents: string[];
-}): boolean {
-    return resolvedTypeHasProperty({
+}): Promise<boolean> {
+    return await resolvedTypeHasProperty({
         typeResolver,
         file,
         resolvedType,

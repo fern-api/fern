@@ -10,7 +10,7 @@ import {
 } from "../../utils/propertyValidatorUtils";
 import { validateQueryParameterProperty, validateResultsProperty } from "./validateUtils";
 
-export function validateOffsetPagination({
+export async function validateOffsetPagination({
     endpointId,
     endpoint,
     typeResolver,
@@ -22,20 +22,20 @@ export function validateOffsetPagination({
     typeResolver: TypeResolver;
     file: FernFileContext;
     offsetPagination: RawSchemas.OffsetPaginationSchema;
-}): RuleViolation[] {
+}): Promise<RuleViolation[]> {
     const violations: RuleViolation[] = [];
 
     violations.push(
-        ...validateOffsetProperty({
+        ...(await validateOffsetProperty({
             endpointId,
             endpoint,
             typeResolver,
             file,
             offsetPagination
-        })
+        }))
     );
 
-    const resolvedResponseType = resolveResponseType({ endpoint, typeResolver, file });
+    const resolvedResponseType = await resolveResponseType({ endpoint, typeResolver, file });
     if (resolvedResponseType == null) {
         violations.push({
             severity: "error",
@@ -57,7 +57,7 @@ export function validateOffsetPagination({
     return violations;
 }
 
-function validateOffsetProperty({
+async function validateOffsetProperty({
     endpointId,
     endpoint,
     typeResolver,
@@ -69,8 +69,8 @@ function validateOffsetProperty({
     typeResolver: TypeResolver;
     file: FernFileContext;
     offsetPagination: RawSchemas.OffsetPaginationSchema;
-}): RuleViolation[] {
-    return validateQueryParameterProperty({
+}): Promise<RuleViolation[]> {
+    return await validateQueryParameterProperty({
         endpointId,
         endpoint,
         typeResolver,
@@ -83,7 +83,7 @@ function validateOffsetProperty({
     });
 }
 
-function isValidOffsetProperty({
+async function isValidOffsetProperty({
     typeResolver,
     file,
     resolvedType,
@@ -93,8 +93,8 @@ function isValidOffsetProperty({
     file: FernFileContext;
     resolvedType: ResolvedType | undefined;
     propertyComponents: string[];
-}): boolean {
-    return resolvedTypeHasProperty({
+}): Promise<boolean> {
+    return await resolvedTypeHasProperty({
         typeResolver,
         file,
         resolvedType,

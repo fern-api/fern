@@ -5,8 +5,8 @@ import { getAllEnvironmentUrlIds } from "../../utils/getAllEnvironmentUriIds";
 
 export const MatchingEnvironmentUrlsRule: Rule = {
     name: "matching-environment-urls",
-    create: ({ workspace }) => {
-        const urlIds = getAllEnvironmentUrlIds(workspace);
+    create: async ({ workspace }) => {
+        const urlIds = await getAllEnvironmentUrlIds(workspace);
         if (urlIds.length === 0) {
             return {};
         }

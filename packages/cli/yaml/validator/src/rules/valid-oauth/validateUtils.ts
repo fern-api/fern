@@ -201,7 +201,7 @@ export function validateExpiresInResponseProperty({
     });
 }
 
-function isValidExpiresInProperty({
+async function isValidExpiresInProperty({
     typeResolver,
     file,
     resolvedType,
@@ -211,8 +211,8 @@ function isValidExpiresInProperty({
     file: FernFileContext;
     resolvedType: ResolvedType | undefined;
     propertyComponents: string[];
-}): boolean {
-    return resolvedTypeHasProperty({
+}): Promise<boolean> {
+    return await resolvedTypeHasProperty({
         typeResolver,
         file,
         resolvedType,
@@ -221,7 +221,7 @@ function isValidExpiresInProperty({
     });
 }
 
-function isValidTokenProperty({
+async function isValidTokenProperty({
     typeResolver,
     file,
     resolvedType,
@@ -231,8 +231,8 @@ function isValidTokenProperty({
     file: FernFileContext;
     resolvedType: ResolvedType | undefined;
     propertyComponents: string[];
-}): boolean {
-    return resolvedTypeHasProperty({
+}): Promise<boolean> {
+    return await resolvedTypeHasProperty({
         typeResolver,
         file,
         resolvedType,

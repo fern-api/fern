@@ -37,7 +37,7 @@ export class ComplexQueryParamTypeDetector {
             casingsGenerator: CASINGS_GENERATOR,
             rootApiFile: (await this.workspace.getDefinition()).rootApiFile.contents
         });
-        const resolvedType = this.typeResolver.resolveType({
+        const resolvedType = await this.typeResolver.resolveType({
             type,
             file
         });
@@ -52,7 +52,7 @@ export class ComplexQueryParamTypeDetector {
         });
     }
 
-    private isResolvedReferenceComplex({
+    private async isResolvedReferenceComplex({
         type,
         file,
         visited
@@ -60,7 +60,7 @@ export class ComplexQueryParamTypeDetector {
         type: ResolvedType;
         file: FernFileContext;
         visited: Set<string>;
-    }): boolean {
+    }): Promise<boolean> {
         switch (type._type) {
             case "container":
                 return this.isResolvedContainerComplex({
@@ -69,7 +69,7 @@ export class ComplexQueryParamTypeDetector {
                     visited
                 });
             case "named":
-                return this.isNamedTypeComplex({
+                return await this.isNamedTypeComplex({
                     type,
                     file,
                     visited
@@ -83,7 +83,7 @@ export class ComplexQueryParamTypeDetector {
         }
     }
 
-    private isResolvedContainerComplex({
+    private async isResolvedContainerComplex({
         type,
         file,
         visited
@@ -91,22 +91,22 @@ export class ComplexQueryParamTypeDetector {
         type: ResolvedContainerType;
         file: FernFileContext;
         visited: Set<string>;
-    }): boolean {
+    }): Promise<boolean> {
         switch (type._type) {
             case "literal":
                 return false;
             case "map":
                 return (
-                    (this.isResolvedReferenceComplex({
+                    ((await this.isResolvedReferenceComplex({
                         type: type.keyType,
                         file,
                         visited
-                    }) ||
-                        this.isResolvedReferenceComplex({
+                    })) ||
+                        (await this.isResolvedReferenceComplex({
                             type: type.valueType,
                             file,
                             visited
-                        })) &&
+                        }))) &&
                     // This is how we denote generic objects, which we should allow to pass through.
                     !(
                         type.keyType._type === "primitive" &&
@@ -117,7 +117,7 @@ export class ComplexQueryParamTypeDetector {
             case "optional":
             case "list":
             case "set":
-                return this.isResolvedReferenceComplex({
+                return await this.isResolvedReferenceComplex({
                     type: type.itemType,
                     file,
                     visited
@@ -127,7 +127,7 @@ export class ComplexQueryParamTypeDetector {
         }
     }
 
-    private isNamedTypeComplex({
+    private async isNamedTypeComplex({
         type,
         file,
         visited
@@ -135,7 +135,7 @@ export class ComplexQueryParamTypeDetector {
         type: ResolvedType.Named;
         file: FernFileContext;
         visited: Set<string>;
-    }): boolean {
+    }): Promise<boolean> {
         if (visited.has(type.rawName)) {
             return false;
         }
@@ -147,7 +147,7 @@ export class ComplexQueryParamTypeDetector {
             return false;
         }
         if (isRawObjectDefinition(type.declaration)) {
-            return this.objectHasComplexProperties({
+            return await this.objectHasComplexProperties({
                 typeName: type.rawName,
                 objectDeclaration: type.declaration,
                 file,
@@ -170,7 +170,7 @@ export class ComplexQueryParamTypeDetector {
         assertNever(type.declaration);
     }
 
-    private objectHasComplexProperties({
+    private async objectHasComplexProperties({
         typeName,
         objectDeclaration,
         file,
@@ -180,8 +180,8 @@ export class ComplexQueryParamTypeDetector {
         objectDeclaration: RawSchemas.ObjectSchema;
         file: FernFileContext;
         visited: Set<string>;
-    }): boolean {
-        const allPropertiesForObject = getAllPropertiesForObject({
+    }): Promise<boolean> {
+        const allPropertiesForObject = await getAllPropertiesForObject({
             typeName,
             objectDeclaration,
             typeResolver: this.typeResolver,
@@ -199,7 +199,7 @@ export class ComplexQueryParamTypeDetector {
         });
     }
 
-    private isComplex({
+    private async isComplex({
         type,
         file,
         visited
@@ -207,10 +207,10 @@ export class ComplexQueryParamTypeDetector {
         type: ResolvedType;
         file: FernFileContext;
         visited: Set<string>;
-    }): boolean {
+    }): Promise<boolean> {
         switch (type._type) {
             case "named":
-                return this.isNamedTypeComplex({
+                return await this.isNamedTypeComplex({
                     type,
                     file,
                     visited
@@ -219,7 +219,7 @@ export class ComplexQueryParamTypeDetector {
             case "unknown":
                 return false;
             case "container":
-                return this.isComplexContainer({
+                return await this.isComplexContainer({
                     type: type.container,
                     file,
                     visited
@@ -229,7 +229,7 @@ export class ComplexQueryParamTypeDetector {
         }
     }
 
-    private isComplexContainer({
+    private async isComplexContainer({
         type,
         file,
         visited
@@ -237,28 +237,28 @@ export class ComplexQueryParamTypeDetector {
         type: ResolvedContainerType;
         file: FernFileContext;
         visited: Set<string>;
-    }): boolean {
+    }): Promise<boolean> {
         switch (type._type) {
             case "literal":
                 // For now, we consider complex objects to be those that define any literals.
                 return true;
             case "map":
                 return (
-                    this.isComplex({
+                    (await this.isComplex({
                         type: type.keyType,
                         file,
                         visited
-                    }) ||
-                    this.isComplex({
+                    })) ||
+                    (await this.isComplex({
                         type: type.valueType,
                         file,
                         visited
-                    })
+                    }))
                 );
             case "optional":
             case "list":
             case "set":
-                return this.isComplex({
+                return await this.isComplex({
                     type: type.itemType,
                     file,
                     visited

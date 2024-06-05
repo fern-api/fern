@@ -10,7 +10,7 @@ export const OnlyObjectExtensionsRule: Rule = {
         return {
             definitionFile: {
                 extension: async (extension, { relativeFilepath, contents }) => {
-                    const resolvedType = typeResolver.resolveNamedType({
+                    const resolvedType = await typeResolver.resolveNamedType({
                         referenceToNamedType: extension,
                         file: constructFernFileContext({
                             relativeFilepath,

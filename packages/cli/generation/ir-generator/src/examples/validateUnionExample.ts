@@ -108,14 +108,14 @@ export async function validateUnionExample({
         });
     } else {
         violations.push(
-            ...validateTypeReferenceExample({
+            ...(await validateTypeReferenceExample({
                 rawTypeReference: type,
                 example: singlePropertyExample,
                 typeResolver,
                 exampleResolver,
                 file,
                 workspace
-            })
+            }))
         );
     }
 

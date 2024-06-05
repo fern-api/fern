@@ -51,14 +51,16 @@ export async function validateRequest({
         );
     } else {
         violations.push(
-            ...ExampleValidators.validateTypeReferenceExample({
-                rawTypeReference: typeof body === "string" ? body : body.type,
-                example,
-                file,
-                workspace,
-                typeResolver,
-                exampleResolver
-            }).map((val): RuleViolation => {
+            ...(
+                await ExampleValidators.validateTypeReferenceExample({
+                    rawTypeReference: typeof body === "string" ? body : body.type,
+                    example,
+                    file,
+                    workspace,
+                    typeResolver,
+                    exampleResolver
+                })
+            ).map((val): RuleViolation => {
                 return { severity: "error", message: val.message };
             })
         );

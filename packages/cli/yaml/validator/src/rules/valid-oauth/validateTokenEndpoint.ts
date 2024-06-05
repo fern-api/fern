@@ -15,7 +15,7 @@ import {
     validateScopesRequestProperty
 } from "./validateUtils";
 
-export function validateTokenEndpoint({
+export async function validateTokenEndpoint({
     endpointId,
     endpoint,
     typeResolver,
@@ -27,7 +27,7 @@ export function validateTokenEndpoint({
     typeResolver: TypeResolver;
     file: FernFileContext;
     tokenEndpoint: RawSchemas.OAuthGetTokenEndpointSchema;
-}): RuleViolation[] {
+}): Promise<RuleViolation[]> {
     const violations: RuleViolation[] = [];
 
     const maybeClientId = tokenEndpoint["request-properties"]?.["client-id"];
@@ -101,7 +101,7 @@ export function validateTokenEndpoint({
         );
     }
 
-    const resolvedResponseType = resolveResponseType({ endpoint, typeResolver, file });
+    const resolvedResponseType = await resolveResponseType({ endpoint, typeResolver, file });
     if (resolvedResponseType == null) {
         violations.push({
             severity: "error",
