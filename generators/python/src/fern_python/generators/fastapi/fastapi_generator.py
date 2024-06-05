@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Literal, Tuple
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources import GeneratorConfig
@@ -25,6 +25,9 @@ from .service_generator import ServiceGenerator
 
 
 class FastApiGenerator(AbstractGenerator):
+    def project_type(self) -> Literal["sdk", "pydantic", "fastapi"]:
+        return "fastapi"
+
     def should_format_files(
         self,
         *,
