@@ -166,7 +166,7 @@ class HttpClient:
 
         response = self.httpx_client.request(
             method=method,
-            url=urllib.parse.urljoin(base_url, path),
+            url=urllib.parse.urljoin(f"{base_url}/", path),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -244,7 +244,7 @@ class HttpClient:
 
         with self.httpx_client.stream(
             method=method,
-            url=urllib.parse.urljoin(base_url, path),
+            url=urllib.parse.urljoin(f"{base_url}/", path),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -324,7 +324,7 @@ class AsyncHttpClient:
         # Add the input to each of these and do None-safety checks
         response = await self.httpx_client.request(
             method=method,
-            url=urllib.parse.urljoin(base_url, path),
+            url=urllib.parse.urljoin(f"{base_url}/", path),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -401,7 +401,7 @@ class AsyncHttpClient:
 
         async with self.httpx_client.stream(
             method=method,
-            url=urllib.parse.urljoin(base_url, path),
+            url=urllib.parse.urljoin(f"{base_url}/", path),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
