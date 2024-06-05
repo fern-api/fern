@@ -3,6 +3,9 @@
  */
 package com.seed.serverSentEvents.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedServerSentEventsError extends RuntimeException {
     public SeedServerSentEventsError(String message) {
         super(message);

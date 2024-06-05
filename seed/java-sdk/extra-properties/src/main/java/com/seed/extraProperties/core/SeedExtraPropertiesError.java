@@ -3,6 +3,9 @@
  */
 package com.seed.extraProperties.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedExtraPropertiesError extends RuntimeException {
     public SeedExtraPropertiesError(String message) {
         super(message);

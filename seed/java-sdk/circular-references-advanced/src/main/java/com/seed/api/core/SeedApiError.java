@@ -3,6 +3,9 @@
  */
 package com.seed.api.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedApiError extends RuntimeException {
     public SeedApiError(String message) {
         super(message);

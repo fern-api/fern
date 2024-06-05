@@ -3,6 +3,9 @@
  */
 package com.seed.audiences.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedAudiencesError extends RuntimeException {
     public SeedAudiencesError(String message) {
         super(message);

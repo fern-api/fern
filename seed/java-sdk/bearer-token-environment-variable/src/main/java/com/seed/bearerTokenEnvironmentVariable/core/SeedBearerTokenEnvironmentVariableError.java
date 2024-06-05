@@ -3,6 +3,9 @@
  */
 package com.seed.bearerTokenEnvironmentVariable.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedBearerTokenEnvironmentVariableError extends RuntimeException {
     public SeedBearerTokenEnvironmentVariableError(String message) {
         super(message);

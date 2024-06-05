@@ -9,6 +9,9 @@ import com.fern.sdk.resources.generalerrors.types.BadObjectRequestInfo;
 import java.lang.Override;
 
 public final class SeedExhaustiveBadRequestBody extends SeedExhaustiveApiError {
+  /**
+   * The body of the response that triggered the exception.
+   */
   private final BadObjectRequestInfo body;
 
   public SeedExhaustiveBadRequestBody(BadObjectRequestInfo body) {
@@ -16,6 +19,9 @@ public final class SeedExhaustiveBadRequestBody extends SeedExhaustiveApiError {
     this.body = body;
   }
 
+  /**
+   * @return the body
+   */
   @Override
   public BadObjectRequestInfo body() {
     return this.body;

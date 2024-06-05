@@ -7,6 +7,9 @@ import com.seed.exhaustive.core.SeedExhaustiveApiError;
 import com.seed.exhaustive.resources.types.enum_.types.WeatherReport;
 
 public final class SeedExhaustiveErrorWithEnumBody extends SeedExhaustiveApiError {
+    /**
+     * The body of the response that triggered the exception.
+     */
     private final WeatherReport body;
 
     public SeedExhaustiveErrorWithEnumBody(WeatherReport body) {
@@ -14,6 +17,9 @@ public final class SeedExhaustiveErrorWithEnumBody extends SeedExhaustiveApiErro
         this.body = body;
     }
 
+    /**
+     * @return the body
+     */
     @Override
     public WeatherReport body() {
         return this.body;

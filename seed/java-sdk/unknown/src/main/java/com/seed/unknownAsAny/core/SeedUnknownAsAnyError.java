@@ -3,6 +3,9 @@
  */
 package com.seed.unknownAsAny.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedUnknownAsAnyError extends RuntimeException {
     public SeedUnknownAsAnyError(String message) {
         super(message);

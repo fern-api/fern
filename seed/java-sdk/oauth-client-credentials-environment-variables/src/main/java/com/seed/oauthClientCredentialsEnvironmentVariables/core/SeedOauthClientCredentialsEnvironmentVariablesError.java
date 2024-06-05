@@ -3,6 +3,9 @@
  */
 package com.seed.oauthClientCredentialsEnvironmentVariables.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedOauthClientCredentialsEnvironmentVariablesError extends RuntimeException {
     public SeedOauthClientCredentialsEnvironmentVariablesError(String message) {
         super(message);

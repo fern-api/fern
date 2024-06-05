@@ -3,6 +3,9 @@
  */
 package com.seed.trace.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedTraceError extends RuntimeException {
     public SeedTraceError(String message) {
         super(message);

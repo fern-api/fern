@@ -3,6 +3,9 @@
  */
 package com.seed.websocket.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedWebsocketError extends RuntimeException {
     public SeedWebsocketError(String message) {
         super(message);

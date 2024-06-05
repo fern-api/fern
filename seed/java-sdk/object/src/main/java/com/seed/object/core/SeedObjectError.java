@@ -3,6 +3,9 @@
  */
 package com.seed.object.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedObjectError extends RuntimeException {
     public SeedObjectError(String message) {
         super(message);

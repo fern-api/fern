@@ -3,6 +3,9 @@
  */
 package com.seed.nurseryApi.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedNurseryApiError extends RuntimeException {
     public SeedNurseryApiError(String message) {
         super(message);

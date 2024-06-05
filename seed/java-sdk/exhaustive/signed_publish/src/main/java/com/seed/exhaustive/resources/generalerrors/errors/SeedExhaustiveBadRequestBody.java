@@ -7,6 +7,9 @@ import com.seed.exhaustive.core.SeedExhaustiveApiError;
 import com.seed.exhaustive.resources.generalerrors.types.BadObjectRequestInfo;
 
 public final class SeedExhaustiveBadRequestBody extends SeedExhaustiveApiError {
+    /**
+     * The body of the response that triggered the exception.
+     */
     private final BadObjectRequestInfo body;
 
     public SeedExhaustiveBadRequestBody(BadObjectRequestInfo body) {
@@ -14,6 +17,9 @@ public final class SeedExhaustiveBadRequestBody extends SeedExhaustiveApiError {
         this.body = body;
     }
 
+    /**
+     * @return the body
+     */
     @Override
     public BadObjectRequestInfo body() {
         return this.body;

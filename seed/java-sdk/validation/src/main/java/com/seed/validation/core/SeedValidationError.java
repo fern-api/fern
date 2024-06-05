@@ -3,6 +3,9 @@
  */
 package com.seed.validation.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedValidationError extends RuntimeException {
     public SeedValidationError(String message) {
         super(message);

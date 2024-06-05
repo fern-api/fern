@@ -7,6 +7,9 @@ import com.seed.exhaustive.core.SeedExhaustiveApiError;
 import com.seed.exhaustive.resources.types.object.types.NestedObjectWithOptionalField;
 
 public final class SeedExhaustiveNestedObjectWithOptionalFieldError extends SeedExhaustiveApiError {
+    /**
+     * The body of the response that triggered the exception.
+     */
     private final NestedObjectWithOptionalField body;
 
     public SeedExhaustiveNestedObjectWithOptionalFieldError(NestedObjectWithOptionalField body) {
@@ -14,6 +17,9 @@ public final class SeedExhaustiveNestedObjectWithOptionalFieldError extends Seed
         this.body = body;
     }
 
+    /**
+     * @return the body
+     */
     @Override
     public NestedObjectWithOptionalField body() {
         return this.body;

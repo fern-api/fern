@@ -3,6 +3,9 @@
  */
 package com.seed.idempotencyHeaders.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedIdempotencyHeadersError extends RuntimeException {
     public SeedIdempotencyHeadersError(String message) {
         super(message);

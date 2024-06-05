@@ -7,6 +7,9 @@ import com.seed.basicAuth.core.SeedBasicAuthApiError;
 import com.seed.basicAuth.resources.errors.types.UnauthorizedRequestErrorBody;
 
 public final class SeedBasicAuthUnauthorizedRequest extends SeedBasicAuthApiError {
+    /**
+     * The body of the response that triggered the exception.
+     */
     private final UnauthorizedRequestErrorBody body;
 
     public SeedBasicAuthUnauthorizedRequest(UnauthorizedRequestErrorBody body) {
@@ -14,6 +17,9 @@ public final class SeedBasicAuthUnauthorizedRequest extends SeedBasicAuthApiErro
         this.body = body;
     }
 
+    /**
+     * @return the body
+     */
     @Override
     public UnauthorizedRequestErrorBody body() {
         return this.body;

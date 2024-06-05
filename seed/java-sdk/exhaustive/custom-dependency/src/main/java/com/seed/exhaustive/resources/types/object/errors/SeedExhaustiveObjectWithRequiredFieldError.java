@@ -7,6 +7,9 @@ import com.seed.exhaustive.core.SeedExhaustiveApiError;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
 
 public final class SeedExhaustiveObjectWithRequiredFieldError extends SeedExhaustiveApiError {
+    /**
+     * The body of the response that triggered the exception.
+     */
     private final ObjectWithRequiredField body;
 
     public SeedExhaustiveObjectWithRequiredFieldError(ObjectWithRequiredField body) {
@@ -14,6 +17,9 @@ public final class SeedExhaustiveObjectWithRequiredFieldError extends SeedExhaus
         this.body = body;
     }
 
+    /**
+     * @return the body
+     */
     @Override
     public ObjectWithRequiredField body() {
         return this.body;

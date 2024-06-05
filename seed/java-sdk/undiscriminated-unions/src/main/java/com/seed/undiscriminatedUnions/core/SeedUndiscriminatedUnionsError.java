@@ -3,6 +3,9 @@
  */
 package com.seed.undiscriminatedUnions.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedUndiscriminatedUnionsError extends RuntimeException {
     public SeedUndiscriminatedUnionsError(String message) {
         super(message);

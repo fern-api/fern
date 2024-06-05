@@ -6,6 +6,9 @@ package com.seed.api.resources.folder.service.errors;
 import com.seed.api.core.SeedApiApiError;
 
 public final class SeedApiNotFoundError extends SeedApiApiError {
+    /**
+     * The body of the response that triggered the exception.
+     */
     private final String body;
 
     public SeedApiNotFoundError(String body) {
@@ -13,6 +16,9 @@ public final class SeedApiNotFoundError extends SeedApiApiError {
         this.body = body;
     }
 
+    /**
+     * @return the body
+     */
     @Override
     public String body() {
         return this.body;

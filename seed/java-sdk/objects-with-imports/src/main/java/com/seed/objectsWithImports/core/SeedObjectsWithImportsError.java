@@ -3,6 +3,9 @@
  */
 package com.seed.objectsWithImports.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedObjectsWithImportsError extends RuntimeException {
     public SeedObjectsWithImportsError(String message) {
         super(message);

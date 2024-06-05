@@ -3,6 +3,9 @@
  */
 package com.seed.streaming.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedStreamingError extends RuntimeException {
     public SeedStreamingError(String message) {
         super(message);

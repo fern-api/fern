@@ -3,30 +3,43 @@
  */
 package com.seed.bytes.core;
 
+/**
+ * This exception type will be thrown for any non-2XX API responses.
+ */
 public class SeedBytesApiError extends SeedBytesError {
-    private final String message;
-
+    /**
+     * The error code of the response that triggered the exception.
+     */
     private final int statusCode;
 
+    /**
+     * The body of the response that triggered the exception.
+     */
     private final Object body;
 
     public SeedBytesApiError(String message, int statusCode, Object body) {
         super(message);
-        this.message = message;
         this.statusCode = statusCode;
         this.body = body;
     }
 
+    /**
+     * @return the statusCode
+     */
     public int statusCode() {
         return this.statusCode;
     }
 
+    /**
+     * @return the body
+     */
     public Object body() {
         return this.body;
     }
 
     @java.lang.Override
     public String toString() {
-        return "SeedBytesApiError{" + "message: " + message + ", statusCode: " + statusCode + ", body: " + body + "}";
+        return "SeedBytesApiError{" + "message: " + getMessage() + ", statusCode: " + statusCode + ", body: " + body
+                + "}";
     }
 }

@@ -3,6 +3,9 @@
  */
 package com.seed.bytes.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedBytesError extends RuntimeException {
     public SeedBytesError(String message) {
         super(message);

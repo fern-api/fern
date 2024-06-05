@@ -3,6 +3,9 @@
  */
 package com.seed.basicAuth.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedBasicAuthError extends RuntimeException {
     public SeedBasicAuthError(String message) {
         super(message);

@@ -9,6 +9,9 @@ import com.fern.sdk.resources.types.union.types.Animal;
 import java.lang.Override;
 
 public final class SeedExhaustiveErrorWithUnionBody extends SeedExhaustiveApiError {
+  /**
+   * The body of the response that triggered the exception.
+   */
   private final Animal body;
 
   public SeedExhaustiveErrorWithUnionBody(Animal body) {
@@ -16,6 +19,9 @@ public final class SeedExhaustiveErrorWithUnionBody extends SeedExhaustiveApiErr
     this.body = body;
   }
 
+  /**
+   * @return the body
+   */
   @Override
   public Animal body() {
     return this.body;

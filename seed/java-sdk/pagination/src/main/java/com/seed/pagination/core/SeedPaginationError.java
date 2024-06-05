@@ -3,6 +3,9 @@
  */
 package com.seed.pagination.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedPaginationError extends RuntimeException {
     public SeedPaginationError(String message) {
         super(message);

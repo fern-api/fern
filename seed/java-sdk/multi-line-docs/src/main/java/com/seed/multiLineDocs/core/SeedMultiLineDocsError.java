@@ -3,6 +3,9 @@
  */
 package com.seed.multiLineDocs.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedMultiLineDocsError extends RuntimeException {
     public SeedMultiLineDocsError(String message) {
         super(message);

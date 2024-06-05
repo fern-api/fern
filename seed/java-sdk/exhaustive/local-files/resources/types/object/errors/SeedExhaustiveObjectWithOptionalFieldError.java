@@ -9,6 +9,9 @@ import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import java.lang.Override;
 
 public final class SeedExhaustiveObjectWithOptionalFieldError extends SeedExhaustiveApiError {
+  /**
+   * The body of the response that triggered the exception.
+   */
   private final ObjectWithOptionalField body;
 
   public SeedExhaustiveObjectWithOptionalFieldError(ObjectWithOptionalField body) {
@@ -16,6 +19,9 @@ public final class SeedExhaustiveObjectWithOptionalFieldError extends SeedExhaus
     this.body = body;
   }
 
+  /**
+   * @return the body
+   */
   @Override
   public ObjectWithOptionalField body() {
     return this.body;

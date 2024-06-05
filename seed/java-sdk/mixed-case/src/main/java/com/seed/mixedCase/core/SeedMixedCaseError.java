@@ -3,6 +3,9 @@
  */
 package com.seed.mixedCase.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedMixedCaseError extends RuntimeException {
     public SeedMixedCaseError(String message) {
         super(message);

@@ -3,6 +3,9 @@
  */
 package com.seed.alias.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedAliasError extends RuntimeException {
     public SeedAliasError(String message) {
         super(message);

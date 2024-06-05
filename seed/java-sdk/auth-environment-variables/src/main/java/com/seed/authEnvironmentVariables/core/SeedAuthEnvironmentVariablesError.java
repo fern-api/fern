@@ -3,6 +3,9 @@
  */
 package com.seed.authEnvironmentVariables.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedAuthEnvironmentVariablesError extends RuntimeException {
     public SeedAuthEnvironmentVariablesError(String message) {
         super(message);

@@ -3,6 +3,9 @@
  */
 package com.seed.singleUrlEnvironmentDefault.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedSingleUrlEnvironmentDefaultError extends RuntimeException {
     public SeedSingleUrlEnvironmentDefaultError(String message) {
         super(message);

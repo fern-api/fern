@@ -8,6 +8,9 @@ import com.seed.basicAuthEnvironmentVariables.resources.errors.types.Unauthorize
 
 public final class SeedBasicAuthEnvironmentVariablesUnauthorizedRequest
         extends SeedBasicAuthEnvironmentVariablesApiError {
+    /**
+     * The body of the response that triggered the exception.
+     */
     private final UnauthorizedRequestErrorBody body;
 
     public SeedBasicAuthEnvironmentVariablesUnauthorizedRequest(UnauthorizedRequestErrorBody body) {
@@ -15,6 +18,9 @@ public final class SeedBasicAuthEnvironmentVariablesUnauthorizedRequest
         this.body = body;
     }
 
+    /**
+     * @return the body
+     */
     @Override
     public UnauthorizedRequestErrorBody body() {
         return this.body;

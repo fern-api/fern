@@ -3,6 +3,9 @@
  */
 package com.seed.unions.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedUnionsError extends RuntimeException {
     public SeedUnionsError(String message) {
         super(message);

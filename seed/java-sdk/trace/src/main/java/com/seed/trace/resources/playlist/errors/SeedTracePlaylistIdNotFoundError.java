@@ -7,6 +7,9 @@ import com.seed.trace.core.SeedTraceApiError;
 import com.seed.trace.resources.playlist.types.PlaylistIdNotFoundErrorBody;
 
 public final class SeedTracePlaylistIdNotFoundError extends SeedTraceApiError {
+    /**
+     * The body of the response that triggered the exception.
+     */
     private final PlaylistIdNotFoundErrorBody body;
 
     public SeedTracePlaylistIdNotFoundError(PlaylistIdNotFoundErrorBody body) {
@@ -14,6 +17,9 @@ public final class SeedTracePlaylistIdNotFoundError extends SeedTraceApiError {
         this.body = body;
     }
 
+    /**
+     * @return the body
+     */
     @Override
     public PlaylistIdNotFoundErrorBody body() {
         return this.body;

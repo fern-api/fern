@@ -3,6 +3,9 @@
  */
 package com.seed.oauthClientCredentialsDefault.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedOauthClientCredentialsDefaultError extends RuntimeException {
     public SeedOauthClientCredentialsDefaultError(String message) {
         super(message);

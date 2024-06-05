@@ -6,6 +6,9 @@ package com.seed.api.resources.imdb.errors;
 import com.seed.api.core.SeedApiApiError;
 
 public final class SeedApiMovieDoesNotExistError extends SeedApiApiError {
+    /**
+     * The body of the response that triggered the exception.
+     */
     private final String body;
 
     public SeedApiMovieDoesNotExistError(String body) {
@@ -13,6 +16,9 @@ public final class SeedApiMovieDoesNotExistError extends SeedApiApiError {
         this.body = body;
     }
 
+    /**
+     * @return the body
+     */
     @Override
     public String body() {
         return this.body;

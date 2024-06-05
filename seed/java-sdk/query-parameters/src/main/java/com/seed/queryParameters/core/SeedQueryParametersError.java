@@ -3,6 +3,9 @@
  */
 package com.seed.queryParameters.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedQueryParametersError extends RuntimeException {
     public SeedQueryParametersError(String message) {
         super(message);

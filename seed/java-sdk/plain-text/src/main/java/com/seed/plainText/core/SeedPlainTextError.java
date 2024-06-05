@@ -3,6 +3,9 @@
  */
 package com.seed.plainText.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedPlainTextError extends RuntimeException {
     public SeedPlainTextError(String message) {
         super(message);

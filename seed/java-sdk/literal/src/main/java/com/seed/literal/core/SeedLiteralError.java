@@ -3,6 +3,9 @@
  */
 package com.seed.literal.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedLiteralError extends RuntimeException {
     public SeedLiteralError(String message) {
         super(message);

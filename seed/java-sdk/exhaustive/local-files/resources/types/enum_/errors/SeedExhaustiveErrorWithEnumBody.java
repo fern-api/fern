@@ -9,6 +9,9 @@ import com.fern.sdk.resources.types.enum_.types.WeatherReport;
 import java.lang.Override;
 
 public final class SeedExhaustiveErrorWithEnumBody extends SeedExhaustiveApiError {
+  /**
+   * The body of the response that triggered the exception.
+   */
   private final WeatherReport body;
 
   public SeedExhaustiveErrorWithEnumBody(WeatherReport body) {
@@ -16,6 +19,9 @@ public final class SeedExhaustiveErrorWithEnumBody extends SeedExhaustiveApiErro
     this.body = body;
   }
 
+  /**
+   * @return the body
+   */
   @Override
   public WeatherReport body() {
     return this.body;

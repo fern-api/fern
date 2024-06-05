@@ -9,6 +9,9 @@ import com.fern.sdk.resources.types.object.types.NestedObjectWithOptionalField;
 import java.lang.Override;
 
 public final class SeedExhaustiveNestedObjectWithOptionalFieldError extends SeedExhaustiveApiError {
+  /**
+   * The body of the response that triggered the exception.
+   */
   private final NestedObjectWithOptionalField body;
 
   public SeedExhaustiveNestedObjectWithOptionalFieldError(NestedObjectWithOptionalField body) {
@@ -16,6 +19,9 @@ public final class SeedExhaustiveNestedObjectWithOptionalFieldError extends Seed
     this.body = body;
   }
 
+  /**
+   * @return the body
+   */
   @Override
   public NestedObjectWithOptionalField body() {
     return this.body;

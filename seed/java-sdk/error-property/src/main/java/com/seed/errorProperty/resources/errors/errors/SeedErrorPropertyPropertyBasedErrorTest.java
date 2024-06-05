@@ -7,6 +7,9 @@ import com.seed.errorProperty.core.SeedErrorPropertyApiError;
 import com.seed.errorProperty.resources.errors.types.PropertyBasedErrorTestBody;
 
 public final class SeedErrorPropertyPropertyBasedErrorTest extends SeedErrorPropertyApiError {
+    /**
+     * The body of the response that triggered the exception.
+     */
     private final PropertyBasedErrorTestBody body;
 
     public SeedErrorPropertyPropertyBasedErrorTest(PropertyBasedErrorTestBody body) {
@@ -14,6 +17,9 @@ public final class SeedErrorPropertyPropertyBasedErrorTest extends SeedErrorProp
         this.body = body;
     }
 
+    /**
+     * @return the body
+     */
     @Override
     public PropertyBasedErrorTestBody body() {
         return this.body;

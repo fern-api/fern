@@ -3,6 +3,9 @@
  */
 package com.seed.examples.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedExamplesError extends RuntimeException {
     public SeedExamplesError(String message) {
         super(message);
