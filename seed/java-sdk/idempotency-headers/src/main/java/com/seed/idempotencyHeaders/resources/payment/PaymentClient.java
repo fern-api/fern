@@ -9,6 +9,7 @@ import com.seed.idempotencyHeaders.core.IdempotentRequestOptions;
 import com.seed.idempotencyHeaders.core.MediaTypes;
 import com.seed.idempotencyHeaders.core.ObjectMappers;
 import com.seed.idempotencyHeaders.core.RequestOptions;
+import com.seed.idempotencyHeaders.core.SeedIdempotencyHeadersApiError;
 import com.seed.idempotencyHeaders.core.SeedIdempotencyHeadersError;
 import com.seed.idempotencyHeaders.resources.payment.requests.CreatePaymentRequest;
 import java.io.IOException;
@@ -60,6 +61,10 @@ public class PaymentClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UUID.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedIdempotencyHeadersApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedIdempotencyHeadersError("Network error executing HTTP request", e);
         }
@@ -90,6 +95,10 @@ public class PaymentClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedIdempotencyHeadersApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedIdempotencyHeadersError("Network error executing HTTP request", e);
         }

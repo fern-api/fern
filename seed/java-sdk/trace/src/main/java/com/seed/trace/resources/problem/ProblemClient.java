@@ -8,6 +8,7 @@ import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.MediaTypes;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.core.RequestOptions;
+import com.seed.trace.core.SeedTraceApiError;
 import com.seed.trace.core.SeedTraceError;
 import com.seed.trace.resources.problem.requests.GetDefaultStarterFilesRequest;
 import com.seed.trace.resources.problem.types.CreateProblemRequest;
@@ -69,6 +70,10 @@ public class ProblemClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), CreateProblemResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedTraceApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedTraceError("Network error executing HTTP request", e);
         }
@@ -115,6 +120,10 @@ public class ProblemClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UpdateProblemResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedTraceApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedTraceError("Network error executing HTTP request", e);
         }
@@ -152,6 +161,10 @@ public class ProblemClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedTraceApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedTraceError("Network error executing HTTP request", e);
         }
@@ -197,6 +210,10 @@ public class ProblemClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GetDefaultStarterFilesResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedTraceApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedTraceError("Network error executing HTTP request", e);
         }

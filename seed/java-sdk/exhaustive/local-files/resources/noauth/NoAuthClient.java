@@ -75,6 +75,7 @@ public class NoAuthClient {
         }
       }
       catch (JsonProcessingException ignored) {
+        // unable to map error response, throwing generic error
       }
       throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }

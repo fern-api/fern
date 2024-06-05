@@ -9,8 +9,10 @@ import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
+import com.fern.sdk.core.SeedExhaustiveApiError;
 import com.fern.sdk.core.SeedExhaustiveError;
 import java.io.IOException;
+import java.lang.Object;
 import java.lang.String;
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -61,6 +63,7 @@ public class PrimitiveClient {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
       throw new SeedExhaustiveError("Network error executing HTTP request", e);
@@ -99,6 +102,7 @@ public class PrimitiveClient {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), int.class);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
       throw new SeedExhaustiveError("Network error executing HTTP request", e);
@@ -137,6 +141,7 @@ public class PrimitiveClient {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), long.class);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
       throw new SeedExhaustiveError("Network error executing HTTP request", e);
@@ -175,6 +180,7 @@ public class PrimitiveClient {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), double.class);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
       throw new SeedExhaustiveError("Network error executing HTTP request", e);
@@ -213,6 +219,7 @@ public class PrimitiveClient {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
       throw new SeedExhaustiveError("Network error executing HTTP request", e);
@@ -252,6 +259,7 @@ public class PrimitiveClient {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), OffsetDateTime.class);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
       throw new SeedExhaustiveError("Network error executing HTTP request", e);
@@ -290,6 +298,7 @@ public class PrimitiveClient {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
       throw new SeedExhaustiveError("Network error executing HTTP request", e);
@@ -328,6 +337,7 @@ public class PrimitiveClient {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UUID.class);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
       throw new SeedExhaustiveError("Network error executing HTTP request", e);
@@ -366,6 +376,7 @@ public class PrimitiveClient {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), byte[].class);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
       throw new SeedExhaustiveError("Network error executing HTTP request", e);

@@ -8,6 +8,7 @@ import com.seed.packageYml.core.ClientOptions;
 import com.seed.packageYml.core.MediaTypes;
 import com.seed.packageYml.core.ObjectMappers;
 import com.seed.packageYml.core.RequestOptions;
+import com.seed.packageYml.core.SeedPackageYmlApiError;
 import com.seed.packageYml.core.SeedPackageYmlError;
 import com.seed.packageYml.core.Suppliers;
 import com.seed.packageYml.resources.service.ServiceClient;
@@ -62,6 +63,10 @@ public class SeedPackageYmlClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedPackageYmlApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedPackageYmlError("Network error executing HTTP request", e);
         }

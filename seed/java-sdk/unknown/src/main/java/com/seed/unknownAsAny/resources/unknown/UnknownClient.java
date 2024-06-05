@@ -9,6 +9,7 @@ import com.seed.unknownAsAny.core.ClientOptions;
 import com.seed.unknownAsAny.core.MediaTypes;
 import com.seed.unknownAsAny.core.ObjectMappers;
 import com.seed.unknownAsAny.core.RequestOptions;
+import com.seed.unknownAsAny.core.SeedUnknownAsAnyApiError;
 import com.seed.unknownAsAny.core.SeedUnknownAsAnyError;
 import java.io.IOException;
 import java.util.List;
@@ -58,6 +59,10 @@ public class UnknownClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<List<Object>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedUnknownAsAnyApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedUnknownAsAnyError("Network error executing HTTP request", e);
         }

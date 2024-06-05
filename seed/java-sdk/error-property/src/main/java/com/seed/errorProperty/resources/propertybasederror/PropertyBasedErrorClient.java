@@ -6,6 +6,7 @@ package com.seed.errorProperty.resources.propertybasederror;
 import com.seed.errorProperty.core.ClientOptions;
 import com.seed.errorProperty.core.ObjectMappers;
 import com.seed.errorProperty.core.RequestOptions;
+import com.seed.errorProperty.core.SeedErrorPropertyApiError;
 import com.seed.errorProperty.core.SeedErrorPropertyError;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -53,6 +54,10 @@ public class PropertyBasedErrorClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedErrorPropertyApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedErrorPropertyError("Network error executing HTTP request", e);
         }

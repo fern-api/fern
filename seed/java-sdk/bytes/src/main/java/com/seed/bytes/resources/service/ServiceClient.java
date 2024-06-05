@@ -4,7 +4,9 @@
 package com.seed.bytes.resources.service;
 
 import com.seed.bytes.core.ClientOptions;
+import com.seed.bytes.core.ObjectMappers;
 import com.seed.bytes.core.RequestOptions;
+import com.seed.bytes.core.SeedBytesApiError;
 import com.seed.bytes.core.SeedBytesError;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -48,6 +50,10 @@ public class ServiceClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedBytesApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedBytesError("Network error executing HTTP request", e);
         }

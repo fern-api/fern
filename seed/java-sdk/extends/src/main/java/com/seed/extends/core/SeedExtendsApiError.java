@@ -5,15 +5,15 @@
 package com.seed.extends.core;
 
 import java.lang.Object;
-import java.lang.RuntimeException;
 import java.lang.String;
 
-public final class ApiError extends RuntimeException {
+public class SeedExtendsApiError extends SeedExtendsError {
   private final int statusCode;
 
   private final Object body;
 
-  public ApiError(int statusCode, Object body) {
+  public SeedExtendsApiError(String message, int statusCode, Object body) {
+    super(message);
     this.statusCode = statusCode;
     this.body = body;
   }
@@ -28,6 +28,6 @@ public final class ApiError extends RuntimeException {
 
   @java.lang.Override
   public String toString() {
-    return "ApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+    return "SeedExtendsApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
   }
 }

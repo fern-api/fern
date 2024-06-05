@@ -68,6 +68,10 @@ public class ImdbClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedApiApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedApiError("Network error executing HTTP request", e);
         }
@@ -105,6 +109,7 @@ public class ImdbClient {
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class));
                 }
             } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new SeedApiApiError(
                     "Error with status code " + response.code(),

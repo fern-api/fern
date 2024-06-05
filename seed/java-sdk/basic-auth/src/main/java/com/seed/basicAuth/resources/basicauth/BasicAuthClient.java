@@ -66,6 +66,7 @@ public class BasicAuthClient {
                             responseBodyString, UnauthorizedRequestErrorBody.class));
                 }
             } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new SeedBasicAuthApiError(
                     "Error with status code " + response.code(),
@@ -124,6 +125,7 @@ public class BasicAuthClient {
                                 responseBodyString, UnauthorizedRequestErrorBody.class));
                 }
             } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new SeedBasicAuthApiError(
                     "Error with status code " + response.code(),

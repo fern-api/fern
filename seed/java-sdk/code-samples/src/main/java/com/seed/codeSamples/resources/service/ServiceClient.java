@@ -8,6 +8,7 @@ import com.seed.codeSamples.core.ClientOptions;
 import com.seed.codeSamples.core.MediaTypes;
 import com.seed.codeSamples.core.ObjectMappers;
 import com.seed.codeSamples.core.RequestOptions;
+import com.seed.codeSamples.core.SeedCodeSamplesApiError;
 import com.seed.codeSamples.core.SeedCodeSamplesError;
 import com.seed.codeSamples.resources.service.requests.MyRequest;
 import com.seed.codeSamples.resources.service.types.MyResponse;
@@ -59,6 +60,10 @@ public class ServiceClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), MyResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedCodeSamplesApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedCodeSamplesError("Network error executing HTTP request", e);
         }

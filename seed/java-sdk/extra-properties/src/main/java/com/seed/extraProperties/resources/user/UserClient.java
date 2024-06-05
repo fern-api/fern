@@ -8,6 +8,7 @@ import com.seed.extraProperties.core.ClientOptions;
 import com.seed.extraProperties.core.MediaTypes;
 import com.seed.extraProperties.core.ObjectMappers;
 import com.seed.extraProperties.core.RequestOptions;
+import com.seed.extraProperties.core.SeedExtraPropertiesApiError;
 import com.seed.extraProperties.core.SeedExtraPropertiesError;
 import com.seed.extraProperties.resources.user.requests.CreateUserRequest;
 import com.seed.extraProperties.resources.user.types.User;
@@ -59,6 +60,10 @@ public class UserClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), User.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedExtraPropertiesApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedExtraPropertiesError("Network error executing HTTP request", e);
         }

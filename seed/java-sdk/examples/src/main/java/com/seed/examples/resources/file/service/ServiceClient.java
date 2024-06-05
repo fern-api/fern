@@ -73,6 +73,7 @@ public class ServiceClient {
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class));
                 }
             } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new SeedExamplesApiError(
                     "Error with status code " + response.code(),

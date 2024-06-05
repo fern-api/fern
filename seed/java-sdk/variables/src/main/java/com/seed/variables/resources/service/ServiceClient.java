@@ -4,7 +4,9 @@
 package com.seed.variables.resources.service;
 
 import com.seed.variables.core.ClientOptions;
+import com.seed.variables.core.ObjectMappers;
 import com.seed.variables.core.RequestOptions;
+import com.seed.variables.core.SeedVariablesApiError;
 import com.seed.variables.core.SeedVariablesError;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -46,6 +48,10 @@ public class ServiceClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedVariablesApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedVariablesError("Network error executing HTTP request", e);
         }

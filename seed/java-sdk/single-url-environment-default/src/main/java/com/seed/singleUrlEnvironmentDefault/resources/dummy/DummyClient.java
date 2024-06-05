@@ -6,6 +6,7 @@ package com.seed.singleUrlEnvironmentDefault.resources.dummy;
 import com.seed.singleUrlEnvironmentDefault.core.ClientOptions;
 import com.seed.singleUrlEnvironmentDefault.core.ObjectMappers;
 import com.seed.singleUrlEnvironmentDefault.core.RequestOptions;
+import com.seed.singleUrlEnvironmentDefault.core.SeedSingleUrlEnvironmentDefaultApiError;
 import com.seed.singleUrlEnvironmentDefault.core.SeedSingleUrlEnvironmentDefaultError;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -47,6 +48,10 @@ public class DummyClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedSingleUrlEnvironmentDefaultApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
             throw new SeedSingleUrlEnvironmentDefaultError("Network error executing HTTP request", e);
         }
