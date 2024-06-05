@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.9.0] - 2024-06-05
 
 - Fix: The new http client abstraction ensures a slash is postfixed to the baseurl
+- Fix: Snippets preserve trailing slashes
 
 ## [2.9.0-rc0] - 2024-06-04
 
