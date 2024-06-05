@@ -598,7 +598,7 @@ public abstract class AbstractEndpointWriter {
                         } else return type;
                     })
                     .orElse(responseType);
-            endpointMethodBuilder.returns(returnType); // todo: make optional if optional
+            endpointMethodBuilder.returns(returnType);
             if (isProperty) {
                 httpResponseBuilder.add("$T $L = ", responseType, getParsedResponseVariableName());
             } else {
