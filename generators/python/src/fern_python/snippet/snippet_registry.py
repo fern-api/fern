@@ -112,12 +112,16 @@ class SnippetRegistry:
         head = endpoint.full_path.head.strip("/")
         if len(head) > 0:
             components.append(head)
+        has_tail = False
         for part in endpoint.full_path.parts:
+            has_tail = False
             components.append("{" + part.path_parameter + "}")
             tail = part.tail.strip("/")
             if len(tail) > 0:
                 components.append(tail)
-        return "/" + "/".join(components)
+                if part.tail.endswith("/"):
+                    has_tail = True
+        return f"/{'/'.join(components)}/" if has_tail else f"/{'/'.join(components)}"
 
     def _ir_method_to_generator_exec_method(
         self,
