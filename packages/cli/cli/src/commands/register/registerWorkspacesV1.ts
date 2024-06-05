@@ -39,8 +39,9 @@ export async function registerWorkspacesV1({
                     context.failWithoutThrowing("Registering from OpenAPI not currently supported.");
                     return;
                 }
+                const workspaceDefinition = await workspace.getDefinition();
                 const registerApiResponse = await fiddle.definitionRegistry.registerUsingOrgToken({
-                    apiId: FernFiddle.ApiId(workspace.definition.rootApiFile.contents.name),
+                    apiId: FernFiddle.ApiId(workspaceDefinition.rootApiFile.contents.name),
                     version,
                     cliVersion: cliContext.environment.packageVersion,
                     yamlSchemaVersion: `${YAML_SCHEMA_VERSION}`
@@ -67,7 +68,7 @@ export async function registerWorkspacesV1({
                 await axios.put(registerApiResponse.body.definitionS3UploadUrl, await readFile(tarPath));
 
                 context.logger.info(
-                    `Registered @${project.config.organization}/${workspace.definition.rootApiFile.contents.name}:${registerApiResponse.body.version}`
+                    `Registered @${project.config.organization}/${workspaceDefinition.rootApiFile.contents.name}:${registerApiResponse.body.version}`
                 );
             });
         })

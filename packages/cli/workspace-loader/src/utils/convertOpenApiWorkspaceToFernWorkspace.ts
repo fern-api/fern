@@ -13,17 +13,6 @@ export async function convertToFernWorkspace(
     enableUniqueErrorsPerEndpoint = false,
     sdkLanguage: generatorsYml.GenerationLanguage | undefined
 ): Promise<FernWorkspace> {
-    const openApiIr = await parse({
-        workspace: openapiWorkspace,
-        taskContext: context,
-        sdkLanguage
-    });
-    const definition = convert({
-        taskContext: context,
-        ir: openApiIr,
-        enableUniqueErrorsPerEndpoint
-    });
-
     return {
         type: "fern",
         name: openapiWorkspace.name,
@@ -33,29 +22,42 @@ export async function convertToFernWorkspace(
             dependencies: {}
         },
         workspaceName: openapiWorkspace.workspaceName,
-        definition: {
-            // these files doesn't live on disk, so there's no absolute filepath
-            absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
-            rootApiFile: {
-                contents: definition.rootApiFile,
-                rawContents: yaml.dump(definition.rootApiFile)
-            },
-            namedDefinitionFiles: {
-                ...mapValues(definition.definitionFiles, (definitionFile) => ({
-                    // these files doesn't live on disk, so there's no absolute filepath
-                    absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
-                    rawContents: yaml.dump(definitionFile),
-                    contents: definitionFile
-                })),
-                [RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)]: {
-                    // these files doesn't live on disk, so there's no absolute filepath
-                    absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
-                    rawContents: yaml.dump(definition.packageMarkerFile),
-                    contents: definition.packageMarkerFile
-                }
-            },
-            packageMarkers: {},
-            importedDefinitions: {}
+        getDefinition: async (language?: generatorsYml.GenerationLanguage) => {
+            const openApiIr = await parse({
+                workspace: openapiWorkspace,
+                taskContext: context,
+                sdkLanguage: language ?? sdkLanguage
+            });
+            const definition = convert({
+                taskContext: context,
+                ir: openApiIr,
+                enableUniqueErrorsPerEndpoint
+            });
+
+            return {
+                // these files doesn't live on disk, so there's no absolute filepath
+                absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
+                rootApiFile: {
+                    contents: definition.rootApiFile,
+                    rawContents: yaml.dump(definition.rootApiFile)
+                },
+                namedDefinitionFiles: {
+                    ...mapValues(definition.definitionFiles, (definitionFile) => ({
+                        // these files doesn't live on disk, so there's no absolute filepath
+                        absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
+                        rawContents: yaml.dump(definitionFile),
+                        contents: definitionFile
+                    })),
+                    [RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)]: {
+                        // these files doesn't live on disk, so there's no absolute filepath
+                        absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
+                        rawContents: yaml.dump(definition.packageMarkerFile),
+                        contents: definition.packageMarkerFile
+                    }
+                },
+                packageMarkers: {},
+                importedDefinitions: {}
+            };
         },
         changelog: openapiWorkspace.changelog
     };

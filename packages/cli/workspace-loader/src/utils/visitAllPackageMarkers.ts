@@ -8,7 +8,7 @@ export async function visitAllPackageMarkers(
     workspace: FernWorkspace,
     visitor: (filepath: RelativeFilePath, packageMarker: PackageMarkerFileSchema) => void | Promise<void>
 ): Promise<void> {
-    for (const [relativeFilepath, file] of entries(getAllPackageMarkers(workspace.definition))) {
+    for (const [relativeFilepath, file] of entries(getAllPackageMarkers(await workspace.getDefinition()))) {
         await visitor(relativeFilepath, file.contents);
     }
 }

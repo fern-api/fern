@@ -65,7 +65,7 @@ export interface FernWorkspace {
     absoluteFilepath: AbsoluteFilePath;
     generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
     dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
-    definition: FernDefinition;
+    getDefinition: (language?: generatorsYml.GenerationLanguage) => Promise<FernDefinition>;
     changelog: APIChangelog | undefined;
 }
 

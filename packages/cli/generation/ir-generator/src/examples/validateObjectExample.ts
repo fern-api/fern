@@ -87,7 +87,7 @@ export function validateObjectExample({
                         relativeFilepath: propertyWithPath.filepathOfDeclaration,
                         definitionFile,
                         casingsGenerator: file.casingsGenerator,
-                        rootApiFile: workspace.definition.rootApiFile.contents
+                        rootApiFile: (await workspace.getDefinition()).rootApiFile.contents
                     }),
                     workspace,
                     typeResolver,

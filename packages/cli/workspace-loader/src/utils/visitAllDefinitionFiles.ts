@@ -14,7 +14,7 @@ export async function visitAllDefinitionFiles(
         metadata: { isPackageMarker: boolean }
     ) => void | Promise<void>
 ): Promise<void> {
-    for (const [relativeFilepath, file] of entries(getAllDefinitionFiles(workspace.definition))) {
+    for (const [relativeFilepath, file] of entries(getAllDefinitionFiles(await workspace.getDefinition()))) {
         await visitor(relativeFilepath, file.contents, {
             isPackageMarker: path.basename(relativeFilepath) === FERN_PACKAGE_MARKER_FILENAME
         });

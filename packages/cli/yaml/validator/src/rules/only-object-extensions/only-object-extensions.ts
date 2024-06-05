@@ -9,13 +9,13 @@ export const OnlyObjectExtensionsRule: Rule = {
         const typeResolver = new TypeResolverImpl(workspace);
         return {
             definitionFile: {
-                extension: (extension, { relativeFilepath, contents }) => {
+                extension: async (extension, { relativeFilepath, contents }) => {
                     const resolvedType = typeResolver.resolveNamedType({
                         referenceToNamedType: extension,
                         file: constructFernFileContext({
                             relativeFilepath,
                             definitionFile: contents,
-                            rootApiFile: workspace.definition.rootApiFile.contents,
+                            rootApiFile: (await workspace.getDefinition()).rootApiFile.contents,
                             casingsGenerator: CASINGS_GENERATOR
                         })
                     });

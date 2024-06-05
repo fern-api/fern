@@ -2,8 +2,8 @@ import { Rule } from "../../Rule";
 
 export const ValidDefaultEnvironmentRule: Rule = {
     name: "valid-default-environment",
-    create: ({ workspace }) => {
-        const environments = workspace.definition.rootApiFile.contents.environments;
+    create: async ({ workspace }) => {
+        const environments = (await workspace.getDefinition()).rootApiFile.contents.environments;
         return {
             rootApiFile: {
                 defaultEnvironment: (defaultEnvironment) => {

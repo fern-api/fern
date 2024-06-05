@@ -20,6 +20,8 @@ export const ValidExampleEndpointCallRule: Rule = {
         const exampleResolver = new ExampleResolverImpl(typeResolver);
         const variableResolver = new VariableResolverImpl();
 
+        const workspaceDefinitionRootFile = await workspace.getDefinition();
+
         return {
             definitionFile: {
                 exampleHeaders: ({ service, endpoint, examples }, { relativeFilepath, contents: definitionFile }) => {
@@ -38,7 +40,7 @@ export const ValidExampleEndpointCallRule: Rule = {
                                 relativeFilepath,
                                 definitionFile,
                                 casingsGenerator: CASINGS_GENERATOR,
-                                rootApiFile: workspace.definition.rootApiFile.contents
+                                rootApiFile: workspaceDefinitionRootFile.contents
                             }),
                             rawType: typeof header === "string" ? header : header.type
                         })
@@ -50,7 +52,7 @@ export const ValidExampleEndpointCallRule: Rule = {
                 ) => {
                     return validateExampleEndpointCallParameters({
                         allDeclarations: {
-                            ...workspace.definition.rootApiFile.contents["path-parameters"],
+                            ...workspaceDefinitionRootFile.contents["path-parameters"],
                             ...service["path-parameters"],
                             ...endpoint["path-parameters"]
                         },
@@ -67,7 +69,7 @@ export const ValidExampleEndpointCallRule: Rule = {
                                     relativeFilepath,
                                     definitionFile,
                                     casingsGenerator: CASINGS_GENERATOR,
-                                    rootApiFile: workspace.definition.rootApiFile.contents
+                                    rootApiFile: workspaceDefinitionRootFile.contents
                                 })
                             })
                     });
@@ -86,7 +88,7 @@ export const ValidExampleEndpointCallRule: Rule = {
                                 relativeFilepath,
                                 definitionFile,
                                 casingsGenerator: CASINGS_GENERATOR,
-                                rootApiFile: workspace.definition.rootApiFile.contents
+                                rootApiFile: workspaceDefinitionRootFile.contents
                             }),
                             rawType: typeof queryParameter === "string" ? queryParameter : queryParameter.type
                         })
@@ -102,7 +104,7 @@ export const ValidExampleEndpointCallRule: Rule = {
                             relativeFilepath,
                             definitionFile,
                             casingsGenerator: CASINGS_GENERATOR,
-                            rootApiFile: workspace.definition.rootApiFile.contents
+                            rootApiFile: workspaceDefinitionRootFile.contents
                         }),
                         workspace
                     });
@@ -117,7 +119,7 @@ export const ValidExampleEndpointCallRule: Rule = {
                             relativeFilepath,
                             definitionFile,
                             casingsGenerator: CASINGS_GENERATOR,
-                            rootApiFile: workspace.definition.rootApiFile.contents
+                            rootApiFile: workspaceDefinitionRootFile.contents
                         }),
                         workspace,
                         errorResolver

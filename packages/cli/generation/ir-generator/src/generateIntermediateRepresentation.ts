@@ -59,14 +59,15 @@ export async function generateIntermediateRepresentation({
     audiences: Audiences;
 }): Promise<IntermediateRepresentation> {
     const casingsGenerator = constructCasingsGenerator({ generationLanguage, keywords, smartCasing });
+    const workspaceDefinition = await workspace.getDefinition(generationLanguage);
 
     const irGraph = new IrGraph(audiences);
 
     const rootApiFileContext = constructRootApiFileContext({
         casingsGenerator,
-        rootApiFile: workspace.definition.rootApiFile.contents
+        rootApiFile: workspaceDefinition.rootApiFile.contents
     });
-    const globalErrors: ResponseErrors = (workspace.definition.rootApiFile.contents.errors ?? []).map(
+    const globalErrors: ResponseErrors = (workspaceDefinition.rootApiFile.contents.errors ?? []).map(
         (referenceToError) => {
             const errorName = parseErrorName({
                 errorName: referenceToError,
@@ -85,26 +86,26 @@ export async function generateIntermediateRepresentation({
 
     const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> = {
         apiName: casingsGenerator.generateName(workspace.name),
-        apiDisplayName: workspace.definition.rootApiFile.contents["display-name"],
-        apiDocs: await formatDocs(workspace.definition.rootApiFile.contents.docs),
+        apiDisplayName: workspaceDefinition.rootApiFile.contents["display-name"],
+        apiDocs: await formatDocs(workspaceDefinition.rootApiFile.contents.docs),
         auth: await convertApiAuth({
-            rawApiFileSchema: workspace.definition.rootApiFile.contents,
+            rawApiFileSchema: workspaceDefinition.rootApiFile.contents,
             file: rootApiFileContext,
             propertyResolver,
             endpointResolver
         }),
         headers:
-            workspace.definition.rootApiFile.contents.headers != null
+            workspaceDefinition.rootApiFile.contents.headers != null
                 ? await Promise.all(
-                      Object.entries(workspace.definition.rootApiFile.contents.headers).map(([headerKey, header]) =>
+                      Object.entries(workspaceDefinition.rootApiFile.contents.headers).map(([headerKey, header]) =>
                           convertHttpHeader({ headerKey, header, file: rootApiFileContext })
                       )
                   )
                 : [],
         idempotencyHeaders:
-            workspace.definition.rootApiFile.contents["idempotency-headers"] != null
+            workspaceDefinition.rootApiFile.contents["idempotency-headers"] != null
                 ? await Promise.all(
-                      Object.entries(workspace.definition.rootApiFile.contents["idempotency-headers"]).map(
+                      Object.entries(workspaceDefinition.rootApiFile.contents["idempotency-headers"]).map(
                           ([headerKey, header]) => convertHttpHeader({ headerKey, header, file: rootApiFileContext })
                       )
                   )
@@ -115,25 +116,25 @@ export async function generateIntermediateRepresentation({
         constants: generateFernConstants(casingsGenerator),
         environments: convertEnvironments({
             casingsGenerator,
-            rawApiFileSchema: workspace.definition.rootApiFile.contents
+            rawApiFileSchema: workspaceDefinition.rootApiFile.contents
         }),
         errorDiscriminationStrategy: convertErrorDiscriminationStrategy(
-            workspace.definition.rootApiFile.contents["error-discrimination"],
+            workspaceDefinition.rootApiFile.contents["error-discrimination"],
             rootApiFileContext
         ),
         basePath:
-            workspace.definition.rootApiFile.contents["base-path"] != null
-                ? constructHttpPath(workspace.definition.rootApiFile.contents["base-path"])
+            workspaceDefinition.rootApiFile.contents["base-path"] != null
+                ? constructHttpPath(workspaceDefinition.rootApiFile.contents["base-path"])
                 : undefined,
         pathParameters: await convertPathParameters({
-            pathParameters: workspace.definition.rootApiFile.contents["path-parameters"],
+            pathParameters: workspaceDefinition.rootApiFile.contents["path-parameters"],
             file: rootApiFileContext,
             location: PathParameterLocation.Root,
             variableResolver
         }),
         variables:
-            workspace.definition.rootApiFile.contents.variables != null
-                ? Object.entries(workspace.definition.rootApiFile.contents.variables).map(([key, variable]) => ({
+            workspaceDefinition.rootApiFile.contents.variables != null
+                ? Object.entries(workspaceDefinition.rootApiFile.contents.variables).map(([key, variable]) => ({
                       docs: typeof variable !== "string" ? variable.docs : undefined,
                       id: key,
                       name: rootApiFileContext.casingsGenerator.generateName(key),
@@ -200,7 +201,7 @@ export async function generateIntermediateRepresentation({
                 if (errors == null) {
                     return;
                 }
-                const errorDiscriminationSchema = workspace.definition.rootApiFile.contents["error-discrimination"];
+                const errorDiscriminationSchema = workspaceDefinition.rootApiFile.contents["error-discrimination"];
                 if (errorDiscriminationSchema == null) {
                     throw new Error("error-discrimination is missing in api.yml but there are declared errors.");
                 }
@@ -307,7 +308,7 @@ export async function generateIntermediateRepresentation({
                 relativeFilepath,
                 definitionFile: file,
                 casingsGenerator,
-                rootApiFile: workspace.definition.rootApiFile.contents
+                rootApiFile: workspaceDefinition.rootApiFile.contents
             })
         );
     });
@@ -364,7 +365,7 @@ export async function generateIntermediateRepresentation({
     );
 
     const isAuthMandatory =
-        workspace.definition.rootApiFile.contents.auth != null &&
+        workspaceDefinition.rootApiFile.contents.auth != null &&
         Object.values(intermediateRepresentationForAudiences.services).every((service) => {
             return service.endpoints.every((endpoint) => endpoint.auth);
         });

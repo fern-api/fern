@@ -27,12 +27,15 @@ export class ComplexQueryParamTypeDetector {
         this.typeResolver = new TypeResolverImpl(workspace);
     }
 
-    public isTypeComplex(type: string, ruleRunnerArgs: RuleRunnerArgs<DefinitionFileSchema>): boolean | undefined {
+    public async isTypeComplex(
+        type: string,
+        ruleRunnerArgs: RuleRunnerArgs<DefinitionFileSchema>
+    ): Promise<boolean | undefined> {
         const file = constructFernFileContext({
             relativeFilepath: ruleRunnerArgs.relativeFilepath,
             definitionFile: ruleRunnerArgs.contents,
             casingsGenerator: CASINGS_GENERATOR,
-            rootApiFile: this.workspace.definition.rootApiFile.contents
+            rootApiFile: (await this.workspace.getDefinition()).rootApiFile.contents
         });
         const resolvedType = this.typeResolver.resolveType({
             type,

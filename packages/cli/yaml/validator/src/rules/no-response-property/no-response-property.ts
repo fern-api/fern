@@ -16,7 +16,7 @@ export const NoResponsePropertyRule: Rule = {
         const typeResolver = new TypeResolverImpl(workspace);
         return {
             definitionFile: {
-                httpEndpoint: ({ endpoint }, { relativeFilepath, contents }) => {
+                httpEndpoint: async async ({ endpoint }, { relativeFilepath, contents }) => {
                     const { response } = endpoint;
                     if (response == null) {
                         return [];
@@ -34,7 +34,7 @@ export const NoResponsePropertyRule: Rule = {
                     const file = constructFernFileContext({
                         relativeFilepath,
                         definitionFile: contents,
-                        rootApiFile: workspace.definition.rootApiFile.contents,
+                        rootApiFile: (await workspace.getDefinition()).rootApiFile.contents,
                         casingsGenerator: CASINGS_GENERATOR
                     });
                     const resolvedType = typeResolver.resolveTypeOrThrow({

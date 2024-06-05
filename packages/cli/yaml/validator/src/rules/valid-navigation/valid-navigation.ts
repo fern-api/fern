@@ -7,9 +7,10 @@ import { Rule, RuleViolation } from "../../Rule";
 
 export const ValidNavigationRule: Rule = {
     name: "valid-navigation",
-    create: ({ workspace }) => {
-        const allDefinitionFilepaths = keys(getAllDefinitionFiles(workspace.definition));
-        const allNamedDefinitionFilepaths = keys(getAllNamedDefinitionFiles(workspace.definition));
+    create: async ({ workspace }) => {
+        const workspaceDefinition = await workspace.getDefinition();
+        const allDefinitionFilepaths = keys(getAllDefinitionFiles(workspaceDefinition));
+        const allNamedDefinitionFilepaths = keys(getAllNamedDefinitionFiles(workspaceDefinition));
 
         const directoryToChildren = allNamedDefinitionFilepaths.reduce<Record<RelativeFilePath, Set<string>>>(
             (acc, definitionFilepath) => {
@@ -29,9 +30,9 @@ export const ValidNavigationRule: Rule = {
 
                     if (typeof navigation === "string") {
                         const pathToNavigated = relative(
-                            workspace.definition.absoluteFilepath,
+                            workspaceDefinition.absoluteFilepath,
                             join(
-                                workspace.definition.absoluteFilepath,
+                                workspaceDefinition.absoluteFilepath,
                                 dirname(relativeFilepath),
                                 RelativeFilePath.of(navigation)
                             )

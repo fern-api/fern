@@ -107,6 +107,7 @@ async function createJob({
     const remoteGenerationService = createFiddleService({ token: token.value });
 
     let fernDefinitionMetadata: FernFiddle.remoteGen.FernDefinitionMetadata | undefined;
+    const workspaceDefinition = await workspace.getDefinition();
     // Only write definition if output mode is github
     if (generatorInvocation.outputMode.type.startsWith("github")) {
         try {
@@ -127,11 +128,11 @@ async function createJob({
                 absolutePathToTmpDefinitionDirectory,
                 RelativeFilePath.of(ROOT_API_FILENAME)
             );
-            await writeFile(absolutePathToApiYml, yaml.dump(workspace.definition.rootApiFile.contents));
+            await writeFile(absolutePathToApiYml, yaml.dump(workspaceDefinition.rootApiFile.contents));
             // write definition
             await writeFernDefinition({
                 absolutePathToDefinitionDirectory: absolutePathToTmpDefinitionDirectory,
-                definition: workspace.definition
+                definition: workspaceDefinition
             });
             // write fern.config.json
             const absolutePathToFernConfigJson = join(

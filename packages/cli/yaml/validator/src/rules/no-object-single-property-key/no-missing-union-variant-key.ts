@@ -45,7 +45,7 @@ export const NoObjectSinglePropertyKeyRule: Rule = {
                                 relativeFilepath,
                                 definitionFile: contents,
                                 casingsGenerator: CASINGS_GENERATOR,
-                                rootApiFile: workspace.definition.rootApiFile.contents
+                                rootApiFile: (await workspace.getDefinition()).rootApiFile.contents
                             })
                         });
 

@@ -90,7 +90,7 @@ interface ReferencedBodyRequestWrapperProperty {
     propertyName: string;
 }
 
-function getRequestWrapperPropertiesByName({
+async function getRequestWrapperPropertiesByName({
     endpoint,
     service,
     relativeFilepath,
@@ -102,7 +102,7 @@ function getRequestWrapperPropertiesByName({
     relativeFilepath: RelativeFilePath;
     definitionFile: DefinitionFileSchema;
     workspace: FernWorkspace;
-}): Record<string, RequestWrapperProperty[]> {
+}): Promise<Record<string, RequestWrapperProperty[]>> {
     const nameToProperties: Record<string, RequestWrapperProperty[]> = {};
     const addProperty = (name: string, property: RequestWrapperProperty) => {
         const propertiesForName = (nameToProperties[name] ??= []);
@@ -119,7 +119,7 @@ function getRequestWrapperPropertiesByName({
                     relativeFilepath,
                     definitionFile,
                     casingsGenerator: CASINGS_GENERATOR,
-                    rootApiFile: workspace.definition.rootApiFile.contents
+                    rootApiFile: (await workspace.getDefinition()).rootApiFile.contents
                 }),
                 typeResolver: new TypeResolverImpl(workspace)
             })

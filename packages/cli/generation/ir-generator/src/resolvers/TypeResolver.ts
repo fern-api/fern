@@ -12,11 +12,11 @@ export interface TypeResolver {
     getDeclarationOfNamedType: (args: {
         referenceToNamedType: string;
         file: FernFileContext;
-    }) => RawTypeDeclarationInfo | undefined;
+    }) => Promise<RawTypeDeclarationInfo | undefined>;
     getDeclarationOfNamedTypeOrThrow: (args: {
         referenceToNamedType: string;
         file: FernFileContext;
-    }) => RawTypeDeclarationInfo;
+    }) => Promise<RawTypeDeclarationInfo>;
     resolveNamedType: (args: { referenceToNamedType: string; file: FernFileContext }) => ResolvedType | undefined;
     resolveNamedTypeOrThrow: (args: { referenceToNamedType: string; file: FernFileContext }) => ResolvedType;
 }
@@ -38,14 +38,14 @@ export class TypeResolverImpl implements TypeResolver {
         return resolvedType;
     }
 
-    public getDeclarationOfNamedTypeOrThrow({
+    public async getDeclarationOfNamedTypeOrThrow({
         referenceToNamedType,
         file
     }: {
         referenceToNamedType: string;
         file: FernFileContext;
-    }): RawTypeDeclarationInfo {
-        const declaration = this.getDeclarationOfNamedType({ referenceToNamedType, file });
+    }): Promise<RawTypeDeclarationInfo> {
+        const declaration = await this.getDeclarationOfNamedType({ referenceToNamedType, file });
         if (declaration == null) {
             throw new Error(
                 "Cannot find declaration of type: " + referenceToNamedType + " in file " + file.relativeFilepath
@@ -54,13 +54,13 @@ export class TypeResolverImpl implements TypeResolver {
         return declaration;
     }
 
-    public getDeclarationOfNamedType({
+    public async getDeclarationOfNamedType({
         referenceToNamedType,
         file
     }: {
         referenceToNamedType: string;
         file: FernFileContext;
-    }): RawTypeDeclarationInfo | undefined {
+    }): Promise<RawTypeDeclarationInfo | undefined> {
         const parsedReference = parseReferenceToTypeName({
             reference: referenceToNamedType,
             referencedIn: file.relativeFilepath,
@@ -86,7 +86,7 @@ export class TypeResolverImpl implements TypeResolver {
                 relativeFilepath: parsedReference.relativeFilepath,
                 definitionFile,
                 casingsGenerator: file.casingsGenerator,
-                rootApiFile: this.workspace.definition.rootApiFile.contents
+                rootApiFile: (await this.workspace.getDefinition()).rootApiFile.contents
             })
         };
     }

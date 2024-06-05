@@ -26,7 +26,7 @@ export const ValidExampleErrorRule: Rule = {
                             relativeFilepath,
                             definitionFile,
                             casingsGenerator: CASINGS_GENERATOR,
-                            rootApiFile: workspace.definition.rootApiFile.contents
+                            rootApiFile: (await workspace.getDefinition()).rootApiFile.contents
                         }),
                         workspace,
                         typeResolver,

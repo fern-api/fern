@@ -34,7 +34,7 @@ export interface ObjectPropertyPathPart {
 
 export type TypeName = string;
 
-export function getAllPropertiesForObject({
+export async function getAllPropertiesForObject({
     typeName,
     objectDeclaration,
     filepathOfDeclaration,
@@ -57,7 +57,7 @@ export function getAllPropertiesForObject({
     // these are for recursive calls only
     path?: ObjectPropertyPath;
     seen?: Record<RelativeFilePath, Set<TypeName>>;
-}): ObjectPropertyWithPath[] {
+}): Promise<ObjectPropertyWithPath[]> {
     const properties: ObjectPropertyWithPath[] = [];
 
     // prevent infinite looping
@@ -82,7 +82,7 @@ export function getAllPropertiesForObject({
         relativeFilepath: filepathOfDeclaration,
         definitionFile,
         casingsGenerator,
-        rootApiFile: workspace.definition.rootApiFile.contents
+        rootApiFile: (await workspace.getDefinition()).rootApiFile.contents
     });
 
     if (objectDeclaration.properties != null) {
@@ -122,7 +122,7 @@ export function getAllPropertiesForObject({
                 const definitionFile = getDefinitionFile(workspace, resolvedTypeOfExtension.filepath);
                 if (definitionFile != null) {
                     properties.push(
-                        ...getAllPropertiesForObject({
+                        ...(await getAllPropertiesForObject({
                             typeName: resolvedTypeOfExtension.rawName,
                             objectDeclaration: resolvedTypeOfExtension.declaration,
                             filepathOfDeclaration: resolvedTypeOfExtension.filepath,
@@ -144,7 +144,7 @@ export function getAllPropertiesForObject({
                                 )
                             ],
                             seen
-                        })
+                        }))
                     );
                 }
             }
@@ -154,7 +154,7 @@ export function getAllPropertiesForObject({
     return properties;
 }
 
-export function getAllPropertiesForType({
+export async function getAllPropertiesForType({
     typeName,
     filepathOfDeclaration,
     definitionFile,
@@ -168,20 +168,20 @@ export function getAllPropertiesForType({
     workspace: FernWorkspace;
     typeResolver: TypeResolver;
     smartCasing: boolean;
-}): ObjectPropertyWithPath[] {
+}): Promise<ObjectPropertyWithPath[]> {
     const resolvedType = typeResolver.resolveNamedType({
         referenceToNamedType: typeName,
         file: constructFernFileContext({
             relativeFilepath: filepathOfDeclaration,
             definitionFile,
             casingsGenerator: CASINGS_GENERATOR,
-            rootApiFile: workspace.definition.rootApiFile.contents
+            rootApiFile: (await workspace.getDefinition()).rootApiFile.contents
         })
     });
     if (resolvedType == null || resolvedType._type !== "named" || !isRawObjectDefinition(resolvedType.declaration)) {
         return [];
     }
-    return getAllPropertiesForObject({
+    return await getAllPropertiesForObject({
         typeName,
         objectDeclaration: resolvedType.declaration,
         filepathOfDeclaration,

@@ -127,7 +127,7 @@ async function validateLocalDependencyAndGetDefinition({
             ? loadDependencyWorkspaceResult.workspace
             : await convertToFernWorkspace(loadDependencyWorkspaceResult.workspace, context, false, sdkLanguage);
 
-    return workspaceOfDependency.definition;
+    return workspaceOfDependency.getDefinition(sdkLanguage);
 }
 
 async function validateVersionedDependencyAndGetDefinition({
@@ -233,7 +233,7 @@ async function validateVersionedDependencyAndGetDefinition({
         return undefined;
     }
 
-    return workspaceOfDependency.definition;
+    return await workspaceOfDependency.getDefinition(sdkLanguage);
 }
 
 async function getAreRootApiFilesEquivalent(
@@ -242,22 +242,20 @@ async function getAreRootApiFilesEquivalent(
 ): Promise<{ equal: boolean; differences: string[] }> {
     let areRootApiFilesEquivalent = true as boolean;
     const differences: string[] = [];
+    const rootFile = (await workspaceOfDependency.getDefinition()).rootApiFile;
     await visitObject(rootApiFile, {
         name: noop,
         imports: noop,
         "display-name": noop,
         auth: (auth) => {
-            const isAuthEquals = isEqual(auth, workspaceOfDependency.definition.rootApiFile.contents.auth);
+            const isAuthEquals = isEqual(auth, rootFile.contents.auth);
             if (!isAuthEquals) {
                 differences.push("auth");
             }
             areRootApiFilesEquivalent &&= isAuthEquals;
         },
         "auth-schemes": (auth) => {
-            const authSchemeEquals = isEqual(
-                auth,
-                removeUndefined(workspaceOfDependency.definition.rootApiFile.contents["auth-schemes"])
-            );
+            const authSchemeEquals = isEqual(auth, removeUndefined(rootFile.contents["auth-schemes"]));
             if (!authSchemeEquals) {
                 differences.push("auth-schemes");
             }
@@ -271,7 +269,7 @@ async function getAreRootApiFilesEquivalent(
         "error-discrimination": (errorDiscrimination) => {
             const errorDiscriminationIsEqual = isEqual(
                 errorDiscrimination,
-                removeUndefined(workspaceOfDependency.definition.rootApiFile.contents["error-discrimination"])
+                removeUndefined(rootFile.contents["error-discrimination"])
             );
             if (!errorDiscriminationIsEqual) {
                 differences.push("error-discrimination");
@@ -281,7 +279,7 @@ async function getAreRootApiFilesEquivalent(
         audiences: noop,
         errors: noop,
         "base-path": (basePath) => {
-            const basePathsAreEqual = basePath === workspaceOfDependency.definition.rootApiFile.contents["base-path"];
+            const basePathsAreEqual = basePath === rootFile.contents["base-path"];
             if (!basePathsAreEqual) {
                 differences.push("base-path");
             }

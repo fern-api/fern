@@ -7,31 +7,31 @@ export interface ErrorResolver {
     getDeclarationOrThrow(
         referenceToError: string,
         file: FernFileContext
-    ): { declaration: RawSchemas.ErrorDeclarationSchema; file: FernFileContext };
+    ): Promise<{ declaration: RawSchemas.ErrorDeclarationSchema; file: FernFileContext }>;
     getDeclaration(
         referenceToError: string,
         file: FernFileContext
-    ): { declaration: RawSchemas.ErrorDeclarationSchema; file: FernFileContext } | undefined;
+    ): Promise<{ declaration: RawSchemas.ErrorDeclarationSchema; file: FernFileContext } | undefined>;
 }
 
 export class ErrorResolverImpl implements ErrorResolver {
     constructor(private readonly workspace: FernWorkspace) {}
 
-    public getDeclarationOrThrow(
+    public async getDeclarationOrThrow(
         referenceToError: string,
         file: FernFileContext
-    ): { declaration: RawSchemas.ErrorDeclarationSchema; file: FernFileContext } {
-        const declaration = this.getDeclaration(referenceToError, file);
+    ): Promise<{ declaration: RawSchemas.ErrorDeclarationSchema; file: FernFileContext }> {
+        const declaration = await this.getDeclaration(referenceToError, file);
         if (declaration == null) {
             throw new Error("Error does not exist: " + referenceToError);
         }
         return declaration;
     }
 
-    public getDeclaration(
+    public async getDeclaration(
         referenceToError: string,
         file: FernFileContext
-    ): { declaration: RawSchemas.ErrorDeclarationSchema; file: FernFileContext } | undefined {
+    ): Promise<{ declaration: RawSchemas.ErrorDeclarationSchema; file: FernFileContext } | undefined> {
         const parsedReference = parseReferenceToTypeName({
             reference: referenceToError,
             referencedIn: file.relativeFilepath,
@@ -58,7 +58,7 @@ export class ErrorResolverImpl implements ErrorResolver {
                 definitionFile,
                 relativeFilepath: parsedReference.relativeFilepath,
                 casingsGenerator: file.casingsGenerator,
-                rootApiFile: this.workspace.definition.rootApiFile.contents
+                rootApiFile: (await this.workspace.getDefinition()).rootApiFile.contents
             })
         };
     }

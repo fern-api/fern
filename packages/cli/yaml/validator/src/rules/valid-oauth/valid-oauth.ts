@@ -19,7 +19,7 @@ const DOCS_LINK_MESSAGE = `For details, see the ${terminalLink("docs", DocsLinks
 
 export const ValidOauthRule: Rule = {
     name: "valid-oauth",
-    create: ({ workspace }) => {
+    create: async ({ workspace }) => {
         const oauthScheme = maybeGetOAuthScheme({ workspace });
         if (oauthScheme == null) {
             return {};
@@ -29,7 +29,9 @@ export const ValidOauthRule: Rule = {
         const typeResolver = new TypeResolverImpl(workspace);
         const endpointResolver = new EndpointResolverImpl(workspace);
 
-        const imports = workspace.definition.rootApiFile.contents.imports;
+        const workspaceDefinition = await workspace.getDefinition();
+
+        const imports = workspaceDefinition.rootApiFile.contents.imports;
         if (imports == null) {
             return {
                 rootApiFile: {
@@ -47,7 +49,7 @@ export const ValidOauthRule: Rule = {
 
         const apiFile = constructRootApiFileContext({
             casingsGenerator: CASINGS_GENERATOR,
-            rootApiFile: workspace.definition.rootApiFile.contents
+            rootApiFile: workspaceDefinition.rootApiFile.contents
         });
 
         const resolvedTokenEndpoint = endpointResolver.resolveEndpoint({
@@ -105,7 +107,7 @@ export const ValidOauthRule: Rule = {
                         relativeFilepath,
                         definitionFile,
                         casingsGenerator: CASINGS_GENERATOR,
-                        rootApiFile: workspace.definition.rootApiFile.contents
+                        rootApiFile: workspaceDefinition.rootApiFile.contents
                     });
 
                     switch (oauthSchema.type) {
@@ -142,7 +144,7 @@ interface OAuthScheme {
 }
 
 function maybeGetOAuthScheme({ workspace }: { workspace: FernWorkspace }): OAuthScheme | undefined {
-    const authSchemes = workspace.definition.rootApiFile.contents["auth-schemes"];
+    const authSchemes = workspaceDefinition.rootApiFile.contents["auth-schemes"];
     if (authSchemes == null) {
         return undefined;
     }
