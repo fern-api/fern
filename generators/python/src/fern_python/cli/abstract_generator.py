@@ -186,6 +186,16 @@ jobs:
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
       - name: Install dependencies
         run: poetry install
+"""
+        if write_unit_tests:
+            workflow_yaml += """
+      - name: Install Fern
+        run: npm install -g fern-api
+      - name: Test
+        run: fern test --command "poetry run pytest -rP ."
+"""
+        else:
+            workflow_yaml += """
       - name: Test
         run: poetry run pytest ./tests/custom/
 """
