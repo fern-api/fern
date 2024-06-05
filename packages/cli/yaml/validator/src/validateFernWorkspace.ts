@@ -33,7 +33,7 @@ export async function runRulesOnWorkspace({
 }): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
 
-    const allRuleVisitors = await Promise.all(rules.map((rule) => rule.create({ workspace, logger })));
+    const allRuleVisitors = await Promise.all(rules.map(async (rule) => await rule.create({ workspace, logger })));
 
     const violationsForRoot = await validateRootApiFile({
         contents: (await workspace.getDefinition()).rootApiFile.contents,

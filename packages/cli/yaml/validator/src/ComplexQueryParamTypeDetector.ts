@@ -45,7 +45,7 @@ export class ComplexQueryParamTypeDetector {
             return undefined;
         }
         const visited = new Set<string>();
-        return this.isResolvedReferenceComplex({
+        return await this.isResolvedReferenceComplex({
             type: resolvedType,
             file,
             visited
@@ -63,7 +63,7 @@ export class ComplexQueryParamTypeDetector {
     }): Promise<boolean> {
         switch (type._type) {
             case "container":
-                return this.isResolvedContainerComplex({
+                return await this.isResolvedContainerComplex({
                     type: type.container,
                     file,
                     visited
@@ -157,7 +157,7 @@ export class ComplexQueryParamTypeDetector {
         if (isRawUndiscriminatedUnionDefinition(type.declaration)) {
             for (const variant of type.declaration.union) {
                 const variantType = typeof variant === "string" ? variant : variant.type;
-                const isVariantComplex = this.isTypeComplex(variantType, {
+                const isVariantComplex = await this.isTypeComplex(variantType, {
                     contents: file.definitionFile,
                     relativeFilepath: file.relativeFilepath
                 });
@@ -190,13 +190,17 @@ export class ComplexQueryParamTypeDetector {
             filepathOfDeclaration: file.relativeFilepath,
             smartCasing: false
         });
-        return allPropertiesForObject.some((property) => {
-            return this.isComplex({
-                type: property.resolvedPropertyType,
-                file,
-                visited
-            });
-        });
+
+        const mappings = await Promise.all(
+            allPropertiesForObject.map(async (property) => {
+                return await this.isComplex({
+                    type: property.resolvedPropertyType,
+                    file,
+                    visited
+                });
+            })
+        );
+        return mappings.some((property) => property);
     }
 
     private async isComplex({

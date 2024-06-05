@@ -45,23 +45,23 @@ export async function validateCursorPagination({
     }
 
     violations.push(
-        ...validateNextCursorProperty({
+        ...(await validateNextCursorProperty({
             endpointId,
             typeResolver,
             file: maybeFileFromResolvedType(resolvedResponseType) ?? file,
             resolvedResponseType,
             nextProperty: cursorPagination.next_cursor
-        })
+        }))
     );
 
     violations.push(
-        ...validateResultsProperty({
+        ...(await validateResultsProperty({
             endpointId,
             typeResolver,
             file: maybeFileFromResolvedType(resolvedResponseType) ?? file,
             resolvedResponseType,
             resultsProperty: cursorPagination.results
-        })
+        }))
     );
 
     return violations;
@@ -93,7 +93,7 @@ async function validateCursorProperty({
     });
 }
 
-function validateNextCursorProperty({
+async function validateNextCursorProperty({
     endpointId,
     typeResolver,
     file,
@@ -105,8 +105,8 @@ function validateNextCursorProperty({
     file: FernFileContext;
     resolvedResponseType: ResolvedType;
     nextProperty: string;
-}): RuleViolation[] {
-    return validateResponseProperty({
+}): Promise<RuleViolation[]> {
+    return await validateResponseProperty({
         endpointId,
         typeResolver,
         file,

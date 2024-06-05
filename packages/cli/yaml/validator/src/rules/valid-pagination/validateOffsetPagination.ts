@@ -45,13 +45,13 @@ export async function validateOffsetPagination({
     }
 
     violations.push(
-        ...validateResultsProperty({
+        ...(await validateResultsProperty({
             endpointId,
             typeResolver,
             file: maybeFileFromResolvedType(resolvedResponseType) ?? file,
             resolvedResponseType,
             resultsProperty: offsetPagination.results
-        })
+        }))
     );
 
     return violations;
