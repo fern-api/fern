@@ -3,6 +3,9 @@
  */
 package com.seed.customAuth.core;
 
+/**
+ * This class serves as the base exception for all errors in the SDK.
+ */
 public class SeedCustomAuthError extends RuntimeException {
     public SeedCustomAuthError(String message) {
         super(message);

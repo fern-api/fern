@@ -27,6 +27,7 @@ public class BaseErrorGenerator extends AbstractFileGenerator {
     @Override
     public GeneratedJavaFile generateFile() {
         TypeSpec apiErrorTypeSpec = TypeSpec.classBuilder(className)
+                .addJavadoc("This class serves as the base exception for all errors in the SDK.")
                 .addModifiers(Modifier.PUBLIC)
                 .superclass(RuntimeException.class)
                 .addMethod(MethodSpec.constructorBuilder()

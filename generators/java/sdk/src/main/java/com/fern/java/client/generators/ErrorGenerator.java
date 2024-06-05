@@ -1,5 +1,7 @@
 package com.fern.java.client.generators;
 
+import static com.fern.java.utils.PoetUtils.createGetter;
+
 import com.fern.irV42.model.errors.ErrorDeclaration;
 import com.fern.irV42.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
@@ -48,22 +50,22 @@ public class ErrorGenerator extends AbstractFileGenerator {
         }
 
         String errorName = errorDeclaration.getName().getName().getPascalCase().getUnsafeName();
-        bodyTypeName.ifPresent(typeName -> errorTypeSpecBuilder
-                .addField(FieldSpec.builder(typeName, BODY_FIELD_NAME)
-                        .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
-                        .build())
-                .addMethod(MethodSpec.constructorBuilder()
-                        .addModifiers(Modifier.PUBLIC)
-                        .addParameter(typeName, BODY_FIELD_NAME)
-                        .addStatement("super($S, $L, $L)", errorName, errorDeclaration.getStatusCode(), BODY_FIELD_NAME)
-                        .addStatement("this.$L = $L", BODY_FIELD_NAME, BODY_FIELD_NAME)
-                        .build())
-                .addMethod(MethodSpec.methodBuilder("body")
-                        .addModifiers(Modifier.PUBLIC)
-                        .returns(typeName)
-                        .addAnnotation(Override.class)
-                        .addStatement("return this.$L", BODY_FIELD_NAME)
-                        .build()));
+        bodyTypeName.ifPresent(typeName -> {
+            FieldSpec bodyFieldSpec = FieldSpec.builder(typeName, BODY_FIELD_NAME)
+                    .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
+                    .addJavadoc("The body of the response that triggered the exception.")
+                    .build();
+            errorTypeSpecBuilder
+                    .addField(bodyFieldSpec)
+                    .addMethod(MethodSpec.constructorBuilder()
+                            .addModifiers(Modifier.PUBLIC)
+                            .addParameter(typeName, BODY_FIELD_NAME)
+                            .addStatement(
+                                    "super($S, $L, $L)", errorName, errorDeclaration.getStatusCode(), BODY_FIELD_NAME)
+                            .addStatement("this.$L = $L", BODY_FIELD_NAME, BODY_FIELD_NAME)
+                            .build())
+                    .addMethod(createGetter(bodyFieldSpec, Override.class));
+        });
         if (bodyTypeName.isEmpty()) {
             errorTypeSpecBuilder.addMethod(MethodSpec.constructorBuilder()
                     .addModifiers(Modifier.PUBLIC)

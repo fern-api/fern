@@ -100,7 +100,7 @@ public abstract class UnionSubType {
     }
 
     public final MethodSpec getToStringMethod() {
-        return ObjectMethodFactory.createToStringMethod(unionClassName, getFieldSpecs());
+        return ObjectMethodFactory.createToStringMethodFromFieldSpecs(unionClassName, getFieldSpecs());
     }
 
     public final TypeSpec getUnionSubTypeWrapper(ClassName unionWrapperInterface) {

@@ -7,6 +7,9 @@ import com.seed.customAuth.core.SeedCustomAuthApiError;
 import com.seed.customAuth.resources.errors.types.UnauthorizedRequestErrorBody;
 
 public final class SeedCustomAuthUnauthorizedRequest extends SeedCustomAuthApiError {
+    /**
+     * The body of the response that triggered the exception.
+     */
     private final UnauthorizedRequestErrorBody body;
 
     public SeedCustomAuthUnauthorizedRequest(UnauthorizedRequestErrorBody body) {
@@ -14,6 +17,9 @@ public final class SeedCustomAuthUnauthorizedRequest extends SeedCustomAuthApiEr
         this.body = body;
     }
 
+    /**
+     * @return the body
+     */
     @Override
     public UnauthorizedRequestErrorBody body() {
         return this.body;
