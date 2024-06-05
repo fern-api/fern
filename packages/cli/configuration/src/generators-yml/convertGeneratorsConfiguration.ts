@@ -557,7 +557,6 @@ function getLanguageFromGeneratorName(generatorName: string) {
     return undefined;
 }
 
-
 function getMavenRegistryUrl(maven: MavenOutputLocationSchema) {
     if (maven.url != null) {
         return maven.url;
