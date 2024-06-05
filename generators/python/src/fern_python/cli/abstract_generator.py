@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import os
 from abc import ABC, abstractmethod
-from typing import Optional, Sequence, Tuple, cast
+from typing import Literal, Optional, Sequence, Tuple, cast
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources import GeneratorConfig, PypiMetadata
@@ -71,7 +71,9 @@ class AbstractGenerator(ABC):
             generator_config.output.mode.visit(
                 download_files=lambda: None,
                 github=lambda github_output_mode: self._write_files_for_github_repo(
-                    project=project, output_mode=github_output_mode, write_unit_tests=generator_config.write_unit_tests
+                    project=project,
+                    output_mode=github_output_mode,
+                    write_unit_tests=(self.project_type() == "sdk" and generator_config.write_unit_tests),
                 ),
                 publish=lambda x: None,
             )
@@ -239,6 +241,10 @@ jobs:
 def test_client() -> None:
     assert True == True
 """
+
+    @abstractmethod
+    def project_type(self) -> Literal["sdk", "pydantic", "fastapi"]:
+        ...
 
     @abstractmethod
     def run(
