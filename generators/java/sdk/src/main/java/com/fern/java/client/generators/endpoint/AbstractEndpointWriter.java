@@ -19,6 +19,7 @@ package com.fern.java.client.generators.endpoint;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fern.irV42.model.commons.ErrorId;
+import com.fern.irV42.model.commons.Name;
 import com.fern.irV42.model.commons.TypeId;
 import com.fern.irV42.model.environment.EnvironmentBaseUrlId;
 import com.fern.irV42.model.errors.ErrorDeclaration;
@@ -475,6 +476,10 @@ public abstract class AbstractEndpointWriter {
         return getVariableName("responseBody");
     }
 
+    private String getParsedResponseVariableName() {
+        return getVariableName("parsedResponse");
+    }
+
     private String getResponseBodyStringName() {
         return getVariableName("responseBodyString");
     }
@@ -559,41 +564,75 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public Void visitJson(JsonResponse json) {
-            JsonResponseBody body = json.visit(new JsonResponse.Visitor<JsonResponseBody>() {
+            JsonResponseBodyWithProperty body = json.visit(new JsonResponse.Visitor<>() {
                 @Override
-                public JsonResponseBody visitResponse(JsonResponseBody response) {
-                    return response;
+                public JsonResponseBodyWithProperty visitResponse(JsonResponseBody response) {
+                    return JsonResponseBodyWithProperty.builder()
+                            .responseBodyType(response.getResponseBodyType())
+                            .build();
                 }
 
                 @Override
-                public JsonResponseBody visitNestedPropertyAsResponse(
+                public JsonResponseBodyWithProperty visitNestedPropertyAsResponse(
                         JsonResponseBodyWithProperty nestedPropertyAsResponse) {
-                    throw new RuntimeException("Returning nested properties as response is unsupported");
+                    return nestedPropertyAsResponse;
                 }
 
                 @Override
-                public JsonResponseBody _visitUnknown(Object unknownType) {
+                public JsonResponseBodyWithProperty _visitUnknown(Object unknownType) {
                     throw new RuntimeException("Encountered unknown json response body type: " + unknownType);
                 }
             });
 
-            TypeName returnType =
+            TypeName responseType =
                     clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, body.getResponseBodyType());
+            boolean isProperty = body.getResponseProperty().isPresent();
+            Optional<TypeName> propertyType = body.getResponseProperty().map(objectProperty -> clientGeneratorContext
+                    .getPoetTypeNameMapper()
+                    .convertToTypeName(true, objectProperty.getValueType()));
+            Boolean responseIsOptional = body.getResponseBodyType().visit(new TypeReferenceIsOptional(true));
+            TypeName returnType = propertyType
+                    .map(type -> {
+                        if (responseIsOptional) {
+                            return ParameterizedTypeName.get(ClassName.get(Optional.class), type);
+                        } else return type;
+                    })
+                    .orElse(responseType);
             endpointMethodBuilder.returns(returnType);
+            if (isProperty) {
+                httpResponseBuilder.add("$T $L = ", responseType, getParsedResponseVariableName());
+            } else {
+                httpResponseBuilder.add("return ");
+            }
             if (body.getResponseBodyType().isContainer() || isAliasContainer(body.getResponseBodyType())) {
                 httpResponseBuilder.addStatement(
-                        "return $T.$L.readValue($L.string(), new $T() {})",
+                        "$T.$L.readValue($L.string(), new $T() {})",
                         generatedObjectMapper.getClassName(),
                         generatedObjectMapper.jsonMapperStaticField().name,
                         getResponseBodyName(),
-                        ParameterizedTypeName.get(ClassName.get(TypeReference.class), returnType));
+                        ParameterizedTypeName.get(ClassName.get(TypeReference.class), responseType));
             } else {
                 httpResponseBuilder.addStatement(
-                        "return $T.$L.readValue($L.string(), $T.class)",
+                        "$T.$L.readValue($L.string(), $T.class)",
                         generatedObjectMapper.getClassName(),
                         generatedObjectMapper.jsonMapperStaticField().name,
                         getResponseBodyName(),
-                        returnType);
+                        responseType);
+            }
+            if (isProperty) {
+                Name responsePropertyName =
+                        body.getResponseProperty().get().getName().getName();
+                if (responseIsOptional) {
+                    httpResponseBuilder.addStatement(
+                            "return $L.map(res -> res.get$L())",
+                            getParsedResponseVariableName(),
+                            responsePropertyName.getPascalCase().getUnsafeName());
+                } else {
+                    httpResponseBuilder.addStatement(
+                            "return $L.get$L()",
+                            getParsedResponseVariableName(),
+                            responsePropertyName.getPascalCase().getUnsafeName());
+                }
             }
             return null;
         }
