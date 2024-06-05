@@ -41,7 +41,8 @@ export class DockerTestRunner extends TestRunner {
         publishConfig,
         outputMode,
         irVersion,
-        publishMetadata
+        publishMetadata,
+        readme
     }: TestRunner.DoRunArgs): Promise<void> {
         try {
             const generatorGroup: generatorsYml.GeneratorGroup = {
@@ -57,7 +58,8 @@ export class DockerTestRunner extends TestRunner {
                         outputMode,
                         fixtureName: fixture,
                         irVersion,
-                        publishMetadata
+                        publishMetadata,
+                        readme
                     })
                 ]
             };

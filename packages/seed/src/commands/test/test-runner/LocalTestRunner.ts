@@ -40,7 +40,8 @@ export class LocalTestRunner extends TestRunner {
         publishConfig,
         outputMode,
         irVersion,
-        publishMetadata
+        publishMetadata,
+        readme
     }: TestRunner.DoRunArgs): Promise<void> {
         const generatorConfigFile = await tmp.file();
         const absolutePathToGeneratorConfig = AbsoluteFilePath.of(generatorConfigFile.path);
@@ -60,7 +61,8 @@ export class LocalTestRunner extends TestRunner {
             outputMode,
             fixtureName: fixture,
             irVersion,
-            publishMetadata
+            publishMetadata,
+            readme
         });
         const ir = await getIntermediateRepresentation({
             workspace: fernWorkspace,
