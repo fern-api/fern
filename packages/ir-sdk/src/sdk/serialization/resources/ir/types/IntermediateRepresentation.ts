@@ -61,6 +61,7 @@ export const IntermediateRepresentation: core.serialization.ObjectSchema<
     serviceTypeReferenceInfo: core.serialization.lazyObject(
         async () => (await import("../../..")).ServiceTypeReferenceInfo
     ),
+    reamdeConfig: core.serialization.lazyObject(async () => (await import("../../..")).ReadmeConfig).optional(),
 });
 
 export declare namespace IntermediateRepresentation {
@@ -86,5 +87,6 @@ export declare namespace IntermediateRepresentation {
         sdkConfig: serializers.SdkConfig.Raw;
         variables: serializers.VariableDeclaration.Raw[];
         serviceTypeReferenceInfo: serializers.ServiceTypeReferenceInfo.Raw;
+        reamdeConfig?: serializers.ReadmeConfig.Raw | null;
     }
 }
