@@ -1,4 +1,5 @@
 export * from "./IntermediateRepresentation";
+export * from "./ReadmeConfig";
 export * from "./SdkConfig";
 export * from "./PlatformHeaders";
 export * from "./ErrorDiscriminationStrategy";
