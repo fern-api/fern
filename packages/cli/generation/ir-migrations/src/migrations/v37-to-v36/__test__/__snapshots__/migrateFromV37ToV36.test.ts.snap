@@ -62,6 +62,7 @@ exports[`migrateFromV37ToV36 snapshot 1`] = `
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
+  "reamdeConfig": undefined,
   "rootPackage": {
     "docs": undefined,
     "errors": [],

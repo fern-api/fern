@@ -48,6 +48,7 @@ export declare namespace TestRunner {
         outputFolder: string;
         keepDocker: boolean | undefined;
         publishMetadata: unknown;
+        readme: generatorsYml.ReadmeSchema | undefined;
     }
 
     type TestResult = TestSuccess | TestFailure;
@@ -178,7 +179,9 @@ export abstract class TestRunner {
                     outputMode,
                     outputFolder,
                     keepDocker: this.keepDocker,
-                    publishMetadata
+                    publishMetadata,
+                    // TODO: Support readme fixtures in seed.
+                    readme: undefined
                 });
                 generationStopwatch.stop();
                 metrics.generationTime = generationStopwatch.duration();

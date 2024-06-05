@@ -36,4 +36,5 @@ export interface IntermediateRepresentation {
     sdkConfig: FernIr.SdkConfig;
     variables: FernIr.VariableDeclaration[];
     serviceTypeReferenceInfo: FernIr.ServiceTypeReferenceInfo;
+    reamdeConfig: FernIr.ReadmeConfig | undefined;
 }

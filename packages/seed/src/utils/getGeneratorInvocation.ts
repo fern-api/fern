@@ -1,4 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
+import { ReadmeSchema } from "@fern-api/configuration/src/generators-yml";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
@@ -15,7 +16,8 @@ export function getGeneratorInvocation({
     outputMode,
     fixtureName,
     irVersion,
-    publishMetadata
+    publishMetadata,
+    readme
 }: {
     absolutePathToOutput: AbsoluteFilePath;
     docker: ParsedDockerName;
@@ -26,6 +28,7 @@ export function getGeneratorInvocation({
     fixtureName: string;
     irVersion: string;
     publishMetadata: unknown;
+    readme: ReadmeSchema | undefined;
 }): generatorsYml.GeneratorInvocation {
     return {
         name: docker.name,
@@ -39,7 +42,8 @@ export function getGeneratorInvocation({
         smartCasing: false,
         disableExamples: false,
         irVersionOverride: irVersion,
-        publishMetadata: publishMetadata != null ? (publishMetadata as FernFiddle.PublishingMetadata) : undefined
+        publishMetadata: publishMetadata != null ? (publishMetadata as FernFiddle.PublishingMetadata) : undefined,
+        readme
     };
 }
 

@@ -50,6 +50,25 @@ types:
       sdkConfig: SdkConfig
       variables: list<variables.VariableDeclaration>
       serviceTypeReferenceInfo: ServiceTypeReferenceInfo
+      reamdeConfig: optional<ReadmeConfig>
+  ReadmeConfig:
+    docs: |
+      The configuration used to generate a README.md file. If present, the generator
+      should call the generator-cli to produce a README.md.
+    properties:
+      defaultEndpoint:
+        docs: |
+          If specified, this enpdoint should be used in every snippet (if possible).
+          Note that some endpoints aren't suitable for every feature (e.g. a non-list
+          endpoint for pagination), so the default is a no-op in those cases.
+        type: optional<commons.EndpointId>
+      bannerLink: optional<string>
+      apiReferenceLink: optional<string>
+      features:
+        docs: |
+          If specified, configures the list of endpoints to associate
+          with each feature.
+        type: optional<map<commons.FeatureId, list<commons.EndpointId>>>
   SdkConfig:
     properties:
       isAuthMandatory: boolean

@@ -23,4 +23,7 @@ export {
     OPENAPI_LOCATION_KEY,
     type GeneratorsConfigurationSchema
 } from "./schemas/GeneratorsConfigurationSchema";
+export { type ReadmeEndpointObjectSchema } from "./schemas/ReadmeEndpointObjectSchema";
+export { type ReadmeEndpointSchema } from "./schemas/ReadmeEndpointSchema";
+export { type ReadmeSchema } from "./schemas/ReadmeSchema";
 export { updateGeneratorGroup } from "./updateGeneratorGroup";
