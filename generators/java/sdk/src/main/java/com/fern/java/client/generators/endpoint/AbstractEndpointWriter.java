@@ -413,19 +413,20 @@ public abstract class AbstractEndpointWriter {
                 httpResponseBuilder
                         .endControlFlow()
                         .beginControlFlow("catch ($T ignored)", JsonProcessingException.class)
-                        .endControlFlow()
-                        .addStatement(
-                                "throw new $T($S + $L.code(), $L.code(), $T.$L.readValue($L, $T.class))",
-                                apiErrorClassName,
-                                "Error with status code ",
-                                getResponseName(),
-                                getResponseName(),
-                                generatedObjectMapper.getClassName(),
-                                generatedObjectMapper.jsonMapperStaticField().name,
-                                getResponseBodyStringName(),
-                                Object.class);
+                        .add("// unable to map error response, throwing generic error\n")
+                        .endControlFlow();
             }
         }
+        httpResponseBuilder.addStatement(
+                "throw new $T($S + $L.code(), $L.code(), $T.$L.readValue($L, $T.class))",
+                apiErrorClassName,
+                "Error with status code ",
+                getResponseName(),
+                getResponseName(),
+                generatedObjectMapper.getClassName(),
+                generatedObjectMapper.jsonMapperStaticField().name,
+                getResponseBodyStringName(),
+                Object.class);
         httpResponseBuilder
                 .endControlFlow()
                 .beginControlFlow("catch ($T e)", IOException.class)
