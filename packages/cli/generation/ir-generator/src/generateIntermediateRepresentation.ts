@@ -146,7 +146,7 @@ export async function generateIntermediateRepresentation({
         },
         webhookGroups: {},
         websocketChannels: {},
-        reamdeConfig: undefined
+        readmeConfig: undefined
     };
 
     const packageTreeGenerator = new PackageTreeGenerator();

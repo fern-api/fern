@@ -537,7 +537,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
     },
     "webhookGroups": {},
     "websocketChannels": {},
-    "reamdeConfig": null,
+    "readmeConfig": null,
     "subpackages": {
         "subpackage_imported": {
             "name": {
