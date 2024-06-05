@@ -126,8 +126,8 @@ async function areAllHeadersLiteral({
     file: FernFileContext;
     typeResolver: TypeResolver;
 }): Promise<boolean> {
-    return (
-        (await Object.values(headers).filter(async (header) => {
+    const mappedHeaders = await Promise.all(
+        Object.values(headers).map(async (header) => {
             const headerType = typeof header === "string" ? header : header.type;
             const resolvedType = await typeResolver.resolveTypeOrThrow({
                 type: headerType,
@@ -135,6 +135,7 @@ async function areAllHeadersLiteral({
             });
             const isLiteral = resolvedType._type === "container" && resolvedType.container._type === "literal";
             return !isLiteral;
-        }).length) === 0
+        })
     );
+    return mappedHeaders.filter((v) => v).length === 0;
 }

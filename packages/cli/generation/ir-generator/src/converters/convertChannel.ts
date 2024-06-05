@@ -129,7 +129,7 @@ export async function convertChannel({
                                       }
                                       return {
                                           name: file.casingsGenerator.generateNameAndWireValue({
-                                              name: await getQueryParameterName({
+                                              name: getQueryParameterName({
                                                   queryParameterKey: wireKey,
                                                   queryParameter: queryParameterDeclaration
                                               }).name,

@@ -26,8 +26,9 @@ export async function convertToFernWorkspace(
         workspaceName: openapiWorkspace.workspaceName,
         getDefinition: async (language?: generatorsYml.GenerationLanguage) => {
             const languageKey = language ?? sdkLanguage ?? "default";
-            if (workspaceDefinitionCache.has(languageKey)) {
-                return workspaceDefinitionCache.get(languageKey)!;
+            const maybeDefinition = workspaceDefinitionCache.get(languageKey);
+            if (maybeDefinition != null) {
+                return maybeDefinition;
             }
             const openApiIr = await parse({
                 workspace: openapiWorkspace,

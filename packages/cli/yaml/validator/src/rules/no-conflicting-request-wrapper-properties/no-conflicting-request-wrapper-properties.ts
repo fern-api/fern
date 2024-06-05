@@ -42,14 +42,9 @@ export const NoConflictingRequestWrapperPropertiesRule: Rule = {
                                 `Multiple request properties have the name ${chalk.bold(
                                     name
                                 )}. This is not suitable for code generation. Use the "name" property to deconflict.\n` +
-                                (
-                                    await Promise.all(
-                                        propertiesWithName.map(
-                                            async (property) =>
-                                                `  - ${await convertRequestWrapperPropertyToString(property)}`
-                                        )
-                                    )
-                                ).join("\n")
+                                propertiesWithName
+                                    .map((property) => `  - ${convertRequestWrapperPropertyToString(property)}`)
+                                    .join("\n")
                         });
                     }
 
