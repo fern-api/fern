@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.21.0] - 2024-06-05
 
-- Feature: The TypeScript generator now supports `bigint` types.
+- Feature: The generator now supports `bigint` types.
 - Internal: Bump to IRv46.
 
 ## [0.20.9] - 2024-06-02
