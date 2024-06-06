@@ -59,6 +59,7 @@ function getCode({
     audience: string;
 }) {
     return new Promise<{ code: string }>((resolve) => {
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         server.addListener("request", async (request, response) => {
             const code = parseCodeFromUrl(request, origin);
             if (code == null) {
