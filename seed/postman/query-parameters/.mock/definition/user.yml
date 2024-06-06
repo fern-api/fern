@@ -3,6 +3,11 @@ types:
     properties:
       name: string
       tags: list<string>
+    examples: 
+      - name: Default
+        value: 
+          name: Deep
+          tags: []
   NestedUser:
     properties:
       name: string
@@ -18,20 +23,42 @@ service:
       request:
         name: GetUsersRequest
         query-parameters:
-          limit: integer
-          id: uuid
-          date: date
-          deadline: datetime
-          bytes: base64
-          user: User
-          keyValue: map<string, string>
+          limit: optional<integer>
+          id: optional<uuid>
+          date: optional<date>
+          deadline: optional<datetime>
+          bytes: optional<base64>
+          user: optional<User>
+          keyValue: optional<map<string, string>>
           optionalString: optional<string>
-          nestedUser: NestedUser
+          nestedUser: optional<NestedUser>
           optionalUser: optional<User>
           excludeUser:
-            type: User
+            type: optional<User>
             allow-multiple: true
           filter:
-            type: string
+            type: optional<string>
             allow-multiple: true
       response: User
+      examples: 
+        - name: Some Query Parameters
+          query-parameters:
+            limit: 5
+            id: 4ff45b32-ca63-462d-b988-cf4eec41397a
+          response: 
+            body: $User.Default
+        # - name: Allow multiple query parameters
+        #   query-parameters:
+        #     filter: [
+        #       "a", 
+        #       "b",
+        #       "c"
+        #     ]
+        #   response: 
+        #     body: $User.Default
+        # - name: Deep object query parameters
+        #   query-parameters:
+        #     user: $User.Default
+        #   response: 
+        #     body: $User.Default
+
