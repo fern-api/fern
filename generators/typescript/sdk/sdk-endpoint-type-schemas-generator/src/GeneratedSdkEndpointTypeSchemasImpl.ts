@@ -3,7 +3,7 @@ import {
     ErrorDiscriminationStrategy,
     HttpEndpoint,
     HttpService,
-    PrimitiveType,
+    PrimitiveTypeV1,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { getSchemaOptions, PackageId } from "@fern-typescript/commons";
@@ -257,7 +257,8 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         if (this.endpoint.response.body.type === "text") {
             return ts.factory.createAsExpression(
                 referenceToRawResponse,
-                context.type.getReferenceToType(TypeReference.primitive(PrimitiveType.String)).typeNode
+                context.type.getReferenceToType(TypeReference.primitive({ v1: PrimitiveTypeV1.String, v2: undefined }))
+                    .typeNode
             );
         }
 
