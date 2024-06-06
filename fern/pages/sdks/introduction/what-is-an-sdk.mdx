@@ -3,26 +3,27 @@ title: What is an SDK?
 description: Generate robust, flexible, and automated SDKs in multiple programming languages.
 ---
 
-<Info>
-SDKs (Software Development Kits) are platform-specific tools that 
-enable faster software development. This could include pre-built modules, compilers, and
-user guides. 
-</Info>
+SDKs (Software Development Kits) reduce the amount of work required to use a REST API, starting by reducing the boilerplate code a developer would otherwise have to write. By simplifyoing the process of making API calls, developers have a faster time-to-integration and run into fewer errors. SDKs are platform-specific and comprised of:
 
-Fern provides robust, flexible, and automated SDKs, enabling developers to use 
-your API effectively in many languages. Fern SDKs offer [autocomplete](/learn/sdks/features/strongly-typed) in 
-code editors, [type checking](/learn/sdks/features/strongly-typed), [schema validation](/learn/sdks/features/schema-validation) at compile time, support for [webhooks](/learn/sdks/features/webhook-signature-verification), and more. 
+1. **Client Libraries**: Pre-written code that provides functionality for interacting with an API, saving developers from having to write this code from scratch. 
+1. **Code Examples**: Example snippets that show example API requests, responses, and schemas (i.e., data models).
+1. **Utilities**: Helper functions that help with tasks such as retrying requests, paginating responses, refreshing OAuth tokens, and verifying webhook requests.
 
-- **Fern SDKs are extensible and customizable.** Supplement your Fern-generated SDK with
+## Fern SDKs
+
+Fern generates robust, flexible, and automated SDKs, enabling developers to use 
+your API effectively in popular languages. Fern SDKs offer autocomplete in 
+code editors. (For less technical folks, think of that nice drop-down when you hit "=" in Excel/GSheets.) Developers also get type checking, schema validation at compile time, support for server-sent events streaming, and more. 
+
+- **Extensible and customizable.** Enhance your Fern-generated SDK with
 handwritten functions and customize your SDK method and group names.
 
-- **Automate your SDKs without sacrificing quality.** Your SDKs update alongside your API Spec. 
-Show developers how to use your SDKs with code examples that automatically populate in your 
-documentation.
+- **Automatically generated.** When your API definition changes, a CI/CD 
+job kicks off to build, version, and release your updates SDKs.
 
-Fern supports generating SDKs in several different programming languages, including 
-Typescript, Python, and Go. Each SDK generator is written by a language expert and 
-is officially maintained by the Fern team. 
+- **Idiomatic code.**: Fern SDKs read as if a language expert wrote them. 
+Each SDK generator is built from scratch, maintained by the Fern team, 
+and designed to follow the best practices of each language (i.e., a Python SDK is Pythonic).
 
 ### Generally Available
 
@@ -53,7 +54,7 @@ is officially maintained by the Fern team.
   />
 </CardGroup>
 
-### Beta
+### In Development
 
 <CardGroup cols={3}>
   <Card
@@ -66,7 +67,7 @@ is officially maintained by the Fern team.
   />
 </CardGroup>
 
-### In Development
+### Upcoming
 
 <CardGroup cols={3}>
   <Card
