@@ -3,6 +3,11 @@ types:
     properties:
       name: string
       tags: list<string>
+    examples: 
+      - name: Default
+        value: 
+          name: Deep
+          tags: []
   NestedUser:
     properties:
       name: string
@@ -35,3 +40,11 @@ service:
             type: string
             allow-multiple: true
       response: User
+      examples: 
+        - name: Some Query Parameters
+          query-parameters:
+            limit: 5
+            id: 4ff45b32-ca63-462d-b988-cf4eec41397a
+          response: 
+            body: $User.Default
+

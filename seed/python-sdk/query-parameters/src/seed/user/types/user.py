@@ -8,6 +8,17 @@ from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
 
 class User(pydantic_v1.BaseModel):
+    """
+    Examples
+    --------
+    from seed import User
+
+    User(
+        name="Deep",
+        tags=[],
+    )
+    """
+
     name: str
     tags: typing.List[str]
 
