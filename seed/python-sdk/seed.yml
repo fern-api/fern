@@ -10,6 +10,7 @@ local:
     - chmod +x setup-python.sh && ./setup-python.sh
     - poetry config virtualenvs.in-project true
     - poetry install
+  # The envvar is needed to trick the generator to look in the right place for the core_utils files
   runCommand: PYTEST_CURRENT_TEST="some value" poetry run python -m src.fern_python.generators.sdk.cli
   env: {}
 fixtures:
