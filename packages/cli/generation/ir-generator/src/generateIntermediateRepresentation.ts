@@ -46,17 +46,19 @@ import { parseErrorName } from "./utils/parseErrorName";
 export async function generateIntermediateRepresentation({
     workspace,
     generationLanguage,
+    keywords,
     smartCasing,
     disableExamples,
     audiences
 }: {
     workspace: FernWorkspace;
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
+    keywords: string[] | undefined;
     smartCasing: boolean;
     disableExamples: boolean;
     audiences: Audiences;
 }): Promise<IntermediateRepresentation> {
-    const casingsGenerator = constructCasingsGenerator({ generationLanguage, smartCasing });
+    const casingsGenerator = constructCasingsGenerator({ generationLanguage, keywords, smartCasing });
 
     const irGraph = new IrGraph(audiences);
 
@@ -143,7 +145,8 @@ export async function generateIntermediateRepresentation({
             sharedTypes: []
         },
         webhookGroups: {},
-        websocketChannels: {}
+        websocketChannels: {},
+        readmeConfig: undefined
     };
 
     const packageTreeGenerator = new PackageTreeGenerator();

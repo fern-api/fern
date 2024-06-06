@@ -9,6 +9,7 @@ export {
     type DocsWorkspace,
     type FernDefinition,
     type FernWorkspace,
+    type FernWorkspaceMetadata,
     type OnDiskNamedDefinitionFile,
     type OSSWorkspace,
     type Workspace

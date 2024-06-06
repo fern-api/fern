@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.2] - 2024-06-06
+
+- Fix: downgrades mypy so we can run it over all our files without concern for their pydantic bug
+- Fix: adds typehint to the response variable
+
+## [2.9.1] - 2024-06-06
+
+- Fix: The SDK removes unset query parameters from requests (regression from the client migration in 2.8.0)
+- Fix: The SDK fixes it's type for `files` parameters to the http client (regression from the client migration in 2.8.0)
+
+## [2.9.0] - 2024-06-05
+
+- Fix: Snippets preserve trailing slashes
+
+## [2.9.0-rc1] - 2024-06-05
+
+- Fix: The new http client abstraction ensures a slash is postfixed to the baseurl
+- Fix: Snippets preserve trailing slashes
+
+## [2.9.0-rc0] - 2024-06-04
+
+- Improvement: The Python generator now runs custom unit tests in CI if configured.
+
+## [2.8.2] - 2024-06-04
+
+- Fix: The none-filtering function now supports mypy's invariance check.
+
+## [2.8.1] - 2024-06-04
+
+- Fix: The parameter comment/documentation for timeouts on the root client now reflects the custom timeout passed through within configuration.
+
 ## [2.8.0] - 2024-06-03
 
 - Improvement: Endpoint function request logic has been abstracted into the request function of the wrapped httpx client.

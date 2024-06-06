@@ -28,7 +28,9 @@ export async function mockServer({
 
     await cliContext.runTaskForWorkspace(workspace, async (context) => {
         const fernWorkspace: FernWorkspace =
-            workspace.type === "fern" ? workspace : await convertOpenApiWorkspaceToFernWorkspace(workspace, context);
+            workspace.type === "fern"
+                ? workspace
+                : await convertOpenApiWorkspaceToFernWorkspace(workspace, context, false, undefined);
 
         await validateAPIWorkspaceAndLogIssues({
             context,
@@ -40,6 +42,7 @@ export async function mockServer({
             workspace: fernWorkspace,
             audiences: { type: "all" },
             generationLanguage: undefined,
+            keywords: undefined,
             smartCasing: false,
             disableExamples: false
         });

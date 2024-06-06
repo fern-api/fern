@@ -1,3 +1,4 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { serialization } from "@fern-api/openapi-ir-sdk";
@@ -11,7 +12,9 @@ export function testParseOpenAPI(
     fixtureName: string,
     openApiFilename: string,
     asyncApiFilename?: string,
-    useTitle?: boolean
+    useTitle?: boolean,
+    useUndiscriminatedUnions?: boolean,
+    sdkLanguage?: generatorsYml.GenerationLanguage
 ): void {
     // eslint-disable-next-line jest/valid-title
     describe(fixtureName, () => {
@@ -25,7 +28,11 @@ export function testParseOpenAPI(
                 asyncApiFilename != null
                     ? join(FIXTURES_PATH, RelativeFilePath.of(fixtureName), RelativeFilePath.of(asyncApiFilename))
                     : undefined;
-            const settings = useTitle != null ? { shouldUseTitleAsName: useTitle, audiences: [] } : undefined;
+            const settings = {
+                shouldUseTitleAsName: useTitle ?? true,
+                audiences: [],
+                shouldUseUndiscriminatedUnionsWithLiterals: useUndiscriminatedUnions ?? false
+            };
             const specs = [];
             if (absolutePathToOpenAPI != null) {
                 specs.push({
@@ -46,7 +53,8 @@ export function testParseOpenAPI(
                 workspace: {
                     specs
                 },
-                taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER })
+                taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER }),
+                sdkLanguage
             });
             const openApiIrJson = await serialization.OpenApiIntermediateRepresentation.jsonOrThrow(openApiIr, {
                 skipValidation: true

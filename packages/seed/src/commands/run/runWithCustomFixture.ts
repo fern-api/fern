@@ -41,7 +41,8 @@ export async function runWithCustomFixture({
     const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
         absolutePathToAPIDefinition: pathToFixture,
         taskContext,
-        fixture: "custom"
+        fixture: "custom",
+        sdkLanguage: workspace.workspaceConfig.language
     });
     if (fernWorkspace == null) {
         taskContext.logger.error("Failed to load API definition.");
@@ -67,7 +68,9 @@ export async function runWithCustomFixture({
             outputMode: customFixtureConfig?.outputMode ?? workspace.workspaceConfig.defaultOutputMode,
             outputFolder: customFixtureConfig?.outputFolder ?? "custom",
             id: "custom",
-            keepDocker: true
+            keepDocker: true,
+            // TODO: Support readme fixtures in seed.
+            readme: undefined
         });
         await writeDotMock({
             absolutePathToDotMockDirectory: absolutePathToOutput,

@@ -14,7 +14,8 @@ describe("TypeResolver", () => {
             ),
             context: createMockTaskContext(),
             cliVersion: "0.0.0",
-            workspaceName: undefined
+            workspaceName: undefined,
+            sdkLanguage: undefined
         });
         if (!parseResult.didSucceed) {
             throw new Error("Failed to parse workspace: " + JSON.stringify(parseResult));
@@ -35,6 +36,7 @@ describe("TypeResolver", () => {
             definitionFile: fooFile.contents,
             casingsGenerator: constructCasingsGenerator({
                 generationLanguage: undefined,
+                keywords: undefined,
                 smartCasing: false
             }),
             rootApiFile: parseResult.workspace.definition.rootApiFile.contents

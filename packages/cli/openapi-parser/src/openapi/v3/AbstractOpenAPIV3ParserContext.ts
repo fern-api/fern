@@ -1,3 +1,4 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { Logger } from "@fern-api/logger";
 import { SchemaId } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -16,6 +17,11 @@ export interface DiscriminatedUnionReference {
     numReferences: number;
 }
 
+export interface DiscriminatedUnionMetadata {
+    // Map of the field name to the field value
+    discriminants: Map<string, string>;
+}
+
 export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserContext {
     public logger: Logger;
     public document: OpenAPIV3.Document;
@@ -24,17 +30,23 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public refOccurrences: Record<string, number>;
     public DUMMY: SchemaParserContext;
     public shouldUseTitleAsName: boolean;
+    public shouldUseUndiscriminatedUnionsWithLiterals: boolean;
+    public sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 
     constructor({
         document,
         taskContext,
         authHeaders,
-        shouldUseTitleAsName
+        shouldUseTitleAsName,
+        shouldUseUndiscriminatedUnionsWithLiterals,
+        sdkLanguage
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
         authHeaders: Set<string>;
         shouldUseTitleAsName: boolean;
+        shouldUseUndiscriminatedUnionsWithLiterals: boolean;
+        sdkLanguage: generatorsYml.GenerationLanguage | undefined;
     }) {
         this.document = document;
         this.logger = taskContext.logger;
@@ -43,6 +55,8 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         this.refOccurrences = getReferenceOccurrences(document);
         this.DUMMY = this.getDummy();
         this.shouldUseTitleAsName = shouldUseTitleAsName;
+        this.shouldUseUndiscriminatedUnionsWithLiterals =
+            shouldUseUndiscriminatedUnionsWithLiterals && sdkLanguage === generatorsYml.GenerationLanguage.PYTHON;
     }
 
     public getNumberOfOccurrencesForRef(schema: OpenAPIV3.ReferenceObject): number {
@@ -194,6 +208,16 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         discrminant: string,
         times: number
     ): void;
+
+    public abstract markSchemaWithDiscriminantValue(
+        schema: OpenAPIV3.ReferenceObject,
+        discrminant: string,
+        discriminantValue: string
+    ): void;
+
+    public abstract getDiscriminatedUnionMetadata(
+        schema: OpenAPIV3.ReferenceObject
+    ): DiscriminatedUnionMetadata | undefined;
 
     public abstract getReferencesFromDiscriminatedUnion(
         schema: OpenAPIV3.ReferenceObject

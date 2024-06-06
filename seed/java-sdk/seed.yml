@@ -54,7 +54,6 @@ scripts:
 allowedFailures:
   - enum
   - extends
-  - response-property
   - examples
   - exhaustive:local-files
   - trace

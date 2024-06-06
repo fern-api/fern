@@ -31,19 +31,21 @@ it("generate IR from OpenAPI", async () => {
         cliVersion: "0.0.0",
         cliName: "fern",
         commandLineApiWorkspace: undefined,
-        defaultToAllApiWorkspaces: true
+        defaultToAllApiWorkspaces: true,
+        sdkLanguage: undefined
     });
 
     for (let workspace of apiWorkspaces) {
         const name = workspace.absoluteFilepath.split("/").pop();
         if (workspace.type === "oss") {
-            workspace = await convertOpenApiWorkspaceToFernWorkspace(workspace, taskContext);
+            workspace = await convertOpenApiWorkspaceToFernWorkspace(workspace, taskContext, false, undefined);
         }
 
         const intermediateRepresentation = await generateIntermediateRepresentation({
             workspace,
             generationLanguage: undefined,
             audiences: TEST_DEFINITION_CONFIG[workspace.name]?.audiences ?? { type: "all" },
+            keywords: undefined,
             smartCasing: true, // Verify the special casing convention in tests.
             disableExamples: false
         });

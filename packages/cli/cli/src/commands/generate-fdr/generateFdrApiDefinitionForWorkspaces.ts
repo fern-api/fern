@@ -24,7 +24,7 @@ export async function generateFdrApiDefinitionForWorkspaces({
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const fernWorkspace =
                     workspace.type === "oss"
-                        ? await convertOpenApiWorkspaceToFernWorkspace(workspace, context)
+                        ? await convertOpenApiWorkspaceToFernWorkspace(workspace, context, false, undefined)
                         : workspace;
 
                 const ir = await generateIrForFernWorkspace({
@@ -32,6 +32,7 @@ export async function generateFdrApiDefinitionForWorkspaces({
                     context,
                     generationLanguage: undefined,
                     audiences,
+                    keywords: undefined,
                     smartCasing: false,
                     disableExamples: false
                 });

@@ -120,7 +120,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         boolean refreshRequired = expiryResponseProperty.isPresent();
         MethodSpec.Builder getMethodSpecBuilder = MethodSpec.methodBuilder(GET_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC)
-                .addAnnotation(Override.class)
+                .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .returns(String.class)
                 .beginControlFlow(
                         refreshRequired

@@ -34,7 +34,9 @@ export async function getPreviewDocsDefinition({
 
     const fernWorkspaces = await Promise.all(
         apiWorkspaces.map((workspace) =>
-            workspace.type === "oss" ? convertOpenApiWorkspaceToFernWorkspace(workspace, context) : workspace
+            workspace.type === "oss"
+                ? convertOpenApiWorkspaceToFernWorkspace(workspace, context, false, undefined)
+                : workspace
         )
     );
 

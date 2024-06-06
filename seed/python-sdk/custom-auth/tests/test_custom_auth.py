@@ -8,7 +8,7 @@ from .utilities import validate_response
 
 
 async def test_get_with_custom_auth(client: SeedCustomAuth, async_client: AsyncSeedCustomAuth) -> None:
-    expected_response = True
+    expected_response: typing.Any = True
     expected_types: typing.Any = None
     response = client.custom_auth.get_with_custom_auth()
     validate_response(response, expected_response, expected_types)
@@ -18,7 +18,7 @@ async def test_get_with_custom_auth(client: SeedCustomAuth, async_client: AsyncS
 
 
 async def test_post_with_custom_auth(client: SeedCustomAuth, async_client: AsyncSeedCustomAuth) -> None:
-    expected_response = True
+    expected_response: typing.Any = True
     expected_types: typing.Any = None
     response = client.custom_auth.post_with_custom_auth(request={"key": "value"})
     validate_response(response, expected_response, expected_types)

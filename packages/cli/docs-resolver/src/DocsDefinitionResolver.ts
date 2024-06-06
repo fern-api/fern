@@ -230,7 +230,12 @@ export class DocsDefinitionResolver {
                 return { items };
             }
             case "tabbed": {
-                return this.convertTabbedNavigation(this.parsedDocsConfig.navigation.items, this.parsedDocsConfig.tabs);
+                return {
+                    tabsV2: await this.convertTabbedNavigation(
+                        this.parsedDocsConfig.navigation.items,
+                        this.parsedDocsConfig.tabs
+                    )
+                };
             }
             case "versioned": {
                 const versions = await Promise.all(
@@ -294,6 +299,7 @@ export class DocsDefinitionResolver {
                     workspace,
                     audiences: item.audiences,
                     generationLanguage: undefined,
+                    keywords: undefined,
                     smartCasing: false,
                     disableExamples: false
                 });
@@ -377,9 +383,8 @@ export class DocsDefinitionResolver {
                 };
             }
             case "tabbed": {
-                const tabbedItem = await this.convertTabbedNavigation(navigationConfig.items, tabs);
                 return {
-                    tabs: tabbedItem.tabs
+                    tabsV2: await this.convertTabbedNavigation(navigationConfig.items, tabs)
                 };
             }
             default:
@@ -390,9 +395,9 @@ export class DocsDefinitionResolver {
     private async convertTabbedNavigation(
         items: docsYml.TabbedNavigation[],
         tabs: Record<string, docsYml.RawSchemas.TabConfig> | undefined
-    ): Promise<{ tabs: DocsV1Write.NavigationTab[] }> {
-        const convertedTabs = await Promise.all(
-            items.map(async (tabbedItem) => {
+    ): Promise<DocsV1Write.NavigationTabV2[]> {
+        return Promise.all(
+            items.map(async (tabbedItem): Promise<WithoutQuestionMarks<DocsV1Write.NavigationTabV2>> => {
                 const tabConfig = tabs?.[tabbedItem.tab];
                 if (tabConfig == null) {
                     throw new Error(`Couldn't find config for tab id ${tabbedItem.tab}`);
@@ -406,6 +411,7 @@ export class DocsDefinitionResolver {
                     }
 
                     return {
+                        type: "link",
                         title: tabConfig.displayName,
                         icon: tabConfig.icon,
                         url: tabConfig.href
@@ -423,14 +429,17 @@ export class DocsDefinitionResolver {
                 );
 
                 return {
+                    type: "group",
                     title: tabConfig.displayName,
                     icon: tabConfig.icon,
                     items: tabbedItems,
-                    urlSlugOverride: tabConfig.slug
+                    urlSlugOverride: tabConfig.slug,
+                    skipUrlSlug: tabConfig.skipSlug,
+                    hidden: tabConfig.hidden,
+                    fullSlug: undefined
                 };
             })
         );
-        return { tabs: convertedTabs };
     }
 
     private getFileId(filepath: AbsoluteFilePath): DocsV1Write.FileId;

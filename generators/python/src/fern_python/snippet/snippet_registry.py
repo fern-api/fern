@@ -1,3 +1,4 @@
+import re
 from typing import Dict, List, Optional
 
 import fern.generator_exec.resources as generator_exec
@@ -109,15 +110,16 @@ class SnippetRegistry:
         endpoint: ir_types.HttpEndpoint,
     ) -> str:
         components: List[str] = []
-        head = endpoint.full_path.head.strip("/")
-        if len(head) > 0:
-            components.append(head)
+        if not endpoint.full_path.head.startswith("/"):
+            components.append("/")
+        if len(endpoint.full_path.head) > 0:
+            components.append(endpoint.full_path.head)
         for part in endpoint.full_path.parts:
             components.append("{" + part.path_parameter + "}")
-            tail = part.tail.strip("/")
-            if len(tail) > 0:
-                components.append(tail)
-        return "/" + "/".join(components)
+            if len(part.tail) > 0:
+                components.append(part.tail)
+        joined_components = "".join(components)
+        return re.sub("/+", "/", joined_components)
 
     def _ir_method_to_generator_exec_method(
         self,
