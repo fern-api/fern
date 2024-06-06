@@ -20,6 +20,7 @@ export async function getIntermediateRepresentation({
     context: TaskContext;
     irVersionOverride: string | undefined;
 }): Promise<unknown> {
+    // TODO: Include the README.md in the IR here.
     const intermediateRepresentation = await generateIntermediateRepresentation({
         workspace,
         audiences,
