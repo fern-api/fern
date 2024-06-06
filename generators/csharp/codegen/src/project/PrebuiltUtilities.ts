@@ -26,7 +26,7 @@ export class PrebuiltUtilities {
         }
 
         for (const file of this.files) {
-            file.write(outputDirectory);
+            await file.write(outputDirectory);
         }
     }
 
