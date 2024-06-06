@@ -19,7 +19,7 @@ public final class SeedExamplesNotFoundError extends SeedExamplesApiError {
     /**
      * @return the body
      */
-    @Override
+    @java.lang.Override
     public String body() {
         return this.body;
     }

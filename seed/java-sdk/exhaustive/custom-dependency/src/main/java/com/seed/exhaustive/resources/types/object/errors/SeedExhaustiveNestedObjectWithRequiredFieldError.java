@@ -20,7 +20,7 @@ public final class SeedExhaustiveNestedObjectWithRequiredFieldError extends Seed
     /**
      * @return the body
      */
-    @Override
+    @java.lang.Override
     public NestedObjectWithRequiredField body() {
         return this.body;
     }

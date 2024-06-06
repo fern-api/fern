@@ -20,7 +20,7 @@ public final class SeedErrorPropertyPropertyBasedErrorTest extends SeedErrorProp
     /**
      * @return the body
      */
-    @Override
+    @java.lang.Override
     public PropertyBasedErrorTestBody body() {
         return this.body;
     }

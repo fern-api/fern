@@ -20,7 +20,7 @@ public final class SeedTracePlaylistIdNotFoundError extends SeedTraceApiError {
     /**
      * @return the body
      */
-    @Override
+    @java.lang.Override
     public PlaylistIdNotFoundErrorBody body() {
         return this.body;
     }

@@ -20,7 +20,7 @@ public final class SeedExhaustiveNestedObjectWithOptionalFieldError extends Seed
     /**
      * @return the body
      */
-    @Override
+    @java.lang.Override
     public NestedObjectWithOptionalField body() {
         return this.body;
     }

@@ -20,7 +20,7 @@ public final class SeedExhaustiveObjectWithRequiredFieldError extends SeedExhaus
     /**
      * @return the body
      */
-    @Override
+    @java.lang.Override
     public ObjectWithRequiredField body() {
         return this.body;
     }

@@ -20,7 +20,7 @@ public final class SeedCustomAuthUnauthorizedRequest extends SeedCustomAuthApiEr
     /**
      * @return the body
      */
-    @Override
+    @java.lang.Override
     public UnauthorizedRequestErrorBody body() {
         return this.body;
     }
