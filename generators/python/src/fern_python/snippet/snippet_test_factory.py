@@ -451,60 +451,78 @@ class SnippetTestFactory:
             )
             if len(successful_examples) == 0:
                 continue
+            
+            example_count = 0
+            seen_generated = False
+            for example in successful_examples:
+                test_name = endpoint_name # Start with endpoint name
+                
+                maybe_example_name = example.get_as_union().name
+                if maybe_example_name is not None: 
+                    test_name += f"_{maybe_example_name.snake_case.safe_name}"
+                elif example_count > 0: 
+                    if example.get_as_union().example_type == "generated": 
+                        if not seen_generated: 
+                            test_name += f"_generated"
+                        else:  
+                            test_name += f"_generated_{example_count}"
+                    else: 
+                        test_name += f"_{example_count}"
 
-            example = successful_examples[0]
-            _path_parameter_names = dict()
-            for path_parameter in endpoint.all_path_parameters:
-                _path_parameter_names[path_parameter.name] = path_parameter.name.snake_case.safe_name
-            endpoint_snippet = self._function_generator(
-                snippet_writer=snippet_writer,
-                service=service,
-                endpoint=endpoint,
-            )._generate_endpoint_snippet_raw(example=example)
+                _path_parameter_names = dict()
+                for path_parameter in endpoint.all_path_parameters:
+                    _path_parameter_names[path_parameter.name] = path_parameter.name.snake_case.safe_name
+                endpoint_snippet = self._function_generator(
+                    snippet_writer=snippet_writer,
+                    service=service,
+                    endpoint=endpoint,
+                )._generate_endpoint_snippet_raw(example=example)
 
-            sync_snippet = self._client_snippet(False, package_path, endpoint_snippet)
-            async_snippet = self._client_snippet(True, package_path, endpoint_snippet)
+                sync_snippet = self._client_snippet(False, package_path, endpoint_snippet)
+                async_snippet = self._client_snippet(True, package_path, endpoint_snippet)
 
-            if async_snippet is None and sync_snippet is None:
-                continue
+                if async_snippet is None and sync_snippet is None:
+                    continue
 
-            response = ir_types.ExampleResponse.visit(
-                example.get_as_union().response,
-                ok=lambda _: example.get_as_union().response,
-                error=lambda _: None,
-            )
-            # Add functions to a test function
-            function_declaration = AST.FunctionDeclaration(
-                name=f"test_{endpoint_name}",
-                # All tests will have the sync and async instantiation within them
-                is_async=True,
-                signature=AST.FunctionSignature(
-                    # Adds in the parameters for the pytest fixtures to be injected in
-                    parameters=[
-                        AST.FunctionParameter(
-                            name=self.SYNC_CLIENT_FIXTURE_NAME,
-                            type_hint=AST.TypeHint(self._generated_root_client.sync_client.class_reference),
-                        ),
-                        AST.FunctionParameter(
-                            name=self.ASYNC_CLIENT_FIXTURE_NAME,
-                            type_hint=AST.TypeHint(self._generated_root_client.async_client.class_reference),
-                        ),
-                    ],
-                    named_parameters=[],
-                    return_type=AST.TypeHint.none(),
-                ),
-                body=self._test_body(sync_snippet, async_snippet, response),
-            )
+                response = ir_types.ExampleResponse.visit(
+                    example.get_as_union().response,
+                    ok=lambda _: example.get_as_union().response,
+                    error=lambda _: None,
+                )
+                # Add functions to a test function
+                function_declaration = AST.FunctionDeclaration(
+                    name=f"test_{test_name}",
+                    # All tests will have the sync and async instantiation within them
+                    is_async=True,
+                    signature=AST.FunctionSignature(
+                        # Adds in the parameters for the pytest fixtures to be injected in
+                        parameters=[
+                            AST.FunctionParameter(
+                                name=self.SYNC_CLIENT_FIXTURE_NAME,
+                                type_hint=AST.TypeHint(self._generated_root_client.sync_client.class_reference),
+                            ),
+                            AST.FunctionParameter(
+                                name=self.ASYNC_CLIENT_FIXTURE_NAME,
+                                type_hint=AST.TypeHint(self._generated_root_client.async_client.class_reference),
+                            ),
+                        ],
+                        named_parameters=[],
+                        return_type=AST.TypeHint.none(),
+                    ),
+                    body=self._test_body(sync_snippet, async_snippet, response),
+                )
 
-            # At least one endpoint has a snippet, now make the file
-            source_file = source_file or SourceFileFactory.create(
-                project=self._project,
-                filepath=filepath,
-                generator_exec_wrapper=self._generator_exec_wrapper,
-                from_src=False,
-            )
-            # Add function to file
-            source_file.add_expression(AST.Expression(function_declaration))
+                # At least one endpoint has a snippet, now make the file
+                source_file = source_file or SourceFileFactory.create(
+                    project=self._project,
+                    filepath=filepath,
+                    generator_exec_wrapper=self._generator_exec_wrapper,
+                    from_src=False,
+                )
+                # Add function to file
+                source_file.add_expression(AST.Expression(function_declaration))
+
+                example_count += 1
 
         if source_file:
             self._service_test_files[filepath] = source_file

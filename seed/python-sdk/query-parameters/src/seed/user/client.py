@@ -22,46 +22,46 @@ class UserClient:
     def get_username(
         self,
         *,
-        limit: int,
-        id: uuid.UUID,
-        date: dt.date,
-        deadline: dt.datetime,
-        bytes: str,
-        user: User,
-        key_value: typing.Dict[str, str],
-        nested_user: NestedUser,
-        exclude_user: typing.Union[User, typing.Sequence[User]],
-        filter: typing.Union[str, typing.Sequence[str]],
+        limit: typing.Optional[int] = None,
+        id: typing.Optional[uuid.UUID] = None,
+        date: typing.Optional[dt.date] = None,
+        deadline: typing.Optional[dt.datetime] = None,
+        bytes: typing.Optional[str] = None,
+        user: typing.Optional[User] = None,
+        key_value: typing.Optional[typing.Dict[str, str]] = None,
         optional_string: typing.Optional[str] = None,
+        nested_user: typing.Optional[NestedUser] = None,
         optional_user: typing.Optional[User] = None,
+        exclude_user: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
+        filter: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None
     ) -> User:
         """
         Parameters
         ----------
-        limit : int
+        limit : typing.Optional[int]
 
-        id : uuid.UUID
+        id : typing.Optional[uuid.UUID]
 
-        date : dt.date
+        date : typing.Optional[dt.date]
 
-        deadline : dt.datetime
+        deadline : typing.Optional[dt.datetime]
 
-        bytes : str
+        bytes : typing.Optional[str]
 
-        user : User
+        user : typing.Optional[User]
 
-        key_value : typing.Dict[str, str]
-
-        nested_user : NestedUser
-
-        exclude_user : typing.Union[User, typing.Sequence[User]]
-
-        filter : typing.Union[str, typing.Sequence[str]]
+        key_value : typing.Optional[typing.Dict[str, str]]
 
         optional_string : typing.Optional[str]
 
+        nested_user : typing.Optional[NestedUser]
+
         optional_user : typing.Optional[User]
+
+        exclude_user : typing.Optional[typing.Union[User, typing.Sequence[User]]]
+
+        filter : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -92,8 +92,8 @@ class UserClient:
             params={
                 "limit": limit,
                 "id": jsonable_encoder(id),
-                "date": str(date),
-                "deadline": serialize_datetime(deadline),
+                "date": str(date) if date is not None else None,
+                "deadline": serialize_datetime(deadline) if deadline is not None else None,
                 "bytes": jsonable_encoder(bytes),
                 "user": jsonable_encoder(user),
                 "keyValue": jsonable_encoder(key_value),
@@ -121,46 +121,46 @@ class AsyncUserClient:
     async def get_username(
         self,
         *,
-        limit: int,
-        id: uuid.UUID,
-        date: dt.date,
-        deadline: dt.datetime,
-        bytes: str,
-        user: User,
-        key_value: typing.Dict[str, str],
-        nested_user: NestedUser,
-        exclude_user: typing.Union[User, typing.Sequence[User]],
-        filter: typing.Union[str, typing.Sequence[str]],
+        limit: typing.Optional[int] = None,
+        id: typing.Optional[uuid.UUID] = None,
+        date: typing.Optional[dt.date] = None,
+        deadline: typing.Optional[dt.datetime] = None,
+        bytes: typing.Optional[str] = None,
+        user: typing.Optional[User] = None,
+        key_value: typing.Optional[typing.Dict[str, str]] = None,
         optional_string: typing.Optional[str] = None,
+        nested_user: typing.Optional[NestedUser] = None,
         optional_user: typing.Optional[User] = None,
+        exclude_user: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
+        filter: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None
     ) -> User:
         """
         Parameters
         ----------
-        limit : int
+        limit : typing.Optional[int]
 
-        id : uuid.UUID
+        id : typing.Optional[uuid.UUID]
 
-        date : dt.date
+        date : typing.Optional[dt.date]
 
-        deadline : dt.datetime
+        deadline : typing.Optional[dt.datetime]
 
-        bytes : str
+        bytes : typing.Optional[str]
 
-        user : User
+        user : typing.Optional[User]
 
-        key_value : typing.Dict[str, str]
-
-        nested_user : NestedUser
-
-        exclude_user : typing.Union[User, typing.Sequence[User]]
-
-        filter : typing.Union[str, typing.Sequence[str]]
+        key_value : typing.Optional[typing.Dict[str, str]]
 
         optional_string : typing.Optional[str]
 
+        nested_user : typing.Optional[NestedUser]
+
         optional_user : typing.Optional[User]
+
+        exclude_user : typing.Optional[typing.Union[User, typing.Sequence[User]]]
+
+        filter : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -191,8 +191,8 @@ class AsyncUserClient:
             params={
                 "limit": limit,
                 "id": jsonable_encoder(id),
-                "date": str(date),
-                "deadline": serialize_datetime(deadline),
+                "date": str(date) if date is not None else None,
+                "deadline": serialize_datetime(deadline) if deadline is not None else None,
                 "bytes": jsonable_encoder(bytes),
                 "user": jsonable_encoder(user),
                 "keyValue": jsonable_encoder(key_value),

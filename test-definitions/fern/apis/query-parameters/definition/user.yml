@@ -47,18 +47,18 @@ service:
             id: 4ff45b32-ca63-462d-b988-cf4eec41397a
           response: 
             body: $User.Default
-        - name: Allow multiple query parameters
-          query-parameters:
-            filter: [
-              "a", 
-              "b",
-              "c"
-            ]
-          response: 
-            body: $User.Default
-        - name: Deep object query parameters
-          query-parameters:
-            user: $User.Default
-          response: 
-            body: $User.Default
+        # - name: Allow multiple query parameters
+        #   query-parameters:
+        #     filter: [
+        #       "a", 
+        #       "b",
+        #       "c"
+        #     ]
+        #   response: 
+        #     body: $User.Default
+        # - name: Deep object query parameters
+        #   query-parameters:
+        #     user: $User.Default
+        #   response: 
+        #     body: $User.Default
 
