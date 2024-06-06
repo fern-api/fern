@@ -25,7 +25,7 @@ fixtures:
     - customConfig:
         pydantic_config:
           extra_fields: allow
-      outputFolder: no-custom-config
+      outputFolder: includes-extra-fields
 allowedFailures: 
   - bytes
   - file-download
