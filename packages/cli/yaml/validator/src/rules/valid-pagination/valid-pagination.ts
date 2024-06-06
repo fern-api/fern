@@ -15,7 +15,7 @@ export const ValidPaginationRule: Rule = {
 
         return {
             definitionFile: {
-                httpEndpoint: ({ endpointId, endpoint }, { relativeFilepath, contents: definitionFile }) => {
+                httpEndpoint: async ({ endpointId, endpoint }, { relativeFilepath, contents: definitionFile }) => {
                     const endpointPagination =
                         typeof endpoint.pagination === "boolean" ? defaultPagination : endpoint.pagination;
                     if (!endpointPagination) {
@@ -30,7 +30,7 @@ export const ValidPaginationRule: Rule = {
                     });
 
                     if (isRawCursorPaginationSchema(endpointPagination)) {
-                        return validateCursorPagination({
+                        return await validateCursorPagination({
                             endpointId,
                             endpoint,
                             typeResolver,
@@ -38,7 +38,7 @@ export const ValidPaginationRule: Rule = {
                             cursorPagination: endpointPagination
                         });
                     }
-                    return validateOffsetPagination({
+                    return await validateOffsetPagination({
                         endpointId,
                         endpoint,
                         typeResolver,

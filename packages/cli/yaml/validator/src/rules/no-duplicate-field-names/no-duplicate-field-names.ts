@@ -9,7 +9,7 @@ import {
 } from "@fern-api/ir-generator";
 import { getDefinitionFile } from "@fern-api/workspace-loader";
 import { isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
-import { groupBy, noop } from "lodash-es";
+import { groupBy } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import { getTypeDeclarationNameAsString } from "../../utils/getTypeDeclarationNameAsString";
@@ -21,13 +21,13 @@ export const NoDuplicateFieldNamesRule: Rule = {
 
         return {
             definitionFile: {
-                typeDeclaration: ({ typeName, declaration }, { relativeFilepath, contents }) => {
+                typeDeclaration: async ({ typeName, declaration }, { relativeFilepath, contents }) => {
                     const violations: RuleViolation[] = [];
 
-                    visitRawTypeDeclaration(declaration, {
-                        alias: noop,
+                    await visitRawTypeDeclaration<Promise<void>>(declaration, {
+                        alias: async () => Promise.resolve(),
 
-                        enum: (enumDeclaration) => {
+                        enum: async (enumDeclaration) => {
                             const duplicateNames = getDuplicateNames(
                                 enumDeclaration.enum,
                                 (value) => getEnumName(value).name
@@ -72,7 +72,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                             }
                         },
 
-                        undiscriminatedUnion: () => [],
+                        undiscriminatedUnion: async () => Promise.resolve(),
 
                         discriminatedUnion: async (unionDeclaration) => {
                             const duplicateNames = getDuplicateNames(
