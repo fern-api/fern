@@ -15,3 +15,13 @@ async def test_echo(client: SeedExamples, async_client: AsyncSeedExamples) -> No
 
     async_response = await async_client.echo(request="Hello world!\\n\\nwith\\n\\tnewlines")
     validate_response(async_response, expected_response, expected_types)
+
+
+async def test_echo_generated(client: SeedExamples, async_client: AsyncSeedExamples) -> None:
+    expected_response = "Hello world!\\n\\nwith\\n\\tnewlines"
+    expected_types: typing.Any = None
+    response = client.echo(request="Hello world!\\n\\nwith\\n\\tnewlines")
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.echo(request="Hello world!\\n\\nwith\\n\\tnewlines")
+    validate_response(async_response, expected_response, expected_types)

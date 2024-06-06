@@ -23,8 +23,28 @@ async def test_get_resource(client: SeedMixedCase, async_client: AsyncSeedMixedC
     validate_response(async_response, expected_response, expected_types)
 
 
+<<<<<<< HEAD
 async def test_list_resources(client: SeedMixedCase, async_client: AsyncSeedMixedCase) -> None:
     expected_response: typing.Any = [
+=======
+async def test_get_resource_generated(client: SeedMixedCase, async_client: AsyncSeedMixedCase) -> None:
+    expected_response = {
+        "resource_type": "user",
+        "userName": "username",
+        "metadata_tags": ["tag1", "tag2"],
+        "EXTRA_PROPERTIES": {"foo": "bar", "baz": "qux"},
+    }
+    expected_types: typing.Any = "no_validate"
+    response = client.service.get_resource(resource_id="string")
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.service.get_resource(resource_id="string")
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_list_resources_one(client: SeedMixedCase, async_client: AsyncSeedMixedCase) -> None:
+    expected_response = [
+>>>>>>> ef007bafd5 (regen python sdk)
         {
             "resource_type": "user",
             "userName": "username",
@@ -38,5 +58,24 @@ async def test_list_resources(client: SeedMixedCase, async_client: AsyncSeedMixe
 
     async_response = await async_client.service.list_resources(
         page_limit=10, before_date=datetime.date.fromisoformat("2023-01-01")
+    )
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_list_resources_generated(client: SeedMixedCase, async_client: AsyncSeedMixedCase) -> None:
+    expected_response = [
+        {
+            "resource_type": "user",
+            "userName": "username",
+            "metadata_tags": ["tag1", "tag2"],
+            "EXTRA_PROPERTIES": {"foo": "bar", "baz": "qux"},
+        }
+    ]
+    expected_types: typing.Any = ("list", {0: "no_validate"})
+    response = client.service.list_resources(page_limit=1, before_date=datetime.date.fromisoformat("2023-01-15"))
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.service.list_resources(
+        page_limit=1, before_date=datetime.date.fromisoformat("2023-01-15")
     )
     validate_response(async_response, expected_response, expected_types)

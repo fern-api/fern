@@ -451,22 +451,22 @@ class SnippetTestFactory:
             )
             if len(successful_examples) == 0:
                 continue
-            
+
             example_count = 0
             seen_generated = False
             for example in successful_examples:
-                test_name = endpoint_name # Start with endpoint name
-                
+                test_name = endpoint_name  # Start with endpoint name
+
                 maybe_example_name = example.get_as_union().name
-                if maybe_example_name is not None: 
+                if maybe_example_name is not None:
                     test_name += f"_{maybe_example_name.snake_case.safe_name}"
-                elif example_count > 0: 
-                    if example.get_as_union().example_type == "generated": 
-                        if not seen_generated: 
+                elif example_count > 0:
+                    if example.get_as_union().example_type == "generated":
+                        if not seen_generated:
                             test_name += f"_generated"
-                        else:  
+                        else:
                             test_name += f"_generated_{example_count}"
-                    else: 
+                    else:
                         test_name += f"_{example_count}"
 
                 _path_parameter_names = dict()

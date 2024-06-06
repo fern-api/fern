@@ -19,3 +19,17 @@ async def test_send(client: SeedLiteral, async_client: AsyncSeedLiteral) -> None
         prompt="You are a helpful assistant", stream=False, query="What is the weather today"
     )
     validate_response(async_response, expected_response, expected_types)
+
+
+async def test_send_generated(client: SeedLiteral, async_client: AsyncSeedLiteral) -> None:
+    expected_response = {"message": "The weather is sunny", "status": 200, "success": True}
+    expected_types: typing.Any = {"message": None, "status": "integer", "success": None}
+    response = client.reference.send(
+        prompt="You are a helpful assistant", stream=False, query="What is the weather today"
+    )
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.reference.send(
+        prompt="You are a helpful assistant", stream=False, query="What is the weather today"
+    )
+    validate_response(async_response, expected_response, expected_types)
