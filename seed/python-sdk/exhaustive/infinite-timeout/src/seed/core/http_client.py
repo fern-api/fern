@@ -178,16 +178,18 @@ class HttpClient:
             ),
             params=encode_query(
                 jsonable_encoder(
-                    remove_omit_from_dict(
-                        {
-                            **(params if params is not None else {}),
-                            **(
-                                request_options.get("additional_query_parameters", {})
-                                if request_options is not None
-                                else {}
-                            ),
-                        },
-                        omit,
+                    remove_none_from_dict(
+                        remove_omit_from_dict(
+                            {
+                                **(params if params is not None else {}),
+                                **(
+                                    request_options.get("additional_query_parameters", {})
+                                    if request_options is not None
+                                    else {}
+                                ),
+                            },
+                            omit,
+                        )
                     )
                 )
             ),
@@ -256,16 +258,18 @@ class HttpClient:
             ),
             params=encode_query(
                 jsonable_encoder(
-                    remove_omit_from_dict(
-                        {
-                            **(params if params is not None else {}),
-                            **(
-                                request_options.get("additional_query_parameters", {})
-                                if request_options is not None
-                                else {}
-                            ),
-                        },
-                        omit,
+                    remove_none_from_dict(
+                        remove_omit_from_dict(
+                            {
+                                **(params if params is not None else {}),
+                                **(
+                                    request_options.get("additional_query_parameters", {})
+                                    if request_options is not None
+                                    else {}
+                                ),
+                            },
+                            omit,
+                        )
                     )
                 )
             ),
@@ -336,16 +340,18 @@ class AsyncHttpClient:
             ),
             params=encode_query(
                 jsonable_encoder(
-                    remove_omit_from_dict(
-                        {
-                            **(params if params is not None else {}),
-                            **(
-                                request_options.get("additional_query_parameters", {})
-                                if request_options is not None
-                                else {}
-                            ),
-                        },
-                        omit,
+                    remove_none_from_dict(
+                        remove_omit_from_dict(
+                            {
+                                **(params if params is not None else {}),
+                                **(
+                                    request_options.get("additional_query_parameters", {})
+                                    if request_options is not None
+                                    else {}
+                                ),
+                            },
+                            omit,
+                        )
                     )
                 )
             ),
@@ -413,16 +419,18 @@ class AsyncHttpClient:
             ),
             params=encode_query(
                 jsonable_encoder(
-                    remove_omit_from_dict(
-                        {
-                            **(params if params is not None else {}),
-                            **(
-                                request_options.get("additional_query_parameters", {})
-                                if request_options is not None
-                                else {}
-                            ),
-                        },
-                        omit=omit,
+                    remove_none_from_dict(
+                        remove_omit_from_dict(
+                            {
+                                **(params if params is not None else {}),
+                                **(
+                                    request_options.get("additional_query_parameters", {})
+                                    if request_options is not None
+                                    else {}
+                                ),
+                            },
+                            omit=omit,
+                        )
                     )
                 )
             ),

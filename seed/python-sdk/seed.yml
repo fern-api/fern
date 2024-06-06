@@ -111,7 +111,9 @@ scripts:
       - export NPM_CONFIG_CACHE="$(pwd)/.cache"
       - export HOME="$(pwd)/"
       - poetry config virtualenvs.path .
-      - poetry install && fern test --command "poetry run pytest -rP ."
+      - poetry install
+      - poetry run mypy .
+      - fern test --command "poetry run pytest -rP ."
 allowedFailures: 
   # This is the only one that should always fail
   - exhaustive:additional_init_exports

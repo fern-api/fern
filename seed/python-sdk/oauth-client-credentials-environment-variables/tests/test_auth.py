@@ -14,7 +14,7 @@ async def test_get_token_with_client_credentials(
     client: SeedOauthClientCredentialsEnvironmentVariables,
     async_client: AsyncSeedOauthClientCredentialsEnvironmentVariables,
 ) -> None:
-    expected_response = {"access_token": "string", "expires_in": 1, "refresh_token": "string"}
+    expected_response: typing.Any = {"access_token": "string", "expires_in": 1, "refresh_token": "string"}
     expected_types: typing.Any = {"access_token": None, "expires_in": "integer", "refresh_token": None}
     response = client.auth.get_token_with_client_credentials(client_id="string", client_secret="string", scope="string")
     validate_response(response, expected_response, expected_types)
@@ -29,7 +29,7 @@ async def test_refresh_token(
     client: SeedOauthClientCredentialsEnvironmentVariables,
     async_client: AsyncSeedOauthClientCredentialsEnvironmentVariables,
 ) -> None:
-    expected_response = {"access_token": "string", "expires_in": 1, "refresh_token": "string"}
+    expected_response: typing.Any = {"access_token": "string", "expires_in": 1, "refresh_token": "string"}
     expected_types: typing.Any = {"access_token": None, "expires_in": "integer", "refresh_token": None}
     response = client.auth.refresh_token(
         client_id="string", client_secret="string", refresh_token="string", scope="string"

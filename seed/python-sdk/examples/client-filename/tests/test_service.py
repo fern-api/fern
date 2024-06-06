@@ -8,7 +8,7 @@ from .utilities import validate_response
 
 
 async def test_get_movie(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "id": "movie-c06a4ad7",
         "prequel": "movie-cv9b914f",
         "title": "The Boy and the Heron",
@@ -40,7 +40,7 @@ async def test_get_movie(client: SeedExhaustive, async_client: AsyncSeedExhausti
 
 
 async def test_create_movie(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
-    expected_response = "movie-c06a4ad7"
+    expected_response: typing.Any = "movie-c06a4ad7"
     expected_types: typing.Any = None
     response = client.service.create_movie(
         id="movie-c06a4ad7",
@@ -76,7 +76,7 @@ async def test_create_movie(client: SeedExhaustive, async_client: AsyncSeedExhau
 
 
 async def test_get_metadata(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "type": "html",
         "extra": {"version": "0.0.1", "tenancy": "test"},
         "tags": ["development", "public"],
@@ -91,7 +91,7 @@ async def test_get_metadata(client: SeedExhaustive, async_client: AsyncSeedExhau
 
 
 async def test_get_response(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "response": "Initializing...",
         "identifiers": [
             {"type": "primitive", "value": "example", "label": "Primitive"},
