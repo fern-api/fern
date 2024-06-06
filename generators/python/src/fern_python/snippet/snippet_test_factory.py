@@ -326,7 +326,11 @@ class SnippetTestFactory:
         def writer(writer: AST.NodeWriter) -> None:
             if response_json is not None:
                 maybe_stringify_response_json = repr(response_json) if type(response_json) is str else response_json
-                writer.write_line(f"{expectation_name} = {maybe_stringify_response_json}")
+
+                writer.write(f"{expectation_name}: ")
+                writer.write_node(AST.Expression(AST.TypeHint.any()))
+                writer.write_line(f" = {maybe_stringify_response_json}")
+
                 expectations = (
                     self._generate_type_expectations_for_type_reference(response_body)
                     if response_body is not None

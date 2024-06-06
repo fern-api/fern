@@ -9,7 +9,7 @@ from .utilities import validate_response
 
 
 async def test_get(client: SeedUnions, async_client: AsyncSeedUnions) -> None:
-    expected_response = {"type": "circle", "id": "string", "radius": 1.1}
+    expected_response: typing.Any = {"type": "circle", "id": "string", "radius": 1.1}
     expected_types: typing.Any = "no_validate"
     response = client.union.get(id="string")
     validate_response(response, expected_response, expected_types)
@@ -19,7 +19,7 @@ async def test_get(client: SeedUnions, async_client: AsyncSeedUnions) -> None:
 
 
 async def test_update(client: SeedUnions, async_client: AsyncSeedUnions) -> None:
-    expected_response = True
+    expected_response: typing.Any = True
     expected_types: typing.Any = None
     response = client.union.update(request=Shape_Circle(id="string", radius=1.1))
     validate_response(response, expected_response, expected_types)

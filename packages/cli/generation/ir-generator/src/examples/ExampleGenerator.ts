@@ -101,9 +101,10 @@ export class ExampleGenerator {
 
     private getFlattenedProperties(typeId: TypeId): ExampleObjectProperty[] {
         const td = this.types.get(typeId);
-        return td === undefined
-            ? []
-            : this.flattenedProperties.get(typeId) ??
+        const foundTd =
+            td === undefined
+                ? []
+                : this.flattenedProperties.get(typeId) ??
                   td.shape._visit<ExampleObjectProperty[]>({
                       alias: (atd: AliasTypeDeclaration) => {
                           return atd.aliasOf._visit<ExampleObjectProperty[]>({
@@ -142,6 +143,8 @@ export class ExampleGenerator {
                           throw new Error("Attempting to type declaration for an unknown type.");
                       }
                   });
+
+        return foundTd;
     }
 
     public enrichWithExamples(): Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> {
@@ -509,6 +512,7 @@ export class ExampleGenerator {
 
         const jsonExample: Record<string, unknown> = {};
         exampleProperties?.forEach((prop) => (jsonExample[prop.name.wireValue] = prop.value.jsonExample));
+
         return (
             providedExample ??
             this.newNamelessExampleType({
@@ -726,14 +730,14 @@ export class ExampleGenerator {
         switch (literal.type) {
             case "boolean":
                 return {
-                    jsonExample: `${literal.boolean}`,
+                    jsonExample: literal.boolean,
                     shape: ExampleTypeReferenceShape.container(
                         ExampleContainer.literal(ExamplePrimitive.boolean(literal.boolean))
                     )
                 };
             case "string":
                 return {
-                    jsonExample: `${literal.string}`,
+                    jsonExample: literal.string,
                     shape: ExampleTypeReferenceShape.container(
                         ExampleContainer.literal(ExamplePrimitive.string({ original: literal.string }))
                     )

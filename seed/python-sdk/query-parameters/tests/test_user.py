@@ -11,7 +11,7 @@ from .utilities import validate_response
 
 
 async def test_get_username(client: SeedQueryParameters, async_client: AsyncSeedQueryParameters) -> None:
-    expected_response = {"name": "string", "tags": ["string"]}
+    expected_response: typing.Any = {"name": "string", "tags": ["string"]}
     expected_types: typing.Any = {"name": None, "tags": ("list", {0: None})}
     response = client.user.get_username(
         limit=1,
