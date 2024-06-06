@@ -7,11 +7,9 @@ defaultOutputMode: github
 local:
   workingDirectory: generators/python
   buildCommand:
-    - echo "STARTING UP"
-    - cat pyproject.toml
-    - ls
-    - cp -R ./core_utilities/sdk ./assets/core_utilities/
+    - export PYTEST_CURRENT_TEST="some value"
     - pip install poetry
+    - poetry env list
     - poetry env remove python
     - poetry config virtualenvs.in-project true
     - poetry shell
