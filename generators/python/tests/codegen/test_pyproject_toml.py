@@ -61,7 +61,7 @@ python = "^3.8"
 pydantic = "^1.10.2"
 
 [tool.poetry.dev-dependencies]
-mypy = "1.9.0"
+mypy = "1.0.1"
 pytest = "^7.4.0"
 pytest-asyncio = "^0.23.5"
 python-dateutil = "^2.9.0"

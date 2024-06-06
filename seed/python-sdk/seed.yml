@@ -4,20 +4,20 @@ dockerCommand: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fer
 language: python
 generatorType: sdk
 defaultOutputMode: github
-# local:
-#   workingDirectory: generators/python
-#   buildCommand:
-#     - echo "STARTING UP"
-#     - cat pyproject.toml
-#     - ls
-#     - cp -r ./core_utilities/sdk ./assets/core_utilities
-#     - pip install poetry
-#     - poetry env remove python
-#     - poetry config virtualenvs.in-project true
-#     - poetry shell
-#     - poetry install
-#   runCommand: poetry run python -m src.fern_python.generators.sdk.cli
-#   env: {}
+local:
+  workingDirectory: generators/python
+  buildCommand:
+    - echo "STARTING UP"
+    - cat pyproject.toml
+    - ls
+    - cp -R ./core_utilities/sdk ./assets/core_utilities/
+    - pip install poetry
+    - poetry env remove python
+    - poetry config virtualenvs.in-project true
+    - poetry shell
+    - poetry install
+  runCommand: poetry run python -m src.fern_python.generators.sdk.cli
+  env: {}
 fixtures:
   examples: 
     - customConfig: null
