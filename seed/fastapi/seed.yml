@@ -19,6 +19,13 @@ fixtures:
         pydantic_config: 
           version: v2
       outputFolder: pydantic-v2
+  imdb:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        pydantic_config:
+          extra_fields: allow
+      outputFolder: no-custom-config
 allowedFailures: 
   - bytes
   - file-download
