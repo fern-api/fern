@@ -30,16 +30,16 @@ export async function validateRefreshTokenEndpoint({
     const maybeRefreshToken = refreshEndpoint["request-properties"]?.["refresh-token"];
     if (maybeRefreshToken != null) {
         violations.push(
-            ...validateRefreshTokenRequestProperty({
+            ...(await validateRefreshTokenRequestProperty({
                 endpointId,
                 endpoint,
                 typeResolver,
                 file,
                 refreshTokenProperty: maybeRefreshToken
-            })
+            }))
         );
     } else {
-        const refreshTokenViolations = validateRefreshTokenRequestProperty({
+        const refreshTokenViolations = await validateRefreshTokenRequestProperty({
             endpointId,
             endpoint,
             typeResolver,
@@ -68,16 +68,16 @@ export async function validateRefreshTokenEndpoint({
     const maybeAccessToken = refreshEndpoint["response-properties"]?.["access-token"];
     if (maybeAccessToken != null) {
         violations.push(
-            ...validateAccessTokenResponseProperty({
+            ...(await validateAccessTokenResponseProperty({
                 endpointId,
                 typeResolver,
                 file,
                 resolvedResponseType,
                 accessTokenProperty: maybeAccessToken
-            })
+            }))
         );
     } else {
-        const accessTokenViolations = validateAccessTokenResponseProperty({
+        const accessTokenViolations = await validateAccessTokenResponseProperty({
             endpointId,
             typeResolver,
             file,
@@ -97,26 +97,26 @@ export async function validateRefreshTokenEndpoint({
     const expiresInProperty = refreshEndpoint?.["response-properties"]?.["expires-in"];
     if (expiresInProperty != null) {
         violations.push(
-            ...validateExpiresInResponseProperty({
+            ...(await validateExpiresInResponseProperty({
                 endpointId,
                 typeResolver,
                 file: maybeFileFromResolvedType(resolvedResponseType) ?? file,
                 resolvedResponseType,
                 expiresInProperty
-            })
+            }))
         );
     }
 
     const refreshTokenProperty = refreshEndpoint?.["response-properties"]?.["refresh-token"];
     if (refreshTokenProperty != null) {
         violations.push(
-            ...validateRefreshTokenResponseProperty({
+            ...(await validateRefreshTokenResponseProperty({
                 endpointId,
                 typeResolver,
                 file: maybeFileFromResolvedType(resolvedResponseType) ?? file,
                 resolvedResponseType,
                 refreshTokenProperty
-            })
+            }))
         );
     }
 

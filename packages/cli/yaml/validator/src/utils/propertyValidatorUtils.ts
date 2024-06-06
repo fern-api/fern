@@ -45,7 +45,7 @@ export async function requestTypeHasProperty({
         return false;
     }
     if (typeof endpoint.request === "string") {
-        return resolvedTypeHasProperty({
+        return await resolvedTypeHasProperty({
             typeResolver,
             file,
             resolvedType: await typeResolver.resolveType({
@@ -56,7 +56,7 @@ export async function requestTypeHasProperty({
             validate
         });
     }
-    return inlinedRequestTypeHasProperty({
+    return await inlinedRequestTypeHasProperty({
         typeResolver,
         file,
         requestType: endpoint.request,
@@ -93,7 +93,7 @@ async function inlinedRequestTypeHasProperty({
         return false;
     }
     if (typeof requestType.body === "string") {
-        return resolvedTypeHasProperty({
+        return await resolvedTypeHasProperty({
             typeResolver,
             file,
             resolvedType: await typeResolver.resolveType({
@@ -105,7 +105,7 @@ async function inlinedRequestTypeHasProperty({
         });
     }
     if (isInlineRequestBody(requestType.body)) {
-        return objectSchemaHasProperty({
+        return await objectSchemaHasProperty({
             typeResolver,
             file,
             objectSchema: requestType.body,
@@ -113,7 +113,7 @@ async function inlinedRequestTypeHasProperty({
             validate
         });
     }
-    return resolvedTypeHasProperty({
+    return await resolvedTypeHasProperty({
         typeResolver,
         file,
         resolvedType: await typeResolver.resolveType({

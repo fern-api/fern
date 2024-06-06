@@ -19,7 +19,7 @@ export const DEFAULT_CLIENT_SECRET = `${REQUEST_PREFIX}client_secret`;
 export const DEFAULT_ACCESS_TOKEN = `${RESPONSE_PREFIX}access_token`;
 export const DEFAULT_REFRESH_TOKEN = `${REQUEST_PREFIX}refresh_token`;
 
-export function validateClientIdRequestProperty({
+export async function validateClientIdRequestProperty({
     endpointId,
     endpoint,
     typeResolver,
@@ -31,8 +31,8 @@ export function validateClientIdRequestProperty({
     typeResolver: TypeResolver;
     file: FernFileContext;
     clientIdProperty: string;
-}): RuleViolation[] {
-    return validateRequestProperty({
+}): Promise<RuleViolation[]> {
+    return await validateRequestProperty({
         endpointId,
         endpoint,
         typeResolver,
@@ -45,7 +45,7 @@ export function validateClientIdRequestProperty({
     });
 }
 
-export function validateClientSecretRequestProperty({
+export async function validateClientSecretRequestProperty({
     endpointId,
     endpoint,
     typeResolver,
@@ -57,8 +57,8 @@ export function validateClientSecretRequestProperty({
     typeResolver: TypeResolver;
     file: FernFileContext;
     clientSecretProperty: string;
-}): RuleViolation[] {
-    return validateRequestProperty({
+}): Promise<RuleViolation[]> {
+    return await validateRequestProperty({
         endpointId,
         endpoint,
         typeResolver,
@@ -71,7 +71,7 @@ export function validateClientSecretRequestProperty({
     });
 }
 
-export function validateScopesRequestProperty({
+export async function validateScopesRequestProperty({
     endpointId,
     endpoint,
     typeResolver,
@@ -83,8 +83,8 @@ export function validateScopesRequestProperty({
     typeResolver: TypeResolver;
     file: FernFileContext;
     scopesProperty: string;
-}): RuleViolation[] {
-    return validateRequestProperty({
+}): Promise<RuleViolation[]> {
+    return await validateRequestProperty({
         endpointId,
         endpoint,
         typeResolver,
@@ -97,7 +97,7 @@ export function validateScopesRequestProperty({
     });
 }
 
-export function validateRefreshTokenRequestProperty({
+export async function validateRefreshTokenRequestProperty({
     endpointId,
     endpoint,
     typeResolver,
@@ -109,8 +109,8 @@ export function validateRefreshTokenRequestProperty({
     typeResolver: TypeResolver;
     file: FernFileContext;
     refreshTokenProperty: string;
-}): RuleViolation[] {
-    return validateRequestProperty({
+}): Promise<RuleViolation[]> {
+    return await validateRequestProperty({
         endpointId,
         endpoint,
         typeResolver,
@@ -123,7 +123,7 @@ export function validateRefreshTokenRequestProperty({
     });
 }
 
-export function validateAccessTokenResponseProperty({
+export async function validateAccessTokenResponseProperty({
     endpointId,
     typeResolver,
     file,
@@ -135,8 +135,8 @@ export function validateAccessTokenResponseProperty({
     file: FernFileContext;
     resolvedResponseType: ResolvedType;
     accessTokenProperty: string;
-}): RuleViolation[] {
-    return validateResponseProperty({
+}): Promise<RuleViolation[]> {
+    return await validateResponseProperty({
         endpointId,
         typeResolver,
         file,
@@ -149,7 +149,7 @@ export function validateAccessTokenResponseProperty({
     });
 }
 
-export function validateRefreshTokenResponseProperty({
+export async function validateRefreshTokenResponseProperty({
     endpointId,
     typeResolver,
     file,
@@ -161,8 +161,8 @@ export function validateRefreshTokenResponseProperty({
     file: FernFileContext;
     resolvedResponseType: ResolvedType;
     refreshTokenProperty: string;
-}): RuleViolation[] {
-    return validateResponseProperty({
+}): Promise<RuleViolation[]> {
+    return await validateResponseProperty({
         endpointId,
         typeResolver,
         file,
@@ -175,7 +175,7 @@ export function validateRefreshTokenResponseProperty({
     });
 }
 
-export function validateExpiresInResponseProperty({
+export async function validateExpiresInResponseProperty({
     endpointId,
     typeResolver,
     file,
@@ -187,8 +187,8 @@ export function validateExpiresInResponseProperty({
     file: FernFileContext;
     resolvedResponseType: ResolvedType;
     expiresInProperty: string;
-}): RuleViolation[] {
-    return validateResponseProperty({
+}): Promise<RuleViolation[]> {
+    return await validateResponseProperty({
         endpointId,
         typeResolver,
         file,
@@ -241,7 +241,7 @@ async function isValidTokenProperty({
     });
 }
 
-function validateRequestProperty({
+async function validateRequestProperty({
     endpointId,
     endpoint,
     typeResolver,
@@ -255,7 +255,7 @@ function validateRequestProperty({
     file: FernFileContext;
     requestProperty: string;
     propertyValidator: RequestPropertyValidator;
-}): RuleViolation[] {
+}): Promise<RuleViolation[]> {
     const violations: RuleViolation[] = [];
 
     const requestPropertyComponents = getRequestPropertyComponents(requestProperty);
@@ -281,13 +281,13 @@ function validateRequestProperty({
         return violations;
     }
     if (
-        !requestTypeHasProperty({
+        !(await requestTypeHasProperty({
             typeResolver,
             file,
             endpoint,
             propertyComponents: requestPropertyComponents,
             validate: propertyValidator.validate
-        })
+        }))
     ) {
         violations.push({
             severity: "error",
@@ -300,7 +300,7 @@ function validateRequestProperty({
     return violations;
 }
 
-function validateResponseProperty({
+async function validateResponseProperty({
     endpointId,
     typeResolver,
     file,
@@ -314,7 +314,7 @@ function validateResponseProperty({
     resolvedResponseType: ResolvedType;
     responseProperty: string;
     propertyValidator: ResponsePropertyValidator;
-}): RuleViolation[] {
+}): Promise<RuleViolation[]> {
     const violations: RuleViolation[] = [];
 
     const responsePropertyComponents = getResponsePropertyComponents(responseProperty);
@@ -329,12 +329,12 @@ function validateResponseProperty({
 
     if (
         responsePropertyComponents != null &&
-        !propertyValidator.validate({
+        !(await propertyValidator.validate({
             typeResolver,
             file,
             resolvedType: resolvedResponseType,
             propertyComponents: responsePropertyComponents
-        })
+        }))
     ) {
         violations.push({
             severity: "error",

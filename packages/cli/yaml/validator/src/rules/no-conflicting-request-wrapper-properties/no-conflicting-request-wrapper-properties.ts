@@ -113,7 +113,7 @@ async function getRequestWrapperPropertiesByName({
         const isBodyReferenced = endpoint.request.body != null && !isInlineRequestBody(endpoint.request.body);
         if (
             isBodyReferenced &&
-            doesRequestHaveNonBodyProperties({
+            (await doesRequestHaveNonBodyProperties({
                 request: endpoint.request,
                 file: constructFernFileContext({
                     relativeFilepath,
@@ -122,7 +122,7 @@ async function getRequestWrapperPropertiesByName({
                     rootApiFile: (await workspace.getDefinition()).rootApiFile.contents
                 }),
                 typeResolver: new TypeResolverImpl(workspace)
-            })
+            }))
         ) {
             addProperty(DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER, {
                 type: "referenced-body",
