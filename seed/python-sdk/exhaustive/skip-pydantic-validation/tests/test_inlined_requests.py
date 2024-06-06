@@ -11,7 +11,7 @@ from .utilities import validate_response
 
 
 async def test_post_with_object_bodyand_response(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
-    expected_response: typing.Any = {
+    expected_response = {
         "string": "string",
         "integer": 1,
         "long": 1000000,

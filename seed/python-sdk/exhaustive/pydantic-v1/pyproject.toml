@@ -37,7 +37,7 @@ pydantic = ">= 1.9.2,<= 1.10.14"
 typing_extensions = ">= 4.0.0"
 
 [tool.poetry.dev-dependencies]
-mypy = "1.0.1"
+mypy = "1.9.0"
 pytest = "^7.4.0"
 pytest-asyncio = "^0.23.5"
 python-dateutil = "^2.9.0"
