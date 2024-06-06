@@ -368,9 +368,6 @@ export async function generateIntermediateRepresentation({
         filteredIr
     );
 
-    // Now that the IR is filtered for audiences, we can resolve the README.md configuration.
-    // This ensures that the README.md configuration is only resolved for the audiences that are present in the IR.
-
     const isAuthMandatory =
         workspace.definition.rootApiFile.contents.auth != null &&
         Object.values(intermediateRepresentationForAudiences.services).every((service) => {
