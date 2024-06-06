@@ -7,7 +7,14 @@ defaultOutputMode: github
 # local:
 #   workingDirectory: generators/python
 #   buildCommand:
-#     - poetry config virtualenvs.create false 
+#     - echo "STARTING UP"
+#     - cat pyproject.toml
+#     - ls
+#     - cp -r ./core_utilities/sdk ./assets/core_utilities
+#     - pip install poetry
+#     - poetry env remove python
+#     - poetry config virtualenvs.in-project true
+#     - poetry shell
 #     - poetry install
 #   runCommand: poetry run python -m src.fern_python.generators.sdk.cli
 #   env: {}
