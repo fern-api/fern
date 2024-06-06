@@ -95,8 +95,8 @@ navigation:
     layout:
       - section: Introduction
         contents:
-          - page: Overview
-            path: ./pages/sdks/introduction/overview.mdx
+          - page: What is an SDK?
+            path: ./pages/sdks/introduction/what-is-an-sdk.mdx
       - section: Getting Started
         contents:
           - page: Generate your first SDK
