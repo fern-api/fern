@@ -16,9 +16,13 @@
 
 package com.fern.java.client.generators.endpoint;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fern.irV42.model.commons.ErrorId;
+import com.fern.irV42.model.commons.Name;
 import com.fern.irV42.model.commons.TypeId;
 import com.fern.irV42.model.environment.EnvironmentBaseUrlId;
+import com.fern.irV42.model.errors.ErrorDeclaration;
 import com.fern.irV42.model.http.BytesRequest;
 import com.fern.irV42.model.http.FileDownloadResponse;
 import com.fern.irV42.model.http.FileProperty;
@@ -62,6 +66,7 @@ import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass
 import com.fern.java.client.generators.endpoint.HttpUrlBuilder.PathParamInfo;
 import com.fern.java.client.generators.visitors.FilePropertyIsOptional;
 import com.fern.java.generators.object.EnrichedObjectProperty;
+import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.utils.JavaDocUtils;
 import com.squareup.javapoet.ClassName;
@@ -74,6 +79,7 @@ import com.squareup.javapoet.TypeName;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -102,6 +108,9 @@ public abstract class AbstractEndpointWriter {
     private final GeneratedObjectMapper generatedObjectMapper;
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
     private final Set<String> endpointParameterNames = new HashSet<>();
+    protected final ClassName baseErrorClassName;
+    protected final ClassName apiErrorClassName;
+    private final Map<ErrorId, GeneratedJavaFile> generatedErrors;
 
     public AbstractEndpointWriter(
             HttpService httpService,
@@ -110,7 +119,8 @@ public abstract class AbstractEndpointWriter {
             ClientGeneratorContext clientGeneratorContext,
             FieldSpec clientOptionsField,
             GeneratedClientOptions generatedClientOptions,
-            GeneratedEnvironmentsClass generatedEnvironmentsClass) {
+            GeneratedEnvironmentsClass generatedEnvironmentsClass,
+            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         this.httpService = httpService;
         this.httpEndpoint = httpEndpoint;
         this.clientOptionsField = clientOptionsField;
@@ -121,6 +131,17 @@ public abstract class AbstractEndpointWriter {
         this.endpointMethodBuilder = MethodSpec.methodBuilder(
                         httpEndpoint.getName().get().getCamelCase().getSafeName())
                 .addModifiers(Modifier.PUBLIC);
+        this.baseErrorClassName = clientGeneratorContext
+                .getPoetClassNameFactory()
+                .getBaseErrorClassName(
+                        clientGeneratorContext.getGeneratorConfig().getOrganization(),
+                        clientGeneratorContext.getGeneratorConfig().getWorkspaceName());
+        this.apiErrorClassName = clientGeneratorContext
+                .getPoetClassNameFactory()
+                .getApiErrorClassName(
+                        clientGeneratorContext.getGeneratorConfig().getOrganization(),
+                        clientGeneratorContext.getGeneratorConfig().getWorkspaceName());
+        this.generatedErrors = generatedErrors;
     }
 
     public static CodeBlock stringify(String reference, TypeName typeName) {
@@ -301,7 +322,6 @@ public abstract class AbstractEndpointWriter {
     public final CodeBlock getResponseParserCodeBlock() {
         String defaultedClientName = "client";
         CodeBlock.Builder httpResponseBuilder = CodeBlock.builder()
-                .beginControlFlow("try")
                 // Default the request client
                 .addStatement(
                         "$T $L = $N.$N()",
@@ -321,8 +341,8 @@ public abstract class AbstractEndpointWriter {
                         generatedClientOptions.httpClientWithTimeout(),
                         REQUEST_OPTIONS_PARAMETER_NAME)
                 .endControlFlow()
-                .addStatement(
-                        "$T $L = $N.newCall($L).execute()",
+                .beginControlFlow(
+                        "try ($T $L = $N.newCall($L).execute())",
                         Response.class,
                         getResponseName(),
                         defaultedClientName,
@@ -340,18 +360,78 @@ public abstract class AbstractEndpointWriter {
         }
         httpResponseBuilder.endControlFlow();
         httpResponseBuilder.addStatement(
-                "throw new $T($L.code(), $T.$L.readValue($L != null ? $L.string() : \"{}\", $T.class))",
-                clientGeneratorContext.getPoetClassNameFactory().getApiErrorClassName(),
+                "$T $L = $L != null ? $L.string() : $S",
+                String.class,
+                getResponseBodyStringName(),
+                getResponseBodyName(),
+                getResponseBodyName(),
+                "{}");
+
+        // map to status-specific errors
+        if (clientGeneratorContext.getIr().getErrorDiscriminationStrategy().isStatusCode()) {
+            List<ErrorDeclaration> errorDeclarations = httpEndpoint.getErrors().get().stream()
+                    .map(responseError -> clientGeneratorContext
+                            .getIr()
+                            .getErrors()
+                            .get(responseError.getError().getErrorId()))
+                    .sorted(Comparator.comparingInt(ErrorDeclaration::getStatusCode))
+                    .collect(Collectors.toList());
+            if (!errorDeclarations.isEmpty()) {
+                boolean multipleErrors = errorDeclarations.size() > 1;
+                httpResponseBuilder.beginControlFlow("try");
+                if (multipleErrors) {
+                    httpResponseBuilder.beginControlFlow("switch ($L.code())", getResponseName());
+                }
+                errorDeclarations.forEach(errorDeclaration -> {
+                    GeneratedJavaFile generatedError =
+                            generatedErrors.get(errorDeclaration.getName().getErrorId());
+                    ClassName errorClassName = generatedError.getClassName();
+                    Optional<TypeName> bodyTypeName = errorDeclaration
+                            .getType()
+                            .map(typeReference -> clientGeneratorContext
+                                    .getPoetTypeNameMapper()
+                                    .convertToTypeName(true, typeReference));
+                    if (multipleErrors) {
+                        httpResponseBuilder.add("case $L:", errorDeclaration.getStatusCode());
+                    } else {
+                        httpResponseBuilder.beginControlFlow(
+                                "if ($L.code() == $L)", getResponseName(), errorDeclaration.getStatusCode());
+                    }
+                    httpResponseBuilder.addStatement(
+                            "throw new $T($T.$L.readValue($L, $T.class))",
+                            errorClassName,
+                            generatedObjectMapper.getClassName(),
+                            generatedObjectMapper.jsonMapperStaticField().name,
+                            getResponseBodyStringName(),
+                            bodyTypeName.orElse(TypeName.get(Object.class)));
+                    if (!multipleErrors) {
+                        httpResponseBuilder.endControlFlow();
+                    }
+                });
+                if (multipleErrors) {
+                    httpResponseBuilder.endControlFlow();
+                }
+                httpResponseBuilder
+                        .endControlFlow()
+                        .beginControlFlow("catch ($T ignored)", JsonProcessingException.class)
+                        .add("// unable to map error response, throwing generic error\n")
+                        .endControlFlow();
+            }
+        }
+        httpResponseBuilder.addStatement(
+                "throw new $T($S + $L.code(), $L.code(), $T.$L.readValue($L, $T.class))",
+                apiErrorClassName,
+                "Error with status code ",
+                getResponseName(),
                 getResponseName(),
                 generatedObjectMapper.getClassName(),
                 generatedObjectMapper.jsonMapperStaticField().name,
-                getResponseBodyName(),
-                getResponseBodyName(),
+                getResponseBodyStringName(),
                 Object.class);
         httpResponseBuilder
                 .endControlFlow()
                 .beginControlFlow("catch ($T e)", IOException.class)
-                .addStatement("throw new $T(e)", RuntimeException.class)
+                .addStatement("throw new $T($S, e)", baseErrorClassName, "Network error executing HTTP request")
                 .endControlFlow()
                 .build();
         return httpResponseBuilder.build();
@@ -394,6 +474,14 @@ public abstract class AbstractEndpointWriter {
 
     private String getResponseBodyName() {
         return getVariableName("responseBody");
+    }
+
+    private String getParsedResponseVariableName() {
+        return getVariableName("parsedResponse");
+    }
+
+    private String getResponseBodyStringName() {
+        return getVariableName("responseBodyString");
     }
 
     protected final String getOkhttpRequestName() {
@@ -476,41 +564,75 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public Void visitJson(JsonResponse json) {
-            JsonResponseBody body = json.visit(new JsonResponse.Visitor<JsonResponseBody>() {
+            JsonResponseBodyWithProperty body = json.visit(new JsonResponse.Visitor<>() {
                 @Override
-                public JsonResponseBody visitResponse(JsonResponseBody response) {
-                    return response;
+                public JsonResponseBodyWithProperty visitResponse(JsonResponseBody response) {
+                    return JsonResponseBodyWithProperty.builder()
+                            .responseBodyType(response.getResponseBodyType())
+                            .build();
                 }
 
                 @Override
-                public JsonResponseBody visitNestedPropertyAsResponse(
+                public JsonResponseBodyWithProperty visitNestedPropertyAsResponse(
                         JsonResponseBodyWithProperty nestedPropertyAsResponse) {
-                    throw new RuntimeException("Returning nested properties as response is unsupported");
+                    return nestedPropertyAsResponse;
                 }
 
                 @Override
-                public JsonResponseBody _visitUnknown(Object unknownType) {
+                public JsonResponseBodyWithProperty _visitUnknown(Object unknownType) {
                     throw new RuntimeException("Encountered unknown json response body type: " + unknownType);
                 }
             });
 
-            TypeName returnType =
+            TypeName responseType =
                     clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, body.getResponseBodyType());
+            boolean isProperty = body.getResponseProperty().isPresent();
+            Optional<TypeName> propertyType = body.getResponseProperty().map(objectProperty -> clientGeneratorContext
+                    .getPoetTypeNameMapper()
+                    .convertToTypeName(true, objectProperty.getValueType()));
+            Boolean responseIsOptional = body.getResponseBodyType().visit(new TypeReferenceIsOptional(true));
+            TypeName returnType = propertyType
+                    .map(type -> {
+                        if (responseIsOptional) {
+                            return ParameterizedTypeName.get(ClassName.get(Optional.class), type);
+                        } else return type;
+                    })
+                    .orElse(responseType);
             endpointMethodBuilder.returns(returnType);
+            if (isProperty) {
+                httpResponseBuilder.add("$T $L = ", responseType, getParsedResponseVariableName());
+            } else {
+                httpResponseBuilder.add("return ");
+            }
             if (body.getResponseBodyType().isContainer() || isAliasContainer(body.getResponseBodyType())) {
                 httpResponseBuilder.addStatement(
-                        "return $T.$L.readValue($L.string(), new $T() {})",
+                        "$T.$L.readValue($L.string(), new $T() {})",
                         generatedObjectMapper.getClassName(),
                         generatedObjectMapper.jsonMapperStaticField().name,
                         getResponseBodyName(),
-                        ParameterizedTypeName.get(ClassName.get(TypeReference.class), returnType));
+                        ParameterizedTypeName.get(ClassName.get(TypeReference.class), responseType));
             } else {
                 httpResponseBuilder.addStatement(
-                        "return $T.$L.readValue($L.string(), $T.class)",
+                        "$T.$L.readValue($L.string(), $T.class)",
                         generatedObjectMapper.getClassName(),
                         generatedObjectMapper.jsonMapperStaticField().name,
                         getResponseBodyName(),
-                        returnType);
+                        responseType);
+            }
+            if (isProperty) {
+                Name responsePropertyName =
+                        body.getResponseProperty().get().getName().getName();
+                if (responseIsOptional) {
+                    httpResponseBuilder.addStatement(
+                            "return $L.map(res -> res.get$L())",
+                            getParsedResponseVariableName(),
+                            responsePropertyName.getPascalCase().getUnsafeName());
+                } else {
+                    httpResponseBuilder.addStatement(
+                            "return $L.get$L()",
+                            getParsedResponseVariableName(),
+                            responsePropertyName.getPascalCase().getUnsafeName());
+                }
             }
             return null;
         }

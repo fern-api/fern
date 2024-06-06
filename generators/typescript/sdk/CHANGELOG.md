@@ -5,9 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.21.0] - 2024-06-05
+
+- Feature: The generator now supports `bigint` types.
+- Internal: Bump to IRv46.
+
 ## [0.20.9] - 2024-06-02
 
-- Fix: TypeScript generator outputs code snippets that have `example-identifier` embedded. 
+- Fix: TypeScript generator outputs code snippets that have `example-identifier` embedded.
 
 ## [0.20.8] - 2024-06-02
 

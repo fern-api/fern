@@ -7,15 +7,18 @@ import com.fern.generator.exec.model.config.GithubOutputMode;
 import com.fern.irV42.core.ObjectMappers;
 import com.fern.irV42.model.auth.AuthScheme;
 import com.fern.irV42.model.auth.OAuthScheme;
+import com.fern.irV42.model.commons.ErrorId;
 import com.fern.irV42.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.AbstractPoetClassNameFactory;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.FeatureResolver;
 import com.fern.java.client.generators.ApiErrorGenerator;
+import com.fern.java.client.generators.BaseErrorGenerator;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.client.generators.EnvironmentGenerator;
+import com.fern.java.client.generators.ErrorGenerator;
 import com.fern.java.client.generators.OAuthTokenSupplierGenerator;
 import com.fern.java.client.generators.RequestOptionsGenerator;
 import com.fern.java.client.generators.RetryInterceptorGenerator;
@@ -36,9 +39,11 @@ import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradleDependency;
 import com.fern.java.output.gradle.GradleDependencyType;
 import com.fern.java.output.gradle.ParsedGradleDependency;
+import com.palantir.common.streams.KeyedStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -190,9 +195,13 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         GeneratedJavaFile generatedSuppliersFile = suppliersGenerator.generateFile();
         this.addGeneratedFile(generatedSuppliersFile);
 
-        ApiErrorGenerator apiErrorGenerator = new ApiErrorGenerator(context);
-        GeneratedJavaFile generatedErrorFile = apiErrorGenerator.generateFile();
-        this.addGeneratedFile(generatedErrorFile);
+        BaseErrorGenerator baseErrorGenerator = new BaseErrorGenerator(context);
+        GeneratedJavaFile generatedBaseErrorFile = baseErrorGenerator.generateFile();
+        this.addGeneratedFile(generatedBaseErrorFile);
+
+        ApiErrorGenerator apiErrorGenerator = new ApiErrorGenerator(context, generatedBaseErrorFile);
+        GeneratedJavaFile generatedApiErrorFile = apiErrorGenerator.generateFile();
+        this.addGeneratedFile(generatedApiErrorFile);
 
         CoreMediaTypesGenerator mediaTypesGenerator = new CoreMediaTypesGenerator(context);
         GeneratedResourcesJavaFile generatedMediaTypesFile = mediaTypesGenerator.generateFile();
@@ -203,6 +212,18 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         Result generatedTypes = typesGenerator.generateFiles();
         generatedTypes.getTypes().values().forEach(this::addGeneratedFile);
         generatedTypes.getInterfaces().values().forEach(this::addGeneratedFile);
+
+        // errors
+        Map<ErrorId, GeneratedJavaFile> generatedErrors = KeyedStream.stream(
+                        context.getIr().getErrors())
+                .map(errorDeclaration -> {
+                    ErrorGenerator errorGenerator =
+                            new ErrorGenerator(context, generatedApiErrorFile, errorDeclaration);
+                    GeneratedJavaFile exception = errorGenerator.generateFile();
+                    this.addGeneratedFile(exception);
+                    return exception;
+                })
+                .collectToMap();
 
         Optional<OAuthScheme> maybeOAuthScheme = context.getResolvedAuthSchemes().stream()
                 .map(AuthScheme::getOauth)
@@ -233,7 +254,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                     generatedSuppliersFile,
                     generatedEnvironmentsClass,
                     generatedRequestOptions,
-                    generatedTypes.getInterfaces());
+                    generatedTypes.getInterfaces(),
+                    generatedErrors);
             GeneratedClient generatedClient = httpServiceClientGenerator.generateFile();
             this.addGeneratedFile(generatedClient);
             generatedClient.wrappedRequests().forEach(this::addGeneratedFile);
@@ -249,7 +271,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 generatedEnvironmentsClass,
                 generatedRequestOptions,
                 generatedTypes.getInterfaces(),
-                generatedOAuthTokenSupplier);
+                generatedOAuthTokenSupplier,
+                generatedErrors);
         GeneratedRootClient generatedRootClient = rootClientGenerator.generateFile();
         this.addGeneratedFile(generatedRootClient);
         this.addGeneratedFile(generatedRootClient.builderClass());
