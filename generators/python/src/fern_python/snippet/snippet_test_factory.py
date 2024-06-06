@@ -464,6 +464,7 @@ class SnippetTestFactory:
                     if example.get_as_union().example_type == "generated":
                         if not seen_generated:
                             test_name += f"_generated"
+                            seen_generated = True
                         else:
                             test_name += f"_generated_{example_count}"
                     else:

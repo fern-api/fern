@@ -18,7 +18,7 @@ async def test_echo(client: SeedPackageYml, async_client: AsyncSeedPackageYml) -
 
 
 async def test_echo_generated(client: SeedPackageYml, async_client: AsyncSeedPackageYml) -> None:
-    expected_response = "Hello world!"
+    expected_response: typing.Any = "Hello world!"
     expected_types: typing.Any = None
     response = client.echo(id="string", request="Hello world!")
     validate_response(response, expected_response, expected_types)

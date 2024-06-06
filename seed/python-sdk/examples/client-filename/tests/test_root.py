@@ -18,7 +18,7 @@ async def test_echo(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -
 
 
 async def test_echo_generated(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
-    expected_response = "Hello world!\\n\\nwith\\n\\tnewlines"
+    expected_response: typing.Any = "Hello world!\\n\\nwith\\n\\tnewlines"
     expected_types: typing.Any = None
     response = client.echo(request="Hello world!\\n\\nwith\\n\\tnewlines")
     validate_response(response, expected_response, expected_types)

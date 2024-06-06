@@ -18,7 +18,7 @@ async def test_send(client: SeedLiteral, async_client: AsyncSeedLiteral) -> None
 
 
 async def test_send_generated(client: SeedLiteral, async_client: AsyncSeedLiteral) -> None:
-    expected_response = {"message": "The weather is sunny", "status": 200, "success": True}
+    expected_response: typing.Any = {"message": "The weather is sunny", "status": 200, "success": True}
     expected_types: typing.Any = {"message": None, "status": "integer", "success": None}
     response = client.query.send(query="string")
     validate_response(response, expected_response, expected_types)

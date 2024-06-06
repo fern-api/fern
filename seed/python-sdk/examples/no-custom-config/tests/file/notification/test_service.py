@@ -23,7 +23,7 @@ async def test_get_exception(client: SeedExamples, async_client: AsyncSeedExampl
 
 
 async def test_get_exception_generated(client: SeedExamples, async_client: AsyncSeedExamples) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "type": "generic",
         "exceptionType": "Unavailable",
         "exceptionMessage": "This component is unavailable!",

@@ -40,7 +40,7 @@ async def test_get_movie(client: SeedExamples, async_client: AsyncSeedExamples) 
 
 
 async def test_get_movie_generated(client: SeedExamples, async_client: AsyncSeedExamples) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "id": "movie-c06a4ad7",
         "prequel": "movie-cv9b914f",
         "title": "The Boy and the Heron",
@@ -108,7 +108,7 @@ async def test_create_movie(client: SeedExamples, async_client: AsyncSeedExample
 
 
 async def test_create_movie_generated(client: SeedExamples, async_client: AsyncSeedExamples) -> None:
-    expected_response = "movie-c06a4ad7"
+    expected_response: typing.Any = "movie-c06a4ad7"
     expected_types: typing.Any = None
     response = client.service.create_movie(
         id="movie-c06a4ad7",
@@ -159,7 +159,7 @@ async def test_get_metadata(client: SeedExamples, async_client: AsyncSeedExample
 
 
 async def test_get_metadata_generated(client: SeedExamples, async_client: AsyncSeedExamples) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "type": "html",
         "extra": {"version": "0.0.1", "tenancy": "test"},
         "tags": ["development", "public"],
@@ -196,7 +196,7 @@ async def test_get_response(client: SeedExamples, async_client: AsyncSeedExample
 
 
 async def test_get_response_generated(client: SeedExamples, async_client: AsyncSeedExamples) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "response": "Initializing...",
         "identifiers": [
             {"type": "primitive", "value": "example", "label": "Primitive"},
