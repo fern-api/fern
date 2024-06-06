@@ -6,7 +6,6 @@ from json.decoder import JSONDecodeError
 from .. import core
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from .types.my_object import MyObject
 
@@ -75,20 +74,14 @@ class ServiceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
-            data=remove_none_from_dict(
-                {
-                    "maybeString": maybe_string,
-                    "integer": integer,
-                    "maybeInteger": maybe_integer,
-                    "optionalListOfStrings": optional_list_of_strings,
-                    "listOfObjects": list_of_objects,
-                }
-            ),
-            files=core.convert_file_dict_to_httpx_tuples(
-                remove_none_from_dict(
-                    {"file": file, "fileList": file_list, "maybeFile": maybe_file, "maybeFileList": maybe_file_list}
-                )
-            ),
+            data={
+                "maybeString": maybe_string,
+                "integer": integer,
+                "maybeInteger": maybe_integer,
+                "optionalListOfStrings": optional_list_of_strings,
+                "listOfObjects": list_of_objects,
+            },
+            files={"file": file, "fileList": file_list, "maybeFile": maybe_file, "maybeFileList": maybe_file_list},
             request_options=request_options,
             omit=OMIT,
         )
@@ -124,12 +117,7 @@ class ServiceClient:
         client.service.just_file()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "just-file",
-            method="POST",
-            data=remove_none_from_dict({}),
-            files=core.convert_file_dict_to_httpx_tuples(remove_none_from_dict({"file": file})),
-            request_options=request_options,
-            omit=OMIT,
+            "just-file", method="POST", data={}, files={"file": file}, request_options=request_options, omit=OMIT
         )
         if 200 <= _response.status_code < 300:
             return
@@ -198,8 +186,8 @@ class ServiceClient:
                 "listOfStrings": list_of_strings,
                 "optionalListOfStrings": optional_list_of_strings,
             },
-            data=remove_none_from_dict({}),
-            files=core.convert_file_dict_to_httpx_tuples(remove_none_from_dict({"file": file})),
+            data={},
+            files={"file": file},
             request_options=request_options,
             omit=OMIT,
         )
@@ -273,20 +261,14 @@ class AsyncServiceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
-            data=remove_none_from_dict(
-                {
-                    "maybeString": maybe_string,
-                    "integer": integer,
-                    "maybeInteger": maybe_integer,
-                    "optionalListOfStrings": optional_list_of_strings,
-                    "listOfObjects": list_of_objects,
-                }
-            ),
-            files=core.convert_file_dict_to_httpx_tuples(
-                remove_none_from_dict(
-                    {"file": file, "fileList": file_list, "maybeFile": maybe_file, "maybeFileList": maybe_file_list}
-                )
-            ),
+            data={
+                "maybeString": maybe_string,
+                "integer": integer,
+                "maybeInteger": maybe_integer,
+                "optionalListOfStrings": optional_list_of_strings,
+                "listOfObjects": list_of_objects,
+            },
+            files={"file": file, "fileList": file_list, "maybeFile": maybe_file, "maybeFileList": maybe_file_list},
             request_options=request_options,
             omit=OMIT,
         )
@@ -322,12 +304,7 @@ class AsyncServiceClient:
         await client.service.just_file()
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "just-file",
-            method="POST",
-            data=remove_none_from_dict({}),
-            files=core.convert_file_dict_to_httpx_tuples(remove_none_from_dict({"file": file})),
-            request_options=request_options,
-            omit=OMIT,
+            "just-file", method="POST", data={}, files={"file": file}, request_options=request_options, omit=OMIT
         )
         if 200 <= _response.status_code < 300:
             return
@@ -396,8 +373,8 @@ class AsyncServiceClient:
                 "listOfStrings": list_of_strings,
                 "optionalListOfStrings": optional_list_of_strings,
             },
-            data=remove_none_from_dict({}),
-            files=core.convert_file_dict_to_httpx_tuples(remove_none_from_dict({"file": file})),
+            data={},
+            files={"file": file},
             request_options=request_options,
             omit=OMIT,
         )

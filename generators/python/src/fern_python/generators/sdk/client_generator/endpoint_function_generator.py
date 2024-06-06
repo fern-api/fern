@@ -365,7 +365,7 @@ class EndpointFunctionGenerator:
                     if (method != "GET") and json_request_body is not None
                     else None,
                     content=request_body_parameters.get_content() if request_body_parameters is not None else None,
-                    files=self._context.core_utilities.httpx_tuple_converter(files) if files is not None else None,
+                    files=files,
                     response_variable_name=EndpointResponseCodeWriter.RESPONSE_VARIABLE,
                     request_options_variable_name=EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE,
                     headers=self._get_headers_for_endpoint(
