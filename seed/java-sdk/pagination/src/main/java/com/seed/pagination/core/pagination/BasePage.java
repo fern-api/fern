@@ -1,10 +1,10 @@
-package com.seed.pagination.core.pagination;
+package com.hume.api.core.pagination;
 
 import java.util.List;
 
 public abstract class BasePage<T> {
-    private boolean hasNext;
-    private List<T> items;
+    private final boolean hasNext;
+    private final List<T> items;
 
     public BasePage(boolean hasNext, List<T> items) {
         this.hasNext = hasNext;
@@ -12,7 +12,7 @@ public abstract class BasePage<T> {
     }
 
     public boolean hasNext() {
-        return hasNext;
+        return !items.isEmpty() && hasNext;
     }
 
     public List<T> getItems() {
