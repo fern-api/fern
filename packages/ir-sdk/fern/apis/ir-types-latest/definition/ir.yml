@@ -50,7 +50,7 @@ types:
       sdkConfig: SdkConfig
       variables: list<variables.VariableDeclaration>
       serviceTypeReferenceInfo: ServiceTypeReferenceInfo
-      reamdeConfig: optional<ReadmeConfig>
+      readmeConfig: optional<ReadmeConfig>
   ReadmeConfig:
     docs: |
       The configuration used to generate a README.md file. If present, the generator

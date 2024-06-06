@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import * as IR from "@fern-fern/ir-sdk/api";
 import { DependencyManager, DependencyType, ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
@@ -294,7 +295,7 @@ describe("test", () => {
         let shouldJsonParseStringify = false;
 
         const getExpectedResponse = () => {
-            const body = example.response.body;
+            const body = getExampleTypeReferenceForResponse(example.response);
             if (!body) {
                 return code`undefined`;
             }
@@ -336,6 +337,9 @@ describe("test", () => {
                                 // return code`new Set(${arrayOf(value.map(visitExampleTypeReference))})`;
                                 // Sets are not supported in ts-sdk
                                 return arrayOf(...value.map(visitExampleTypeReference));
+                            },
+                            literal: (value) => {
+                                return jsonExample;
                             },
                             _other: (value) => {
                                 return jsonExample;
@@ -396,5 +400,32 @@ describe("test", () => {
                 expect(${expected}).toEqual(${response});
             });
           `;
+    }
+}
+
+function getExampleTypeReferenceForResponse(exampleResponse: IR.ExampleResponse): IR.ExampleTypeReference | undefined {
+    switch (exampleResponse.type) {
+        case "ok":
+            return getExampleTypeReferenceForSuccessResponse(exampleResponse.value);
+        case "error":
+            return exampleResponse.body;
+        default:
+            assertNever(exampleResponse);
+    }
+}
+
+// TODO: Update this to handle multiple responses in the stream and sse cases.
+function getExampleTypeReferenceForSuccessResponse(
+    successResponse: IR.ExampleEndpointSuccessResponse
+): IR.ExampleTypeReference | undefined {
+    switch (successResponse.type) {
+        case "body":
+            return successResponse.value;
+        case "stream":
+            return successResponse.value[0];
+        case "sse":
+            return successResponse.value[0]?.data;
+        default:
+            assertNever(successResponse);
     }
 }
