@@ -20,7 +20,7 @@ public final class SeedExhaustiveErrorWithUnionBody extends SeedExhaustiveApiErr
     /**
      * @return the body
      */
-    @Override
+    @java.lang.Override
     public Animal body() {
         return this.body;
     }

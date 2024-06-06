@@ -8,7 +8,7 @@ from ...utilities import validate_response
 
 
 async def test_get_exception(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "type": "generic",
         "exceptionType": "Unavailable",
         "exceptionMessage": "This component is unavailable!",
