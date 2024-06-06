@@ -16,7 +16,6 @@ import com.seed.queryParameters.resources.user.types.NestedUser;
 import com.seed.queryParameters.resources.user.types.User;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -25,45 +24,45 @@ import java.util.UUID;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = GetUsersRequest.Builder.class)
 public final class GetUsersRequest {
-    private final int limit;
+    private final Optional<Integer> limit;
 
-    private final UUID id;
+    private final Optional<UUID> id;
 
-    private final String date;
+    private final Optional<String> date;
 
-    private final OffsetDateTime deadline;
+    private final Optional<OffsetDateTime> deadline;
 
-    private final byte[] bytes;
+    private final Optional<byte[]> bytes;
 
-    private final User user;
+    private final Optional<User> user;
 
-    private final Map<String, String> keyValue;
+    private final Optional<Map<String, String>> keyValue;
 
     private final Optional<String> optionalString;
 
-    private final NestedUser nestedUser;
+    private final Optional<NestedUser> nestedUser;
 
     private final Optional<User> optionalUser;
 
-    private final User excludeUser;
+    private final Optional<User> excludeUser;
 
-    private final String filter;
+    private final Optional<String> filter;
 
     private final Map<String, Object> additionalProperties;
 
     private GetUsersRequest(
-            int limit,
-            UUID id,
-            String date,
-            OffsetDateTime deadline,
-            byte[] bytes,
-            User user,
-            Map<String, String> keyValue,
+            Optional<Integer> limit,
+            Optional<UUID> id,
+            Optional<String> date,
+            Optional<OffsetDateTime> deadline,
+            Optional<byte[]> bytes,
+            Optional<User> user,
+            Optional<Map<String, String>> keyValue,
             Optional<String> optionalString,
-            NestedUser nestedUser,
+            Optional<NestedUser> nestedUser,
             Optional<User> optionalUser,
-            User excludeUser,
-            String filter,
+            Optional<User> excludeUser,
+            Optional<String> filter,
             Map<String, Object> additionalProperties) {
         this.limit = limit;
         this.id = id;
@@ -81,37 +80,37 @@ public final class GetUsersRequest {
     }
 
     @JsonProperty("limit")
-    public int getLimit() {
+    public Optional<Integer> getLimit() {
         return limit;
     }
 
     @JsonProperty("id")
-    public UUID getId() {
+    public Optional<UUID> getId() {
         return id;
     }
 
     @JsonProperty("date")
-    public String getDate() {
+    public Optional<String> getDate() {
         return date;
     }
 
     @JsonProperty("deadline")
-    public OffsetDateTime getDeadline() {
+    public Optional<OffsetDateTime> getDeadline() {
         return deadline;
     }
 
     @JsonProperty("bytes")
-    public byte[] getBytes() {
+    public Optional<byte[]> getBytes() {
         return bytes;
     }
 
     @JsonProperty("user")
-    public User getUser() {
+    public Optional<User> getUser() {
         return user;
     }
 
     @JsonProperty("keyValue")
-    public Map<String, String> getKeyValue() {
+    public Optional<Map<String, String>> getKeyValue() {
         return keyValue;
     }
 
@@ -121,7 +120,7 @@ public final class GetUsersRequest {
     }
 
     @JsonProperty("nestedUser")
-    public NestedUser getNestedUser() {
+    public Optional<NestedUser> getNestedUser() {
         return nestedUser;
     }
 
@@ -131,12 +130,12 @@ public final class GetUsersRequest {
     }
 
     @JsonProperty("excludeUser")
-    public User getExcludeUser() {
+    public Optional<User> getExcludeUser() {
         return excludeUser;
     }
 
     @JsonProperty("filter")
-    public String getFilter() {
+    public Optional<String> getFilter() {
         return filter;
     }
 
@@ -152,7 +151,7 @@ public final class GetUsersRequest {
     }
 
     private boolean equalTo(GetUsersRequest other) {
-        return limit == other.limit
+        return limit.equals(other.limit)
                 && id.equals(other.id)
                 && date.equals(other.date)
                 && deadline.equals(other.deadline)
@@ -188,108 +187,41 @@ public final class GetUsersRequest {
         return ObjectMappers.stringify(this);
     }
 
-    public static LimitStage builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
-    public interface LimitStage {
-        IdStage limit(int limit);
-
-        Builder from(GetUsersRequest other);
-    }
-
-    public interface IdStage {
-        DateStage id(UUID id);
-    }
-
-    public interface DateStage {
-        DeadlineStage date(String date);
-    }
-
-    public interface DeadlineStage {
-        BytesStage deadline(OffsetDateTime deadline);
-    }
-
-    public interface BytesStage {
-        UserStage bytes(byte[] bytes);
-    }
-
-    public interface UserStage {
-        NestedUserStage user(User user);
-    }
-
-    public interface NestedUserStage {
-        ExcludeUserStage nestedUser(NestedUser nestedUser);
-    }
-
-    public interface ExcludeUserStage {
-        FilterStage excludeUser(User excludeUser);
-    }
-
-    public interface FilterStage {
-        _FinalStage filter(String filter);
-    }
-
-    public interface _FinalStage {
-        GetUsersRequest build();
-
-        _FinalStage keyValue(Map<String, String> keyValue);
-
-        _FinalStage putAllKeyValue(Map<String, String> keyValue);
-
-        _FinalStage keyValue(String key, String value);
-
-        _FinalStage optionalString(Optional<String> optionalString);
-
-        _FinalStage optionalString(String optionalString);
-
-        _FinalStage optionalUser(Optional<User> optionalUser);
-
-        _FinalStage optionalUser(User optionalUser);
-    }
-
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder
-            implements LimitStage,
-                    IdStage,
-                    DateStage,
-                    DeadlineStage,
-                    BytesStage,
-                    UserStage,
-                    NestedUserStage,
-                    ExcludeUserStage,
-                    FilterStage,
-                    _FinalStage {
-        private int limit;
+    public static final class Builder {
+        private Optional<Integer> limit = Optional.empty();
 
-        private UUID id;
+        private Optional<UUID> id = Optional.empty();
 
-        private String date;
+        private Optional<String> date = Optional.empty();
 
-        private OffsetDateTime deadline;
+        private Optional<OffsetDateTime> deadline = Optional.empty();
 
-        private byte[] bytes;
+        private Optional<byte[]> bytes = Optional.empty();
 
-        private User user;
+        private Optional<User> user = Optional.empty();
 
-        private NestedUser nestedUser;
-
-        private User excludeUser;
-
-        private String filter;
-
-        private Optional<User> optionalUser = Optional.empty();
+        private Optional<Map<String, String>> keyValue = Optional.empty();
 
         private Optional<String> optionalString = Optional.empty();
 
-        private Map<String, String> keyValue = new LinkedHashMap<>();
+        private Optional<NestedUser> nestedUser = Optional.empty();
+
+        private Optional<User> optionalUser = Optional.empty();
+
+        private Optional<User> excludeUser = Optional.empty();
+
+        private Optional<String> filter = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
-        @java.lang.Override
         public Builder from(GetUsersRequest other) {
             limit(other.getLimit());
             id(other.getId());
@@ -306,116 +238,138 @@ public final class GetUsersRequest {
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("limit")
-        public IdStage limit(int limit) {
+        @JsonSetter(value = "limit", nulls = Nulls.SKIP)
+        public Builder limit(Optional<Integer> limit) {
             this.limit = limit;
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("id")
-        public DateStage id(UUID id) {
+        public Builder limit(Integer limit) {
+            this.limit = Optional.of(limit);
+            return this;
+        }
+
+        @JsonSetter(value = "id", nulls = Nulls.SKIP)
+        public Builder id(Optional<UUID> id) {
             this.id = id;
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("date")
-        public DeadlineStage date(String date) {
+        public Builder id(UUID id) {
+            this.id = Optional.of(id);
+            return this;
+        }
+
+        @JsonSetter(value = "date", nulls = Nulls.SKIP)
+        public Builder date(Optional<String> date) {
             this.date = date;
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("deadline")
-        public BytesStage deadline(OffsetDateTime deadline) {
+        public Builder date(String date) {
+            this.date = Optional.of(date);
+            return this;
+        }
+
+        @JsonSetter(value = "deadline", nulls = Nulls.SKIP)
+        public Builder deadline(Optional<OffsetDateTime> deadline) {
             this.deadline = deadline;
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("bytes")
-        public UserStage bytes(byte[] bytes) {
+        public Builder deadline(OffsetDateTime deadline) {
+            this.deadline = Optional.of(deadline);
+            return this;
+        }
+
+        @JsonSetter(value = "bytes", nulls = Nulls.SKIP)
+        public Builder bytes(Optional<byte[]> bytes) {
             this.bytes = bytes;
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("user")
-        public NestedUserStage user(User user) {
+        public Builder bytes(byte[] bytes) {
+            this.bytes = Optional.of(bytes);
+            return this;
+        }
+
+        @JsonSetter(value = "user", nulls = Nulls.SKIP)
+        public Builder user(Optional<User> user) {
             this.user = user;
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("nestedUser")
-        public ExcludeUserStage nestedUser(NestedUser nestedUser) {
-            this.nestedUser = nestedUser;
+        public Builder user(User user) {
+            this.user = Optional.of(user);
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("excludeUser")
-        public FilterStage excludeUser(User excludeUser) {
-            this.excludeUser = excludeUser;
+        @JsonSetter(value = "keyValue", nulls = Nulls.SKIP)
+        public Builder keyValue(Optional<Map<String, String>> keyValue) {
+            this.keyValue = keyValue;
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("filter")
-        public _FinalStage filter(String filter) {
-            this.filter = filter;
+        public Builder keyValue(Map<String, String> keyValue) {
+            this.keyValue = Optional.of(keyValue);
             return this;
         }
 
-        @java.lang.Override
-        public _FinalStage optionalUser(User optionalUser) {
-            this.optionalUser = Optional.of(optionalUser);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "optionalUser", nulls = Nulls.SKIP)
-        public _FinalStage optionalUser(Optional<User> optionalUser) {
-            this.optionalUser = optionalUser;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage optionalString(String optionalString) {
-            this.optionalString = Optional.of(optionalString);
-            return this;
-        }
-
-        @java.lang.Override
         @JsonSetter(value = "optionalString", nulls = Nulls.SKIP)
-        public _FinalStage optionalString(Optional<String> optionalString) {
+        public Builder optionalString(Optional<String> optionalString) {
             this.optionalString = optionalString;
             return this;
         }
 
-        @java.lang.Override
-        public _FinalStage keyValue(String key, String value) {
-            this.keyValue.put(key, value);
+        public Builder optionalString(String optionalString) {
+            this.optionalString = Optional.of(optionalString);
             return this;
         }
 
-        @java.lang.Override
-        public _FinalStage putAllKeyValue(Map<String, String> keyValue) {
-            this.keyValue.putAll(keyValue);
+        @JsonSetter(value = "nestedUser", nulls = Nulls.SKIP)
+        public Builder nestedUser(Optional<NestedUser> nestedUser) {
+            this.nestedUser = nestedUser;
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter(value = "keyValue", nulls = Nulls.SKIP)
-        public _FinalStage keyValue(Map<String, String> keyValue) {
-            this.keyValue.clear();
-            this.keyValue.putAll(keyValue);
+        public Builder nestedUser(NestedUser nestedUser) {
+            this.nestedUser = Optional.of(nestedUser);
             return this;
         }
 
-        @java.lang.Override
+        @JsonSetter(value = "optionalUser", nulls = Nulls.SKIP)
+        public Builder optionalUser(Optional<User> optionalUser) {
+            this.optionalUser = optionalUser;
+            return this;
+        }
+
+        public Builder optionalUser(User optionalUser) {
+            this.optionalUser = Optional.of(optionalUser);
+            return this;
+        }
+
+        @JsonSetter(value = "excludeUser", nulls = Nulls.SKIP)
+        public Builder excludeUser(Optional<User> excludeUser) {
+            this.excludeUser = excludeUser;
+            return this;
+        }
+
+        public Builder excludeUser(User excludeUser) {
+            this.excludeUser = Optional.of(excludeUser);
+            return this;
+        }
+
+        @JsonSetter(value = "filter", nulls = Nulls.SKIP)
+        public Builder filter(Optional<String> filter) {
+            this.filter = filter;
+            return this;
+        }
+
+        public Builder filter(String filter) {
+            this.filter = Optional.of(filter);
+            return this;
+        }
+
         public GetUsersRequest build() {
             return new GetUsersRequest(
                     limit,

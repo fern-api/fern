@@ -30,8 +30,11 @@ module SeedQueryParametersClient
     # @param filter [String]
     # @param request_options [SeedQueryParametersClient::RequestOptions]
     # @return [SeedQueryParametersClient::User::User]
-    def get_username(limit:, id:, date:, deadline:, bytes:, filter:, user: nil, key_value: nil, optional_string: nil,
-                     nested_user: nil, optional_user: nil, exclude_user: nil, request_options: nil)
+    # @example
+    #  query_parameters = SeedQueryParametersClient::Client.new(base_url: "https://api.example.com")
+    #  query_parameters.user.get_username(limit: 5, id: "4ff45b32-ca63-462d-b988-cf4eec41397a")
+    def get_username(limit: nil, id: nil, date: nil, deadline: nil, bytes: nil, user: nil, key_value: nil,
+                     optional_string: nil, nested_user: nil, optional_user: nil, exclude_user: nil, filter: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -80,8 +83,11 @@ module SeedQueryParametersClient
     # @param filter [String]
     # @param request_options [SeedQueryParametersClient::RequestOptions]
     # @return [SeedQueryParametersClient::User::User]
-    def get_username(limit:, id:, date:, deadline:, bytes:, filter:, user: nil, key_value: nil, optional_string: nil,
-                     nested_user: nil, optional_user: nil, exclude_user: nil, request_options: nil)
+    # @example
+    #  query_parameters = SeedQueryParametersClient::Client.new(base_url: "https://api.example.com")
+    #  query_parameters.user.get_username(limit: 5, id: "4ff45b32-ca63-462d-b988-cf4eec41397a")
+    def get_username(limit: nil, id: nil, date: nil, deadline: nil, bytes: nil, user: nil, key_value: nil,
+                     optional_string: nil, nested_user: nil, optional_user: nil, exclude_user: nil, filter: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?

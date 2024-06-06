@@ -1,4 +1,27 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/user",
+                "method": "GET",
+                "identifierOverride": "endpoint_user.getUsername"
+            },
+            "snippet": {
+                "client": "require \"fern_query_parameters\"\n\nquery_parameters = SeedQueryParametersClient::Client.new(base_url: \"https://api.example.com\")\nquery_parameters.user.get_username(limit: 5, id: \"4ff45b32-ca63-462d-b988-cf4eec41397a\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/user",
+                "method": "GET",
+                "identifierOverride": "endpoint_user.getUsername"
+            },
+            "snippet": {
+                "client": "require \"fern_query_parameters\"\n\nquery_parameters = SeedQueryParametersClient::Client.new(base_url: \"https://api.example.com\")\nquery_parameters.user.get_username(limit: 5, id: \"4ff45b32-ca63-462d-b988-cf4eec41397a\")",
+                "type": "ruby"
+            }
+        }
+    ],
     "types": {}
 }

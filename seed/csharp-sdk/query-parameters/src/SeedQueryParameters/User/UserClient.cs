@@ -16,26 +16,54 @@ public class UserClient
 
     public async Task<User> GetUsernameAsync(GetUsersRequest request)
     {
-        var _query = new Dictionary<string, object>()
+        var _query = new Dictionary<string, object>() { };
+        if (request.Limit != null)
         {
-            { "limit", request.Limit.ToString() },
-            { "id", request.Id.ToString() },
-            { "date", request.Date.ToString() },
-            { "deadline", request.Deadline.ToString() },
-            { "bytes", request.Bytes.ToString() },
-            { "user", request.User.ToString() },
-            { "keyValue", request.KeyValue.ToString() },
-            { "nestedUser", request.NestedUser.ToString() },
-            { "excludeUser", request.ExcludeUser.ToString() },
-            { "filter", request.Filter },
-        };
+            _query["limit"] = request.Limit;
+        }
+        if (request.Id != null)
+        {
+            _query["id"] = request.Id;
+        }
+        if (request.Date != null)
+        {
+            _query["date"] = request.Date;
+        }
+        if (request.Deadline != null)
+        {
+            _query["deadline"] = request.Deadline;
+        }
+        if (request.Bytes != null)
+        {
+            _query["bytes"] = request.Bytes;
+        }
+        if (request.User != null)
+        {
+            _query["user"] = request.User;
+        }
+        if (request.KeyValue != null)
+        {
+            _query["keyValue"] = request.KeyValue;
+        }
         if (request.OptionalString != null)
         {
             _query["optionalString"] = request.OptionalString;
         }
+        if (request.NestedUser != null)
+        {
+            _query["nestedUser"] = request.NestedUser;
+        }
         if (request.OptionalUser != null)
         {
             _query["optionalUser"] = request.OptionalUser;
+        }
+        if (request.ExcludeUser != null)
+        {
+            _query["excludeUser"] = request.ExcludeUser;
+        }
+        if (request.Filter != null)
+        {
+            _query["filter"] = request.Filter;
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest

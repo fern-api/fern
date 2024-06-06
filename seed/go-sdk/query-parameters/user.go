@@ -11,18 +11,18 @@ import (
 )
 
 type GetUsersRequest struct {
-	Limit          int               `json:"-" url:"limit"`
-	Id             uuid.UUID         `json:"-" url:"id"`
-	Date           time.Time         `json:"-" url:"date" format:"date"`
-	Deadline       time.Time         `json:"-" url:"deadline"`
-	Bytes          []byte            `json:"-" url:"bytes"`
+	Limit          *int              `json:"-" url:"limit,omitempty"`
+	Id             *uuid.UUID        `json:"-" url:"id,omitempty"`
+	Date           *time.Time        `json:"-" url:"date,omitempty" format:"date"`
+	Deadline       *time.Time        `json:"-" url:"deadline,omitempty"`
+	Bytes          *[]byte           `json:"-" url:"bytes,omitempty"`
 	User           *User             `json:"-" url:"user,omitempty"`
 	KeyValue       map[string]string `json:"-" url:"keyValue,omitempty"`
 	OptionalString *string           `json:"-" url:"optionalString,omitempty"`
 	NestedUser     *NestedUser       `json:"-" url:"nestedUser,omitempty"`
 	OptionalUser   *User             `json:"-" url:"optionalUser,omitempty"`
 	ExcludeUser    []*User           `json:"-" url:"excludeUser,omitempty"`
-	Filter         []string          `json:"-" url:"filter"`
+	Filter         []*string         `json:"-" url:"filter,omitempty"`
 }
 
 type NestedUser struct {
