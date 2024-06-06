@@ -144,10 +144,6 @@ export class ExampleGenerator {
                       }
                   });
 
-        if (typeId === "type_:ToolCall") {
-            throw new Error(`${JSON.stringify(td)} \n \n ${JSON.stringify(foundTd)}`);
-        }
-
         return foundTd;
     }
 
@@ -516,10 +512,6 @@ export class ExampleGenerator {
 
         const jsonExample: Record<string, unknown> = {};
         exampleProperties?.forEach((prop) => (jsonExample[prop.name.wireValue] = prop.value.jsonExample));
-
-        // if (declaredTypeName.typeId === "type_:ToolCall") {
-        //     throw new Error(`${providedExample} \n \n ${exampleProperties} \n \n ${jsonExample}`);
-        // }
 
         return (
             providedExample ??
