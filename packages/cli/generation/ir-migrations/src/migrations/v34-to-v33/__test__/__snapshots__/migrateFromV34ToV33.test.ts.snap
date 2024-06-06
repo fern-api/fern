@@ -62,7 +62,7 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
-  "reamdeConfig": undefined,
+  "readmeConfig": undefined,
   "rootPackage": {
     "docs": undefined,
     "errors": [],

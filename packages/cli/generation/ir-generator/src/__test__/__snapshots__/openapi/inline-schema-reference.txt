@@ -61,7 +61,7 @@ exports[`generate IR from OpenAPI 1`] = `
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
-  "reamdeConfig": null,
+  "readmeConfig": null,
   "rootPackage": {
     "docs": null,
     "errors": [],
