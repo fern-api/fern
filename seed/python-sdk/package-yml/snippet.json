@@ -4,7 +4,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/{id}",
+                "path": "/{id}/",
                 "method": "POST",
                 "identifier_override": "endpoint_.echo"
             },
