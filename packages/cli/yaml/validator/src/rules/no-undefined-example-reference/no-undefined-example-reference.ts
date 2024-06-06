@@ -25,7 +25,7 @@ export const NoUndefinedExampleReferenceRule: Rule = {
                     }
 
                     const doesExist =
-                        exampleResolver.resolveExample({
+                        (await exampleResolver.resolveExample({
                             example: exampleReference,
                             file: constructFernFileContext({
                                 relativeFilepath,
@@ -33,7 +33,7 @@ export const NoUndefinedExampleReferenceRule: Rule = {
                                 casingsGenerator: CASINGS_GENERATOR,
                                 rootApiFile: (await workspace.getDefinition()).rootApiFile.contents
                             })
-                        }) != null;
+                        })) != null;
 
                     if (doesExist) {
                         return [];

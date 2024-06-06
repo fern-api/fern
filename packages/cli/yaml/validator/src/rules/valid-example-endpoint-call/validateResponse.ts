@@ -50,9 +50,9 @@ export async function validateResponse({
                 errorResolver
             }),
         stream: async (example) =>
-            validateStreamResponse({ example, endpoint, typeResolver, exampleResolver, file, workspace }),
+            await validateStreamResponse({ example, endpoint, typeResolver, exampleResolver, file, workspace }),
         events: async (example) =>
-            validateSseResponse({ example, endpoint, typeResolver, exampleResolver, file, workspace })
+            await validateSseResponse({ example, endpoint, typeResolver, exampleResolver, file, workspace })
     });
 }
 

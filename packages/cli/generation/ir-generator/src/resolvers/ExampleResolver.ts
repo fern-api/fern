@@ -40,7 +40,7 @@ export class ExampleResolverImpl implements ExampleResolver {
             if (resolvedExample == null || typeof resolvedExample.resolvedExample === "string") {
                 return resolvedExample;
             }
-            return this.resolveAllReferencesInExample({
+            return await this.resolveAllReferencesInExample({
                 example: resolvedExample.resolvedExample,
                 file: resolvedExample.file
             });
@@ -137,7 +137,7 @@ export class ExampleResolverImpl implements ExampleResolver {
         if (resolvedExample == null) {
             return undefined;
         }
-        return this.resolveExample({ example: resolvedExample.value, file: typeDeclaration.file });
+        return await this.resolveExample({ example: resolvedExample.value, file: typeDeclaration.file });
     }
 
     public async resolveExampleOrThrow({ example, file }: { example: unknown; file: FernFileContext }): Promise<{

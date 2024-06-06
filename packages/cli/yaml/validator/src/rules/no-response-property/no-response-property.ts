@@ -87,7 +87,7 @@ async function resolvedTypeHasProperty(
             if (resolvedType.container._type !== "optional") {
                 return Result.IsNotObject;
             }
-            return resolvedTypeHasProperty(resolvedType.container.itemType, property, file, typeResolver);
+            return await resolvedTypeHasProperty(resolvedType.container.itemType, property, file, typeResolver);
         case "named":
             if (!isRawObjectDefinition(resolvedType.declaration)) {
                 return Result.IsNotObject;
@@ -150,7 +150,7 @@ async function getAllPropertiesForExtendedType(
         file
     });
     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
-        return getAllPropertiesForRawObjectSchema(resolvedType.declaration, file, typeResolver);
+        return await getAllPropertiesForRawObjectSchema(resolvedType.declaration, file, typeResolver);
     }
     // Unreachable; extended types must be named objects. This should be handled
     // by another rule, so we just return an empty set.

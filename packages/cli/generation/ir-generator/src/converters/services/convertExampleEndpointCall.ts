@@ -518,12 +518,12 @@ async function convertExampleResponse({
                 ExampleEndpointSuccessResponse.stream(
                     (
                         await Promise.all(
-                            example.stream.map((data) => {
+                            example.stream.map(async (data) => {
                                 if (rawTypeBeingExemplified == null) {
                                     return undefined;
                                 }
 
-                                return convertTypeReferenceExample({
+                                return await convertTypeReferenceExample({
                                     example: data,
                                     rawTypeBeingExemplified,
                                     typeResolver,

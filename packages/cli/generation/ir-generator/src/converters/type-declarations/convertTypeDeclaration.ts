@@ -96,10 +96,11 @@ export async function convertType({
     typeResolver: TypeResolver;
 }): Promise<Type> {
     return await visitRawTypeDeclaration<Promise<Type> | Type>(typeDeclaration, {
-        alias: (alias) => convertAliasTypeDeclaration({ alias, file, typeResolver }),
-        object: (object) => convertObjectTypeDeclaration({ object, file }),
-        discriminatedUnion: (union) => convertDiscriminatedUnionTypeDeclaration({ union, file, typeResolver }),
-        undiscriminatedUnion: (union) => convertUndiscriminatedUnionTypeDeclaration({ union, file }),
-        enum: (enum_) => convertEnumTypeDeclaration({ _enum: enum_, file })
+        alias: async (alias) => await convertAliasTypeDeclaration({ alias, file, typeResolver }),
+        object: async (object) => await convertObjectTypeDeclaration({ object, file }),
+        discriminatedUnion: async (union) =>
+            await convertDiscriminatedUnionTypeDeclaration({ union, file, typeResolver }),
+        undiscriminatedUnion: async (union) => convertUndiscriminatedUnionTypeDeclaration({ union, file }),
+        enum: async (enum_) => await convertEnumTypeDeclaration({ _enum: enum_, file })
     });
 }

@@ -43,7 +43,7 @@ describe("TypeResolver", () => {
             rootApiFile: workspaceDefinition.rootApiFile.contents
         });
 
-        const resolvedFooType = typeResolver.resolveType({
+        const resolvedFooType = await typeResolver.resolveType({
             type: "Foo",
             file: fernFileContext
         });

@@ -24,8 +24,11 @@ export const ValidExampleEndpointCallRule: Rule = {
 
         return {
             definitionFile: {
-                exampleHeaders: ({ service, endpoint, examples }, { relativeFilepath, contents: definitionFile }) => {
-                    return validateExampleEndpointCallParameters({
+                exampleHeaders: async (
+                    { service, endpoint, examples },
+                    { relativeFilepath, contents: definitionFile }
+                ) => {
+                    return await validateExampleEndpointCallParameters({
                         allDeclarations: {
                             ...service.headers,
                             ...(typeof endpoint.request !== "string" ? endpoint.request?.headers : undefined)
@@ -46,11 +49,11 @@ export const ValidExampleEndpointCallRule: Rule = {
                         })
                     });
                 },
-                examplePathParameters: (
+                examplePathParameters: async (
                     { service, endpoint, examples },
                     { relativeFilepath, contents: definitionFile }
                 ) => {
-                    return validateExampleEndpointCallParameters({
+                    return await validateExampleEndpointCallParameters({
                         allDeclarations: {
                             ...workspaceDefinitionRootFile.contents["path-parameters"],
                             ...service["path-parameters"],
@@ -74,8 +77,11 @@ export const ValidExampleEndpointCallRule: Rule = {
                             })
                     });
                 },
-                exampleQueryParameters: ({ endpoint, examples }, { relativeFilepath, contents: definitionFile }) => {
-                    return validateExampleEndpointCallParameters({
+                exampleQueryParameters: async (
+                    { endpoint, examples },
+                    { relativeFilepath, contents: definitionFile }
+                ) => {
+                    return await validateExampleEndpointCallParameters({
                         allDeclarations:
                             typeof endpoint.request !== "string" ? endpoint.request?.["query-parameters"] : undefined,
                         examples,

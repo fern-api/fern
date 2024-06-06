@@ -133,18 +133,19 @@ export async function convertHttpService({
                     examples:
                         endpoint.examples != null
                             ? await Promise.all(
-                                  endpoint.examples.map((example) =>
-                                      convertExampleEndpointCall({
-                                          service: serviceDefinition,
-                                          endpoint,
-                                          example,
-                                          typeResolver,
-                                          errorResolver,
-                                          exampleResolver,
-                                          variableResolver,
-                                          file,
-                                          workspace
-                                      })
+                                  endpoint.examples.map(
+                                      async (example) =>
+                                          await convertExampleEndpointCall({
+                                              service: serviceDefinition,
+                                              endpoint,
+                                              example,
+                                              typeResolver,
+                                              errorResolver,
+                                              exampleResolver,
+                                              variableResolver,
+                                              file,
+                                              workspace
+                                          })
                                   )
                               )
                             : [],

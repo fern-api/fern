@@ -29,7 +29,7 @@ export async function validateTypeExample({
 }): Promise<ExampleViolation[]> {
     return visitRawTypeDeclaration(typeDeclaration, {
         alias: async (rawAlias) => {
-            return validateAliasExample({
+            return await validateAliasExample({
                 rawAlias,
                 file,
                 typeResolver,
@@ -68,7 +68,7 @@ export async function validateTypeExample({
             });
         },
         undiscriminatedUnion: async (rawUnion) => {
-            return validateUndiscriminatedUnionExample({
+            return await validateUndiscriminatedUnionExample({
                 rawUnion,
                 example,
                 file,

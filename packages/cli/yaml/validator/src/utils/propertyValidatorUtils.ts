@@ -248,7 +248,7 @@ async function objectSchemaHasProperty({
     propertyComponents: string[];
     validate: RequestPropertyValidatorFunc;
 }): Promise<boolean> {
-    const property = getPropertyTypeFromObjectSchema({
+    const property = await getPropertyTypeFromObjectSchema({
         typeResolver,
         file,
         objectSchema,
@@ -261,7 +261,7 @@ async function objectSchemaHasProperty({
         type: property,
         file
     });
-    return resolvedTypeHasProperty({
+    return await resolvedTypeHasProperty({
         typeResolver,
         file: maybeFileFromResolvedType(resolvedTypeProperty) ?? file,
         resolvedType: resolvedTypeProperty,
@@ -270,7 +270,7 @@ async function objectSchemaHasProperty({
     });
 }
 
-function getPropertyTypeFromObjectSchema({
+async function getPropertyTypeFromObjectSchema({
     typeResolver,
     file,
     objectSchema,
@@ -280,8 +280,8 @@ function getPropertyTypeFromObjectSchema({
     file: FernFileContext;
     objectSchema: RawSchemas.ObjectSchema;
     property: string;
-}): string | undefined {
-    const properties = getAllPropertiesForRawObjectSchema({
+}): Promise<string | undefined> {
+    const properties = await getAllPropertiesForRawObjectSchema({
         typeResolver,
         file,
         objectSchema
@@ -289,7 +289,7 @@ function getPropertyTypeFromObjectSchema({
     return properties[property];
 }
 
-function getAllPropertiesForRawObjectSchema({
+async function getAllPropertiesForRawObjectSchema({
     typeResolver,
     file,
     objectSchema
@@ -297,7 +297,7 @@ function getAllPropertiesForRawObjectSchema({
     typeResolver: TypeResolver;
     file: FernFileContext;
     objectSchema: RawSchemas.ObjectSchema;
-}): Record<string, string> {
+}): Promise<Record<string, string>> {
     let extendedTypes: string[] = [];
     if (typeof objectSchema.extends === "string") {
         extendedTypes = [objectSchema.extends];
@@ -307,7 +307,7 @@ function getAllPropertiesForRawObjectSchema({
 
     const properties: Record<string, string> = {};
     for (const extendedType of extendedTypes) {
-        const extendedProperties = getAllPropertiesForExtendedType({
+        const extendedProperties = await getAllPropertiesForExtendedType({
             typeResolver,
             file,
             extendedType

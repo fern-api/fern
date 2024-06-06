@@ -50,7 +50,7 @@ async function convertHttpSdkRequestShape({
         });
     };
 
-    if (!areAllHeadersLiteral({ headers: service.headers ?? {}, file, typeResolver })) {
+    if (!(await areAllHeadersLiteral({ headers: service.headers ?? {}, file, typeResolver }))) {
         return constructWrapper();
     }
 

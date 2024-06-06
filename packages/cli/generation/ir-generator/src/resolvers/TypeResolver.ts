@@ -273,7 +273,7 @@ export class TypeResolverImpl implements TypeResolver {
         const { declaration, file: fileOfResolvedDeclaration } = rawDeclaration;
 
         if (isRawAliasDefinition(declaration)) {
-            return this.resolveType({
+            return await this.resolveType({
                 type: typeof declaration === "string" ? declaration : declaration.type,
                 file: fileOfResolvedDeclaration,
                 objectPath

@@ -239,16 +239,17 @@ export async function convertTypeReferenceExample({
                 return ExampleTypeReferenceShape.container(
                     ExampleContainer.list(
                         await Promise.all(
-                            resolvedExample.map((exampleItem) =>
-                                convertTypeReferenceExample({
-                                    example: exampleItem,
-                                    fileContainingExample: fileContainingResolvedExample,
-                                    rawTypeBeingExemplified: itemType,
-                                    fileContainingRawTypeReference,
-                                    typeResolver,
-                                    exampleResolver,
-                                    workspace
-                                })
+                            resolvedExample.map(
+                                async (exampleItem) =>
+                                    await convertTypeReferenceExample({
+                                        example: exampleItem,
+                                        fileContainingExample: fileContainingResolvedExample,
+                                        rawTypeBeingExemplified: itemType,
+                                        fileContainingRawTypeReference,
+                                        typeResolver,
+                                        exampleResolver,
+                                        workspace
+                                    })
                             )
                         )
                     )
@@ -261,16 +262,17 @@ export async function convertTypeReferenceExample({
                 return ExampleTypeReferenceShape.container(
                     ExampleContainer.set(
                         await Promise.all(
-                            resolvedExample.map((exampleItem) =>
-                                convertTypeReferenceExample({
-                                    example: exampleItem,
-                                    fileContainingExample: fileContainingResolvedExample,
-                                    rawTypeBeingExemplified: itemType,
-                                    fileContainingRawTypeReference,
-                                    typeResolver,
-                                    exampleResolver,
-                                    workspace
-                                })
+                            resolvedExample.map(
+                                async (exampleItem) =>
+                                    await convertTypeReferenceExample({
+                                        example: exampleItem,
+                                        fileContainingExample: fileContainingResolvedExample,
+                                        rawTypeBeingExemplified: itemType,
+                                        fileContainingRawTypeReference,
+                                        typeResolver,
+                                        exampleResolver,
+                                        workspace
+                                    })
                             )
                         )
                     )
@@ -555,7 +557,7 @@ export async function getOriginalTypeDeclarationForPropertyFromExtensions({
             if (resolvedType._type !== "named" || !isRawObjectDefinition(resolvedType.declaration)) {
                 throw new Error("Extension is not of a named object");
             }
-            const originalTypeDeclaration = getOriginalTypeDeclarationForProperty({
+            const originalTypeDeclaration = await getOriginalTypeDeclarationForProperty({
                 wirePropertyKey,
                 rawObject: resolvedType.declaration,
                 typeResolver,
