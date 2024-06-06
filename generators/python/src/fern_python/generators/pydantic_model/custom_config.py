@@ -25,5 +25,6 @@ class PydanticModelCustomConfig(BasePydanticModelCustomConfig):
     # Skip validation of fields (automatically includes additional fields)
     skip_validation: bool = False
 
+
 class FastApiPydanticModelCustomConfig(BasePydanticModelCustomConfig):
     extra_fields: Optional[Literal["allow", "forbid"]] = "forbid"
