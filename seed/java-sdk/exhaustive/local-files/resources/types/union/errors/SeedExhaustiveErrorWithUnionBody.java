@@ -6,7 +6,6 @@ package com.fern.sdk.resources.types.union.errors;
 
 import com.fern.sdk.core.SeedExhaustiveApiError;
 import com.fern.sdk.resources.types.union.types.Animal;
-import java.lang.Override;
 
 public final class SeedExhaustiveErrorWithUnionBody extends SeedExhaustiveApiError {
   /**
@@ -22,7 +21,7 @@ public final class SeedExhaustiveErrorWithUnionBody extends SeedExhaustiveApiErr
   /**
    * @return the body
    */
-  @Override
+  @java.lang.Override
   public Animal body() {
     return this.body;
   }
