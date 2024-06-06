@@ -8,7 +8,7 @@ from .utilities import validate_response
 
 
 async def test_post(client: SeedUnknownAsAny, async_client: AsyncSeedUnknownAsAny) -> None:
-    expected_response = [{"key": "value"}]
+    expected_response: typing.Any = [{"key": "value"}]
     expected_types: typing.Any = ("list", {0: None})
     response = client.unknown.post(request={"key": "value"})
     validate_response(response, expected_response, expected_types)

@@ -149,7 +149,7 @@ class HttpClient:
         json: typing.Optional[typing.Any] = None,
         data: typing.Optional[typing.Any] = None,
         content: typing.Optional[typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]] = None,
-        files: typing.Optional[typing.Dict[str, typing.Union[File, typing.List[File]]]] = None,
+        files: typing.Optional[typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]]] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
         retries: int = 0,
@@ -176,16 +176,18 @@ class HttpClient:
             ),
             params=encode_query(
                 jsonable_encoder(
-                    remove_omit_from_dict(
-                        {
-                            **(params if params is not None else {}),
-                            **(
-                                request_options.get("additional_query_parameters", {})
-                                if request_options is not None
-                                else {}
-                            ),
-                        },
-                        omit,
+                    remove_none_from_dict(
+                        remove_omit_from_dict(
+                            {
+                                **(params if params is not None else {}),
+                                **(
+                                    request_options.get("additional_query_parameters", {})
+                                    if request_options is not None
+                                    else {}
+                                ),
+                            },
+                            omit,
+                        )
                     )
                 )
             ),
@@ -227,7 +229,7 @@ class HttpClient:
         json: typing.Optional[typing.Any] = None,
         data: typing.Optional[typing.Any] = None,
         content: typing.Optional[typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]] = None,
-        files: typing.Optional[typing.Dict[str, typing.Union[File, typing.List[File]]]] = None,
+        files: typing.Optional[typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]]] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
         retries: int = 0,
@@ -254,16 +256,18 @@ class HttpClient:
             ),
             params=encode_query(
                 jsonable_encoder(
-                    remove_omit_from_dict(
-                        {
-                            **(params if params is not None else {}),
-                            **(
-                                request_options.get("additional_query_parameters", {})
-                                if request_options is not None
-                                else {}
-                            ),
-                        },
-                        omit,
+                    remove_none_from_dict(
+                        remove_omit_from_dict(
+                            {
+                                **(params if params is not None else {}),
+                                **(
+                                    request_options.get("additional_query_parameters", {})
+                                    if request_options is not None
+                                    else {}
+                                ),
+                            },
+                            omit,
+                        )
                     )
                 )
             ),
@@ -306,7 +310,7 @@ class AsyncHttpClient:
         json: typing.Optional[typing.Any] = None,
         data: typing.Optional[typing.Any] = None,
         content: typing.Optional[typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]] = None,
-        files: typing.Optional[typing.Dict[str, typing.Union[File, typing.List[File]]]] = None,
+        files: typing.Optional[typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]]] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
         retries: int = 0,
@@ -334,16 +338,18 @@ class AsyncHttpClient:
             ),
             params=encode_query(
                 jsonable_encoder(
-                    remove_omit_from_dict(
-                        {
-                            **(params if params is not None else {}),
-                            **(
-                                request_options.get("additional_query_parameters", {})
-                                if request_options is not None
-                                else {}
-                            ),
-                        },
-                        omit,
+                    remove_none_from_dict(
+                        remove_omit_from_dict(
+                            {
+                                **(params if params is not None else {}),
+                                **(
+                                    request_options.get("additional_query_parameters", {})
+                                    if request_options is not None
+                                    else {}
+                                ),
+                            },
+                            omit,
+                        )
                     )
                 )
             ),
@@ -384,7 +390,7 @@ class AsyncHttpClient:
         json: typing.Optional[typing.Any] = None,
         data: typing.Optional[typing.Any] = None,
         content: typing.Optional[typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]] = None,
-        files: typing.Optional[typing.Dict[str, typing.Union[File, typing.List[File]]]] = None,
+        files: typing.Optional[typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]]] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
         retries: int = 0,
@@ -411,16 +417,18 @@ class AsyncHttpClient:
             ),
             params=encode_query(
                 jsonable_encoder(
-                    remove_omit_from_dict(
-                        {
-                            **(params if params is not None else {}),
-                            **(
-                                request_options.get("additional_query_parameters", {})
-                                if request_options is not None
-                                else {}
-                            ),
-                        },
-                        omit=omit,
+                    remove_none_from_dict(
+                        remove_omit_from_dict(
+                            {
+                                **(params if params is not None else {}),
+                                **(
+                                    request_options.get("additional_query_parameters", {})
+                                    if request_options is not None
+                                    else {}
+                                ),
+                            },
+                            omit=omit,
+                        )
                     )
                 )
             ),

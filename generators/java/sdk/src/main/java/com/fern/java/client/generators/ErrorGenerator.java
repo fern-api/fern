@@ -7,6 +7,7 @@ import com.fern.irV42.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -64,7 +65,7 @@ public class ErrorGenerator extends AbstractFileGenerator {
                                     "super($S, $L, $L)", errorName, errorDeclaration.getStatusCode(), BODY_FIELD_NAME)
                             .addStatement("this.$L = $L", BODY_FIELD_NAME, BODY_FIELD_NAME)
                             .build())
-                    .addMethod(createGetter(bodyFieldSpec, Override.class));
+                    .addMethod(createGetter(bodyFieldSpec, ClassName.get("", "java.lang.Override")));
         });
         if (bodyTypeName.isEmpty()) {
             errorTypeSpecBuilder.addMethod(MethodSpec.constructorBuilder()
