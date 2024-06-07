@@ -42,6 +42,7 @@ public class SyspropClient {
                 .url(httpUrl)
                 .method("PUT", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
