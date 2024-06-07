@@ -66,9 +66,6 @@ navigation:
         contents:
           - page: Overview
             path: ./pages/api-definition/fern-definition/ferndef-overview.mdx
-          - page: Export to OpenAPI
-            slug: export-openapi
-            path: ./pages/api-definition/fern-definition/export-openapi.mdx
           - page: Types
             path: ./pages/api-definition/fern-definition/types.mdx
           - page: Endpoints
@@ -91,6 +88,9 @@ navigation:
             path: ./pages/api-definition/fern-definition/packages.mdx
           - page: Comparison with OpenAPI
             path: ./pages/api-definition/fern-definition/comparison.mdx
+          - page: Export to OpenAPI
+            slug: export-openapi
+            path: ./pages/api-definition/fern-definition/export-openapi.mdx
   - tab: sdks
     layout:
       - section: Introduction
