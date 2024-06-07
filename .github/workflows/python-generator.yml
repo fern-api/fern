@@ -6,6 +6,11 @@ on:
       - "generators/python/**"
     branches:
       - main
+  push:
+    paths:
+      - "generators/python/**"
+    branches:
+      - main
   workflow_call:
 
 jobs:
@@ -14,7 +19,7 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      
+
       - name: Install Poetry
         uses: snok/install-poetry@v1
 
