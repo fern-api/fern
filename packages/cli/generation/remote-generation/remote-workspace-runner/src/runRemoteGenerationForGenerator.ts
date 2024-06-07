@@ -21,7 +21,8 @@ export async function runRemoteGenerationForGenerator({
     token,
     whitelabel,
     irVersionOverride,
-    absolutePathToPreview
+    absolutePathToPreview,
+    readme
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -35,6 +36,7 @@ export async function runRemoteGenerationForGenerator({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    readme: generatorsYml.ReadmeSchema | undefined;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const intermediateRepresentation = await generateIntermediateRepresentation({
         workspace,
@@ -42,7 +44,8 @@ export async function runRemoteGenerationForGenerator({
         keywords: generatorInvocation.keywords,
         smartCasing: generatorInvocation.smartCasing,
         disableExamples: generatorInvocation.disableExamples,
-        audiences
+        audiences,
+        readme
     });
 
     const job = await createAndStartJob({
