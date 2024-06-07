@@ -11,7 +11,7 @@ typer = {extras = ["all"], version = "^0.6.1"}
 fern-fern-generator-exec-sdk = {version = "0.0.846", source = "fern-prod"}
 ordered-set = "^4.1.0"
 fern-fern-fdr-sdk = {version = "0.0.5435", source = "fern-prod"}
-fern-fern-ir-v39 = "^0.0.3473"
+fern-fern-ir-v46 = "^0.0.3519"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.4.2"

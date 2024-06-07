@@ -204,6 +204,7 @@ class SnippetWriter:
             map_=lambda map: self._get_snippet_for_map(
                 pairs=map,
             ),
+            literal = lambda _literal: None
         )
 
     def _get_snippet_for_unknown(

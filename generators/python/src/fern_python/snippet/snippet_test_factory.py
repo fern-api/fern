@@ -288,6 +288,7 @@ class SnippetTestFactory:
                         ]
                     ),
                 ),
+                literal=lambda _primitive: None,
             ),
             named=lambda named: named.shape.visit(
                 alias=lambda alias: self._generate_type_expectations_for_type_reference(alias.value),

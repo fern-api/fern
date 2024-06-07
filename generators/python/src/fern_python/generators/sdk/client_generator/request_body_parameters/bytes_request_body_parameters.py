@@ -26,7 +26,7 @@ class BytesRequestBodyParameters(AbstractRequestBodyParameters):
                 type_hint=AST.TypeHint.optional(AST.TypeHint.bytes_or_bytes_stream())
                 if self._request.is_optional
                 else AST.TypeHint.bytes_or_bytes_stream(),
-                raw_type=ir_types.TypeReference.factory.primitive(ir_types.PrimitiveType.BASE_64),
+                raw_type=ir_types.TypeReference.factory.primitive(ir_types.PrimitiveTypeV1.BASE_64),
             )
         ]
 

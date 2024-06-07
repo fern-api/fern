@@ -31,10 +31,10 @@ from .request_body_parameters import (
 
 HTTPX_PRIMITIVE_DATA_TYPES = set(
     [
-        ir_types.PrimitiveType.STRING,
-        ir_types.PrimitiveType.INTEGER,
-        ir_types.PrimitiveType.DOUBLE,
-        ir_types.PrimitiveType.BOOLEAN,
+        ir_types.PrimitiveTypeV1.STRING,
+        ir_types.PrimitiveTypeV1.INTEGER,
+        ir_types.PrimitiveTypeV1.DOUBLE,
+        ir_types.PrimitiveTypeV1.BOOLEAN,
     ]
 )
 
@@ -874,7 +874,7 @@ class EndpointFunctionGenerator:
     ) -> bool:
         return self._does_type_reference_match_primitives(
             type_reference,
-            expected=set([ir_types.PrimitiveType.DATE_TIME]),
+            expected=set([ir_types.PrimitiveTypeV1.DATE_TIME]),
             allow_optional=allow_optional,
             allow_enum=False,
         )
@@ -886,7 +886,7 @@ class EndpointFunctionGenerator:
         allow_optional: bool,
     ) -> bool:
         return self._does_type_reference_match_primitives(
-            type_reference, expected=set([ir_types.PrimitiveType.DATE]), allow_optional=allow_optional, allow_enum=False
+            type_reference, expected=set([ir_types.PrimitiveTypeV1.DATE]), allow_optional=allow_optional, allow_enum=False
         )
 
     def _is_httpx_primitive_data(self, type_reference: ir_types.TypeReference, *, allow_optional: bool) -> bool:
@@ -898,7 +898,7 @@ class EndpointFunctionGenerator:
         self,
         type_reference: ir_types.TypeReference,
         *,
-        expected: Set[ir_types.PrimitiveType],
+        expected: Set[ir_types.PrimitiveTypeV1],
         allow_optional: bool,
         allow_enum: bool,
     ) -> bool:
@@ -938,8 +938,8 @@ class EndpointFunctionGenerator:
                 ),
                 map_=lambda x: False,
                 literal=lambda literal: literal.visit(
-                    boolean=lambda x: ir_types.PrimitiveType.BOOLEAN in expected,
-                    string=lambda x: ir_types.PrimitiveType.STRING in expected,
+                    boolean=lambda x: ir_types.PrimitiveTypeV1.BOOLEAN in expected,
+                    string=lambda x: ir_types.PrimitiveTypeV1.STRING in expected,
                 ),
             ),
             named=visit_named_type,
