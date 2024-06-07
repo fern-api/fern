@@ -39,6 +39,10 @@ public abstract class AbstractPoetClassNameFactory {
         return String.join(".", tokens);
     }
 
+    public final String getPaginationPackage() {
+        return getCorePackage() + ".pagination";
+    }
+
     public final String getRootPackage() {
         List<String> tokens = new ArrayList<>(packagePrefixTokens);
         return String.join(".", tokens);
@@ -50,6 +54,10 @@ public abstract class AbstractPoetClassNameFactory {
 
     public final ClassName getStreamClassName() {
         return ClassName.get(getCorePackage(), "Stream");
+    }
+
+    public final ClassName getPaginationClassName(String simpleName) {
+        return ClassName.get(getPaginationPackage(), simpleName);
     }
 
     public final List<String> getPackagePrefixTokens() {
