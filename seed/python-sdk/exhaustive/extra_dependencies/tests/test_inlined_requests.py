@@ -24,6 +24,7 @@ async def test_post_with_object_bodyand_response(client: SeedExhaustive, async_c
         "list": ["string"],
         "set": ["string"],
         "map": {"1": "string"},
+        "bigint": "123456789123456789",
     }
     expected_types: typing.Any = {
         "string": None,
@@ -38,6 +39,7 @@ async def test_post_with_object_bodyand_response(client: SeedExhaustive, async_c
         "list": ("list", {0: None}),
         "set": ("set", {0: None}),
         "map": ("dict", {0: ("integer", None)}),
+        "bigint": None,
     }
     response = client.inlined_requests.post_with_object_bodyand_response(
         string="string",
@@ -55,6 +57,7 @@ async def test_post_with_object_bodyand_response(client: SeedExhaustive, async_c
             list_=["string"],
             set_={"string"},
             map_={1: "string"},
+            bigint="123456789123456789",
         ),
     )
     validate_response(response, expected_response, expected_types)
@@ -75,6 +78,7 @@ async def test_post_with_object_bodyand_response(client: SeedExhaustive, async_c
             list_=["string"],
             set_={"string"},
             map_={1: "string"},
+            bigint="123456789123456789",
         ),
     )
     validate_response(async_response, expected_response, expected_types)

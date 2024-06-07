@@ -39,6 +39,7 @@ class ObjectClient:
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
         set_: typing.Optional[typing.Set[str]] = OMIT,
         map_: typing.Optional[typing.Dict[int, str]] = OMIT,
+        bigint: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
@@ -67,6 +68,8 @@ class ObjectClient:
         set_ : typing.Optional[typing.Set[str]]
 
         map_ : typing.Optional[typing.Dict[int, str]]
+
+        bigint : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -105,6 +108,7 @@ class ObjectClient:
             list_=["string"],
             set_={"string"},
             map_={1: "string"},
+            bigint="123456789123456789",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -123,6 +127,7 @@ class ObjectClient:
                 "list": list_,
                 "set": set_,
                 "map": map_,
+                "bigint": bigint,
             },
             request_options=request_options,
             omit=OMIT,
@@ -273,6 +278,7 @@ class ObjectClient:
                 list_=["string"],
                 set_={"string"},
                 map_={1: "string"},
+                bigint="123456789123456789",
             ),
         )
         """
@@ -349,6 +355,7 @@ class ObjectClient:
                 list_=["string"],
                 set_={"string"},
                 map_={1: "string"},
+                bigint="123456789123456789",
             ),
         )
         """
@@ -420,6 +427,7 @@ class ObjectClient:
                         list_=["string"],
                         set_={"string"},
                         map_={1: "string"},
+                        bigint="123456789123456789",
                     ),
                 )
             ],
@@ -460,6 +468,7 @@ class AsyncObjectClient:
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
         set_: typing.Optional[typing.Set[str]] = OMIT,
         map_: typing.Optional[typing.Dict[int, str]] = OMIT,
+        bigint: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
@@ -488,6 +497,8 @@ class AsyncObjectClient:
         set_ : typing.Optional[typing.Set[str]]
 
         map_ : typing.Optional[typing.Dict[int, str]]
+
+        bigint : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -526,6 +537,7 @@ class AsyncObjectClient:
             list_=["string"],
             set_={"string"},
             map_={1: "string"},
+            bigint="123456789123456789",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -544,6 +556,7 @@ class AsyncObjectClient:
                 "list": list_,
                 "set": set_,
                 "map": map_,
+                "bigint": bigint,
             },
             request_options=request_options,
             omit=OMIT,
@@ -694,6 +707,7 @@ class AsyncObjectClient:
                 list_=["string"],
                 set_={"string"},
                 map_={1: "string"},
+                bigint="123456789123456789",
             ),
         )
         """
@@ -770,6 +784,7 @@ class AsyncObjectClient:
                 list_=["string"],
                 set_={"string"},
                 map_={1: "string"},
+                bigint="123456789123456789",
             ),
         )
         """
@@ -841,6 +856,7 @@ class AsyncObjectClient:
                         list_=["string"],
                         set_={"string"},
                         map_={1: "string"},
+                        bigint="123456789123456789",
                     ),
                 )
             ],

@@ -155,6 +155,7 @@ type ObjectWithOptionalField struct {
 	List     []string       `json:"list,omitempty" url:"list,omitempty"`
 	Set      []string       `json:"set,omitempty" url:"set,omitempty"`
 	Map      map[int]string `json:"map,omitempty" url:"map,omitempty"`
+	Bigint   *string        `json:"bigint,omitempty" url:"bigint,omitempty"`
 
 	extraProperties map[string]interface{}
 }

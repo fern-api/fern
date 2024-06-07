@@ -79,6 +79,7 @@ class InlinedRequestsClient:
                 list_=["string"],
                 set_={"string"},
                 map_={1: "string"},
+                bigint="123456789123456789",
             ),
         )
         """
@@ -164,6 +165,7 @@ class AsyncInlinedRequestsClient:
                 list_=["string"],
                 set_={"string"},
                 map_={1: "string"},
+                bigint="123456789123456789",
             ),
         )
         """

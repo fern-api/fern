@@ -23,6 +23,7 @@ class ObjectWithOptionalField(pydantic.BaseModel):
     list_: typing.Optional[typing.List[str]] = pydantic.Field(alias="list", default=None)
     set_: typing.Optional[typing.Set[str]] = pydantic.Field(alias="set", default=None)
     map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(alias="map", default=None)
+    bigint: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
