@@ -47,7 +47,7 @@ class UnionWithBaseProperties_String(Base):
         populate_by_name = True
 
 
-class UnionWithBaseProperties_Foo(pydantic_v1.BaseModel):
+class UnionWithBaseProperties_Foo(Base):
     name: str
     type: typing.Literal["foo"] = "foo"
 
@@ -64,6 +64,8 @@ class UnionWithBaseProperties_Foo(pydantic_v1.BaseModel):
         )
 
     class Config:
+        allow_population_by_field_name = True
+        populate_by_name = True
         extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}
 
