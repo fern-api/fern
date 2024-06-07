@@ -445,6 +445,7 @@ class SnippetTemplateFactory:
                 discriminant_field=union_declaration.discriminant.wire_value,
                 template_string=f"{name}={self.TEMPLATE_SENTINEL}" if name is not None else f"{self.TEMPLATE_SENTINEL}",
                 members=member_templates,
+                template_input=PayloadInput(location="RELATIVE"),
             )
         )
 
