@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-import com.fern.irV42.model.constants.Constants;
+import com.fern.ir.model.constants.Constants;
 import com.fern.java.FernJavaAnnotations;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;

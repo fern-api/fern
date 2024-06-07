@@ -18,46 +18,46 @@ package com.fern.java.client.generators.endpoint;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fern.irV42.model.commons.ErrorId;
-import com.fern.irV42.model.commons.Name;
-import com.fern.irV42.model.commons.TypeId;
-import com.fern.irV42.model.environment.EnvironmentBaseUrlId;
-import com.fern.irV42.model.errors.ErrorDeclaration;
-import com.fern.irV42.model.http.BytesRequest;
-import com.fern.irV42.model.http.FileDownloadResponse;
-import com.fern.irV42.model.http.FileProperty;
-import com.fern.irV42.model.http.FileUploadRequest;
-import com.fern.irV42.model.http.FileUploadRequestProperty;
-import com.fern.irV42.model.http.HttpEndpoint;
-import com.fern.irV42.model.http.HttpRequestBody;
-import com.fern.irV42.model.http.HttpRequestBodyReference;
-import com.fern.irV42.model.http.HttpResponse;
-import com.fern.irV42.model.http.HttpService;
-import com.fern.irV42.model.http.InlinedRequestBody;
-import com.fern.irV42.model.http.InlinedRequestBodyProperty;
-import com.fern.irV42.model.http.JsonResponse;
-import com.fern.irV42.model.http.JsonResponseBody;
-import com.fern.irV42.model.http.JsonResponseBodyWithProperty;
-import com.fern.irV42.model.http.JsonStreamChunk;
-import com.fern.irV42.model.http.PathParameter;
-import com.fern.irV42.model.http.SdkRequest;
-import com.fern.irV42.model.http.SdkRequestBodyType;
-import com.fern.irV42.model.http.SdkRequestShape;
-import com.fern.irV42.model.http.SdkRequestWrapper;
-import com.fern.irV42.model.http.SseStreamChunk;
-import com.fern.irV42.model.http.StreamingResponse;
-import com.fern.irV42.model.http.TextResponse;
-import com.fern.irV42.model.http.TextStreamChunk;
-import com.fern.irV42.model.types.AliasTypeDeclaration;
-import com.fern.irV42.model.types.ContainerType;
-import com.fern.irV42.model.types.DeclaredTypeName;
-import com.fern.irV42.model.types.EnumTypeDeclaration;
-import com.fern.irV42.model.types.ObjectTypeDeclaration;
-import com.fern.irV42.model.types.PrimitiveType;
-import com.fern.irV42.model.types.Type;
-import com.fern.irV42.model.types.TypeDeclaration;
-import com.fern.irV42.model.types.UndiscriminatedUnionTypeDeclaration;
-import com.fern.irV42.model.types.UnionTypeDeclaration;
+import com.fern.ir.model.commons.ErrorId;
+import com.fern.ir.model.commons.Name;
+import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.environment.EnvironmentBaseUrlId;
+import com.fern.ir.model.errors.ErrorDeclaration;
+import com.fern.ir.model.http.BytesRequest;
+import com.fern.ir.model.http.FileDownloadResponse;
+import com.fern.ir.model.http.FileProperty;
+import com.fern.ir.model.http.FileUploadRequest;
+import com.fern.ir.model.http.FileUploadRequestProperty;
+import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.HttpRequestBody;
+import com.fern.ir.model.http.HttpRequestBodyReference;
+import com.fern.ir.model.http.HttpResponseBody;
+import com.fern.ir.model.http.HttpService;
+import com.fern.ir.model.http.InlinedRequestBody;
+import com.fern.ir.model.http.InlinedRequestBodyProperty;
+import com.fern.ir.model.http.JsonResponse;
+import com.fern.ir.model.http.JsonResponseBody;
+import com.fern.ir.model.http.JsonResponseBodyWithProperty;
+import com.fern.ir.model.http.JsonStreamChunk;
+import com.fern.ir.model.http.PathParameter;
+import com.fern.ir.model.http.SdkRequest;
+import com.fern.ir.model.http.SdkRequestBodyType;
+import com.fern.ir.model.http.SdkRequestShape;
+import com.fern.ir.model.http.SdkRequestWrapper;
+import com.fern.ir.model.http.SseStreamChunk;
+import com.fern.ir.model.http.StreamingResponse;
+import com.fern.ir.model.http.TextResponse;
+import com.fern.ir.model.http.TextStreamChunk;
+import com.fern.ir.model.types.AliasTypeDeclaration;
+import com.fern.ir.model.types.ContainerType;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.EnumTypeDeclaration;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
+import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.Type;
+import com.fern.ir.model.types.TypeDeclaration;
+import com.fern.ir.model.types.UndiscriminatedUnionTypeDeclaration;
+import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
@@ -349,9 +349,12 @@ public abstract class AbstractEndpointWriter {
                         getOkhttpRequestName())
                 .addStatement("$T $L = $N.body()", ResponseBody.class, getResponseBodyName(), getResponseName())
                 .beginControlFlow("if ($L.isSuccessful())", getResponseName());
-        if (httpEndpoint.getResponse().isPresent()) {
+        if (httpEndpoint.getResponse().isPresent()
+                && httpEndpoint.getResponse().get().getBody().isPresent()) {
             httpEndpoint
                     .getResponse()
+                    .get()
+                    .getBody()
                     .get()
                     .visit(new SuccessResponseWriter(
                             httpResponseBuilder, endpointMethodBuilder, clientGeneratorContext, generatedObjectMapper));
@@ -544,7 +547,7 @@ public abstract class AbstractEndpointWriter {
                 .build();
     }
 
-    private final class SuccessResponseWriter implements HttpResponse.Visitor<Void> {
+    private final class SuccessResponseWriter implements HttpResponseBody.Visitor<Void> {
 
         private final CodeBlock.Builder httpResponseBuilder;
         private final MethodSpec.Builder endpointMethodBuilder;
@@ -653,24 +656,24 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public Void visitStreaming(StreamingResponse streaming) {
-            com.fern.irV42.model.types.TypeReference bodyType = streaming.visit(new StreamingResponse.Visitor<>() {
+            com.fern.ir.model.types.TypeReference bodyType = streaming.visit(new StreamingResponse.Visitor<>() {
                 @Override
-                public com.fern.irV42.model.types.TypeReference visitJson(JsonStreamChunk json) {
+                public com.fern.ir.model.types.TypeReference visitJson(JsonStreamChunk json) {
                     return json.getPayload();
                 }
 
                 @Override
-                public com.fern.irV42.model.types.TypeReference visitText(TextStreamChunk text) {
+                public com.fern.ir.model.types.TypeReference visitText(TextStreamChunk text) {
                     throw new RuntimeException("Returning streamed text is not supported.");
                 }
 
                 @Override
-                public com.fern.irV42.model.types.TypeReference visitSse(SseStreamChunk sse) {
+                public com.fern.ir.model.types.TypeReference visitSse(SseStreamChunk sse) {
                     return sse.getPayload();
                 }
 
                 @Override
-                public com.fern.irV42.model.types.TypeReference _visitUnknown(Object unknownType) {
+                public com.fern.ir.model.types.TypeReference _visitUnknown(Object unknownType) {
                     throw new RuntimeException("Encountered unknown json response body type: " + unknownType);
                 }
             });
@@ -697,7 +700,7 @@ public abstract class AbstractEndpointWriter {
             return null;
         }
 
-        private boolean isAliasContainer(com.fern.irV42.model.types.TypeReference responseBodyType) {
+        private boolean isAliasContainer(com.fern.ir.model.types.TypeReference responseBodyType) {
             if (responseBodyType.getNamed().isPresent()) {
                 TypeId typeId = responseBodyType.getNamed().get().getTypeId();
                 TypeDeclaration typeDeclaration =
@@ -782,7 +785,7 @@ public abstract class AbstractEndpointWriter {
         }
     }
 
-    private class TypeReferenceIsOptional implements com.fern.irV42.model.types.TypeReference.Visitor<Boolean> {
+    private class TypeReferenceIsOptional implements com.fern.ir.model.types.TypeReference.Visitor<Boolean> {
 
         private final boolean visitNamedType;
 
