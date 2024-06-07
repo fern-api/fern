@@ -1,0 +1,10 @@
+{
+    "editor.formatOnSave": true,
+    "python.formatting.provider": "black",
+    "python.linting.flake8Enabled": true,
+    "python.sortImports.args": [
+      "--profile",
+      "black"
+    ],
+    "python.analysis.typeCheckingMode": "basic"
+  }
