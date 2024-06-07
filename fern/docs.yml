@@ -44,7 +44,7 @@ navigation:
         contents:
           - page: What is an API Definition?
             path: ./pages/api-definition/introduction/what-is-an-api-definition.mdx
-      - section: OpenAPI
+      - section: OpenAPI Specification
         slug: openapi
         contents:
           - page: Overview
