@@ -85,6 +85,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 apiName: intermediateRepresentation.apiName.originalName,
                 whitelabel: config.whitelabel,
                 generateOAuthClients: config.generateOauthClients,
+                originalReadmeFilepath:
+                    config.originalReadmeFilepath != null
+                        ? AbsoluteFilePath.of(config.originalReadmeFilepath)
+                        : undefined,
                 snippetFilepath:
                     config.output.snippetFilepath != null
                         ? AbsoluteFilePath.of(config.output.snippetFilepath)

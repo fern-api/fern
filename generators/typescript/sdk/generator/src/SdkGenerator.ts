@@ -1,4 +1,5 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import {
@@ -54,6 +55,7 @@ import { SdkErrorDeclarationReferencer } from "./declaration-referencers/SdkErro
 import { SdkInlinedRequestBodyDeclarationReferencer } from "./declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer";
 import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
+import { GeneratorCli } from "./generator-cli/Client";
 import { ReferenceGenerator, ReferenceParameterDeclaration } from "./ReferenceGenerator";
 import { TemplateGenerator } from "./TemplateGenerator";
 import { JestTestGenerator } from "./test-generator/JestTestGenerator";
@@ -81,6 +83,7 @@ export declare namespace SdkGenerator {
     export interface Config {
         whitelabel: boolean;
         generateOAuthClients: boolean;
+        originalReadmeFilepath: AbsoluteFilePath | undefined;
         snippetFilepath: AbsoluteFilePath | undefined;
         snippetTemplateFilepath: AbsoluteFilePath | undefined;
         shouldBundle: boolean;
@@ -127,6 +130,7 @@ export class SdkGenerator {
     private extraFiles: Record<string, string> = {};
     private extraScripts: Record<string, string> = {};
 
+    private readmeSnippets: Record<FernGeneratorCli.FeatureId, string[]> = {};
     private endpointSnippets: FernGeneratorExec.Endpoint[] = [];
     private endpointSnippetTemplates: FdrSnippetTemplate.SnippetRegistryEntry[] = [];
 
@@ -167,6 +171,7 @@ export class SdkGenerator {
     private timeoutSdkErrorGenerator: TimeoutSdkErrorGenerator;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private jestTestGenerator: JestTestGenerator;
+    private generatorCli: GeneratorCli;
     private FdrClient: FdrSnippetTemplateClient | undefined;
 
     constructor({
@@ -336,6 +341,12 @@ export class SdkGenerator {
             this.rootDirectory,
             this.config.writeUnitTests
         );
+        this.generatorCli = new GeneratorCli({
+            logger: context.logger,
+            organization: config.organization,
+            intermediateRepresentation,
+            npmPackage
+        });
 
         this.FdrClient =
             this.config.executionEnvironment !== "local"
@@ -411,7 +422,7 @@ export class SdkGenerator {
                     apiName: this.namespaceExport === "api" ? "client" : this.namespaceExport
                 });
             }
-            this.generateSnippets(refGenerator);
+            this.generateSnippets({ refGenerator });
             const snippets: FernGeneratorExec.Snippets = {
                 endpoints: this.endpointSnippets,
                 types: {}
@@ -450,7 +461,14 @@ export class SdkGenerator {
                 this.extraFiles["reference.md"] = refGenerator.write();
             }
             this.context.logger.debug("Generated snippets");
+
+            try {
+                await this.generateReadme();
+            } catch (e) {
+                this.context.logger.warn("Failed to generate README.md, this is OK");
+            }
         }
+
         return this.config.shouldBundle
             ? new BundledTypescriptProject({
                   npmPackage: this.npmPackage,
@@ -670,6 +688,25 @@ export class SdkGenerator {
         });
     }
 
+    private async generateReadme(): Promise<void> {
+        if (this.endpointSnippets.length === 0) {
+            this.context.logger.debug("No snippets were produced; skipping README.md generation.");
+            return;
+        }
+        await this.withRawFile({
+            filepath: this.generatorCli.getReadmeExportedFilePath(),
+            run: async ({ sourceFile, importsManager }) => {
+                const context = this.generateSdkContext({ sourceFile, importsManager });
+                const readmeContent = await this.generatorCli.generateReadme({
+                    context,
+                    endpointSnippets: this.endpointSnippets,
+                    originalReadmeFilepath: this.config.originalReadmeFilepath
+                });
+                sourceFile.replaceWithText(readmeContent);
+            }
+        });
+    }
+
     private runWithSnippet({
         sourceFile,
         importsManager,
@@ -720,7 +757,7 @@ export class SdkGenerator {
         return [ts.factory.createExpressionStatement(endpointInvocation)];
     }
 
-    private generateSnippets(refGenerator: ReferenceGenerator | undefined) {
+    private generateSnippets({ refGenerator }: { refGenerator: ReferenceGenerator | undefined }) {
         const rootPackage: PackageId = { isRoot: true };
         this.forEachService((service, packageId) => {
             if (service.endpoints.length === 0) {
@@ -828,6 +865,7 @@ export class SdkGenerator {
                         if (example.name?.originalName != null) {
                             endpointSnippet.exampleIdentifier = example.name?.originalName;
                         }
+
                         this.endpointSnippets.push(endpointSnippet);
                     }
 
@@ -1016,6 +1054,24 @@ export class SdkGenerator {
 
             this.context.logger.debug(`Generated ${filepathStr}`);
         }
+    }
+
+    private async withRawFile({
+        run,
+        filepath,
+        overwrite
+    }: {
+        run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => Promise<void>;
+        filepath: ExportedFilePath;
+        overwrite?: boolean;
+    }) {
+        const filepathStr = convertExportedFilePathToFilePath(filepath);
+        this.context.logger.debug(`Generating ${filepathStr}`);
+        await run({
+            sourceFile: this.rootDirectory.createSourceFile(filepathStr, undefined, { overwrite }),
+            importsManager: new ImportsManager()
+        });
+        this.context.logger.debug(`Generated ${filepathStr}`);
     }
 
     private getAllPackageIds(): PackageId[] {
