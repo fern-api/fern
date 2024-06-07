@@ -49,7 +49,8 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                 definitionFile: contents,
                                 workspace,
                                 typeResolver,
-                                smartCasing: false
+                                smartCasing: false,
+                                casingVersion: undefined
                             });
                             const propertiesGroupedByName = groupBy(allProperties, (property) => property.name);
                             for (const [propertyName, propertiesWithName] of Object.entries(propertiesGroupedByName)) {
@@ -127,7 +128,8 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                             definitionFile,
                                             workspace,
                                             typeResolver,
-                                            smartCasing: false
+                                            smartCasing: false,
+                                            casingVersion: undefined
                                         });
                                         const propertiesWithSameNameAsDiscriminant = propertiesOnObject.filter(
                                             (property) => property.name === discriminantName

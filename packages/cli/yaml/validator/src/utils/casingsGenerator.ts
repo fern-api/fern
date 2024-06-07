@@ -5,5 +5,6 @@ import { constructCasingsGenerator } from "@fern-api/ir-generator";
 export const CASINGS_GENERATOR = constructCasingsGenerator({
     generationLanguage: undefined,
     keywords: undefined,
-    smartCasing: false
+    smartCasing: false,
+    casingVersion: undefined
 });

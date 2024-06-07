@@ -43,7 +43,8 @@ export function validateObjectExample({
         definitionFile: file.definitionFile,
         workspace,
         filepathOfDeclaration: file.relativeFilepath,
-        smartCasing: false
+        smartCasing: false,
+        casingVersion: undefined
     });
 
     const allPropertiesByWireKey = keyBy(allPropertiesForObject, (property) => property.wireKey);

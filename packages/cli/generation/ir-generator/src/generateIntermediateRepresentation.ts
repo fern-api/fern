@@ -48,6 +48,7 @@ export async function generateIntermediateRepresentation({
     generationLanguage,
     keywords,
     smartCasing,
+    casingVersion,
     disableExamples,
     audiences
 }: {
@@ -55,10 +56,11 @@ export async function generateIntermediateRepresentation({
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
+    casingVersion: generatorsYml.CasingVersion | undefined;
     disableExamples: boolean;
     audiences: Audiences;
 }): Promise<IntermediateRepresentation> {
-    const casingsGenerator = constructCasingsGenerator({ generationLanguage, keywords, smartCasing });
+    const casingsGenerator = constructCasingsGenerator({ generationLanguage, keywords, smartCasing, casingVersion });
 
     const irGraph = new IrGraph(audiences);
 

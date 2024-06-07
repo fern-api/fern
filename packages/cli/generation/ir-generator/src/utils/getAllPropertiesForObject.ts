@@ -1,3 +1,4 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
@@ -12,7 +13,8 @@ import { TypeResolver } from "../resolvers/TypeResolver";
 export const CASINGS_GENERATOR = constructCasingsGenerator({
     generationLanguage: undefined,
     keywords: undefined,
-    smartCasing: false
+    smartCasing: false,
+    casingVersion: undefined
 });
 
 export interface ObjectPropertyWithPath {
@@ -42,6 +44,7 @@ export function getAllPropertiesForObject({
     workspace,
     typeResolver,
     smartCasing,
+    casingVersion,
     // used only for recursive calls
     path = [],
     seen = {}
@@ -54,6 +57,7 @@ export function getAllPropertiesForObject({
     workspace: FernWorkspace;
     typeResolver: TypeResolver;
     smartCasing: boolean;
+    casingVersion: generatorsYml.CasingVersion | undefined;
     // these are for recursive calls only
     path?: ObjectPropertyPath;
     seen?: Record<RelativeFilePath, Set<TypeName>>;
@@ -74,7 +78,8 @@ export function getAllPropertiesForObject({
         casingsGenerator = constructCasingsGenerator({
             generationLanguage: undefined,
             keywords: undefined,
-            smartCasing
+            smartCasing,
+            casingVersion
         });
     }
 
@@ -130,6 +135,7 @@ export function getAllPropertiesForObject({
                             workspace,
                             typeResolver,
                             smartCasing,
+                            casingVersion,
                             path: [
                                 ...path,
                                 {
@@ -160,7 +166,8 @@ export function getAllPropertiesForType({
     definitionFile,
     workspace,
     typeResolver,
-    smartCasing
+    smartCasing,
+    casingVersion
 }: {
     typeName: TypeName;
     filepathOfDeclaration: RelativeFilePath;
@@ -168,6 +175,7 @@ export function getAllPropertiesForType({
     workspace: FernWorkspace;
     typeResolver: TypeResolver;
     smartCasing: boolean;
+    casingVersion: generatorsYml.CasingVersion | undefined;
 }): ObjectPropertyWithPath[] {
     const resolvedType = typeResolver.resolveNamedType({
         referenceToNamedType: typeName,
@@ -188,7 +196,8 @@ export function getAllPropertiesForType({
         definitionFile,
         workspace,
         typeResolver,
-        smartCasing
+        smartCasing,
+        casingVersion
     });
 }
 

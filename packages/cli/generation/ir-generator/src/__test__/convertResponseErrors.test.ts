@@ -10,7 +10,8 @@ describe("convertResponseErrors", () => {
         const casingsGenerator = constructCasingsGenerator({
             generationLanguage: undefined,
             keywords: undefined,
-            smartCasing: false
+            smartCasing: false,
+            casingVersion: undefined
         });
         const actualResponseErrors = convertResponseErrors({
             errors: ["commons.UnauthorizedError"],

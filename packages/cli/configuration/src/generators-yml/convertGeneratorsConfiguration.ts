@@ -7,6 +7,7 @@ import path from "path";
 import {
     APIDefinition,
     APIDefinitionLocation,
+    CasingVersion,
     GenerationLanguage,
     GeneratorGroup,
     GeneratorInvocation,
@@ -224,7 +225,9 @@ async function convertGenerator({
             maybeTopLevelMetadata
         }),
         keywords: generator.keywords,
-        smartCasing: generator["smart-casing"] ?? false,
+        smartCasing: generator["smart-casing"] === true,
+        casingVersion:
+            generator.casing === "V1" ? CasingVersion.V1 : generator.casing === "V0" ? CasingVersion.V0 : undefined,
         disableExamples: generator["disable-examples"] ?? false,
         absolutePathToLocalOutput:
             generator.output?.location === "local-file-system"

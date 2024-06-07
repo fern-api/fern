@@ -17,8 +17,10 @@ export const GeneratorInvocationSchema = z.strictObject({
     snippets: z.optional(GeneratorSnippetsSchema),
     // Overrides the version of the IR used by the generator.
     "ir-version": z.optional(z.string()),
-    // Feature flag used to enable better IR naming.
+    // Feature flag used to enable better IR naming, deprecated
+    // use `casing` instead.
     "smart-casing": z.optional(z.boolean()),
+    casing: z.optional(z.enum(["V1", "V0"])),
     // Temporary way to unblock example serialization.
     "disable-examples": z.optional(z.boolean()),
     // Deprecated, use `metadata` on the output block instead.

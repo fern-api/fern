@@ -29,6 +29,7 @@ export async function registerApi({
         generationLanguage: undefined,
         keywords: undefined,
         smartCasing: false,
+        casingVersion: undefined,
         disableExamples: false
     });
 

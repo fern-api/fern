@@ -10,7 +10,8 @@ describe("parse inline types", () => {
         const casingsGenerator = constructCasingsGenerator({
             generationLanguage: undefined,
             keywords: undefined,
-            smartCasing: false
+            smartCasing: false,
+            casingVersion: undefined
         });
 
         const dummyTypeName = "Dummy";

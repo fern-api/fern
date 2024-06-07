@@ -44,6 +44,7 @@ export async function mockServer({
             generationLanguage: undefined,
             keywords: undefined,
             smartCasing: false,
+            casingVersion: undefined,
             disableExamples: false
         });
 

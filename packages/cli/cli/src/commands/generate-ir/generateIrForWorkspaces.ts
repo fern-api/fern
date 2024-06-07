@@ -18,7 +18,8 @@ export async function generateIrForWorkspaces({
     audiences,
     version,
     keywords,
-    smartCasing
+    smartCasing,
+    casingVersion
 }: {
     project: Project;
     irFilepath: AbsoluteFilePath;
@@ -28,6 +29,7 @@ export async function generateIrForWorkspaces({
     version: string | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
+    casingVersion: generatorsYml.CasingVersion | undefined;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
@@ -61,6 +63,7 @@ export async function generateIrForWorkspaces({
                     generationLanguage,
                     keywords,
                     smartCasing,
+                    casingVersion,
                     disableExamples: false,
                     audiences,
                     version
@@ -84,6 +87,7 @@ async function getIntermediateRepresentation({
     audiences,
     keywords,
     smartCasing,
+    casingVersion,
     disableExamples,
     version
 }: {
@@ -92,6 +96,7 @@ async function getIntermediateRepresentation({
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
+    casingVersion: generatorsYml.CasingVersion | undefined;
     disableExamples: boolean;
     audiences: Audiences;
     version: string | undefined;
@@ -103,6 +108,7 @@ async function getIntermediateRepresentation({
         audiences,
         keywords,
         smartCasing,
+        casingVersion,
         disableExamples
     });
 

@@ -11,6 +11,7 @@ export async function generateIrForFernWorkspace({
     generationLanguage,
     keywords,
     smartCasing,
+    casingVersion,
     disableExamples,
     audiences
 }: {
@@ -19,6 +20,7 @@ export async function generateIrForFernWorkspace({
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
+    casingVersion: generatorsYml.CasingVersion | undefined;
     disableExamples: boolean;
     audiences: Audiences;
 }): Promise<IntermediateRepresentation> {
@@ -28,6 +30,7 @@ export async function generateIrForFernWorkspace({
         generationLanguage,
         keywords,
         smartCasing,
+        casingVersion,
         disableExamples,
         audiences
     });
