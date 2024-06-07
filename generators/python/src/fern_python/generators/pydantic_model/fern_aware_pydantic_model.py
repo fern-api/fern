@@ -54,8 +54,12 @@ class FernAwarePydanticModel:
         self._source_file = source_file
         self._extends = extends
 
-        models_to_extend = [item for item in base_models]  if base_models is not None else []
-        extends_crs = [context.get_class_reference_for_type_id(extended.type_id) for extended in extends] if extends is not None else []
+        models_to_extend = [item for item in base_models] if base_models is not None else []
+        extends_crs = (
+            [context.get_class_reference_for_type_id(extended.type_id) for extended in extends]
+            if extends is not None
+            else []
+        )
         models_to_extend.extend(extends_crs)
         self._pydantic_model = PydanticModel(
             version=self._custom_config.version,
