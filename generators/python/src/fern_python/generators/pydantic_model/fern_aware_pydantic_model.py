@@ -43,6 +43,7 @@ class FernAwarePydanticModel:
         type_name: Optional[ir_types.DeclaredTypeName],
         should_export: bool = None,
         extends: Sequence[ir_types.DeclaredTypeName] = None,
+        base_models: Sequence[AST.ClassReference] = None,
         docstring: Optional[str] = None,
         snippet: Optional[str] = None,
     ):
@@ -52,14 +53,16 @@ class FernAwarePydanticModel:
         self._custom_config = custom_config
         self._source_file = source_file
         self._extends = extends
+
+        models_to_extend = [item for item in base_models]  if base_models is not None else []
+        extends_crs = [context.get_class_reference_for_type_id(extended.type_id) for extended in extends] if extends is not None else []
+        models_to_extend.extend(extends_crs)
         self._pydantic_model = PydanticModel(
             version=self._custom_config.version,
             name=class_name,
             source_file=source_file,
             should_export=should_export,
-            base_models=[context.get_class_reference_for_type_id(extended.type_id) for extended in extends]
-            if extends is not None
-            else None,
+            base_models=models_to_extend,
             docstring=docstring,
             snippet=snippet,
             extra_fields="forbid" if custom_config.forbid_extra_fields else custom_config.extra_fields,

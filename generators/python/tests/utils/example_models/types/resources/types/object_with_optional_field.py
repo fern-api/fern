@@ -13,7 +13,7 @@ from .undiscriminated_shape import UndiscriminatedShape
 
 
 class ObjectWithOptionalField(UncheckedBaseModel):
-    literal: typing.Literal["lit_one", "lit_two"]
+    literal: typing.Literal["lit_one", "lit_two"] = "lit_one", "lit_two"
     string: typing.Optional[str] = None
     integer: typing.Optional[int] = None
     long_: typing.Optional[int] = pydantic_v1.Field(alias="long", default=None)
@@ -28,6 +28,7 @@ class ObjectWithOptionalField(UncheckedBaseModel):
     map_: typing.Optional[typing.Dict[int, str]] = pydantic_v1.Field(alias="map", default=None)
     enum: typing.Optional[Color] = None
     union: typing.Optional[Shape] = None
+    second_union: typing.Optional[Shape] = None
     undiscriminated_union: typing.Optional[UndiscriminatedShape] = None
     any: typing.Any
 

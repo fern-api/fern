@@ -6,6 +6,7 @@ from re import M
 from typing import cast
 import uuid
 from core_utilities.sdk.unchecked_base_model import construct_type
+from generators.python.tests.utils.example_models.types.resources.types.shape import Shape_Circle
 from .example_models.manual_types.defaulted_object import ObjectWithDefaultedOptionalFields
 from .example_models.types.resources.types import ObjectWithOptionalField, Circle, Shape_Square
 
@@ -26,6 +27,7 @@ def test_construct_valid() -> None:
         "set": ["string"],
         "map": {1: "string"},
         "union": {"type": "square", "id": "string", "length": 1.1},
+        "second_union": {"type": "circle", "id": "another_string", "radius": 2.3},
         "undiscriminated_union": {"id": "string2", "length": 6.7},
         "enum": "red",
         "any": "something here"
@@ -53,6 +55,12 @@ def test_construct_valid() -> None:
     assert cast_response.union.id == shape_expectation.id
     assert "length" in cast_response.union.dict() and cast_response.union.length == shape_expectation.length
     assert cast_response.union.type == shape_expectation.type
+
+    shape_expectation = Shape_Circle(id="another_string", radius=2.3)
+    assert cast_response.second_union is not None
+    assert cast_response.second_union.id == shape_expectation.id
+    assert "radius" in cast_response.second_union.dict() and cast_response.second_union.radius == shape_expectation.radius
+    assert cast_response.second_union.type == shape_expectation.type
 
     assert cast_response.undiscriminated_union is not None
     assert cast_response.undiscriminated_union.id == "string2"

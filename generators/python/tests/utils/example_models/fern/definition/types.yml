@@ -42,5 +42,6 @@ types:
       map: optional<map<integer, string>>
       enum: optional<Color>
       union: optional<Shape>
+      second_union: optional<Shape>
       undiscriminated_union: optional<UndiscriminatedShape>
       any: unknown
