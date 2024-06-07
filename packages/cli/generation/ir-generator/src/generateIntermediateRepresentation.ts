@@ -6,7 +6,6 @@ import {
     HttpEndpoint,
     IntermediateRepresentation,
     PathParameterLocation,
-    ReadmeConfig,
     ResponseErrors,
     ServiceId,
     ServiceTypeReferenceInfo,
@@ -23,11 +22,11 @@ import { getAudiences } from "./converters/convertDeclaration";
 import { convertEnvironments } from "./converters/convertEnvironments";
 import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
 import { convertErrorDiscriminationStrategy } from "./converters/convertErrorDiscriminationStrategy";
+import { convertReadmeConfig } from "./converters/convertReadmeConfig";
 import { convertWebhookGroup } from "./converters/convertWebhookGroup";
 import { constructHttpPath } from "./converters/services/constructHttpPath";
 import { convertHttpHeader, convertHttpService, convertPathParameters } from "./converters/services/convertHttpService";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
-import { EndpointSet } from "./EndpointSet";
 import { ExampleGenerator } from "./examples/ExampleGenerator";
 import { constructFernFileContext, constructRootApiFileContext, FernFileContext } from "./FernFileContext";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
@@ -386,8 +385,8 @@ export async function generateIntermediateRepresentation({
         return service.endpoints.some((endpoint) => endpoint.response?.body?.type === "fileDownload");
     });
 
-    const endpointSet = new EndpointSet(intermediateRepresentationForAudiences.services);
-    const readmeConfig = readme != null ? convertReadmeConfig({ endpointSet, readme }) : undefined;
+    const readmeConfig =
+        readme != null ? convertReadmeConfig({ readme, services: intermediateRepresentation.services }) : undefined;
 
     return {
         ...intermediateRepresentationForAudiences,
@@ -518,33 +517,5 @@ function filterServiceTypeReferenceInfoForAudiences(
     return {
         sharedTypes: serviceTypeReferenceInfo.sharedTypes.filter((typeId) => filteredIr.hasTypeId(typeId)),
         typesReferencedOnlyByService: filteredTypesReferencedOnlyByService
-    };
-}
-
-function convertReadmeConfig({
-    endpointSet,
-    readme
-}: {
-    endpointSet: EndpointSet;
-    readme: generatorsYml.ReadmeSchema;
-}): ReadmeConfig {
-    return {
-        apiReferenceLink: readme.apiReferenceLink,
-        bannerLink: readme.bannerLink,
-        defaultEndpoint:
-            readme.defaultEndpoint != null
-                ? endpointSet.getEndpointForReadmeOrThrow(readme.defaultEndpoint).id
-                : undefined,
-        features:
-            readme.features != null
-                ? Object.fromEntries(
-                      Object.entries(readme.features).map(([featureId, endpoints]) => {
-                          return [
-                              featureId,
-                              endpoints.map((endpoint) => endpointSet.getEndpointForReadmeOrThrow(endpoint).id)
-                          ];
-                      })
-                  )
-                : undefined
     };
 }
