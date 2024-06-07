@@ -1,4 +1,4 @@
-package com.hume.api.core.pagination;
+package com.seed.pagination.core.pagination;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public class SyncPagingIterable<T> extends SyncPage<T> implements Iterable<T> {
 
@@ -15,6 +17,10 @@ public class SyncPagingIterable<T> extends SyncPage<T> implements Iterable<T> {
 
     public SyncPagingIterable(boolean hasNext, Optional<List<T>> items, Supplier<? extends SyncPage<T>> getNext) {
         super(hasNext, items.orElse(new ArrayList<>()), getNext);
+    }
+
+    public Stream<T> streamItems() {
+        return StreamSupport.stream(this.spliterator(), false);
     }
 
     @Override

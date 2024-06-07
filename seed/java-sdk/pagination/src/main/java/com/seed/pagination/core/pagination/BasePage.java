@@ -1,4 +1,4 @@
-package com.hume.api.core.pagination;
+package com.seed.pagination.core.pagination;
 
 import java.util.List;
 
