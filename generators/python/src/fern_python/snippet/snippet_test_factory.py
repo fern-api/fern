@@ -1,5 +1,6 @@
 import os
 from typing import Any, Dict, Optional, Tuple, Union
+import typing
 
 import fern.ir.resources as ir_types
 
@@ -320,9 +321,8 @@ class SnippetTestFactory:
         response_name = "response"
         async_response_name = "async_response"
 
-        response_body = example_response.get_as_union().body if example_response is not None else None
-        response_json = response_body.json_example if response_body is not None else None
-        response_body = example_response.get_as_union().body if example_response is not None else None
+        response_body = self.maybe_get_response_body(example_response)
+        response_json = response_body.json() if response_body is not None else None
 
         def writer(writer: AST.NodeWriter) -> None:
             if response_json is not None:
@@ -387,6 +387,16 @@ class SnippetTestFactory:
 
         return AST.CodeWriter(writer)
 
+    def maybe_get_response_body(self, example_response: Optional[ir_types.ExampleResponse]) -> Optional[ir_types.ExampleTypeReference]:
+        example_response.visit(
+            ok= lambda res: res.visit(
+                body=lambda body: body if body else None,
+                stream=lambda _stream: None,
+                sse=lambda _sse: None
+            ),
+            error= lambda err: None
+        ) if example_response else None
+
     def _client_snippet(self, is_async: bool, package_path: str, function_invocation: AST.Expression) -> AST.Expression:
         def client_writer(writer: AST.NodeWriter) -> None:
             if is_async:
@@ -423,8 +433,8 @@ class SnippetTestFactory:
                 or (
                     endpoint.response is not None
                     and (
-                        endpoint.response.get_as_union().type == "streaming"
-                        or endpoint.response.get_as_union().type == "fileDownload"
+                        endpoint.response.body.get_as_union().type == "streaming"
+                        or endpoint.response.body.get_as_union().type == "fileDownload"
                     )
                 )
                 or (

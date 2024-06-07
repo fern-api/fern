@@ -329,8 +329,8 @@ class EndpointFunctionGenerator:
                 True
                 if endpoint.response is not None
                 and (
-                    endpoint.response.get_as_union().type == "streaming"
-                    or endpoint.response.get_as_union().type == "fileDownload"
+                    endpoint.response.body.get_as_union().type == "streaming"
+                    or endpoint.response.body.get_as_union().type == "fileDownload"
                 )
                 else False
             )
@@ -643,7 +643,7 @@ class EndpointFunctionGenerator:
         return fallback_typehint
 
     def _get_response_body_type(self, response: ir_types.HttpResponse, is_async: bool) -> AST.TypeHint:
-        response_type = response.visit(
+        response_type = response.body.visit(
             file_download=lambda _: (
                 AST.TypeHint.async_iterator(AST.TypeHint.bytes())
                 if self._is_async
@@ -678,7 +678,7 @@ class EndpointFunctionGenerator:
         self, writer: NodeWriter, response: Optional[ir_types.HttpResponse], response_hint: AST.TypeHint
     ) -> None:
         if response is not None:
-            response.visit(
+            response.body.visit(
                 file_download=lambda fd: self._write_yielding_return(writer, response_hint, fd.docs),
                 json=lambda json_response: self._write_standard_return(
                     writer, response_hint, json_response.get_as_union().docs
@@ -1108,7 +1108,7 @@ class EndpointFunctionSnippetGenerator:
         )
 
     def generate_usage(self, response_name: str, is_async: bool) -> Optional[AST.Expression]:
-        if self.endpoint.response is not None and self.endpoint.response.get_as_union().type == "streaming":
+        if self.endpoint.response is not None and self.endpoint.response.body.get_as_union().type == "streaming":
 
             def snippet_writer(writer: AST.NodeWriter) -> None:
                 if is_async:

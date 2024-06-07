@@ -326,7 +326,7 @@ class EndpointGenerator:
             writer.write_line(f"raise {CAUGHT_ERROR_NAME}")
 
     def _get_response_body_type(self, response: ir_types.HttpResponse) -> AST.TypeHint:
-        return response.visit(
+        return response.body.visit(
             file_download=raise_file_download_unsupported,
             json=lambda json_response: self._get_json_response_body_type(json_response),
             text=lambda _: AST.TypeHint.str_(),

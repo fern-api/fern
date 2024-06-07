@@ -306,7 +306,7 @@ class EndpointResponseCodeWriter:
             if self._endpoint.response is None:
                 writer.write_line("return")
             else:
-                self._endpoint.response.visit(
+                self._endpoint.response.body.visit(
                     json=lambda json_response: self._handle_success_json(
                         writer=writer, json_response=json_response, use_response_json=False
                     ),
@@ -320,8 +320,8 @@ class EndpointResponseCodeWriter:
         # in streaming responses, we need to call read() or aread()
         # before deserializing or httpx will raise ResponseNotRead
         if self._endpoint.response is not None and (
-            self._endpoint.response.get_as_union().type == "streaming"
-            or self._endpoint.response.get_as_union().type == "fileDownload"
+            self._endpoint.response.body.get_as_union().type == "streaming"
+            or self._endpoint.response.body.get_as_union().type == "fileDownload"
         ):
             writer.write_line(
                 f"await {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.aread()"
@@ -379,7 +379,7 @@ class EndpointResponseCodeWriter:
             if self._endpoint.response is None:
                 writer.write_line("return")
             else:
-                self._endpoint.response.visit(
+                self._endpoint.response.body.visit(
                     json=lambda json_response: self._handle_success_json(
                         writer=writer, json_response=json_response, use_response_json=True
                     ),
@@ -457,7 +457,7 @@ class EndpointResponseCodeWriter:
             writer.write_newline_if_last_line_not()
 
     def _get_response_body_type(self, response: ir_types.HttpResponse) -> AST.TypeHint:
-        return response.visit(
+        return response.body.visit(
             file_download=lambda _: AST.TypeHint.async_iterator(AST.TypeHint.bytes())
             if self._is_async
             else AST.TypeHint.iterator(AST.TypeHint.bytes()),
