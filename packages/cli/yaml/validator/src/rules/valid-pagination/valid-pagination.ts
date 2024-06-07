@@ -7,13 +7,15 @@ import { validateOffsetPagination } from "./validateOffsetPagination";
 
 export const ValidPaginationRule: Rule = {
     name: "valid-pagination",
-    create: ({ workspace }) => {
+    create: async ({ workspace }) => {
         const typeResolver = new TypeResolverImpl(workspace);
-        const defaultPagination = workspace.definition.rootApiFile.contents.pagination;
+
+        const workspaceDefinition = await workspace.getDefinition();
+        const defaultPagination = workspaceDefinition.rootApiFile.contents.pagination;
 
         return {
             definitionFile: {
-                httpEndpoint: ({ endpointId, endpoint }, { relativeFilepath, contents: definitionFile }) => {
+                httpEndpoint: async ({ endpointId, endpoint }, { relativeFilepath, contents: definitionFile }) => {
                     const endpointPagination =
                         typeof endpoint.pagination === "boolean" ? defaultPagination : endpoint.pagination;
                     if (!endpointPagination) {
@@ -24,11 +26,11 @@ export const ValidPaginationRule: Rule = {
                         relativeFilepath,
                         definitionFile,
                         casingsGenerator: CASINGS_GENERATOR,
-                        rootApiFile: workspace.definition.rootApiFile.contents
+                        rootApiFile: workspaceDefinition.rootApiFile.contents
                     });
 
                     if (isRawCursorPaginationSchema(endpointPagination)) {
-                        return validateCursorPagination({
+                        return await validateCursorPagination({
                             endpointId,
                             endpoint,
                             typeResolver,
@@ -36,7 +38,7 @@ export const ValidPaginationRule: Rule = {
                             cursorPagination: endpointPagination
                         });
                     }
-                    return validateOffsetPagination({
+                    return await validateOffsetPagination({
                         endpointId,
                         endpoint,
                         typeResolver,

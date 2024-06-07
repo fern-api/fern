@@ -10,7 +10,7 @@ import { RawSchemas, visitExampleResponseSchema } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { RuleViolation } from "../../Rule";
 
-export function validateResponse({
+export async function validateResponse({
     example,
     endpoint,
     typeResolver,
@@ -26,9 +26,9 @@ export function validateResponse({
     file: FernFileContext;
     workspace: FernWorkspace;
     errorResolver: ErrorResolver;
-}): RuleViolation[] {
+}): Promise<RuleViolation[]> {
     if (example == null) {
-        return validateBodyResponse({
+        return await validateBodyResponse({
             example: {},
             endpoint,
             typeResolver,
@@ -39,15 +39,24 @@ export function validateResponse({
         });
     }
     return visitExampleResponseSchema(endpoint, example, {
-        body: (example) =>
-            validateBodyResponse({ example, endpoint, typeResolver, exampleResolver, file, workspace, errorResolver }),
-        stream: (example) =>
-            validateStreamResponse({ example, endpoint, typeResolver, exampleResolver, file, workspace }),
-        events: (example) => validateSseResponse({ example, endpoint, typeResolver, exampleResolver, file, workspace })
+        body: async (example) =>
+            await validateBodyResponse({
+                example,
+                endpoint,
+                typeResolver,
+                exampleResolver,
+                file,
+                workspace,
+                errorResolver
+            }),
+        stream: async (example) =>
+            await validateStreamResponse({ example, endpoint, typeResolver, exampleResolver, file, workspace }),
+        events: async (example) =>
+            await validateSseResponse({ example, endpoint, typeResolver, exampleResolver, file, workspace })
     });
 }
 
-function validateBodyResponse({
+async function validateBodyResponse({
     example,
     endpoint,
     typeResolver,
@@ -63,20 +72,22 @@ function validateBodyResponse({
     file: FernFileContext;
     workspace: FernWorkspace;
     errorResolver: ErrorResolver;
-}): RuleViolation[] {
+}): Promise<RuleViolation[]> {
     const violations: RuleViolation[] = [];
     if (example.error == null) {
         if (endpoint.response != null) {
             violations.push(
-                ...ExampleValidators.validateTypeReferenceExample({
-                    rawTypeReference:
-                        typeof endpoint.response !== "string" ? endpoint.response.type : endpoint.response,
-                    example: example.body,
-                    typeResolver,
-                    exampleResolver,
-                    file,
-                    workspace
-                }).map((val): RuleViolation => {
+                ...(
+                    await ExampleValidators.validateTypeReferenceExample({
+                        rawTypeReference:
+                            typeof endpoint.response !== "string" ? endpoint.response.type : endpoint.response,
+                        example: example.body,
+                        typeResolver,
+                        exampleResolver,
+                        file,
+                        workspace
+                    })
+                ).map((val): RuleViolation => {
                     return {
                         severity: "error",
                         message: val.message
@@ -91,7 +102,7 @@ function validateBodyResponse({
             });
         }
     } else {
-        const errorDeclaration = errorResolver.getDeclaration(example.error, file);
+        const errorDeclaration = await errorResolver.getDeclaration(example.error, file);
 
         // if error doesn't exist. this will be caught by another rule
         if (errorDeclaration != null) {
@@ -114,14 +125,16 @@ function validateBodyResponse({
 
             if (errorDeclaration.declaration.type != null) {
                 violations.push(
-                    ...ExampleValidators.validateTypeReferenceExample({
-                        rawTypeReference: errorDeclaration.declaration.type,
-                        example: example.body,
-                        typeResolver,
-                        exampleResolver,
-                        file: errorDeclaration.file,
-                        workspace
-                    }).map((val): RuleViolation => {
+                    ...(
+                        await ExampleValidators.validateTypeReferenceExample({
+                            rawTypeReference: errorDeclaration.declaration.type,
+                            example: example.body,
+                            typeResolver,
+                            exampleResolver,
+                            file: errorDeclaration.file,
+                            workspace
+                        })
+                    ).map((val): RuleViolation => {
                         return { severity: "error", message: val.message };
                     })
                 );
@@ -137,7 +150,7 @@ function validateBodyResponse({
     return violations;
 }
 
-function validateStreamResponse({
+async function validateStreamResponse({
     example,
     endpoint,
     typeResolver,
@@ -151,7 +164,7 @@ function validateStreamResponse({
     typeResolver: TypeResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): RuleViolation[] {
+}): Promise<RuleViolation[]> {
     const violations: RuleViolation[] = [];
     if (endpoint["response-stream"] == null) {
         violations.push({
@@ -165,17 +178,19 @@ function validateStreamResponse({
     ) {
         for (const event of example.stream) {
             violations.push(
-                ...ExampleValidators.validateTypeReferenceExample({
-                    rawTypeReference:
-                        typeof endpoint["response-stream"] !== "string"
-                            ? endpoint["response-stream"].type
-                            : endpoint["response-stream"],
-                    example: event,
-                    typeResolver,
-                    exampleResolver,
-                    file,
-                    workspace
-                }).map((val): RuleViolation => {
+                ...(
+                    await ExampleValidators.validateTypeReferenceExample({
+                        rawTypeReference:
+                            typeof endpoint["response-stream"] !== "string"
+                                ? endpoint["response-stream"].type
+                                : endpoint["response-stream"],
+                        example: event,
+                        typeResolver,
+                        exampleResolver,
+                        file,
+                        workspace
+                    })
+                ).map((val): RuleViolation => {
                     return { severity: "error", message: val.message };
                 })
             );
@@ -191,7 +206,7 @@ function validateStreamResponse({
     return violations;
 }
 
-function validateSseResponse({
+async function validateSseResponse({
     example,
     endpoint,
     typeResolver,
@@ -205,7 +220,7 @@ function validateSseResponse({
     typeResolver: TypeResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): RuleViolation[] {
+}): Promise<RuleViolation[]> {
     const violations: RuleViolation[] = [];
     if (endpoint["response-stream"] == null) {
         violations.push({
@@ -215,17 +230,19 @@ function validateSseResponse({
     } else if (typeof endpoint["response-stream"] !== "string" && endpoint["response-stream"].format === "sse") {
         for (const event of example.stream) {
             violations.push(
-                ...ExampleValidators.validateTypeReferenceExample({
-                    rawTypeReference:
-                        typeof endpoint["response-stream"] !== "string"
-                            ? endpoint["response-stream"].type
-                            : endpoint["response-stream"],
-                    example: event.data,
-                    typeResolver,
-                    exampleResolver,
-                    file,
-                    workspace
-                }).map((val): RuleViolation => {
+                ...(
+                    await ExampleValidators.validateTypeReferenceExample({
+                        rawTypeReference:
+                            typeof endpoint["response-stream"] !== "string"
+                                ? endpoint["response-stream"].type
+                                : endpoint["response-stream"],
+                        example: event.data,
+                        typeResolver,
+                        exampleResolver,
+                        file,
+                        workspace
+                    })
+                ).map((val): RuleViolation => {
                     return { severity: "error", message: val.message };
                 })
             );

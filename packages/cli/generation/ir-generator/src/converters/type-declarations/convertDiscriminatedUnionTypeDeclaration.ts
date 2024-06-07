@@ -1,4 +1,4 @@
-import { SingleUnionType, SingleUnionTypeProperties, Type, TypeReference } from "@fern-api/ir-sdk";
+import { SingleUnionTypeProperties, Type, TypeReference } from "@fern-api/ir-sdk";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
@@ -38,43 +38,45 @@ export async function convertDiscriminatedUnionTypeDeclaration({
                       }))
                   )
                 : [],
-        types: Object.entries(union.union).map(([unionKey, rawSingleUnionType]): SingleUnionType => {
-            const rawType: string | undefined =
-                typeof rawSingleUnionType === "string"
-                    ? rawSingleUnionType
-                    : typeof rawSingleUnionType.type === "string"
-                    ? rawSingleUnionType.type
-                    : undefined;
+        types: await Promise.all(
+            Object.entries(union.union).map(async ([unionKey, rawSingleUnionType]) => {
+                const rawType: string | undefined =
+                    typeof rawSingleUnionType === "string"
+                        ? rawSingleUnionType
+                        : typeof rawSingleUnionType.type === "string"
+                        ? rawSingleUnionType.type
+                        : undefined;
 
-            const discriminantValue = file.casingsGenerator.generateNameAndWireValue({
-                wireValue: unionKey,
-                name: getSingleUnionTypeName({ unionKey, rawSingleUnionType }).name
-            });
+                const discriminantValue = file.casingsGenerator.generateNameAndWireValue({
+                    wireValue: unionKey,
+                    name: getSingleUnionTypeName({ unionKey, rawSingleUnionType }).name
+                });
 
-            const docs = getDocs(rawSingleUnionType);
+                const docs = getDocs(rawSingleUnionType);
 
-            if (rawType == null) {
+                if (rawType == null) {
+                    return {
+                        discriminantValue,
+                        docs,
+                        shape: SingleUnionTypeProperties.noProperties()
+                    };
+                }
+
+                const parsedValueType = file.parseTypeReference(rawType);
+
                 return {
                     discriminantValue,
-                    docs,
-                    shape: SingleUnionTypeProperties.noProperties()
+                    shape: await getSingleUnionTypeProperties({
+                        rawSingleUnionType,
+                        rawValueType: rawType,
+                        parsedValueType,
+                        file,
+                        typeResolver
+                    }),
+                    docs: getDocs(rawSingleUnionType)
                 };
-            }
-
-            const parsedValueType = file.parseTypeReference(rawType);
-
-            return {
-                discriminantValue,
-                shape: getSingleUnionTypeProperties({
-                    rawSingleUnionType,
-                    rawValueType: rawType,
-                    parsedValueType,
-                    file,
-                    typeResolver
-                }),
-                docs: getDocs(rawSingleUnionType)
-            };
-        })
+            })
+        )
     });
 }
 
@@ -127,7 +129,7 @@ export function getSingleUnionTypeName({
     };
 }
 
-export function getSingleUnionTypeProperties({
+export async function getSingleUnionTypeProperties({
     rawSingleUnionType,
     rawValueType,
     parsedValueType,
@@ -139,10 +141,10 @@ export function getSingleUnionTypeProperties({
     parsedValueType: TypeReference;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): SingleUnionTypeProperties.SamePropertiesAsObject | SingleUnionTypeProperties.SingleProperty {
+}): Promise<SingleUnionTypeProperties.SamePropertiesAsObject | SingleUnionTypeProperties.SingleProperty> {
     const singlePropertyKey = typeof rawSingleUnionType !== "string" ? rawSingleUnionType.key : undefined;
 
-    const resolvedType = typeResolver.resolveTypeOrThrow({ type: rawValueType, file });
+    const resolvedType = await typeResolver.resolveTypeOrThrow({ type: rawValueType, file });
     if (
         resolvedType._type === "named" &&
         isRawObjectDefinition(resolvedType.declaration) &&

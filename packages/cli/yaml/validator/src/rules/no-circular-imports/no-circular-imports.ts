@@ -14,8 +14,8 @@ interface CircularImport {
 export const NoCircularImportsRule: Rule = {
     name: "no-circular-imports",
     DISABLE_RULE: true,
-    create: ({ workspace }) => {
-        const circularImports = findCircularImports(workspace.definition.namedDefinitionFiles);
+    create: async ({ workspace }) => {
+        const circularImports = findCircularImports((await workspace.getDefinition()).namedDefinitionFiles);
 
         return {
             definitionFile: {

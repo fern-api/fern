@@ -5,7 +5,7 @@ import { Rule } from "../../Rule";
 export const NoMissingErrorDiscriminantRule: Rule = {
     name: "no-missing-error-discriminant",
     create: async ({ workspace }) => {
-        if (!doesApiDeclareErrors(workspace)) {
+        if (!(await doesApiDeclareErrors(workspace))) {
             return {};
         }
 
@@ -28,8 +28,8 @@ export const NoMissingErrorDiscriminantRule: Rule = {
     }
 };
 
-function doesApiDeclareErrors(workspace: FernWorkspace): boolean {
-    for (const file of Object.values(getAllNamedDefinitionFiles(workspace.definition))) {
+async function doesApiDeclareErrors(workspace: FernWorkspace): Promise<boolean> {
+    for (const file of Object.values(getAllNamedDefinitionFiles(await workspace.getDefinition()))) {
         if (file.contents.errors != null && !isEmpty(file.contents.errors)) {
             return true;
         }

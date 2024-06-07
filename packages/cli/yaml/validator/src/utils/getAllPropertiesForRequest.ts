@@ -8,7 +8,7 @@ import {
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
 
-export function getAllPropertiesForRequest({
+export async function getAllPropertiesForRequest({
     endpoint,
     filepath,
     definitionFile,
@@ -18,7 +18,7 @@ export function getAllPropertiesForRequest({
     filepath: RelativeFilePath;
     definitionFile: RawSchemas.DefinitionFileSchema;
     workspace: FernWorkspace;
-}): ObjectPropertyWithPath[] | undefined {
+}): Promise<ObjectPropertyWithPath[] | undefined> {
     if (endpoint.request == null) {
         return undefined;
     }
@@ -26,7 +26,7 @@ export function getAllPropertiesForRequest({
     const typeResolver = new TypeResolverImpl(workspace);
 
     if (typeof endpoint.request === "string") {
-        return getAllPropertiesForType({
+        return await getAllPropertiesForType({
             typeName: endpoint.request,
             filepathOfDeclaration: filepath,
             definitionFile,
@@ -41,7 +41,7 @@ export function getAllPropertiesForRequest({
     }
 
     if (typeof endpoint.request.body === "string" || !isInlineRequestBody(endpoint.request.body)) {
-        return getAllPropertiesForType({
+        return await getAllPropertiesForType({
             typeName: typeof endpoint.request.body === "string" ? endpoint.request.body : endpoint.request.body.type,
             filepathOfDeclaration: filepath,
             definitionFile,
@@ -51,7 +51,7 @@ export function getAllPropertiesForRequest({
         });
     }
 
-    return getAllPropertiesForObject({
+    return await getAllPropertiesForObject({
         typeName: undefined,
         objectDeclaration: {
             extends: endpoint.request.body.extends,

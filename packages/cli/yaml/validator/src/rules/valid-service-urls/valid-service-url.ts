@@ -5,8 +5,8 @@ import { getAllEnvironmentUrlIds } from "../../utils/getAllEnvironmentUriIds";
 
 export const ValidServiceUrlsRule: Rule = {
     name: "valid-service-urls",
-    create: ({ workspace }) => {
-        const urlIds = getAllEnvironmentUrlIds(workspace);
+    create: async ({ workspace }) => {
+        const urlIds = await getAllEnvironmentUrlIds(workspace);
 
         const validateBaseUrl = (url: string): RuleViolation[] => {
             if (urlIds.includes(url)) {

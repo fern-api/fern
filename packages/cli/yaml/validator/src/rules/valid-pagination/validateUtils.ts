@@ -10,7 +10,7 @@ import {
     ResponsePropertyValidator
 } from "../../utils/propertyValidatorUtils";
 
-export function validateResultsProperty({
+export async function validateResultsProperty({
     endpointId,
     typeResolver,
     file,
@@ -22,8 +22,8 @@ export function validateResultsProperty({
     file: FernFileContext;
     resolvedResponseType: ResolvedType;
     resultsProperty: string;
-}): RuleViolation[] {
-    return validateResponseProperty({
+}): Promise<RuleViolation[]> {
+    return await validateResponseProperty({
         endpointId,
         typeResolver,
         file,
@@ -36,7 +36,7 @@ export function validateResultsProperty({
     });
 }
 
-export function validateQueryParameterProperty({
+export async function validateQueryParameterProperty({
     endpointId,
     endpoint,
     typeResolver,
@@ -50,7 +50,7 @@ export function validateQueryParameterProperty({
     file: FernFileContext;
     queryParameterProperty: string;
     propertyValidator: ResponsePropertyValidator;
-}): RuleViolation[] {
+}): Promise<RuleViolation[]> {
     const violations: RuleViolation[] = [];
 
     const queryPropertyComponents = getRequestPropertyComponents(queryParameterProperty);
@@ -98,17 +98,17 @@ export function validateQueryParameterProperty({
     }
 
     const queryParameterType = typeof queryParameter !== "string" ? queryParameter.type : queryParameter;
-    const resolvedQueryParameterType = typeResolver.resolveType({
+    const resolvedQueryParameterType = await typeResolver.resolveType({
         type: queryParameterType,
         file
     });
     if (
-        !propertyValidator.validate({
+        !(await propertyValidator.validate({
             typeResolver,
             file: maybeFileFromResolvedType(resolvedQueryParameterType) ?? file,
             resolvedType: resolvedQueryParameterType,
             propertyComponents: queryPropertyComponents.slice(1)
-        })
+        }))
     ) {
         violations.push({
             severity: "error",
@@ -121,7 +121,7 @@ export function validateQueryParameterProperty({
     return violations;
 }
 
-export function validateResponseProperty({
+export async function validateResponseProperty({
     endpointId,
     typeResolver,
     file,
@@ -135,7 +135,7 @@ export function validateResponseProperty({
     resolvedResponseType: ResolvedType;
     responseProperty: string;
     propertyValidator: ResponsePropertyValidator;
-}): RuleViolation[] {
+}): Promise<RuleViolation[]> {
     const violations: RuleViolation[] = [];
 
     const responsePropertyComponents = getResponsePropertyComponents(responseProperty);
@@ -150,12 +150,12 @@ export function validateResponseProperty({
 
     if (
         responsePropertyComponents != null &&
-        !propertyValidator.validate({
+        !(await propertyValidator.validate({
             typeResolver,
             file,
             resolvedType: resolvedResponseType,
             propertyComponents: responsePropertyComponents
-        })
+        }))
     ) {
         violations.push({
             severity: "error",
@@ -168,7 +168,7 @@ export function validateResponseProperty({
     return violations;
 }
 
-function isValidResultsProperty({
+async function isValidResultsProperty({
     typeResolver,
     file,
     resolvedType,
@@ -178,8 +178,8 @@ function isValidResultsProperty({
     file: FernFileContext;
     resolvedType: ResolvedType | undefined;
     propertyComponents: string[];
-}): boolean {
-    return resolvedTypeHasProperty({
+}): Promise<boolean> {
+    return await resolvedTypeHasProperty({
         typeResolver,
         file,
         resolvedType,

@@ -1,4 +1,4 @@
-import { ExampleType, FernFilepath, Type, TypeDeclaration } from "@fern-api/ir-sdk";
+import { FernFilepath, Type, TypeDeclaration } from "@fern-api/ir-sdk";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { isRawObjectDefinition, RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../../FernFileContext";
@@ -42,7 +42,7 @@ export async function convertTypeDeclaration({
         typeName,
         file
     });
-    const referencedTypes = getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver });
+    const referencedTypes = await getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver });
 
     let propertiesByAudience: Record<AudienceId, Set<string>> = {};
     if (isRawObjectDefinition(typeDeclaration)) {
@@ -58,15 +58,17 @@ export async function convertTypeDeclaration({
             referencedTypes: new Set(referencedTypes.map((referencedType) => referencedType.typeId)),
             examples:
                 typeof typeDeclaration !== "string" && typeDeclaration.examples != null
-                    ? typeDeclaration.examples.map(
-                          (example): ExampleType => ({
+                    ? await Promise.all(
+                          typeDeclaration.examples.map(async (example) => ({
                               name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
                               docs: example.docs,
-                              jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({
-                                  example: example.value,
-                                  file
-                              }).resolvedExample,
-                              shape: convertTypeExample({
+                              jsonExample: (
+                                  await exampleResolver.resolveAllReferencesInExampleOrThrow({
+                                      example: example.value,
+                                      file
+                                  })
+                              ).resolvedExample,
+                              shape: await convertTypeExample({
                                   typeName: declaredTypeName,
                                   example: example.value,
                                   typeResolver,
@@ -76,7 +78,7 @@ export async function convertTypeDeclaration({
                                   fileContainingExample: file,
                                   workspace
                               })
-                          })
+                          }))
                       )
                     : []
         },
@@ -94,10 +96,11 @@ export async function convertType({
     typeResolver: TypeResolver;
 }): Promise<Type> {
     return await visitRawTypeDeclaration<Promise<Type> | Type>(typeDeclaration, {
-        alias: (alias) => convertAliasTypeDeclaration({ alias, file, typeResolver }),
-        object: (object) => convertObjectTypeDeclaration({ object, file }),
-        discriminatedUnion: (union) => convertDiscriminatedUnionTypeDeclaration({ union, file, typeResolver }),
-        undiscriminatedUnion: (union) => convertUndiscriminatedUnionTypeDeclaration({ union, file }),
-        enum: (enum_) => convertEnumTypeDeclaration({ _enum: enum_, file })
+        alias: async (alias) => await convertAliasTypeDeclaration({ alias, file, typeResolver }),
+        object: async (object) => await convertObjectTypeDeclaration({ object, file }),
+        discriminatedUnion: async (union) =>
+            await convertDiscriminatedUnionTypeDeclaration({ union, file, typeResolver }),
+        undiscriminatedUnion: async (union) => convertUndiscriminatedUnionTypeDeclaration({ union, file }),
+        enum: async (enum_) => await convertEnumTypeDeclaration({ _enum: enum_, file })
     });
 }

@@ -6,7 +6,7 @@ import { TypeResolver } from "../resolvers/TypeResolver";
 import { ExampleViolation } from "./exampleViolation";
 import { validateTypeReferenceExample } from "./validateTypeReferenceExample";
 
-export function validateAliasExample({
+export async function validateAliasExample({
     rawAlias,
     example,
     file,
@@ -20,8 +20,8 @@ export function validateAliasExample({
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
-}): ExampleViolation[] {
-    return validateTypeReferenceExample({
+}): Promise<ExampleViolation[]> {
+    return await validateTypeReferenceExample({
         rawTypeReference: typeof rawAlias === "string" ? rawAlias : rawAlias.type,
         example,
         file,

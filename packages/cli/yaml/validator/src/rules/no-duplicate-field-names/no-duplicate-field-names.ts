@@ -9,7 +9,7 @@ import {
 } from "@fern-api/ir-generator";
 import { getDefinitionFile } from "@fern-api/workspace-loader";
 import { isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
-import { groupBy, noop } from "lodash-es";
+import { groupBy } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import { getTypeDeclarationNameAsString } from "../../utils/getTypeDeclarationNameAsString";
@@ -21,13 +21,13 @@ export const NoDuplicateFieldNamesRule: Rule = {
 
         return {
             definitionFile: {
-                typeDeclaration: ({ typeName, declaration }, { relativeFilepath, contents }) => {
+                typeDeclaration: async ({ typeName, declaration }, { relativeFilepath, contents }) => {
                     const violations: RuleViolation[] = [];
 
-                    visitRawTypeDeclaration(declaration, {
-                        alias: noop,
+                    await visitRawTypeDeclaration<Promise<void>>(declaration, {
+                        alias: async () => Promise.resolve(),
 
-                        enum: (enumDeclaration) => {
+                        enum: async (enumDeclaration) => {
                             const duplicateNames = getDuplicateNames(
                                 enumDeclaration.enum,
                                 (value) => getEnumName(value).name
@@ -40,9 +40,9 @@ export const NoDuplicateFieldNamesRule: Rule = {
                             }
                         },
 
-                        object: (objectDeclaration) => {
+                        object: async (objectDeclaration) => {
                             const typeNameString = getTypeDeclarationNameAsString(typeName);
-                            const allProperties = getAllPropertiesForObject({
+                            const allProperties = await getAllPropertiesForObject({
                                 typeName: typeNameString,
                                 objectDeclaration,
                                 filepathOfDeclaration: relativeFilepath,
@@ -72,9 +72,9 @@ export const NoDuplicateFieldNamesRule: Rule = {
                             }
                         },
 
-                        undiscriminatedUnion: () => [],
+                        undiscriminatedUnion: async () => Promise.resolve(),
 
-                        discriminatedUnion: (unionDeclaration) => {
+                        discriminatedUnion: async (unionDeclaration) => {
                             const duplicateNames = getDuplicateNames(
                                 Object.entries(unionDeclaration.union),
                                 ([unionKey, rawSingleUnionType]) =>
@@ -96,13 +96,13 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                         : undefined;
 
                                 if (specifiedType != null) {
-                                    const resolvedType = typeResolver.resolveType({
+                                    const resolvedType = await typeResolver.resolveType({
                                         type: specifiedType,
                                         file: constructFernFileContext({
                                             relativeFilepath,
                                             definitionFile: contents,
                                             casingsGenerator: CASINGS_GENERATOR,
-                                            rootApiFile: workspace.definition.rootApiFile.contents
+                                            rootApiFile: (await workspace.getDefinition()).rootApiFile.contents
                                         })
                                     });
 
@@ -116,11 +116,14 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                         isRawObjectDefinition(resolvedType.declaration)
                                     ) {
                                         const discriminantName = getUnionDiscriminantName(unionDeclaration).name;
-                                        const definitionFile = getDefinitionFile(workspace, resolvedType.filepath);
+                                        const definitionFile = await getDefinitionFile(
+                                            workspace,
+                                            resolvedType.filepath
+                                        );
                                         if (definitionFile == null) {
                                             continue;
                                         }
-                                        const propertiesOnObject = getAllPropertiesForObject({
+                                        const propertiesOnObject = await getAllPropertiesForObject({
                                             typeName: resolvedType.rawName,
                                             objectDeclaration: resolvedType.declaration,
                                             filepathOfDeclaration: resolvedType.filepath,

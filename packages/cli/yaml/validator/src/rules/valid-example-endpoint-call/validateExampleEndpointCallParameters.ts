@@ -3,7 +3,7 @@ import { FernWorkspace } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { RuleViolation } from "../../Rule";
 
-export function validateExampleEndpointCallParameters<T>({
+export async function validateExampleEndpointCallParameters<T>({
     allDeclarations = {},
     examples,
     parameterDisplayName,
@@ -19,33 +19,36 @@ export function validateExampleEndpointCallParameters<T>({
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
     getRawType: (parameter: T) => { rawType: string; file: FernFileContext } | undefined;
-}): RuleViolation[] {
+}): Promise<RuleViolation[]> {
     const violations: RuleViolation[] = [];
 
-    const requiredParameters = Object.entries(allDeclarations).reduce<string[]>((acc, [key, parameter]) => {
-        const rawType = getRawType(parameter);
+    const requiredParameters = await Object.entries(allDeclarations).reduce<Promise<string[]>>(
+        async (acc, [key, parameter]) => {
+            const rawType = getRawType(parameter);
 
-        // if rawType is not defined, then variable couldn't be de-referenced.
-        // this will be caught by another rule
-        if (rawType != null) {
-            const resolvedType = typeResolver.resolveType({
-                type: rawType.rawType,
-                file: rawType.file
-            });
+            // if rawType is not defined, then variable couldn't be de-referenced.
+            // this will be caught by another rule
+            if (rawType != null) {
+                const resolvedType = await typeResolver.resolveType({
+                    type: rawType.rawType,
+                    file: rawType.file
+                });
 
-            const isOptional =
-                (resolvedType != null &&
-                    resolvedType._type === "container" &&
-                    resolvedType.container._type === "optional") ||
-                resolvedType?._type === "unknown";
+                const isOptional =
+                    (resolvedType != null &&
+                        resolvedType._type === "container" &&
+                        resolvedType.container._type === "optional") ||
+                    resolvedType?._type === "unknown";
 
-            if (!isOptional) {
-                acc.push(key);
+                if (!isOptional) {
+                    (await acc).push(key);
+                }
             }
-        }
 
-        return acc;
-    }, []);
+            return acc;
+        },
+        Promise.resolve([])
+    );
 
     for (const requiredKey of requiredParameters) {
         if (examples?.[requiredKey] == null) {
@@ -71,14 +74,16 @@ export function validateExampleEndpointCallParameters<T>({
                 // this will be caught by another rule
                 if (rawType != null) {
                     violations.push(
-                        ...ExampleValidators.validateTypeReferenceExample({
-                            rawTypeReference: rawType.rawType,
-                            example: exampleParameter,
-                            file: rawType.file,
-                            workspace,
-                            typeResolver,
-                            exampleResolver
-                        }).map((val): RuleViolation => {
+                        ...(
+                            await ExampleValidators.validateTypeReferenceExample({
+                                rawTypeReference: rawType.rawType,
+                                example: exampleParameter,
+                                file: rawType.file,
+                                workspace,
+                                typeResolver,
+                                exampleResolver
+                            })
+                        ).map((val): RuleViolation => {
                             return { severity: "error", message: val.message };
                         })
                     );

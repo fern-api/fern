@@ -19,11 +19,11 @@ import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 
 export const NoConflictingRequestWrapperPropertiesRule: Rule = {
     name: "no-conflicting-request-wrapper-properties",
-    create: ({ workspace }) => {
+    create: async ({ workspace }) => {
         return {
             definitionFile: {
-                httpEndpoint: ({ endpoint, service }, { contents: definitionFile, relativeFilepath }) => {
-                    const nameToProperties = getRequestWrapperPropertiesByName({
+                httpEndpoint: async ({ endpoint, service }, { contents: definitionFile, relativeFilepath }) => {
+                    const nameToProperties = await getRequestWrapperPropertiesByName({
                         endpoint,
                         service,
                         relativeFilepath,
@@ -90,7 +90,7 @@ interface ReferencedBodyRequestWrapperProperty {
     propertyName: string;
 }
 
-function getRequestWrapperPropertiesByName({
+async function getRequestWrapperPropertiesByName({
     endpoint,
     service,
     relativeFilepath,
@@ -102,7 +102,7 @@ function getRequestWrapperPropertiesByName({
     relativeFilepath: RelativeFilePath;
     definitionFile: DefinitionFileSchema;
     workspace: FernWorkspace;
-}): Record<string, RequestWrapperProperty[]> {
+}): Promise<Record<string, RequestWrapperProperty[]>> {
     const nameToProperties: Record<string, RequestWrapperProperty[]> = {};
     const addProperty = (name: string, property: RequestWrapperProperty) => {
         const propertiesForName = (nameToProperties[name] ??= []);
@@ -113,16 +113,16 @@ function getRequestWrapperPropertiesByName({
         const isBodyReferenced = endpoint.request.body != null && !isInlineRequestBody(endpoint.request.body);
         if (
             isBodyReferenced &&
-            doesRequestHaveNonBodyProperties({
+            (await doesRequestHaveNonBodyProperties({
                 request: endpoint.request,
                 file: constructFernFileContext({
                     relativeFilepath,
                     definitionFile,
                     casingsGenerator: CASINGS_GENERATOR,
-                    rootApiFile: workspace.definition.rootApiFile.contents
+                    rootApiFile: (await workspace.getDefinition()).rootApiFile.contents
                 }),
                 typeResolver: new TypeResolverImpl(workspace)
-            })
+            }))
         ) {
             addProperty(DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER, {
                 type: "referenced-body",
@@ -163,7 +163,7 @@ function getRequestWrapperPropertiesByName({
         }
 
         if (endpoint.request.body != null && isInlineRequestBody(endpoint.request.body)) {
-            const allProperties = getAllPropertiesForObject({
+            const allProperties = await getAllPropertiesForObject({
                 typeName: undefined,
                 objectDeclaration: {
                     extends: endpoint.request.body.extends,

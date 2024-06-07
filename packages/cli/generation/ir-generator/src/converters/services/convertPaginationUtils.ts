@@ -37,7 +37,7 @@ export function getPaginationPropertyComponents(
     };
 }
 
-export function resolveResponseType({
+export async function resolveResponseType({
     endpoint,
     typeResolver,
     file
@@ -45,8 +45,8 @@ export function resolveResponseType({
     endpoint: RawSchemas.HttpEndpointSchema;
     typeResolver: TypeResolver;
     file: FernFileContext;
-}): ResolvedType {
-    return typeResolver.resolveTypeOrThrow({
+}): Promise<ResolvedType> {
+    return await typeResolver.resolveTypeOrThrow({
         type: (typeof endpoint.response !== "string" ? endpoint.response?.type : endpoint.response) ?? "",
         file
     });

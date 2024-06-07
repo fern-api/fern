@@ -10,7 +10,7 @@ export const NoUndefinedExampleReferenceRule: Rule = {
 
         return {
             definitionFile: {
-                exampleTypeReference: (exampleReference, { relativeFilepath, contents }) => {
+                exampleTypeReference: async (exampleReference, { relativeFilepath, contents }) => {
                     if (exampleResolver.parseExampleReference(exampleReference) == null) {
                         return [
                             {
@@ -25,15 +25,15 @@ export const NoUndefinedExampleReferenceRule: Rule = {
                     }
 
                     const doesExist =
-                        exampleResolver.resolveExample({
+                        (await exampleResolver.resolveExample({
                             example: exampleReference,
                             file: constructFernFileContext({
                                 relativeFilepath,
                                 definitionFile: contents,
                                 casingsGenerator: CASINGS_GENERATOR,
-                                rootApiFile: workspace.definition.rootApiFile.contents
+                                rootApiFile: (await workspace.getDefinition()).rootApiFile.contents
                             })
-                        }) != null;
+                        })) != null;
 
                     if (doesExist) {
                         return [];

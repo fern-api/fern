@@ -26,9 +26,9 @@ export type ResponsePropertyValidatorFunc = ({
     file: FernFileContext;
     resolvedType: ResolvedType | undefined;
     propertyComponents: string[];
-}) => boolean;
+}) => Promise<boolean>;
 
-export function requestTypeHasProperty({
+export async function requestTypeHasProperty({
     typeResolver,
     file,
     endpoint,
@@ -40,15 +40,15 @@ export function requestTypeHasProperty({
     endpoint: RawSchemas.HttpEndpointSchema;
     propertyComponents: string[];
     validate: RequestPropertyValidatorFunc;
-}): boolean {
+}): Promise<boolean> {
     if (endpoint.request == null) {
         return false;
     }
     if (typeof endpoint.request === "string") {
-        return resolvedTypeHasProperty({
+        return await resolvedTypeHasProperty({
             typeResolver,
             file,
-            resolvedType: typeResolver.resolveType({
+            resolvedType: await typeResolver.resolveType({
                 type: endpoint.request,
                 file
             }),
@@ -56,7 +56,7 @@ export function requestTypeHasProperty({
             validate
         });
     }
-    return inlinedRequestTypeHasProperty({
+    return await inlinedRequestTypeHasProperty({
         typeResolver,
         file,
         requestType: endpoint.request,
@@ -65,7 +65,7 @@ export function requestTypeHasProperty({
     });
 }
 
-function inlinedRequestTypeHasProperty({
+async function inlinedRequestTypeHasProperty({
     typeResolver,
     file,
     requestType,
@@ -77,9 +77,9 @@ function inlinedRequestTypeHasProperty({
     requestType: RawSchemas.HttpRequestSchema;
     propertyComponents: string[];
     validate: RequestPropertyValidatorFunc;
-}): boolean {
+}): Promise<boolean> {
     if (
-        isQueryParameterProperty({
+        await isQueryParameterProperty({
             typeResolver,
             file,
             requestType,
@@ -93,10 +93,10 @@ function inlinedRequestTypeHasProperty({
         return false;
     }
     if (typeof requestType.body === "string") {
-        return resolvedTypeHasProperty({
+        return await resolvedTypeHasProperty({
             typeResolver,
             file,
-            resolvedType: typeResolver.resolveType({
+            resolvedType: await typeResolver.resolveType({
                 type: requestType.body,
                 file
             }),
@@ -105,7 +105,7 @@ function inlinedRequestTypeHasProperty({
         });
     }
     if (isInlineRequestBody(requestType.body)) {
-        return objectSchemaHasProperty({
+        return await objectSchemaHasProperty({
             typeResolver,
             file,
             objectSchema: requestType.body,
@@ -113,10 +113,10 @@ function inlinedRequestTypeHasProperty({
             validate
         });
     }
-    return resolvedTypeHasProperty({
+    return await resolvedTypeHasProperty({
         typeResolver,
         file,
-        resolvedType: typeResolver.resolveType({
+        resolvedType: await typeResolver.resolveType({
             type: requestType.body.type,
             file
         }),
@@ -125,7 +125,7 @@ function inlinedRequestTypeHasProperty({
     });
 }
 
-export function isQueryParameterProperty({
+export async function isQueryParameterProperty({
     typeResolver,
     file,
     requestType,
@@ -137,7 +137,7 @@ export function isQueryParameterProperty({
     requestType: RawSchemas.HttpRequestSchema;
     propertyComponents: string[];
     validate: RequestPropertyValidatorFunc;
-}): boolean {
+}): Promise<boolean> {
     if (propertyComponents.length !== 1 || typeof requestType === "string" || requestType["query-parameters"] == null) {
         return false;
     }
@@ -145,7 +145,7 @@ export function isQueryParameterProperty({
     if (queryParameter == null) {
         return false;
     }
-    const resolvedQueryParameterType = typeResolver.resolveType({
+    const resolvedQueryParameterType = await typeResolver.resolveType({
         type: typeof queryParameter !== "string" ? queryParameter.type : queryParameter,
         file
     });
@@ -154,7 +154,7 @@ export function isQueryParameterProperty({
     });
 }
 
-export function resolvedTypeHasProperty({
+export async function resolvedTypeHasProperty({
     typeResolver,
     file,
     resolvedType,
@@ -166,7 +166,7 @@ export function resolvedTypeHasProperty({
     resolvedType: ResolvedType | undefined;
     propertyComponents: string[];
     validate: RequestPropertyValidatorFunc;
-}): boolean {
+}): Promise<boolean> {
     if (propertyComponents.length === 0) {
         return validate({ resolvedType });
     }
@@ -174,7 +174,7 @@ export function resolvedTypeHasProperty({
     if (objectSchema == null) {
         return false;
     }
-    return objectSchemaHasProperty({
+    return await objectSchemaHasProperty({
         typeResolver,
         file,
         objectSchema,
@@ -183,7 +183,7 @@ export function resolvedTypeHasProperty({
     });
 }
 
-export function resolveResponseType({
+export async function resolveResponseType({
     endpoint,
     typeResolver,
     file
@@ -191,12 +191,12 @@ export function resolveResponseType({
     endpoint: RawSchemas.HttpEndpointSchema;
     typeResolver: TypeResolver;
     file: FernFileContext;
-}): ResolvedType | undefined {
+}): Promise<ResolvedType | undefined> {
     const responseType = typeof endpoint.response !== "string" ? endpoint.response?.type : endpoint.response;
     if (responseType == null) {
         return undefined;
     }
-    return typeResolver.resolveType({
+    return await typeResolver.resolveType({
         type: responseType,
         file
     });
@@ -235,7 +235,7 @@ export function getResponsePropertyComponents(value: string): string[] | undefin
     return trimmed?.split(".");
 }
 
-function objectSchemaHasProperty({
+async function objectSchemaHasProperty({
     typeResolver,
     file,
     objectSchema,
@@ -247,8 +247,8 @@ function objectSchemaHasProperty({
     objectSchema: RawSchemas.ObjectSchema;
     propertyComponents: string[];
     validate: RequestPropertyValidatorFunc;
-}): boolean {
-    const property = getPropertyTypeFromObjectSchema({
+}): Promise<boolean> {
+    const property = await getPropertyTypeFromObjectSchema({
         typeResolver,
         file,
         objectSchema,
@@ -257,11 +257,11 @@ function objectSchemaHasProperty({
     if (property == null) {
         return false;
     }
-    const resolvedTypeProperty = typeResolver.resolveType({
+    const resolvedTypeProperty = await typeResolver.resolveType({
         type: property,
         file
     });
-    return resolvedTypeHasProperty({
+    return await resolvedTypeHasProperty({
         typeResolver,
         file: maybeFileFromResolvedType(resolvedTypeProperty) ?? file,
         resolvedType: resolvedTypeProperty,
@@ -270,7 +270,7 @@ function objectSchemaHasProperty({
     });
 }
 
-function getPropertyTypeFromObjectSchema({
+async function getPropertyTypeFromObjectSchema({
     typeResolver,
     file,
     objectSchema,
@@ -280,8 +280,8 @@ function getPropertyTypeFromObjectSchema({
     file: FernFileContext;
     objectSchema: RawSchemas.ObjectSchema;
     property: string;
-}): string | undefined {
-    const properties = getAllPropertiesForRawObjectSchema({
+}): Promise<string | undefined> {
+    const properties = await getAllPropertiesForRawObjectSchema({
         typeResolver,
         file,
         objectSchema
@@ -289,7 +289,7 @@ function getPropertyTypeFromObjectSchema({
     return properties[property];
 }
 
-function getAllPropertiesForRawObjectSchema({
+async function getAllPropertiesForRawObjectSchema({
     typeResolver,
     file,
     objectSchema
@@ -297,7 +297,7 @@ function getAllPropertiesForRawObjectSchema({
     typeResolver: TypeResolver;
     file: FernFileContext;
     objectSchema: RawSchemas.ObjectSchema;
-}): Record<string, string> {
+}): Promise<Record<string, string>> {
     let extendedTypes: string[] = [];
     if (typeof objectSchema.extends === "string") {
         extendedTypes = [objectSchema.extends];
@@ -307,7 +307,7 @@ function getAllPropertiesForRawObjectSchema({
 
     const properties: Record<string, string> = {};
     for (const extendedType of extendedTypes) {
-        const extendedProperties = getAllPropertiesForExtendedType({
+        const extendedProperties = await getAllPropertiesForExtendedType({
             typeResolver,
             file,
             extendedType
@@ -326,7 +326,7 @@ function getAllPropertiesForRawObjectSchema({
     return properties;
 }
 
-function getAllPropertiesForExtendedType({
+async function getAllPropertiesForExtendedType({
     typeResolver,
     file,
     extendedType
@@ -334,8 +334,8 @@ function getAllPropertiesForExtendedType({
     typeResolver: TypeResolver;
     file: FernFileContext;
     extendedType: string;
-}): Record<string, string> {
-    const resolvedType = typeResolver.resolveNamedTypeOrThrow({
+}): Promise<Record<string, string>> {
+    const resolvedType = await typeResolver.resolveNamedTypeOrThrow({
         referenceToNamedType: extendedType,
         file
     });

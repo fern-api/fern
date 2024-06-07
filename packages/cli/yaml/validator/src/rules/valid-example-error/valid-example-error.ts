@@ -15,18 +15,21 @@ export const ValidExampleErrorRule: Rule = {
 
         return {
             definitionFile: {
-                exampleError: ({ errorName, declaration, example }, { relativeFilepath, contents: definitionFile }) => {
+                exampleError: async (
+                    { errorName, declaration, example },
+                    { relativeFilepath, contents: definitionFile }
+                ) => {
                     if (declaration.type == null) {
                         return [];
                     }
-                    const violations = ExampleValidators.validateTypeReferenceExample({
+                    const violations = await ExampleValidators.validateTypeReferenceExample({
                         rawTypeReference: declaration.type,
                         example: example.value,
                         file: constructFernFileContext({
                             relativeFilepath,
                             definitionFile,
                             casingsGenerator: CASINGS_GENERATOR,
-                            rootApiFile: workspace.definition.rootApiFile.contents
+                            rootApiFile: (await workspace.getDefinition()).rootApiFile.contents
                         }),
                         workspace,
                         typeResolver,

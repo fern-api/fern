@@ -4,7 +4,7 @@ import { RuleViolation } from "../../Rule";
 import { validateRefreshTokenEndpoint } from "./validateRefreshTokenEndpoint";
 import { validateTokenEndpoint } from "./validateTokenEndpoint";
 
-export function validateClientCredentials({
+export async function validateClientCredentials({
     endpointId,
     endpoint,
     typeResolver,
@@ -20,30 +20,30 @@ export function validateClientCredentials({
     resolvedTokenEndpoint: ResolvedEndpoint;
     resolvedRefreshEndpoint: ResolvedEndpoint | undefined;
     clientCredentials: RawSchemas.OAuthClientCredentialsSchema;
-}): RuleViolation[] {
+}): Promise<RuleViolation[]> {
     const violations: RuleViolation[] = [];
 
     if (endpointId === resolvedTokenEndpoint.endpointId) {
         violations.push(
-            ...validateTokenEndpoint({
+            ...(await validateTokenEndpoint({
                 endpointId,
                 endpoint,
                 typeResolver,
                 file,
                 tokenEndpoint: oauthScheme["get-token"]
-            })
+            }))
         );
     }
 
     if (oauthScheme["refresh-token"] != null && endpointId === resolvedRefreshEndpoint?.endpointId) {
         violations.push(
-            ...validateRefreshTokenEndpoint({
+            ...(await validateRefreshTokenEndpoint({
                 endpointId,
                 endpoint,
                 typeResolver,
                 file,
                 refreshEndpoint: oauthScheme["refresh-token"]
-            })
+            }))
         );
     }
 

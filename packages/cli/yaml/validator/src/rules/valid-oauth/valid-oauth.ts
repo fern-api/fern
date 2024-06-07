@@ -19,8 +19,8 @@ const DOCS_LINK_MESSAGE = `For details, see the ${terminalLink("docs", DocsLinks
 
 export const ValidOauthRule: Rule = {
     name: "valid-oauth",
-    create: ({ workspace }) => {
-        const oauthScheme = maybeGetOAuthScheme({ workspace });
+    create: async ({ workspace }) => {
+        const oauthScheme = await maybeGetOAuthScheme({ workspace });
         if (oauthScheme == null) {
             return {};
         }
@@ -29,7 +29,9 @@ export const ValidOauthRule: Rule = {
         const typeResolver = new TypeResolverImpl(workspace);
         const endpointResolver = new EndpointResolverImpl(workspace);
 
-        const imports = workspace.definition.rootApiFile.contents.imports;
+        const workspaceDefinition = await workspace.getDefinition();
+
+        const imports = workspaceDefinition.rootApiFile.contents.imports;
         if (imports == null) {
             return {
                 rootApiFile: {
@@ -47,10 +49,10 @@ export const ValidOauthRule: Rule = {
 
         const apiFile = constructRootApiFileContext({
             casingsGenerator: CASINGS_GENERATOR,
-            rootApiFile: workspace.definition.rootApiFile.contents
+            rootApiFile: workspaceDefinition.rootApiFile.contents
         });
 
-        const resolvedTokenEndpoint = endpointResolver.resolveEndpoint({
+        const resolvedTokenEndpoint = await endpointResolver.resolveEndpoint({
             endpoint: oauthSchema["get-token"].endpoint,
             file: apiFile
         });
@@ -71,7 +73,7 @@ export const ValidOauthRule: Rule = {
 
         const resolvedRefreshEndpoint =
             oauthSchema["refresh-token"] != null
-                ? endpointResolver.resolveEndpoint({
+                ? await endpointResolver.resolveEndpoint({
                       endpoint: oauthSchema["refresh-token"].endpoint,
                       file: apiFile
                   })
@@ -93,7 +95,7 @@ export const ValidOauthRule: Rule = {
 
         return {
             definitionFile: {
-                httpEndpoint: ({ endpointId, endpoint }, { relativeFilepath, contents: definitionFile }) => {
+                httpEndpoint: async ({ endpointId, endpoint }, { relativeFilepath, contents: definitionFile }) => {
                     if (
                         endpointId !== resolvedTokenEndpoint.endpointId &&
                         endpointId !== resolvedRefreshEndpoint?.endpointId
@@ -105,12 +107,12 @@ export const ValidOauthRule: Rule = {
                         relativeFilepath,
                         definitionFile,
                         casingsGenerator: CASINGS_GENERATOR,
-                        rootApiFile: workspace.definition.rootApiFile.contents
+                        rootApiFile: workspaceDefinition.rootApiFile.contents
                     });
 
                     switch (oauthSchema.type) {
                         case "client-credentials": {
-                            const violations = validateClientCredentials({
+                            const violations = await validateClientCredentials({
                                 endpointId,
                                 endpoint,
                                 typeResolver,
@@ -141,8 +143,8 @@ interface OAuthScheme {
     schema: RawSchemas.OAuthSchemeSchema;
 }
 
-function maybeGetOAuthScheme({ workspace }: { workspace: FernWorkspace }): OAuthScheme | undefined {
-    const authSchemes = workspace.definition.rootApiFile.contents["auth-schemes"];
+async function maybeGetOAuthScheme({ workspace }: { workspace: FernWorkspace }): Promise<OAuthScheme | undefined> {
+    const authSchemes = (await workspace.getDefinition()).rootApiFile.contents["auth-schemes"];
     if (authSchemes == null) {
         return undefined;
     }

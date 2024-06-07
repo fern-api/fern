@@ -24,8 +24,9 @@ describe("TypeResolver", () => {
             throw new Error("Expected fern workspace, but received openapi");
         }
 
+        const workspaceDefinition = await parseResult.workspace.getDefinition();
         const fooFilepath = RelativeFilePath.of("foo.yml");
-        const fooFile = parseResult.workspace.definition.namedDefinitionFiles[fooFilepath];
+        const fooFile = workspaceDefinition.namedDefinitionFiles[fooFilepath];
         if (fooFile == null) {
             throw new Error(`${fooFilepath} does not exist.`);
         }
@@ -39,17 +40,17 @@ describe("TypeResolver", () => {
                 keywords: undefined,
                 smartCasing: false
             }),
-            rootApiFile: parseResult.workspace.definition.rootApiFile.contents
+            rootApiFile: workspaceDefinition.rootApiFile.contents
         });
 
-        const resolvedFooType = typeResolver.resolveType({
+        const resolvedFooType = await typeResolver.resolveType({
             type: "Foo",
             file: fernFileContext
         });
         expect(resolvedFooType).toBeUndefined();
 
         // to make sure the file is being parsed correctly
-        const resolvedBazType = typeResolver.resolveType({
+        const resolvedBazType = await typeResolver.resolveType({
             type: "Baz",
             file: fernFileContext
         });

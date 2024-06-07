@@ -15,7 +15,7 @@ import {
     validateScopesRequestProperty
 } from "./validateUtils";
 
-export function validateTokenEndpoint({
+export async function validateTokenEndpoint({
     endpointId,
     endpoint,
     typeResolver,
@@ -27,22 +27,22 @@ export function validateTokenEndpoint({
     typeResolver: TypeResolver;
     file: FernFileContext;
     tokenEndpoint: RawSchemas.OAuthGetTokenEndpointSchema;
-}): RuleViolation[] {
+}): Promise<RuleViolation[]> {
     const violations: RuleViolation[] = [];
 
     const maybeClientId = tokenEndpoint["request-properties"]?.["client-id"];
     if (maybeClientId != null) {
         violations.push(
-            ...validateClientIdRequestProperty({
+            ...(await validateClientIdRequestProperty({
                 endpointId,
                 endpoint,
                 typeResolver,
                 file,
                 clientIdProperty: maybeClientId
-            })
+            }))
         );
     } else {
-        const clientIdViolations = validateClientIdRequestProperty({
+        const clientIdViolations = await validateClientIdRequestProperty({
             endpointId,
             endpoint,
             typeResolver,
@@ -62,16 +62,16 @@ export function validateTokenEndpoint({
     const maybeClientSecret = tokenEndpoint["request-properties"]?.["client-secret"];
     if (maybeClientSecret != null) {
         violations.push(
-            ...validateClientSecretRequestProperty({
+            ...(await validateClientSecretRequestProperty({
                 endpointId,
                 endpoint,
                 typeResolver,
                 file,
                 clientSecretProperty: maybeClientSecret
-            })
+            }))
         );
     } else {
-        const clientSecretViolations = validateClientSecretRequestProperty({
+        const clientSecretViolations = await validateClientSecretRequestProperty({
             endpointId,
             endpoint,
             typeResolver,
@@ -91,17 +91,17 @@ export function validateTokenEndpoint({
     const scopesProperty = tokenEndpoint?.["request-properties"]?.scopes;
     if (scopesProperty != null) {
         violations.push(
-            ...validateScopesRequestProperty({
+            ...(await validateScopesRequestProperty({
                 endpointId,
                 endpoint,
                 typeResolver,
                 file,
                 scopesProperty
-            })
+            }))
         );
     }
 
-    const resolvedResponseType = resolveResponseType({ endpoint, typeResolver, file });
+    const resolvedResponseType = await resolveResponseType({ endpoint, typeResolver, file });
     if (resolvedResponseType == null) {
         violations.push({
             severity: "error",
@@ -113,16 +113,16 @@ export function validateTokenEndpoint({
     const maybeAccessToken = tokenEndpoint["response-properties"]?.["access-token"];
     if (maybeAccessToken != null) {
         violations.push(
-            ...validateAccessTokenResponseProperty({
+            ...(await validateAccessTokenResponseProperty({
                 endpointId,
                 typeResolver,
                 file,
                 resolvedResponseType,
                 accessTokenProperty: maybeAccessToken
-            })
+            }))
         );
     } else {
-        const accessTokenViolations = validateAccessTokenResponseProperty({
+        const accessTokenViolations = await validateAccessTokenResponseProperty({
             endpointId,
             typeResolver,
             file,
@@ -142,26 +142,26 @@ export function validateTokenEndpoint({
     const expiresInProperty = tokenEndpoint?.["response-properties"]?.["expires-in"];
     if (expiresInProperty != null) {
         violations.push(
-            ...validateExpiresInResponseProperty({
+            ...(await validateExpiresInResponseProperty({
                 endpointId,
                 typeResolver,
                 file: maybeFileFromResolvedType(resolvedResponseType) ?? file,
                 resolvedResponseType,
                 expiresInProperty
-            })
+            }))
         );
     }
 
     const refreshTokenProperty = tokenEndpoint?.["response-properties"]?.["refresh-token"];
     if (refreshTokenProperty != null) {
         violations.push(
-            ...validateRefreshTokenResponseProperty({
+            ...(await validateRefreshTokenResponseProperty({
                 endpointId,
                 typeResolver,
                 file: maybeFileFromResolvedType(resolvedResponseType) ?? file,
                 resolvedResponseType,
                 refreshTokenProperty
-            })
+            }))
         );
     }
 

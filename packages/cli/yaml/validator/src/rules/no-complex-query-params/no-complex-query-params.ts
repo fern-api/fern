@@ -8,10 +8,10 @@ export const NoComplexQueryParamsRule: Rule = {
 
         return {
             definitionFile: {
-                queryParameter: ({ queryParameter }, ruleRunnerArgs) => {
+                queryParameter: async ({ queryParameter }, ruleRunnerArgs) => {
                     const type = typeof queryParameter === "string" ? queryParameter : queryParameter.type;
 
-                    const isComplex = complexTypeDetector.isTypeComplex(type, ruleRunnerArgs);
+                    const isComplex = await complexTypeDetector.isTypeComplex(type, ruleRunnerArgs);
                     if (isComplex != null && isComplex) {
                         return [
                             {

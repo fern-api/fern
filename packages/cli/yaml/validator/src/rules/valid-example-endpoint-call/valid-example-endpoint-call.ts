@@ -14,16 +14,21 @@ import { validateResponse } from "./validateResponse";
 
 export const ValidExampleEndpointCallRule: Rule = {
     name: "valid-example-endpoint-call",
-    create: ({ workspace }) => {
+    create: async ({ workspace }) => {
         const typeResolver = new TypeResolverImpl(workspace);
         const errorResolver = new ErrorResolverImpl(workspace);
         const exampleResolver = new ExampleResolverImpl(typeResolver);
         const variableResolver = new VariableResolverImpl();
 
+        const workspaceDefinitionRootFile = (await workspace.getDefinition()).rootApiFile;
+
         return {
             definitionFile: {
-                exampleHeaders: ({ service, endpoint, examples }, { relativeFilepath, contents: definitionFile }) => {
-                    return validateExampleEndpointCallParameters({
+                exampleHeaders: async (
+                    { service, endpoint, examples },
+                    { relativeFilepath, contents: definitionFile }
+                ) => {
+                    return await validateExampleEndpointCallParameters({
                         allDeclarations: {
                             ...service.headers,
                             ...(typeof endpoint.request !== "string" ? endpoint.request?.headers : undefined)
@@ -38,19 +43,19 @@ export const ValidExampleEndpointCallRule: Rule = {
                                 relativeFilepath,
                                 definitionFile,
                                 casingsGenerator: CASINGS_GENERATOR,
-                                rootApiFile: workspace.definition.rootApiFile.contents
+                                rootApiFile: workspaceDefinitionRootFile.contents
                             }),
                             rawType: typeof header === "string" ? header : header.type
                         })
                     });
                 },
-                examplePathParameters: (
+                examplePathParameters: async (
                     { service, endpoint, examples },
                     { relativeFilepath, contents: definitionFile }
                 ) => {
-                    return validateExampleEndpointCallParameters({
+                    return await validateExampleEndpointCallParameters({
                         allDeclarations: {
-                            ...workspace.definition.rootApiFile.contents["path-parameters"],
+                            ...workspaceDefinitionRootFile.contents["path-parameters"],
                             ...service["path-parameters"],
                             ...endpoint["path-parameters"]
                         },
@@ -67,13 +72,16 @@ export const ValidExampleEndpointCallRule: Rule = {
                                     relativeFilepath,
                                     definitionFile,
                                     casingsGenerator: CASINGS_GENERATOR,
-                                    rootApiFile: workspace.definition.rootApiFile.contents
+                                    rootApiFile: workspaceDefinitionRootFile.contents
                                 })
                             })
                     });
                 },
-                exampleQueryParameters: ({ endpoint, examples }, { relativeFilepath, contents: definitionFile }) => {
-                    return validateExampleEndpointCallParameters({
+                exampleQueryParameters: async (
+                    { endpoint, examples },
+                    { relativeFilepath, contents: definitionFile }
+                ) => {
+                    return await validateExampleEndpointCallParameters({
                         allDeclarations:
                             typeof endpoint.request !== "string" ? endpoint.request?.["query-parameters"] : undefined,
                         examples,
@@ -86,14 +94,14 @@ export const ValidExampleEndpointCallRule: Rule = {
                                 relativeFilepath,
                                 definitionFile,
                                 casingsGenerator: CASINGS_GENERATOR,
-                                rootApiFile: workspace.definition.rootApiFile.contents
+                                rootApiFile: workspaceDefinitionRootFile.contents
                             }),
                             rawType: typeof queryParameter === "string" ? queryParameter : queryParameter.type
                         })
                     });
                 },
-                exampleRequest: ({ endpoint, example }, { relativeFilepath, contents: definitionFile }) => {
-                    return validateRequest({
+                exampleRequest: async ({ endpoint, example }, { relativeFilepath, contents: definitionFile }) => {
+                    return await validateRequest({
                         example,
                         endpoint,
                         typeResolver,
@@ -102,13 +110,13 @@ export const ValidExampleEndpointCallRule: Rule = {
                             relativeFilepath,
                             definitionFile,
                             casingsGenerator: CASINGS_GENERATOR,
-                            rootApiFile: workspace.definition.rootApiFile.contents
+                            rootApiFile: workspaceDefinitionRootFile.contents
                         }),
                         workspace
                     });
                 },
-                exampleResponse: ({ endpoint, example }, { relativeFilepath, contents: definitionFile }) => {
-                    return validateResponse({
+                exampleResponse: async ({ endpoint, example }, { relativeFilepath, contents: definitionFile }) => {
+                    return await validateResponse({
                         example,
                         endpoint,
                         typeResolver,
@@ -117,7 +125,7 @@ export const ValidExampleEndpointCallRule: Rule = {
                             relativeFilepath,
                             definitionFile,
                             casingsGenerator: CASINGS_GENERATOR,
-                            rootApiFile: workspace.definition.rootApiFile.contents
+                            rootApiFile: workspaceDefinitionRootFile.contents
                         }),
                         workspace,
                         errorResolver

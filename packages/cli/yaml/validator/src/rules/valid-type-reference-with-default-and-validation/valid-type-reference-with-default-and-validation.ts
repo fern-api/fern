@@ -9,7 +9,7 @@ export const ValidTypeReferenceWithDefaultAndValidationRule: Rule = {
         const typeResolver = new TypeResolverImpl(workspace);
         return {
             definitionFile: {
-                typeReference: (
+                typeReference: async (
                     { typeReference, _default, validation, location },
                     { relativeFilepath, contents: definitionFile }
                 ) => {
@@ -17,10 +17,10 @@ export const ValidTypeReferenceWithDefaultAndValidationRule: Rule = {
                         relativeFilepath,
                         definitionFile,
                         casingsGenerator: CASINGS_GENERATOR,
-                        rootApiFile: workspace.definition.rootApiFile.contents
+                        rootApiFile: (await workspace.getDefinition()).rootApiFile.contents
                     });
 
-                    const resolvedType = typeResolver.resolveType({
+                    const resolvedType = await typeResolver.resolveType({
                         type: typeReference,
                         file
                     });

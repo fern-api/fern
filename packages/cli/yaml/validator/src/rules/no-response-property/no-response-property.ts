@@ -16,7 +16,7 @@ export const NoResponsePropertyRule: Rule = {
         const typeResolver = new TypeResolverImpl(workspace);
         return {
             definitionFile: {
-                httpEndpoint: ({ endpoint }, { relativeFilepath, contents }) => {
+                httpEndpoint: async ({ endpoint }, { relativeFilepath, contents }) => {
                     const { response } = endpoint;
                     if (response == null) {
                         return [];
@@ -34,14 +34,14 @@ export const NoResponsePropertyRule: Rule = {
                     const file = constructFernFileContext({
                         relativeFilepath,
                         definitionFile: contents,
-                        rootApiFile: workspace.definition.rootApiFile.contents,
+                        rootApiFile: (await workspace.getDefinition()).rootApiFile.contents,
                         casingsGenerator: CASINGS_GENERATOR
                     });
-                    const resolvedType = typeResolver.resolveTypeOrThrow({
+                    const resolvedType = await typeResolver.resolveTypeOrThrow({
                         type: typeof response !== "string" ? response.type : response,
                         file
                     });
-                    const result = resolvedTypeHasProperty(resolvedType, responseProperty, file, typeResolver);
+                    const result = await resolvedTypeHasProperty(resolvedType, responseProperty, file, typeResolver);
                     return resultToRuleViolations(result, responseProperty);
                 }
             }
@@ -76,23 +76,23 @@ function resultToRuleViolations(result: Result, responseProperty: string): RuleV
     }
 }
 
-function resolvedTypeHasProperty(
+async function resolvedTypeHasProperty(
     resolvedType: ResolvedType,
     property: string,
     file: FernFileContext,
     typeResolver: TypeResolver
-): Result {
+): Promise<Result> {
     switch (resolvedType._type) {
         case "container":
             if (resolvedType.container._type !== "optional") {
                 return Result.IsNotObject;
             }
-            return resolvedTypeHasProperty(resolvedType.container.itemType, property, file, typeResolver);
+            return await resolvedTypeHasProperty(resolvedType.container.itemType, property, file, typeResolver);
         case "named":
             if (!isRawObjectDefinition(resolvedType.declaration)) {
                 return Result.IsNotObject;
             }
-            if (rawObjectSchemaHasProperty(resolvedType.declaration, property, file, typeResolver)) {
+            if (await rawObjectSchemaHasProperty(resolvedType.declaration, property, file, typeResolver)) {
                 return Result.ContainsProperty;
             }
             return Result.DoesNotContainProperty;
@@ -104,21 +104,21 @@ function resolvedTypeHasProperty(
     }
 }
 
-function rawObjectSchemaHasProperty(
+async function rawObjectSchemaHasProperty(
     objectSchema: RawSchemas.ObjectSchema,
     property: string,
     file: FernFileContext,
     typeResolver: TypeResolver
-): boolean {
-    const properties = getAllPropertiesForRawObjectSchema(objectSchema, file, typeResolver);
+): Promise<boolean> {
+    const properties = await getAllPropertiesForRawObjectSchema(objectSchema, file, typeResolver);
     return properties.has(property);
 }
 
-function getAllPropertiesForRawObjectSchema(
+async function getAllPropertiesForRawObjectSchema(
     objectSchema: RawSchemas.ObjectSchema,
     file: FernFileContext,
     typeResolver: TypeResolver
-): Set<string> {
+): Promise<Set<string>> {
     let extendedTypes: string[] = [];
     if (typeof objectSchema.extends === "string") {
         extendedTypes = [objectSchema.extends];
@@ -128,7 +128,7 @@ function getAllPropertiesForRawObjectSchema(
 
     const properties = new Set<string>();
     for (const extendedType of extendedTypes) {
-        for (const extendedProperty of getAllPropertiesForExtendedType(extendedType, file, typeResolver)) {
+        for (const extendedProperty of await getAllPropertiesForExtendedType(extendedType, file, typeResolver)) {
             properties.add(extendedProperty);
         }
     }
@@ -140,17 +140,17 @@ function getAllPropertiesForRawObjectSchema(
     return properties;
 }
 
-function getAllPropertiesForExtendedType(
+async function getAllPropertiesForExtendedType(
     extendedType: string,
     file: FernFileContext,
     typeResolver: TypeResolver
-): Set<string> {
-    const resolvedType = typeResolver.resolveNamedTypeOrThrow({
+): Promise<Set<string>> {
+    const resolvedType = await typeResolver.resolveNamedTypeOrThrow({
         referenceToNamedType: extendedType,
         file
     });
     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
-        return getAllPropertiesForRawObjectSchema(resolvedType.declaration, file, typeResolver);
+        return await getAllPropertiesForRawObjectSchema(resolvedType.declaration, file, typeResolver);
     }
     // Unreachable; extended types must be named objects. This should be handled
     // by another rule, so we just return an empty set.

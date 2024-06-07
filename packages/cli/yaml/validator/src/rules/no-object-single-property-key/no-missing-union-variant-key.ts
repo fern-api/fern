@@ -10,19 +10,19 @@ export const NoObjectSinglePropertyKeyRule: Rule = {
 
         return {
             definitionFile: {
-                typeDeclaration: ({ declaration }, { relativeFilepath, contents }) => {
+                typeDeclaration: async ({ declaration }, { relativeFilepath, contents }) => {
                     const violations: RuleViolation[] = [];
                     if (!isRawDiscriminatedUnionDefinition(declaration)) {
                         return violations;
                     }
 
-                    const getViolationsForVariant = ({
+                    const getViolationsForVariant = async ({
                         discriminantValue,
                         singleUnionType
                     }: {
                         discriminantValue: string;
                         singleUnionType: RawSchemas.SingleUnionTypeSchema;
-                    }): RuleViolation[] => {
+                    }): Promise<RuleViolation[]> => {
                         const hasKey = typeof singleUnionType !== "string" && singleUnionType.key != null;
                         const type = typeof singleUnionType === "string" ? singleUnionType : singleUnionType.type;
 
@@ -39,13 +39,13 @@ export const NoObjectSinglePropertyKeyRule: Rule = {
                             }
                         }
 
-                        const resolvedType = typeResolver.resolveType({
+                        const resolvedType = await typeResolver.resolveType({
                             type,
                             file: constructFernFileContext({
                                 relativeFilepath,
                                 definitionFile: contents,
                                 casingsGenerator: CASINGS_GENERATOR,
-                                rootApiFile: workspace.definition.rootApiFile.contents
+                                rootApiFile: (await workspace.getDefinition()).rootApiFile.contents
                             })
                         });
 
@@ -59,10 +59,10 @@ export const NoObjectSinglePropertyKeyRule: Rule = {
 
                     for (const [discriminantValue, singleUnionType] of Object.entries(declaration.union)) {
                         violations.push(
-                            ...getViolationsForVariant({
+                            ...(await getViolationsForVariant({
                                 discriminantValue,
                                 singleUnionType
-                            })
+                            }))
                         );
                     }
 

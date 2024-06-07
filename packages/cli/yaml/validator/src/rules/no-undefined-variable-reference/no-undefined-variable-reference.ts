@@ -34,6 +34,8 @@ export const NoUndefinedVariableReferenceRule: Rule = {
             ];
         };
 
+        const workspaceDefinition = await workspace.getDefinition();
+
         return {
             rootApiFile: {
                 variableReference: (variableReference) => {
@@ -41,7 +43,7 @@ export const NoUndefinedVariableReferenceRule: Rule = {
                         variableReference,
                         constructRootApiFileContext({
                             casingsGenerator: CASINGS_GENERATOR,
-                            rootApiFile: workspace.definition.rootApiFile.contents
+                            rootApiFile: workspaceDefinition.rootApiFile.contents
                         })
                     );
                 }
@@ -54,7 +56,7 @@ export const NoUndefinedVariableReferenceRule: Rule = {
                             casingsGenerator: CASINGS_GENERATOR,
                             relativeFilepath,
                             definitionFile: contents,
-                            rootApiFile: workspace.definition.rootApiFile.contents
+                            rootApiFile: workspaceDefinition.rootApiFile.contents
                         })
                     );
                 }

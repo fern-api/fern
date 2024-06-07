@@ -15,11 +15,11 @@ export const ValidExampleTypeRule: Rule = {
 
         return {
             definitionFile: {
-                exampleType: (
+                exampleType: async (
                     { typeName, typeDeclaration, example },
                     { relativeFilepath, contents: definitionFile }
                 ) => {
-                    const violations = ExampleValidators.validateTypeExample({
+                    const violations = await ExampleValidators.validateTypeExample({
                         typeName,
                         typeDeclaration,
                         example: example.value,
@@ -27,7 +27,7 @@ export const ValidExampleTypeRule: Rule = {
                             relativeFilepath,
                             definitionFile,
                             casingsGenerator: CASINGS_GENERATOR,
-                            rootApiFile: workspace.definition.rootApiFile.contents
+                            rootApiFile: (await workspace.getDefinition()).rootApiFile.contents
                         }),
                         typeResolver,
                         exampleResolver,

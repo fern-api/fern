@@ -17,7 +17,9 @@ describe("loadWorkspace", () => {
         assert(workspace.didSucceed);
         assert(workspace.workspace.type === "fern");
 
-        const simpleYaml = workspace.workspace.definition.namedDefinitionFiles[RelativeFilePath.of("simple.yml")];
+        const simpleYaml = (await workspace.workspace.getDefinition()).namedDefinitionFiles[
+            RelativeFilePath.of("simple.yml")
+        ];
         const exampleDateTime = (simpleYaml?.contents.types?.MyDateTime as RawSchemas.BaseTypeDeclarationSchema)
             .examples?.[0]?.value;
         expect(typeof exampleDateTime).toBe("string");

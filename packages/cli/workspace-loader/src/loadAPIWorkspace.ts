@@ -188,13 +188,15 @@ export async function loadAPIWorkspace({
         generatorsConfiguration,
         dependenciesConfiguration,
         workspaceName,
-        definition: {
+        // Dummy function to satisfy the interface
+        // the function paradigm is really only needed for OAS to Fern conversion
+        getDefinition: async () => ({
             absoluteFilepath: absolutePathToDefinition,
             rootApiFile: structuralValidationResult.rootApiFile,
             namedDefinitionFiles: structuralValidationResult.namedDefinitionFiles,
             packageMarkers: processPackageMarkersResult.packageMarkers,
             importedDefinitions: processPackageMarkersResult.importedDefinitions
-        },
+        }),
         changelog
     };
 

@@ -75,7 +75,7 @@ export async function writeFilesToDiskAndRunGenerator({
     const absolutePathToTmpOutputDirectory = AbsoluteFilePath.of(tmpOutputDirectory.path);
     context.logger.debug("Will write output to: " + absolutePathToTmpOutputDirectory);
 
-    const absolutePathToFernDefinition = workspace.definition.absoluteFilepath;
+    const absolutePathToFernDefinition = (await workspace.getDefinition()).absoluteFilepath;
 
     let absolutePathToTmpSnippetJSON = undefined;
     if (absolutePathToLocalSnippetJSON != null) {

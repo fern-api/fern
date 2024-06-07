@@ -43,7 +43,8 @@ async function writeDefinitionForFernWorkspace({
     workspace: FernWorkspace;
     context: TaskContext;
 }): Promise<void> {
-    for (const [relativePath, definition] of Object.entries(workspace.definition.importedDefinitions)) {
+    const workspaceDefinition = await workspace.getDefinition();
+    for (const [relativePath, definition] of Object.entries(workspaceDefinition.importedDefinitions)) {
         const absolutePathToOutputDirectory = join(
             workspace.absoluteFilepath,
             RelativeFilePath.of(DEFINITION_DIRECTORY),
@@ -75,7 +76,7 @@ async function writeDefinitionForOpenAPIWorkspace({
         RelativeFilePath.of(`.${DEFINITION_DIRECTORY}`)
     );
     await writeFernDefinition({
-        definition: fernWorkspace.definition,
+        definition: await fernWorkspace.getDefinition(),
         absolutePathToOutputDirectory
     });
     context.logger.info(
