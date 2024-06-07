@@ -7,7 +7,7 @@ import typing
 
 import typing_extensions
 
-from generators.python.core_utilities.pydantic.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 from ....core.datetime_utils import serialize_datetime
 from ....core.pydantic_utilities import deep_union_pydantic_dicts
@@ -44,6 +44,9 @@ else:
 
 
 class Animal(AnimalBase):  # type: ignore
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def visit(
@@ -55,20 +58,7 @@ class Animal(AnimalBase):  # type: ignore
             return dog(types_union_types_dog_Dog(**self.get_as_union().dict(exclude_unset=True, exclude={"animal"})))
         if self.get_as_union().animal == "cat":
             return cat(types_union_types_cat_Cat(**self.get_as_union().dict(exclude_unset=True, exclude={"animal"})))
-
-    if IS_PYDANTIC_V2:
-        root: typing_extensions.Annotated[
-            typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")
-        ]
-        def get_as_union(self) -> typing.Union[_Animal.Dog, _Animal.Cat]:
-            return self.root
-    else:
-        __root__: typing_extensions.Annotated[
-            typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")
-        ]
-        def get_as_union(self) -> typing.Union[_Animal.Dog, _Animal.Cat]:
-            return self.__root__
-    
+        return cat(types_union_types_cat_Cat(**self.get_as_union().dict(exclude_unset=True, exclude={"animal"})))
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -81,7 +71,7 @@ class Animal(AnimalBase):  # type: ignore
         return deep_union_pydantic_dicts(
             super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
         )
-
+    
     class Config:
         frozen = True
         smart_union = True

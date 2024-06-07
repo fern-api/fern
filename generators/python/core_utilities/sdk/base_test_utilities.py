@@ -3,8 +3,7 @@ import uuid
 
 from dateutil import parser
 
-from .pydantic_utilities import pydantic_v1
-
+import pydantic
 
 def cast_field(json_expectation: typing.Any, type_expectation: typing.Any) -> typing.Any:
     # Cast these specific types which come through as string and expect our
@@ -69,12 +68,12 @@ def validate_response(response: typing.Any, json_expectation: typing.Any, type_e
     if type_expectations == "no_validate":
         return
 
-    if not isinstance(response, dict) and not issubclass(type(response), pydantic_v1.BaseModel):
+    if not isinstance(response, dict) and not issubclass(type(response), pydantic.BaseModel):
         validate_field(response=response, json_expectation=json_expectation, type_expectation=type_expectations)
         return
 
     response_json = response
-    if issubclass(type(response), pydantic_v1.BaseModel):
+    if issubclass(type(response), pydantic.BaseModel):
         response_json = response.dict(by_alias=True)
 
     for key, value in json_expectation.items():

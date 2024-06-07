@@ -1,6 +1,10 @@
+from functools import wraps
 import typing
 
 import pydantic
+from .datetime_utils import serialize_datetime
+
+import datetime as dt
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
@@ -63,12 +67,16 @@ def to_jsonable_with_fallback(obj: typing.Any, fallback_serializer: typing.Calla
         return fallback_serializer(obj)
 
 class UniversalBaseModel(pydantic.BaseModel):
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            json_encoders={dt.datetime: serialize_datetime}
+        )
+
     class Config:
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-        # TODO(armandobelardo): figure out encoders
-        # json_encoders = {dt.datetime: serialize_datetime}
+        json_encoders = {dt.datetime: serialize_datetime}
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -90,3 +98,29 @@ class UniversalBaseModel(pydantic.BaseModel):
             return deep_union_pydantic_dicts(
                 super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
             )
+
+def universal_root_validator(pre: bool = False):
+    def decorator(func):
+        @wraps(func)
+        def validate(*args, **kwargs):
+            if IS_PYDANTIC_V2:
+                wrapped_func = pydantic.model_validator("before" if pre else "after")(func)
+            else:
+                wrapped_func = pydantic.root_validator(pre=pre)(func)
+            
+            return wrapped_func(*args, **kwargs)
+        return validate
+    return decorator
+
+def universal_field_validator(field_name: str, pre: bool = False):
+    def decorator(func):
+        @wraps(func)
+        def validate(*args, **kwargs):
+            if IS_PYDANTIC_V2:
+                wrapped_func = pydantic.field_validator(field_name, mode="before" if pre else "after")(func)
+            else:
+                wrapped_func = pydantic.validator(field_name, pre=pre)(func)
+            
+            return wrapped_func(*args, **kwargs)
+        return validate
+    return decorator

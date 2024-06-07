@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import dataclasses
+from tkinter import W
 from types import TracebackType
-from typing import Iterable, List, Literal, Optional, Sequence, Tuple, Type, Union
+from typing import Callable, Iterable, List, Literal, Optional, Sequence, Tuple, Type, Union
 
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
 from fern_python.external_dependencies import Pydantic, PydanticVersionCompatibility
+from fern_python.generators.core_utilities.core_utilities import CoreUtilities
 from pydantic import BaseModel
 
 from .pydantic_field import PydanticField
@@ -28,6 +30,9 @@ class PydanticModel:
         orm_mode: bool,
         smart_union: bool,
         version: PydanticVersionCompatibility,
+        is_pydantic_v2: AST.Expression,
+        universal_root_validator: Callable[[bool], AST.FunctionInvocation],
+        universal_field_validator: Callable[[str, bool], AST.FunctionInvocation],
         require_optional_fields: bool,
         should_export: bool = None,
         base_models: Sequence[AST.ClassReference] = None,
@@ -39,7 +44,7 @@ class PydanticModel:
     ):
         self._source_file = source_file
 
-        pydantic_base_model = pydantic_base_model or Pydantic.BaseModel(version)
+        pydantic_base_model = pydantic_base_model or Pydantic.BaseModel()
         self._class_declaration = AST.ClassDeclaration(
             name=name,
             extends=base_models or [pydantic_base_model],
@@ -59,8 +64,11 @@ class PydanticModel:
         self._orm_mode = orm_mode
         self._smart_union = smart_union
         self.name = name
-        self.json_encoders: List[Tuple[AST.Expression, AST.Expression]] = []
         self._require_optional_fields = require_optional_fields
+        self._is_pydantic_v2 = is_pydantic_v2
+
+        self._universal_root_validator = universal_root_validator
+        self._universal_field_validator = universal_field_validator
 
     def to_reference(self) -> LocalClassReference:
         return self._local_class_reference
@@ -171,7 +179,7 @@ class PydanticModel:
                     return_type=field_type,
                 ),
                 body=body,
-                decorators=[Pydantic.validator(self._version, field_name, pre)],
+                decorators=[self._universal_field_validator(field_name, pre)],
             ),
         )
 
@@ -195,12 +203,9 @@ class PydanticModel:
                     return_type=value_type,
                 ),
                 body=body,
-                decorators=[Pydantic.root_validator(pre=pre, version=self._version)],
+                decorators=[self._universal_root_validator(pre)],
             ),
         )
-
-    def add_json_encoder(self, key: AST.Expression, value: AST.Expression) -> None:
-        self.json_encoders.append((key, value))
 
     def add_inner_class(self, inner_class: AST.ClassDeclaration) -> None:
         self._class_declaration.add_class(declaration=inner_class)
@@ -243,6 +248,21 @@ class PydanticModel:
             qualified_name_excluding_import=(self.name, PydanticModel._PARTIAL_CLASS_NAME),
             is_forward_reference=True,
         )
+    
+    def maybe_extras_config(self) -> Optional[AST.Expression]:
+        extra_fields = self._extra_fields
+        if extra_fields == "allow" or extra_fields == "forbid":
+            def write_extras(writer: AST.NodeWriter) -> None:
+                writer.write("if ")
+                # TODO: this class needs a context, then we can call get_is_pydantic_v2
+                writer.write_node(self._is_pydantic_v2)
+                writer.write_line(":")
+                with writer.indent():
+                    writer.write("model_config: ")
+                    writer.write_node(AST.TypeHint.class_var(AST.TypeHint(type=Pydantic.ConfigDict())))
+                    writer.write(" = ")
+                    writer.write_node(AST.Expression(AST.ClassInstantiation(Pydantic.ConfigDict(), kwargs=[("extra", AST.Expression(extra_fields))])))
+            self._source_file.add_expression(AST.Expression(AST.CodeWriter(write_extras)))
 
     def update_forward_refs(self, localns: Iterable[AST.ClassReference] = None) -> None:
         self._source_file.add_footer_expression(
@@ -311,24 +331,14 @@ class PydanticModel:
             config.add_class_var(
                 AST.VariableDeclaration(
                     name="extra",
-                    initializer=Pydantic.Extra.forbid(self._version),
+                    initializer=Pydantic.Extra.forbid(),
                 )
             )
         elif self._extra_fields == "allow":
             config.add_class_var(
                 AST.VariableDeclaration(
                     name="extra",
-                    initializer=Pydantic.Extra.allow(self._version),
-                )
-            )
-
-        if len(self.json_encoders) > 0:
-            config.add_class_var(
-                AST.VariableDeclaration(
-                    name="json_encoders",
-                    initializer=AST.Expression(
-                        AST.DictionaryInstantiation(entries=self.json_encoders),
-                    ),
+                    initializer=Pydantic.Extra.allow(),
                 )
             )
 

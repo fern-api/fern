@@ -33,7 +33,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="pydantic_utilities"),
             ),
-            exports={"pydantic_v1", "deep_union_pydantic_dicts", "parse_obj_as", "UniversalBaseModel"},
+            exports={"deep_union_pydantic_dicts", "parse_obj_as", "UniversalBaseModel", "IS_PYDANTIC_V2"},
         )
 
         if self._allow_skipping_validation:
@@ -126,14 +126,6 @@ class CoreUtilities:
             else self.get_parse_obj_as(PydanticVersionCompatibility.Both, type_of_obj, obj)
         )
 
-    def get_pydantic_version_import(self) -> AST.Reference:
-        return AST.Reference(
-            qualified_name_excluding_import=(),
-            import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="pydantic_v1"
-            ),
-        )
-
     def get_pydantic_deep_union_import(self) -> AST.Reference:
         return AST.Reference(
             qualified_name_excluding_import=(),
@@ -147,8 +139,8 @@ class CoreUtilities:
         return AST.ClassReference(
                 qualified_name_excluding_import=(),
                 import_=AST.ReferenceImport(
-                    module=AST.Module.local(*self._module_path, "unchecked_base_model"),
-                    named_import="UncheckedBaseModel",
+                    module=AST.Module.local(*self._module_path, "pydantic_utilities"),
+                    named_import="UniversalBaseModel",
                 ),
             )
 
@@ -176,4 +168,27 @@ class CoreUtilities:
                 ),
                 args=[],
             )
+        )
+    
+    def universal_root_validator(self, pre: bool = False) -> AST.FunctionInvocation:
+        return AST.FunctionInvocation(
+            function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="universal_root_validator"
+                    ),
+                ),
+            kwargs=[("pre", AST.Expression(expression="True" if pre else "False"))],
+        )
+
+    def universal_field_validator(self, field_name: str, pre: bool = False) -> AST.FunctionInvocation:
+        return AST.FunctionInvocation(
+            function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="universal_field_validator"
+                    ),
+                ),
+            args=[AST.Expression(expression=f'"{field_name}"')],
+            kwargs=[("pre", AST.Expression(expression="True" if pre else "False"))],
         )

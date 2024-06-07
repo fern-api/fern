@@ -131,7 +131,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="pydantic_utilities"),
             ),
-            exports={"pydantic_v1", "deep_union_pydantic_dicts"},
+            exports={"deep_union_pydantic_dicts", "parse_obj_as", "UniversalBaseModel", "IS_PYDANTIC_V2"},
         )
         self._copy_security_to_project(project=project)
         self._copy_exceptions_to_project(project=project)
@@ -245,3 +245,25 @@ class CoreUtilities:
 
     def _get_security_submodule_path(self, *submodule: str) -> AST.ModulePath:
         return self._get_security_module_path() + submodule
+
+    def get_universal_base_model(self) -> AST.ClassReference:
+        return AST.ClassReference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._module_path, "unchecked_base_model"),
+                    named_import="UncheckedBaseModel",
+                ),
+            )
+
+    def get_is_pydantic_v2(self) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="IS_PYDANTIC_V2"
+                    ),
+                ),
+                args=[],
+            )
+        )

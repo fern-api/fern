@@ -48,13 +48,14 @@ def jsonable_encoder(
                 if isinstance(obj, encoder_type):
                     return encoder_instance(obj)
     if isinstance(obj, pydantic.BaseModel):
-        # TODO(armandobelardo): figure out encoders
         encoder = getattr(obj.__config__, "json_encoders", {})
         if custom_encoder:
             encoder.update(custom_encoder)
         obj_dict = obj.dict(by_alias=True)
         if "__root__" in obj_dict:
             obj_dict = obj_dict["__root__"]
+        if "root" in obj_dict:
+            obj_dict = obj_dict["root"]
         return jsonable_encoder(obj_dict, custom_encoder=encoder)
     if dataclasses.is_dataclass(obj):
         obj_dict = dataclasses.asdict(obj)

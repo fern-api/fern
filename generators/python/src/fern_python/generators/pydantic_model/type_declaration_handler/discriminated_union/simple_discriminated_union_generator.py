@@ -139,6 +139,7 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                     smart_union=self._custom_config.smart_union,
                     pydantic_base_model=self._context.core_utilities.get_unchecked_pydantic_base_model(),
                     require_optional_fields=self._custom_config.require_optional_fields,
+                    is_pydantic_v2=self._context.core_utilities.get_is_pydantic_v2(),
                 ) as internal_pydantic_model_for_single_union_type:
                     internal_pydantic_model_for_single_union_type.add_field(
                         PydanticField(

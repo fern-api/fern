@@ -1,3 +1,4 @@
+
 import enum
 
 from fern_python.codegen import AST
@@ -31,6 +32,10 @@ class Pydantic:
     @staticmethod
     def BaseModel() -> AST.ClassReference:
         return _export("BaseModel")
+    
+    @staticmethod
+    def ConfigDict() -> AST.ClassReference:
+        return _export("ConfigDict")
 
     @staticmethod
     def PrivateAttr() -> AST.ClassReference:
@@ -44,17 +49,3 @@ class Pydantic:
         @staticmethod
         def allow() -> AST.Expression:
             return AST.Expression(_export("Extra", "allow"))
-
-    @staticmethod
-    def root_validator(pre: bool = False) -> AST.FunctionInvocation:
-        return AST.FunctionInvocation(
-            function_definition=_export("root_validator"),
-            args=[AST.Expression(expression=f'pre={"True" if pre else "False"}')],
-        )
-
-    @staticmethod
-    def validator(field_name: str, pre: bool = False) -> AST.FunctionInvocation:
-        return AST.FunctionInvocation(
-            function_definition=_export("validator"),
-            args=[AST.Expression(expression=f'"{field_name}", pre={"True" if pre else "False"}')],
-        )

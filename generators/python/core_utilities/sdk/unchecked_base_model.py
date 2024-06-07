@@ -43,8 +43,7 @@ class UncheckedBaseModel(UniversalBaseModel):
         allow_population_by_field_name = True
         # Pydantic v2 configuration
         populate_by_name = True
-        # TODO(armandobelardo): figure out encoders
-        # json_encoders = {dt.datetime: serialize_datetime}
+        json_encoders = {dt.datetime: serialize_datetime}
 
     @classmethod
     def get_is_populate_by_name(cls: typing.Type["Model"]) -> bool:
