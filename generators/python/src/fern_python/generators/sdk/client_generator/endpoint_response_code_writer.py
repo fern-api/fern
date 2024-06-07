@@ -303,7 +303,7 @@ class EndpointResponseCodeWriter:
     def _write_status_code_discriminated_response_handler(self, *, writer: AST.NodeWriter) -> None:
         writer.write_line(f"if 200 <= {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.status_code < 300:")
         with writer.indent():
-            if self._endpoint.response is None:
+            if self._endpoint.response is None or self._endpoint.response.body is None:
                 writer.write_line("return")
             else:
                 self._endpoint.response.body.visit(
@@ -319,7 +319,7 @@ class EndpointResponseCodeWriter:
 
         # in streaming responses, we need to call read() or aread()
         # before deserializing or httpx will raise ResponseNotRead
-        if self._endpoint.response is not None and (
+        if self._endpoint.response is not None and self._endpoint.response.body and (
             self._endpoint.response.body.get_as_union().type == "streaming"
             or self._endpoint.response.body.get_as_union().type == "fileDownload"
         ):
@@ -376,7 +376,7 @@ class EndpointResponseCodeWriter:
 
         writer.write_line(f"if 200 <= {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.status_code < 300:")
         with writer.indent():
-            if self._endpoint.response is None:
+            if self._endpoint.response is None or self._endpoint.response.body is None:
                 writer.write_line("return")
             else:
                 self._endpoint.response.body.visit(

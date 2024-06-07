@@ -431,7 +431,7 @@ class SnippetTestFactory:
                 endpoint.idempotent
                 or endpoint.pagination is not None
                 or (
-                    endpoint.response is not None
+                    endpoint.response is not None and endpoint.response.body
                     and (
                         endpoint.response.body.get_as_union().type == "streaming"
                         or endpoint.response.body.get_as_union().type == "fileDownload"

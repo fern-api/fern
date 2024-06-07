@@ -175,8 +175,8 @@ class EndpointFunctionGenerator:
 
     def _get_endpoint_return_type(self) -> AST.TypeHint:
         return_type = (
-            self._get_response_body_type(self._endpoint.response, self._is_async)
-            if self._endpoint.response is not None
+            self._get_response_body_type(self._endpoint.response.body, self._is_async)
+            if self._endpoint.response is not None and self._endpoint.response.body is not None
             else AST.TypeHint.none()
         )
         return (
@@ -327,7 +327,7 @@ class EndpointFunctionGenerator:
 
             is_streaming = (
                 True
-                if endpoint.response is not None
+                if endpoint.response is not None and endpoint.response.body
                 and (
                     endpoint.response.body.get_as_union().type == "streaming"
                     or endpoint.response.body.get_as_union().type == "fileDownload"
@@ -642,8 +642,8 @@ class EndpointFunctionGenerator:
 
         return fallback_typehint
 
-    def _get_response_body_type(self, response: ir_types.HttpResponse, is_async: bool) -> AST.TypeHint:
-        response_type = response.body.visit(
+    def _get_response_body_type(self, response_body: ir_types.HttpResponseBody, is_async: bool) -> AST.TypeHint:
+        response_type = response_body.visit(
             file_download=lambda _: (
                 AST.TypeHint.async_iterator(AST.TypeHint.bytes())
                 if self._is_async
@@ -677,7 +677,7 @@ class EndpointFunctionGenerator:
     def _write_response_body_type(
         self, writer: NodeWriter, response: Optional[ir_types.HttpResponse], response_hint: AST.TypeHint
     ) -> None:
-        if response is not None:
+        if response is not None and response.body:
             response.body.visit(
                 file_download=lambda fd: self._write_yielding_return(writer, response_hint, fd.docs),
                 json=lambda json_response: self._write_standard_return(
@@ -1108,7 +1108,7 @@ class EndpointFunctionSnippetGenerator:
         )
 
     def generate_usage(self, response_name: str, is_async: bool) -> Optional[AST.Expression]:
-        if self.endpoint.response is not None and self.endpoint.response.body.get_as_union().type == "streaming":
+        if self.endpoint.response is not None and self.endpoint.response.body and self.endpoint.response.body.get_as_union().type == "streaming":
 
             def snippet_writer(writer: AST.NodeWriter) -> None:
                 if is_async:
