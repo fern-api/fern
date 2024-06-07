@@ -15,7 +15,10 @@ import types.Operand;
     path = "/"
 )
 public interface PathParamService {
-  @PostMapping("/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}")
+  @PostMapping(
+      value = "/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
+      produces = "application/json"
+  )
   void send(@PathVariable("operand") Operand operand,
       @PathVariable("maybeOperand") Optional<Operand> maybeOperand,
       @PathVariable("operandOrColor") ColorOrOperand operandOrColor,
