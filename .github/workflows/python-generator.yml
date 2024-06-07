@@ -6,11 +6,6 @@ on:
       - "generators/python/**"
     branches:
       - main
-  push:
-    paths:
-      - "generators/python/**"
-    branches:
-      - main
   workflow_call:
 
 jobs:

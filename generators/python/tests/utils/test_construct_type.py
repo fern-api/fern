@@ -6,14 +6,13 @@ from re import M
 from typing import cast
 import uuid
 from core_utilities.sdk.unchecked_base_model import construct_type
-from generators.python.tests.utils.example_models.types.resources.types.shape import Shape_Circle
 from .example_models.manual_types.defaulted_object import ObjectWithDefaultedOptionalFields
-from .example_models.types.resources.types import ObjectWithOptionalField, Circle, Shape_Square
+from .example_models.types.resources.types import ObjectWithOptionalField, Circle, Shape_Square, Shape_Circle
 
 
 def test_construct_valid() -> None:
     response = {
-        "literal": "lit_two",
+        "literal": "lit_one",
         "string": "circle",
         "integer": 1,
         "long": 1000000,
@@ -34,7 +33,7 @@ def test_construct_valid() -> None:
     }
     cast_response = cast(ObjectWithOptionalField, construct_type(type_=ObjectWithOptionalField, object_=response))
 
-    assert cast_response.literal == "lit_two"
+    assert cast_response.literal == "lit_one"
     assert cast_response.string == "circle"
     assert cast_response.integer == 1
     assert cast_response.long_ == 1000000
@@ -69,7 +68,7 @@ def test_construct_valid() -> None:
 
 def test_construct_unset() -> None:
     response = {
-        "literal": "lit_two",
+        "literal": "lit_one",
         "string": "circle",
         "integer": 1,
         "long": 1000000,
@@ -91,7 +90,7 @@ def test_construct_unset() -> None:
 
     d = cast_response.dict(by_alias=True, exclude_unset=True)
     assert d == {
-        "literal": "lit_two",
+        "literal": "lit_one",
         "string": "circle",
         "integer": 1,
         "long": 1000000,
