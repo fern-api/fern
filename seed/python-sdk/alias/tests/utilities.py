@@ -3,9 +3,8 @@
 import typing
 import uuid
 
-from dateutil import parser
-
 import pydantic
+from dateutil import parser
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
