@@ -1,13 +1,12 @@
 from __future__ import annotations
 
 from abc import abstractmethod
+from dataclasses import dataclass
 from typing import Callable, List, Optional, TypeVar
 
 from fern_python.codegen.ast.ast_node.ast_node import AstNode
 
 from ordered_set import OrderedSet
-
-import pydantic
 
 from fern_python.codegen.dependency_manager import DependencyManager
 
@@ -21,11 +20,13 @@ from .top_level_statement import TopLevelStatement
 
 T_AstNode = TypeVar("T_AstNode", bound=AST.AstNode)
 
-class IfConditionLeaf(pydantic.BaseModel):
+@dataclass
+class IfConditionLeaf:
     condition: AST.Expression
     code: AstNode
 
-class ConditionalTree(pydantic.BaseModel):
+@dataclass
+class ConditionalTree:
     conditions: List[IfConditionLeaf]
     else_code: Optional[AstNode]
 

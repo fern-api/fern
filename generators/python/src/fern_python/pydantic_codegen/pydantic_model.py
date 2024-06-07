@@ -369,7 +369,7 @@ def get_field_name_initializer(
         return default
 
     def write(writer: AST.NodeWriter) -> None:
-        writer.write_reference(Pydantic.Field(version=version))
+        writer.write_reference(Pydantic.Field())
         writer.write("(")
         arg_present = False
         if alias is not None:
