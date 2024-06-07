@@ -19,7 +19,7 @@ public final class SeedApiMovieDoesNotExistError extends SeedApiApiError {
     /**
      * @return the body
      */
-    @Override
+    @java.lang.Override
     public String body() {
         return this.body;
     }

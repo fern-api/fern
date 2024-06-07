@@ -53,6 +53,7 @@ async function runCli() {
     const exit = async () => {
         await cliContext.exit();
     };
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     process.on("SIGINT", async () => {
         cliContext.suppressUpgradeMessage();
         await exit();

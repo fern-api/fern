@@ -4,13 +4,15 @@ dockerCommand: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fer
 language: python
 generatorType: sdk
 defaultOutputMode: github
-# local:
-#   workingDirectory: generators/python
-#   buildCommand:
-#     - poetry config virtualenvs.create false 
-#     - poetry install
-#   runCommand: poetry run python -m src.fern_python.generators.sdk.cli
-#   env: {}
+local:
+  workingDirectory: generators/python
+  buildCommand:
+    - chmod +x setup-python.sh && ./setup-python.sh
+    - poetry config virtualenvs.in-project true
+    - poetry install
+  # The envvar is needed to trick the generator to look in the right place for the core_utils files
+  runCommand: PYTEST_CURRENT_TEST="some value" poetry run python -m src.fern_python.generators.sdk.cli
+  env: {}
 fixtures:
   examples: 
     - customConfig: null
@@ -122,7 +124,9 @@ scripts:
       - export NPM_CONFIG_CACHE="$(pwd)/.cache"
       - export HOME="$(pwd)/"
       - poetry config virtualenvs.path .
-      - poetry install && fern test --command "poetry run pytest -rP ."
+      - poetry install
+      - poetry run mypy .
+      - fern test --command "poetry run pytest -rP ."
 allowedFailures: 
   # This is the only one that should always fail
   - exhaustive:additional_init_exports

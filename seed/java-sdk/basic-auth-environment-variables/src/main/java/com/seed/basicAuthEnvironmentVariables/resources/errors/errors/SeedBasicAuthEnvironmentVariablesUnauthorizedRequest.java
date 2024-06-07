@@ -21,7 +21,7 @@ public final class SeedBasicAuthEnvironmentVariablesUnauthorizedRequest
     /**
      * @return the body
      */
-    @Override
+    @java.lang.Override
     public UnauthorizedRequestErrorBody body() {
         return this.body;
     }

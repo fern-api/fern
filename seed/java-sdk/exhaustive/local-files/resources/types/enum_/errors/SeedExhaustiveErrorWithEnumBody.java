@@ -6,7 +6,6 @@ package com.fern.sdk.resources.types.enum_.errors;
 
 import com.fern.sdk.core.SeedExhaustiveApiError;
 import com.fern.sdk.resources.types.enum_.types.WeatherReport;
-import java.lang.Override;
 
 public final class SeedExhaustiveErrorWithEnumBody extends SeedExhaustiveApiError {
   /**
@@ -22,7 +21,7 @@ public final class SeedExhaustiveErrorWithEnumBody extends SeedExhaustiveApiErro
   /**
    * @return the body
    */
-  @Override
+  @java.lang.Override
   public WeatherReport body() {
     return this.body;
   }

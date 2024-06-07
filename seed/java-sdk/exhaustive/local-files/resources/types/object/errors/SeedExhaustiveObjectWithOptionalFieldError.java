@@ -6,7 +6,6 @@ package com.fern.sdk.resources.types.object.errors;
 
 import com.fern.sdk.core.SeedExhaustiveApiError;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
-import java.lang.Override;
 
 public final class SeedExhaustiveObjectWithOptionalFieldError extends SeedExhaustiveApiError {
   /**
@@ -22,7 +21,7 @@ public final class SeedExhaustiveObjectWithOptionalFieldError extends SeedExhaus
   /**
    * @return the body
    */
-  @Override
+  @java.lang.Override
   public ObjectWithOptionalField body() {
     return this.body;
   }

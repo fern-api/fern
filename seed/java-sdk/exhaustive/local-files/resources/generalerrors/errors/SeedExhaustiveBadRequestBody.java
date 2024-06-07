@@ -6,7 +6,6 @@ package com.fern.sdk.resources.generalerrors.errors;
 
 import com.fern.sdk.core.SeedExhaustiveApiError;
 import com.fern.sdk.resources.generalerrors.types.BadObjectRequestInfo;
-import java.lang.Override;
 
 public final class SeedExhaustiveBadRequestBody extends SeedExhaustiveApiError {
   /**
@@ -22,7 +21,7 @@ public final class SeedExhaustiveBadRequestBody extends SeedExhaustiveApiError {
   /**
    * @return the body
    */
-  @Override
+  @java.lang.Override
   public BadObjectRequestInfo body() {
     return this.body;
   }

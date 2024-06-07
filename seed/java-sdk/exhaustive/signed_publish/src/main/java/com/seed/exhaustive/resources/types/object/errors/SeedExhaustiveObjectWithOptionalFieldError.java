@@ -20,7 +20,7 @@ public final class SeedExhaustiveObjectWithOptionalFieldError extends SeedExhaus
     /**
      * @return the body
      */
-    @Override
+    @java.lang.Override
     public ObjectWithOptionalField body() {
         return this.body;
     }

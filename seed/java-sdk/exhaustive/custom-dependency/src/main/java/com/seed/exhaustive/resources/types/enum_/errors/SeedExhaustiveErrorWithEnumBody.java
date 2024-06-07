@@ -20,7 +20,7 @@ public final class SeedExhaustiveErrorWithEnumBody extends SeedExhaustiveApiErro
     /**
      * @return the body
      */
-    @Override
+    @java.lang.Override
     public WeatherReport body() {
         return this.body;
     }

@@ -6,7 +6,6 @@ package com.fern.sdk.resources.types.object.errors;
 
 import com.fern.sdk.core.SeedExhaustiveApiError;
 import com.fern.sdk.resources.types.object.types.NestedObjectWithRequiredField;
-import java.lang.Override;
 
 public final class SeedExhaustiveNestedObjectWithRequiredFieldError extends SeedExhaustiveApiError {
   /**
@@ -22,7 +21,7 @@ public final class SeedExhaustiveNestedObjectWithRequiredFieldError extends Seed
   /**
    * @return the body
    */
-  @Override
+  @java.lang.Override
   public NestedObjectWithRequiredField body() {
     return this.body;
   }

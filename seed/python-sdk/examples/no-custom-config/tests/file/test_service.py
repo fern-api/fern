@@ -8,7 +8,7 @@ from ..utilities import validate_response
 
 
 async def test_get_file(client: SeedExamples, async_client: AsyncSeedExamples) -> None:
-    expected_response = {"name": "file.txt", "contents": "..."}
+    expected_response: typing.Any = {"name": "file.txt", "contents": "..."}
     expected_types: typing.Any = {"name": None, "contents": None}
     response = client.file.service.get_file(filename="string", x_file_api_version="string")
     validate_response(response, expected_response, expected_types)

@@ -20,7 +20,7 @@ public final class SeedExhaustiveBadRequestBody extends SeedExhaustiveApiError {
     /**
      * @return the body
      */
-    @Override
+    @java.lang.Override
     public BadObjectRequestInfo body() {
         return this.body;
     }
