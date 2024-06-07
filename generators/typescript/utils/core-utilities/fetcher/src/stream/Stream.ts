@@ -106,7 +106,7 @@ export class Stream<T> implements AsyncIterable<T> {
 
     private decodeChunk(chunk: any): string {
         let decoded = "";
-        // TextDecoder is present in Browser environment
+        // If TextDecoder is present, use it
         if (typeof TextDecoder !== "undefined") {
             const decoder = new TextDecoder("utf8");
             decoded += decoder.decode(chunk);

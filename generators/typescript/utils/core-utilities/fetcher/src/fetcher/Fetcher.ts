@@ -93,17 +93,7 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
         }
     }
 
-    // In Node.js environments, the SDK always uses`node-fetch`.
-    // If not in Node.js the SDK uses global fetch if available,
-    // and falls back to node-fetch.
-    const fetchFn =
-        RUNTIME.type === "node"
-            ? // `.default` is required due to this issue:
-              // https://github.com/node-fetch/node-fetch/issues/450#issuecomment-387045223
-              ((await import("node-fetch")).default as any)
-            : typeof fetch == "function"
-            ? fetch
-            : ((await import("node-fetch")).default as any);
+    const fetchFn = await getFetchFn();
 
     const makeRequest = async (): Promise<Response> => {
         const signals: AbortSignal[] = [];
@@ -268,6 +258,25 @@ function anySignal(...args: AbortSignal[] | [AbortSignal[]]): AbortSignal {
     }
 
     return controller.signal;
+}
+
+/**
+ * Returns a fetch function based on the runtime
+ */
+async function getFetchFn(): Promise<any> {
+    // In Node.js environments, the SDK always uses`node-fetch`.
+    if (RUNTIME.type === "node") {
+        return (await import("node-fetch")).default as any;
+    }
+
+    // Otherwise the SDK uses global fetch if available,
+    // and falls back to node-fetch.
+    if (typeof fetch == "function") {
+        return fetch;
+    }
+
+    // Defaults to node `node-fetch` if global fetch isn't available
+    return (await import("node-fetch")).default as any;
 }
 
 export const fetcher: FetchFunction = fetcherImpl;
