@@ -5,4 +5,7 @@ export * from "./ScriptConfig";
 export * from "./Language";
 export * from "./GeneratorType";
 export * from "./FixtureConfigurations";
+export * from "./ReadmeConfig";
+export * from "./ReadmeEndpoint";
+export * from "./ReadmeEndpointObject";
 export * from "./OutputMode";

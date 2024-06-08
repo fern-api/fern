@@ -53,6 +53,7 @@ async function runCli() {
     const exit = async () => {
         await cliContext.exit();
     };
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     process.on("SIGINT", async () => {
         cliContext.suppressUpgradeMessage();
         await exit();
@@ -458,7 +459,8 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" },
                 version: argv.version,
                 keywords: undefined,
-                smartCasing: false
+                smartCasing: false,
+                readme: undefined
             });
         }
     );

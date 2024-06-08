@@ -5166,6 +5166,9 @@
                                     "type": "generic"
                                 }
                             },
+                            "templateInput": {
+                                "location": "RELATIVE"
+                            },
                             "type": "discriminatedUnion"
                         }
                     }
@@ -5275,6 +5278,9 @@
                                         ],
                                         "type": "generic"
                                     }
+                                },
+                                "templateInput": {
+                                    "location": "RELATIVE"
                                 },
                                 "type": "discriminatedUnion"
                             }

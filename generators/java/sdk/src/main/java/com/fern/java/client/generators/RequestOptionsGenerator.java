@@ -113,11 +113,16 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
 
         // Add in the other (static) fields for request options
         createRequestOptionField(
-                "getTimeout", timeoutFieldBuilder, "null", requestOptionsTypeSpec, builderTypeSpec, fields);
+                "getTimeout",
+                timeoutFieldBuilder,
+                CodeBlock.of("$T.empty()", Optional.class),
+                requestOptionsTypeSpec,
+                builderTypeSpec,
+                fields);
         createRequestOptionField(
                 "getTimeoutTimeUnit",
                 timeoutTimeUnitFieldBuilder,
-                "TimeUnit.SECONDS",
+                CodeBlock.of("$T.SECONDS", TimeUnit.class),
                 requestOptionsTypeSpec,
                 builderTypeSpec,
                 fields);
@@ -185,7 +190,7 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
     private void createRequestOptionField(
             String getterFunctionName,
             FieldSpec.Builder fieldSpecBuilder,
-            String initializer,
+            CodeBlock initializer,
             TypeSpec.Builder requestOptionsTypeSpec,
             TypeSpec.Builder builderTypeSpec,
             List<RequestOption> fields) {

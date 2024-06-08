@@ -65,7 +65,8 @@ export async function runRemoteGenerationForAPIWorkspace({
                         token,
                         whitelabel: workspaceMetadata.workspace.generatorsConfiguration?.whitelabel,
                         irVersionOverride: generatorInvocation.irVersionOverride,
-                        absolutePathToPreview: workspaceMetadata.absolutePathToPreview
+                        absolutePathToPreview: workspaceMetadata.absolutePathToPreview,
+                        readme: generatorInvocation.readme
                     });
                     if (remoteTaskHandlerResponse != null && remoteTaskHandlerResponse.createdSnippets) {
                         snippetsProducedBy.push(generatorInvocation);

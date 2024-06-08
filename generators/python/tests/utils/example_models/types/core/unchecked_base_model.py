@@ -124,9 +124,11 @@ def _convert_union_type(type_: typing.Type[typing.Any], object_: typing.Any) -> 
                 try:
                     # Cast to the correct type, based on the discriminant
                     for inner_type in pydantic_v1.typing.get_args(union_type):
-                        if inner_type.__fields__[metadata.discriminant].default == getattr(
-                            object_, metadata.discriminant
-                        ):
+                        try:
+                            objects_discriminant = getattr(object_, metadata.discriminant)
+                        except:
+                            objects_discriminant = object_[metadata.discriminant]
+                        if inner_type.__fields__[metadata.discriminant].default == objects_discriminant:
                             return construct_type(object_=object_, type_=inner_type)
                 except Exception:
                     # Allow to fall through to our regular union handling
@@ -212,6 +214,10 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
 
     if base_type == bool:
         try:
+            if isinstance(object_, str):
+                stringified_object = object_.lower()
+                return stringified_object == "true" or stringified_object == "1"
+
             return bool(object_)
         except Exception:
             return object_

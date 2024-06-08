@@ -7,14 +7,11 @@ defaultOutputMode: github
 local:
   workingDirectory: generators/python
   buildCommand:
-    - export PYTEST_CURRENT_TEST="some value"
-    - pip install poetry
-    - poetry env list
-    - poetry env remove python
+    - chmod +x setup-python.sh && ./setup-python.sh
     - poetry config virtualenvs.in-project true
-    - poetry shell
     - poetry install
-  runCommand: poetry run python -m src.fern_python.generators.sdk.cli
+  # The envvar is needed to trick the generator to look in the right place for the core_utils files
+  runCommand: PYTEST_CURRENT_TEST="some value" poetry run python -m src.fern_python.generators.sdk.cli
   env: {}
 fixtures:
   examples: 
@@ -27,6 +24,17 @@ fixtures:
           exported_filename: client.py
           exported_class_name: SeedExhaustive
       outputFolder: client-filename
+    - customConfig: null
+      readmeConfig:
+        bannerLink: https://www.fernapi.com
+        apiReferenceLink: https://www.docs.fernapi.com
+        defaultEndpoint: POST /movie
+        features:
+          timeouts:
+            - GET /movie/{movieId}
+            - method: POST
+              path: /movie
+      outputFolder: readme
   enum:
     - customConfig: null
       outputFolder: no-custom-config
@@ -139,5 +147,6 @@ allowedFailures:
   # into the method as parameters when they're meant to be omitted (so the tests fail on unrecognized params).
   - examples:no-custom-config
   - examples:client-filename
+  - examples:readme
   - literal
   # ===========================================

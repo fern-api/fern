@@ -69,8 +69,7 @@ export async function runWithCustomFixture({
             outputFolder: customFixtureConfig?.outputFolder ?? "custom",
             id: "custom",
             keepDocker: true,
-            // TODO: Support readme fixtures in seed.
-            readme: undefined
+            readme: customFixtureConfig?.readmeConfig
         });
         await writeDotMock({
             absolutePathToDotMockDirectory: absolutePathToOutput,
