@@ -3,89 +3,253 @@ title: What is an SDK?
 description: Generate robust, flexible, and automated SDKs in multiple programming languages.
 ---
 
-SDKs (Software Development Kits) reduce the amount of work required to use a REST API, starting by reducing the boilerplate code a developer would otherwise have to write. By simplifyoing the process of making API calls, developers have a faster time-to-integration and run into fewer errors. SDKs are platform-specific and comprised of:
+{/* An SDK (Software Development Kit) is any platform-specific tools that 
+enables faster software development. Traditionally, that could include 
+anything from a compiler to documentation to code libraries. */}
 
-1. **Client Libraries**: Pre-written code that provides functionality for interacting with an API, saving developers from having to write this code from scratch. 
-1. **Code Examples**: Example snippets that show example API requests, responses, and schemas (i.e., data models).
-1. **Utilities**: Helper functions that help with tasks such as retrying requests, paginating responses, refreshing OAuth tokens, and verifying webhook requests.
+SDKs (Software Development Kits) are code libraries that provide functionality for interacting with your API. 
+By simplifying the process of making API calls, developers have a faster time-to-integration
+and run into fewer errors. 
 
-## Fern SDKs
+### SDKs vs. vanilla code
 
-Fern generates robust, flexible, and automated SDKs, enabling developers to use 
-your API effectively in popular languages. Fern SDKs offer autocomplete in 
-code editors. (For less technical folks, think of that nice drop-down when you hit "=" in Excel/GSheets.) Developers also get type checking, schema validation at compile time, support for server-sent events streaming, and more. 
+Calling an API without an SDK can be tedious and error-prone. An SDK simplifies the headache-inducing parts of 
+calling APIs in code: configuring headers, extracting response data, error-handling, pagination, and rate limits. 
 
-- **Extensible and customizable.** Enhance your Fern-generated SDK with
-handwritten functions and customize your SDK method and group names.
+As an example, compare vanilla TypeScript with the Fern SDK to convert text to speech via the ElevenLabs API: 
 
-- **Automatically generated.** When your API definition changes, a CI/CD 
-job kicks off to build, version, and release your updates SDKs.
+<CodeBlocks>
+<CodeBlock title="Vanilla TypeScript">
+```TypeScript
+const url = 'https://api.elevenlabs.io/v1/text-to-speech/pMsXgVXv3BLzUgSXRplE?optimize_streaming_latency=0&output_format=mp3_22050_32';
+const requestBody = {
+    text: "It sure does, Jackie… My mama always said: \"In Carolina, the air's so thick you can wear it!\"",
+    voice_settings: {
+        stability: 0.1,
+        similarity_boost: 0.3,
+        style: 0.2
+    }
+}
 
-- **Idiomatic code.**: Fern SDKs read as if a language expert wrote them. 
-Each SDK generator is built from scratch, maintained by the Fern team, 
-and designed to follow the best practices of each language (i.e., a Python SDK is Pythonic).
+try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'xi-api-key': 'YOUR_API_KEY',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(
+        requestBody
+      )
+    });
 
-### Generally Available
+    const blob = await response.blob();
+    const audioUrl = URL.createObjectURL(blob);
+    
+} catch (error) {
+    console.error('Error:', error);
+}
+```
+</CodeBlock>
+<CodeBlock title="With Fern SDK">
+```TypeScript
+import { ElevenLabsClient, ElevenLabs } from "elevenlabs";
 
-<CardGroup cols={3}>
-  <Card
-    title="TypeScript"
-    icon="brands node-js"
-  />
-  <Card
-    title="Python"
-    icon="brands python"
-  />
-  <Card
-    title="Go"
-    icon="brands golang"
-  />
-  <Card
-    title=".Net"
-    icon="brands microsoft"
-  />
-  <Card
-    title="Java"
-    icon="brands java"
-  />
-  <Card
-    title="Ruby"
-    icon="gem"
-  />
-</CardGroup>
+const elevenLabs = new ElevenLabsClient({ apiKey: "YOUR_API_KEY" });
+await elevenLabs.textToSpeech.convert("pMsXgVXv3BLzUgSXRplE", {
+    optimize_streaming_latency: ElevenLabs.OptimizeStreamingLatency.Zero,
+    output_format: ElevenLabs.OutputFormat.Mp32205032,
+    text: "It sure does, Jackie... My mama always said: \"In Carolina, the air's so thick you can wear it!\"",
+    voice_settings: {
+        stability: 0.1,
+        similarity_boost: 0.3,
+        style: 0.2
+    }
+});
+```
+</CodeBlock>
+</CodeBlocks>
 
-### In Development
+### Features
 
-<CardGroup cols={3}>
-  <Card
-    title="Terraform"
-    icon="cloud"
-  />
-  <Card
-    title="PHP"
-    icon="brands php"
-  />
-</CardGroup>
+In a robust SDK, header configuration, type-checking, and error-handling are built-in. See the relevant parts of the text-to-speech SDK below. 
 
-### Upcoming
+<CodeBlocks maxLines={15}>
+<CodeBlock title="ElevenLabs.textToSpeech.convert()">
+```TypeScript {22, 44}
+public async convert(
+    voiceId: string,
+    request: ElevenLabs.TextToSpeechRequest,
+    requestOptions?: TextToSpeech.RequestOptions
+): Promise<stream.Readable> {
+    const { optimize_streaming_latency: optimizeStreamingLatency, output_format: outputFormat, ..._body } = request;
+    const _queryParams: Record<string, string | string[] | object | object[]> = {};
+    if (optimizeStreamingLatency != null) {
+        _queryParams["optimize_streaming_latency"] = optimizeStreamingLatency;
+    }
 
-<CardGroup cols={3}>
-  <Card
-    title="Swift"
-    icon="brands swift"
-  />
-  <Card
-    title="Rust"
-    icon="brands rust"
-  />
-  <Card
-    title="CLI"
-    icon="terminal"
-  />
-</CardGroup>
+    if (outputFormat != null) {
+        _queryParams["output_format"] = outputFormat;
+    }
 
+    const _response = await core.fetcher<stream.Readable>({
+        url: urlJoin(
+            (await core.Supplier.get(this._options.environment)) ?? environments.ElevenLabsEnvironment.Production,
+            `v1/text-to-speech/${encodeURIComponent(voiceId)}`
+        ),
+        method: "POST",
+        headers: {
+            "xi-api-key":
+                (await core.Supplier.get(this._options.apiKey)) != null
+                    ? await core.Supplier.get(this._options.apiKey)
+                    : undefined,
+            "X-Fern-Language": "JavaScript",
+            "X-Fern-SDK-Name": "elevenlabs",
+            "X-Fern-SDK-Version": "v0.6.0",
+            "X-Fern-Runtime": core.RUNTIME.type,
+            "X-Fern-Runtime-Version": core.RUNTIME.version,
+        },
+        contentType: "application/json",
+        queryParameters: _queryParams,
+        body: _body,
+        responseType: "streaming",
+        timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+        maxRetries: requestOptions?.maxRetries,
+    });
+    if (_response.ok) {
+        return _response.body;
+    }
 
-<Warning title='Get early access'>
-  Please message support@buildwithfern.com if you're interested in our 
-  beta or in-development generators.
-</Warning>
+    if (_response.error.reason === "status-code") {
+        switch (_response.error.statusCode) {
+            case 422:
+                throw new ElevenLabs.UnprocessableEntityError(
+                    _response.error.body as ElevenLabs.HttpValidationError
+                );
+            default:
+                throw new errors.ElevenLabsError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.body,
+                });
+        }
+    }
+
+    /** ...more error handling... */
+
+}
+```
+</CodeBlock>
+<CodeBlock title="ElevenLabs.TextToSpeechRequest">
+```TypeScript
+export interface TextToSpeechRequest {
+    /** You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. */
+    optimize_streaming_latency?: ElevenLabs.OptimizeStreamingLatency;
+    /** The output format of the generated audio. */
+    output_format?: ElevenLabs.OutputFormat;
+    /** The text that will get converted into speech. */
+    text: string;
+    /** Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property. */
+    model_id?: string;
+    /** Voice settings overriding stored setttings for the given voice. They are applied only on the given request. */
+    voice_settings?: ElevenLabs.VoiceSettings;
+    /** A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request */
+    pronunciation_dictionary_locators?: ElevenLabs.PronunciationDictionaryVersionLocator[];
+}
+```
+</CodeBlock>
+
+</CodeBlocks>
+
+### One API, many SDKs
+
+SDKs are platform-specific, so each language requires its own. Here's the same ElevenLabs API endpoint called via SDKs in multiple languages:
+
+<CodeBlocks maxLines={10}>
+<CodeBlock title="Python">
+```Python
+from elevenlabs import VoiceSettings
+from elevenlabs.client import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.text_to_speech.convert(
+    voice_id="pMsXgVXv3BLzUgSXRplE",
+    optimize_streaming_latency="0",
+    output_format="mp3_22050_32",
+    text="It sure does, Jackie… My mama always said: “In Carolina, the air's so thick you can wear it!”",
+    voice_settings=VoiceSettings(
+        stability=0.1,
+        similarity_boost=0.3,
+        style=0.2,
+    ),
+)
+```
+</CodeBlock>
+<CodeBlock title="Ruby">
+```Ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.elevenlabs.io/v1/text-to-speech/pMsXgVXv3BLzUgSXRplE?optimize_streaming_latency=0&output_format=mp3_22050_32")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+
+request = Net::HTTP::Post.new(url)
+request["xi-api-key"] = '<xi-api-key>'
+request["Content-Type"] = 'application/json'
+request.body = "{\n  \"text\": \"It sure does, Jackie… My mama always said: “In Carolina, the air's so thick you can wear it!”\",\n  \"voice_settings\": {\n    \"stability\": 0.1,\n    \"similarity_boost\": 0.3,\n    \"style\": 0.2\n  }\n}"
+
+response = http.request(request)
+puts response.read_body
+```
+</CodeBlock>
+<CodeBlock title="Java">
+```Java
+HttpResponse<String> response = Unirest.post("https://api.elevenlabs.io/v1/text-to-speech/pMsXgVXv3BLzUgSXRplE?optimize_streaming_latency=0&output_format=mp3_22050_32")
+  .header("xi-api-key", "<xi-api-key>")
+  .header("Content-Type", "application/json")
+  .body("{\n  \"text\": \"It sure does, Jackie… My mama always said: “In Carolina, the air's so thick you can wear it!”\",\n  \"voice_settings\": {\n    \"stability\": 0.1,\n    \"similarity_boost\": 0.3,\n    \"style\": 0.2\n  }\n}")
+  .asString();
+```
+</CodeBlock>
+<CodeBlock title="Go">
+```Go
+package main
+
+import (
+	"fmt"
+	"strings"
+	"net/http"
+	"io"
+)
+
+func main() {
+
+	url := "https://api.elevenlabs.io/v1/text-to-speech/pMsXgVXv3BLzUgSXRplE?optimize_streaming_latency=0&output_format=mp3_22050_32"
+
+	payload := strings.NewReader("{\n  \"text\": \"It sure does, Jackie… My mama always said: “In Carolina, the air's so thick you can wear it!”\",\n  \"voice_settings\": {\n    \"stability\": 0.1,\n    \"similarity_boost\": 0.3,\n    \"style\": 0.2\n  }\n}")
+
+	req, _ := http.NewRequest("POST", url, payload)
+
+	req.Header.Add("xi-api-key", "<xi-api-key>")
+	req.Header.Add("Content-Type", "application/json")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := io.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+</CodeBlock>
+</CodeBlocks>
+
+<Note>
+**Q: So what's the difference between an SDK and a client library?**<br/>
+A: They are synonymous in the context of Fern! Fern SDKs are robust client libraries.
+</Note>
