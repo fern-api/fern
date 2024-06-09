@@ -47,6 +47,7 @@ groups:
           frozen: true
           version: v1
   go: 
+    generators:
       - name: fernapi/fern-go-model
         version: 0.9.3
         github:
