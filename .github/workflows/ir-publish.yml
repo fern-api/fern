@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - "packages/ir-sdk/fern/apis/ir-types-latest/VERSION"
+      - "fern/apis/ir-types-latest/VERSION"
 
 jobs:
   node:
@@ -23,7 +23,7 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
           cd packages/ir-sdk
-          version=$(cat packages/ir-sdk/fern/apis/ir-types-latest/VERSION)
+          version=$(cat fern/apis/ir-types-latest/VERSION)
           fern generate --api ir-types-latest --group node --version $version
   
   python:
@@ -40,7 +40,7 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
           cd packages/ir-sdk
-          version=$(cat packages/ir-sdk/fern/apis/ir-types-latest/VERSION)
+          version=$(cat fern/apis/ir-types-latest/VERSION)
           fern generate --api ir-types-latest --group python --version $version
 
   go:
@@ -57,7 +57,7 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
           cd packages/ir-sdk
-          version=$(cat packages/ir-sdk/fern/apis/ir-types-latest/VERSION)
+          version=$(cat fern/apis/ir-types-latest/VERSION)
           fern generate --api ir-types-latest --group go --version $version
   
   java:
@@ -74,5 +74,5 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
           cd packages/ir-sdk
-          version=$(cat packages/ir-sdk/fern/apis/ir-types-latest/VERSION)
+          version=$(cat fern/apis/ir-types-latest/VERSION)
           fern generate --api ir-types-latest --group java --version $version
