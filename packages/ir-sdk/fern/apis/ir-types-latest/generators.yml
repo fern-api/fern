@@ -11,7 +11,7 @@ groups:
           outputSourceFiles: true
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true
-  sdks:
+  node:
     generators:
       - name: fernapi/fern-typescript-node-sdk
         version: 0.8.13
@@ -22,6 +22,8 @@ groups:
         config:
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true
+  java:
+    generators:
       - name: fernapi/java-model
         version: 0.5.20
         output:
@@ -31,6 +33,8 @@ groups:
         config:
           wrapped-aliases: true
           enable-forward-compatible-enums: true
+  python: 
+    generators:
       - name: fernapi/fern-pydantic-model
         version: 0.8.1-rc0
         output:
@@ -41,6 +45,8 @@ groups:
           wrapped_aliases: true
           include_union_utils: true
           frozen: true
+          version: v1
+  go: 
       - name: fernapi/fern-go-model
         version: 0.9.3
         github:
