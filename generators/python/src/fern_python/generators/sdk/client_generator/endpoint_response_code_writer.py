@@ -456,15 +456,17 @@ class EndpointResponseCodeWriter:
             )
             writer.write_newline_if_last_line_not()
 
-    def _get_response_body_type(self, response: ir_types.HttpResponse) -> AST.TypeHint:
-        return response.body.visit(
-            file_download=lambda _: AST.TypeHint.async_iterator(AST.TypeHint.bytes())
-            if self._is_async
-            else AST.TypeHint.iterator(AST.TypeHint.bytes()),
-            json=lambda json_response: self._get_json_response_body_type(json_response),
-            streaming=lambda streaming_response: self._get_streaming_response_data_type(streaming_response),
-            text=lambda _: AST.TypeHint.str_(),
-        )
+    def _get_response_body_type(self, response: ir_types.HttpResponse) -> Optional[AST.TypeHint]:
+        if response.body is not None: 
+            return response.body.visit(
+                file_download=lambda _: AST.TypeHint.async_iterator(AST.TypeHint.bytes())
+                if self._is_async
+                else AST.TypeHint.iterator(AST.TypeHint.bytes()),
+                json=lambda json_response: self._get_json_response_body_type(json_response),
+                streaming=lambda streaming_response: self._get_streaming_response_data_type(streaming_response),
+                text=lambda _: AST.TypeHint.str_(),
+            )
+        return None
 
     def _get_json_response_body_type(
         self,
