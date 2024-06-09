@@ -11,33 +11,44 @@ paths:
       parameters:
         - name: limit
           in: query
-          required: true
+          required: false
           schema:
             type: integer
+            nullable: true
+          examples:
+            Some Query Parameters:
+              value: 5
         - name: id
           in: query
-          required: true
+          required: false
           schema:
             type: string
             format: uuid
+            nullable: true
+          examples:
+            Some Query Parameters:
+              value: 4ff45b32-ca63-462d-b988-cf4eec41397a
         - name: date
           in: query
-          required: true
+          required: false
           schema:
             type: string
             format: date
+            nullable: true
         - name: deadline
           in: query
-          required: true
+          required: false
           schema:
             type: string
             format: date-time
+            nullable: true
         - name: bytes
           in: query
-          required: true
+          required: false
           schema:
             type: string
             format: byte
+            nullable: true
         - name: user
           in: query
           required: false
@@ -78,11 +89,12 @@ paths:
               nullable: true
         - name: filter
           in: query
-          required: true
+          required: false
           schema:
             type: array
             items:
               type: string
+              nullable: true
       responses:
         '200':
           description: ''
@@ -90,6 +102,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              examples:
+                Some Query Parameters:
+                  value:
+                    name: Deep
+                    tags: []
 components:
   schemas:
     User:
@@ -98,10 +115,12 @@ components:
       properties:
         name:
           type: string
+          example: Deep
         tags:
           type: array
           items:
             type: string
+          example: []
       required:
         - name
         - tags

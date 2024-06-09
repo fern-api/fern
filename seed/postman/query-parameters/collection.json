@@ -24,7 +24,7 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/user?limit=&id=&date=&deadline=&bytes=&user=&keyValue=&optionalString=&nestedUser=&optionalUser=&excludeUser=&filter=",
+              "raw": "{{baseUrl}}/user?limit=5&id=4ff45b32-ca63-462d-b988-cf4eec41397a",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -34,73 +34,73 @@
               "query": [
                 {
                   "key": "limit",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "5"
                 },
                 {
                   "key": "id",
-                  "value": "",
-                  "description": null
-                },
-                {
-                  "key": "date",
-                  "value": "",
-                  "description": null
-                },
-                {
-                  "key": "deadline",
-                  "value": "",
-                  "description": null
-                },
-                {
-                  "key": "bytes",
-                  "value": "",
-                  "description": null
-                },
-                {
-                  "key": "user",
-                  "value": "",
-                  "description": null
-                },
-                {
-                  "key": "keyValue",
-                  "value": "",
-                  "description": null
-                },
-                {
-                  "key": "optionalString",
-                  "value": "",
-                  "description": null
-                },
-                {
-                  "key": "nestedUser",
-                  "value": "",
-                  "description": null
-                },
-                {
-                  "key": "optionalUser",
-                  "value": "",
-                  "description": null
-                },
-                {
-                  "key": "excludeUser",
-                  "value": "",
-                  "description": null
-                },
-                {
-                  "key": "filter",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "4ff45b32-ca63-462d-b988-cf4eec41397a"
                 }
               ],
               "variable": []
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "GET",
             "auth": null,
             "body": null
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/user?limit=5&id=4ff45b32-ca63-462d-b988-cf4eec41397a",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "user"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "description": null,
+                      "value": "5"
+                    },
+                    {
+                      "key": "id",
+                      "description": null,
+                      "value": "4ff45b32-ca63-462d-b988-cf4eec41397a"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"name\": \"Deep\",\n    \"tags\": []\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }
