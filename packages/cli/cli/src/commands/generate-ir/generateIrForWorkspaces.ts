@@ -1,6 +1,5 @@
-import { Audiences } from "@fern-api/configuration";
+import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
-import { generatorsYml } from "@fern-api/configuration";
 import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-migrations";
 import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { Project } from "@fern-api/project-loader";
@@ -18,7 +17,9 @@ export async function generateIrForWorkspaces({
     generationLanguage,
     audiences,
     version,
-    smartCasing
+    keywords,
+    smartCasing,
+    readme
 }: {
     project: Project;
     irFilepath: AbsoluteFilePath;
@@ -26,24 +27,46 @@ export async function generateIrForWorkspaces({
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
     audiences: Audiences;
     version: string | undefined;
+    keywords: string[] | undefined;
     smartCasing: boolean;
+    readme: generatorsYml.ReadmeSchema | undefined;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                const fernWorkspace =
-                    workspace.type === "oss"
-                        ? await convertOpenApiWorkspaceToFernWorkspace(workspace, context)
-                        : workspace;
+                cliContext.logger.info(`Generating IR for workspace ${workspace.name}`);
+                let fernWorkspace: FernWorkspace;
+                if (workspace.type === "fern") {
+                    cliContext.logger.info("Found a fern workspace");
+                    fernWorkspace = workspace;
+                } else {
+                    workspace.specs = workspace.specs.map((spec) => ({
+                        ...spec,
+                        settings: {
+                            audiences: spec.settings?.audiences ?? [],
+                            shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true,
+                            shouldUseUndiscriminatedUnionsWithLiterals:
+                                spec.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false
+                        }
+                    }));
+                    fernWorkspace = await convertOpenApiWorkspaceToFernWorkspace(
+                        workspace,
+                        context,
+                        false,
+                        generationLanguage
+                    );
+                }
 
                 const intermediateRepresentation = await getIntermediateRepresentation({
                     workspace: fernWorkspace,
                     context,
                     generationLanguage,
+                    keywords,
                     smartCasing,
                     disableExamples: false,
                     audiences,
-                    version
+                    version,
+                    readme
                 });
 
                 const irOutputFilePath = path.resolve(irFilepath);
@@ -62,25 +85,31 @@ async function getIntermediateRepresentation({
     context,
     generationLanguage,
     audiences,
+    keywords,
     smartCasing,
     disableExamples,
-    version
+    version,
+    readme
 }: {
     workspace: FernWorkspace;
     context: TaskContext;
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
+    keywords: string[] | undefined;
     smartCasing: boolean;
     disableExamples: boolean;
     audiences: Audiences;
     version: string | undefined;
+    readme: generatorsYml.ReadmeSchema | undefined;
 }): Promise<unknown> {
     const intermediateRepresentation = await generateIrForFernWorkspace({
         workspace,
         context,
         generationLanguage,
         audiences,
+        keywords,
         smartCasing,
-        disableExamples
+        disableExamples,
+        readme
     });
 
     if (version == null) {

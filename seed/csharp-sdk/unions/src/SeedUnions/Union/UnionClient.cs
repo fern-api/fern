@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedUnions;
 
+#nullable enable
+
 namespace SeedUnions;
 
 public class UnionClient
@@ -22,7 +24,7 @@ public class UnionClient
         {
             return JsonSerializer.Deserialize<Shape>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<bool> UpdateAsync(Shape request)
@@ -40,6 +42,6 @@ public class UnionClient
         {
             return JsonSerializer.Deserialize<bool>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

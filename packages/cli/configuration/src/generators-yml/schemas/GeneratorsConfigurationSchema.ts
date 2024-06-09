@@ -3,6 +3,7 @@ import { APIConfigurationSchema, APIDefinitionSettingsSchema } from "./APIConfig
 import { GeneratorGroupSchema } from "./GeneratorGroupSchema";
 import { GeneratorsOpenAPISchema } from "./GeneratorsOpenAPISchema";
 import { OutputMetadataSchema } from "./OutputMetadataSchema";
+import { ReadmeSchema } from "./ReadmeSchema";
 import { WhitelabelConfigurationSchema } from "./WhitelabelConfigurationSchema";
 
 export const DEFAULT_GROUP_GENERATORS_CONFIG_KEY = "default-group";
@@ -18,6 +19,8 @@ export const GeneratorsConfigurationSchema = z.strictObject({
     whitelabel: z.optional(WhitelabelConfigurationSchema),
 
     metadata: z.optional(OutputMetadataSchema),
+
+    readme: z.optional(ReadmeSchema),
 
     [DEFAULT_GROUP_GENERATORS_CONFIG_KEY]: z.optional(z.string()),
     groups: z.optional(z.record(GeneratorGroupSchema)),

@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Literal, Tuple
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources.config import GeneratorConfig
@@ -30,6 +30,9 @@ from .type_declaration_referencer import TypeDeclarationReferencer
 
 
 class PydanticModelGenerator(AbstractGenerator):
+    def project_type(self) -> Literal["sdk", "pydantic", "fastapi"]:
+        return "pydantic"
+
     def should_format_files(
         self,
         *,

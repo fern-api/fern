@@ -1,5 +1,7 @@
 using SeedMultiLineDocs;
 
+#nullable enable
+
 namespace SeedMultiLineDocs;
 
 public partial class SeedMultiLineDocsClient

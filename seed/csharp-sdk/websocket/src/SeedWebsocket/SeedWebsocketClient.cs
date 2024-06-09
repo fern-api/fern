@@ -1,5 +1,7 @@
 using SeedWebsocket;
 
+#nullable enable
+
 namespace SeedWebsocket;
 
 public partial class SeedWebsocketClient

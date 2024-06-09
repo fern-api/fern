@@ -9,23 +9,29 @@ export async function generateIrForFernWorkspace({
     workspace,
     context,
     generationLanguage,
+    keywords,
     smartCasing,
     disableExamples,
-    audiences
+    audiences,
+    readme
 }: {
     workspace: FernWorkspace;
     context: TaskContext;
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
+    keywords: string[] | undefined;
     smartCasing: boolean;
     disableExamples: boolean;
     audiences: Audiences;
+    readme: generatorsYml.ReadmeSchema | undefined;
 }): Promise<IntermediateRepresentation> {
     await validateAPIWorkspaceAndLogIssues({ workspace, context, logWarnings: false });
     return generateIntermediateRepresentation({
         workspace,
         generationLanguage,
+        keywords,
         smartCasing,
         disableExamples,
-        audiences
+        audiences,
+        readme
     });
 }

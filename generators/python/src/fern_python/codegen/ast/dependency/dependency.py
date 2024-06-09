@@ -15,3 +15,4 @@ class Dependency:
     name: DependencyName
     version: DependencyVersion
     compatibility: DependencyCompatibility = DependencyCompatibility.EXACT
+    optional: bool = False

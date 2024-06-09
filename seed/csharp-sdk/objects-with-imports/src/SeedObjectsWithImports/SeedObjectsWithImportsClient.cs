@@ -1,6 +1,8 @@
 using SeedObjectsWithImports;
 using SeedObjectsWithImports.Commons;
 
+#nullable enable
+
 namespace SeedObjectsWithImports;
 
 public partial class SeedObjectsWithImportsClient

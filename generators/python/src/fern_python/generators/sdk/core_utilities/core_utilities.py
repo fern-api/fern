@@ -301,7 +301,21 @@ class CoreUtilities:
             )
         )
 
-    def http_client(self, obj: AST.Expression, is_async: bool) -> AST.Expression:
+    def http_client(
+        self,
+        base_client: AST.Expression,
+        base_url: Optional[AST.Expression],
+        base_headers: AST.Expression,
+        base_timeout: AST.Expression,
+        is_async: bool,
+    ) -> AST.Expression:
+        func_args = [
+            ("httpx_client", base_client),
+            ("base_headers", base_headers),
+            ("base_timeout", base_timeout),
+        ]
+        if base_url is not None:
+            func_args.append(("base_url", base_url))
         return AST.Expression(
             AST.FunctionInvocation(
                 function_definition=AST.Reference(
@@ -311,7 +325,7 @@ class CoreUtilities:
                         named_import="HttpClient" if not is_async else "AsyncHttpClient",
                     ),
                 ),
-                kwargs=[("httpx_client", obj)],
+                kwargs=func_args,
             )
         )
 

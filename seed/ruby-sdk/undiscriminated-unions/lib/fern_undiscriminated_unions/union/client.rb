@@ -15,9 +15,9 @@ module SeedUndiscriminatedUnionsClient
       @request_client = request_client
     end
 
-    # @param request [String, Array<String>, Integer, Array<Integer>, Array<Array<Integer>>]
+    # @param request [String, Array<String>, Integer, Array<Integer>, Array<Array<Integer>>, Set<String>]
     # @param request_options [SeedUndiscriminatedUnionsClient::RequestOptions]
-    # @return [String, Array<String>, Integer, Array<Integer>, Array<Array<Integer>>]
+    # @return [String, Array<String>, Integer, Array<Integer>, Array<Array<Integer>>, Set<String>]
     def get(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -39,9 +39,9 @@ module SeedUndiscriminatedUnionsClient
       @request_client = request_client
     end
 
-    # @param request [String, Array<String>, Integer, Array<Integer>, Array<Array<Integer>>]
+    # @param request [String, Array<String>, Integer, Array<Integer>, Array<Array<Integer>>, Set<String>]
     # @param request_options [SeedUndiscriminatedUnionsClient::RequestOptions]
-    # @return [String, Array<String>, Integer, Array<Integer>, Array<Array<Integer>>]
+    # @return [String, Array<String>, Integer, Array<Integer>, Array<Array<Integer>>, Set<String>]
     def get(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|

@@ -17,6 +17,9 @@ generators/**/dist
 generators/**/tsconfig*tsbuildinfo
 seed/**/tsconfig*tsbuildinfo
 generators/**/out
+seed/**/gradlew
+seed/**/gradlew.bat
+seed/**/gradle
 
 # don't ignore the ruby lib within the playground
 !generators/ruby/playground/lib
@@ -52,3 +55,5 @@ packages/**/generated
 .vercel
 
 **/.idea/*
+
+.python-version

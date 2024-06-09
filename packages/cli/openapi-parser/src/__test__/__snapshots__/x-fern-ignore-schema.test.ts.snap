@@ -9,6 +9,7 @@ exports[`x-fern-ignore-schema x-fern-ignore-schema parse open api 1`] = `
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [],
   "schemas": {
     "SchemaToKeep": {

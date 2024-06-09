@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedSingleUrlEnvironmentNoDefault;
 
+#nullable enable
+
 namespace SeedSingleUrlEnvironmentNoDefault;
 
 public class DummyClient
@@ -22,6 +24,6 @@ public class DummyClient
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

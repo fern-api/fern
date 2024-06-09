@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedExtraProperties;
 
+#nullable enable
+
 namespace SeedExtraProperties;
 
 public class UserClient
@@ -27,6 +29,6 @@ public class UserClient
         {
             return JsonSerializer.Deserialize<User>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

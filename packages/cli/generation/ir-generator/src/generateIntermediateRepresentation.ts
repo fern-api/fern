@@ -22,6 +22,7 @@ import { getAudiences } from "./converters/convertDeclaration";
 import { convertEnvironments } from "./converters/convertEnvironments";
 import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
 import { convertErrorDiscriminationStrategy } from "./converters/convertErrorDiscriminationStrategy";
+import { convertReadmeConfig } from "./converters/convertReadmeConfig";
 import { convertWebhookGroup } from "./converters/convertWebhookGroup";
 import { constructHttpPath } from "./converters/services/constructHttpPath";
 import { convertHttpHeader, convertHttpService, convertPathParameters } from "./converters/services/convertHttpService";
@@ -46,17 +47,21 @@ import { parseErrorName } from "./utils/parseErrorName";
 export async function generateIntermediateRepresentation({
     workspace,
     generationLanguage,
+    keywords,
     smartCasing,
     disableExamples,
-    audiences
+    audiences,
+    readme
 }: {
     workspace: FernWorkspace;
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
+    keywords: string[] | undefined;
     smartCasing: boolean;
     disableExamples: boolean;
     audiences: Audiences;
+    readme: generatorsYml.ReadmeSchema | undefined;
 }): Promise<IntermediateRepresentation> {
-    const casingsGenerator = constructCasingsGenerator({ generationLanguage, smartCasing });
+    const casingsGenerator = constructCasingsGenerator({ generationLanguage, keywords, smartCasing });
 
     const irGraph = new IrGraph(audiences);
 
@@ -143,7 +148,8 @@ export async function generateIntermediateRepresentation({
             sharedTypes: []
         },
         webhookGroups: {},
-        websocketChannels: {}
+        websocketChannels: {},
+        readmeConfig: undefined
     };
 
     const packageTreeGenerator = new PackageTreeGenerator();
@@ -379,6 +385,9 @@ export async function generateIntermediateRepresentation({
         return service.endpoints.some((endpoint) => endpoint.response?.body?.type === "fileDownload");
     });
 
+    const readmeConfig =
+        readme != null ? convertReadmeConfig({ readme, services: intermediateRepresentation.services }) : undefined;
+
     return {
         ...intermediateRepresentationForAudiences,
         ...packageTreeGenerator.build(filteredIr),
@@ -392,7 +401,8 @@ export async function generateIntermediateRepresentation({
                 sdkName: "X-Fern-SDK-Name",
                 sdkVersion: "X-Fern-SDK-Version"
             }
-        }
+        },
+        readmeConfig
     };
 }
 

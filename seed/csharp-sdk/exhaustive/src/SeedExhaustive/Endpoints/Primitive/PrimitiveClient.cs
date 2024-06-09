@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedExhaustive;
 
+#nullable enable
+
 namespace SeedExhaustive.Endpoints;
 
 public class PrimitiveClient
@@ -27,7 +29,7 @@ public class PrimitiveClient
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<int> GetAndReturnIntAsync(int request)
@@ -45,7 +47,7 @@ public class PrimitiveClient
         {
             return JsonSerializer.Deserialize<int>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<long> GetAndReturnLongAsync(long request)
@@ -63,7 +65,7 @@ public class PrimitiveClient
         {
             return JsonSerializer.Deserialize<long>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<double> GetAndReturnDoubleAsync(double request)
@@ -81,7 +83,7 @@ public class PrimitiveClient
         {
             return JsonSerializer.Deserialize<double>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<bool> GetAndReturnBoolAsync(bool request)
@@ -99,7 +101,7 @@ public class PrimitiveClient
         {
             return JsonSerializer.Deserialize<bool>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<DateTime> GetAndReturnDatetimeAsync(DateTime request)
@@ -117,7 +119,7 @@ public class PrimitiveClient
         {
             return JsonSerializer.Deserialize<DateTime>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<DateOnly> GetAndReturnDateAsync(DateOnly request)
@@ -135,7 +137,7 @@ public class PrimitiveClient
         {
             return JsonSerializer.Deserialize<DateOnly>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<Guid> GetAndReturnUuidAsync(Guid request)
@@ -153,7 +155,7 @@ public class PrimitiveClient
         {
             return JsonSerializer.Deserialize<Guid>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<string> GetAndReturnBase64Async(string request)
@@ -171,6 +173,6 @@ public class PrimitiveClient
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

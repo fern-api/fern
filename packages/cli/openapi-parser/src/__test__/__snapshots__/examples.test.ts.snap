@@ -137,6 +137,7 @@ exports[`examples examples parse open api 1`] = `
       ],
       "generatedRequestName": "SearchRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "Search",
@@ -175,6 +176,7 @@ exports[`examples examples parse open api 1`] = `
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [
     "PropertySearchResponse",
   ],

@@ -37,6 +37,7 @@ export interface Spec {
 export interface SpecImportSettings {
     audiences: string[];
     shouldUseTitleAsName: boolean;
+    shouldUseUndiscriminatedUnionsWithLiterals: boolean;
 }
 export interface APIChangelog {
     files: ChangelogFile[];
@@ -78,4 +79,10 @@ export interface FernDefinition {
 
 export interface OnDiskNamedDefinitionFile extends ParsedFernFile<DefinitionFileSchema> {
     absoluteFilepath: AbsoluteFilePath;
+}
+
+export interface FernWorkspaceMetadata {
+    workspace: FernWorkspace;
+    absolutePathToPreview: AbsoluteFilePath | undefined;
+    group: generatorsYml.GeneratorGroup;
 }

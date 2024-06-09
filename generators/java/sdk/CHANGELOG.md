@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.8] - 2024-06-06
+
+- Fix: `RequestOptions` are now generated with the `timeout` field initialized to `Optional.empty()` instead of `null` 
+  to avoid NPEs if `timeout` is not set in the builder.
+
+## [0.9.7] - 2024-06-06
+
+- Feature: The SDK generator now generates `@java.lang.Override` over `@Override` in all files to avoid clashes with any
+  `Override.java` class that may have been generated in the same package. The former was used most places, but not all, 
+  until this release.
+
+## [0.9.6] - 2024-06-05
+
+- Feature: The SDK generator now supports returning response properties from client methods rather than just the 
+  responses themselves.
+
+## [0.9.5] - 2024-05-30
+
+- Fix: Types without fields are now generated with builders. Previously, they were not, which made them impossible to
+  initialize.
+
+## [0.9.4] - 2024-05-28
+
+- Fix: The SDK now generates undiscriminated unions with de-conflicted method signatures. Previously, certain
+  undiscriminated unions would have failed to compile due to Java's type erasure causing conflicts.
+
 ## [0.9.3] - 2024-05-23
 
 - Feature: Generated SDK clients with an OAuth security scheme will now automatically refresh access tokens before they

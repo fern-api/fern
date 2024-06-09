@@ -15,6 +15,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
       "examples": [],
       "generatedRequestName": "GetExampleRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": null,
@@ -46,6 +47,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [
     "ExampleResponse",
     "GreetingEnum",

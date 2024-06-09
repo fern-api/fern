@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedCodeSamples;
 
+#nullable enable
+
 namespace SeedCodeSamples;
 
 public class ServiceClient
@@ -27,6 +29,6 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<MyResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

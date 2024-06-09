@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using SeedObject;
 
+#nullable enable
+
 namespace SeedObject;
 
 public class Type
@@ -33,7 +35,7 @@ public class Type
     public string Nine { get; init; }
 
     [JsonPropertyName("ten")]
-    public List<int> Ten { get; init; }
+    public IEnumerable<int> Ten { get; init; }
 
     [JsonPropertyName("eleven")]
     public HashSet<double> Eleven { get; init; }
@@ -48,13 +50,13 @@ public class Type
     public object Fourteen { get; init; }
 
     [JsonPropertyName("fifteen")]
-    public List<List<int>> Fifteen { get; init; }
+    public IEnumerable<IEnumerable<int>> Fifteen { get; init; }
 
     [JsonPropertyName("sixteen")]
-    public List<Dictionary<string, int>> Sixteen { get; init; }
+    public IEnumerable<Dictionary<string, int>> Sixteen { get; init; }
 
     [JsonPropertyName("seventeen")]
-    public List<Guid?> Seventeen { get; init; }
+    public IEnumerable<Guid> Seventeen { get; init; }
 
     [JsonPropertyName("eighteen")]
     public string Eighteen { get; init; }

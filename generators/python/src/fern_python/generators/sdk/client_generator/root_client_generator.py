@@ -56,6 +56,7 @@ class RootClientGenerator:
     RESPONSE_JSON_VARIABLE = EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE
 
     GET_BASEURL_FUNCTION_NAME = "_get_base_url"
+    TOKEN_GETTER_PARAM_NAME = "_token_getter_override"
 
     def __init__(
         self,
@@ -120,6 +121,15 @@ class RootClientGenerator:
                             instantiation=AST.Expression(f'client_secret="YOUR_CLIENT_SECRET"'),
                         )
                     )
+            self._root_client_constructor_params.append(
+                ConstructorParameter(
+                    constructor_parameter_name=self.TOKEN_GETTER_PARAM_NAME,
+                    private_member_name=self.TOKEN_GETTER_PARAM_NAME,
+                    type_hint=AST.TypeHint.optional(
+                        AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_())
+                    ),
+                )
+            )
 
     def generate(self, source_file: SourceFile) -> GeneratedRootClient:
         exported_client_class_name = self._context.get_class_name_for_exported_root_client()
@@ -247,14 +257,14 @@ class RootClientGenerator:
                 ):
                     self._is_default_body_parameter_used = True
 
-                if generated_endpoint_function.snippet is not None:
+                for val in generated_endpoint_function.snippets or []:
                     if is_async:
                         self._snippet_registry.register_async_client_endpoint_snippet(
-                            endpoint=endpoint, expr=generated_endpoint_function.snippet
+                            endpoint=endpoint, expr=val.snippet, example_id=val.example_id
                         )
                     else:
                         self._snippet_registry.register_sync_client_endpoint_snippet(
-                            endpoint=endpoint, expr=generated_endpoint_function.snippet
+                            endpoint=endpoint, expr=val.snippet, example_id=val.example_id
                         )
 
         return class_declaration
@@ -467,12 +477,26 @@ class RootClientGenerator:
                         else None,
                     ),
                 )
+            parameters.append(
+                RootClientConstructorParameter(
+                    constructor_parameter_name=self.TOKEN_GETTER_PARAM_NAME,
+                    type_hint=AST.TypeHint.optional(
+                        AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_())
+                    ),
+                    initializer=AST.Expression("None"),
+                ),
+            )
 
+        timeout_phrase = (
+            f"the timeout is {self._context.custom_config.timeout_in_seconds} seconds"
+            if isinstance(self._context.custom_config.timeout_in_seconds, int)
+            else "there is no timeout set"
+        )
         parameters.append(
             RootClientConstructorParameter(
                 constructor_parameter_name=self._timeout_constructor_parameter_name,
                 type_hint=AST.TypeHint.optional(AST.TypeHint.float_()),
-                docs="The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.",
+                docs=f"The timeout to be used, in seconds, for requests. By default {timeout_phrase}, unless a custom httpx client is used, in which case this default is not enforced.",
             )
         )
 
@@ -698,7 +722,9 @@ class RootClientGenerator:
             client_wrapper_constructor_kwargs.append(
                 (
                     "token",
-                    AST.Expression(f"oauth_token_provider.get_token"),
+                    AST.Expression(
+                        f"{self.TOKEN_GETTER_PARAM_NAME} if {self.TOKEN_GETTER_PARAM_NAME} is not None else oauth_token_provider.get_token"
+                    ),
                 )
             )
 
@@ -735,7 +761,6 @@ class RootClientGenerator:
                     ),
                 ),
             )
-            pass
         else:
             client_wrapper_constructor_kwargs.append(
                 (

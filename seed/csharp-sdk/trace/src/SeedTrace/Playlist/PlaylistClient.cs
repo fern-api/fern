@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class PlaylistClient
@@ -39,13 +41,13 @@ public class PlaylistClient
         {
             return JsonSerializer.Deserialize<Playlist>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
     /// Returns the user's playlists
     /// </summary>
-    public async Task<List<Playlist>> GetPlaylistsAsync(GetPlaylistsRequest request)
+    public async Task<IEnumerable<Playlist>> GetPlaylistsAsync(GetPlaylistsRequest request)
     {
         var _query = new Dictionary<string, object>()
         {
@@ -72,9 +74,9 @@ public class PlaylistClient
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<Playlist>>(responseBody);
+            return JsonSerializer.Deserialize<IEnumerable<Playlist>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -90,7 +92,7 @@ public class PlaylistClient
         {
             return JsonSerializer.Deserialize<Playlist>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -114,7 +116,7 @@ public class PlaylistClient
         {
             return JsonSerializer.Deserialize<Playlist?>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>

@@ -61,6 +61,7 @@ exports[`generate IR from OpenAPI 1`] = `
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
+  "readmeConfig": null,
   "rootPackage": {
     "docs": null,
     "errors": [],
@@ -127,6 +128,7 @@ exports[`generate IR from OpenAPI 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "userProvided",
+              "id": null,
               "name": null,
               "queryParameters": [],
               "request": null,
@@ -482,6 +484,7 @@ exports[`generate IR from OpenAPI 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
+              "id": "b7cd984460d409b15aa09c63eef2ffd3dd1c7ad4",
               "name": null,
               "queryParameters": [],
               "request": null,

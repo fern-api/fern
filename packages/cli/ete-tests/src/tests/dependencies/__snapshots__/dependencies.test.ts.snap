@@ -485,6 +485,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                                     "value": null
                                 }
                             },
+                            "id": "c38c6fa40fc9f218268c8f066fe87af2cf02a872",
                             "docs": null
                         }
                     ],
@@ -536,6 +537,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
     },
     "webhookGroups": {},
     "websocketChannels": {},
+    "readmeConfig": null,
     "subpackages": {
         "subpackage_imported": {
             "name": {
@@ -839,4 +841,4 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `2695212`;
+exports[`dependencies file dependencies 1`] = `2715425`;

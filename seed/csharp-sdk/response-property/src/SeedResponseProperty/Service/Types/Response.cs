@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using SeedResponseProperty;
 
+#nullable enable
+
 namespace SeedResponseProperty;
 
 public class Response

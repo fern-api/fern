@@ -2,7 +2,6 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
-import { rewriteInputsForWorkspace } from "./commands/rewrite-inputs/rewriteInputsForWorkspace";
 import { runWithCustomFixture } from "./commands/run/runWithCustomFixture";
 import { ScriptRunner } from "./commands/test/ScriptRunner";
 import { TaskContextFactory } from "./commands/test/TaskContextFactory";
@@ -18,7 +17,6 @@ export async function tryRunCli(): Promise<void> {
 
     addTestCommand(cli);
     addRunCommand(cli);
-    addWriteInputsCommand(cli);
 
     await cli.parse();
 
@@ -50,6 +48,11 @@ function addTestCommand(cli: Argv) {
                     choices: FIXTURES,
                     demandOption: false,
                     description: "Runs on all fixtures if not provided"
+                })
+                .option("outputFolder", {
+                    string: true,
+                    demandOption: false,
+                    description: "Runs on a specific output folder. Only relevant if there are >1 folders configured."
                 })
                 .option("keepDocker", {
                     type: "boolean",
@@ -85,7 +88,6 @@ function addTestCommand(cli: Argv) {
                 }
                 let testRunner;
                 const scriptRunner = new ScriptRunner(generator);
-
                 if (argv.local && generator.workspaceConfig.local != null) {
                     testRunner = new LocalTestRunner({
                         generator,
@@ -112,7 +114,8 @@ function addTestCommand(cli: Argv) {
                     testGenerator({
                         generator,
                         runner: testRunner,
-                        fixtures: argv.fixture
+                        fixtures: argv.fixture,
+                        outputFolder: argv.outputFolder
                     })
                 );
             }
@@ -127,49 +130,6 @@ function addTestCommand(cli: Argv) {
             if (results.includes(false)) {
                 process.exit(1);
             }
-        }
-    );
-}
-
-function addWriteInputsCommand(cli: Argv) {
-    cli.command(
-        "write-inputs",
-        "Rewrites the .inputs directory for each workspace",
-        (yargs) =>
-            yargs
-                .option("generator", {
-                    type: "array",
-                    string: true,
-                    demandOption: false,
-                    description: "Generator to write inputs for"
-                })
-                .option("fixture", {
-                    type: "array",
-                    string: true,
-                    default: FIXTURES,
-                    choices: FIXTURES,
-                    demandOption: false,
-                    description: "Runs on all fixtures if not provided"
-                })
-                .option("log-level", {
-                    default: LogLevel.Info,
-                    choices: LOG_LEVELS
-                }),
-        async (argv) => {
-            const generators = await loadGeneratorWorkspaces();
-            const promises: Promise<void>[] = [];
-            for (const generator of generators) {
-                if (argv.workspace != null && !argv.generator?.includes(generator.workspaceName)) {
-                    continue;
-                }
-                const promise = rewriteInputsForWorkspace({
-                    generator,
-                    fixtures: argv.fixture,
-                    taskContextFactory: new TaskContextFactory(argv["log-level"])
-                });
-                promises.push(promise);
-            }
-            await Promise.all(promises);
         }
     );
 }

@@ -1,4 +1,4 @@
-export { AsIsFiles } from "./AsIs";
+export * from "./AsIs";
 export * as dependencies from "./ast/dependencies";
 export * from "./cli";
 export * as csharp from "./csharp";

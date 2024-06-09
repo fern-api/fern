@@ -42,6 +42,7 @@ Instead of forcing SDK users to learn the intricacies of your pagination system,
     console.log(user);
   }
   ```
+  
 </Tab>
 <Tab title="Python">
 
@@ -111,8 +112,7 @@ MyResponseObject:
 
 <Tabs>
 <Tab title="OpenAPI">
-<Tabs>
-<Tab>
+<CodeBlocks>
 ```yaml Offset
 ...
 paths:
@@ -122,8 +122,7 @@ paths:
       results: $response.results
 ...
 ```
-</Tab>
-<Tab>
+
 ```yaml Cursor
 ...
 paths:
@@ -134,13 +133,12 @@ paths:
       results: $response.results
 ...
 ```
-</Tab>
-</Tabs>
+</CodeBlocks>
 </Tab>
 
 <Tab title="Fern Definition">
-<Tabs>
-<Tab>
+<CodeBlocks>
+
 ```yaml Offset
 service:
   endpoints:
@@ -149,8 +147,7 @@ service:
         offset: $request.page
         results: $response.data
 ```
-</Tab>
-<Tab>
+
 ```yaml Cursor
 service:
   endpoints:
@@ -160,7 +157,10 @@ service:
         next_cursor: $response.page.next.starting_after
         results: $response.data
 ```
+
+</CodeBlocks>
 </Tab>
 </Tabs>
-</Tab>
-</Tabs>
+
+
+

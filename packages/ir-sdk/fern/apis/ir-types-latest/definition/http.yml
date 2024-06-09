@@ -286,6 +286,7 @@ types:
   ExampleEndpointCall:
     extends: commons.WithDocs
     properties:
+      id: optional<string>
       name: optional<commons.Name>
       url: string
       rootPathParameters: list<ExamplePathParameter>

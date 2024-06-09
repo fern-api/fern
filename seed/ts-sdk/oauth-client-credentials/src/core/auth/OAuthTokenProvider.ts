@@ -44,6 +44,7 @@ export class OAuthTokenProvider {
             clientId: await core.Supplier.get(this._clientId),
             clientSecret: await core.Supplier.get(this._clientSecret),
         });
+
         this._accessToken = tokenResponse.accessToken;
         this._expiresAt = this.getExpiresAt(tokenResponse.expiresIn, this.BUFFER_IN_MINUTES);
         return this._accessToken;

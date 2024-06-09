@@ -6,6 +6,12 @@ instances:
         owner: fern-api
         repo: fern
         branch: main
+  - url: fern.docs.dev.buildwithfern.com/learn
+    edit-this-page:
+      github:
+        owner: fern-api
+        repo: fern
+        branch: main
 title: Fern
 
 tabs:
@@ -38,7 +44,7 @@ navigation:
         contents:
           - page: What is an API Definition?
             path: ./pages/api-definition/introduction/what-is-an-api-definition.mdx
-      - section: OpenAPI
+      - section: OpenAPI Specification
         slug: openapi
         contents:
           - page: Overview
@@ -60,9 +66,6 @@ navigation:
         contents:
           - page: Overview
             path: ./pages/api-definition/fern-definition/ferndef-overview.mdx
-          - page: Export to OpenAPI
-            slug: export-openapi
-            path: ./pages/api-definition/fern-definition/export-openapi.mdx
           - page: Types
             path: ./pages/api-definition/fern-definition/types.mdx
           - page: Endpoints
@@ -85,6 +88,9 @@ navigation:
             path: ./pages/api-definition/fern-definition/packages.mdx
           - page: Comparison with OpenAPI
             path: ./pages/api-definition/fern-definition/comparison.mdx
+          - page: Export to OpenAPI
+            slug: export-openapi
+            path: ./pages/api-definition/fern-definition/export-openapi.mdx
   - tab: sdks
     layout:
       - section: Introduction
@@ -106,6 +112,8 @@ navigation:
             path: ./pages/sdks/features/idiomatic-method-names.mdx
           - page: Schema validation
             path: ./pages/sdks/features/schema-validation.mdx
+          - page: Discriminated unions
+            path: ./pages/sdks/features/discriminated-unions.mdx
           - page: Multipart form data
             path: ./pages/sdks/features/multipart-form-data.mdx
           - page: Forward compatibility
@@ -176,6 +184,8 @@ navigation:
             path: ./pages/docs/building-your-docs/navigation.mdx
           - page: Customize Styling 
             path: ./pages/docs/building-your-docs/styling.mdx
+          - page: Custom CSS & Global JS
+            path: ./pages/docs/building-your-docs/custom-css-js.mdx
           - page: Pull Request Preview
             path: ./pages/docs/building-your-docs/pr-preview.mdx
           - page: Local Development
@@ -268,13 +278,14 @@ navigation:
       - section: CLI Reference
         contents:
           - page: CLI Overview
-            path: ./pages/cli/overview.mdx
+            path: ./pages/cli-api/overview.mdx
           - page: Global Options
-            path: ./pages/cli/global-options.mdx
+            path: ./pages/cli-api/global-options.mdx
           - page: Commands
-            path: ./pages/cli/commands.mdx
+            path: ./pages/cli-api/commands.mdx
       - api: API Reference
         api-name: public-api
+        summary: ./pages/cli-api/api-summary.mdx
         # audiences:
         #   - external
         # snippets:

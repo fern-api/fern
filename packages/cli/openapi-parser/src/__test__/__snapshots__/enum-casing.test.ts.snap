@@ -60,6 +60,7 @@ exports[`examples enum-casing parse open api 1`] = `
       ],
       "generatedRequestName": "GetExampleRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": null,
@@ -91,6 +92,7 @@ exports[`examples enum-casing parse open api 1`] = `
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [
     "ExampleResponse",
   ],

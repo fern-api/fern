@@ -36,7 +36,8 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, asyncA
                 workspace: {
                     specs
                 },
-                taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER })
+                taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER }),
+                sdkLanguage: undefined
             });
             const fernDefinition = convert({
                 ir: openApiIr,
@@ -71,7 +72,8 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, asyncA
                 workspace: {
                     specs
                 },
-                taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER })
+                taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER }),
+                sdkLanguage: undefined
             });
             const fernDefinition = convert({
                 ir: openApiIr,

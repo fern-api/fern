@@ -8,9 +8,9 @@ from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
 
 class SendRequest(pydantic_v1.BaseModel):
-    prompt: typing.Literal["You are a helpful assistant"]
+    prompt: typing.Literal["You are a helpful assistant"] = "You are a helpful assistant"
     query: str
-    stream: typing.Literal[False]
+    stream: typing.Literal[False] = False
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

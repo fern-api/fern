@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedUnknownAsAny;
 
+#nullable enable
+
 namespace SeedUnknownAsAny;
 
 public class UnknownClient
@@ -12,7 +14,7 @@ public class UnknownClient
         _client = client;
     }
 
-    public async Task<List<object>> PostAsync(object request)
+    public async Task<IEnumerable<object>> PostAsync(object request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -25,8 +27,8 @@ public class UnknownClient
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<object>>(responseBody);
+            return JsonSerializer.Deserialize<IEnumerable<object>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

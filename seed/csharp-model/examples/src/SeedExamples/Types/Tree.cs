@@ -1,10 +1,12 @@
 using System.Text.Json.Serialization;
 using SeedExamples;
 
+#nullable enable
+
 namespace SeedExamples;
 
 public class Tree
 {
     [JsonPropertyName("nodes")]
-    public List<Node>? Nodes { get; init; }
+    public IEnumerable<Node>? Nodes { get; init; }
 }

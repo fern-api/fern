@@ -109,7 +109,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                         )
             writer.write_line("}")
 
-        return self._context.core_utilities.remove_none_from_dict(AST.Expression(AST.CodeWriter(write)))
+        return AST.Expression(AST.CodeWriter(write))
 
     def get_files(self) -> Optional[AST.Expression]:
         def write(writer: AST.NodeWriter) -> None:
@@ -123,7 +123,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                         )
             writer.write_line("}")
 
-        return self._context.core_utilities.remove_none_from_dict(AST.Expression(AST.CodeWriter(write)))
+        return AST.Expression(AST.CodeWriter(write))
 
     def get_pre_fetch_statements(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.CodeWriter]:
         return None

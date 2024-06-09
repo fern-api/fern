@@ -1,5 +1,7 @@
 using SeedErrorProperty;
 
+#nullable enable
+
 namespace SeedErrorProperty;
 
 public partial class SeedErrorPropertyClient

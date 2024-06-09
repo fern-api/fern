@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace SeedObjectsWithImports.Commons;
 
 public class Metadata

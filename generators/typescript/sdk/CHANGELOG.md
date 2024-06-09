@@ -5,12 +5,82 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.20.0-rc1] - 2024-05-20
+## [0.21.1] - 2024-06-05
+
+- Improvement: Detect `workerd` (Cloudflare) environments in `Runtime.ts`. The `Stream` class which is 
+  used for Server-Sent Events now prefers `TextDecoder` if it is present in the environment, to 
+  work in Cloudflare environments. 
+
+## [0.21.0] - 2024-06-05
+
+- Feature: The generator now supports `bigint` types.
+- Internal: Bump to IRv46.
+
+## [0.20.9] - 2024-06-02
+
+- Fix: TypeScript generator outputs code snippets that have `example-identifier` embedded.
+
+## [0.20.8] - 2024-06-02
+
+- Improvement: TypeScript projects were skipping added peer dependencies in certain cases,
+  now those are fixed.
+
+## [0.20.7] - 2024-05-31
+
+- Fix: Simplify the error handling introduced in `0.20.6` so that it more easily
+  handles endpoints that include structured errors.
+
+## [0.20.6] - 2024-05-31
+
+- Fix: This updates the behavior of the failure condition introduced in `0.20.2`; the SDK
+  now throws an error whenever we fail to refresh an access token even if `neverThrowErrors`
+  is set. We treat this failure as a systematic exception, so it's OK to throw in this case.
+
+## [0.20.5] - 2024-05-30
+
+- Improvement: Support setting `extraPeerDependencies` and `extraPeerDependenciesMeta` as
+  configuration arguments. For example:
+
+  ```yaml
+  extraPeerDependencies:
+    "openai": "^4.47.1"
+  extraPeerDependenciesMeta:
+    "openai":
+      optional: true
+  ```
+
+## [0.20.4] - 2024-05-29
+
+- Fix: Functionality to generate integration tests against a mock server has been disabled.
+
+## [0.20.2] - 2024-05-29
+
+- Fix: The OAuth token provider supports SDKs that enable the `neverThrowErrors` setting.
+  If the OAuth token provider fails to retrieve and/or refresh an access token, an error
+  will _not_ be thrown. Instead, the original access token will be used and the user will be
+  able to act upon an error available on the response. For example,
+
+  ```ts
+  const response = await client.user.get(...)
+  if (!response.ok) {
+    // Handle the response.error ...
+  }
+  ```
+
+## [0.20.1] - 2024-05-29
+
+- Fix: Remove instances of `node:stream` so that the generated SDK is Webpack + Next.js compatible.
+
+## [0.20.1-rc0] - 2024-05-29
+
+- (Pre-emptive) Fix: URL encoded bodies are now appropriately encoded within the fetcher.
+
+## [0.20.0-rc1] - 2024-05-24
 
 - Fix: Pass `abortSignal` to `Stream` for server-sent-events and JSON streams so that the user
   can opt out and break from a stream.
 
-## [0.20.0-rc0] - 2024-05-20
+## [0.20.0-rc0] - 2024-05-24
 
 - Feature: Add `abortSignal` to `RequestOptions`. SDK consumers can now specify an
   an arbitrary abort signal that can interrupt the API call.

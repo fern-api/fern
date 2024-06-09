@@ -2,6 +2,8 @@ using System.Text.Json;
 using SeedTrace;
 using SeedTrace.V2;
 
+#nullable enable
+
 namespace SeedTrace.V2;
 
 public class ProblemClient
@@ -16,7 +18,7 @@ public class ProblemClient
     /// <summary>
     /// Returns lightweight versions of all problems
     /// </summary>
-    public async Task<List<LightweightProblemInfoV2>> GetLightweightProblemsAsync()
+    public async Task<IEnumerable<LightweightProblemInfoV2>> GetLightweightProblemsAsync()
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/lightweight-problem-info" }
@@ -24,15 +26,15 @@ public class ProblemClient
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<LightweightProblemInfoV2>>(responseBody);
+            return JsonSerializer.Deserialize<IEnumerable<LightweightProblemInfoV2>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
     /// Returns latest versions of all problems
     /// </summary>
-    public async Task<List<ProblemInfoV2>> GetProblemsAsync()
+    public async Task<IEnumerable<ProblemInfoV2>> GetProblemsAsync()
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/problem-info" }
@@ -40,9 +42,9 @@ public class ProblemClient
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<ProblemInfoV2>>(responseBody);
+            return JsonSerializer.Deserialize<IEnumerable<ProblemInfoV2>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -62,7 +64,7 @@ public class ProblemClient
         {
             return JsonSerializer.Deserialize<ProblemInfoV2>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -82,6 +84,6 @@ public class ProblemClient
         {
             return JsonSerializer.Deserialize<ProblemInfoV2>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

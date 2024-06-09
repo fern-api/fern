@@ -1,3 +1,4 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -20,6 +21,7 @@ export interface Spec {
 export interface SpecImportSettings {
     audiences: string[];
     shouldUseTitleAsName: boolean;
+    shouldUseUndiscriminatedUnionsWithLiterals: boolean;
 }
 
 export interface RawOpenAPIFile {
@@ -34,12 +36,14 @@ export interface RawAsyncAPIFile {
 
 export async function parse({
     workspace,
-    taskContext
+    taskContext,
+    sdkLanguage
 }: {
     workspace: {
         specs: Spec[];
     };
     taskContext: TaskContext;
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<OpenApiIntermediateRepresentation> {
     let ir: OpenApiIntermediateRepresentation = {
         title: undefined,
@@ -59,6 +63,7 @@ export async function parse({
         nonRequestReferencedSchemas: new Set(),
         securitySchemes: {},
         globalHeaders: [],
+        idempotencyHeaders: [],
         groups: {}
     };
 
@@ -76,7 +81,10 @@ export async function parse({
                     taskContext,
                     disableExamples: false,
                     audiences: spec.settings?.audiences ?? [],
-                    shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true
+                    shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true,
+                    shouldUseUndiscriminatedUnionsWithLiterals:
+                        spec.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
+                    sdkLanguage
                 });
                 ir = merge(ir, openapiIr);
             } else if (isOpenApiV2(openApiDocument)) {
@@ -85,7 +93,10 @@ export async function parse({
                     taskContext,
                     disableExamples: false,
                     audiences: spec.settings?.audiences ?? [],
-                    shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true
+                    shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true,
+                    shouldUseUndiscriminatedUnionsWithLiterals:
+                        spec.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
+                    sdkLanguage
                 });
                 ir = merge(ir, openapiIr);
             }
@@ -99,7 +110,10 @@ export async function parse({
             const parsedAsyncAPI = parseAsyncAPI({
                 document: asyncAPI,
                 taskContext,
-                shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true
+                shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true,
+                shouldUseUndiscriminatedUnionsWithLiterals:
+                    spec.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
+                sdkLanguage
             });
             if (parsedAsyncAPI.channel != null) {
                 ir.channel.push(parsedAsyncAPI.channel);
@@ -155,6 +169,8 @@ function merge(
             ...ir2.securitySchemes
         },
         globalHeaders: ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined,
+        idempotencyHeaders:
+            ir1.idempotencyHeaders != null ? [...ir1.idempotencyHeaders, ...(ir2.idempotencyHeaders ?? [])] : undefined,
         groups: {
             ...ir1.groups,
             ...ir2.groups

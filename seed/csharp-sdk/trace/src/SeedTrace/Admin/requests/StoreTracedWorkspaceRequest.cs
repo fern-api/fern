@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class StoreTracedWorkspaceRequest
@@ -9,5 +11,5 @@ public class StoreTracedWorkspaceRequest
     public WorkspaceRunDetails WorkspaceRunDetails { get; init; }
 
     [JsonPropertyName("traceResponses")]
-    public List<TraceResponse> TraceResponses { get; init; }
+    public IEnumerable<TraceResponse> TraceResponses { get; init; }
 }

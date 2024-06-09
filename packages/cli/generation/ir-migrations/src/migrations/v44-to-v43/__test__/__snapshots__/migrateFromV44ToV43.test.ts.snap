@@ -88,6 +88,7 @@ exports[`migrateFromV44ToV43 snapshot 1`] = `
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
+  "readmeConfig": undefined,
   "rootPackage": {
     "docs": undefined,
     "errors": [],
@@ -151,6 +152,7 @@ exports[`migrateFromV44ToV43 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "userProvided",
+              "id": undefined,
               "name": undefined,
               "queryParameters": [],
               "request": undefined,
@@ -732,6 +734,7 @@ exports[`migrateFromV44ToV43 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
+              "id": "83ebca4c0264e4e5b52dafcf4d02528e0b30434d",
               "name": undefined,
               "queryParameters": [
                 {
@@ -1571,6 +1574,7 @@ exports[`migrateFromV44ToV43 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "userProvided",
+              "id": undefined,
               "name": undefined,
               "queryParameters": [],
               "request": undefined,
@@ -1591,6 +1595,7 @@ exports[`migrateFromV44ToV43 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
+              "id": "39a4de353f79a5c53b6c9b966bad1cb032e64e78",
               "name": undefined,
               "queryParameters": [
                 {
@@ -1870,6 +1875,7 @@ exports[`migrateFromV44ToV43 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "userProvided",
+              "id": undefined,
               "name": undefined,
               "queryParameters": [],
               "request": undefined,
@@ -1890,6 +1896,7 @@ exports[`migrateFromV44ToV43 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
+              "id": "a92495e5fe0dd0c8be990ba7958b2cf012f0d99b",
               "name": undefined,
               "queryParameters": [
                 {

@@ -43,6 +43,8 @@ types:
       display-name: string
       icon: optional<string>
       slug: optional<string>
+      skip-slug: optional<boolean>
+      hidden: optional<boolean>
       href:
         type: optional<string>
         docs: |

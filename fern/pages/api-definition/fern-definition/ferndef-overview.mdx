@@ -1,11 +1,9 @@
 ---
 title: Use Fern Definition to define your API
-description: An overview of how to define your API using the Fern Definition format, then use Fern to generate SDKs and API reference documentation for your API.
+subtitle: An overview of how to define your API using the Fern Definition format, then use Fern to generate SDKs and API reference documentation for your API.
 ---
 
-## Use Fern Definition to define your API
-
-Use our Fern Definition format to define your API. A Fern Definition is a set of YAML files that describe your API.
+A Fern Definition is a set of YAML files that describe your API.
 
 Each **Fern Definition** file may define:
 
@@ -19,12 +17,12 @@ Alternatively, you can use the [OpenAPI specification format](/learn/api-definit
 
 Fern generates SDKs and API reference documentation from your Fern Def. Create a `fern/` project through one of our [Quickstarts](//learn/docs/getting-started/quickstart) then update the Fern Def files in `fern/definitions/` with your own. You can configure API-wide settings with the [api.yml file](https://buildwithfern.com/learn/api-definition/fern/api-yml-reference).
 
-Once you've defined and configured your API, you can run [fern generate](/learn/cli-api/cli-reference/commands/generate#for-sdks) to generate SDKs or [fern generate --docs](cli-api/cli-reference/commands/generate#for-documentation) to generate docs. 
+Once you've defined and configured your API, you can run [fern generate](/learn/cli-api/cli-reference/commands#fern-generate) to generate SDKs or [fern generate --docs](cli-api/cli-reference/commands#fern-generate---docs) to generate docs. 
 
 ## Converting to and from OpenAPI
 
-- Already have an OpenAPI spec and want to convert it to Fern Definition? Run [fern write-definition](/learn/cli-api/cli-reference/commands/write-definition).
-- Need to convert your Fern Definition files to an OpenAPI spec to work with OpenAPI tools? Use our [OpenAPI generator](/learn/sdks/other-generators/spec/openapi/) from your Fern Def.
+- Already have an OpenAPI spec and want to convert it to Fern Definition? Run [fern write-definition](/learn/cli-api/cli-reference/commands#fern-write-definition).
+- Need to convert your Fern Definition files to an OpenAPI spec to work with OpenAPI tools? Use our [OpenAPI generator](/learn/api-definition/fern/export-openapi) from your Fern Def.
 
 ## An example of a Fern Definition
 

@@ -421,6 +421,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
+  "readmeConfig": undefined,
   "rootPackage": {
     "docs": undefined,
     "errors": [],
@@ -488,15 +489,16 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
+              "id": "52fcb7dec47c171211d94986f41b69876f6de24b",
               "name": undefined,
               "queryParameters": [],
               "request": {
                 "_visit": [Function],
                 "jsonExample": {
-                  "audience": ""https://api.example.com"",
+                  "audience": "https://api.example.com",
                   "client_id": "string",
                   "client_secret": "string",
-                  "grant_type": ""client_credentials"",
+                  "grant_type": "client_credentials",
                   "scope": "string",
                 },
                 "properties": [
@@ -603,7 +605,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     },
                     "originalTypeDeclaration": undefined,
                     "value": {
-                      "jsonExample": ""https://api.example.com"",
+                      "jsonExample": "https://api.example.com",
                       "shape": {
                         "_visit": [Function],
                         "primitive": {
@@ -642,7 +644,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     },
                     "originalTypeDeclaration": undefined,
                     "value": {
-                      "jsonExample": ""client_credentials"",
+                      "jsonExample": "client_credentials",
                       "shape": {
                         "_visit": [Function],
                         "primitive": {
@@ -684,14 +686,25 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       "jsonExample": "string",
                       "shape": {
                         "_visit": [Function],
-                        "primitive": {
+                        "container": {
                           "_visit": [Function],
-                          "string": {
-                            "original": "string",
+                          "optional": {
+                            "jsonExample": "string",
+                            "shape": {
+                              "_visit": [Function],
+                              "primitive": {
+                                "_visit": [Function],
+                                "string": {
+                                  "original": "string",
+                                },
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
                           },
-                          "type": "string",
+                          "type": "optional",
                         },
-                        "type": "primitive",
+                        "type": "container",
                       },
                     },
                   },
@@ -1007,14 +1020,25 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                             "jsonExample": "string",
                             "shape": {
                               "_visit": [Function],
-                              "primitive": {
+                              "container": {
                                 "_visit": [Function],
-                                "string": {
-                                  "original": "string",
+                                "optional": {
+                                  "jsonExample": "string",
+                                  "shape": {
+                                    "_visit": [Function],
+                                    "primitive": {
+                                      "_visit": [Function],
+                                      "string": {
+                                        "original": "string",
+                                      },
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
                                 },
-                                "type": "string",
+                                "type": "optional",
                               },
-                              "type": "primitive",
+                              "type": "container",
                             },
                           },
                         },
@@ -1491,15 +1515,16 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
+              "id": "556995cf9cbbe37620d328cf372403cb7eb7bc10",
               "name": undefined,
               "queryParameters": [],
               "request": {
                 "_visit": [Function],
                 "jsonExample": {
-                  "audience": ""https://api.example.com"",
+                  "audience": "https://api.example.com",
                   "client_id": "string",
                   "client_secret": "string",
-                  "grant_type": ""refresh_token"",
+                  "grant_type": "refresh_token",
                   "refresh_token": "string",
                   "scope": "string",
                 },
@@ -1646,7 +1671,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     },
                     "originalTypeDeclaration": undefined,
                     "value": {
-                      "jsonExample": ""https://api.example.com"",
+                      "jsonExample": "https://api.example.com",
                       "shape": {
                         "_visit": [Function],
                         "primitive": {
@@ -1685,7 +1710,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     },
                     "originalTypeDeclaration": undefined,
                     "value": {
-                      "jsonExample": ""refresh_token"",
+                      "jsonExample": "refresh_token",
                       "shape": {
                         "_visit": [Function],
                         "primitive": {
@@ -1727,14 +1752,25 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       "jsonExample": "string",
                       "shape": {
                         "_visit": [Function],
-                        "primitive": {
+                        "container": {
                           "_visit": [Function],
-                          "string": {
-                            "original": "string",
+                          "optional": {
+                            "jsonExample": "string",
+                            "shape": {
+                              "_visit": [Function],
+                              "primitive": {
+                                "_visit": [Function],
+                                "string": {
+                                  "original": "string",
+                                },
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
                           },
-                          "type": "string",
+                          "type": "optional",
                         },
-                        "type": "primitive",
+                        "type": "container",
                       },
                     },
                   },
@@ -2050,14 +2086,25 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                             "jsonExample": "string",
                             "shape": {
                               "_visit": [Function],
-                              "primitive": {
+                              "container": {
                                 "_visit": [Function],
-                                "string": {
-                                  "original": "string",
+                                "optional": {
+                                  "jsonExample": "string",
+                                  "shape": {
+                                    "_visit": [Function],
+                                    "primitive": {
+                                      "_visit": [Function],
+                                      "string": {
+                                        "original": "string",
+                                      },
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
                                 },
-                                "type": "string",
+                                "type": "optional",
                               },
-                              "type": "primitive",
+                              "type": "container",
                             },
                           },
                         },
@@ -2688,6 +2735,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                 },
               ],
               "exampleType": "userProvided",
+              "id": undefined,
               "name": undefined,
               "queryParameters": [
                 {
@@ -3338,6 +3386,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                 },
               ],
               "exampleType": "generated",
+              "id": "861590e3c81f48c829f1bda70c3e08897997e1c9",
               "name": undefined,
               "queryParameters": [
                 {
@@ -3717,14 +3766,25 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     "jsonExample": "string",
                     "shape": {
                       "_visit": [Function],
-                      "primitive": {
+                      "container": {
                         "_visit": [Function],
-                        "string": {
-                          "original": "string",
+                        "optional": {
+                          "jsonExample": "string",
+                          "shape": {
+                            "_visit": [Function],
+                            "primitive": {
+                              "_visit": [Function],
+                              "string": {
+                                "original": "string",
+                              },
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                         },
-                        "type": "string",
+                        "type": "optional",
                       },
-                      "type": "primitive",
+                      "type": "container",
                     },
                   },
                 },
@@ -4004,10 +4064,23 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     },
                     "shape": {
                       "_visit": [Function],
-                      "type": "unknown",
-                      "unknown": {
-                        "key": "value",
+                      "container": {
+                        "_visit": [Function],
+                        "optional": {
+                          "jsonExample": {
+                            "key": "value",
+                          },
+                          "shape": {
+                            "_visit": [Function],
+                            "type": "unknown",
+                            "unknown": {
+                              "key": "value",
+                            },
+                          },
+                        },
+                        "type": "optional",
                       },
+                      "type": "container",
                     },
                   },
                 },
@@ -4590,6 +4663,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
+              "id": "d90746a1499d7f7e6f1d2323ee91e508d282ed53",
               "name": undefined,
               "queryParameters": [
                 {

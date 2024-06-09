@@ -209,6 +209,10 @@ export function buildEndpoint({
         }
     }
 
+    if (endpoint.idempotent) {
+        convertedEndpoint.idempotent = true;
+    }
+
     if (endpoint.availability === EndpointAvailability.Beta) {
         convertedEndpoint.availability = "pre-release";
     } else if (endpoint.availability === EndpointAvailability.GenerallyAvailable) {

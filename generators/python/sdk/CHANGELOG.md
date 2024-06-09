@@ -5,6 +5,91 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.4] - 2024-06-07
+
+- Fix: The unchecked base model now handles pulling the discriminant from a dict, not just a model/object.
+
+## [2.9.3] - 2024-06-06
+
+- Fix: Snippet templates for discrminated unions now specify the `template_input` property which is
+  required to actually see snippets of instantiating discrminated unions.
+
+## [2.9.2] - 2024-06-06
+
+- Fix: downgrades mypy so we can run it over all our files without concern for their pydantic bug
+- Fix: adds typehint to the response variable
+
+## [2.9.1] - 2024-06-06
+
+- Fix: The SDK removes unset query parameters from requests (regression from the client migration in 2.8.0)
+- Fix: The SDK fixes it's type for `files` parameters to the http client (regression from the client migration in 2.8.0)
+
+## [2.9.0] - 2024-06-05
+
+- Fix: Snippets preserve trailing slashes
+
+## [2.9.0-rc1] - 2024-06-05
+
+- Fix: The new http client abstraction ensures a slash is postfixed to the baseurl
+- Fix: Snippets preserve trailing slashes
+
+## [2.9.0-rc0] - 2024-06-04
+
+- Improvement: The Python generator now runs custom unit tests in CI if configured.
+
+## [2.8.2] - 2024-06-04
+
+- Fix: The none-filtering function now supports mypy's invariance check.
+
+## [2.8.1] - 2024-06-04
+
+- Fix: The parameter comment/documentation for timeouts on the root client now reflects the custom timeout passed through within configuration.
+
+## [2.8.0] - 2024-06-03
+
+- Improvement: Endpoint function request logic has been abstracted into the request function of the wrapped httpx client.
+
+## [2.7.0] - 2024-05-30
+
+- Improvement: The generator now outputs an `exampleId` alongside each generated snippet so that
+  we can correlate snippets with the relevant examples. This is useful for retrieving examples from
+  Fern's API and making sure that you can show multiple snippets in the generated docs.
+
+## [2.6.1] - 2024-05-31
+
+- Fix: this adds a back door token getter function to OAuth clients to better test the functionality.
+
+## [2.6.0] - 2024-05-30
+
+- Improvement: Support adding optional dependencies and extras to your generated `pyproject.toml`. To
+  use this configuration, please add the following:
+
+  ```yaml
+  extra_dependencies:
+    boto3: 1.28.57
+    langchain:
+      version: "^0.1.20"
+      optional: true
+  extras:
+    telemetry: ["langchain", "boto3"]
+  ```
+
+## [2.5.7] - 2024-05-30
+
+- Fix: tests now carry a type annotation for `expected_types` variable.
+
+## [2.5.6] - 2024-05-29
+
+- Improvement: literal values are now all defaulted such that users are not required to plug in a redundant value.
+
+## [2.5.5] - 2024-05-29
+
+- Fix: Optional lists returned from pagination endpoints are now appropriately flattened such that the `Pager` return types are correctly `Pager[ListItem]` as opposed to `Pager[List[ListItem]]`.
+
+## [2.5.4] - 2024-05-28
+
+- Fix: Add typing library for dateutils in testing lib to satisfy mypy errors.
+
 ## [2.5.3] - 2024-05-24
 
 - Fix: Stop specifying custom licenses manually, let poetry handle adding them.

@@ -80,6 +80,7 @@ module.exports = {
             }
         ],
         "@typescript-eslint/no-floating-promises": ["error"],
+        "@typescript-eslint/no-misused-promises": ["error"],
         "@typescript-eslint/no-empty-function": [
             "error",
             {

@@ -88,6 +88,7 @@ exports[`migrateFromV43ToV42 snapshot 1`] = `
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
+  "readmeConfig": undefined,
   "rootPackage": {
     "docs": undefined,
     "errors": [],
@@ -152,6 +153,7 @@ exports[`migrateFromV43ToV42 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
+              "id": "91a2fed864051477fd2f5ef58644a29c7647f9c8",
               "name": undefined,
               "queryParameters": [
                 {

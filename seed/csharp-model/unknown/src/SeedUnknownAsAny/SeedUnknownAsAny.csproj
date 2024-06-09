@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFrameworks>net8.0;net7.0;net6.0;net5.0;net4.0</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
         <NuGetAudit>false</NuGetAudit>
         <Version>0.0.1</Version>
@@ -19,6 +19,5 @@
         <None Include="..\..\README.md" Pack="true" PackagePath=""/>
     </ItemGroup>
 
-    
 
 </Project>

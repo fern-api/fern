@@ -27,6 +27,7 @@
     },
     "endpoints": [
         {
+            "example_identifier": "default",
             "id": {
                 "path": "/",
                 "method": "POST",
@@ -39,6 +40,7 @@
             }
         },
         {
+            "example_identifier": "default",
             "id": {
                 "path": "/file/notification/{notificationId}",
                 "method": "GET",
@@ -51,6 +53,7 @@
             }
         },
         {
+            "example_identifier": "default",
             "id": {
                 "path": "/file/{filename}",
                 "method": "GET",
@@ -63,6 +66,7 @@
             }
         },
         {
+            "example_identifier": "Example0",
             "id": {
                 "path": "/check/{id}",
                 "method": "GET",
@@ -75,6 +79,20 @@
             }
         },
         {
+            "example_identifier": "Example2",
+            "id": {
+                "path": "/check/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_health/service.check"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)\nclient.health.service.check(\n    id=\"id-3tey93i\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)\nawait client.health.service.check(\n    id=\"id-3tey93i\",\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "Example0",
             "id": {
                 "path": "/ping",
                 "method": "GET",
@@ -87,6 +105,7 @@
             }
         },
         {
+            "example_identifier": "default",
             "id": {
                 "path": "/movie/{movieId}",
                 "method": "GET",
@@ -99,6 +118,7 @@
             }
         },
         {
+            "example_identifier": "default",
             "id": {
                 "path": "/movie",
                 "method": "POST",
@@ -111,6 +131,7 @@
             }
         },
         {
+            "example_identifier": "default",
             "id": {
                 "path": "/metadata",
                 "method": "GET",
@@ -123,6 +144,7 @@
             }
         },
         {
+            "example_identifier": "default",
             "id": {
                 "path": "/response",
                 "method": "POST",

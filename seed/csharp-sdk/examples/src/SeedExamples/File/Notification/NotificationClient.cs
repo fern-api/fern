@@ -1,6 +1,8 @@
 using SeedExamples;
 using SeedExamples.File.Notification;
 
+#nullable enable
+
 namespace SeedExamples.File.Notification;
 
 public class NotificationClient

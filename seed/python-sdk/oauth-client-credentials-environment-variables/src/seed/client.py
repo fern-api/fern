@@ -22,8 +22,9 @@ class SeedOauthClientCredentialsEnvironmentVariables:
 
     client_id : typing.Optional[str]
     client_secret : typing.Optional[str]
+    _token_getter_override : typing.Optional[typing.Callable[[], str]]
     timeout : typing.Optional[float]
-        The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
+        The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
     follow_redirects : typing.Optional[bool]
         Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
@@ -46,6 +47,7 @@ class SeedOauthClientCredentialsEnvironmentVariables:
         base_url: str,
         client_id: typing.Optional[str] = os.getenv("CLIENT_ID"),
         client_secret: typing.Optional[str] = os.getenv("CLIENT_SECRET"),
+        _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None
@@ -70,7 +72,7 @@ class SeedOauthClientCredentialsEnvironmentVariables:
         )
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
-            token=oauth_token_provider.get_token,
+            token=_token_getter_override if _token_getter_override is not None else oauth_token_provider.get_token,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
@@ -92,8 +94,9 @@ class AsyncSeedOauthClientCredentialsEnvironmentVariables:
 
     client_id : typing.Optional[str]
     client_secret : typing.Optional[str]
+    _token_getter_override : typing.Optional[typing.Callable[[], str]]
     timeout : typing.Optional[float]
-        The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
+        The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
     follow_redirects : typing.Optional[bool]
         Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
@@ -116,6 +119,7 @@ class AsyncSeedOauthClientCredentialsEnvironmentVariables:
         base_url: str,
         client_id: typing.Optional[str] = os.getenv("CLIENT_ID"),
         client_secret: typing.Optional[str] = os.getenv("CLIENT_SECRET"),
+        _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None
@@ -140,7 +144,7 @@ class AsyncSeedOauthClientCredentialsEnvironmentVariables:
         )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
-            token=oauth_token_provider.get_token,
+            token=_token_getter_override if _token_getter_override is not None else oauth_token_provider.get_token,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)

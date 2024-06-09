@@ -1,5 +1,7 @@
 using SeedOauthClientCredentials;
 
+#nullable enable
+
 namespace SeedOauthClientCredentials;
 
 public partial class SeedOauthClientCredentialsClient

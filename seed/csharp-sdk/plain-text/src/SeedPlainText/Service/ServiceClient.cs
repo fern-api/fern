@@ -1,5 +1,7 @@
 using SeedPlainText;
 
+#nullable enable
+
 namespace SeedPlainText;
 
 public class ServiceClient

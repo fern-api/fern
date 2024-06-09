@@ -1,3 +1,4 @@
+import { generatorsYml } from "@fern-api/configuration";
 import {
     HeaderWithExample,
     PathParameterWithExample,
@@ -30,11 +31,15 @@ export interface AsyncAPIIntermediateRepresentation {
 export function parseAsyncAPI({
     document,
     taskContext,
-    shouldUseTitleAsName
+    sdkLanguage,
+    shouldUseTitleAsName,
+    shouldUseUndiscriminatedUnionsWithLiterals
 }: {
     document: AsyncAPIV2.Document;
     taskContext: TaskContext;
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
     shouldUseTitleAsName: boolean;
+    shouldUseUndiscriminatedUnionsWithLiterals: boolean;
 }): AsyncAPIIntermediateRepresentation {
     const breadcrumbs: string[] = [];
     if (document.tags?.[0] != null) {
@@ -43,7 +48,13 @@ export function parseAsyncAPI({
         breadcrumbs.push("websocket");
     }
 
-    const context = new AsyncAPIV2ParserContext({ document, taskContext, shouldUseTitleAsName });
+    const context = new AsyncAPIV2ParserContext({
+        document,
+        taskContext,
+        shouldUseTitleAsName,
+        shouldUseUndiscriminatedUnionsWithLiterals,
+        sdkLanguage
+    });
 
     const schemas: Record<SchemaId, SchemaWithExample> = {};
     let parsedChannel: WebsocketChannel | undefined = undefined;

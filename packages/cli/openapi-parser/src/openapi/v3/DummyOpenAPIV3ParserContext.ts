@@ -2,11 +2,22 @@ import { SchemaId } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { SchemaParserContext } from "../../schema/SchemaParserContext";
-import { AbstractOpenAPIV3ParserContext, DiscriminatedUnionReference } from "./AbstractOpenAPIV3ParserContext";
+import {
+    AbstractOpenAPIV3ParserContext,
+    DiscriminatedUnionMetadata,
+    DiscriminatedUnionReference
+} from "./AbstractOpenAPIV3ParserContext";
 
 export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
     constructor({ document, taskContext }: { document: OpenAPIV3.Document; taskContext: TaskContext }) {
-        super({ document, taskContext, authHeaders: new Set(), shouldUseTitleAsName: false });
+        super({
+            document,
+            taskContext,
+            authHeaders: new Set(),
+            shouldUseTitleAsName: false,
+            shouldUseUndiscriminatedUnionsWithLiterals: false,
+            sdkLanguage: undefined
+        });
     }
 
     public getDummy(): SchemaParserContext {
@@ -45,5 +56,17 @@ export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext 
 
     public isSchemaExcluded(_schemaId: SchemaId): boolean {
         return false;
+    }
+
+    public markSchemaWithDiscriminantValue(
+        _schema: OpenAPIV3.ReferenceObject,
+        _discrminant: string,
+        _discriminantValue: string
+    ): void {
+        return;
+    }
+
+    public getDiscriminatedUnionMetadata(_schema: OpenAPIV3.ReferenceObject): DiscriminatedUnionMetadata | undefined {
+        return;
     }
 }

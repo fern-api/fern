@@ -1,5 +1,7 @@
 using SeedObject;
 
+#nullable enable
+
 namespace SeedObject;
 
 public partial class SeedObjectClient

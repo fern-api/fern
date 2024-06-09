@@ -7,6 +7,15 @@ dockerCommand:
 language: java
 generatorType: SDK
 defaultOutputMode: github
+local:
+  workingDirectory: generators/java
+  buildCommand:
+    - ./gradlew :sdk:distTar
+    - chmod +x install-gradle.sh && ./install-gradle.sh
+    - cd sdk
+    - tar -xvf build/distributions/sdk.tar -C .
+  runCommand: cd sdk/sdk && java -cp sdk.jar:lib/* com.fern.java.client.Cli
+  env: {}
 fixtures:
   exhaustive:
     - customConfig: null
@@ -45,10 +54,8 @@ scripts:
 allowedFailures:
   - enum
   - extends
-  - response-property
   - examples
   - exhaustive:local-files
   - trace
-  - undiscriminated-unions
   - unions
   - query-parameters
