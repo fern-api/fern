@@ -38,4 +38,4 @@ class UnionWithLiteral_Fern(Base):
         populate_by_name = True
 
 
-UnionWithLiteral = typing.Union[UnionWithLiteral_Fern]
+UnionWithLiteral = UnionWithLiteral_Fern

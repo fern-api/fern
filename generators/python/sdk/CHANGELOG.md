@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.5] - 2024-06-10
+
+- Fix: Unions with elements that specify no properties are generated correctly.
+- Fix: Unions with a single type now have a valid type alias (rather than an invalid `typing.Union`).
+
 ## [2.9.4] - 2024-06-07
 
 - Fix: The unchecked base model now handles pulling the discriminant from a dict, not just a model/object.
