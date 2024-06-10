@@ -22,7 +22,7 @@ class _Factory:
 class PlaylistIdNotFoundErrorBody(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get_as_union(self) -> typing.Union[_PlaylistIdNotFoundErrorBody.PlaylistId]:
+    def get_as_union(self) -> _PlaylistIdNotFoundErrorBody.PlaylistId:
         return self.__root__
 
     def visit(
@@ -31,7 +31,7 @@ class PlaylistIdNotFoundErrorBody(pydantic_v1.BaseModel):
         if self.__root__.type == "playlistId":
             return playlist_id(self.__root__.value)
 
-    __root__: typing.Union[_PlaylistIdNotFoundErrorBody.PlaylistId]
+    __root__: _PlaylistIdNotFoundErrorBody.PlaylistId
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

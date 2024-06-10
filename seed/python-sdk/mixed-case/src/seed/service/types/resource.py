@@ -44,7 +44,7 @@ class Base(pydantic_v1.BaseModel):
         json_encoders = {dt.datetime: serialize_datetime}
 
 
-class Resource_User(pydantic_v1.BaseModel):
+class Resource_User(Base):
     """
     Examples
     --------
@@ -83,7 +83,7 @@ class Resource_User(pydantic_v1.BaseModel):
         json_encoders = {dt.datetime: serialize_datetime}
 
 
-class Resource_Organization(pydantic_v1.BaseModel):
+class Resource_Organization(Base):
     """
     Examples
     --------
@@ -114,6 +114,8 @@ class Resource_Organization(pydantic_v1.BaseModel):
     class Config:
         frozen = True
         smart_union = True
+        allow_population_by_field_name = True
+        populate_by_name = True
         extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}
 
