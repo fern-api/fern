@@ -172,12 +172,16 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                         for type_id in forward_refed_types:
                             external_pydantic_model.add_ghost_reference(type_id)
 
-            root_type = AST.TypeHint.union(
-                *(
-                    AST.TypeHint(type=internal_single_union_type)
-                    for internal_single_union_type in internal_single_union_types
-                ),
-            ) if len(internal_single_union_types) > 1 else AST.TypeHint(type=internal_single_union_types[0])
+            root_type = (
+                AST.TypeHint.union(
+                    *(
+                        AST.TypeHint(type=internal_single_union_type)
+                        for internal_single_union_type in internal_single_union_types
+                    ),
+                )
+                if len(internal_single_union_types) > 1
+                else AST.TypeHint(type=internal_single_union_types[0])
+            )
             if self._custom_config.skip_validation:
                 root_type = AST.TypeHint.annotated(
                     type=root_type,

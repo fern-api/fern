@@ -229,7 +229,11 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                     internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()
                     single_union_type_references.append(internal_single_union_type)
 
-            type_hint = AST.TypeHint.union(*(AST.TypeHint(ref) for ref in single_union_type_references)) if len(single_union_type_references) > 1 else AST.TypeHint(single_union_type_references[0])
+            type_hint = (
+                AST.TypeHint.union(*(AST.TypeHint(ref) for ref in single_union_type_references))
+                if len(single_union_type_references) > 1
+                else AST.TypeHint(single_union_type_references[0])
+            )
             if self._custom_config.skip_validation:
                 type_hint = AST.TypeHint.annotated(
                     type=type_hint,
