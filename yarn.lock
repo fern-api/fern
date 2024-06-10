@@ -3417,7 +3417,7 @@ __metadata:
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     ansi-escapes: ^5.0.0
     axios: ^0.28.0
-    boxen: ^7.0.0
+    boxen: ^7.1.1
     chalk: ^5.0.1
     depcheck: ^1.4.6
     env-cmd: toddbluhm/env-cmd
@@ -4112,7 +4112,7 @@ __metadata:
     "@types/node": ^18.7.18
     "@types/qs": 6.9.15
     axios: ^0.28.0
-    boxen: ^7.0.0
+    boxen: ^7.1.1
     chalk: ^5.0.1
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -9184,7 +9184,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"boxen@npm:*, boxen@npm:^7.0.0":
+"boxen@npm:*":
   version: 7.0.0
   resolution: "boxen@npm:7.0.0"
   dependencies:
@@ -9212,6 +9212,22 @@ __metadata:
     term-size: ^1.2.0
     widest-line: ^2.0.0
   checksum: 8dad2081bfaf5a86cb85685882b5f22027c5c430ee0974894078f521a44d92a90222fb4391b41fc4575aa1215c9133ea2c6b7feadcd1cb2fae8f4e97c05dbf11
+  languageName: node
+  linkType: hard
+
+"boxen@npm:^7.1.1":
+  version: 7.1.1
+  resolution: "boxen@npm:7.1.1"
+  dependencies:
+    ansi-align: ^3.0.1
+    camelcase: ^7.0.1
+    chalk: ^5.2.0
+    cli-boxes: ^3.0.0
+    string-width: ^5.1.2
+    type-fest: ^2.13.0
+    widest-line: ^4.0.1
+    wrap-ansi: ^8.1.0
+  checksum: ad8833d5f2845b0a728fdf8a0bc1505dff0c518edcb0fd56979a08774b1f26cf48b71e66532179ccdfb9ed95b64aa008689cca26f7776f93f002b8000a683d76
   languageName: node
   linkType: hard
 
@@ -9605,6 +9621,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"camelcase@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "camelcase@npm:7.0.1"
+  checksum: 86ab8f3ebf08bcdbe605a211a242f00ed30d8bfb77dab4ebb744dd36efbc84432d1c4adb28975ba87a1b8be40a80fbd1e60e2f06565315918fa7350011a26d3d
+  languageName: node
+  linkType: hard
+
 "caniuse-lite@npm:^1.0.30001449":
   version: 1.0.30001456
   resolution: "caniuse-lite@npm:1.0.30001456"
@@ -9706,7 +9729,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:^5.3.0":
+"chalk@npm:^5.2.0, chalk@npm:^5.3.0":
   version: 5.3.0
   resolution: "chalk@npm:5.3.0"
   checksum: 623922e077b7d1e9dedaea6f8b9e9352921f8ae3afe739132e0e00c275971bdd331268183b2628cf4ab1727c45ea1f28d7e24ac23ce1db1eb653c414ca8a5a80
