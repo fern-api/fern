@@ -281,7 +281,7 @@ export const FernOpenAPIExtension = {
      * paths:
      *  /path/to/my:
      *    get:
-     *     x-fern-fern-examples:
+     *     x-fern-examples:
      *      - name: Example 1
      *        docs: This is an example
      *        request: {}

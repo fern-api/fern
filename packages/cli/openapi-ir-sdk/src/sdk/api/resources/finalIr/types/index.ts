@@ -5,6 +5,7 @@ export * from "./IdempotencyHeader";
 export * from "./Tags";
 export * from "./HttpError";
 export * from "./Webhook";
+export * from "./WebhookExampleCall";
 export * from "./WebsocketChannel";
 export * from "./WebsocketHandshake";
 export * from "./WebsocketSessionExample";

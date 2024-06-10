@@ -19,6 +19,9 @@ export const Webhook: core.serialization.ObjectSchema<serializers.Webhook.Raw, F
             ),
             generatedPayloadName: core.serialization.string(),
             payload: core.serialization.lazy(async () => (await import("../../..")).Schema),
+            examples: core.serialization.list(
+                core.serialization.lazyObject(async () => (await import("../../..")).WebhookExampleCall)
+            ),
         })
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
 
@@ -32,5 +35,6 @@ export declare namespace Webhook {
         headers: serializers.Header.Raw[];
         generatedPayloadName: string;
         payload: serializers.Schema.Raw;
+        examples: serializers.WebhookExampleCall.Raw[];
     }
 }

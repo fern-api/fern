@@ -893,18 +893,18 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
                 },
                 "response": {
                   "body": {
-                    "items": {
-                      "0": {
+                    "items": [
+                      {
                         "id": "da1331a9e9168ea91346",
                         "label": "Checking *3456",
                         "maskedNumber": "*3456",
                       },
-                      "1": {
+                      {
                         "id": "5c9b4e50a0401ef4eb2e",
                         "label": "Premiere Savings *1234",
                         "maskedNumber": "*1234",
                       },
-                    },
+                    ],
                     "limit": 100,
                     "maximumOverdraftAccounts": 1,
                     "nextPage_url": "https://production.api.apiture.com/banking/accounts/f204d292df9fb/eligibleOverdraftAccounts?start=641f62296ecbf1882c84?limit=100",
@@ -6824,18 +6824,18 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
                 },
                 "response": {
                   "body": {
-                    "items": {
-                      "0": {
+                    "items": [
+                      {
                         "id": "da1331a9e9168ea91346",
                         "label": "Checking *3456",
                         "maskedNumber": "*3456",
                       },
-                      "1": {
+                      {
                         "id": "5c9b4e50a0401ef4eb2e",
                         "label": "Premiere Savings *1234",
                         "maskedNumber": "*1234",
                       },
-                    },
+                    ],
                     "limit": 100,
                     "maximumOverdraftAccounts": 1,
                     "nextPage_url": "https://production.api.apiture.com/banking/accounts/f204d292df9fb/eligibleOverdraftAccounts?start=641f62296ecbf1882c84?limit=100",

@@ -139,10 +139,10 @@ Log.d("TAG", group.toString())
                         "content_info": {
                           "image": {
                             "color_mode": "RGB",
-                            "dpi": {
-                              "0": 72,
-                              "1": 72,
-                            },
+                            "dpi": [
+                              72,
+                              72,
+                            ],
                             "format": "JPEG",
                             "geo_location": {
                               "latitude": 55.62013611111111,
@@ -165,10 +165,10 @@ Log.d("TAG", group.toString())
                         "filename": "IMG0412_123.JPG",
                         "image_info": {
                           "color_mode": "RGB",
-                          "dpi": {
-                            "0": 72,
-                            "1": 72,
-                          },
+                          "dpi": [
+                            72,
+                            72,
+                          ],
                           "format": "JPEG",
                           "geo_location": {
                             "latitude": 55.62013611111111,
@@ -337,10 +337,10 @@ Log.d("TAG", group.toString())
                         "content_info": {
                           "image": {
                             "color_mode": "RGB",
-                            "dpi": {
-                              "0": 72,
-                              "1": 72,
-                            },
+                            "dpi": [
+                              72,
+                              72,
+                            ],
                             "format": "JPEG",
                             "geo_location": {
                               "latitude": 55.62013611111111,
@@ -363,10 +363,10 @@ Log.d("TAG", group.toString())
                         "filename": "IMG0412_123.JPG",
                         "image_info": {
                           "color_mode": "RGB",
-                          "dpi": {
-                            "0": 72,
-                            "1": 72,
-                          },
+                          "dpi": [
+                            72,
+                            72,
+                          ],
                           "format": "JPEG",
                           "geo_location": {
                             "latitude": 55.62013611111111,
@@ -4607,10 +4607,10 @@ Log.d("TAG", group.toString())
                         "content_info": {
                           "image": {
                             "color_mode": "RGB",
-                            "dpi": {
-                              "0": 72,
-                              "1": 72,
-                            },
+                            "dpi": [
+                              72,
+                              72,
+                            ],
                             "format": "JPEG",
                             "geo_location": {
                               "latitude": 55.62013611111111,
@@ -4633,10 +4633,10 @@ Log.d("TAG", group.toString())
                         "filename": "IMG0412_123.JPG",
                         "image_info": {
                           "color_mode": "RGB",
-                          "dpi": {
-                            "0": 72,
-                            "1": 72,
-                          },
+                          "dpi": [
+                            72,
+                            72,
+                          ],
                           "format": "JPEG",
                           "geo_location": {
                             "latitude": 55.62013611111111,
@@ -4805,10 +4805,10 @@ Log.d("TAG", group.toString())
                         "content_info": {
                           "image": {
                             "color_mode": "RGB",
-                            "dpi": {
-                              "0": 72,
-                              "1": 72,
-                            },
+                            "dpi": [
+                              72,
+                              72,
+                            ],
                             "format": "JPEG",
                             "geo_location": {
                               "latitude": 55.62013611111111,
@@ -4831,10 +4831,10 @@ Log.d("TAG", group.toString())
                         "filename": "IMG0412_123.JPG",
                         "image_info": {
                           "color_mode": "RGB",
-                          "dpi": {
-                            "0": 72,
-                            "1": 72,
-                          },
+                          "dpi": [
+                            72,
+                            72,
+                          ],
                           "format": "JPEG",
                           "geo_location": {
                             "latitude": 55.62013611111111,

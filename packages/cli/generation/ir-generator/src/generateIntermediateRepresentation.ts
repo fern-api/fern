@@ -280,7 +280,13 @@ export async function generateIntermediateRepresentation({
                     return;
                 }
                 const webhookGroupId = IdGenerator.generateWebhookGroupId(file.fernFilepath);
-                const convertedWebhookGroup = await convertWebhookGroup({ webhooks, file });
+                const convertedWebhookGroup = await convertWebhookGroup({
+                    webhooks,
+                    file,
+                    typeResolver,
+                    exampleResolver,
+                    workspace
+                });
                 intermediateRepresentation.webhookGroups[webhookGroupId] = convertedWebhookGroup;
                 packageTreeGenerator.addWebhookGroup(webhookGroupId, file.fernFilepath);
             },

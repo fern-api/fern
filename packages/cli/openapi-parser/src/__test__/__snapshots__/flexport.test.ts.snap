@@ -869,19 +869,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "12345",
-                                  },
+                                  "type": "string",
+                                  "value": "12345",
                                 },
                               },
                             ],
@@ -896,19 +890,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "abc123",
-                                  },
+                                  "type": "string",
+                                  "value": "abc123",
                                 },
                               },
                             ],
@@ -3949,19 +3937,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                                 "value": {
                                   "type": "unknown",
                                   "value": {
-                                    "type": "map",
+                                    "type": "array",
                                     "value": [
                                       {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
+                                        "type": "primitive",
                                         "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "12345",
-                                          },
+                                          "type": "string",
+                                          "value": "12345",
                                         },
                                       },
                                     ],
@@ -3976,19 +3958,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                                 "value": {
                                   "type": "unknown",
                                   "value": {
-                                    "type": "map",
+                                    "type": "array",
                                     "value": [
                                       {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
+                                        "type": "primitive",
                                         "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "abc123",
-                                          },
+                                          "type": "string",
+                                          "value": "abc123",
                                         },
                                       },
                                     ],
@@ -6724,19 +6700,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "12345",
-                                  },
+                                  "type": "string",
+                                  "value": "12345",
                                 },
                               },
                             ],
@@ -6751,19 +6721,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "abc123",
-                                  },
+                                  "type": "string",
+                                  "value": "abc123",
                                 },
                               },
                             ],
@@ -8556,19 +8520,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "12345",
-                                  },
+                                  "type": "string",
+                                  "value": "12345",
                                 },
                               },
                             ],
@@ -8583,19 +8541,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "abc123",
-                                  },
+                                  "type": "string",
+                                  "value": "abc123",
                                 },
                               },
                             ],
@@ -10121,19 +10073,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                                         "value": {
                                           "type": "unknown",
                                           "value": {
-                                            "type": "map",
+                                            "type": "array",
                                             "value": [
                                               {
-                                                "key": {
-                                                  "type": "string",
-                                                  "value": "0",
-                                                },
+                                                "type": "primitive",
                                                 "value": {
-                                                  "type": "primitive",
-                                                  "value": {
-                                                    "type": "string",
-                                                    "value": "12345",
-                                                  },
+                                                  "type": "string",
+                                                  "value": "12345",
                                                 },
                                               },
                                             ],
@@ -10148,19 +10094,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                                         "value": {
                                           "type": "unknown",
                                           "value": {
-                                            "type": "map",
+                                            "type": "array",
                                             "value": [
                                               {
-                                                "key": {
-                                                  "type": "string",
-                                                  "value": "0",
-                                                },
+                                                "type": "primitive",
                                                 "value": {
-                                                  "type": "primitive",
-                                                  "value": {
-                                                    "type": "string",
-                                                    "value": "abc123",
-                                                  },
+                                                  "type": "string",
+                                                  "value": "abc123",
                                                 },
                                               },
                                             ],
@@ -10403,19 +10343,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                                 "value": {
                                   "type": "unknown",
                                   "value": {
-                                    "type": "map",
+                                    "type": "array",
                                     "value": [
                                       {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
+                                        "type": "primitive",
                                         "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "12345",
-                                          },
+                                          "type": "string",
+                                          "value": "12345",
                                         },
                                       },
                                     ],
@@ -10430,19 +10364,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                                 "value": {
                                   "type": "unknown",
                                   "value": {
-                                    "type": "map",
+                                    "type": "array",
                                     "value": [
                                       {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
+                                        "type": "primitive",
                                         "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "abc123",
-                                          },
+                                          "type": "string",
+                                          "value": "abc123",
                                         },
                                       },
                                     ],
@@ -11462,19 +11390,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                                 "value": {
                                   "type": "unknown",
                                   "value": {
-                                    "type": "map",
+                                    "type": "array",
                                     "value": [
                                       {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
+                                        "type": "primitive",
                                         "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "12345",
-                                          },
+                                          "type": "string",
+                                          "value": "12345",
                                         },
                                       },
                                     ],
@@ -11489,19 +11411,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                                 "value": {
                                   "type": "unknown",
                                   "value": {
-                                    "type": "map",
+                                    "type": "array",
                                     "value": [
                                       {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
+                                        "type": "primitive",
                                         "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "abc123",
-                                          },
+                                          "type": "string",
+                                          "value": "abc123",
                                         },
                                       },
                                     ],
@@ -11744,19 +11660,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "12345",
-                                  },
+                                  "type": "string",
+                                  "value": "12345",
                                 },
                               },
                             ],
@@ -11771,19 +11681,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "abc123",
-                                  },
+                                  "type": "string",
+                                  "value": "abc123",
                                 },
                               },
                             ],
@@ -12445,19 +12349,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                                 "value": {
                                   "type": "unknown",
                                   "value": {
-                                    "type": "map",
+                                    "type": "array",
                                     "value": [
                                       {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
+                                        "type": "primitive",
                                         "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "12345",
-                                          },
+                                          "type": "string",
+                                          "value": "12345",
                                         },
                                       },
                                     ],
@@ -12472,19 +12370,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                                 "value": {
                                   "type": "unknown",
                                   "value": {
-                                    "type": "map",
+                                    "type": "array",
                                     "value": [
                                       {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
+                                        "type": "primitive",
                                         "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "abc123",
-                                          },
+                                          "type": "string",
+                                          "value": "abc123",
                                         },
                                       },
                                     ],
@@ -12727,19 +12619,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "12345",
-                                  },
+                                  "type": "string",
+                                  "value": "12345",
                                 },
                               },
                             ],
@@ -12754,19 +12640,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "abc123",
-                                  },
+                                  "type": "string",
+                                  "value": "abc123",
                                 },
                               },
                             ],
@@ -13436,19 +13316,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                                 "value": {
                                   "type": "unknown",
                                   "value": {
-                                    "type": "map",
+                                    "type": "array",
                                     "value": [
                                       {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
+                                        "type": "primitive",
                                         "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "12345",
-                                          },
+                                          "type": "string",
+                                          "value": "12345",
                                         },
                                       },
                                     ],
@@ -13463,19 +13337,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                                 "value": {
                                   "type": "unknown",
                                   "value": {
-                                    "type": "map",
+                                    "type": "array",
                                     "value": [
                                       {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
+                                        "type": "primitive",
                                         "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "abc123",
-                                          },
+                                          "type": "string",
+                                          "value": "abc123",
                                         },
                                       },
                                     ],
@@ -13718,19 +13586,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "12345",
-                                  },
+                                  "type": "string",
+                                  "value": "12345",
                                 },
                               },
                             ],
@@ -13745,19 +13607,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "abc123",
-                                  },
+                                  "type": "string",
+                                  "value": "abc123",
                                 },
                               },
                             ],
@@ -18384,19 +18240,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                                     "value": {
                                       "type": "unknown",
                                       "value": {
-                                        "type": "map",
+                                        "type": "array",
                                         "value": [
                                           {
-                                            "key": {
-                                              "type": "string",
-                                              "value": "0",
-                                            },
+                                            "type": "primitive",
                                             "value": {
-                                              "type": "primitive",
-                                              "value": {
-                                                "type": "string",
-                                                "value": "12345",
-                                              },
+                                              "type": "string",
+                                              "value": "12345",
                                             },
                                           },
                                         ],
@@ -18411,19 +18261,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                                     "value": {
                                       "type": "unknown",
                                       "value": {
-                                        "type": "map",
+                                        "type": "array",
                                         "value": [
                                           {
-                                            "key": {
-                                              "type": "string",
-                                              "value": "0",
-                                            },
+                                            "type": "primitive",
                                             "value": {
-                                              "type": "primitive",
-                                              "value": {
-                                                "type": "string",
-                                                "value": "abc123",
-                                              },
+                                              "type": "string",
+                                              "value": "abc123",
                                             },
                                           },
                                         ],
@@ -18514,19 +18358,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                                 "value": {
                                   "type": "unknown",
                                   "value": {
-                                    "type": "map",
+                                    "type": "array",
                                     "value": [
                                       {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
+                                        "type": "primitive",
                                         "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "12345",
-                                          },
+                                          "type": "string",
+                                          "value": "12345",
                                         },
                                       },
                                     ],
@@ -18541,19 +18379,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                                 "value": {
                                   "type": "unknown",
                                   "value": {
-                                    "type": "map",
+                                    "type": "array",
                                     "value": [
                                       {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
+                                        "type": "primitive",
                                         "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "abc123",
-                                          },
+                                          "type": "string",
+                                          "value": "abc123",
                                         },
                                       },
                                     ],
@@ -18683,19 +18515,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                                 "value": {
                                   "type": "unknown",
                                   "value": {
-                                    "type": "map",
+                                    "type": "array",
                                     "value": [
                                       {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
+                                        "type": "primitive",
                                         "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "12345",
-                                          },
+                                          "type": "string",
+                                          "value": "12345",
                                         },
                                       },
                                     ],
@@ -18710,19 +18536,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                                 "value": {
                                   "type": "unknown",
                                   "value": {
-                                    "type": "map",
+                                    "type": "array",
                                     "value": [
                                       {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
+                                        "type": "primitive",
                                         "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "abc123",
-                                          },
+                                          "type": "string",
+                                          "value": "abc123",
                                         },
                                       },
                                     ],
@@ -24211,19 +24031,13 @@ Other details about this invoice",
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "12345",
-                                  },
+                                  "type": "string",
+                                  "value": "12345",
                                 },
                               },
                             ],
@@ -24238,19 +24052,13 @@ Other details about this invoice",
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "abc123",
-                                  },
+                                  "type": "string",
+                                  "value": "abc123",
                                 },
                               },
                             ],
@@ -25393,19 +25201,13 @@ Other details about this invoice",
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "12345",
-                                  },
+                                  "type": "string",
+                                  "value": "12345",
                                 },
                               },
                             ],
@@ -25420,19 +25222,13 @@ Other details about this invoice",
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "abc123",
-                                  },
+                                  "type": "string",
+                                  "value": "abc123",
                                 },
                               },
                             ],
@@ -33679,19 +33475,13 @@ Other details about this invoice",
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "12345",
-                                  },
+                                  "type": "string",
+                                  "value": "12345",
                                 },
                               },
                             ],
@@ -33706,19 +33496,13 @@ Other details about this invoice",
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "abc123",
-                                  },
+                                  "type": "string",
+                                  "value": "abc123",
                                 },
                               },
                             ],
@@ -41063,19 +40847,13 @@ Other details about this invoice",
                                 "value": {
                                   "type": "unknown",
                                   "value": {
-                                    "type": "map",
+                                    "type": "array",
                                     "value": [
                                       {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
+                                        "type": "primitive",
                                         "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "M",
-                                          },
+                                          "type": "string",
+                                          "value": "M",
                                         },
                                       },
                                     ],
@@ -42454,19 +42232,13 @@ Other details about this invoice",
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "M",
-                                  },
+                                  "type": "string",
+                                  "value": "M",
                                 },
                               },
                             ],
@@ -43640,19 +43412,13 @@ Other details about this invoice",
                                 "value": {
                                   "type": "unknown",
                                   "value": {
-                                    "type": "map",
+                                    "type": "array",
                                     "value": [
                                       {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
+                                        "type": "primitive",
                                         "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "M",
-                                          },
+                                          "type": "string",
+                                          "value": "M",
                                         },
                                       },
                                     ],
@@ -46365,19 +46131,13 @@ Other details about this invoice",
                     "value": {
                       "type": "unknown",
                       "value": {
-                        "type": "map",
+                        "type": "array",
                         "value": [
                           {
-                            "key": {
-                              "type": "string",
-                              "value": "0",
-                            },
+                            "type": "primitive",
                             "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string",
-                                "value": "12345",
-                              },
+                              "type": "string",
+                              "value": "12345",
                             },
                           },
                         ],
@@ -46392,19 +46152,13 @@ Other details about this invoice",
                     "value": {
                       "type": "unknown",
                       "value": {
-                        "type": "map",
+                        "type": "array",
                         "value": [
                           {
-                            "key": {
-                              "type": "string",
-                              "value": "0",
-                            },
+                            "type": "primitive",
                             "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string",
-                                "value": "abc123",
-                              },
+                              "type": "string",
+                              "value": "abc123",
                             },
                           },
                         ],
@@ -47360,19 +47114,13 @@ Other details about this invoice",
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "12345",
-                                  },
+                                  "type": "string",
+                                  "value": "12345",
                                 },
                               },
                             ],
@@ -47387,19 +47135,13 @@ Other details about this invoice",
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "abc123",
-                                  },
+                                  "type": "string",
+                                  "value": "abc123",
                                 },
                               },
                             ],
@@ -48627,19 +48369,13 @@ Other details about this invoice",
                     "value": {
                       "type": "unknown",
                       "value": {
-                        "type": "map",
+                        "type": "array",
                         "value": [
                           {
-                            "key": {
-                              "type": "string",
-                              "value": "0",
-                            },
+                            "type": "primitive",
                             "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string",
-                                "value": "12345",
-                              },
+                              "type": "string",
+                              "value": "12345",
                             },
                           },
                         ],
@@ -48654,19 +48390,13 @@ Other details about this invoice",
                     "value": {
                       "type": "unknown",
                       "value": {
-                        "type": "map",
+                        "type": "array",
                         "value": [
                           {
-                            "key": {
-                              "type": "string",
-                              "value": "0",
-                            },
+                            "type": "primitive",
                             "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string",
-                                "value": "abc123",
-                              },
+                              "type": "string",
+                              "value": "abc123",
                             },
                           },
                         ],
@@ -57909,19 +57639,13 @@ Other details about this invoice",
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "12345",
-                                  },
+                                  "type": "string",
+                                  "value": "12345",
                                 },
                               },
                             ],
