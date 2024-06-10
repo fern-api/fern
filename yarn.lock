@@ -3414,7 +3414,7 @@ __metadata:
     "@types/tar": ^6.1.11
     "@types/validate-npm-package-name": ^4.0.0
     "@types/yargs": ^17.0.28
-    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
+    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.15
     ansi-escapes: ^5.0.0
     axios: ^0.28.0
     boxen: ^7.0.0
@@ -3703,7 +3703,7 @@ __metadata:
     "@fern-fern/ir-sdk": 0.0.3318
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
-    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
+    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.15
     depcheck: ^1.4.6
     env-cmd: toddbluhm/env-cmd
     esbuild: ^0.15.7
@@ -3732,7 +3732,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
-    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
+    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.15
     depcheck: ^1.4.6
     env-cmd: toddbluhm/env-cmd
     esbuild: ^0.15.7
@@ -3761,7 +3761,7 @@ __metadata:
     "@fern-fern/ir-sdk": ^32
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
-    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
+    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.15
     depcheck: ^1.4.6
     env-cmd: toddbluhm/env-cmd
     esbuild: ^0.15.7
@@ -3791,7 +3791,7 @@ __metadata:
     "@fern-fern/ir-sdk": ^32
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
-    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
+    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.15
     depcheck: ^1.4.6
     env-cmd: toddbluhm/env-cmd
     esbuild: ^0.15.7
@@ -4160,7 +4160,7 @@ __metadata:
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
-    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
+    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.15
     depcheck: ^1.4.6
     env-cmd: toddbluhm/env-cmd
     esbuild: ^0.15.7
@@ -4282,7 +4282,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/lodash": ^4.17.4
     "@types/node": ^18.7.18
-    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
+    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.15
     depcheck: ^1.4.6
     endent: ^2.1.0
     env-cmd: toddbluhm/env-cmd
@@ -4451,7 +4451,7 @@ __metadata:
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/yargs": ^17.0.28
-    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
+    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.15
     chalk: ^5.0.1
     depcheck: ^1.4.6
     esbuild: ^0.15.7
@@ -4491,7 +4491,7 @@ __metadata:
     "@types/node": ^18.7.18
     "@types/pretty-ms": ^5.0.1
     "@types/yargs": ^17.0.28
-    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
+    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.15
     chalk: ^5.0.1
     console-table-printer: ^2.12.0
     depcheck: ^1.4.6
@@ -8184,14 +8184,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@yarnpkg/esbuild-plugin-pnp@npm:^3.0.0-rc.14":
-  version: 3.0.0-rc.14
-  resolution: "@yarnpkg/esbuild-plugin-pnp@npm:3.0.0-rc.14"
+"@yarnpkg/esbuild-plugin-pnp@npm:^3.0.0-rc.15":
+  version: 3.0.0-rc.15
+  resolution: "@yarnpkg/esbuild-plugin-pnp@npm:3.0.0-rc.15"
   dependencies:
-    tslib: ^1.13.0
+    tslib: ^2.4.0
   peerDependencies:
     esbuild: ">=0.10.0"
-  checksum: 7213b06d807b20dfb51a631779b8279abcad822be0c0ef14312401fde30fcb4a6a997a195f7971d5f4df0099d9bd5dc00b8a18004af920c21c0c72eec160dcff
+  checksum: 04da15355a99773b441742814ba4d0f3453a83df47aa07e215f167e156f109ab8e971489c8b1a4ddf3c79d568d35213f496ad52e97298228597e1aacc22680aa
   languageName: node
   linkType: hard
 
@@ -23220,10 +23220,17 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"tslib@npm:^1.13.0, tslib@npm:^1.8.1":
+"tslib@npm:^1.8.1":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.4.0":
+  version: 2.6.3
+  resolution: "tslib@npm:2.6.3"
+  checksum: 74fce0e100f1ebd95b8995fbbd0e6c91bdd8f4c35c00d4da62e285a3363aaa534de40a80db30ecfd388ed7c313c42d930ee0eaf108e8114214b180eec3dbe6f5
   languageName: node
   linkType: hard
 

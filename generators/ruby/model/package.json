@@ -44,7 +44,7 @@
   "devDependencies": {
     "@types/jest": "^29.0.3",
     "@types/node": "^18.7.18",
-    "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
+    "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.15",
     "depcheck": "^1.4.6",
     "env-cmd": "toddbluhm/env-cmd",
     "esbuild": "^0.15.7",
