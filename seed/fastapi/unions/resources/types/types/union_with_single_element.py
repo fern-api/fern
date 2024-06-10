@@ -22,14 +22,14 @@ class _Factory:
 class UnionWithSingleElement(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get_as_union(self) -> typing.Union[_UnionWithSingleElement.Foo]:
+    def get_as_union(self) -> _UnionWithSingleElement.Foo:
         return self.__root__
 
     def visit(self, foo: typing.Callable[[resources_types_types_foo_Foo], T_Result]) -> T_Result:
         if self.__root__.type == "foo":
             return foo(resources_types_types_foo_Foo(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
-    __root__: typing.Union[_UnionWithSingleElement.Foo]
+    __root__: _UnionWithSingleElement.Foo
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

@@ -43,6 +43,46 @@ class WorkspaceSubmissionUpdateInfo_Ran(pydantic_v1.BaseModel):
         json_encoders = {dt.datetime: serialize_datetime}
 
 
+class WorkspaceSubmissionUpdateInfo_Stopped(pydantic_v1.BaseModel):
+    type: typing.Literal["stopped"] = "stopped"
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
+
+
+class WorkspaceSubmissionUpdateInfo_Traced(pydantic_v1.BaseModel):
+    type: typing.Literal["traced"] = "traced"
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
+
+
 class WorkspaceSubmissionUpdateInfo_TracedV2(pydantic_v1.BaseModel):
     trace_responses_size: int = pydantic_v1.Field(alias="traceResponsesSize")
     type: typing.Literal["tracedV2"] = "tracedV2"
@@ -71,9 +111,32 @@ class WorkspaceSubmissionUpdateInfo_Errored(pydantic_v1.BaseModel):
     type: typing.Literal["errored"] = "errored"
 
 
+class WorkspaceSubmissionUpdateInfo_Finished(pydantic_v1.BaseModel):
+    type: typing.Literal["finished"] = "finished"
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
+
+
 WorkspaceSubmissionUpdateInfo = typing.Union[
     WorkspaceSubmissionUpdateInfo_Running,
     WorkspaceSubmissionUpdateInfo_Ran,
+    WorkspaceSubmissionUpdateInfo_Stopped,
+    WorkspaceSubmissionUpdateInfo_Traced,
     WorkspaceSubmissionUpdateInfo_TracedV2,
     WorkspaceSubmissionUpdateInfo_Errored,
+    WorkspaceSubmissionUpdateInfo_Finished,
 ]

@@ -114,7 +114,7 @@ fixtures:
     - customConfig:
         pydantic_config:
           include_union_utils: true
-      outputFolder: union_utils 
+      outputFolder: union-utils 
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
