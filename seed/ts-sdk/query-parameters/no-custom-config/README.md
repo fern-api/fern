@@ -29,6 +29,12 @@ await seedQueryParameters.user.getUsername({
         name: "string",
         tags: ["string"],
     },
+    userList: [
+        {
+            name: "string",
+            tags: ["string"],
+        },
+    ],
     keyValue: {
         string: "string",
     },

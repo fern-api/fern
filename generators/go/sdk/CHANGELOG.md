@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.22.1 - 2024-06-11]
+
+- Fix: Array of `deepObject` query parameters are correctly serialized. An array of objects
+  are encoded like so:
+
+  ```go
+  user, err := client.Users.Get(
+    ...,
+    acme.GetUserRequest{
+      Filters: []*acme.Filter{
+        {
+          Key: "age",
+          Value: "42",
+        },
+        {
+          Key: "firstName",
+          Value: "john",
+        },
+      },
+    },
+  )
+  // The query string is serialized as: ?filters[key]=hello&filters[key]=firstName&filters[value]=42&filters[value]=john
+  ```
+
 ## [0.22.0 - 2024-05-21]
 
 - Feature: Extra properties decoded from response objects are retained and accessible via the

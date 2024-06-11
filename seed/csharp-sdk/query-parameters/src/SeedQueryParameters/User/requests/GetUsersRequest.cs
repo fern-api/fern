@@ -18,6 +18,8 @@ public class GetUsersRequest
 
     public User User { get; init; }
 
+    public IEnumerable<User> UserList { get; init; }
+
     public Dictionary<string, string> KeyValue { get; init; }
 
     public string? OptionalString { get; init; }
