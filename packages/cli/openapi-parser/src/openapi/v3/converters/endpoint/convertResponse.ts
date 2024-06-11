@@ -49,7 +49,7 @@ export function convertResponse({
             continue;
         }
         successStatusCodePresent = true;
-        if (convertedResponse != null) {
+        if (convertedResponse == null) {
             convertedResponse = convertResolvedResponse({
                 operationContext,
                 response,
@@ -61,7 +61,7 @@ export function convertResponse({
     }
 
     // If no success status codes have been visited, then try to fallback to the `default` status code
-    if (!successStatusCodePresent && responses.default != null) {
+    if (convertedResponse == null && !successStatusCodePresent && responses.default != null) {
         convertedResponse = convertResolvedResponse({
             operationContext,
             response: responses.default,
