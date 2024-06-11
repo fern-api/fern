@@ -104,7 +104,11 @@ def maybe_filter_request_body(
     omit: typing.Optional[typing.Any],
 ) -> typing.Optional[typing.Any]:
     if data is None:
-        return jsonable_encoder(request_options.get("additional_body_parameters", {})) if request_options is not None else None
+        return (
+            jsonable_encoder(request_options.get("additional_body_parameters", {}))
+            if request_options is not None
+            else None
+        )
     elif not isinstance(data, typing.Mapping):
         data_content = jsonable_encoder(data)
     else:
