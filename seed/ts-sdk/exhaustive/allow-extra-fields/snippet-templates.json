@@ -3452,9 +3452,9 @@
                                                     {
                                                         "value": {
                                                             "imports": [],
-                                                            "templateString": "$FERN_INPUT\n",
+                                                            "templateString": "$FERN_INPUT",
                                                             "isOptional": true,
-                                                            "inputDelimiter": ",\n\t\t\t\t",
+                                                            "inputDelimiter": ",\n\t\t\t",
                                                             "templateInputs": [
                                                                 {
                                                                     "value": {
@@ -3504,9 +3504,9 @@
                                                     {
                                                         "value": {
                                                             "imports": [],
-                                                            "templateString": "$FERN_INPUT\n",
+                                                            "templateString": "$FERN_INPUT",
                                                             "isOptional": true,
-                                                            "inputDelimiter": ",\n\t\t\t\t",
+                                                            "inputDelimiter": ",\n\t\t\t",
                                                             "templateInputs": [
                                                                 {
                                                                     "value": {
