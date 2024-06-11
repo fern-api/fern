@@ -82,7 +82,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "'$FERN_INPUT'",
+                                        "templateString": "$FERN_INPUT",
                                         "discriminantField": "type",
                                         "members": {
                                             "circle": {
@@ -93,7 +93,7 @@
                                                     {
                                                         "value": {
                                                             "imports": [],
-                                                            "templateString": "{\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                                            "templateString": "$FERN_INPUT\n",
                                                             "isOptional": true,
                                                             "inputDelimiter": ",\n\t\t\t\t",
                                                             "templateInputs": [
@@ -129,7 +129,7 @@
                                                     {
                                                         "value": {
                                                             "imports": [],
-                                                            "templateString": "{\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                                            "templateString": "$FERN_INPUT\n",
                                                             "isOptional": true,
                                                             "inputDelimiter": ",\n\t\t\t\t",
                                                             "templateInputs": [
