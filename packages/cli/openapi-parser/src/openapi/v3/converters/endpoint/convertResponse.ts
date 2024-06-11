@@ -13,7 +13,7 @@ import { getApplicationJsonSchemaMediaObject, getSchemaMediaObject } from "./get
 
 // The converter will attempt to get response in priority order
 // (i.e. try for 200, then 201, then 204)
-const SUCCESSFUL_STATUS_CODES = ["200", "201", "204", "default"];
+const SUCCESSFUL_STATUS_CODES = ["200", "201", "204"];
 
 export interface ConvertedResponse {
     value: ResponseWithExample | undefined;
@@ -40,42 +40,59 @@ export function convertResponse({
         return { value: undefined, errors: {} };
     }
     const errors = markErrorSchemas({ responses, context });
+
+    let successStatusCodePresent = false;
+    let convertedResponse: FernOpenapiIr.ResponseWithExample | undefined = undefined;
     for (const statusCode of responseStatusCode != null ? [responseStatusCode] : SUCCESSFUL_STATUS_CODES) {
         const response = responses[statusCode];
         if (response == null) {
             continue;
         }
+        successStatusCodePresent = true;
+        if (convertedResponse != null) {
+            convertedResponse = convertResolvedResponse({
+                operationContext,
+                response,
+                context,
+                responseBreadcrumbs,
+                streamFormat
+            });
+        }
+    }
 
-        const convertedResponse = convertResolvedResponse({
+    // If no success status codes have been visited, then try to fallback to the `default` status code
+    if (!successStatusCodePresent && responses.default != null) {
+        convertedResponse = convertResolvedResponse({
             operationContext,
-            response,
+            response: responses.default,
             context,
             responseBreadcrumbs,
             streamFormat
         });
-        if (convertedResponse != null) {
-            switch (convertedResponse.type) {
-                case "json":
-                    return {
-                        value: convertedResponse,
-                        errors
-                    };
-                case "streamingJson":
-                case "streamingSse":
-                    return {
-                        value: convertedResponse,
-                        errors
-                    };
-                case "file":
-                case "text":
-                case "streamingText":
-                    return {
-                        value: convertedResponse,
-                        errors
-                    };
-                default:
-                    assertNever(convertedResponse);
-            }
+    }
+
+    if (convertedResponse != null) {
+        switch (convertedResponse.type) {
+            case "json":
+                return {
+                    value: convertedResponse,
+                    errors
+                };
+            case "streamingJson":
+            case "streamingSse":
+                return {
+                    value: convertedResponse,
+                    errors
+                };
+            case "file":
+            case "text":
+            case "streamingText":
+                return {
+                    value: convertedResponse,
+                    errors
+                };
+            default:
+                assertNever(convertedResponse);
         }
     }
 

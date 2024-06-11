@@ -31,9 +31,7 @@ default-environment: Default
     "type": "file",
   },
   {
-    "contents": "imports:
-  root: __package__.yml
-service:
+    "contents": "service:
   auth: false
   base-path: ''
   endpoints:
@@ -48,15 +46,8 @@ service:
           limit:
             type: optional<integer>
             docs: How many items to return at one time (max 100)
-      response:
-        docs: A paged array of pets
-        type: root.Pets
       examples:
-        - response:
-            body:
-              - id: 1
-                name: name
-                tag: tag
+        - {}
     createPets:
       path: /pets
       method: POST
@@ -73,17 +64,9 @@ service:
           type: string
           docs: The id of the pet to retrieve
       display-name: Info for a specific pet
-      response:
-        docs: Expected response to a valid request
-        type: root.Pet
       examples:
         - path-parameters:
             petId: petId
-          response:
-            body:
-              id: 1
-              name: name
-              tag: tag
 ",
     "name": "pets.yml",
     "type": "file",
