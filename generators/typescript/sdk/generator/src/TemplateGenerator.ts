@@ -185,17 +185,7 @@ export class TemplateGenerator {
                         indentationLevel: childIndentationLevel,
                         isUnionType: true
                     });
-                    // console.log("PIYUSHDEBUGD samePropertiesAsObject", {
-                    //     utdodtn,
-                    //     location,
-                    //     wireOrOriginalName,
-                    //     nameBreadcrumbs,
-                    //     childIndentationLevel,
-                    //     namedTypeTemplate: JSON.stringify(namedTypeTemplate),
-                    //     templateInput: JSON.stringify(
-                    //         namedTypeTemplate != null ? [this.getTemplateInputFromTemplate(namedTypeTemplate)] : []
-                    //     )
-                    // });
+
                     return FdrSnippetTemplate.Template.generic({
                         imports: [],
                         templateString: this.getAsNamedParameterTemplate(
@@ -249,16 +239,6 @@ export class TemplateGenerator {
             if (memberTemplate != null) {
                 memberTemplates[member.discriminantValue.wireValue] = memberTemplate;
             }
-            // console.log("PIYUSHDEBUGA", {
-            //     memberTemplate: JSON.stringify(memberTemplate),
-            //     member: JSON.stringify(member),
-            //     wireOrOriginalName,
-            //     nameBreadcrumbs,
-            //     templateInput: FdrSnippetTemplate.TemplateInput.payload({
-            //         location,
-            //         path: this.getBreadCrumbPath({ wireOrOriginalName, nameBreadcrumbs })
-            //     })
-            // });
         }
 
         return FdrSnippetTemplate.Template.discriminatedUnion({
@@ -291,15 +271,6 @@ export class TemplateGenerator {
         indentationLevel: number;
         isUnionType: boolean;
     }): FdrSnippetTemplate.Template | undefined {
-        // console.log("PIYUSHDEBUGG", {
-        //     function: "getObjectTemplate",
-        //     otd: JSON.stringify(otd),
-        //     name,
-        //     location,
-        //     wireOrOriginalName,
-        //     nameBreadcrumbs,
-        //     indentationLevel
-        // });
         const childIndentationLevel = indentationLevel + 1;
         const childTabs = "\t".repeat(childIndentationLevel);
         const selfTabs = "\t".repeat(indentationLevel);
@@ -352,15 +323,7 @@ export class TemplateGenerator {
     }): FdrSnippetTemplate.Template | undefined {
         const td = this.endpointContext.type.getTypeDeclaration(typeName);
         const generatedType = this.endpointContext.type.getGeneratedType(typeName);
-        // console.log("PIYUSHDEBUGF", {
-        //     td: JSON.stringify(td),
-        //     generatedType,
-        //     typeName,
-        //     name,
-        //     location,
-        //     wireOrOriginalName,
-        //     nameBreadcrumbs
-        // });
+
         return td.shape._visit<FdrSnippetTemplate.Template | undefined>({
             enum: (etd) =>
                 this.getEnumTemplate({
@@ -878,11 +841,6 @@ export class TemplateGenerator {
                       this.endpoint
                   )}(\n\t${TEMPLATE_SENTINEL}\n)`
                 : `await ${endpointClientAccessString}.${this.getEndpointFunctionName(this.endpoint)}()`;
-        // console.log("PIYUSHDEBUG", {
-        //     endpointClientAccessString: JSON.stringify(endpointClientAccessString),
-        //     topLevelTemplateInputs: JSON.stringify(topLevelTemplateInputs),
-        //     templateString: JSON.stringify(templateString)
-        // });
 
         return FdrSnippetTemplate.VersionedSnippetTemplate.v1({
             clientInstantiation: clientInstantiationString,
