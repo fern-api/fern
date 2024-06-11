@@ -29,9 +29,11 @@ import com.fern.java.client.generators.SuppliersGenerator;
 import com.fern.java.client.generators.TestGenerator;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
+import com.fern.java.generators.PaginationCoreGenerator;
 import com.fern.java.generators.StreamGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
+import com.fern.java.output.GeneratedFile;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.output.GeneratedResourcesJavaFile;
@@ -167,6 +169,10 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 context, context.getPoetClassNameFactory().getRequestOptionsClassName());
         GeneratedJavaFile generatedRequestOptions = requestOptionsGenerator.generateFile();
         this.addGeneratedFile(generatedRequestOptions);
+
+        PaginationCoreGenerator paginationCoreGenerator = new PaginationCoreGenerator(context);
+        List<GeneratedFile> generatedFiles = paginationCoreGenerator.generateFiles();
+        generatedFiles.forEach(this::addGeneratedFile);
 
         if (!ir.getIdempotencyHeaders().isEmpty()) {
             RequestOptionsGenerator idempotentRequestOptionsGenerator = new RequestOptionsGenerator(

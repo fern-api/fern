@@ -16,16 +16,14 @@
 
 package com.fern.java.generators;
 
-import com.fern.irV42.model.http.HttpEndpoint;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedFile;
 import com.fern.java.output.GeneratedResourcesJavaFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 public final class PaginationCoreGenerator extends AbstractFilesGenerator {
     public static final String GET_MODULE_METHOD_NAME = "getModule";
@@ -40,22 +38,24 @@ public final class PaginationCoreGenerator extends AbstractFilesGenerator {
                 .getGeneratorConfig()
                 .getGeneratePaginatedClients()
                 .orElse(false);
-        Stream<HttpEndpoint> allEndpoints = generatorContext.getIr().getServices().values().stream()
-                .flatMap(httpService -> httpService.getEndpoints().stream());
-        allEndpoints.anyMatch(httpEndpoint -> httpEndpoint.getPagination().map(pagination -> pagination.getCursor().get().))
+        // todo: check if we should generate pagination
 
-        ArrayList<String> fileNames = new ArrayList<>();
+        List<String> fileNames = List.of("BasePage", "SyncPage", "SyncPagingIterable");
 
-        fileNames.add("");
-
-        try (InputStream is = PaginationCoreGenerator.class.getResourceAsStream("/Stream.java")) {
-            String contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
-            return GeneratedResourcesJavaFile.builder()
-                    .className(className)
-                    .contents(contents)
-                    .build();
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to read Stream.java");
-        }
+        return fileNames.stream()
+                .map(fileName -> {
+                    try (InputStream is = PaginationCoreGenerator.class.getResourceAsStream("/" + fileName + ".java")) {
+                        String contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+                        return GeneratedResourcesJavaFile.builder()
+                                .className(generatorContext
+                                        .getPoetClassNameFactory()
+                                        .getPaginationClassName(fileName))
+                                .contents(contents)
+                                .build();
+                    } catch (IOException e) {
+                        throw new RuntimeException("Failed to read Stream.java");
+                    }
+                })
+                .collect(Collectors.toList());
     }
 }
