@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.23.0-rc0] - 2024-06-07
+
+- Fix: Union snippet templates are fixed in 2 ways:
+  1. The templates do not have a leading single quote (a typo from before)
+  2. The templates now inline union properties.
+
 ## [0.22.0] - 2024-06-07
 
 - Feature: Add support for higher quality `README.md` generation.
