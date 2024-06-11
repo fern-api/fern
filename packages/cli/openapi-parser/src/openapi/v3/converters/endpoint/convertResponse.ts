@@ -13,7 +13,7 @@ import { getApplicationJsonSchemaMediaObject, getSchemaMediaObject } from "./get
 
 // The converter will attempt to get response in priority order
 // (i.e. try for 200, then 201, then 204)
-const SUCCESSFUL_STATUS_CODES = ["200", "201", "204"];
+const SUCCESSFUL_STATUS_CODES = ["200", "201", "204", "default"];
 
 export interface ConvertedResponse {
     value: ResponseWithExample | undefined;
