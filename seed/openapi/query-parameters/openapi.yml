@@ -44,6 +44,12 @@ paths:
           schema:
             type: string
             nullable: true
+        - name: userList
+          in: query
+          required: false
+          schema:
+            type: string
+            nullable: true
         - name: keyValue
           in: query
           required: false
