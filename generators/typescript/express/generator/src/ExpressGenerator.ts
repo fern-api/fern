@@ -256,7 +256,7 @@ export class ExpressGenerator {
             resolutions: {
                 "@types/mime": "3.0.4"
             },
-            extraConfigs: un
+            extraConfigs: undefined
         });
     }
 
