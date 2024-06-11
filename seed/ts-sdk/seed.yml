@@ -39,6 +39,27 @@ fixtures:
             lodash-es: "^4.17.21"
       outputFolder: bundle
     - customConfig:
+        useBrandedStringAliases: true
+        neverThrowErrors: true
+        namespaceExport: "Fiddle"
+        bundle: true
+        includeUtilsOnUnionMembers: true
+        includeOtherInUnionTypes: true
+        extraDependencies:
+            lodash-es: "^4.17.21"
+        packageJson:
+          version: "0.0.2"
+          dependencies:
+            stream: "^0.0.2"
+            qs: "^6.11.2"
+          files:
+            - exampleFile
+            - dist
+          browser:
+            command-exists: false
+            execa: false
+      outputFolder: custom-package-json
+    - customConfig:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
     - customConfig:

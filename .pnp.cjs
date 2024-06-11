@@ -8489,6 +8489,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/esutils", "npm:2.0.2"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
+            ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["decompress", "npm:4.2.1"],\
@@ -8500,6 +8501,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["immer", "npm:9.0.15"],\
             ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
             ["js-yaml", "npm:4.1.0"],\
+            ["lodash-es", "npm:4.17.21"],\
             ["memfs", "npm:3.5.3"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["package-json-type", "npm:1.0.3"],\

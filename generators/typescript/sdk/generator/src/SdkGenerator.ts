@@ -116,6 +116,7 @@ export declare namespace SdkGenerator {
         executionEnvironment: "local" | "dev" | "prod";
         organization: string;
         apiName: string;
+        packageJson: Record<string, unknown> | undefined;
     }
 }
 
@@ -479,7 +480,8 @@ export class SdkGenerator {
                   extraPeerDependencies: this.config.extraPeerDependencies,
                   extraPeerDependenciesMeta: this.config.extraPeerDependenciesMeta,
                   extraFiles: this.extraFiles,
-                  extraScripts: this.extraScripts
+                  extraScripts: this.extraScripts,
+                  extraConfigs: this.config.packageJson
               })
             : new SimpleTypescriptProject({
                   npmPackage: this.npmPackage,
@@ -492,7 +494,8 @@ export class SdkGenerator {
                   extraPeerDependenciesMeta: this.config.extraPeerDependenciesMeta,
                   extraFiles: this.extraFiles,
                   extraScripts: this.extraScripts,
-                  resolutions: {}
+                  resolutions: {},
+                  extraConfigs: this.config.packageJson
               });
     }
 
