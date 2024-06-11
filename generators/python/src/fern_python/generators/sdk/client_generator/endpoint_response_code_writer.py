@@ -157,7 +157,7 @@ class EndpointResponseCodeWriter:
             if parameter.name == page_parameter.name.name.snake_case.safe_name:
                 if type == "offset":
                     # Here we assume the offset parameter is an integer
-                    writer.write(f"{parameter.name} + 1 if {parameter.name} is not None else 1")
+                    writer.write(f"{parameter.name} + 1")
                 else:
                     writer.write(EndpointResponseCodeWriter.PARSED_RESPONSE_NEXT_VARIABLE)
             else:
@@ -168,7 +168,7 @@ class EndpointResponseCodeWriter:
             if parameter.name == page_parameter.name.name.snake_case.safe_name:
                 if type == "offset":
                     # Here we assume the offset parameter is an integer
-                    writer.write(f"{parameter.name}={parameter.name} + 1 if {parameter.name} is not None else 1")
+                    writer.write(f"{parameter.name}={parameter.name} + 1")
                 else:
                     writer.write(f"{parameter.name}={EndpointResponseCodeWriter.PARSED_RESPONSE_NEXT_VARIABLE}")
             else:
@@ -233,6 +233,8 @@ class EndpointResponseCodeWriter:
                         type="cursor",
                     )
             else:
+                page_parameter = self._pagination.get_as_union().page
+
                 writer.write_line(f"{EndpointResponseCodeWriter.PAGINATION_HAS_NEXT_VARIABLE} = True")
 
                 # Get next, only for offset, since cursor is handled in the above if statement
@@ -240,7 +242,7 @@ class EndpointResponseCodeWriter:
                 pagination_type = self._pagination.get_as_union().type
                 self._write_dummy_snippet_to_paginate(
                     writer=writer,
-                    page_parameter=self._pagination.get_as_union().page,
+                    page_parameter=page_parameter,
                     type=pagination_type,
                 )
 
