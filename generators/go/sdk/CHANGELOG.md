@@ -28,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
       },
     },
   )
-  // The query string is serialized as: ?filters[key]=hello&filters[key]=firstName&filters[value]=42&filters[value]=john
+  // The query string is serialized as: ?filters[key]=age&filters[key]=firstName&filters[value]=42&filters[value]=john
   ```
 
 ## [0.22.0 - 2024-05-21]
