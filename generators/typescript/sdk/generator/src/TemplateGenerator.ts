@@ -182,9 +182,20 @@ export class TemplateGenerator {
                         location,
                         wireOrOriginalName,
                         nameBreadcrumbs,
-                        indentationLevel: childIndentationLevel
+                        indentationLevel: childIndentationLevel,
+                        isUnionType: true
                     });
-
+                    // console.log("PIYUSHDEBUGD samePropertiesAsObject", {
+                    //     utdodtn,
+                    //     location,
+                    //     wireOrOriginalName,
+                    //     nameBreadcrumbs,
+                    //     childIndentationLevel,
+                    //     namedTypeTemplate: JSON.stringify(namedTypeTemplate),
+                    //     templateInput: JSON.stringify(
+                    //         namedTypeTemplate != null ? [this.getTemplateInputFromTemplate(namedTypeTemplate)] : []
+                    //     )
+                    // });
                     return FdrSnippetTemplate.Template.generic({
                         imports: [],
                         templateString: this.getAsNamedParameterTemplate(
@@ -205,7 +216,8 @@ export class TemplateGenerator {
                         location,
                         wireOrOriginalName: utdsp.name.wireValue,
                         nameBreadcrumbs: childBreadcrumbs,
-                        indentationLevel: childIndentationLevel
+                        indentationLevel: childIndentationLevel,
+                        isUnionType: true
                     });
                     return FdrSnippetTemplate.Template.generic({
                         imports: [],
@@ -237,12 +249,22 @@ export class TemplateGenerator {
             if (memberTemplate != null) {
                 memberTemplates[member.discriminantValue.wireValue] = memberTemplate;
             }
+            // console.log("PIYUSHDEBUGA", {
+            //     memberTemplate: JSON.stringify(memberTemplate),
+            //     member: JSON.stringify(member),
+            //     wireOrOriginalName,
+            //     nameBreadcrumbs,
+            //     templateInput: FdrSnippetTemplate.TemplateInput.payload({
+            //         location,
+            //         path: this.getBreadCrumbPath({ wireOrOriginalName, nameBreadcrumbs })
+            //     })
+            // });
         }
 
         return FdrSnippetTemplate.Template.discriminatedUnion({
             imports: [],
             isOptional: true,
-            templateString: this.getAsNamedParameterTemplate(name, `'${TEMPLATE_SENTINEL}'`),
+            templateString: this.getAsNamedParameterTemplate(name, `${TEMPLATE_SENTINEL}`),
             discriminantField: utd.discriminant.wireValue,
             members: memberTemplates,
             templateInput: FdrSnippetTemplate.TemplateInput.payload({
@@ -258,7 +280,8 @@ export class TemplateGenerator {
         location,
         wireOrOriginalName,
         nameBreadcrumbs,
-        indentationLevel
+        indentationLevel,
+        isUnionType
     }: {
         otd: ObjectTypeDeclaration;
         name: string | undefined;
@@ -266,7 +289,17 @@ export class TemplateGenerator {
         wireOrOriginalName: string | undefined;
         nameBreadcrumbs: string[] | undefined;
         indentationLevel: number;
+        isUnionType: boolean;
     }): FdrSnippetTemplate.Template | undefined {
+        // console.log("PIYUSHDEBUGG", {
+        //     function: "getObjectTemplate",
+        //     otd: JSON.stringify(otd),
+        //     name,
+        //     location,
+        //     wireOrOriginalName,
+        //     nameBreadcrumbs,
+        //     indentationLevel
+        // });
         const childIndentationLevel = indentationLevel + 1;
         const childTabs = "\t".repeat(childIndentationLevel);
         const selfTabs = "\t".repeat(indentationLevel);
@@ -291,7 +324,9 @@ export class TemplateGenerator {
         }
         return FdrSnippetTemplate.Template.generic({
             imports: [],
-            templateString: this.getAsNamedParameterTemplate(name, `{\n${childTabs}${TEMPLATE_SENTINEL}\n${selfTabs}}`),
+            templateString: isUnionType
+                ? this.getAsNamedParameterTemplate(name, `${TEMPLATE_SENTINEL}\n`)
+                : this.getAsNamedParameterTemplate(name, `{\n${childTabs}${TEMPLATE_SENTINEL}\n${selfTabs}}`),
             isOptional: true,
             inputDelimiter: `,\n${childTabs}`,
             templateInputs
@@ -304,7 +339,8 @@ export class TemplateGenerator {
         location,
         wireOrOriginalName,
         nameBreadcrumbs,
-        indentationLevel
+        indentationLevel,
+        isUnionType
     }: {
         typeName: DeclaredTypeName;
         name: string | undefined;
@@ -312,9 +348,19 @@ export class TemplateGenerator {
         wireOrOriginalName: string | undefined;
         nameBreadcrumbs: string[] | undefined;
         indentationLevel: number;
+        isUnionType: boolean;
     }): FdrSnippetTemplate.Template | undefined {
         const td = this.endpointContext.type.getTypeDeclaration(typeName);
         const generatedType = this.endpointContext.type.getGeneratedType(typeName);
+        // console.log("PIYUSHDEBUGF", {
+        //     td: JSON.stringify(td),
+        //     generatedType,
+        //     typeName,
+        //     name,
+        //     location,
+        //     wireOrOriginalName,
+        //     nameBreadcrumbs
+        // });
         return td.shape._visit<FdrSnippetTemplate.Template | undefined>({
             enum: (etd) =>
                 this.getEnumTemplate({
@@ -341,7 +387,8 @@ export class TemplateGenerator {
                     location,
                     wireOrOriginalName,
                     nameBreadcrumbs,
-                    indentationLevel
+                    indentationLevel,
+                    isUnionType
                 }),
             // This is likely just calling get object template on every member
             union: (utd) =>
@@ -488,7 +535,8 @@ export class TemplateGenerator {
         location,
         wireOrOriginalName,
         nameBreadcrumbs,
-        indentationLevel
+        indentationLevel,
+        isUnionType
     }: {
         typeReference: TypeReference;
         name: string | undefined;
@@ -496,6 +544,7 @@ export class TemplateGenerator {
         wireOrOriginalName: string | undefined;
         nameBreadcrumbs: string[] | undefined;
         indentationLevel: number;
+        isUnionType?: boolean;
     }): FdrSnippetTemplate.Template | undefined {
         // Do not insert literals into templates
         if (typeReference.type === "container" && typeReference.container.type === "literal") {
@@ -526,7 +575,8 @@ export class TemplateGenerator {
                     location,
                     wireOrOriginalName,
                     nameBreadcrumbs,
-                    indentationLevel
+                    indentationLevel,
+                    isUnionType: !!isUnionType
                 }),
             _other: () => undefined
         });
@@ -543,6 +593,7 @@ export class TemplateGenerator {
         wireOrOriginalName: string | undefined;
         nameBreadcrumbs: string[] | undefined;
         indentationLevel: number;
+        isUnionType?: boolean;
     }): FdrSnippetTemplate.TemplateInput | undefined {
         const template = this.getTemplateFromTypeReference(args);
         return template != null ? this.getTemplateInputFromTemplate(template) : template;
@@ -827,6 +878,12 @@ export class TemplateGenerator {
                       this.endpoint
                   )}(\n\t${TEMPLATE_SENTINEL}\n)`
                 : `await ${endpointClientAccessString}.${this.getEndpointFunctionName(this.endpoint)}()`;
+        // console.log("PIYUSHDEBUG", {
+        //     endpointClientAccessString: JSON.stringify(endpointClientAccessString),
+        //     topLevelTemplateInputs: JSON.stringify(topLevelTemplateInputs),
+        //     templateString: JSON.stringify(templateString)
+        // });
+
         return FdrSnippetTemplate.VersionedSnippetTemplate.v1({
             clientInstantiation: clientInstantiationString,
             functionInvocation: FdrSnippetTemplate.Template.generic({
