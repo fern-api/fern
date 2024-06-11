@@ -44,7 +44,8 @@ public final class PaginationCoreGenerator extends AbstractFilesGenerator {
 
         return fileNames.stream()
                 .map(fileName -> {
-                    try (InputStream is = PaginationCoreGenerator.class.getResourceAsStream("/" + fileName + ".java")) {
+                    String fullFileName = "/" + fileName + ".java";
+                    try (InputStream is = PaginationCoreGenerator.class.getResourceAsStream(fullFileName)) {
                         String contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
                         return GeneratedResourcesJavaFile.builder()
                                 .className(generatorContext
@@ -53,7 +54,7 @@ public final class PaginationCoreGenerator extends AbstractFilesGenerator {
                                 .contents(contents)
                                 .build();
                     } catch (IOException e) {
-                        throw new RuntimeException("Failed to read Stream.java");
+                        throw new RuntimeException("Failed to read " + fullFileName);
                     }
                 })
                 .collect(Collectors.toList());
