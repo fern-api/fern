@@ -112,6 +112,11 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             destinationZip,
                             logger
                         });
+                    } else if (this.exportAsProject(customConfig)) {
+                        await typescriptProject.copyProjectAsZipTo({
+                            logger,
+                            destinationZip
+                        });
                     } else {
                         await typescriptProject.copyDistAsZipTo({
                             destinationZip,
@@ -158,6 +163,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     protected abstract isPackagePrivate(customConfig: CustomConfig): boolean;
     protected abstract outputSourceFiles(customConfig: CustomConfig): boolean;
     protected abstract shouldTolerateRepublish(customConfig: CustomConfig): boolean;
+    protected abstract exportAsProject(customConfig: CustomConfig): boolean;
 }
 
 class GeneratorContextImpl implements GeneratorContext {

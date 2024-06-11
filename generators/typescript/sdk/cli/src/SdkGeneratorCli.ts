@@ -53,7 +53,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             tolerateRepublish: parsed?.tolerateRepublish ?? false,
             retainOriginalCasing: parsed?.retainOriginalCasing ?? false,
             allowExtraFields: parsed?.allowExtraFields ?? false,
-            inlineFileProperties: parsed?.inlineFileProperties ?? false
+            inlineFileProperties: parsed?.inlineFileProperties ?? false,
+            exportAsProject: parsed?.exportAsProject ?? false
         };
     }
 
@@ -154,5 +155,9 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             : config.environment.coordinatorUrlV2.endsWith("dev2.buildwithfern.com")
             ? "dev"
             : "prod";
+    }
+
+    protected exportAsProject(customConfig: SdkCustomConfig): boolean {
+        return customConfig.exportAsProject;
     }
 }
