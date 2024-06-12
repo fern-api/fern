@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.23.0] - 2024-06-12
+
+- Fix: The latest version of the `generator-cli` (used to generate `README.md` files) is
+  always installed.
+
 ## [0.23.0-rc1] - 2024-06-11
 
 - Feature: Introduce a custom configuration for arbitrary package json field. Now you can specify
