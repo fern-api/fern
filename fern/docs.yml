@@ -209,8 +209,6 @@ navigation:
           - page: Generate API reference
             path: ./pages/fern-docs/content/generate-api-ref.mdx
             slug: generate-api-ref
-          - page: Audiences
-            path: ./pages/fern-docs/config/audiences.mdx
           - page: SDK snippets
             path: ./pages/fern-docs/config/sdk-snippets.mdx
           - page: Endpoint errors
