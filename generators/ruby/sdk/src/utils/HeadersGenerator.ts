@@ -7,6 +7,7 @@ import {
     FunctionInvocation,
     Function_,
     Import,
+    MethodClassReference,
     Parameter,
     Property,
     StringClassReference
@@ -17,7 +18,8 @@ import {
     BasicAuthScheme,
     BearerAuthScheme,
     HeaderAuthScheme,
-    HttpHeader
+    HttpHeader,
+    OAuthScheme
 } from "@fern-fern/ir-sdk/api";
 import { isTypeOptional } from "./TypeUtilities";
 
@@ -31,6 +33,7 @@ export interface BearerAuth {
 
 // For global headers + auth headers
 export class HeadersGenerator {
+    OAUTH_TOKEN_NAME = "token";
     public headers: HttpHeader[];
     public crf: ClassReferenceFactory;
     public auth: ApiAuth;
@@ -66,7 +69,7 @@ export class HeadersGenerator {
         );
     }
 
-    public getAuthHeadersAsParameters(): Parameter[] {
+    public getAuthHeadersAsParameters(forRootClient: boolean): Parameter[] {
         return this.auth.schemes.flatMap((scheme) =>
             scheme._visit<Parameter[]>({
                 bearer: (bas: BearerAuthScheme) => [
@@ -91,6 +94,35 @@ export class HeadersGenerator {
                         example: '"YOUR_PASSWORD"'
                     })
                 ],
+                oauth: (oas: OAuthScheme) =>
+                    oas.configuration._visit<Parameter[]>({
+                        clientCredentials: (cc) =>
+                            forRootClient
+                                ? [
+                                      new Parameter({
+                                          name: "client_id",
+                                          type: StringClassReference,
+                                          isOptional: cc.clientIdEnvVar !== undefined || !this.isAuthRequired,
+                                          example: '"YOUR_CLIENT_ID"'
+                                      }),
+                                      new Parameter({
+                                          name: "client_secret",
+                                          type: StringClassReference,
+                                          isOptional: cc.clientSecretEnvVar !== undefined || !this.isAuthRequired,
+                                          example: '"YOUR_CLIENT_SECRET"'
+                                      })
+                                  ]
+                                : [
+                                      new Parameter({
+                                          name: "token",
+                                          type: [StringClassReference, MethodClassReference],
+                                          isOptional: true
+                                      })
+                                  ],
+                        _other: () => {
+                            throw new Error("Unrecognized auth scheme.");
+                        }
+                    }),
                 header: (has: HeaderAuthScheme) => [
                     new Parameter({
                         name: has.name.name.snakeCase.safeName,
@@ -154,6 +186,14 @@ export class HeadersGenerator {
                         wireValue: has.name.wireValue
                     })
                 ],
+                oauth: (_: OAuthScheme) => [
+                    new Property({
+                        name: this.OAUTH_TOKEN_NAME,
+                        type: [StringClassReference, MethodClassReference],
+                        isOptional: true,
+                        wireValue: "Authorization"
+                    })
+                ],
                 _other: () => {
                     throw new Error("Unrecognized auth scheme.");
                 }
@@ -177,7 +217,21 @@ export class HeadersGenerator {
                   })
                 : new Expression({ rightSide: bas.token.snakeCase.safeName, isAssignment: false });
 
-        return ['"Authorization"', `Bearer #{${bearerValue.write({})}}`];
+        return ['"Authorization"', `Bearer #{@${bearerValue.write({})}}`];
+    }
+
+    private getOAuthBearerAuthorizationHeader(oas: OAuthScheme): [string, string] {
+        // The meat of the logic for bearer auth happens within an oauth token provider, which passes
+        // the get token function to the RequestClient, so this is just leveraging that.
+        return oas.configuration._visit<[string, string]>({
+            clientCredentials: (cc) => {
+                // Note we're hardcoding to bearer auth and assuming that we're setting an `@token` property
+                return ['"Authorization"', `${cc.tokenPrefix} #{@${this.OAUTH_TOKEN_NAME}}`];
+            },
+            _other: () => {
+                throw new Error("Unrecognized auth scheme.");
+            }
+        });
     }
 
     private getBasicAuthorizationHeader(bas: BasicAuthScheme): [string, string] {
@@ -206,12 +260,12 @@ export class HeadersGenerator {
             arguments_: [
                 new Argument({
                     isNamed: false,
-                    value: `"#{${userName.write({})}}:#{${password.write({})}}"`
+                    value: `"#{@${userName.write({})}}:#{@${password.write({})}}"`
                 })
             ]
         });
 
-        return ['"Authorization"', `Basic #{${b64.write({})}}`];
+        return ['"Authorization"', `Basic #{@${b64.write({})}}`];
     }
 
     // TODO: I don't love how this works, ideally it's a string to expression hash instead, but we don't
@@ -236,7 +290,7 @@ export class HeadersGenerator {
 
         return [
             `"${has.name.wireValue}"`,
-            `${has.prefix !== undefined ? has.prefix + " " : ""}#{${headerValue.write({})}}`
+            `${has.prefix !== undefined ? has.prefix + " " : ""}#{@${headerValue.write({})}}`
         ];
     }
 
@@ -246,6 +300,7 @@ export class HeadersGenerator {
                 bearer: (bas: BearerAuthScheme) => this.getBearerAuthorizationHeader(bas),
                 basic: (bas: BasicAuthScheme) => this.getBasicAuthorizationHeader(bas),
                 header: (has: HeaderAuthScheme) => this.getCustomAuthorizationHeader(has),
+                oauth: (oas: OAuthScheme) => this.getOAuthBearerAuthorizationHeader(oas),
                 _other: () => {
                     throw new Error("Unrecognized auth scheme.");
                 }

@@ -6,7 +6,9 @@ import {
     GeneratedFile,
     GeneratedRubyFile,
     LocationGenerator,
-    Module_
+    LongClassReference,
+    Module_,
+    Property
 } from "@fern-api/ruby-codegen";
 import {
     HttpService,
@@ -153,6 +155,18 @@ export class ClientsGenerator {
             clientName: this.clientName
         });
 
+        const retriesProperty = new Property({
+            name: "max_retries",
+            type: LongClassReference,
+            isOptional: true,
+            documentation: "The number of times to retry a failed request, defaults to 2."
+        });
+        const timeoutProperty = new Property({
+            name: "timeout_in_seconds",
+            type: LongClassReference,
+            isOptional: true
+        });
+
         this.gc.logger.debug("[Ruby] Preparing request clients.");
         const [syncClientClass, asyncClientClass] = generateRequestClients(
             this.clientName,
@@ -164,7 +178,9 @@ export class ClientsGenerator {
             this.intermediateRepresentation.environments?.environments.type === "multipleBaseUrls",
             this.defaultEnvironment,
             this.hasFileBasedDependencies,
-            requestOptionsClass
+            requestOptionsClass,
+            retriesProperty,
+            timeoutProperty
         );
         const requestsModule = Module_.wrapInModules(this.clientName, [
             syncClientClass,
@@ -391,7 +407,11 @@ export class ClientsGenerator {
                 this.flattenedProperties,
                 fileUtilityClass,
                 typeExporterLocation,
+                headersGenerator,
+                retriesProperty,
+                timeoutProperty,
                 environmentClass?.classReference,
+                this.defaultEnvironment,
                 this.services.get(this.intermediateRepresentation.rootPackage.service ?? "")
             )
         );

@@ -12,9 +12,10 @@ module SeedOauthClientCredentialsDefaultClient
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
-    # @param token [String]
+    # @param client_id [String]
+    # @param client_secret [String]
     # @return [SeedOauthClientCredentialsDefaultClient::Client]
-    def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+    def initialize(client_id:, client_secret:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
       @request_client = SeedOauthClientCredentialsDefaultClient::RequestClient.new(
         base_url: base_url,
         max_retries: max_retries,
@@ -32,9 +33,10 @@ module SeedOauthClientCredentialsDefaultClient
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
-    # @param token [String]
+    # @param client_id [String]
+    # @param client_secret [String]
     # @return [SeedOauthClientCredentialsDefaultClient::AsyncClient]
-    def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+    def initialize(client_id:, client_secret:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
       @async_request_client = SeedOauthClientCredentialsDefaultClient::AsyncRequestClient.new(
         base_url: base_url,
         max_retries: max_retries,

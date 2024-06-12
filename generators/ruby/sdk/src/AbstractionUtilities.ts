@@ -17,7 +17,6 @@ import {
     HashReference,
     Import,
     LocationGenerator,
-    LongClassReference,
     Module_,
     Parameter,
     Property,
@@ -36,6 +35,7 @@ import {
     ObjectProperty,
     Package,
     PathParameter,
+    PlatformHeaders,
     SdkConfig,
     SingleBaseUrlEnvironments,
     Subpackage,
@@ -185,7 +185,11 @@ export function generateRootPackage(
     flattenedProperties: Map<TypeId, ObjectProperty[]>,
     fileUploadUtility: FileUploadUtility,
     typeExporterLocation: string,
+    headersGenerator: HeadersGenerator,
+    retriesProperty: Property,
+    timeoutProperty: Property,
     environmentClass?: ClassReference,
+    defaultEnvironment?: string,
     rootService?: HttpService
 ): GeneratedRubyFile {
     const classReference = new ClassReference({
@@ -255,7 +259,14 @@ export function generateRootPackage(
                     });
                 })
             ],
-            parameters: requestClient.initializer?.parameters,
+            parameters: getClientParameters(
+                "rootClient",
+                environmentClass,
+                headersGenerator,
+                retriesProperty,
+                timeoutProperty,
+                defaultEnvironment
+            ),
             returnValue: classReference
         })
     });
@@ -328,7 +339,14 @@ export function generateRootPackage(
                     });
                 })
             ],
-            parameters: asyncRequestClient.initializer?.parameters,
+            parameters: getClientParameters(
+                "rootClient",
+                environmentClass,
+                headersGenerator,
+                retriesProperty,
+                timeoutProperty,
+                defaultEnvironment
+            ),
             returnValue: asyncClassReference
         })
     });
@@ -598,65 +616,15 @@ export function generateEnvironmentConstants(environmentsConfig: EnvironmentsCon
 
 function generateRequestClientInitializer(
     isAsync: boolean,
-    sdkConfig: SdkConfig,
     classReference: ClassReference,
-    gemName: string,
-    sdkVersion: string | undefined,
     headersGenerator: HeadersGenerator,
     environmentCr: ClassReference | undefined,
     isMultiBaseUrlEnvironments: boolean,
+    retriesProperty: Property,
+    timeoutProperty: Property,
     defaultEnvironment?: string,
     hasFileBasedDependencies = false
 ): Function_ {
-    const allHeaders = new Map([
-        // SDK Default Headers
-        [`"${sdkConfig.platformHeaders.language}"`, "Ruby"],
-        [`"${sdkConfig.platformHeaders.sdkName}"`, gemName]
-    ]);
-    if (sdkVersion !== undefined) {
-        allHeaders.set(`"${sdkConfig.platformHeaders.sdkVersion}"`, sdkVersion);
-    }
-
-    // If "all" then require the param and always put it in, if optional
-    // just add the header if it's there headers["name"] = value if value
-    let authHeaders = new Map();
-    const authHeaderSetters: AstNode[] = [];
-    let headersToSet = headersGenerator.getAdditionalHeadersAsProperties();
-    if (headersGenerator.isAuthRequired) {
-        authHeaders = new Map(headersGenerator.getAuthHeaders());
-    } else {
-        headersToSet = [...headersGenerator.getAuthHeadersAsProperties(), ...headersToSet];
-    }
-    // Make an if statement for each auth scheme that adds the header if present
-    headersToSet.forEach((prop) =>
-        authHeaderSetters.push(
-            new ConditionalStatement({
-                if_: {
-                    rightSide: new FunctionInvocation({
-                        onObject: prop.name,
-                        baseFunction: new Function_({ name: "nil?", functionBody: [] })
-                    }),
-                    operation: "!",
-                    expressions: [
-                        new Expression({
-                            leftSide: `@headers["${prop.wireValue ?? prop.name}"]`,
-                            rightSide: prop.name,
-                            isAssignment: true
-                        })
-                    ]
-                }
-            })
-        )
-    );
-
-    const retriesProperty = new Property({
-        name: "max_retries",
-        type: LongClassReference,
-        isOptional: true,
-        documentation: "The number of times to retry a failed request, defaults to 2."
-    });
-    const timeoutProperty = new Property({ name: "timeout_in_seconds", type: LongClassReference, isOptional: true });
-
     const retryOptions = new HashInstance({
         contents: new Map([["max", retriesProperty.toVariable(VariableType.LOCAL)]])
     });
@@ -701,7 +669,6 @@ function generateRequestClientInitializer(
         );
     }
 
-    const initialRequestOverrides: Property[] = [retriesProperty, timeoutProperty];
     faradayConfiguration.push(
         new ConditionalStatement({
             if_: {
@@ -749,19 +716,9 @@ function generateRequestClientInitializer(
         })
     );
 
-    const functionParams = [];
-    const functionBody = [];
+    let functionBody: AstNode[] = [];
 
     if (environmentCr !== undefined) {
-        functionParams.push(
-            new Parameter({
-                name: "environment",
-                type: environmentCr,
-                defaultValue: defaultEnvironment,
-                isOptional: true,
-                example: defaultEnvironment
-            })
-        );
         functionBody.push(
             new Expression({
                 leftSide: "@default_environment",
@@ -787,39 +744,70 @@ function generateRequestClientInitializer(
                 isAssignment: true
             })
         );
+
+        // TODO: gate oauth
+        // if (this.shouldGenerateOauth) {
+        functionBody.push(
+            new Expression({
+                leftSide: "@token",
+                rightSide: "token",
+                isAssignment: true
+            })
+        );
+        // }
     }
 
-    functionParams.push(
-        new Parameter({
-            name: "base_url",
-            type: StringClassReference,
-            isOptional: true,
-            example: '"https://api.example.com"'
-        })
+    const headerSetters: AstNode[] = [];
+    let headersToSet = headersGenerator.getAdditionalHeadersAsProperties();
+    const hasHeaders = headersToSet.length > 0;
+
+    // Make an if statement for each auth scheme that adds the header if present
+    headersToSet.forEach((prop) =>
+        headerSetters.push(
+            new ConditionalStatement({
+                if_: {
+                    rightSide: new FunctionInvocation({
+                        onObject: prop.name,
+                        baseFunction: new Function_({ name: "nil?", functionBody: [] })
+                    }),
+                    operation: "!",
+                    expressions: [
+                        new Expression({
+                            leftSide: `@headers["${prop.wireValue ?? prop.name}"]`,
+                            rightSide: prop.name,
+                            isAssignment: true
+                        })
+                    ]
+                }
+            })
+        )
     );
+
+    if (hasHeaders) {
+        functionBody = functionBody.concat([
+            new Expression({
+                leftSide: "@headers",
+                rightSide: new HashInstance({}),
+                isAssignment: true
+            }),
+            ...headerSetters
+        ]);
+    }
 
     return new Function_({
         name: "initialize",
         invocationName: "new",
-        parameters: [
-            ...functionParams,
-            // Select sample of the request overrides object properties
-            ...initialRequestOverrides.map((prop) => prop.toParameter({})),
-            // Auth headers
-            ...headersGenerator.getAuthHeadersAsParameters(),
-            // Global headers
-            ...headersGenerator.getAdditionalHeadersAsParameters()
-        ],
+        parameters: getClientParameters(
+            "requestClient",
+            environmentCr,
+            headersGenerator,
+            retriesProperty,
+            timeoutProperty,
+            defaultEnvironment
+        ),
         returnValue: classReference,
         functionBody: [
             ...functionBody,
-            // Set the header
-            new Expression({
-                leftSide: "@headers",
-                rightSide: new HashInstance({ contents: new Map([...allHeaders.entries(), ...authHeaders.entries()]) }),
-                isAssignment: true
-            }),
-            ...authHeaderSetters,
             // Set the Faraday connection
             new Expression({
                 leftSide: "@conn",
@@ -829,13 +817,15 @@ function generateRequestClientInitializer(
                         import_: new Import({ from: "faraday", isExternal: true })
                     }),
                     baseFunction: new Function_({ name: "new", functionBody: [] }),
-                    arguments_: [
-                        new Argument({
-                            isNamed: true,
-                            name: "headers",
-                            value: "@headers"
-                        })
-                    ],
+                    arguments_: hasHeaders
+                        ? [
+                              new Argument({
+                                  isNamed: true,
+                                  name: "headers",
+                                  value: "@headers"
+                              })
+                          ]
+                        : undefined,
                     block: { arguments: "faraday", expressions: faradayConfiguration }
                 }),
                 isAssignment: true
@@ -844,11 +834,56 @@ function generateRequestClientInitializer(
     });
 }
 
+function getClientParameters(
+    desiredClient: "rootClient" | "requestClient",
+    environmentCr: ClassReference | undefined,
+    headersGenerator: HeadersGenerator,
+    retriesProperty: Property,
+    timeoutProperty: Property,
+    defaultEnvironment?: string
+): Parameter[] {
+    const functionParams = [
+        new Parameter({
+            name: "base_url",
+            type: StringClassReference,
+            isOptional: true,
+            example: '"https://api.example.com"'
+        })
+    ];
+    if (environmentCr !== undefined) {
+        functionParams.push(
+            new Parameter({
+                name: "environment",
+                type: environmentCr,
+                defaultValue: defaultEnvironment,
+                isOptional: true,
+                example: defaultEnvironment
+            })
+        );
+    }
+
+    const initialRequestOverrides: Property[] = [retriesProperty, timeoutProperty];
+
+    return [
+        ...functionParams,
+        // Select sample of the request overrides object properties
+        ...initialRequestOverrides.map((prop) => prop.toParameter({})),
+        // Auth headers
+        ...headersGenerator.getAuthHeadersAsParameters(desiredClient === "rootClient"),
+        // Global headers
+        ...headersGenerator.getAdditionalHeadersAsParameters()
+    ];
+}
+
 function requestClientFunctions(
     requestOptions: RequestOptions,
     baseUrlProperty: Property,
     environmentProperty: Property | undefined,
-    isMultiBaseUrlEnvironments: boolean
+    isMultiBaseUrlEnvironments: boolean,
+    platformHeaders: PlatformHeaders,
+    headersGenerator: HeadersGenerator,
+    gemName: string,
+    sdkVersion: string | undefined
 ): Function_[] {
     const requestOptionsParameter = new Parameter({
         name: "request_options",
@@ -862,6 +897,15 @@ function requestClientFunctions(
     const parameters = [requestOptionsParameter];
     if (environmentProperty != null && isMultiBaseUrlEnvironments) {
         parameters.push(environmentOverrideParameter);
+    }
+
+    const allHeaders = new Map([
+        // SDK Default Headers
+        [`"${platformHeaders.language}"`, "Ruby"],
+        [`"${platformHeaders.sdkName}"`, gemName]
+    ]);
+    if (sdkVersion !== undefined) {
+        allHeaders.set(`"${platformHeaders.sdkVersion}"`, sdkVersion);
     }
 
     return [
@@ -889,6 +933,42 @@ function requestClientFunctions(
             ],
             parameters,
             returnValue: StringClassReference
+        }),
+        new Function_({
+            name: "get_headers",
+            functionBody: [
+                new Expression({
+                    leftSide: "headers",
+                    rightSide: new HashInstance({
+                        contents: new Map([...allHeaders.entries()])
+                    }),
+                    isAssignment: true
+                }),
+                ...headersGenerator.getAuthHeadersAsProperties().map(
+                    (prop) =>
+                        new ConditionalStatement({
+                            if_: {
+                                rightSide: new FunctionInvocation({
+                                    onObject: prop.name,
+                                    baseFunction: new Function_({ name: "nil?", functionBody: [] })
+                                }),
+                                operation: "!",
+                                expressions: [
+                                    new Expression({
+                                        leftSide: `headers["${prop.wireValue ?? prop.name}"]`,
+                                        rightSide: prop.name,
+                                        isAssignment: true
+                                    })
+                                ]
+                            }
+                        })
+                ),
+                new Expression({
+                    leftSide: "headers",
+                    isAssignment: false
+                })
+            ],
+            returnValue: new HashReference({ keyType: StringClassReference, valueType: StringClassReference })
         })
     ];
 }
@@ -903,7 +983,9 @@ export function generateRequestClients(
     isMultiBaseUrlEnvironments: boolean,
     defaultEnvironment: string | undefined,
     hasFileBasedDependencies: boolean | undefined,
-    requestOptions: RequestOptions
+    requestOptions: RequestOptions,
+    retriesProperty: Property,
+    timeoutProperty: Property
 ): [Class_, Class_] {
     const hasEnvironments = environmentCr != null;
     const faradayReference = new ClassReference({
@@ -920,12 +1002,9 @@ export function generateRequestClients(
     });
     // Client properties
     const clientProperties = [
-        new Property({
-            name: "headers",
-            type: new HashReference({ keyType: StringClassReference, valueType: StringClassReference })
-        }),
         new Property({ name: "conn", type: faradayReference }),
-        baseUrlProperty
+        baseUrlProperty,
+        ...headersGenerator.getAuthHeadersAsProperties()
     ];
 
     if (hasEnvironments) {
@@ -944,13 +1023,12 @@ export function generateRequestClients(
         includeInitializer: false,
         initializerOverride: generateRequestClientInitializer(
             false,
-            sdkConfig,
             clientClassReference,
-            gemName,
-            sdkVersion,
             headersGenerator,
             environmentCr,
             isMultiBaseUrlEnvironments,
+            retriesProperty,
+            timeoutProperty,
             defaultEnvironment,
             hasFileBasedDependencies
         ),
@@ -958,7 +1036,11 @@ export function generateRequestClients(
             requestOptions,
             baseUrlProperty,
             environmentCr != null ? environmentProperty : undefined,
-            isMultiBaseUrlEnvironments
+            isMultiBaseUrlEnvironments,
+            sdkConfig.platformHeaders,
+            headersGenerator,
+            gemName,
+            sdkVersion
         )
     });
 
@@ -974,13 +1056,12 @@ export function generateRequestClients(
         includeInitializer: false,
         initializerOverride: generateRequestClientInitializer(
             true,
-            sdkConfig,
             asyncClientClassReference,
-            gemName,
-            sdkVersion,
             headersGenerator,
             environmentCr,
             isMultiBaseUrlEnvironments,
+            retriesProperty,
+            timeoutProperty,
             defaultEnvironment,
             hasFileBasedDependencies
         ),
@@ -988,7 +1069,11 @@ export function generateRequestClients(
             requestOptions,
             baseUrlProperty,
             environmentCr != null ? environmentProperty : undefined,
-            isMultiBaseUrlEnvironments
+            isMultiBaseUrlEnvironments,
+            sdkConfig.platformHeaders,
+            headersGenerator,
+            gemName,
+            sdkVersion
         )
     });
 

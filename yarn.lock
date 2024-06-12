@@ -3758,7 +3758,7 @@ __metadata:
     "@fern-api/ruby-codegen": "workspace:*"
     "@fern-api/ruby-generator-cli": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.845
-    "@fern-fern/ir-sdk": ^32
+    "@fern-fern/ir-sdk": ^39
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
@@ -3788,7 +3788,7 @@ __metadata:
     "@fern-api/ruby-codegen": "workspace:*"
     "@fern-api/ruby-generator-cli": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.845
-    "@fern-fern/ir-sdk": ^32
+    "@fern-fern/ir-sdk": ^39
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
@@ -4403,7 +4403,7 @@ __metadata:
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.845
-    "@fern-fern/ir-sdk": ^32
+    "@fern-fern/ir-sdk": ^39
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
@@ -4426,7 +4426,7 @@ __metadata:
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
-    "@fern-fern/ir-sdk": ^32
+    "@fern-fern/ir-sdk": ^39
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -4789,6 +4789,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern-fern/ir-sdk@npm:^39":
+  version: 39.0.0
+  resolution: "@fern-fern/ir-sdk@npm:39.0.0"
+  checksum: 72cf9e729cd47d30092c6c04b847a973c289dbb2b1a7a8f04c874d59afe5d71fb24e99c5440f8663ca23b85d602c601b67c0fe5c0cc5bd6785047e880600c598
+  languageName: node
+  linkType: hard
+
 "@fern-fern/ir-v1-model@npm:0.0.1":
   version: 0.0.1
   resolution: "@fern-fern/ir-v1-model@npm:0.0.1"
@@ -5013,7 +5020,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-v39-sdk@npm:0.0.1":
+"@fern-fern/ir-v39-sdk@npm:0.0.1, @fern-fern/ir-v39-sdk@npm:^0.0.1":
   version: 0.0.1
   resolution: "@fern-fern/ir-v39-sdk@npm:0.0.1"
   checksum: 88f6d5de5e27fa8e22523198c775b4229120d13a04f165b15b0a174b802120bf18a2b43c21aa015c792552406f224cb0d8c2fe5964ee8d0439b62f92642f689c
@@ -12757,6 +12764,7 @@ env-cmd@toddbluhm/env-cmd:
     "@blueprintjs/stylelint-plugin": ^4.1.3
     "@fern-api/logging-execa": "workspace:^"
     "@fern-fern/generator-exec-sdk": ^0.0.816
+    "@fern-fern/ir-v39-sdk": ^0.0.1
     "@types/is-ci": ^3.0.2
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.6
