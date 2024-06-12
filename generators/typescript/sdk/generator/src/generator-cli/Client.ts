@@ -8,12 +8,13 @@ import { ExportedFilePath, NpmPackage } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
+import path from "path";
 import tmp from "tmp-promise";
 import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
 
 const README_FILENAME = "README.md";
 const GENERATOR_CLI_NPM_PACKAGE = "@fern-api/generator-cli";
-const FEATURES_CONFIG_PATH = "/assets/features.yml";
+const DOCKER_FEATURES_CONFIG_PATH = "/assets/features.yml";
 
 export class GeneratorCli {
     private logger: Logger;
@@ -122,7 +123,7 @@ export class GeneratorCli {
 
     private async readFeatureConfig(): Promise<FernGeneratorCli.FeatureConfig> {
         this.logger.debug("Reading feature configuration ...");
-        const rawContents = await readFile(FEATURES_CONFIG_PATH, "utf8");
+        const rawContents = await readFile(getFeaturesConfigPath(), "utf8");
         if (rawContents.length === 0) {
             throw new Error("Internal error; failed to read feature configuration");
         }
@@ -149,7 +150,7 @@ export class GeneratorCli {
             logger: this.logger
         });
         this.logger.debug(`Installing ${GENERATOR_CLI_NPM_PACKAGE} ...`);
-        await npm(["install", "-g", GENERATOR_CLI_NPM_PACKAGE]);
+        await npm(["install", "-f", "-g", GENERATOR_CLI_NPM_PACKAGE]);
 
         const generatorCli = createLoggingExecutable("generator-cli", {
             cwd: process.cwd(),
@@ -172,4 +173,11 @@ export class GeneratorCli {
         }
         return FernGeneratorCli.LanguageInfo.typescript({});
     }
+}
+
+function getFeaturesConfigPath(): string {
+    if (process.env.NODE_ENV === "test") {
+        return path.join(__dirname, "../../features.yml");
+    }
+    return DOCKER_FEATURES_CONFIG_PATH;
 }
