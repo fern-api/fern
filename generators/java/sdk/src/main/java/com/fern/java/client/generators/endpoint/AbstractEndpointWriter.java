@@ -24,6 +24,7 @@ import com.fern.irV42.model.commons.TypeId;
 import com.fern.irV42.model.environment.EnvironmentBaseUrlId;
 import com.fern.irV42.model.errors.ErrorDeclaration;
 import com.fern.irV42.model.http.BytesRequest;
+import com.fern.irV42.model.http.CursorPagination;
 import com.fern.irV42.model.http.FileDownloadResponse;
 import com.fern.irV42.model.http.FileProperty;
 import com.fern.irV42.model.http.FileUploadRequest;
@@ -39,6 +40,8 @@ import com.fern.irV42.model.http.JsonResponse;
 import com.fern.irV42.model.http.JsonResponseBody;
 import com.fern.irV42.model.http.JsonResponseBodyWithProperty;
 import com.fern.irV42.model.http.JsonStreamChunk;
+import com.fern.irV42.model.http.OffsetPagination;
+import com.fern.irV42.model.http.Pagination.Visitor;
 import com.fern.irV42.model.http.PathParameter;
 import com.fern.irV42.model.http.SdkRequest;
 import com.fern.irV42.model.http.SdkRequestBodyType;
@@ -52,6 +55,7 @@ import com.fern.irV42.model.types.AliasTypeDeclaration;
 import com.fern.irV42.model.types.ContainerType;
 import com.fern.irV42.model.types.DeclaredTypeName;
 import com.fern.irV42.model.types.EnumTypeDeclaration;
+import com.fern.irV42.model.types.ObjectProperty;
 import com.fern.irV42.model.types.ObjectTypeDeclaration;
 import com.fern.irV42.model.types.PrimitiveType;
 import com.fern.irV42.model.types.Type;
@@ -71,6 +75,7 @@ import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.utils.JavaDocUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
+import com.squareup.javapoet.CodeBlock.Builder;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
@@ -583,7 +588,7 @@ public abstract class AbstractEndpointWriter {
                     throw new RuntimeException("Encountered unknown json response body type: " + unknownType);
                 }
             });
-
+            boolean pagination = httpEndpoint.getPagination().isPresent();
             TypeName responseType =
                     clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, body.getResponseBodyType());
             boolean isProperty = body.getResponseProperty().isPresent();
@@ -599,7 +604,7 @@ public abstract class AbstractEndpointWriter {
                     })
                     .orElse(responseType);
             endpointMethodBuilder.returns(returnType);
-            if (isProperty) {
+            if (isProperty || pagination) {
                 httpResponseBuilder.add("$T $L = ", responseType, getParsedResponseVariableName());
             } else {
                 httpResponseBuilder.add("return ");
@@ -633,6 +638,38 @@ public abstract class AbstractEndpointWriter {
                             getParsedResponseVariableName(),
                             responsePropertyName.getPascalCase().getUnsafeName());
                 }
+            } else if (pagination) {
+                httpEndpoint.getPagination().get().visit(new Visitor<Void>() {
+                    @Override
+                    public Void visitCursor(CursorPagination cursor) {
+                        ArrayList<Name> propertyPath = cursor.getNext()
+                                .getPropertyPath()
+                                .map(ArrayList::new)
+                                .orElse(new ArrayList<>());
+                        propertyPath.add(
+                                cursor.getNext().getProperty().getName().getName());
+                        System.out.println("Before");
+                        GetSnippetOutput getSnippetOutput = body.getResponseBodyType()
+                                .visit(new NestedPropertySnippetGenerator(
+                                        body.getResponseBodyType(), propertyPath, false, false, Optional.empty()));
+                        System.out.println("After");
+                        Builder codeBlockBuilder = CodeBlock.builder();
+                        getSnippetOutput.code.forEach(codeBlockBuilder::add);
+                        CodeBlock block = codeBlockBuilder.build();
+                        httpResponseBuilder.addStatement(block);
+                        return null;
+                    }
+
+                    @Override
+                    public Void visitOffset(OffsetPagination offset) {
+                        return null;
+                    }
+
+                    @Override
+                    public Void _visitUnknown(Object unknownType) {
+                        throw new RuntimeException("Unknown pagination type " + unknownType);
+                    }
+                });
             }
             return null;
         }
@@ -711,6 +748,186 @@ public abstract class AbstractEndpointWriter {
                                 .isContainer();
             }
             return false;
+        }
+    }
+
+    private class NestedPropertySnippetGenerator
+            implements com.fern.irV42.model.types.TypeReference.Visitor<GetSnippetOutput> {
+
+        /**
+         * The current type from which we need get a property value.
+         */
+        private final com.fern.irV42.model.types.TypeReference typeReference;
+
+        private final List<Name> propertyPath;
+        private final Boolean previousWasOptional;
+        private final Boolean currentOptional;
+        private final Optional<Name> writeName;
+
+        private NestedPropertySnippetGenerator(
+                com.fern.irV42.model.types.TypeReference typeReference,
+                List<Name> propertyPath,
+                Boolean previousWasOptional,
+                Boolean currentOptional,
+                Optional<Name> writeName) {
+            this.typeReference = typeReference;
+            this.propertyPath = propertyPath;
+            this.previousWasOptional = previousWasOptional;
+            this.currentOptional = currentOptional;
+            this.writeName = writeName;
+            System.out.println("\nproperty path: "
+                    + propertyPath.stream().map(Name::getOriginalName).collect(Collectors.toList()));
+            System.out.println("previous optional: " + previousWasOptional);
+            System.out.println("current optional: " + currentOptional);
+        }
+
+        private boolean isFinalProperty() {
+            return propertyPath.size() == 0;
+        }
+
+        private String getCurrentPropertyPascal() {
+            return getCurrentProperty().getPascalCase().getUnsafeName();
+        }
+
+        private Name getCurrentProperty() {
+            return propertyPath.get(0);
+        }
+
+        private CodeBlock getterCodeBlock() {
+            if (previousWasOptional) {
+                String mappingOperation = currentOptional ? "flatMap" : "map";
+                return CodeBlock.of(
+                        ".$L($T::get$L)",
+                        mappingOperation,
+                        clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, typeReference),
+                        getCurrentPropertyPascal());
+            }
+            return CodeBlock.of(".get$L()", getCurrentPropertyPascal());
+        }
+
+        @Override
+        public GetSnippetOutput visitContainer(ContainerType container) {
+            com.fern.irV42.model.types.TypeReference ref = container
+                    .getOptional()
+                    .orElseThrow(
+                            () -> new RuntimeException("Unexpected non-optional container type in snippet generation"));
+            System.out.println("Calling nested from visitContainer with propertyPath "
+                    + propertyPath.stream().map(Name::getOriginalName).collect(Collectors.toList()));
+            return ref.visit(
+                    new NestedPropertySnippetGenerator(ref, propertyPath, previousWasOptional, true, writeName));
+        }
+
+        @Override
+        public GetSnippetOutput visitNamed(DeclaredTypeName named) {
+            TypeDeclaration typeDeclaration =
+                    clientGeneratorContext.getTypeDeclarations().get(named.getTypeId());
+            return typeDeclaration.getShape().visit(new Type.Visitor<>() {
+                @Override
+                public GetSnippetOutput visitAlias(AliasTypeDeclaration alias) {
+                    System.out.println("Calling nested from visitAlias with propertyPath "
+                            + propertyPath.stream().map(Name::getOriginalName).collect(Collectors.toList()));
+                    return alias.getAliasOf()
+                            .visit(new NestedPropertySnippetGenerator(
+                                    typeReference, propertyPath, previousWasOptional, currentOptional, writeName));
+                }
+
+                @Override
+                public GetSnippetOutput visitEnum(EnumTypeDeclaration enum_) {
+                    // todo: figure out how to handle this
+                    return null;
+                }
+
+                @Override
+                public GetSnippetOutput visitObject(ObjectTypeDeclaration object) {
+                    System.out.println(object.getProperties().stream()
+                            .map(property -> property.getName().getWireValue())
+                            .collect(Collectors.toList()));
+                    System.out.println(getCurrentProperty().getOriginalName());
+                    Optional<ObjectProperty> maybeMatchingProperty = object.getProperties().stream()
+                            .filter(property -> property.getName()
+                                    .getName()
+                                    .getCamelCase()
+                                    .getUnsafeName()
+                                    .equals(getCurrentProperty().getCamelCase().getUnsafeName()))
+                            .findFirst();
+                    if (maybeMatchingProperty.isEmpty()) {
+                        for (DeclaredTypeName declaredTypeName : object.getExtends()) {
+                            try {
+                                return visitNamed(declaredTypeName);
+                            } catch (Exception e) {
+                            }
+                        }
+                        throw new RuntimeException("No property matches found for property "
+                                + getCurrentProperty().getOriginalName());
+                    }
+                    ObjectProperty matchingProperty = maybeMatchingProperty.get();
+                    if (isFinalProperty()) {
+                        System.out.println("Final property!");
+                        // todo: handle if this is optional
+                        return new GetSnippetOutput(matchingProperty.getValueType(), List.of(getterCodeBlock()));
+                    }
+                    List<Name> newPropertyPath = propertyPath.subList(1, propertyPath.size());
+                    System.out.println("Calling nested from visitObject with propertyPath "
+                            + newPropertyPath.stream()
+                                    .map(Name::getOriginalName)
+                                    .collect(Collectors.toList()));
+                    GetSnippetOutput nextSnippet = matchingProperty
+                            .getValueType()
+                            .visit(new NestedPropertySnippetGenerator(
+                                    matchingProperty.getValueType(),
+                                    newPropertyPath,
+                                    currentOptional,
+                                    false,
+                                    writeName));
+                    ArrayList<CodeBlock> newCodeBlocks = new ArrayList<>(nextSnippet.code);
+                    newCodeBlocks.add(0, getterCodeBlock());
+                    return new GetSnippetOutput(nextSnippet.typeReference, newCodeBlocks);
+                }
+
+                @Override
+                public GetSnippetOutput visitUnion(UnionTypeDeclaration union) {
+                    throw new RuntimeException("Cannot create a snippet with a union");
+                }
+
+                @Override
+                public GetSnippetOutput visitUndiscriminatedUnion(
+                        UndiscriminatedUnionTypeDeclaration undiscriminatedUnion) {
+                    throw new RuntimeException("Cannot create a snippet with an undiscriminated union");
+                }
+
+                @Override
+                public GetSnippetOutput _visitUnknown(Object unknownType) {
+                    throw new RuntimeException("Unknown shape " + unknownType);
+                }
+            });
+        }
+
+        @Override
+        public GetSnippetOutput visitPrimitive(PrimitiveType primitive) {
+            if (!isFinalProperty()) {
+                throw new RuntimeException("Unexpected primitive with property path remaining");
+            }
+            return new GetSnippetOutput(typeReference, List.of(getterCodeBlock()));
+        }
+
+        @Override
+        public GetSnippetOutput visitUnknown() {
+            throw new RuntimeException("Can't generate snippet for unknown type");
+        }
+
+        @Override
+        public GetSnippetOutput _visitUnknown(Object unknownType) {
+            throw new RuntimeException("Unknown TypeReference type " + unknownType);
+        }
+    }
+
+    private class GetSnippetOutput {
+        private final com.fern.irV42.model.types.TypeReference typeReference;
+        private final List<CodeBlock> code;
+
+        private GetSnippetOutput(com.fern.irV42.model.types.TypeReference typeReference, List<CodeBlock> code) {
+            this.typeReference = typeReference;
+            this.code = code;
         }
     }
 
