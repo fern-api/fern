@@ -6453,7 +6453,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:b567308d600cc49ad0dcf5ee9f761adc5572b914144f87bbc3284c71fbc29382723507bb61a8e531e29275684fd9c09310bc363ee648e9b47f4ea2c53497d2c8#npm:3.0.0-rc.14"],\
             ["ansi-escapes", "npm:5.0.0"],\
             ["axios", "npm:0.28.0"],\
-            ["boxen", "npm:7.0.0"],\
+            ["boxen", "npm:7.1.1"],\
             ["chalk", "npm:5.0.1"],\
             ["depcheck", "npm:1.4.6"],\
             ["env-cmd", "https://github.com/toddbluhm/env-cmd.git#commit=8f35b71651f6a78710308ff38ab30896ea72ee8b"],\
@@ -7187,7 +7187,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.7.18"],\
             ["@types/qs", "npm:6.9.15"],\
             ["axios", "npm:0.28.0"],\
-            ["boxen", "npm:7.0.0"],\
+            ["boxen", "npm:7.1.1"],\
             ["chalk", "npm:5.0.1"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -13153,6 +13153,21 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["wrap-ansi", "npm:8.0.1"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:7.1.1", {\
+          "packageLocation": "./.yarn/cache/boxen-npm-7.1.1-e79a50b11c-ad8833d5f2.zip/node_modules/boxen/",\
+          "packageDependencies": [\
+            ["boxen", "npm:7.1.1"],\
+            ["ansi-align", "npm:3.0.1"],\
+            ["camelcase", "npm:7.0.1"],\
+            ["chalk", "npm:5.3.0"],\
+            ["cli-boxes", "npm:3.0.0"],\
+            ["string-width", "npm:5.1.2"],\
+            ["type-fest", "npm:2.18.0"],\
+            ["widest-line", "npm:4.0.1"],\
+            ["wrap-ansi", "npm:8.1.0"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["brace-expansion", [\
@@ -13562,6 +13577,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/camelcase-npm-7.0.0-5041fb20b5-162d59607b.zip/node_modules/camelcase/",\
           "packageDependencies": [\
             ["camelcase", "npm:7.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:7.0.1", {\
+          "packageLocation": "./.yarn/cache/camelcase-npm-7.0.1-d41d97bb0d-86ab8f3ebf.zip/node_modules/camelcase/",\
+          "packageDependencies": [\
+            ["camelcase", "npm:7.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\
