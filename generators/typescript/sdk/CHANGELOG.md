@@ -5,11 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.23.0-rc1] - 2024-06-11
+
+- Feature: Introduce a custom configuration for arbitrary package json field. Now you can specify 
+  arbitrary key, value pairs that you want to be merged in the generated `package.json`. 
+
+  ```yml
+  config: 
+    packageJson: 
+      dependencies: 
+        my-dep: "2.0.0"
+      bin: "./index.js"
+  ```
+
 ## [0.23.0-rc0] - 2024-06-07
 
 - Fix: Union snippet templates are fixed in 2 ways:
   1. The templates do not have a leading single quote (a typo from before)
-  2. The templates now inline union properties.
+  2. The templates now inline union properties (in certain cases)
 
 ## [0.22.0] - 2024-06-07
 
