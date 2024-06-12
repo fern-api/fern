@@ -1,8 +1,11 @@
 import { isArray, mergeWith } from "lodash-es";
 import { IPackageJson } from "package-json-type";
 
-export function mergeExtraConfigs(packageJson: IPackageJson, extraConfigs: Record<string, unknown> | undefined): IPackageJson{
-    function customizer(objValue: any, srcValue: any) {
+export function mergeExtraConfigs(
+    packageJson: IPackageJson,
+    extraConfigs: Record<string, unknown> | undefined
+): IPackageJson {
+    function customizer(objValue: unknown, srcValue: unknown) {
         if (isArray(objValue) && isArray(srcValue)) {
             return [...new Set(srcValue.concat(objValue))];
         } else if (typeof objValue === "object" && typeof srcValue === "object") {
@@ -14,6 +17,5 @@ export function mergeExtraConfigs(packageJson: IPackageJson, extraConfigs: Recor
             return srcValue;
         }
     }
-    
     return mergeWith(JSON.parse(JSON.stringify(packageJson)), extraConfigs ?? {}, customizer);
 }

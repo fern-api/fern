@@ -28,5 +28,5 @@ export interface SdkCustomConfig {
     retainOriginalCasing: boolean | undefined;
     allowExtraFields: boolean | undefined;
     inlineFileProperties: boolean | undefined;
-    packageJson: Record<string,unknown> | undefined;
+    packageJson: Record<string, unknown> | undefined;
 }
