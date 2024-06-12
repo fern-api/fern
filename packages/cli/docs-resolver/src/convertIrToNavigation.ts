@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
-import { DocsV1Write } from "@fern-api/fdr-sdk";
+import { DocsV1Write } from "@fern-api/fdr-sdk/dist";
 import { AbsoluteFilePath, dirname, relative } from "@fern-api/fs-utils";
 import { FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
 

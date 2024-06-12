@@ -9,7 +9,7 @@ import {
     DocsV1Read,
     FdrAPI,
     SDKSnippetHolder
-} from "@fern-api/fdr-sdk";
+} from "@fern-api/fdr-sdk/dist";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";

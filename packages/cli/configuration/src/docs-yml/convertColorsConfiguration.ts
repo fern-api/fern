@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { DocsV1Write } from "@fern-api/fdr-sdk";
+import { DocsV1Write } from "@fern-api/fdr-sdk/dist";
 import { TaskContext } from "@fern-api/task-context";
 import tinycolor from "tinycolor2";
 import { FernDocsConfig as RawDocs } from "./schemas";

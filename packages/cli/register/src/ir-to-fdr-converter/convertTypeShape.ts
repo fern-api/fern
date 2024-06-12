@@ -1,4 +1,4 @@
-import { APIV1Write } from "@fern-api/fdr-sdk";
+import { APIV1Write } from "@fern-api/fdr-sdk/dist";
 import { FernIr as Ir } from "@fern-api/ir-sdk";
 import { convertIrAvailability } from "./convertPackage";
 

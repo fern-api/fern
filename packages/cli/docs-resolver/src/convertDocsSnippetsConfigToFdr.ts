@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
-import { APIV1Write } from "@fern-api/fdr-sdk";
+import { APIV1Write } from "@fern-api/fdr-sdk/dist";
 
 export function convertDocsSnippetsConfigToFdr(
     snippetsConfiguration: docsYml.RawSchemas.SnippetsConfiguration | undefined

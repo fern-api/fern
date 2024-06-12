@@ -27,7 +27,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "0.97.0-bec92c652",
+    "@fern-api/fdr-sdk": "0.97.0-2e949e344",
     "@fern-api/venus-api-sdk": "0.0.38",
     "@fern-fern/fdr-test-sdk": "^0.0.5297",
     "@fern-fern/fiddle-sdk": "^0.0.552"

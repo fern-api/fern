@@ -1,5 +1,5 @@
 import { wrapWithHttps } from "@fern-api/docs-resolver";
-import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
+import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk/dist";
 import { dirname } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";

@@ -3,7 +3,7 @@ import { docsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { MediaType } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
-import { DocsV1Write, DocsV2Write } from "@fern-api/fdr-sdk";
+import { DocsV1Write, DocsV2Write } from "@fern-api/fdr-sdk/dist";
 import { AbsoluteFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";

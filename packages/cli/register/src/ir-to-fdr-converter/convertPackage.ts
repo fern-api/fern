@@ -1,5 +1,5 @@
 import { assertNever, isNonNullish, isPlainObject, MediaType, WithoutQuestionMarks } from "@fern-api/core-utils";
-import { APIV1Write } from "@fern-api/fdr-sdk";
+import { APIV1Write } from "@fern-api/fdr-sdk/dist";
 import { ExampleCodeSample, FernIr as Ir } from "@fern-api/ir-sdk";
 import { noop, startCase } from "lodash-es";
 import { convertTypeReference } from "./convertTypeShape";

@@ -1,6 +1,6 @@
 import { docsYml, WithoutQuestionMarks } from "@fern-api/configuration";
 import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
-import { APIV1Write, DocsV1Write } from "@fern-api/fdr-sdk";
+import { APIV1Write, DocsV1Write } from "@fern-api/fdr-sdk/dist";
 import { AbsoluteFilePath, relative, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
