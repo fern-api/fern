@@ -49,7 +49,7 @@ def test_construct_valid() -> None:
     assert cast_response.map_ == {1: "string"}
     assert cast_response.enum == "red"
     assert cast_response.any == "something here"
-    assert cast_response.additional_field == "this here"  # type: ignore
+    assert cast_response.additional_field == "this here"
 
     shape_expectation = Shape_Square(id="string", length=1.1)
     assert cast_response.union is not None
