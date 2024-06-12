@@ -164,6 +164,13 @@ navigation:
           # - page: GitHub integration
           #   path: ./pages/sdks/features/dummy.mdx
           #   icon: pro
+      - section: Package Managers
+        contents:
+          - page: npm
+            path: ./pages/sdks/integration/npm.mdx
+          - page: PyPi
+            slug: pypi
+            path: ./pages/sdks/integration/pypi.mdx
   - tab: docs
     layout:
       - section: Getting Started
@@ -209,8 +216,6 @@ navigation:
           - page: Generate API reference
             path: ./pages/fern-docs/content/generate-api-ref.mdx
             slug: generate-api-ref
-          - page: Audiences
-            path: ./pages/fern-docs/config/audiences.mdx
           - page: SDK snippets
             path: ./pages/fern-docs/config/sdk-snippets.mdx
           - page: Endpoint errors
@@ -219,6 +224,14 @@ navigation:
             path: ./pages/fern-docs/content/reorder-api-ref.mdx
           - page: Write markdown in API Reference
             path: ./pages/fern-docs/content/api-ref-content.mdx
+
+      - section: Developer Tools
+        contents: 
+          - page: GitLab
+            slug: gitlab
+            path: ./pages/docs/developer-tools/gitlab.mdx
+          - page: Vale
+            path: ./pages/docs/developer-tools/vale.mdx
 
       - section: Components
         slug: components
