@@ -48,8 +48,8 @@ class UncheckedBaseModel(pydantic_v1.BaseModel):
             # you should always use the NAME of the field to for field_values, etc.
             # because that's how the object is constructed from a pydantic perspective
             key = field.alias
-            if (
-                key is None or (key not in values and config.allow_population_by_field_name)
+            if key is None or (
+                key not in values and config.allow_population_by_field_name
             ):  # Added this to allow population by field name
                 key = name
 
