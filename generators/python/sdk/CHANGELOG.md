@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.7] - 2024-06-12
+
+- Fix: The unchecked base model stops special casing defaults and pydantic v2.
+
 ## [2.9.6] - 2024-06-11
 
 - Fix: Offset based pagination is now 1-based, as opposed to 0 based
