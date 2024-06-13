@@ -226,7 +226,8 @@ public abstract class AbstractEndpointWriter {
 
         // Step 5: Get request initializer
         boolean sendContentType = httpEndpoint.getRequestBody().isPresent()
-                || httpEndpoint.getResponse().isPresent();
+                || (httpEndpoint.getResponse().isPresent()
+                        && httpEndpoint.getResponse().get().getBody().isPresent());
         CodeBlock requestInitializer = getInitializeRequestCodeBlock(
                 clientOptionsField,
                 generatedClientOptions,
