@@ -14,7 +14,7 @@ local:
     - chmod +x install-gradle.sh && ./install-gradle.sh
     - cd sdk
     - tar -xvf build/distributions/sdk.tar -C .
-  runCommand: cd sdk/sdk && java -cp sdk.jar:lib/* com.fern.java.client.Cli
+  runCommand: cd sdk/sdk && java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -cp sdk.jar:lib/* com.fern.java.client.Cli
   env: {}
 fixtures:
   exhaustive:

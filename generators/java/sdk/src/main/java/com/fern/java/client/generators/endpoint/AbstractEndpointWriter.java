@@ -642,25 +642,14 @@ public abstract class AbstractEndpointWriter {
                 httpEndpoint.getPagination().get().visit(new Visitor<Void>() {
                     @Override
                     public Void visitCursor(CursorPagination cursor) {
-                        ArrayList<Name> propertyPath = cursor.getNext()
-                                .getPropertyPath()
-                                .map(ArrayList::new)
-                                .orElse(new ArrayList<>());
-                        propertyPath.add(
-                                cursor.getNext().getProperty().getName().getName());
-                        System.out.println("Before");
-                        GetSnippetOutput getSnippetOutput = body.getResponseBodyType()
-                                .visit(new NestedPropertySnippetGenerator(
-                                        body.getResponseBodyType(),
-                                        propertyPath,
-                                        false,
-                                        false,
-                                        Optional.empty(),
-                                        Optional.empty()));
-                        System.out.println("After");
-                        Builder codeBlockBuilder = CodeBlock.builder();
-                        getSnippetOutput.code.forEach(codeBlockBuilder::add);
-                        CodeBlock block = codeBlockBuilder.build();
+                        SnippetAndResultType result = getNestedPropertySnippet(
+                                cursor.getNext().getPropertyPath(),
+                                cursor.getNext().getProperty(),
+                                body.getResponseBodyType());
+                        CodeBlock block = CodeBlock.builder()
+                                .add("$T startingAfter = $L", result.typeName, getParsedResponseVariableName())
+                                .add(result.codeBlock)
+                                .build();
                         httpResponseBuilder.addStatement(block);
                         return null;
                     }
@@ -756,27 +745,29 @@ public abstract class AbstractEndpointWriter {
         }
     }
 
-    //    private CodeBlock getNestedPropertySnippet(
-    //            Optional<List<Name>> propertyPath,
-    //            ObjectProperty objectProperty,
-    //            com.fern.irV42.model.types.TypeReference typeReference) {
-    //        ArrayList<Name> fullPropertyPath = propertyPath.map(ArrayList::new).orElse(new ArrayList<>());
-    //        fullPropertyPath.add(objectProperty.getName().getName());
-    //        System.out.println("---------- Before ---------");
-    //        GetSnippetOutput getSnippetOutput = typeReference.visit(new NestedPropertySnippetGenerator(
-    //                typeReference, fullPropertyPath, false, false, Optional.empty(), Optional.empty()));
-    //        System.out.println("--------- After ---------\n\n\n");
-    //        Builder codeBlockBuilder = CodeBlock.builder();
-    //        getSnippetOutput.code.forEach(codeBlockBuilder::add);
-    //        new SnippetAndResultType(getcodeBlockBuilder.build();
-    //    }
+    private SnippetAndResultType getNestedPropertySnippet(
+            Optional<List<Name>> propertyPath,
+            ObjectProperty objectProperty,
+            com.fern.irV42.model.types.TypeReference typeReference) {
+        ArrayList<Name> fullPropertyPath = propertyPath.map(ArrayList::new).orElse(new ArrayList<>());
+        fullPropertyPath.add(objectProperty.getName().getName());
+        System.out.println("---------- Before ---------");
+        GetSnippetOutput getSnippetOutput = typeReference.visit(new NestedPropertySnippetGenerator(
+                typeReference, fullPropertyPath, false, false, Optional.empty(), Optional.empty()));
+        System.out.println("--------- After ---------\n\n\n");
+        Builder codeBlockBuilder = CodeBlock.builder();
+        getSnippetOutput.code.forEach(codeBlockBuilder::add);
+        return new SnippetAndResultType(
+                clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, getSnippetOutput.typeReference),
+                codeBlockBuilder.build());
+    }
 
     private class SnippetAndResultType {
-        private final com.fern.irV42.model.types.TypeReference typeReference;
+        private final TypeName typeName;
         private final CodeBlock codeBlock;
 
-        private SnippetAndResultType(com.fern.irV42.model.types.TypeReference typeReference, CodeBlock codeBlock) {
-            this.typeReference = typeReference;
+        private SnippetAndResultType(TypeName typeName, CodeBlock codeBlock) {
+            this.typeName = typeName;
             this.codeBlock = codeBlock;
         }
     }
@@ -805,7 +796,7 @@ public abstract class AbstractEndpointWriter {
                 Optional<com.fern.irV42.model.types.TypeReference> previousTypeReference) {
             this.typeReference = typeReference;
             this.propertyPath = propertyPath;
-            this.previousWasOptional = false;
+            this.previousWasOptional = previousWasOptional;
             this.currentOptional = currentOptional;
             this.previousProperty = previousProperty;
             this.previousTypeReference = previousTypeReference;
@@ -814,7 +805,15 @@ public abstract class AbstractEndpointWriter {
             System.out.println("previous optional: " + previousWasOptional);
             System.out.println("current optional: " + currentOptional);
             System.out.println("type reference: "
-                    + clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, typeReference) + "\n");
+                    + clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, typeReference));
+            System.out.println("previous type reference: "
+                    + previousTypeReference
+                            .map(typeReference1 -> clientGeneratorContext
+                                    .getPoetTypeNameMapper()
+                                    .convertToTypeName(true, typeReference1)
+                                    .toString())
+                            .orElse("none")
+                    + "\n");
         }
 
         private void addPreviousIfPresent() {
@@ -843,24 +842,29 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public GetSnippetOutput visitContainer(ContainerType container) {
+            System.out.println("🤙 visitContainer");
             // todo: make sure list handled properly
             com.fern.irV42.model.types.TypeReference ref = container
                     .getOptional()
                     .orElseThrow(
                             () -> new RuntimeException("Unexpected non-optional container type in snippet generation"));
-            System.out.println("Calling nested from visitContainer");
+            System.out.println("previous: " + previousWasOptional);
+
+            boolean newPrevious = previousWasOptional || currentOptional;
+            System.out.println("new previous; " + newPrevious);
             return ref.visit(new NestedPropertySnippetGenerator(
-                    ref, propertyPath, previousWasOptional, true, previousProperty, previousTypeReference));
+                    ref, propertyPath, newPrevious, true, previousProperty, previousTypeReference));
         }
 
         @Override
         public GetSnippetOutput visitNamed(DeclaredTypeName named) {
+            System.out.println("🤙 visitNamed");
             TypeDeclaration typeDeclaration =
                     clientGeneratorContext.getTypeDeclarations().get(named.getTypeId());
             return typeDeclaration.getShape().visit(new Type.Visitor<>() {
                 @Override
                 public GetSnippetOutput visitAlias(AliasTypeDeclaration alias) {
-                    System.out.println("Calling nested from visitAlias");
+                    System.out.println("🤙🤙 visitAlias");
                     return alias.getAliasOf()
                             .visit(new NestedPropertySnippetGenerator(
                                     alias.getAliasOf(),
@@ -879,6 +883,7 @@ public abstract class AbstractEndpointWriter {
 
                 @Override
                 public GetSnippetOutput visitObject(ObjectTypeDeclaration object) {
+                    System.out.println("🤙🤙 visitObject");
                     addPreviousIfPresent();
                     Optional<ObjectProperty> maybeMatchingProperty = object.getProperties().stream()
                             .filter(property -> property.getName()
@@ -899,13 +904,12 @@ public abstract class AbstractEndpointWriter {
                     }
                     ObjectProperty matchingProperty = maybeMatchingProperty.get();
                     List<Name> newPropertyPath = propertyPath.subList(1, propertyPath.size());
-                    System.out.println("Calling nested from visitObject");
                     GetSnippetOutput output = matchingProperty
                             .getValueType()
                             .visit(new NestedPropertySnippetGenerator(
                                     matchingProperty.getValueType(),
                                     newPropertyPath,
-                                    currentOptional,
+                                    currentOptional || previousWasOptional,
                                     false,
                                     Optional.of(getCurrentProperty()),
                                     Optional.of(typeReference)));
@@ -933,6 +937,7 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public GetSnippetOutput visitPrimitive(PrimitiveType primitive) {
+            System.out.println("🤙 visitPrimitive");
             //            if (!propertyPath.isEmpty()) {
             //                throw new RuntimeException("Unexpected primitive with property path remaining");
             //            }

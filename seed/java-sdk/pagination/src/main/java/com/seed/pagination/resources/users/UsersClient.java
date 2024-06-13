@@ -17,11 +17,13 @@ import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
 import com.seed.pagination.resources.users.types.ListUsersExtendedResponse;
 import com.seed.pagination.resources.users.types.ListUsersPaginationResponse;
 import com.seed.pagination.resources.users.types.NextPage;
+import com.seed.pagination.resources.users.types.Page;
 import com.seed.pagination.resources.users.types.UsernameContainer;
 import com.seed.pagination.types.UsernameCursor;
 import java.io.IOException;
 import java.lang.Object;
 import java.lang.String;
+import java.util.UUID;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -75,7 +77,7 @@ public class UsersClient {
         ResponseBody responseBody = response.body();
         if (response.isSuccessful()) {
           ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
-          .getPage().getNext().flatMap(NextPage::getStartingAfter);
+          String startingAfter = parsedResponse.getPage().flatMap(Page::getNext).map(NextPage::getStartingAfter);
         }
         String responseBodyString = responseBody != null ? responseBody.string() : "{}";
         throw new SeedPaginationApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
@@ -162,7 +164,7 @@ public class UsersClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
               ListUsersExtendedResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersExtendedResponse.class);
-              .getNext();
+              UUID startingAfter = parsedResponse.getNext();
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedPaginationApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
@@ -201,7 +203,7 @@ public class UsersClient {
               ResponseBody responseBody = response.body();
               if (response.isSuccessful()) {
                 UsernameCursor parsedResponse = ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UsernameCursor.class);
-                .getCursor().getAfter();
+                String startingAfter = parsedResponse.getCursor().getAfter();
               }
               String responseBodyString = responseBody != null ? responseBody.string() : "{}";
               throw new SeedPaginationApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
