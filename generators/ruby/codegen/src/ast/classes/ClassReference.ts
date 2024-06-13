@@ -154,7 +154,7 @@ export class LiteralClassReference extends ClassReference {
             string: (s) => `"${s}"`,
             boolean: (b) => (b ? "true" : "false"),
             _other: () => {
-                throw new Error("Unexpected literal type: " + lit);
+                throw new Error("Unexpected literal type");
             }
         });
     }

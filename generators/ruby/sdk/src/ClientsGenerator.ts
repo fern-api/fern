@@ -432,7 +432,7 @@ export class ClientsGenerator {
                     artifactRegistry: this.artifactRegistry
                 });
             }
-            const fullRubyDetails = {
+            const oauthConfiguration = {
                 accessTokenFunction: getOauthAccessTokenFunctionMetadata({
                     tokenEndpoint: this.oauthScheme.configuration.tokenEndpoint,
                     artifactRegistry: this.artifactRegistry
@@ -442,7 +442,7 @@ export class ClientsGenerator {
 
             oauthTokenProvider = new OauthTokenProvider({
                 clientName: this.clientName,
-                oauthConfiguration: fullRubyDetails,
+                oauthConfiguration,
                 oauthType: "client_credentials",
                 requestClientReference: syncClientClass.classReference,
                 accessTokenReference: accessTokenClass.classReference
@@ -451,7 +451,7 @@ export class ClientsGenerator {
             clientFiles.push(
                 new GeneratedRubyFile({
                     rootNode: oauthModule,
-                    fullPath: "oauth"
+                    fullPath: "core/oauth"
                 })
             );
         }

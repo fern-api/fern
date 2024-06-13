@@ -18,7 +18,7 @@ module SeedBearerTokenEnvironmentVariableClient
     # @param timeout_in_seconds [Long]
     # @param api_key [String]
     # @return [SeedBearerTokenEnvironmentVariableClient::RequestClient]
-    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: nil)
+    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: ENV["COURIER_API_KEY"])
       @base_url = base_url
       @api_key = api_key
       @conn = Faraday.new do |faraday|
@@ -60,7 +60,7 @@ module SeedBearerTokenEnvironmentVariableClient
     # @param timeout_in_seconds [Long]
     # @param api_key [String]
     # @return [SeedBearerTokenEnvironmentVariableClient::AsyncRequestClient]
-    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: nil)
+    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: ENV["COURIER_API_KEY"])
       @base_url = base_url
       @api_key = api_key
       @conn = Faraday.new do |faraday|

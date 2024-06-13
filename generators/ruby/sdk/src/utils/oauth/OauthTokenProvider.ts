@@ -167,7 +167,7 @@ export class OauthTokenProvider extends Class_ {
     private static isRefreshClientSeperate(oauthConfiguration: OauthTokenProvider.ClientCredentialsInit): boolean {
         return (
             oauthConfiguration.refreshTokenFunction != null &&
-            oauthConfiguration.refreshTokenFunction.tokenFunctionClientClassReference !=
+            oauthConfiguration.refreshTokenFunction.tokenFunctionClientClassReference !==
                 oauthConfiguration.accessTokenFunction.tokenFunctionClientClassReference
         );
     }

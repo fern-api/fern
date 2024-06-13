@@ -19,7 +19,8 @@ module SeedAuthEnvironmentVariablesClient
     # @param api_key [String]
     # @param x_another_header [String]
     # @return [SeedAuthEnvironmentVariablesClient::RequestClient]
-    def initialize(x_another_header:, base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: nil)
+    def initialize(x_another_header:, base_url: nil, max_retries: nil, timeout_in_seconds: nil,
+                   api_key: ENV["FERN_API_KEY"])
       @base_url = base_url
       @api_key = api_key
       @headers = {}
@@ -64,7 +65,8 @@ module SeedAuthEnvironmentVariablesClient
     # @param api_key [String]
     # @param x_another_header [String]
     # @return [SeedAuthEnvironmentVariablesClient::AsyncRequestClient]
-    def initialize(x_another_header:, base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: nil)
+    def initialize(x_another_header:, base_url: nil, max_retries: nil, timeout_in_seconds: nil,
+                   api_key: ENV["FERN_API_KEY"])
       @base_url = base_url
       @api_key = api_key
       @headers = {}

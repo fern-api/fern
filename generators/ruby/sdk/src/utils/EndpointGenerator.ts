@@ -197,7 +197,9 @@ export class EndpointGenerator {
 
                 allProperties.forEach((prop) => {
                     if (prop.type.length === 1 && prop.type[0] instanceof LiteralClassReference) {
-                        this.bodyLiteralsAsProperties.set(prop.wireValue!, prop.type[0] as LiteralClassReference);
+                        if (prop.wireValue != null) {
+                            this.bodyLiteralsAsProperties.set(prop.wireValue, prop.type[0] as LiteralClassReference);
+                        }
                     } else {
                         this.bodyAsProperties.push(prop);
                     }

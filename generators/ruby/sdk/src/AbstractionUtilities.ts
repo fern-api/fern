@@ -221,12 +221,12 @@ export function generateRootPackage(
 
     const initializerArguments =
         requestClient.initializer?.parameters
-            .filter((param) => oauthTokenProviderClass == null || param.name != OauthTokenProvider.FIELD_NAME)
+            .filter((param) => oauthTokenProviderClass == null || param.name !== OauthTokenProvider.FIELD_NAME)
             .map((param) => param.toArgument(param.name)) ?? [];
 
     const asyncInitializerArguments =
         requestClient.initializer?.parameters
-            .filter((param) => oauthTokenProviderClass == null || param.name != OauthTokenProvider.FIELD_NAME)
+            .filter((param) => oauthTokenProviderClass == null || param.name !== OauthTokenProvider.FIELD_NAME)
             .map((param) => param.toArgument(param.name)) ?? [];
 
     if (oauthTokenProviderClass != null) {
@@ -851,7 +851,7 @@ function generateRequestClientInitializer(
     );
 
     const headerSetters: AstNode[] = [];
-    let headersToSet = headersGenerator.getAdditionalHeadersAsProperties();
+    const headersToSet = headersGenerator.getAdditionalHeadersAsProperties();
     const hasHeaders = headersToSet.length > 0;
 
     // Make an if statement for each auth scheme that adds the header if present

@@ -79,7 +79,11 @@ export class HeadersGenerator {
                         name: bas.token.snakeCase.safeName,
                         type: StringClassReference,
                         isOptional: bas.tokenEnvVar !== undefined || !this.isAuthRequired,
-                        example: '"YOUR_AUTH_TOKEN"'
+                        example: '"YOUR_AUTH_TOKEN"',
+                        defaultValue:
+                            bas.tokenEnvVar != null
+                                ? new EnvironmentVariable({ variableName: bas.tokenEnvVar })
+                                : undefined
                     })
                 ],
                 basic: (bas: BasicAuthScheme) => [
@@ -87,13 +91,21 @@ export class HeadersGenerator {
                         name: bas.username.snakeCase.safeName,
                         type: StringClassReference,
                         isOptional: bas.usernameEnvVar !== undefined || !this.isAuthRequired,
-                        example: '"YOUR_USERNAME"'
+                        example: '"YOUR_USERNAME"',
+                        defaultValue:
+                            bas.usernameEnvVar != null
+                                ? new EnvironmentVariable({ variableName: bas.usernameEnvVar })
+                                : undefined
                     }),
                     new Parameter({
                         name: bas.password.snakeCase.safeName,
                         type: StringClassReference,
                         isOptional: bas.passwordEnvVar !== undefined || !this.isAuthRequired,
-                        example: '"YOUR_PASSWORD"'
+                        example: '"YOUR_PASSWORD"',
+                        defaultValue:
+                            bas.passwordEnvVar != null
+                                ? new EnvironmentVariable({ variableName: bas.passwordEnvVar })
+                                : undefined
                     })
                 ],
                 oauth: (oas: OAuthScheme) =>
@@ -106,13 +118,21 @@ export class HeadersGenerator {
                                                 name: "client_id",
                                                 type: StringClassReference,
                                                 isOptional: cc.clientIdEnvVar !== undefined || !this.isAuthRequired,
-                                                example: '"YOUR_CLIENT_ID"'
+                                                example: '"YOUR_CLIENT_ID"',
+                                                defaultValue:
+                                                    cc.clientIdEnvVar != null
+                                                        ? new EnvironmentVariable({ variableName: cc.clientIdEnvVar })
+                                                        : undefined
                                             }),
                                             new Parameter({
                                                 name: "client_secret",
                                                 type: StringClassReference,
                                                 isOptional: cc.clientSecretEnvVar !== undefined || !this.isAuthRequired,
-                                                example: '"YOUR_CLIENT_SECRET"'
+                                                example: '"YOUR_CLIENT_SECRET"',
+                                                defaultValue:
+                                                    cc.clientIdEnvVar != null
+                                                        ? new EnvironmentVariable({ variableName: cc.clientIdEnvVar })
+                                                        : undefined
                                             })
                                         ]
                                       : [
@@ -139,7 +159,11 @@ export class HeadersGenerator {
                         name: has.name.name.snakeCase.safeName,
                         type: StringClassReference,
                         isOptional: has.headerEnvVar !== undefined || !this.isAuthRequired,
-                        example: `"YOUR_${has.name.name.screamingSnakeCase.safeName}"`
+                        example: `"YOUR_${has.name.name.screamingSnakeCase.safeName}"`,
+                        defaultValue:
+                            has.headerEnvVar != null
+                                ? new EnvironmentVariable({ variableName: has.headerEnvVar })
+                                : undefined
                     })
                 ],
                 _other: () => {
@@ -218,16 +242,7 @@ export class HeadersGenerator {
     }
 
     private getBearerAuthorizationHeader(bas: BearerAuthScheme): [string, string] {
-        const bearerValue =
-            bas.tokenEnvVar !== undefined
-                ? new Expression({
-                      leftSide: bas.token.snakeCase.safeName,
-                      rightSide: new EnvironmentVariable({ variableName: bas.tokenEnvVar }),
-                      isAssignment: false,
-                      operation: "||"
-                  })
-                : new Expression({ rightSide: bas.token.snakeCase.safeName, isAssignment: false });
-
+        const bearerValue = new Expression({ rightSide: bas.token.snakeCase.safeName, isAssignment: false });
         return ['"Authorization"', `Bearer #{@${bearerValue.write({})}}`];
     }
 
@@ -248,24 +263,8 @@ export class HeadersGenerator {
     }
 
     private getBasicAuthorizationHeader(bas: BasicAuthScheme): [string, string] {
-        const userName =
-            bas.usernameEnvVar !== undefined
-                ? new Expression({
-                      leftSide: bas.username.snakeCase.safeName,
-                      rightSide: new EnvironmentVariable({ variableName: bas.usernameEnvVar }),
-                      isAssignment: false,
-                      operation: "||"
-                  })
-                : new Expression({ rightSide: bas.username.snakeCase.safeName, isAssignment: false });
-        const password =
-            bas.passwordEnvVar !== undefined
-                ? new Expression({
-                      leftSide: bas.password.snakeCase.safeName,
-                      rightSide: new EnvironmentVariable({ variableName: bas.passwordEnvVar }),
-                      isAssignment: false,
-                      operation: "||"
-                  })
-                : new Expression({ rightSide: bas.password.snakeCase.safeName, isAssignment: false });
+        const userName = new Expression({ rightSide: bas.username.snakeCase.safeName, isAssignment: false });
+        const password = new Expression({ rightSide: bas.password.snakeCase.safeName, isAssignment: false });
 
         const b64 = new FunctionInvocation({
             onObject: new ClassReference({ name: "Base64", import_: new Import({ from: "base64", isExternal: true }) }),
@@ -291,15 +290,7 @@ export class HeadersGenerator {
         //     onObject: has.name.name.snakeCase.safeName,
         //     baseFunction: new Function_({ name: "to_json", functionBody: [] })
         // });
-        const headerValue =
-            has.headerEnvVar !== undefined
-                ? new Expression({
-                      leftSide: has.name.name.snakeCase.safeName,
-                      rightSide: new EnvironmentVariable({ variableName: has.headerEnvVar }),
-                      isAssignment: false,
-                      operation: "||"
-                  })
-                : new Expression({ rightSide: has.name.name.snakeCase.safeName, isAssignment: false });
+        const headerValue = new Expression({ rightSide: has.name.name.snakeCase.safeName, isAssignment: false });
 
         return [
             `"${has.name.wireValue}"`,

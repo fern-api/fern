@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "requests"
-require_relative "fern_oauth_client_credentials_default/auth/client"
-require_relative "core/oauth"
+require_relative "../requests"
+require_relative "../fern_oauth_client_credentials_default/auth/client"
+require_relative "oauth"
 
 module SeedOauthClientCredentialsDefaultClient
   class AccessToken

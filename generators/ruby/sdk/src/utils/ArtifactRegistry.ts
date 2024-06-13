@@ -6,7 +6,7 @@ export class ArtifactRegistry {
     endpointRegistry: Map<EndpointId, Function_> = new Map();
     endpointPackageRegistry: Map<EndpointId, ClassReference> = new Map();
 
-    public registerEndpoint(endpointId: EndpointId, endpoint: Function_, endpointPackage: ClassReference) {
+    public registerEndpoint(endpointId: EndpointId, endpoint: Function_, endpointPackage: ClassReference): void {
         this.endpointRegistry.set(endpointId, endpoint);
         this.endpointPackageRegistry.set(endpointId, endpointPackage);
     }
