@@ -27,9 +27,9 @@ module SeedOauthClientCredentialsDefaultClient
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = {
-**req.headers,
-**@request_client.get_headers,
-**(request_options&.additional_headers || {})
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
         }.compact
         req.body = {
           **(request_options&.additional_body_parameters || {}),
@@ -66,9 +66,9 @@ module SeedOauthClientCredentialsDefaultClient
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = {
-**req.headers,
-**@request_client.get_headers,
-**(request_options&.additional_headers || {})
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
           }.compact
           req.body = {
             **(request_options&.additional_body_parameters || {}),

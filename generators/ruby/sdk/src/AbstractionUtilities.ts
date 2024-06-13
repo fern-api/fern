@@ -48,7 +48,7 @@ import { EndpointGenerator } from "./utils/EndpointGenerator";
 import { FileUploadUtility } from "./utils/FileUploadUtility";
 import { HeadersGenerator } from "./utils/HeadersGenerator";
 import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClass";
-import { OauthFunction } from "./utils/oauth/OauthTokenProvider";
+import { OauthFunction, OauthTokenProvider } from "./utils/oauth/OauthTokenProvider";
 import { RequestOptions } from "./utils/RequestOptionsClass";
 
 export interface ClientClassPair {
@@ -198,6 +198,7 @@ export function generateRootPackage(
     retriesProperty: Property,
     timeoutProperty: Property,
     artifactRegistry: ArtifactRegistry,
+    oauthTokenProviderClass: Class_ | undefined,
     environmentClass?: ClassReference,
     defaultEnvironment?: string,
     rootService?: HttpService
@@ -214,6 +215,101 @@ export function generateRootPackage(
         type: requestClient.classReference,
         variableType: VariableType.INSTANCE
     });
+
+    const initializerBody: AstNode[] = [];
+    const asyncInitializerBody: AstNode[] = [];
+
+    const initializerArguments =
+        requestClient.initializer?.parameters
+            .filter((param) => oauthTokenProviderClass == null || param.name != OauthTokenProvider.FIELD_NAME)
+            .map((param) => param.toArgument(param.name)) ?? [];
+
+    const asyncInitializerArguments =
+        requestClient.initializer?.parameters
+            .filter((param) => oauthTokenProviderClass == null || param.name != OauthTokenProvider.FIELD_NAME)
+            .map((param) => param.toArgument(param.name)) ?? [];
+
+    if (oauthTokenProviderClass != null) {
+        const tokenProviderName = "oauth_provider";
+        const oauthProviderVariable = new Variable({
+            name: tokenProviderName,
+            type: oauthTokenProviderClass.classReference,
+            variableType: VariableType.INSTANCE
+        });
+        const initOauthProvider = new Expression({
+            leftSide: oauthProviderVariable,
+            rightSide: new FunctionInvocation({
+                onObject: oauthTokenProviderClass.classReference,
+                baseFunction: oauthTokenProviderClass.initializer,
+                arguments_: [
+                    ...(oauthTokenProviderClass.initializer?.parameters ?? [])
+                        .filter((param) => param.name !== "request_client")
+                        .map((param) => param.toArgument(param.name)),
+                    new Argument({
+                        name: "request_client",
+                        value: new FunctionInvocation({
+                            onObject: requestClient.classReference,
+                            baseFunction: requestClient.initializer,
+                            // Spread the array here so we don't lazily pick up the
+                            // method call for token we add in down below
+                            arguments_: [...initializerArguments]
+                        }),
+                        isNamed: true
+                    })
+                ]
+            }),
+            isAssignment: true
+        });
+
+        initializerBody.push(initOauthProvider);
+        asyncInitializerBody.push(initOauthProvider);
+
+        initializerArguments.push(
+            new Argument({
+                name: OauthTokenProvider.FIELD_NAME,
+                value: `method(@${tokenProviderName}.token)`,
+                isNamed: true
+            })
+        );
+        asyncInitializerArguments.push(
+            new Argument({
+                name: OauthTokenProvider.FIELD_NAME,
+                value: `method(@${tokenProviderName}.token)`,
+                isNamed: true
+            })
+        );
+    }
+
+    initializerBody.push(
+        ...[
+            new Expression({
+                leftSide: requestClientVariable,
+                rightSide: new FunctionInvocation({
+                    onObject: requestClient.classReference,
+                    baseFunction: requestClient.initializer,
+                    arguments_: initializerArguments
+                }),
+                isAssignment: true
+            }),
+            ...Array.from(syncSubpackages.entries()).map(([spName, sp]) => {
+                const spInstanceVar = new Variable({
+                    name: getSubpackagePropertyNameFromIr(spName),
+                    type: sp.classReference,
+                    variableType: VariableType.INSTANCE
+                });
+                return new Expression({
+                    leftSide: spInstanceVar,
+                    rightSide: new FunctionInvocation({
+                        onObject: sp.classReference,
+                        baseFunction: sp.initializer,
+                        arguments_: sp.initializer?.parameters.map((param) => param.toArgument(requestClientVariable))
+                    }),
+                    isAssignment: true
+                });
+            })
+        ]
+    );
+
     const clientClass = new Class_({
         classReference,
         properties: Array.from(syncSubpackages.entries()).map(
@@ -242,35 +338,7 @@ export function generateRootPackage(
         initializerOverride: new Function_({
             name: "initialize",
             invocationName: "new",
-            functionBody: [
-                new Expression({
-                    leftSide: requestClientVariable,
-                    rightSide: new FunctionInvocation({
-                        onObject: requestClient.classReference,
-                        baseFunction: requestClient.initializer,
-                        arguments_: requestClient.initializer?.parameters.map((param) => param.toArgument(param.name))
-                    }),
-                    isAssignment: true
-                }),
-                ...Array.from(syncSubpackages.entries()).map(([spName, sp]) => {
-                    const spInstanceVar = new Variable({
-                        name: getSubpackagePropertyNameFromIr(spName),
-                        type: sp.classReference,
-                        variableType: VariableType.INSTANCE
-                    });
-                    return new Expression({
-                        leftSide: spInstanceVar,
-                        rightSide: new FunctionInvocation({
-                            onObject: sp.classReference,
-                            baseFunction: sp.initializer,
-                            arguments_: sp.initializer?.parameters.map((param) =>
-                                param.toArgument(requestClientVariable)
-                            )
-                        }),
-                        isAssignment: true
-                    });
-                })
-            ],
+            functionBody: initializerBody,
             parameters: getClientParameters(
                 "rootClient",
                 environmentClass,
@@ -289,6 +357,38 @@ export function generateRootPackage(
         type: asyncRequestClient.classReference,
         variableType: VariableType.INSTANCE
     });
+    asyncInitializerBody.push(
+        ...[
+            new Expression({
+                leftSide: asyncRequestClientVariable,
+                rightSide: new FunctionInvocation({
+                    onObject: asyncRequestClient.classReference,
+                    baseFunction: asyncRequestClient.initializer,
+                    arguments_: asyncRequestClient.initializer?.parameters.map((param) => param.toArgument(param.name))
+                }),
+                isAssignment: true
+            }),
+            ...Array.from(asyncSubpackages.entries()).map(([spName, sp]) => {
+                const spInstanceVar = new Variable({
+                    name: getSubpackagePropertyNameFromIr(spName),
+                    type: sp.classReference,
+                    variableType: VariableType.INSTANCE
+                });
+                return new Expression({
+                    leftSide: spInstanceVar,
+                    rightSide: new FunctionInvocation({
+                        onObject: sp.classReference,
+                        baseFunction: sp.initializer,
+                        arguments_: sp.initializer?.parameters.map((param) =>
+                            param.toArgument(asyncRequestClientVariable)
+                        )
+                    }),
+                    isAssignment: true
+                });
+            })
+        ]
+    );
+
     const asyncClassReference = new ClassReference({
         name: "AsyncClient",
         import_: new Import({ from: gemName, isExternal: false }),
@@ -322,37 +422,7 @@ export function generateRootPackage(
         initializerOverride: new Function_({
             name: "initialize",
             invocationName: "new",
-            functionBody: [
-                new Expression({
-                    leftSide: asyncRequestClientVariable,
-                    rightSide: new FunctionInvocation({
-                        onObject: asyncRequestClient.classReference,
-                        baseFunction: asyncRequestClient.initializer,
-                        arguments_: asyncRequestClient.initializer?.parameters.map((param) =>
-                            param.toArgument(param.name)
-                        )
-                    }),
-                    isAssignment: true
-                }),
-                ...Array.from(asyncSubpackages.entries()).map(([spName, sp]) => {
-                    const spInstanceVar = new Variable({
-                        name: getSubpackagePropertyNameFromIr(spName),
-                        type: sp.classReference,
-                        variableType: VariableType.INSTANCE
-                    });
-                    return new Expression({
-                        leftSide: spInstanceVar,
-                        rightSide: new FunctionInvocation({
-                            onObject: sp.classReference,
-                            baseFunction: sp.initializer,
-                            arguments_: sp.initializer?.parameters.map((param) =>
-                                param.toArgument(asyncRequestClientVariable)
-                            )
-                        }),
-                        isAssignment: true
-                    });
-                })
-            ],
+            functionBody: asyncInitializerBody,
             parameters: getClientParameters(
                 "rootClient",
                 environmentClass,
@@ -770,13 +840,14 @@ function generateRequestClientInitializer(
         );
     }
 
-    // TODO: do this for each auth header
-    functionBody.push(
-        new Expression({
-            leftSide: "@token",
-            rightSide: "token",
-            isAssignment: true
-        })
+    headersGenerator.getAuthHeadersAsProperties().forEach((prop) =>
+        functionBody.push(
+            new Expression({
+                leftSide: prop.toVariable(),
+                rightSide: prop.name,
+                isAssignment: true
+            })
+        )
     );
 
     const headerSetters: AstNode[] = [];

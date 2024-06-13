@@ -40,6 +40,7 @@ type OauthType = "client_credentials" | undefined;
 export class OauthTokenProvider extends Class_ {
     public fetchToken: Function_;
     public initializerParameters: Parameter[];
+    public static FIELD_NAME = "token";
 
     // Including the type here to try to future proof some, though it's a bit awkward
     constructor({
@@ -231,7 +232,7 @@ export class OauthTokenProvider extends Class_ {
                         new ConditionalStatement({
                             if_: {
                                 // HACK: we don't really support nested statements like this, so doing manually for now
-                                leftSide: "!@token.nil? && (@token.expires_at.nil || @token.expires_at > Time.now)",
+                                leftSide: "!@token.nil? && (@token.expires_at.nil? || @token.expires_at > Time.now)",
                                 expressions: [
                                     new Expression({
                                         leftSide: "return",
@@ -322,6 +323,18 @@ export class OauthTokenProvider extends Class_ {
             case "client_credentials": {
                 const body: AstNode[] = [];
                 const responseVariableName = "token_response";
+                const clientCredentialArgs = [
+                    new Argument({
+                        isNamed: true,
+                        name: "client_id",
+                        value: "@client_id"
+                    }),
+                    new Argument({
+                        isNamed: true,
+                        name: "client_secret",
+                        value: "@client_secret"
+                    })
+                ];
                 if (oauthConfiguration.refreshTokenFunction != null) {
                     body.push(
                         new ConditionalStatement({
@@ -350,7 +363,7 @@ export class OauthTokenProvider extends Class_ {
                                         rightSide: new FunctionInvocation({
                                             onObject: "@auth_client",
                                             baseFunction: oauthConfiguration.accessTokenFunction.tokenFunction,
-                                            arguments_: []
+                                            arguments_: clientCredentialArgs
                                         }),
                                         isAssignment: true
                                     }),
@@ -373,7 +386,14 @@ export class OauthTokenProvider extends Class_ {
                                             ? "@refresh_client"
                                             : "@auth_client",
                                         baseFunction: oauthConfiguration.refreshTokenFunction.tokenFunction,
-                                        arguments_: []
+                                        arguments_: [
+                                            ...clientCredentialArgs,
+                                            new Argument({
+                                                isNamed: true,
+                                                name: "referesh_token",
+                                                value: "@token.refresh_token"
+                                            })
+                                        ]
                                     }),
                                     isAssignment: true
                                 }),
@@ -397,7 +417,7 @@ export class OauthTokenProvider extends Class_ {
                                 rightSide: new FunctionInvocation({
                                     onObject: "@auth_client",
                                     baseFunction: oauthConfiguration.accessTokenFunction.tokenFunction,
-                                    arguments_: []
+                                    arguments_: clientCredentialArgs
                                 }),
                                 isAssignment: true
                             }),

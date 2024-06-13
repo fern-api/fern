@@ -46,7 +46,7 @@ module SeedOauthClientCredentialsDefaultClient
     #
     # @return [String]
     def token
-      return @token.access_token if !@token.nil? && (@token.expires_at.nil || @token.expires_at > Time.now)
+      return @token.access_token if !@token.nil? && (@token.expires_at.nil? || @token.expires_at > Time.now)
 
       @token = refresh_token
       @token.access_token
@@ -54,7 +54,7 @@ module SeedOauthClientCredentialsDefaultClient
 
     # @return [SeedOauthClientCredentialsDefaultClient::AccessToken]
     def refresh_token
-      token_response = @auth_client.auth.get_token
+      token_response = @auth_client.auth.get_token(client_id: @client_id, client_secret: @client_secret)
       SeedOauthClientCredentialsDefaultClient::AccessToken.new(access_token: token_response.access_token)
     end
   end

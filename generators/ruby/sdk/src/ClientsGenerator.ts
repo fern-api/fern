@@ -421,6 +421,7 @@ export class ClientsGenerator {
         const typeExporterLocation = "types_export";
         clientFiles.push(new GeneratedRubyFile({ rootNode: typeExporter, fullPath: typeExporterLocation }));
 
+        let oauthTokenProvider: OauthTokenProvider | undefined;
         if (this.shouldGenerateOauth && this.oauthScheme != null) {
             const accessTokenClass = new AccessToken(this.clientName, this.oauthScheme.configuration);
 
@@ -439,7 +440,7 @@ export class ClientsGenerator {
                 refreshTokenFunction: maybeRefereshTokenDetails
             };
 
-            const oauthTokenProvider = new OauthTokenProvider({
+            oauthTokenProvider = new OauthTokenProvider({
                 clientName: this.clientName,
                 oauthConfiguration: fullRubyDetails,
                 oauthType: "client_credentials",
@@ -476,6 +477,7 @@ export class ClientsGenerator {
                 retriesProperty,
                 timeoutProperty,
                 this.artifactRegistry,
+                oauthTokenProvider,
                 environmentClass?.classReference,
                 this.defaultEnvironment,
                 this.services.get(this.intermediateRepresentation.rootPackage.service ?? "")

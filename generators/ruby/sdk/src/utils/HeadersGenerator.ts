@@ -21,6 +21,7 @@ import {
     HttpHeader,
     OAuthScheme
 } from "@fern-fern/ir-sdk/api";
+import { OauthTokenProvider } from "./oauth/OauthTokenProvider";
 import { isTypeOptional } from "./TypeUtilities";
 
 export interface BasicAuth {
@@ -33,7 +34,6 @@ export interface BearerAuth {
 
 // For global headers + auth headers
 export class HeadersGenerator {
-    OAUTH_TOKEN_NAME = "token";
     public headers: HttpHeader[];
     public crf: ClassReferenceFactory;
     public auth: ApiAuth;
@@ -117,7 +117,7 @@ export class HeadersGenerator {
                                         ]
                                       : [
                                             new Parameter({
-                                                name: "token",
+                                                name: OauthTokenProvider.FIELD_NAME,
                                                 type: [StringClassReference, MethodClassReference],
                                                 isOptional: true
                                             })
@@ -128,7 +128,7 @@ export class HeadersGenerator {
                           })
                         : [
                               new Parameter({
-                                  name: this.OAUTH_TOKEN_NAME,
+                                  name: OauthTokenProvider.FIELD_NAME,
                                   type: StringClassReference,
                                   isOptional: !this.isAuthRequired,
                                   example: '"YOUR_AUTH_TOKEN"'
@@ -199,7 +199,7 @@ export class HeadersGenerator {
                 ],
                 oauth: (_: OAuthScheme) => [
                     new Property({
-                        name: this.OAUTH_TOKEN_NAME,
+                        name: OauthTokenProvider.FIELD_NAME,
                         type: [StringClassReference, MethodClassReference],
                         isOptional: true,
                         wireValue: "Authorization"
@@ -238,13 +238,13 @@ export class HeadersGenerator {
             ? oas.configuration._visit<[string, string]>({
                   clientCredentials: (cc) => {
                       // Note we're hardcoding to bearer auth and assuming that we're setting an `@token` property
-                      return ['"Authorization"', `${cc.tokenPrefix} #{@${this.OAUTH_TOKEN_NAME}}`];
+                      return ['"Authorization"', `${cc.tokenPrefix} #{@${OauthTokenProvider.FIELD_NAME}}`];
                   },
                   _other: () => {
                       throw new Error("Unrecognized auth scheme.");
                   }
               })
-            : ['"Authorization"', `Bearer #{@${this.OAUTH_TOKEN_NAME}}`];
+            : ['"Authorization"', `Bearer #{@${OauthTokenProvider.FIELD_NAME}}`];
     }
 
     private getBasicAuthorizationHeader(bas: BasicAuthScheme): [string, string] {

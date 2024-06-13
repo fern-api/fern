@@ -343,7 +343,7 @@ export class EndpointGenerator {
                     ]),
                     // Expand the existing headers hash, then the additionalheaders params
                     additionalHashes: [
-                        { value: "req.headers" },
+                        { value: "req.headers", defaultValue: "{}" },
                         { value: `${requestClientVariable.write({})}.get_headers` },
                         { value: additionalHeadersProperty, defaultValue: "{}" }
                     ],
