@@ -102,7 +102,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                         .build(),
                 clientPoetClassNameFactory,
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes());
-        generateClient(context, ir);
+        generateClient(context, ir, generatorExecClient);
     }
 
     @Override
@@ -118,7 +118,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
         ClientGeneratorContext context = new ClientGeneratorContext(
                 ir, generatorConfig, customConfig, clientPoetClassNameFactory, resolvedAuthSchemes);
-        GeneratedRootClient generatedClientWrapper = generateClient(context, ir);
+        GeneratedRootClient generatedClientWrapper = generateClient(context, ir, generatorExecClient);
         SampleAppGenerator sampleAppGenerator = new SampleAppGenerator(context, generatedClientWrapper);
         sampleAppGenerator.generateFiles().forEach(this::addGeneratedFile);
         subprojects.add(SampleAppGenerator.SAMPLE_APP_DIRECTORY);
@@ -151,10 +151,13 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
         ClientGeneratorContext context = new ClientGeneratorContext(
                 ir, generatorConfig, customConfig, clientPoetClassNameFactory, resolvedAuthSchemes);
-        generateClient(context, ir);
+        generateClient(context, ir, generatorExecClient);
     }
 
-    public GeneratedRootClient generateClient(ClientGeneratorContext context, IntermediateRepresentation ir) {
+    public GeneratedRootClient generateClient(
+            ClientGeneratorContext context,
+            IntermediateRepresentation ir,
+            DefaultGeneratorExecClient generatorExecClient) {
 
         // core
         ObjectMappersGenerator objectMappersGenerator = new ObjectMappersGenerator(context);
@@ -170,7 +173,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         GeneratedJavaFile generatedRequestOptions = requestOptionsGenerator.generateFile();
         this.addGeneratedFile(generatedRequestOptions);
 
-        PaginationCoreGenerator paginationCoreGenerator = new PaginationCoreGenerator(context);
+        PaginationCoreGenerator paginationCoreGenerator = new PaginationCoreGenerator(context, generatorExecClient);
         List<GeneratedFile> generatedFiles = paginationCoreGenerator.generateFiles();
         generatedFiles.forEach(this::addGeneratedFile);
 

@@ -16,7 +16,11 @@
 
 package com.fern.java.generators;
 
+import com.fern.generator.exec.model.logging.GeneratorUpdate;
+import com.fern.generator.exec.model.logging.LogLevel;
+import com.fern.generator.exec.model.logging.LogUpdate;
 import com.fern.java.AbstractGeneratorContext;
+import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.output.GeneratedFile;
 import com.fern.java.output.GeneratedResourcesJavaFile;
 import java.io.IOException;
@@ -27,18 +31,32 @@ import java.util.stream.Collectors;
 
 public final class PaginationCoreGenerator extends AbstractFilesGenerator {
     public static final String GET_MODULE_METHOD_NAME = "getModule";
+    private final DefaultGeneratorExecClient generatorExecClient;
 
-    public PaginationCoreGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
+    public PaginationCoreGenerator(
+            AbstractGeneratorContext<?, ?> generatorContext, DefaultGeneratorExecClient generatorExecClient) {
         super(generatorContext);
+        this.generatorExecClient = generatorExecClient;
     }
 
     @Override
     public List<GeneratedFile> generateFiles() {
+        boolean hasPaginatedEndpoints = generatorContext.getIr().getSdkConfig().getHasPaginatedEndpoints();
+        if (!hasPaginatedEndpoints) {
+            return List.of();
+        }
         Boolean generatePaginatedClients = generatorContext
                 .getGeneratorConfig()
                 .getGeneratePaginatedClients()
                 .orElse(false);
-        // todo: check if we should generate pagination
+        if (!generatePaginatedClients) {
+            generatorExecClient.sendUpdate(GeneratorUpdate.log(LogUpdate.builder()
+                    .level(LogLevel.ERROR)
+                    .message("Pagination is not supported in your current Java SDK plan; falling back to returning full"
+                            + " response types. Please reach out to the Fern team!")
+                    .build()));
+            return List.of();
+        }
 
         List<String> fileNames = List.of("BasePage", "SyncPage", "SyncPagingIterable");
 

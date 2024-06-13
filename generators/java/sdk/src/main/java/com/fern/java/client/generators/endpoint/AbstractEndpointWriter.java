@@ -610,7 +610,11 @@ public abstract class AbstractEndpointWriter {
                     throw new RuntimeException("Encountered unknown json response body type: " + unknownType);
                 }
             });
-            boolean pagination = httpEndpoint.getPagination().isPresent();
+            boolean pagination = httpEndpoint.getPagination().isPresent()
+                    && clientGeneratorContext
+                            .getGeneratorConfig()
+                            .getGeneratePaginatedClients()
+                            .orElse(false);
             TypeName responseType =
                     clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, body.getResponseBodyType());
             boolean isProperty = body.getResponseProperty().isPresent();
