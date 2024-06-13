@@ -990,7 +990,6 @@ public abstract class AbstractEndpointWriter {
             return typeDeclaration.getShape().visit(new Type.Visitor<>() {
                 @Override
                 public GetSnippetOutput visitAlias(AliasTypeDeclaration alias) {
-                    System.out.println("🤙🤙 visitAlias");
                     return alias.getAliasOf()
                             .visit(new NestedPropertySnippetGenerator(
                                     alias.getAliasOf(),
