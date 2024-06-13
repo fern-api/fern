@@ -16,19 +16,19 @@
 
 package com.fern.java.client.generators;
 
-import com.fern.irV42.model.auth.AuthScheme;
-import com.fern.irV42.model.auth.BasicAuthScheme;
-import com.fern.irV42.model.auth.BearerAuthScheme;
-import com.fern.irV42.model.auth.EnvironmentVariable;
-import com.fern.irV42.model.auth.HeaderAuthScheme;
-import com.fern.irV42.model.auth.OAuthClientCredentials;
-import com.fern.irV42.model.auth.OAuthConfiguration;
-import com.fern.irV42.model.auth.OAuthScheme;
-import com.fern.irV42.model.commons.EndpointReference;
-import com.fern.irV42.model.commons.ErrorId;
-import com.fern.irV42.model.commons.TypeId;
-import com.fern.irV42.model.ir.Subpackage;
-import com.fern.irV42.model.types.Literal;
+import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.auth.BasicAuthScheme;
+import com.fern.ir.model.auth.BearerAuthScheme;
+import com.fern.ir.model.auth.EnvironmentVariable;
+import com.fern.ir.model.auth.HeaderAuthScheme;
+import com.fern.ir.model.auth.OAuthClientCredentials;
+import com.fern.ir.model.auth.OAuthConfiguration;
+import com.fern.ir.model.auth.OAuthScheme;
+import com.fern.ir.model.commons.EndpointReference;
+import com.fern.ir.model.commons.ErrorId;
+import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.ir.Subpackage;
+import com.fern.ir.model.types.Literal;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;

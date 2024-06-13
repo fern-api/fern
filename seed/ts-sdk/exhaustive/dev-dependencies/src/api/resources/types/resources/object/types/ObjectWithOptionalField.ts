@@ -15,4 +15,5 @@ export interface ObjectWithOptionalField {
     list?: string[];
     set?: Set<string>;
     map?: Record<number, string>;
+    bigint?: string;
 }

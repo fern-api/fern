@@ -4,12 +4,12 @@ import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.logging.GeneratorUpdate;
 import com.fern.generator.exec.model.logging.LogLevel;
 import com.fern.generator.exec.model.logging.LogUpdate;
-import com.fern.irV42.model.auth.AuthScheme;
-import com.fern.irV42.model.auth.BearerAuthScheme;
-import com.fern.irV42.model.auth.OAuthScheme;
-import com.fern.irV42.model.commons.Name;
-import com.fern.irV42.model.commons.SafeAndUnsafeString;
-import com.fern.irV42.model.ir.IntermediateRepresentation;
+import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.auth.BearerAuthScheme;
+import com.fern.ir.model.auth.OAuthScheme;
+import com.fern.ir.model.commons.Name;
+import com.fern.ir.model.commons.SafeAndUnsafeString;
+import com.fern.ir.model.ir.IntermediateRepresentation;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -60,8 +60,8 @@ public class FeatureResolver {
         if (maybeOAuthScheme.isEmpty() || generatorConfig.getGenerateOauthClients()) return schemes;
         generatorExecClient.sendUpdate(GeneratorUpdate.log(LogUpdate.builder()
                 .level(LogLevel.ERROR)
-                .message(
-                        "OAuth is not supported in your current Java SDK plan; falling back to bearer auth. Please reach out to the Fern team!")
+                .message("OAuth is not supported in your current Java SDK plan; falling back to bearer auth. Please"
+                        + " reach out to the Fern team!")
                 .build()));
         List<AuthScheme> resolvedSchemes = schemes.stream()
                 .filter(authScheme -> !authScheme.isOauth() && !authScheme.isBearer())

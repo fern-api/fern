@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
     path = "/"
 )
 public interface ServiceService {
-  @GetMapping("/{nestedId}")
+  @GetMapping(
+      value = "/{nestedId}",
+      produces = "application/json"
+  )
   void nop(@PathVariable("nestedId") String nestedId);
 }

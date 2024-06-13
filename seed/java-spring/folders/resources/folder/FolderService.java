@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
     path = "/"
 )
 public interface FolderService {
-  @PostMapping("")
+  @PostMapping(
+      value = "",
+      produces = "application/json"
+  )
   void foo();
 }

@@ -19,7 +19,10 @@ import resources.commons.types.Language;
     path = "/sysprop"
 )
 public interface SyspropService {
-  @PutMapping("/num-warm-instances/{language}/{numWarmInstances}")
+  @PutMapping(
+      value = "/num-warm-instances/{language}/{numWarmInstances}",
+      produces = "application/json"
+  )
   void setNumWarmInstances(@RequestHeader("X-Random-Header") Optional<String> xRandomHeader,
       @PathVariable("language") Language language,
       @PathVariable("numWarmInstances") Integer numWarmInstances);

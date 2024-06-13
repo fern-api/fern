@@ -24,6 +24,7 @@ async def test_get_and_return_with_optional_field(client: SeedExhaustive, async_
         "list": ["string"],
         "set": ["string"],
         "map": {"1": "string"},
+        "bigint": "123456789123456789",
     }
     expected_types: typing.Any = {
         "string": None,
@@ -38,6 +39,7 @@ async def test_get_and_return_with_optional_field(client: SeedExhaustive, async_
         "list": ("list", {0: None}),
         "set": ("set", {0: None}),
         "map": ("dict", {0: ("integer", None)}),
+        "bigint": None,
     }
     response = client.endpoints.object.get_and_return_with_optional_field(
         string="string",
@@ -52,6 +54,7 @@ async def test_get_and_return_with_optional_field(client: SeedExhaustive, async_
         list_=["string"],
         set_={"string"},
         map_={1: "string"},
+        bigint="123456789123456789",
     )
     validate_response(response, expected_response, expected_types)
 
@@ -68,6 +71,7 @@ async def test_get_and_return_with_optional_field(client: SeedExhaustive, async_
         list_=["string"],
         set_={"string"},
         map_={1: "string"},
+        bigint="123456789123456789",
     )
     validate_response(async_response, expected_response, expected_types)
 
@@ -112,6 +116,7 @@ async def test_get_and_return_nested_with_optional_field(
             "list": ["string"],
             "set": ["string"],
             "map": {"1": "string"},
+            "bigint": "123456789123456789",
         },
     }
     expected_types: typing.Any = {
@@ -129,6 +134,7 @@ async def test_get_and_return_nested_with_optional_field(
             "list": ("list", {0: None}),
             "set": ("set", {0: None}),
             "map": ("dict", {0: ("integer", None)}),
+            "bigint": None,
         },
     }
     response = client.endpoints.object.get_and_return_nested_with_optional_field(
@@ -146,6 +152,7 @@ async def test_get_and_return_nested_with_optional_field(
             list_=["string"],
             set_={"string"},
             map_={1: "string"},
+            bigint="123456789123456789",
         ),
     )
     validate_response(response, expected_response, expected_types)
@@ -165,6 +172,7 @@ async def test_get_and_return_nested_with_optional_field(
             list_=["string"],
             set_={"string"},
             map_={1: "string"},
+            bigint="123456789123456789",
         ),
     )
     validate_response(async_response, expected_response, expected_types)
@@ -188,6 +196,7 @@ async def test_get_and_return_nested_with_required_field(
             "list": ["string"],
             "set": ["string"],
             "map": {"1": "string"},
+            "bigint": "123456789123456789",
         },
     }
     expected_types: typing.Any = {
@@ -205,6 +214,7 @@ async def test_get_and_return_nested_with_required_field(
             "list": ("list", {0: None}),
             "set": ("set", {0: None}),
             "map": ("dict", {0: ("integer", None)}),
+            "bigint": None,
         },
     }
     response = client.endpoints.object.get_and_return_nested_with_required_field(
@@ -223,6 +233,7 @@ async def test_get_and_return_nested_with_required_field(
             list_=["string"],
             set_={"string"},
             map_={1: "string"},
+            bigint="123456789123456789",
         ),
     )
     validate_response(response, expected_response, expected_types)
@@ -243,6 +254,7 @@ async def test_get_and_return_nested_with_required_field(
             list_=["string"],
             set_={"string"},
             map_={1: "string"},
+            bigint="123456789123456789",
         ),
     )
     validate_response(async_response, expected_response, expected_types)
@@ -266,6 +278,7 @@ async def test_get_and_return_nested_with_required_field_as_list(
             "list": ["string"],
             "set": ["string"],
             "map": {"1": "string"},
+            "bigint": "123456789123456789",
         },
     }
     expected_types: typing.Any = {
@@ -283,6 +296,7 @@ async def test_get_and_return_nested_with_required_field_as_list(
             "list": ("list", {0: None}),
             "set": ("set", {0: None}),
             "map": ("dict", {0: ("integer", None)}),
+            "bigint": None,
         },
     }
     response = client.endpoints.object.get_and_return_nested_with_required_field_as_list(
@@ -302,6 +316,7 @@ async def test_get_and_return_nested_with_required_field_as_list(
                     list_=["string"],
                     set_={"string"},
                     map_={1: "string"},
+                    bigint="123456789123456789",
                 ),
             )
         ]
@@ -325,6 +340,7 @@ async def test_get_and_return_nested_with_required_field_as_list(
                     list_=["string"],
                     set_={"string"},
                     map_={1: "string"},
+                    bigint="123456789123456789",
                 ),
             )
         ]

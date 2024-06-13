@@ -21,6 +21,7 @@ async def test_get_with_no_request_body(client: SeedExhaustive, async_client: As
         "list": ["string"],
         "set": ["string"],
         "map": {"1": "string"},
+        "bigint": "123456789123456789",
     }
     expected_types: typing.Any = {
         "string": None,
@@ -35,6 +36,7 @@ async def test_get_with_no_request_body(client: SeedExhaustive, async_client: As
         "list": ("list", {0: None}),
         "set": ("set", {0: None}),
         "map": ("dict", {0: ("integer", None)}),
+        "bigint": None,
     }
     response = client.no_req_body.get_with_no_request_body()
     validate_response(response, expected_response, expected_types)

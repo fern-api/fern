@@ -33,6 +33,7 @@ module SeedExhaustiveClient
       #   * :list (Array<String>)
       #   * :set (Set<String>)
       #   * :map (Hash{Integer => String})
+      #   * :bigint (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
       def get_and_return_with_optional_field(request:, request_options: nil)
@@ -91,6 +92,7 @@ module SeedExhaustiveClient
       #     * :list (Array<String>)
       #     * :set (Set<String>)
       #     * :map (Hash{Integer => String})
+      #     * :bigint (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::NestedObjectWithOptionalField]
       def get_and_return_nested_with_optional_field(request:, request_options: nil)
@@ -120,6 +122,7 @@ module SeedExhaustiveClient
       #     * :list (Array<String>)
       #     * :set (Set<String>)
       #     * :map (Hash{Integer => String})
+      #     * :bigint (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::NestedObjectWithRequiredField]
       def get_and_return_nested_with_required_field(string:, request:, request_options: nil)
@@ -148,6 +151,7 @@ module SeedExhaustiveClient
       #     * :list (Array<String>)
       #     * :set (Set<String>)
       #     * :map (Hash{Integer => String})
+      #     * :bigint (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::NestedObjectWithRequiredField]
       def get_and_return_nested_with_required_field_as_list(request:, request_options: nil)
@@ -185,6 +189,7 @@ module SeedExhaustiveClient
       #   * :list (Array<String>)
       #   * :set (Set<String>)
       #   * :map (Hash{Integer => String})
+      #   * :bigint (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
       def get_and_return_with_optional_field(request:, request_options: nil)
@@ -249,6 +254,7 @@ module SeedExhaustiveClient
       #     * :list (Array<String>)
       #     * :set (Set<String>)
       #     * :map (Hash{Integer => String})
+      #     * :bigint (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::NestedObjectWithOptionalField]
       def get_and_return_nested_with_optional_field(request:, request_options: nil)
@@ -280,6 +286,7 @@ module SeedExhaustiveClient
       #     * :list (Array<String>)
       #     * :set (Set<String>)
       #     * :map (Hash{Integer => String})
+      #     * :bigint (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::NestedObjectWithRequiredField]
       def get_and_return_nested_with_required_field(string:, request:, request_options: nil)
@@ -310,6 +317,7 @@ module SeedExhaustiveClient
       #     * :list (Array<String>)
       #     * :set (Set<String>)
       #     * :map (Hash{Integer => String})
+      #     * :bigint (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::NestedObjectWithRequiredField]
       def get_and_return_nested_with_required_field_as_list(request:, request_options: nil)

@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.0] - 2024-06-07
+
+- Feature: The generator now supports BigInteger types.
+- Chore: Bump intermediate representation to v46
+
 ## [0.8.2] - 2024-06-04
 
 - Improvement: We now generate Exception types for all errors that are defined in the IR. Generated clients with an 
