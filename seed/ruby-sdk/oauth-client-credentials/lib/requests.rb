@@ -42,7 +42,7 @@ module SeedOauthClientCredentialsClient
         "X-Fern-SDK-Name": "fern_oauth_client_credentials",
         "X-Fern-SDK-Version": "0.0.1"
       }
-      headers["Authorization"] = token unless token.nil?
+      headers["Authorization"] = @token unless token.nil?
       headers
     end
   end
@@ -85,7 +85,7 @@ module SeedOauthClientCredentialsClient
         "X-Fern-SDK-Name": "fern_oauth_client_credentials",
         "X-Fern-SDK-Version": "0.0.1"
       }
-      headers["Authorization"] = token unless token.nil?
+      headers["Authorization"] = @token unless token.nil?
       headers
     end
   end

@@ -38,7 +38,7 @@ module SeedExhaustiveClient
     # @return [Hash{String => String}]
     def get_headers
       headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_exhaustive", "X-Fern-SDK-Version": "0.0.1" }
-      headers["Authorization"] = token unless token.nil?
+      headers["Authorization"] = @token unless token.nil?
       headers
     end
   end
@@ -77,7 +77,7 @@ module SeedExhaustiveClient
     # @return [Hash{String => String}]
     def get_headers
       headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_exhaustive", "X-Fern-SDK-Version": "0.0.1" }
-      headers["Authorization"] = token unless token.nil?
+      headers["Authorization"] = @token unless token.nil?
       headers
     end
   end

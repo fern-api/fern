@@ -1049,7 +1049,7 @@ function requestClientFunctions(
                                 expressions: [
                                     new Expression({
                                         leftSide: `headers["${prop.wireValue ?? prop.name}"]`,
-                                        rightSide: prop.name,
+                                        rightSide: prop.toVariable(VariableType.INSTANCE),
                                         isAssignment: true
                                     })
                                 ]

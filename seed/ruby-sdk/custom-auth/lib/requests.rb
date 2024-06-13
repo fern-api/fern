@@ -38,7 +38,7 @@ module SeedCustomAuthClient
     # @return [Hash{String => String}]
     def get_headers
       headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_custom_auth", "X-Fern-SDK-Version": "0.0.1" }
-      headers["X-API-KEY"] = custom_auth_scheme unless custom_auth_scheme.nil?
+      headers["X-API-KEY"] = @custom_auth_scheme unless custom_auth_scheme.nil?
       headers
     end
   end
@@ -77,7 +77,7 @@ module SeedCustomAuthClient
     # @return [Hash{String => String}]
     def get_headers
       headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_custom_auth", "X-Fern-SDK-Version": "0.0.1" }
-      headers["X-API-KEY"] = custom_auth_scheme unless custom_auth_scheme.nil?
+      headers["X-API-KEY"] = @custom_auth_scheme unless custom_auth_scheme.nil?
       headers
     end
   end
