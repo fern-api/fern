@@ -101,6 +101,11 @@ public class UsersClient {
         }
     }
 
+    public SyncPagingIterable<User> listWithOffsetPagination() {
+        return listWithOffsetPagination(
+                ListUsersOffsetPaginationRequest.builder().build());
+    }
+
     public SyncPagingIterable<User> listWithOffsetPagination(ListUsersOffsetPaginationRequest request) {
         return listWithOffsetPagination(request, null);
     }
@@ -110,7 +115,9 @@ public class UsersClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users");
-        httpUrl.addQueryParameter("page", Integer.toString(request.getPage()));
+        if (request.getPage().isPresent()) {
+            httpUrl.addQueryParameter("page", request.getPage().get().toString());
+        }
         if (request.getPerPage().isPresent()) {
             httpUrl.addQueryParameter("per_page", request.getPerPage().get().toString());
         }
@@ -136,7 +143,7 @@ public class UsersClient {
             if (response.isSuccessful()) {
                 ListUsersPaginationResponse parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
-                int newPageNumber = request.getPage() + 1;
+                int newPageNumber = request.getPage().map(page -> page + 1).orElse(1);
                 ListUsersOffsetPaginationRequest nextRequest = ListUsersOffsetPaginationRequest.builder()
                         .from(request)
                         .page(newPageNumber)

@@ -21,7 +21,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ListUsersOffsetPaginationRequest.Builder.class)
 public final class ListUsersOffsetPaginationRequest {
-    private final int page;
+    private final Optional<Integer> page;
 
     private final Optional<Integer> perPage;
 
@@ -32,7 +32,7 @@ public final class ListUsersOffsetPaginationRequest {
     private final Map<String, Object> additionalProperties;
 
     private ListUsersOffsetPaginationRequest(
-            int page,
+            Optional<Integer> page,
             Optional<Integer> perPage,
             Optional<Order> order,
             Optional<String> startingAfter,
@@ -48,7 +48,7 @@ public final class ListUsersOffsetPaginationRequest {
      * @return Defaults to first page
      */
     @JsonProperty("page")
-    public int getPage() {
+    public Optional<Integer> getPage() {
         return page;
     }
 
@@ -86,7 +86,7 @@ public final class ListUsersOffsetPaginationRequest {
     }
 
     private boolean equalTo(ListUsersOffsetPaginationRequest other) {
-        return page == other.page
+        return page.equals(other.page)
                 && perPage.equals(other.perPage)
                 && order.equals(other.order)
                 && startingAfter.equals(other.startingAfter);
@@ -102,48 +102,25 @@ public final class ListUsersOffsetPaginationRequest {
         return ObjectMappers.stringify(this);
     }
 
-    public static PageStage builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
-    public interface PageStage {
-        _FinalStage page(int page);
-
-        Builder from(ListUsersOffsetPaginationRequest other);
-    }
-
-    public interface _FinalStage {
-        ListUsersOffsetPaginationRequest build();
-
-        _FinalStage perPage(Optional<Integer> perPage);
-
-        _FinalStage perPage(Integer perPage);
-
-        _FinalStage order(Optional<Order> order);
-
-        _FinalStage order(Order order);
-
-        _FinalStage startingAfter(Optional<String> startingAfter);
-
-        _FinalStage startingAfter(String startingAfter);
-    }
-
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements PageStage, _FinalStage {
-        private int page;
+    public static final class Builder {
+        private Optional<Integer> page = Optional.empty();
 
-        private Optional<String> startingAfter = Optional.empty();
+        private Optional<Integer> perPage = Optional.empty();
 
         private Optional<Order> order = Optional.empty();
 
-        private Optional<Integer> perPage = Optional.empty();
+        private Optional<String> startingAfter = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
-        @java.lang.Override
         public Builder from(ListUsersOffsetPaginationRequest other) {
             page(other.getPage());
             perPage(other.getPerPage());
@@ -152,66 +129,50 @@ public final class ListUsersOffsetPaginationRequest {
             return this;
         }
 
-        /**
-         * <p>Defaults to first page</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("page")
-        public _FinalStage page(int page) {
+        @JsonSetter(value = "page", nulls = Nulls.SKIP)
+        public Builder page(Optional<Integer> page) {
             this.page = page;
             return this;
         }
 
-        /**
-         * <p>The cursor used for pagination in order to fetch
-         * the next page of results.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage startingAfter(String startingAfter) {
-            this.startingAfter = Optional.of(startingAfter);
+        public Builder page(Integer page) {
+            this.page = Optional.of(page);
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter(value = "starting_after", nulls = Nulls.SKIP)
-        public _FinalStage startingAfter(Optional<String> startingAfter) {
-            this.startingAfter = startingAfter;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage order(Order order) {
-            this.order = Optional.of(order);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "order", nulls = Nulls.SKIP)
-        public _FinalStage order(Optional<Order> order) {
-            this.order = order;
-            return this;
-        }
-
-        /**
-         * <p>Defaults to per page</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage perPage(Integer perPage) {
-            this.perPage = Optional.of(perPage);
-            return this;
-        }
-
-        @java.lang.Override
         @JsonSetter(value = "per_page", nulls = Nulls.SKIP)
-        public _FinalStage perPage(Optional<Integer> perPage) {
+        public Builder perPage(Optional<Integer> perPage) {
             this.perPage = perPage;
             return this;
         }
 
-        @java.lang.Override
+        public Builder perPage(Integer perPage) {
+            this.perPage = Optional.of(perPage);
+            return this;
+        }
+
+        @JsonSetter(value = "order", nulls = Nulls.SKIP)
+        public Builder order(Optional<Order> order) {
+            this.order = order;
+            return this;
+        }
+
+        public Builder order(Order order) {
+            this.order = Optional.of(order);
+            return this;
+        }
+
+        @JsonSetter(value = "starting_after", nulls = Nulls.SKIP)
+        public Builder startingAfter(Optional<String> startingAfter) {
+            this.startingAfter = startingAfter;
+            return this;
+        }
+
+        public Builder startingAfter(String startingAfter) {
+            this.startingAfter = Optional.of(startingAfter);
+            return this;
+        }
+
         public ListUsersOffsetPaginationRequest build() {
             return new ListUsersOffsetPaginationRequest(page, perPage, order, startingAfter, additionalProperties);
         }
