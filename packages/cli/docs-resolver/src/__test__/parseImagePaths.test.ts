@@ -343,6 +343,52 @@ describe("parseImagePaths", () => {
             "\"This is a test page with an image <img src='/Volume/git/fern/my/docs/folder/path/to/image.png#anchor' />\""
         );
     });
+
+    it("should parse images inside of tabs and frame", () => {
+        const page = `
+<Tabs>
+    <Tab>
+        <Frame>
+            <img src="./add-tool-view.png" alt="Add tool to configuration within the portal"/>
+        </Frame>
+    </Tab>
+</Tabs>
+        `;
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/add-tool-view.png"]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(`
+            "<Tabs>
+                <Tab>
+                    <Frame>
+                        <img src="/Volume/git/fern/my/docs/folder/add-tool-view.png" alt="Add tool to configuration within the portal"/>
+                    </Frame>
+                </Tab>
+            </Tabs>"
+        `);
+    });
+
+    it("should parse images inside of tabs and frame using markdown", () => {
+        const page = `
+<Tabs>
+    <Tab>
+        <Frame>
+            ![Add tool to configuration within the portal](./add-tool-view.png)
+        </Frame>
+    </Tab>
+</Tabs>
+        `;
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/add-tool-view.png"]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(`
+            "<Tabs>
+                <Tab>
+                    <Frame>
+                        ![Add tool to configuration within the portal](/Volume/git/fern/my/docs/folder/add-tool-view.png)
+                    </Frame>
+                </Tab>
+            </Tabs>"
+        `);
+    });
 });
 
 describe("replaceImagePaths", () => {
