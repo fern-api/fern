@@ -6,10 +6,10 @@ import {
     StringClassReference,
     TimeClassReference
 } from "@fern-api/ruby-codegen";
-import { OauthTokenProvider } from "./OauthTokenProvider";
+import { OAuthConfiguration } from "@fern-fern/ir-sdk/api";
 
-export class AccesToken extends Class_ {
-    constructor(clientName: string, oauthConfiguration: OauthTokenProvider.ClientCredentialsInit) {
+export class AccessToken extends Class_ {
+    constructor(clientName: string, oauthConfiguration: OAuthConfiguration) {
         const properties = [
             new Property({
                 name: "access_token",
@@ -22,7 +22,7 @@ export class AccesToken extends Class_ {
             })
         ];
 
-        if (oauthConfiguration.refreshTokenFunction) {
+        if (oauthConfiguration.refreshEndpoint) {
             properties.push(
                 new Property({
                     name: "refresh_token",
@@ -37,8 +37,7 @@ export class AccesToken extends Class_ {
                 import_: new Import({ from: "core/oauth", isExternal: false }),
                 moduleBreadcrumbs: [clientName]
             }),
-            includeInitializer: false,
-            properties: []
+            properties
         });
     }
 }

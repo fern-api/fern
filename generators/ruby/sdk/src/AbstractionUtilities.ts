@@ -32,6 +32,8 @@ import {
     HttpService,
     MultipleBaseUrlsEnvironments,
     Name,
+    OAuthRefreshEndpoint,
+    OAuthTokenEndpoint,
     ObjectProperty,
     Package,
     PathParameter,
@@ -41,10 +43,12 @@ import {
     Subpackage,
     TypeId
 } from "@fern-fern/ir-sdk/api";
+import { ArtifactRegistry } from "./utils/ArtifactRegistry";
 import { EndpointGenerator } from "./utils/EndpointGenerator";
 import { FileUploadUtility } from "./utils/FileUploadUtility";
 import { HeadersGenerator } from "./utils/HeadersGenerator";
 import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClass";
+import { OauthFunction } from "./utils/oauth/OauthTokenProvider";
 import { RequestOptions } from "./utils/RequestOptionsClass";
 
 export interface ClientClassPair {
@@ -71,7 +75,9 @@ export function generateEndpoints(
     generatedClasses: Map<TypeId, Class_>,
     flattenedProperties: Map<TypeId, ObjectProperty[]>,
     fileUploadUtility: FileUploadUtility,
-    packagePath: string[]
+    packagePath: string[],
+    packageClassReference: ClassReference | undefined,
+    artifactRegistry: ArtifactRegistry | undefined
 ): Function_[] {
     return endpoints
         .map((endpoint) => {
@@ -142,6 +148,9 @@ export function generateEndpoints(
                 skipExample: !generator.endpointHasExamples
             });
 
+            if (artifactRegistry != null && packageClassReference != null) {
+                artifactRegistry.registerEndpoint(endpoint.id, func, packageClassReference);
+            }
             if (generator.endpointHasExamples) {
                 eg.registerSnippet(func, endpoint);
             }
@@ -188,6 +197,7 @@ export function generateRootPackage(
     headersGenerator: HeadersGenerator,
     retriesProperty: Property,
     timeoutProperty: Property,
+    artifactRegistry: ArtifactRegistry,
     environmentClass?: ClassReference,
     defaultEnvironment?: string,
     rootService?: HttpService
@@ -223,7 +233,9 @@ export function generateRootPackage(
                   generatedClasses,
                   flattenedProperties,
                   fileUploadUtility,
-                  []
+                  [],
+                  classReference,
+                  artifactRegistry
               )
             : [],
         includeInitializer: false,
@@ -301,7 +313,9 @@ export function generateRootPackage(
                   generatedClasses,
                   flattenedProperties,
                   fileUploadUtility,
-                  []
+                  [],
+                  undefined,
+                  undefined
               )
             : [],
         includeInitializer: false,
@@ -483,7 +497,8 @@ export function generateService(
     flattenedProperties: Map<TypeId, ObjectProperty[]>,
     fileUploadUtility: FileUploadUtility,
     locationGenerator: LocationGenerator,
-    packagePath: string[]
+    packagePath: string[],
+    artifactRegistry: ArtifactRegistry
 ): ClientClassPair {
     const subpackageName = subpackage.name;
     const serviceName = subpackageName.pascalCase.safeName;
@@ -496,6 +511,11 @@ export function generateService(
     // Add Client class
     const serviceBasePath = generateRubyPathTemplate(service.pathParameters, service.basePath);
     const requestClientProperty = new Property({ name: "request_client", type: requestClientCr });
+    const syncClientClassReference = new ClassReference({
+        name: `${serviceName}Client`,
+        import_,
+        moduleBreadcrumbs
+    });
     const syncClientClass = new Class_({
         classReference: new ClassReference({
             name: `${serviceName}Client`,
@@ -517,7 +537,9 @@ export function generateService(
             generatedClasses,
             flattenedProperties,
             fileUploadUtility,
-            packagePath
+            packagePath,
+            syncClientClassReference,
+            artifactRegistry
         )
     });
 
@@ -544,7 +566,9 @@ export function generateService(
             generatedClasses,
             flattenedProperties,
             fileUploadUtility,
-            packagePath
+            packagePath,
+            undefined,
+            undefined
         )
     });
 
@@ -1080,4 +1104,48 @@ export function generateRequestClients(
 
 export function getSubpackagePropertyNameFromIr(name: Name): string {
     return name.snakeCase.safeName;
+}
+
+export function getOauthAccessTokenFunctionMetadata({
+    tokenEndpoint,
+    artifactRegistry
+}: {
+    tokenEndpoint: OAuthTokenEndpoint;
+    artifactRegistry: ArtifactRegistry;
+}): OauthFunction {
+    const endpointId = tokenEndpoint.endpointReference;
+    const tokenFunction = artifactRegistry.getEndpointFunction(endpointId);
+    const tokenFunctionClientClassReference = artifactRegistry.getEndpointPackage(endpointId);
+
+    if (tokenFunction == null || tokenFunctionClientClassReference == null) {
+        throw new Error(`Could not find endpoint function for ${endpointId}`);
+    }
+
+    return {
+        tokenResponseProperty: tokenEndpoint.responseProperties,
+        tokenFunction,
+        tokenFunctionClientClassReference
+    };
+}
+
+export function getOauthRefreshTokenFunctionMetadata({
+    refreshEndpoint,
+    artifactRegistry
+}: {
+    refreshEndpoint: OAuthRefreshEndpoint;
+    artifactRegistry: ArtifactRegistry;
+}): OauthFunction {
+    const endpointId = refreshEndpoint.endpointReference;
+    const tokenFunction = artifactRegistry.getEndpointFunction(endpointId);
+    const tokenFunctionClientClassReference = artifactRegistry.getEndpointPackage(endpointId);
+
+    if (tokenFunction == null || tokenFunctionClientClassReference == null) {
+        throw new Error(`Could not find endpoint function for ${endpointId}`);
+    }
+
+    return {
+        tokenResponseProperty: refreshEndpoint.responseProperties,
+        tokenFunction,
+        tokenFunctionClientClassReference
+    };
 }

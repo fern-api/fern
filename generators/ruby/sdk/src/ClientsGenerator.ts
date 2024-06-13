@@ -14,6 +14,7 @@ import {
     HttpService,
     IntermediateRepresentation,
     Name,
+    OAuthScheme,
     ObjectProperty,
     ServiceId,
     Subpackage,
@@ -30,12 +31,15 @@ import {
     generateService,
     generateSubpackage,
     getDefaultEnvironmentUrl,
+    getOauthAccessTokenFunctionMetadata,
+    getOauthRefreshTokenFunctionMetadata,
     getSubpackagePropertyNameFromIr
 } from "./AbstractionUtilities";
+import { ArtifactRegistry } from "./utils/ArtifactRegistry";
 import { FileUploadUtility } from "./utils/FileUploadUtility";
 import { HeadersGenerator } from "./utils/HeadersGenerator";
 import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClass";
-import { AccesToken } from "./utils/oauth/AccessToken";
+import { AccessToken } from "./utils/oauth/AccessToken";
 import { OauthTokenProvider } from "./utils/oauth/OauthTokenProvider";
 import { RequestOptions } from "./utils/RequestOptionsClass";
 import { RootImportsFile } from "./utils/RootImportsFile";
@@ -60,6 +64,8 @@ export class ClientsGenerator {
     private locationGenerator: LocationGenerator;
 
     private shouldGenerateOauth: boolean;
+    private oauthScheme: OAuthScheme | undefined;
+    private artifactRegistry: ArtifactRegistry;
 
     // TODO: should this be an object instead of a string
     private defaultEnvironment: string | undefined;
@@ -115,7 +121,19 @@ export class ClientsGenerator {
             this.intermediateRepresentation.basePath
         );
 
-        this.shouldGenerateOauth = this.gc.config.generateOauthClients;
+        this.oauthScheme = this.gc.config.generateOauthClients
+            ? this.intermediateRepresentation.auth.schemes
+                  .find((scheme) => scheme.type === "oauth")
+                  ?._visit<OAuthScheme | undefined>({
+                      basic: () => undefined,
+                      bearer: () => undefined,
+                      header: () => undefined,
+                      oauth: (oauth) => oauth,
+                      _other: () => undefined
+                  })
+            : undefined;
+        this.shouldGenerateOauth = this.oauthScheme != null && this.gc.config.generateOauthClients;
+        this.artifactRegistry = new ArtifactRegistry();
     }
 
     public generateFiles(): GeneratedFile[] {
@@ -240,7 +258,8 @@ export class ClientsGenerator {
             irBasePath: string,
             generatedClasses: Map<TypeId, Class_>,
             flattenedProperties: Map<TypeId, ObjectProperty[]>,
-            subpackagePaths: Map<SubpackageId, string[]>
+            subpackagePaths: Map<SubpackageId, string[]>,
+            artifactRegistry: ArtifactRegistry
         ): ClientClassPair {
             if (subpackage.service === undefined) {
                 throw new Error("Calling getServiceClasses without a service defined within the subpackage.");
@@ -265,7 +284,8 @@ export class ClientsGenerator {
                 flattenedProperties,
                 fileUtilityClass,
                 locationGenerator,
-                subpackagePaths.get(packageId) ?? []
+                subpackagePaths.get(packageId) ?? [],
+                artifactRegistry
             );
             const serviceModule = Module_.wrapInModules(
                 clientName,
@@ -295,7 +315,8 @@ export class ClientsGenerator {
             irBasePath: string,
             generatedClasses: Map<TypeId, Class_>,
             flattenedProperties: Map<TypeId, ObjectProperty[]>,
-            subpackagePaths: Map<SubpackageId, string[]>
+            subpackagePaths: Map<SubpackageId, string[]>,
+            artifactRegistry: ArtifactRegistry
         ): ClientClassPair | undefined {
             if (subpackage.service !== undefined) {
                 return getServiceClasses(
@@ -307,7 +328,8 @@ export class ClientsGenerator {
                     irBasePath,
                     generatedClasses,
                     flattenedProperties,
-                    subpackagePaths
+                    subpackagePaths,
+                    artifactRegistry
                 );
             } else {
                 // We create these subpackage files to support dot access for service clients,
@@ -333,7 +355,8 @@ export class ClientsGenerator {
                                     irBasePath,
                                     generatedClasses,
                                     flattenedProperties,
-                                    subpackagePaths
+                                    subpackagePaths,
+                                    artifactRegistry
                                 );
                             }
                             return classPair;
@@ -382,7 +405,8 @@ export class ClientsGenerator {
                 this.irBasePath,
                 this.generatedClasses,
                 this.flattenedProperties,
-                this.subpackagePaths
+                this.subpackagePaths,
+                this.artifactRegistry
             )
         );
 
@@ -397,11 +421,27 @@ export class ClientsGenerator {
         const typeExporterLocation = "types_export";
         clientFiles.push(new GeneratedRubyFile({ rootNode: typeExporter, fullPath: typeExporterLocation }));
 
-        if (this.shouldGenerateOauth) {
-            const accessTokenClass = new AccesToken(this.clientName, this.intermediateRepresentation.auth.schemes);
+        if (this.shouldGenerateOauth && this.oauthScheme != null) {
+            const accessTokenClass = new AccessToken(this.clientName, this.oauthScheme.configuration);
+
+            let maybeRefereshTokenDetails;
+            if (this.oauthScheme.configuration.refreshEndpoint) {
+                maybeRefereshTokenDetails = getOauthRefreshTokenFunctionMetadata({
+                    refreshEndpoint: this.oauthScheme.configuration.refreshEndpoint,
+                    artifactRegistry: this.artifactRegistry
+                });
+            }
+            const fullRubyDetails = {
+                accessTokenFunction: getOauthAccessTokenFunctionMetadata({
+                    tokenEndpoint: this.oauthScheme.configuration.tokenEndpoint,
+                    artifactRegistry: this.artifactRegistry
+                }),
+                refreshTokenFunction: maybeRefereshTokenDetails
+            };
+
             const oauthTokenProvider = new OauthTokenProvider({
                 clientName: this.clientName,
-                oauthConfiguration: this.intermediateRepresentation.auth.schemes,
+                oauthConfiguration: fullRubyDetails,
                 oauthType: "client_credentials",
                 requestClientReference: syncClientClass.classReference,
                 accessTokenReference: accessTokenClass.classReference
@@ -435,6 +475,7 @@ export class ClientsGenerator {
                 headersGenerator,
                 retriesProperty,
                 timeoutProperty,
+                this.artifactRegistry,
                 environmentClass?.classReference,
                 this.defaultEnvironment,
                 this.services.get(this.intermediateRepresentation.rootPackage.service ?? "")

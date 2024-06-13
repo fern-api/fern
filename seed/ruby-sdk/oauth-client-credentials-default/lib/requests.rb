@@ -6,8 +6,6 @@ require "async/http/faraday"
 
 module SeedOauthClientCredentialsDefaultClient
   class RequestClient
-    # @return [Hash{String => String}]
-    attr_reader :headers
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
@@ -20,7 +18,7 @@ module SeedOauthClientCredentialsDefaultClient
     # @param timeout_in_seconds [Long]
     # @param token [String, Method]
     # @return [SeedOauthClientCredentialsDefaultClient::RequestClient]
-    def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, token: nil)
       @base_url = base_url
       @token = token
       @conn = Faraday.new do |faraday|
@@ -50,8 +48,6 @@ module SeedOauthClientCredentialsDefaultClient
   end
 
   class AsyncRequestClient
-    # @return [Hash{String => String}]
-    attr_reader :headers
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
@@ -64,7 +60,7 @@ module SeedOauthClientCredentialsDefaultClient
     # @param timeout_in_seconds [Long]
     # @param token [String, Method]
     # @return [SeedOauthClientCredentialsDefaultClient::AsyncRequestClient]
-    def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, token: nil)
       @base_url = base_url
       @token = token
       @conn = Faraday.new do |faraday|
