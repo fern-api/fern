@@ -62,7 +62,7 @@ service:
     listWithCursorPagination:
       pagination: 
         cursor: $request.starting_after
-        next_cursor: $response.page.next.starting_after
+        next_cursor: $response.data
         results: $response.data
       method: GET
       path: ""

@@ -16,13 +16,13 @@ import com.seed.pagination.resources.users.requests.ListUsersOffsetPaginationReq
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
 import com.seed.pagination.resources.users.types.ListUsersExtendedResponse;
 import com.seed.pagination.resources.users.types.ListUsersPaginationResponse;
-import com.seed.pagination.resources.users.types.NextPage;
-import com.seed.pagination.resources.users.types.Page;
+import com.seed.pagination.resources.users.types.User;
 import com.seed.pagination.resources.users.types.UsernameContainer;
 import com.seed.pagination.types.UsernameCursor;
 import java.io.IOException;
 import java.lang.Object;
 import java.lang.String;
+import java.util.List;
 import java.util.UUID;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -77,7 +77,7 @@ public class UsersClient {
         ResponseBody responseBody = response.body();
         if (response.isSuccessful()) {
           ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
-          String startingAfter = parsedResponse.getPage().flatMap(Page::getNext).map(NextPage::getStartingAfter);
+          List<User> startingAfter = parsedResponse.getData();
         }
         String responseBodyString = responseBody != null ? responseBody.string() : "{}";
         throw new SeedPaginationApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));

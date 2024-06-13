@@ -843,17 +843,22 @@ public abstract class AbstractEndpointWriter {
         @Override
         public GetSnippetOutput visitContainer(ContainerType container) {
             System.out.println("🤙 visitContainer");
+            if (propertyPath.isEmpty() && !container.isOptional()) {
+                addPreviousIfPresent();
+                return new GetSnippetOutput(typeReference, codeBlocks);
+            }
             // todo: make sure list handled properly
             com.fern.irV42.model.types.TypeReference ref = container
                     .getOptional()
                     .orElseThrow(
                             () -> new RuntimeException("Unexpected non-optional container type in snippet generation"));
-            System.out.println("previous: " + previousWasOptional);
-
-            boolean newPrevious = previousWasOptional || currentOptional;
-            System.out.println("new previous; " + newPrevious);
             return ref.visit(new NestedPropertySnippetGenerator(
-                    ref, propertyPath, newPrevious, true, previousProperty, previousTypeReference));
+                    ref,
+                    propertyPath,
+                    previousWasOptional || currentOptional,
+                    true,
+                    previousProperty,
+                    previousTypeReference));
         }
 
         @Override
@@ -885,6 +890,9 @@ public abstract class AbstractEndpointWriter {
                 public GetSnippetOutput visitObject(ObjectTypeDeclaration object) {
                     System.out.println("🤙🤙 visitObject");
                     addPreviousIfPresent();
+                    if (propertyPath.isEmpty()) {
+                        return new GetSnippetOutput(typeReference, codeBlocks);
+                    }
                     Optional<ObjectProperty> maybeMatchingProperty = object.getProperties().stream()
                             .filter(property -> property.getName()
                                     .getName()
@@ -938,13 +946,11 @@ public abstract class AbstractEndpointWriter {
         @Override
         public GetSnippetOutput visitPrimitive(PrimitiveType primitive) {
             System.out.println("🤙 visitPrimitive");
-            //            if (!propertyPath.isEmpty()) {
-            //                throw new RuntimeException("Unexpected primitive with property path remaining");
-            //            }
-            //            codeBlocks.add(getterCodeBlock());
+            if (!propertyPath.isEmpty()) {
+                throw new RuntimeException("Unexpected primitive with property path remaining");
+            }
             addPreviousIfPresent();
-            //            codeBlocks.add(getterCodeBlock(previousProperty.get(), typeReference));
-            return new GetSnippetOutput(previousTypeReference.get(), codeBlocks);
+            return new GetSnippetOutput(typeReference, codeBlocks);
         }
 
         @Override
