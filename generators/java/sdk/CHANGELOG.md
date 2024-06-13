@@ -40,7 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         response: ListUsersResponse
   ```
   
-  The generated `SyncPagingIterable<User>` and then be used to traverse through the `User` objects:
+  The generated `SyncPagingIterable<User>` can then be used to traverse through the `User` objects:
   ```java
   for (User user : client.users.list(...)) {
       System.out.println(user);
