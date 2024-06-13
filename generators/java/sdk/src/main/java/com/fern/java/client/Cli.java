@@ -29,9 +29,11 @@ import com.fern.java.client.generators.SuppliersGenerator;
 import com.fern.java.client.generators.TestGenerator;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
+import com.fern.java.generators.PaginationCoreGenerator;
 import com.fern.java.generators.StreamGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
+import com.fern.java.output.GeneratedFile;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.output.GeneratedResourcesJavaFile;
@@ -100,7 +102,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                         .build(),
                 clientPoetClassNameFactory,
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes());
-        generateClient(context, ir);
+        generateClient(context, ir, generatorExecClient);
     }
 
     @Override
@@ -116,7 +118,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
         ClientGeneratorContext context = new ClientGeneratorContext(
                 ir, generatorConfig, customConfig, clientPoetClassNameFactory, resolvedAuthSchemes);
-        GeneratedRootClient generatedClientWrapper = generateClient(context, ir);
+        GeneratedRootClient generatedClientWrapper = generateClient(context, ir, generatorExecClient);
         SampleAppGenerator sampleAppGenerator = new SampleAppGenerator(context, generatedClientWrapper);
         sampleAppGenerator.generateFiles().forEach(this::addGeneratedFile);
         subprojects.add(SampleAppGenerator.SAMPLE_APP_DIRECTORY);
@@ -149,10 +151,13 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
         ClientGeneratorContext context = new ClientGeneratorContext(
                 ir, generatorConfig, customConfig, clientPoetClassNameFactory, resolvedAuthSchemes);
-        generateClient(context, ir);
+        generateClient(context, ir, generatorExecClient);
     }
 
-    public GeneratedRootClient generateClient(ClientGeneratorContext context, IntermediateRepresentation ir) {
+    public GeneratedRootClient generateClient(
+            ClientGeneratorContext context,
+            IntermediateRepresentation ir,
+            DefaultGeneratorExecClient generatorExecClient) {
 
         // core
         ObjectMappersGenerator objectMappersGenerator = new ObjectMappersGenerator(context);
@@ -167,6 +172,10 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 context, context.getPoetClassNameFactory().getRequestOptionsClassName());
         GeneratedJavaFile generatedRequestOptions = requestOptionsGenerator.generateFile();
         this.addGeneratedFile(generatedRequestOptions);
+
+        PaginationCoreGenerator paginationCoreGenerator = new PaginationCoreGenerator(context, generatorExecClient);
+        List<GeneratedFile> generatedFiles = paginationCoreGenerator.generateFiles();
+        generatedFiles.forEach(this::addGeneratedFile);
 
         if (!ir.getIdempotencyHeaders().isEmpty()) {
             RequestOptionsGenerator idempotentRequestOptionsGenerator = new RequestOptionsGenerator(

@@ -76,6 +76,39 @@ public class TypeReferenceUtils {
         }
     }
 
+    public static class ContainerTypeToUnderlyingType implements ContainerType.Visitor<TypeReference> {
+
+        @Override
+        public TypeReference visitList(TypeReference list) {
+            return list;
+        }
+
+        @Override
+        public TypeReference visitMap(MapType map) {
+            throw new RuntimeException("Unexpected non collection type of literal");
+        }
+
+        @Override
+        public TypeReference visitOptional(TypeReference optional) {
+            return optional;
+        }
+
+        @Override
+        public TypeReference visitSet(TypeReference set) {
+            return set;
+        }
+
+        @Override
+        public TypeReference visitLiteral(Literal literal) {
+            throw new RuntimeException("Unexpected non collection type of literal");
+        }
+
+        @Override
+        public TypeReference _visitUnknown(Object unknownType) {
+            throw new RuntimeException("Unknown type reference type " + unknownType);
+        }
+    }
+
     public static class ContainerTypeToName implements ContainerType.Visitor<String> {
 
         @Override

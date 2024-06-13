@@ -5,6 +5,63 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.1] - 2024-06-13
+
+- Feature: Add support for cursor and offset pagination. 
+
+  For example, consider the following endpoint `/users` endpoint:
+
+  ```yaml
+  types:
+    User:
+      properties:
+        name: string
+
+    ListUserResponse:
+      properties:
+        next: optional<string>
+        data: list<User>
+
+  service:
+    auth: false
+    base-path: /users
+    endpoints:
+      list:
+        path: ""
+        method: GET
+        pagination:
+          cursor: $request.starting_after
+          next_cursor: $response.next
+          results: $response.data
+        request:
+          name: ListUsersRequest
+          query-parameters:
+            starting_after: optional<string>
+        response: ListUsersResponse
+  ```
+  
+  The generated `SyncPagingIterable<User>` can then be used to traverse through the `User` objects:
+  ```java
+  for (User user : client.users.list(...)) {
+      System.out.println(user);
+  }
+  ```
+  
+  Or stream them:
+  ```java
+  client.users.list(...).streamItems().map(user -> ...);
+  ```
+  
+  Or statically calling `nextPage()` to perform the pagination manually:
+  ```java
+  SyncPagingIterable<User> pager = client.users.list(...);
+  // First page
+  System.out.println(pager.getItems());
+  // Second page
+  pager = pager.nextPage();
+  System.out.println(pager.getItems());
+  ```
+
 ## [0.10.0] - 2024-06-07
 
 - Feature: The generator now supports BigInteger types.

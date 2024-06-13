@@ -244,7 +244,7 @@ public class ServiceClient {
                                 responseBody.string(),
                                 new TypeReference<
                                         Optional<com.seed.responseProperty.resources.service.types.Response>>() {});
-                return parsedResponse.map(res -> res.getData());
+                return parsedResponse.map(com.seed.responseProperty.resources.service.types.Response::getData);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedResponsePropertyApiError(
@@ -287,7 +287,7 @@ public class ServiceClient {
             if (response.isSuccessful()) {
                 Optional<WithDocs> parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
                         responseBody.string(), new TypeReference<Optional<WithDocs>>() {});
-                return parsedResponse.map(res -> res.getDocs());
+                return parsedResponse.map(WithDocs::getDocs);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedResponsePropertyApiError(
@@ -330,7 +330,7 @@ public class ServiceClient {
             if (response.isSuccessful()) {
                 Optional<StringResponse> parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
                         responseBody.string(), new TypeReference<Optional<StringResponse>>() {});
-                return parsedResponse.map(res -> res.getData());
+                return parsedResponse.map(StringResponse::getData);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedResponsePropertyApiError(
