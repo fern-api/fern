@@ -35,6 +35,7 @@ enum RubyClass {
     STRING = "String",
     BOOLEAN = "Boolean",
     LONG = "Long",
+    TIME = "Time",
     DATETIME = "DateTime",
     DATE = "Date",
     // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
@@ -138,6 +139,7 @@ export const MethodClassReference = new ClassReference({ name: RubyClass.METHOD 
 export const LongClassReference = new ClassReference({ name: RubyClass.LONG });
 export const FileClassReference = new ClassReference({ name: RubyClass.FILE });
 export const B64StringClassReference = new ClassReference({ name: RubyClass.BASE64 });
+export const TimeClassReference = new ClassReference({ name: RubyClass.TIME });
 export const NilValue = "nil";
 export const OmittedValue = "OMIT";
 

@@ -744,18 +744,16 @@ function generateRequestClientInitializer(
                 isAssignment: true
             })
         );
-
-        // TODO: gate oauth
-        // if (this.shouldGenerateOauth) {
-        functionBody.push(
-            new Expression({
-                leftSide: "@token",
-                rightSide: "token",
-                isAssignment: true
-            })
-        );
-        // }
     }
+
+    // TODO: do this for each auth header
+    functionBody.push(
+        new Expression({
+            leftSide: "@token",
+            rightSide: "token",
+            isAssignment: true
+        })
+    );
 
     const headerSetters: AstNode[] = [];
     let headersToSet = headersGenerator.getAdditionalHeadersAsProperties();

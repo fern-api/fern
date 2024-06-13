@@ -39,8 +39,9 @@ export class HeadersGenerator {
     public auth: ApiAuth;
 
     public isAuthRequired: boolean;
+    public shouldGeneratOauth: boolean;
 
-    constructor(headers: HttpHeader[], crf: ClassReferenceFactory, auth: ApiAuth) {
+    constructor(headers: HttpHeader[], crf: ClassReferenceFactory, auth: ApiAuth, shouldGeneratOauth: boolean) {
         this.headers = headers;
         this.crf = crf;
         this.auth = auth;
@@ -52,6 +53,7 @@ export class HeadersGenerator {
                 throw new Error("Unrecognized auth requirement.");
             }
         });
+        this.shouldGeneratOauth = shouldGeneratOauth;
     }
 
     // Get as parameters
@@ -95,34 +97,43 @@ export class HeadersGenerator {
                     })
                 ],
                 oauth: (oas: OAuthScheme) =>
-                    oas.configuration._visit<Parameter[]>({
-                        clientCredentials: (cc) =>
-                            forRootClient
-                                ? [
-                                      new Parameter({
-                                          name: "client_id",
-                                          type: StringClassReference,
-                                          isOptional: cc.clientIdEnvVar !== undefined || !this.isAuthRequired,
-                                          example: '"YOUR_CLIENT_ID"'
-                                      }),
-                                      new Parameter({
-                                          name: "client_secret",
-                                          type: StringClassReference,
-                                          isOptional: cc.clientSecretEnvVar !== undefined || !this.isAuthRequired,
-                                          example: '"YOUR_CLIENT_SECRET"'
-                                      })
-                                  ]
-                                : [
-                                      new Parameter({
-                                          name: "token",
-                                          type: [StringClassReference, MethodClassReference],
-                                          isOptional: true
-                                      })
-                                  ],
-                        _other: () => {
-                            throw new Error("Unrecognized auth scheme.");
-                        }
-                    }),
+                    this.shouldGeneratOauth
+                        ? oas.configuration._visit<Parameter[]>({
+                              clientCredentials: (cc) =>
+                                  forRootClient
+                                      ? [
+                                            new Parameter({
+                                                name: "client_id",
+                                                type: StringClassReference,
+                                                isOptional: cc.clientIdEnvVar !== undefined || !this.isAuthRequired,
+                                                example: '"YOUR_CLIENT_ID"'
+                                            }),
+                                            new Parameter({
+                                                name: "client_secret",
+                                                type: StringClassReference,
+                                                isOptional: cc.clientSecretEnvVar !== undefined || !this.isAuthRequired,
+                                                example: '"YOUR_CLIENT_SECRET"'
+                                            })
+                                        ]
+                                      : [
+                                            new Parameter({
+                                                name: "token",
+                                                type: [StringClassReference, MethodClassReference],
+                                                isOptional: true
+                                            })
+                                        ],
+                              _other: () => {
+                                  throw new Error("Unrecognized auth scheme.");
+                              }
+                          })
+                        : [
+                              new Parameter({
+                                  name: this.OAUTH_TOKEN_NAME,
+                                  type: StringClassReference,
+                                  isOptional: !this.isAuthRequired,
+                                  example: '"YOUR_AUTH_TOKEN"'
+                              })
+                          ],
                 header: (has: HeaderAuthScheme) => [
                     new Parameter({
                         name: has.name.name.snakeCase.safeName,
@@ -223,15 +234,17 @@ export class HeadersGenerator {
     private getOAuthBearerAuthorizationHeader(oas: OAuthScheme): [string, string] {
         // The meat of the logic for bearer auth happens within an oauth token provider, which passes
         // the get token function to the RequestClient, so this is just leveraging that.
-        return oas.configuration._visit<[string, string]>({
-            clientCredentials: (cc) => {
-                // Note we're hardcoding to bearer auth and assuming that we're setting an `@token` property
-                return ['"Authorization"', `${cc.tokenPrefix} #{@${this.OAUTH_TOKEN_NAME}}`];
-            },
-            _other: () => {
-                throw new Error("Unrecognized auth scheme.");
-            }
-        });
+        return this.shouldGeneratOauth
+            ? oas.configuration._visit<[string, string]>({
+                  clientCredentials: (cc) => {
+                      // Note we're hardcoding to bearer auth and assuming that we're setting an `@token` property
+                      return ['"Authorization"', `${cc.tokenPrefix} #{@${this.OAUTH_TOKEN_NAME}}`];
+                  },
+                  _other: () => {
+                      throw new Error("Unrecognized auth scheme.");
+                  }
+              })
+            : ['"Authorization"', `Bearer #{@${this.OAUTH_TOKEN_NAME}}`];
     }
 
     private getBasicAuthorizationHeader(bas: BasicAuthScheme): [string, string] {

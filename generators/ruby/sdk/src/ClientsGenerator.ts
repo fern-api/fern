@@ -35,6 +35,8 @@ import {
 import { FileUploadUtility } from "./utils/FileUploadUtility";
 import { HeadersGenerator } from "./utils/HeadersGenerator";
 import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClass";
+import { AccesToken } from "./utils/oauth/AccessToken";
+import { OauthTokenProvider } from "./utils/oauth/OauthTokenProvider";
 import { RequestOptions } from "./utils/RequestOptionsClass";
 import { RootImportsFile } from "./utils/RootImportsFile";
 
@@ -56,6 +58,8 @@ export class ClientsGenerator {
     private intermediateRepresentation: IntermediateRepresentation;
     private crf: ClassReferenceFactory;
     private locationGenerator: LocationGenerator;
+
+    private shouldGenerateOauth: boolean;
 
     // TODO: should this be an object instead of a string
     private defaultEnvironment: string | undefined;
@@ -110,6 +114,8 @@ export class ClientsGenerator {
             this.intermediateRepresentation.pathParameters,
             this.intermediateRepresentation.basePath
         );
+
+        this.shouldGenerateOauth = this.gc.config.generateOauthClients;
     }
 
     public generateFiles(): GeneratedFile[] {
@@ -140,7 +146,8 @@ export class ClientsGenerator {
         const headersGenerator = new HeadersGenerator(
             this.intermediateRepresentation.headers,
             this.crf,
-            this.intermediateRepresentation.auth
+            this.intermediateRepresentation.auth,
+            this.shouldGenerateOauth
         );
 
         this.gc.logger.debug("[Ruby] Preparing request options classes.");
@@ -389,6 +396,24 @@ export class ClientsGenerator {
         const typeExporter = new RootImportsFile(allTypeImports);
         const typeExporterLocation = "types_export";
         clientFiles.push(new GeneratedRubyFile({ rootNode: typeExporter, fullPath: typeExporterLocation }));
+
+        if (this.shouldGenerateOauth) {
+            const accessTokenClass = new AccesToken(this.clientName, this.intermediateRepresentation.auth.schemes);
+            const oauthTokenProvider = new OauthTokenProvider({
+                clientName: this.clientName,
+                oauthConfiguration: this.intermediateRepresentation.auth.schemes,
+                oauthType: "client_credentials",
+                requestClientReference: syncClientClass.classReference,
+                accessTokenReference: accessTokenClass.classReference
+            });
+            const oauthModule = Module_.wrapInModules(this.clientName, [accessTokenClass, oauthTokenProvider]);
+            clientFiles.push(
+                new GeneratedRubyFile({
+                    rootNode: oauthModule,
+                    fullPath: "oauth"
+                })
+            );
+        }
 
         clientFiles.push(
             generateRootPackage(
