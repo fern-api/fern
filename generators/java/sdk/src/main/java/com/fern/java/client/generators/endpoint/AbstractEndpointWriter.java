@@ -918,9 +918,7 @@ public abstract class AbstractEndpointWriter {
     private class NestedPropertySnippetGenerator
             implements com.fern.ir.model.types.TypeReference.Visitor<GetSnippetOutput> {
 
-        /**
-         * The current type from which we need get a property value.
-         */
+        /** The current type from which we need get a property value. */
         private final com.fern.ir.model.types.TypeReference typeReference;
 
         private final List<Name> propertyPath;
