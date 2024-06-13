@@ -13,6 +13,7 @@ types:
       method: WebhookHttpMethod
       headers: list<http.HttpHeader>
       payload: WebhookPayload
+      examples: optional<list<ExampleWebhookCall>>
 
   WebhookName: commons.Name
 
@@ -42,3 +43,13 @@ types:
     enum:
       - GET
       - POST
+
+  ExampleWebhookCall:
+    docs: |
+      An example webhook call. For now, this only includes the payload,
+      but it can be easily extended to support other endpoint properties
+      (e.g. headers).
+    extends: commons.WithDocs
+    properties:
+      name: optional<commons.Name>
+      payload: types.ExampleTypeReference

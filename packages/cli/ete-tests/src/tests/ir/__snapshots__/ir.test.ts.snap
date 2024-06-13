@@ -35318,6 +35318,7 @@ exports[`ir {"name":"webhooks"} 1`] = `
                         }
                     ]
                 },
+                "examples": null,
                 "availability": null,
                 "docs": "This is a webhook to receive notifications."
             }

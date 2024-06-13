@@ -10671,12 +10671,12 @@ exports[`open api parser aries docs 1`] = `
                         {
                           "did": "WgWxqztrNooG92RXvxSTWv",
                           "id": "string",
-                          "recipientKeys": {
-                            "0": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                          },
-                          "routingKeys": {
-                            "0": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                          },
+                          "recipientKeys": [
+                            "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                          ],
+                          "routingKeys": [
+                            "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                          ],
                           "serviceEndpoint": "http://192.168.56.101:8020",
                           "type": "string",
                         },
@@ -10830,12 +10830,12 @@ exports[`open api parser aries docs 1`] = `
                     {
                       "did": "WgWxqztrNooG92RXvxSTWv",
                       "id": "string",
-                      "recipientKeys": {
-                        "0": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                      },
-                      "routingKeys": {
-                        "0": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                      },
+                      "recipientKeys": [
+                        "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                      ],
+                      "routingKeys": [
+                        "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                      ],
                       "serviceEndpoint": "http://192.168.56.101:8020",
                       "type": "string",
                     },
@@ -10899,12 +10899,12 @@ exports[`open api parser aries docs 1`] = `
                         {
                           "did": "WgWxqztrNooG92RXvxSTWv",
                           "id": "string",
-                          "recipientKeys": {
-                            "0": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                          },
-                          "routingKeys": {
-                            "0": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                          },
+                          "recipientKeys": [
+                            "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                          ],
+                          "routingKeys": [
+                            "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                          ],
                           "serviceEndpoint": "http://192.168.56.101:8020",
                           "type": "string",
                         },
@@ -33757,12 +33757,12 @@ exports[`open api parser aries simple 1`] = `
                         {
                           "did": "WgWxqztrNooG92RXvxSTWv",
                           "id": "string",
-                          "recipientKeys": {
-                            "0": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                          },
-                          "routingKeys": {
-                            "0": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                          },
+                          "recipientKeys": [
+                            "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                          ],
+                          "routingKeys": [
+                            "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                          ],
                           "serviceEndpoint": "http://192.168.56.101:8020",
                           "type": "string",
                         },
@@ -33916,12 +33916,12 @@ exports[`open api parser aries simple 1`] = `
                     {
                       "did": "WgWxqztrNooG92RXvxSTWv",
                       "id": "string",
-                      "recipientKeys": {
-                        "0": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                      },
-                      "routingKeys": {
-                        "0": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                      },
+                      "recipientKeys": [
+                        "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                      ],
+                      "routingKeys": [
+                        "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                      ],
                       "serviceEndpoint": "http://192.168.56.101:8020",
                       "type": "string",
                     },
@@ -33985,12 +33985,12 @@ exports[`open api parser aries simple 1`] = `
                         {
                           "did": "WgWxqztrNooG92RXvxSTWv",
                           "id": "string",
-                          "recipientKeys": {
-                            "0": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                          },
-                          "routingKeys": {
-                            "0": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                          },
+                          "recipientKeys": [
+                            "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                          ],
+                          "routingKeys": [
+                            "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                          ],
                           "serviceEndpoint": "http://192.168.56.101:8020",
                           "type": "string",
                         },

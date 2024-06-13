@@ -40,7 +40,14 @@ function convertWebhookGroup(webhookGroup: Ir.webhooks.WebhookGroup): APIV1Write
                 })
             ),
             payload: convertWebhookPayload(webhook.payload),
-            examples: []
+            examples:
+                webhook.examples != null
+                    ? webhook.examples.map((example) => {
+                          return {
+                              payload: example.payload.jsonExample
+                          };
+                      })
+                    : []
         };
     });
 }

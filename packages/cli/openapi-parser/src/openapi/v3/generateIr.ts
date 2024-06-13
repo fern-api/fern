@@ -26,7 +26,7 @@ import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSche
 import { getGeneratedTypeName } from "../../schema/utils/getSchemaName";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext";
-import { convertPathItem } from "./converters/convertPathItem";
+import { convertPathItem, convertPathItemToWebhooks } from "./converters/convertPathItem";
 import { convertSecurityScheme } from "./converters/convertSecurityScheme";
 import { convertServer } from "./converters/convertServer";
 import { ERROR_NAMES } from "./converters/convertToHttpError";
@@ -38,6 +38,7 @@ import { getFernGroups } from "./extensions/getFernGroups";
 import { getGlobalHeaders } from "./extensions/getGlobalHeaders";
 import { getIdempotencyHeaders } from "./extensions/getIdempotencyHeaders";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
+import { getWebhooksPathsObject } from "./getWebhookPathsObject";
 import { hasIncompleteExample } from "./hasIncompleteExample";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 import { runResolutions } from "./runResolutions";
@@ -94,7 +95,7 @@ export function generateIr({
 
     const endpointsWithExample: EndpointWithExample[] = [];
     const webhooks: Webhook[] = [];
-    Object.entries(openApi.paths).forEach(([path, pathItem]) => {
+    Object.entries(openApi.paths ?? {}).forEach(([path, pathItem]) => {
         if (pathItem == null) {
             return;
         }
@@ -126,6 +127,20 @@ export function generateIr({
                 default:
                     assertNever(operation);
             }
+        }
+    });
+    Object.entries(getWebhooksPathsObject(openApi)).forEach(([path, pathItem]) => {
+        if (pathItem == null) {
+            return;
+        }
+        taskContext.logger.debug(`Converting path ${path}`);
+        const convertedWebhooks = convertPathItemToWebhooks(path, pathItem, openApi, context);
+        for (const webhook of convertedWebhooks) {
+            const webhookAudiences = getAudiences({ operation: webhook });
+            if (audiences.length > 0 && !audiences.some((audience) => webhookAudiences.includes(audience))) {
+                continue;
+            }
+            webhooks.push(webhook.value);
         }
     });
 

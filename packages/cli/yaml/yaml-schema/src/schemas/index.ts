@@ -29,6 +29,7 @@ export {
 export { ExampleTypeReferenceSchema } from "./ExampleTypeReferenceSchema";
 export { ExampleTypeSchema } from "./ExampleTypeSchema";
 export { ExampleTypeValueSchema } from "./ExampleTypeValueSchema";
+export { ExampleWebhookCallSchema } from "./ExampleWebhookCallSchema";
 export { ExampleWebSocketSession } from "./ExampleWebSocketSession";
 export * from "./file-schemas";
 export { HeaderAuthSchemeSchema } from "./HeaderAuthSchemeSchema";
