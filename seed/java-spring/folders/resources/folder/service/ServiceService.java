@@ -15,11 +15,15 @@ import resources.folder.service.exceptions.NotFoundError;
     path = "/service"
 )
 public interface ServiceService {
-  @GetMapping("")
+  @GetMapping(
+      value = "",
+      produces = "application/json"
+  )
   void endpoint();
 
   @PostMapping(
       value = "",
+      produces = "application/json",
       consumes = "application/json"
   )
   void unknownRequest(@RequestBody Object body) throws NotFoundError;

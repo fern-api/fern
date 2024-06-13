@@ -1,0 +1,248 @@
+[
+    {
+        "sdk": {
+            "package": "fern_unions",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/{id}",
+            "method": "GET",
+            "identifierOverride": "endpoint_union.get"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import SeedUnions\n\nclient = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.union.get(\n\t$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "id=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "PATH",
+                                    "path": "id",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": "from seed.client import AsyncSeedUnions\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.union.get(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "id=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "PATH",
+                                        "path": "id",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_unions",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/",
+            "method": "PATCH",
+            "identifierOverride": "endpoint_union.update"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import SeedUnions\n\nclient = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.union.update(\n\t$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "request=$FERN_INPUT",
+                            "discriminantField": "type",
+                            "members": {
+                                "circle": {
+                                    "imports": [
+                                        "from seed import Shape_Circle"
+                                    ],
+                                    "isOptional": true,
+                                    "templateString": "request=Shape_Circle($FERN_INPUT, )",
+                                    "templateInputs": [
+                                        {
+                                            "type": "template",
+                                            "value": {
+                                                "imports": [],
+                                                "isOptional": true,
+                                                "templateString": "radius=$FERN_INPUT",
+                                                "templateInputs": [
+                                                    {
+                                                        "location": "BODY",
+                                                        "path": "radius",
+                                                        "type": "payload"
+                                                    }
+                                                ],
+                                                "type": "generic"
+                                            }
+                                        }
+                                    ],
+                                    "type": "generic"
+                                },
+                                "square": {
+                                    "imports": [
+                                        "from seed import Shape_Square"
+                                    ],
+                                    "isOptional": true,
+                                    "templateString": "request=Shape_Square($FERN_INPUT, )",
+                                    "templateInputs": [
+                                        {
+                                            "type": "template",
+                                            "value": {
+                                                "imports": [],
+                                                "isOptional": true,
+                                                "templateString": "length=$FERN_INPUT",
+                                                "templateInputs": [
+                                                    {
+                                                        "location": "BODY",
+                                                        "path": "length",
+                                                        "type": "payload"
+                                                    }
+                                                ],
+                                                "type": "generic"
+                                            }
+                                        }
+                                    ],
+                                    "type": "generic"
+                                }
+                            },
+                            "templateInput": {
+                                "location": "RELATIVE"
+                            },
+                            "type": "discriminatedUnion"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": "from seed.client import AsyncSeedUnions\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.union.update(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "request=$FERN_INPUT",
+                                "discriminantField": "type",
+                                "members": {
+                                    "circle": {
+                                        "imports": [
+                                            "from seed import Shape_Circle"
+                                        ],
+                                        "isOptional": true,
+                                        "templateString": "request=Shape_Circle($FERN_INPUT, )",
+                                        "templateInputs": [
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "radius=$FERN_INPUT",
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "radius",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                }
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "square": {
+                                        "imports": [
+                                            "from seed import Shape_Square"
+                                        ],
+                                        "isOptional": true,
+                                        "templateString": "request=Shape_Square($FERN_INPUT, )",
+                                        "templateInputs": [
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "length=$FERN_INPUT",
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "length",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                }
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                "templateInput": {
+                                    "location": "RELATIVE"
+                                },
+                                "type": "discriminatedUnion"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
+    }
+]

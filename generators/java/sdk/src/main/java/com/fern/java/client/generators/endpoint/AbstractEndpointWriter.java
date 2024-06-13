@@ -18,49 +18,49 @@ package com.fern.java.client.generators.endpoint;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fern.irV42.model.commons.ErrorId;
-import com.fern.irV42.model.commons.Name;
-import com.fern.irV42.model.commons.TypeId;
-import com.fern.irV42.model.environment.EnvironmentBaseUrlId;
-import com.fern.irV42.model.errors.ErrorDeclaration;
-import com.fern.irV42.model.http.BytesRequest;
-import com.fern.irV42.model.http.CursorPagination;
-import com.fern.irV42.model.http.FileDownloadResponse;
-import com.fern.irV42.model.http.FileProperty;
-import com.fern.irV42.model.http.FileUploadRequest;
-import com.fern.irV42.model.http.FileUploadRequestProperty;
-import com.fern.irV42.model.http.HttpEndpoint;
-import com.fern.irV42.model.http.HttpRequestBody;
-import com.fern.irV42.model.http.HttpRequestBodyReference;
-import com.fern.irV42.model.http.HttpResponse;
-import com.fern.irV42.model.http.HttpService;
-import com.fern.irV42.model.http.InlinedRequestBody;
-import com.fern.irV42.model.http.InlinedRequestBodyProperty;
-import com.fern.irV42.model.http.JsonResponse;
-import com.fern.irV42.model.http.JsonResponseBody;
-import com.fern.irV42.model.http.JsonResponseBodyWithProperty;
-import com.fern.irV42.model.http.JsonStreamChunk;
-import com.fern.irV42.model.http.OffsetPagination;
-import com.fern.irV42.model.http.Pagination.Visitor;
-import com.fern.irV42.model.http.PathParameter;
-import com.fern.irV42.model.http.SdkRequest;
-import com.fern.irV42.model.http.SdkRequestBodyType;
-import com.fern.irV42.model.http.SdkRequestShape;
-import com.fern.irV42.model.http.SdkRequestWrapper;
-import com.fern.irV42.model.http.SseStreamChunk;
-import com.fern.irV42.model.http.StreamingResponse;
-import com.fern.irV42.model.http.TextResponse;
-import com.fern.irV42.model.http.TextStreamChunk;
-import com.fern.irV42.model.types.AliasTypeDeclaration;
-import com.fern.irV42.model.types.DeclaredTypeName;
-import com.fern.irV42.model.types.EnumTypeDeclaration;
-import com.fern.irV42.model.types.ObjectProperty;
-import com.fern.irV42.model.types.ObjectTypeDeclaration;
-import com.fern.irV42.model.types.PrimitiveType;
-import com.fern.irV42.model.types.Type;
-import com.fern.irV42.model.types.TypeDeclaration;
-import com.fern.irV42.model.types.UndiscriminatedUnionTypeDeclaration;
-import com.fern.irV42.model.types.UnionTypeDeclaration;
+import com.fern.ir.model.commons.ErrorId;
+import com.fern.ir.model.commons.Name;
+import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.environment.EnvironmentBaseUrlId;
+import com.fern.ir.model.errors.ErrorDeclaration;
+import com.fern.ir.model.http.BytesRequest;
+import com.fern.ir.model.http.CursorPagination;
+import com.fern.ir.model.http.FileDownloadResponse;
+import com.fern.ir.model.http.FileProperty;
+import com.fern.ir.model.http.FileUploadRequest;
+import com.fern.ir.model.http.FileUploadRequestProperty;
+import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.HttpRequestBody;
+import com.fern.ir.model.http.HttpRequestBodyReference;
+import com.fern.ir.model.http.HttpResponseBody;
+import com.fern.ir.model.http.HttpService;
+import com.fern.ir.model.http.InlinedRequestBody;
+import com.fern.ir.model.http.InlinedRequestBodyProperty;
+import com.fern.ir.model.http.JsonResponse;
+import com.fern.ir.model.http.JsonResponseBody;
+import com.fern.ir.model.http.JsonResponseBodyWithProperty;
+import com.fern.ir.model.http.JsonStreamChunk;
+import com.fern.ir.model.http.OffsetPagination;
+import com.fern.ir.model.http.Pagination.Visitor;
+import com.fern.ir.model.http.PathParameter;
+import com.fern.ir.model.http.SdkRequest;
+import com.fern.ir.model.http.SdkRequestBodyType;
+import com.fern.ir.model.http.SdkRequestShape;
+import com.fern.ir.model.http.SdkRequestWrapper;
+import com.fern.ir.model.http.SseStreamChunk;
+import com.fern.ir.model.http.StreamingResponse;
+import com.fern.ir.model.http.TextResponse;
+import com.fern.ir.model.http.TextStreamChunk;
+import com.fern.ir.model.types.AliasTypeDeclaration;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.EnumTypeDeclaration;
+import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
+import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.Type;
+import com.fern.ir.model.types.TypeDeclaration;
+import com.fern.ir.model.types.UndiscriminatedUnionTypeDeclaration;
+import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
@@ -231,7 +231,8 @@ public abstract class AbstractEndpointWriter {
 
         // Step 5: Get request initializer
         boolean sendContentType = httpEndpoint.getRequestBody().isPresent()
-                || httpEndpoint.getResponse().isPresent();
+                || (httpEndpoint.getResponse().isPresent()
+                        && httpEndpoint.getResponse().get().getBody().isPresent());
         CodeBlock requestInitializer = getInitializeRequestCodeBlock(
                 clientOptionsField,
                 generatedClientOptions,
@@ -356,9 +357,12 @@ public abstract class AbstractEndpointWriter {
                         getOkhttpRequestName())
                 .addStatement("$T $L = $N.body()", ResponseBody.class, getResponseBodyName(), getResponseName())
                 .beginControlFlow("if ($L.isSuccessful())", getResponseName());
-        if (httpEndpoint.getResponse().isPresent()) {
+        if (httpEndpoint.getResponse().isPresent()
+                && httpEndpoint.getResponse().get().getBody().isPresent()) {
             httpEndpoint
                     .getResponse()
+                    .get()
+                    .getBody()
                     .get()
                     .visit(new SuccessResponseWriter(
                             httpResponseBuilder, endpointMethodBuilder, clientGeneratorContext, generatedObjectMapper));
@@ -567,7 +571,7 @@ public abstract class AbstractEndpointWriter {
                 .build();
     }
 
-    private final class SuccessResponseWriter implements HttpResponse.Visitor<Void> {
+    private final class SuccessResponseWriter implements HttpResponseBody.Visitor<Void> {
 
         private final com.squareup.javapoet.CodeBlock.Builder httpResponseBuilder;
         private final MethodSpec.Builder endpointMethodBuilder;
@@ -700,12 +704,12 @@ public abstract class AbstractEndpointWriter {
                                 getResultVariableName(),
                                 endpointName,
                                 methodParameters);
-                        com.fern.irV42.model.types.ContainerType resultContainerType = resultSnippet
+                        com.fern.ir.model.types.ContainerType resultContainerType = resultSnippet
                                 .typeReference
                                 .getContainer()
                                 .orElseThrow(
                                         () -> new RuntimeException("Unexpected non-container pagination result type"));
-                        com.fern.irV42.model.types.TypeReference resultUnderlyingType =
+                        com.fern.ir.model.types.TypeReference resultUnderlyingType =
                                 resultContainerType.visit(new ContainerTypeToUnderlyingType());
                         endpointMethodBuilder.returns(ParameterizedTypeName.get(
                                 pagerClassName,
@@ -717,11 +721,11 @@ public abstract class AbstractEndpointWriter {
 
                     @Override
                     public Void visitOffset(OffsetPagination offset) {
-                        com.fern.irV42.model.types.TypeReference pageType =
+                        com.fern.ir.model.types.TypeReference pageType =
                                 offset.getPage().getValueType();
                         Boolean pageIsOptional = pageType.visit(new TypeReferenceIsOptional(true));
                         if (pageIsOptional) {
-                            com.fern.irV42.model.types.TypeReference numberType =
+                            com.fern.ir.model.types.TypeReference numberType =
                                     pageType.getContainer().get().visit(new ContainerTypeToUnderlyingType());
                             httpResponseBuilder.addStatement(CodeBlock.of(
                                     "$T $L = $L.get$L().map(page -> page + 1).orElse(1)",
@@ -781,12 +785,12 @@ public abstract class AbstractEndpointWriter {
                                 getResultVariableName(),
                                 endpointName,
                                 methodParameters);
-                        com.fern.irV42.model.types.ContainerType resultContainerType = resultSnippet
+                        com.fern.ir.model.types.ContainerType resultContainerType = resultSnippet
                                 .typeReference
                                 .getContainer()
                                 .orElseThrow(
                                         () -> new RuntimeException("Unexpected non-container pagination result type"));
-                        com.fern.irV42.model.types.TypeReference resultUnderlyingType =
+                        com.fern.ir.model.types.TypeReference resultUnderlyingType =
                                 resultContainerType.visit(new ContainerTypeToUnderlyingType());
                         endpointMethodBuilder.returns(ParameterizedTypeName.get(
                                 pagerClassName,
@@ -821,24 +825,24 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public Void visitStreaming(StreamingResponse streaming) {
-            com.fern.irV42.model.types.TypeReference bodyType = streaming.visit(new StreamingResponse.Visitor<>() {
+            com.fern.ir.model.types.TypeReference bodyType = streaming.visit(new StreamingResponse.Visitor<>() {
                 @Override
-                public com.fern.irV42.model.types.TypeReference visitJson(JsonStreamChunk json) {
+                public com.fern.ir.model.types.TypeReference visitJson(JsonStreamChunk json) {
                     return json.getPayload();
                 }
 
                 @Override
-                public com.fern.irV42.model.types.TypeReference visitText(TextStreamChunk text) {
+                public com.fern.ir.model.types.TypeReference visitText(TextStreamChunk text) {
                     throw new RuntimeException("Returning streamed text is not supported.");
                 }
 
                 @Override
-                public com.fern.irV42.model.types.TypeReference visitSse(SseStreamChunk sse) {
+                public com.fern.ir.model.types.TypeReference visitSse(SseStreamChunk sse) {
                     return sse.getPayload();
                 }
 
                 @Override
-                public com.fern.irV42.model.types.TypeReference _visitUnknown(Object unknownType) {
+                public com.fern.ir.model.types.TypeReference _visitUnknown(Object unknownType) {
                     throw new RuntimeException("Encountered unknown json response body type: " + unknownType);
                 }
             });
@@ -865,7 +869,7 @@ public abstract class AbstractEndpointWriter {
             return null;
         }
 
-        private boolean isAliasContainer(com.fern.irV42.model.types.TypeReference responseBodyType) {
+        private boolean isAliasContainer(com.fern.ir.model.types.TypeReference responseBodyType) {
             if (responseBodyType.getNamed().isPresent()) {
                 TypeId typeId = responseBodyType.getNamed().get().getTypeId();
                 TypeDeclaration typeDeclaration =
@@ -885,7 +889,7 @@ public abstract class AbstractEndpointWriter {
     private SnippetAndResultType getNestedPropertySnippet(
             Optional<List<Name>> propertyPath,
             ObjectProperty objectProperty,
-            com.fern.irV42.model.types.TypeReference typeReference) {
+            com.fern.ir.model.types.TypeReference typeReference) {
         ArrayList<Name> fullPropertyPath = propertyPath.map(ArrayList::new).orElse(new ArrayList<>());
         fullPropertyPath.add(objectProperty.getName().getName());
         GetSnippetOutput getSnippetOutput = typeReference.visit(new NestedPropertySnippetGenerator(
@@ -899,12 +903,12 @@ public abstract class AbstractEndpointWriter {
     }
 
     private class SnippetAndResultType {
-        private final com.fern.irV42.model.types.TypeReference typeReference;
+        private final com.fern.ir.model.types.TypeReference typeReference;
         private final TypeName typeName;
         private final CodeBlock codeBlock;
 
         private SnippetAndResultType(
-                com.fern.irV42.model.types.TypeReference typeReference, TypeName typeName, CodeBlock codeBlock) {
+                com.fern.ir.model.types.TypeReference typeReference, TypeName typeName, CodeBlock codeBlock) {
             this.typeReference = typeReference;
             this.typeName = typeName;
             this.codeBlock = codeBlock;
@@ -912,27 +916,27 @@ public abstract class AbstractEndpointWriter {
     }
 
     private class NestedPropertySnippetGenerator
-            implements com.fern.irV42.model.types.TypeReference.Visitor<GetSnippetOutput> {
+            implements com.fern.ir.model.types.TypeReference.Visitor<GetSnippetOutput> {
 
         /**
          * The current type from which we need get a property value.
          */
-        private final com.fern.irV42.model.types.TypeReference typeReference;
+        private final com.fern.ir.model.types.TypeReference typeReference;
 
         private final List<Name> propertyPath;
         private final Boolean previousWasOptional;
         private final Boolean currentOptional;
         private final Optional<Name> previousProperty;
-        private final Optional<com.fern.irV42.model.types.TypeReference> previousTypeReference;
+        private final Optional<com.fern.ir.model.types.TypeReference> previousTypeReference;
         private final ArrayList<CodeBlock> codeBlocks = new ArrayList<>();
 
         private NestedPropertySnippetGenerator(
-                com.fern.irV42.model.types.TypeReference typeReference,
+                com.fern.ir.model.types.TypeReference typeReference,
                 List<Name> propertyPath,
                 Boolean previousWasOptional,
                 Boolean currentOptional,
                 Optional<Name> previousProperty,
-                Optional<com.fern.irV42.model.types.TypeReference> previousTypeReference) {
+                Optional<com.fern.ir.model.types.TypeReference> previousTypeReference) {
             this.typeReference = typeReference;
             this.propertyPath = propertyPath;
             this.previousWasOptional = previousWasOptional;
@@ -951,8 +955,7 @@ public abstract class AbstractEndpointWriter {
             return propertyPath.get(0);
         }
 
-        private CodeBlock getterCodeBlock(
-                Name property, com.fern.irV42.model.types.TypeReference overrideTypeReference) {
+        private CodeBlock getterCodeBlock(Name property, com.fern.ir.model.types.TypeReference overrideTypeReference) {
             if (previousWasOptional) {
                 String mappingOperation = currentOptional ? "flatMap" : "map";
                 return CodeBlock.of(
@@ -965,12 +968,12 @@ public abstract class AbstractEndpointWriter {
         }
 
         @Override
-        public GetSnippetOutput visitContainer(com.fern.irV42.model.types.ContainerType container) {
+        public GetSnippetOutput visitContainer(com.fern.ir.model.types.ContainerType container) {
             if (propertyPath.isEmpty() && !container.isOptional()) {
                 addPreviousIfPresent();
                 return new GetSnippetOutput(typeReference, codeBlocks);
             }
-            com.fern.irV42.model.types.TypeReference ref = container
+            com.fern.ir.model.types.TypeReference ref = container
                     .getOptional()
                     .orElseThrow(
                             () -> new RuntimeException("Unexpected non-optional container type in snippet generation"));
@@ -1012,8 +1015,8 @@ public abstract class AbstractEndpointWriter {
                     if (propertyPath.isEmpty()) {
                         if (currentOptional || previousWasOptional) {
                             return new GetSnippetOutput(
-                                    com.fern.irV42.model.types.TypeReference.container(
-                                            com.fern.irV42.model.types.ContainerType.optional(typeReference)),
+                                    com.fern.ir.model.types.TypeReference.container(
+                                            com.fern.ir.model.types.ContainerType.optional(typeReference)),
                                     codeBlocks);
                         }
                         return new GetSnippetOutput(typeReference, codeBlocks);
@@ -1076,8 +1079,8 @@ public abstract class AbstractEndpointWriter {
             addPreviousIfPresent();
             if (currentOptional || previousWasOptional) {
                 return new GetSnippetOutput(
-                        com.fern.irV42.model.types.TypeReference.container(
-                                com.fern.irV42.model.types.ContainerType.optional(typeReference)),
+                        com.fern.ir.model.types.TypeReference.container(
+                                com.fern.ir.model.types.ContainerType.optional(typeReference)),
                         codeBlocks);
             }
             return new GetSnippetOutput(typeReference, codeBlocks);
@@ -1095,10 +1098,10 @@ public abstract class AbstractEndpointWriter {
     }
 
     private class GetSnippetOutput {
-        private final com.fern.irV42.model.types.TypeReference typeReference;
+        private final com.fern.ir.model.types.TypeReference typeReference;
         private final List<CodeBlock> code;
 
-        private GetSnippetOutput(com.fern.irV42.model.types.TypeReference typeReference, List<CodeBlock> code) {
+        private GetSnippetOutput(com.fern.ir.model.types.TypeReference typeReference, List<CodeBlock> code) {
             this.typeReference = typeReference;
             this.code = code;
         }
@@ -1172,7 +1175,7 @@ public abstract class AbstractEndpointWriter {
         }
     }
 
-    private class TypeReferenceIsOptional implements com.fern.irV42.model.types.TypeReference.Visitor<Boolean> {
+    private class TypeReferenceIsOptional implements com.fern.ir.model.types.TypeReference.Visitor<Boolean> {
 
         private final boolean visitNamedType;
 
@@ -1181,7 +1184,7 @@ public abstract class AbstractEndpointWriter {
         }
 
         @Override
-        public Boolean visitContainer(com.fern.irV42.model.types.ContainerType container) {
+        public Boolean visitContainer(com.fern.ir.model.types.ContainerType container) {
             return container.isOptional();
         }
 

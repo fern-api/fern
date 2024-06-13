@@ -10,6 +10,17 @@
                 "type": "typescript",
                 "client": "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";\n\nconst seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient;\nawait seedUndiscriminatedUnions.union.get(\"string\");\n"
             }
+        },
+        {
+            "id": {
+                "path": "/metadata",
+                "method": "GET",
+                "identifier_override": "endpoint_union.getMetadata"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";\n\nconst seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient;\nawait seedUndiscriminatedUnions.union.getMetadata();\n"
+            }
         }
     ],
     "types": {}

@@ -1,7 +1,7 @@
 package com.fern.java;
 
-import com.fern.irV42.model.ir.IntermediateRepresentation;
-import com.fern.irV42.model.types.DeclaredTypeName;
+import com.fern.ir.model.ir.IntermediateRepresentation;
+import com.fern.ir.model.types.DeclaredTypeName;
 import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
 import java.util.Arrays;

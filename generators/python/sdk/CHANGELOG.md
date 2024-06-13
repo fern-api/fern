@@ -5,10 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.7] - 2024-06-12
+
+- Fix: The unchecked base model stops special casing defaults and pydantic v2.
+
+## [2.9.6] - 2024-06-11
+
+- Fix: Offset based pagination is now 1-based, as opposed to 0 based
+- Fix: The HTTP client now passes in additional body properties from the request options, even if the body is empty (regression from the client migration in 2.8.0)
+
+## [2.9.5] - 2024-06-10
+
+- Fix: Unions with elements that specify no properties are generated correctly.
+- Fix: Unions with a single type now have a valid type alias (rather than an invalid `typing.Union`).
+
+## [2.9.4] - 2024-06-07
+
+- Fix: The unchecked base model now handles pulling the discriminant from a dict, not just a model/object.
+
 ## [2.9.3] - 2024-06-06
 
-- Fix: Snippet templates for discrminated unions now specify the `template_input` property which is 
-  required to actually see snippets of instantiating discrminated unions. 
+- Fix: Snippet templates for discrminated unions now specify the `template_input` property which is
+  required to actually see snippets of instantiating discrminated unions.
 
 ## [2.9.2] - 2024-06-06
 

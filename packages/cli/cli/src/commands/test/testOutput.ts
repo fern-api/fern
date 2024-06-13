@@ -52,7 +52,8 @@ export async function testOutput({
             generationLanguage: undefined,
             keywords: undefined,
             smartCasing: false,
-            disableExamples: false
+            disableExamples: false,
+            readme: undefined
         });
 
         const mockServer = new MockServer({

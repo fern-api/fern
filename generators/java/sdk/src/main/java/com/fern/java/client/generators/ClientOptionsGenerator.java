@@ -17,9 +17,9 @@
 package com.fern.java.client.generators;
 
 import com.fern.generator.exec.model.config.GeneratorConfig;
-import com.fern.irV42.model.ir.PlatformHeaders;
-import com.fern.irV42.model.variables.VariableDeclaration;
-import com.fern.irV42.model.variables.VariableId;
+import com.fern.ir.model.ir.PlatformHeaders;
+import com.fern.ir.model.variables.VariableDeclaration;
+import com.fern.ir.model.variables.VariableId;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;

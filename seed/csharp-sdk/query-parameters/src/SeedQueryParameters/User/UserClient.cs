@@ -24,6 +24,7 @@ public class UserClient
             { "deadline", request.Deadline.ToString() },
             { "bytes", request.Bytes.ToString() },
             { "user", request.User.ToString() },
+            { "userList", request.UserList.ToString() },
             { "keyValue", request.KeyValue.ToString() },
             { "nestedUser", request.NestedUser.ToString() },
             { "excludeUser", request.ExcludeUser.ToString() },

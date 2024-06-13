@@ -28,6 +28,7 @@ class UserClient:
         deadline: dt.datetime,
         bytes: str,
         user: User,
+        user_list: typing.Sequence[User],
         key_value: typing.Dict[str, str],
         nested_user: NestedUser,
         exclude_user: typing.Union[User, typing.Sequence[User]],
@@ -50,6 +51,8 @@ class UserClient:
         bytes : str
 
         user : User
+
+        user_list : typing.Sequence[User]
 
         key_value : typing.Dict[str, str]
 
@@ -97,6 +100,12 @@ class UserClient:
                 name="string",
                 tags=["string"],
             ),
+            user_list=[
+                User(
+                    name="string",
+                    tags=["string"],
+                )
+            ],
             key_value={"string": "string"},
             optional_string="string",
             nested_user=NestedUser(
@@ -127,6 +136,7 @@ class UserClient:
                 "deadline": serialize_datetime(deadline),
                 "bytes": jsonable_encoder(bytes),
                 "user": jsonable_encoder(user),
+                "userList": jsonable_encoder(user_list),
                 "keyValue": jsonable_encoder(key_value),
                 "optionalString": optional_string,
                 "nestedUser": jsonable_encoder(nested_user),
@@ -158,6 +168,7 @@ class AsyncUserClient:
         deadline: dt.datetime,
         bytes: str,
         user: User,
+        user_list: typing.Sequence[User],
         key_value: typing.Dict[str, str],
         nested_user: NestedUser,
         exclude_user: typing.Union[User, typing.Sequence[User]],
@@ -180,6 +191,8 @@ class AsyncUserClient:
         bytes : str
 
         user : User
+
+        user_list : typing.Sequence[User]
 
         key_value : typing.Dict[str, str]
 
@@ -227,6 +240,12 @@ class AsyncUserClient:
                 name="string",
                 tags=["string"],
             ),
+            user_list=[
+                User(
+                    name="string",
+                    tags=["string"],
+                )
+            ],
             key_value={"string": "string"},
             optional_string="string",
             nested_user=NestedUser(
@@ -257,6 +276,7 @@ class AsyncUserClient:
                 "deadline": serialize_datetime(deadline),
                 "bytes": jsonable_encoder(bytes),
                 "user": jsonable_encoder(user),
+                "userList": jsonable_encoder(user_list),
                 "keyValue": jsonable_encoder(key_value),
                 "optionalString": optional_string,
                 "nestedUser": jsonable_encoder(nested_user),

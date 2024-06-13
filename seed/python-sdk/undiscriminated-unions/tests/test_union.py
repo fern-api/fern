@@ -15,3 +15,13 @@ async def test_get(client: SeedUndiscriminatedUnions, async_client: AsyncSeedUnd
 
     async_response = await async_client.union.get(request="string")
     validate_response(async_response, expected_response, expected_types)
+
+
+async def test_get_metadata(client: SeedUndiscriminatedUnions, async_client: AsyncSeedUndiscriminatedUnions) -> None:
+    expected_response: typing.Any = {"name": "exampleName", "value": "exampleValue", "default": "exampleDefault"}
+    expected_types: typing.Any = ("dict", {0: (None, None), 1: (None, None), 2: (None, None)})
+    response = client.union.get_metadata()
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.union.get_metadata()
+    validate_response(async_response, expected_response, expected_types)

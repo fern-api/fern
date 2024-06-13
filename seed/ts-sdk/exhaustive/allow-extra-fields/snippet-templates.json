@@ -1072,6 +1072,22 @@
                                                     "type": "dict"
                                                 },
                                                 "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "bigint: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "bigint",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
                                             }
                                         ],
                                         "type": "generic"
@@ -1410,6 +1426,22 @@
                                                         "type": "payload"
                                                     },
                                                     "type": "dict"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "bigint: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "bigint",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
                                                 },
                                                 "type": "template"
                                             }
@@ -1900,6 +1932,22 @@
                                                                 "type": "dict"
                                                             },
                                                             "type": "template"
+                                                        },
+                                                        {
+                                                            "value": {
+                                                                "imports": [],
+                                                                "templateString": "bigint: $FERN_INPUT",
+                                                                "isOptional": true,
+                                                                "templateInputs": [
+                                                                    {
+                                                                        "location": "BODY",
+                                                                        "path": "NestedObject.bigint",
+                                                                        "type": "payload"
+                                                                    }
+                                                                ],
+                                                                "type": "generic"
+                                                            },
+                                                            "type": "template"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -2243,6 +2291,22 @@
                                                                 "type": "dict"
                                                             },
                                                             "type": "template"
+                                                        },
+                                                        {
+                                                            "value": {
+                                                                "imports": [],
+                                                                "templateString": "bigint: $FERN_INPUT",
+                                                                "isOptional": true,
+                                                                "templateInputs": [
+                                                                    {
+                                                                        "location": "BODY",
+                                                                        "path": "NestedObject.bigint",
+                                                                        "type": "payload"
+                                                                    }
+                                                                ],
+                                                                "type": "generic"
+                                                            },
+                                                            "type": "template"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -2561,6 +2625,22 @@
                                                                         "type": "payload"
                                                                     },
                                                                     "type": "dict"
+                                                                },
+                                                                "type": "template"
+                                                            },
+                                                            {
+                                                                "value": {
+                                                                    "imports": [],
+                                                                    "templateString": "bigint: $FERN_INPUT",
+                                                                    "isOptional": true,
+                                                                    "templateInputs": [
+                                                                        {
+                                                                            "location": "RELATIVE",
+                                                                            "path": "NestedObject.bigint",
+                                                                            "type": "payload"
+                                                                        }
+                                                                    ],
+                                                                    "type": "generic"
                                                                 },
                                                                 "type": "template"
                                                             }
@@ -3441,7 +3521,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "'$FERN_INPUT'",
+                                        "templateString": "$FERN_INPUT",
                                         "discriminantField": "animal",
                                         "members": {
                                             "dog": {
@@ -3452,9 +3532,9 @@
                                                     {
                                                         "value": {
                                                             "imports": [],
-                                                            "templateString": "{\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                                            "templateString": "$FERN_INPUT",
                                                             "isOptional": true,
-                                                            "inputDelimiter": ",\n\t\t\t\t",
+                                                            "inputDelimiter": ",\n\t\t\t",
                                                             "templateInputs": [
                                                                 {
                                                                     "value": {
@@ -3504,9 +3584,9 @@
                                                     {
                                                         "value": {
                                                             "imports": [],
-                                                            "templateString": "{\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                                            "templateString": "$FERN_INPUT",
                                                             "isOptional": true,
-                                                            "inputDelimiter": ",\n\t\t\t\t",
+                                                            "inputDelimiter": ",\n\t\t\t",
                                                             "templateInputs": [
                                                                 {
                                                                     "value": {
@@ -3868,6 +3948,22 @@
                                                         "type": "payload"
                                                     },
                                                     "type": "dict"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "bigint: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "NestedObject.bigint",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
                                                 },
                                                 "type": "template"
                                             }

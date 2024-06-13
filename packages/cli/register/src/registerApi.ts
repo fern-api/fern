@@ -29,7 +29,8 @@ export async function registerApi({
         generationLanguage: undefined,
         keywords: undefined,
         smartCasing: false,
-        disableExamples: false
+        disableExamples: false,
+        readme: undefined
     });
 
     const fdrService = createFdrService({

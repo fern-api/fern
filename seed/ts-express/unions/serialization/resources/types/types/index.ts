@@ -7,5 +7,6 @@ export * from "./UnionWithLiteral";
 export * from "./UnionWithBaseProperties";
 export * from "./UnionWithTime";
 export * from "./UnionWithOptionalTime";
+export * from "./UnionWithSingleElement";
 export * from "./Foo";
 export * from "./Bar";

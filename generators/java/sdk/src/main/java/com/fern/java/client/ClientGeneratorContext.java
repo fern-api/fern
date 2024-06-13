@@ -1,8 +1,8 @@
 package com.fern.java.client;
 
 import com.fern.generator.exec.model.config.GeneratorConfig;
-import com.fern.irV42.model.auth.AuthScheme;
-import com.fern.irV42.model.ir.IntermediateRepresentation;
+import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorContext;
 import java.util.List;
 
