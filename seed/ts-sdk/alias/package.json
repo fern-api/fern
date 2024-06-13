@@ -1,7 +1,6 @@
 {
     "name": "@fern/alias",
     "version": "0.0.1",
-    "private": false,
     "repository": "https://github.com/alias/fern",
     "main": "./index.js",
     "types": "./index.d.ts",
@@ -12,12 +11,12 @@
         "test": "jest"
     },
     "devDependencies": {
-        "jest": "29.7.0",
         "@types/jest": "29.5.5",
-        "ts-jest": "29.1.1",
-        "jest-environment-jsdom": "29.7.0",
         "@types/node": "17.0.33",
+        "jest": "29.7.0",
+        "jest-environment-jsdom": "29.7.0",
         "prettier": "2.7.1",
+        "ts-jest": "29.1.1",
         "typescript": "4.6.4"
     }
 }

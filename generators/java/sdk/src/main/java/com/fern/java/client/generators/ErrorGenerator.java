@@ -2,8 +2,8 @@ package com.fern.java.client.generators;
 
 import static com.fern.java.utils.PoetUtils.createGetter;
 
-import com.fern.irV42.model.errors.ErrorDeclaration;
-import com.fern.irV42.model.types.TypeReference;
+import com.fern.ir.model.errors.ErrorDeclaration;
+import com.fern.ir.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;

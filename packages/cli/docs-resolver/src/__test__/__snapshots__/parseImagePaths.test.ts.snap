@@ -630,6 +630,108 @@ description: >-
 ]
 `;
 
+exports[`hume should replace all images with full path 1`] = `
+[
+  "/Volume/git/fern/my/docs/img/evi-tools-view.png",
+  "/Volume/git/fern/my/docs/img/create-function-interface.png",
+  "/Volume/git/fern/my/docs/img/add-tool-view.png",
+]
+`;
+
+exports[`hume should replace all images with full path 2`] = `
+[
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "      <img src="../img/evi-tools-view.png" alt="EVI Tools page" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "      <img src="/Volume/git/fern/my/docs/img/evi-tools-view.png" alt="EVI Tools page" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "      <img src="../img/create-function-interface.png" alt="EVI Create function interface" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "      <img src="/Volume/git/fern/my/docs/img/create-function-interface.png" alt="EVI Create function interface" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "      <img src="../img/add-tool-view.png" alt="Add tool to configuration within the Hume portal"/>
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "      <img src="/Volume/git/fern/my/docs/img/add-tool-view.png" alt="Add tool to configuration within the Hume portal"/>
+",
+  },
+]
+`;
+
+exports[`hume should replace all images with full path 3`] = `
+[
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "      <img src="../img/evi-tools-view.png" alt="EVI Tools page" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "      <img src="/Volume/git/fern/my/docs/img/evi-tools-view.png" alt="EVI Tools page" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "      <img src="../img/create-function-interface.png" alt="EVI Create function interface" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "      <img src="/Volume/git/fern/my/docs/img/create-function-interface.png" alt="EVI Create function interface" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "      <img src="../img/add-tool-view.png" alt="Add tool to configuration within the Hume portal"/>
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "      <img src="/Volume/git/fern/my/docs/img/add-tool-view.png" alt="Add tool to configuration within the Hume portal"/>
+",
+  },
+]
+`;
+
 exports[`multimedia-file should replace all images with full path 1`] = `
 [
   "/Volume/git/fern/my/docs/folder/image.png",

@@ -23,7 +23,8 @@ import * as SeedExhaustive from "../../../../index";
  *             set: new Set(["string"]),
  *             map: {
  *                 1: "string"
- *             }
+ *             },
+ *             bigint: "123456789123456789"
  *         }
  *     }
  */

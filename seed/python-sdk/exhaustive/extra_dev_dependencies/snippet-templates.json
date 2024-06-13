@@ -1234,6 +1234,22 @@
                             },
                             "type": "dict"
                         }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "bigint=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": "bigint",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
                     }
                 ],
                 "inputDelimiter": ",\n\t",
@@ -1475,6 +1491,22 @@
                                     "path": "map"
                                 },
                                 "type": "dict"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "bigint=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "bigint",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
                             }
                         }
                     ],
@@ -1786,6 +1818,22 @@
                             },
                             "type": "dict"
                         }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "bigint=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": "bigint",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
                     }
                 ],
                 "inputDelimiter": ",\n\t",
@@ -2011,6 +2059,22 @@
                                     "path": "map"
                                 },
                                 "type": "dict"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "bigint=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "bigint",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
                             }
                         }
                     ],
@@ -2519,6 +2583,22 @@
                                         },
                                         "type": "dict"
                                     }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "bigint=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "NestedObject.bigint",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
                                 }
                             ],
                             "inputDelimiter": ",\n\t\t",
@@ -2774,6 +2854,22 @@
                                                 "path": "NestedObject.map"
                                             },
                                             "type": "dict"
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "value": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "bigint=$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": "NestedObject.bigint",
+                                                    "type": "payload"
+                                                }
+                                            ],
+                                            "type": "generic"
                                         }
                                     }
                                 ],
@@ -3059,6 +3155,22 @@
                                         },
                                         "type": "dict"
                                     }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "bigint=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "NestedObject.bigint",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
                                 }
                             ],
                             "inputDelimiter": ",\n\t\t",
@@ -3330,6 +3442,22 @@
                                                 "path": "NestedObject.map"
                                             },
                                             "type": "dict"
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "value": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "bigint=$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": "NestedObject.bigint",
+                                                    "type": "payload"
+                                                }
+                                            ],
+                                            "type": "generic"
                                         }
                                     }
                                 ],
@@ -3613,6 +3741,22 @@
                                                         },
                                                         "type": "dict"
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "value": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "templateString": "bigint=$FERN_INPUT",
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "RELATIVE",
+                                                                "path": "NestedObject.bigint",
+                                                                "type": "payload"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    }
                                                 }
                                             ],
                                             "inputDelimiter": ",\n\t\t\t\t",
@@ -3893,6 +4037,22 @@
                                                                 "path": "NestedObject.map"
                                                             },
                                                             "type": "dict"
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "value": {
+                                                            "imports": [],
+                                                            "isOptional": true,
+                                                            "templateString": "bigint=$FERN_INPUT",
+                                                            "templateInputs": [
+                                                                {
+                                                                    "location": "RELATIVE",
+                                                                    "path": "NestedObject.bigint",
+                                                                    "type": "payload"
+                                                                }
+                                                            ],
+                                                            "type": "generic"
                                                         }
                                                     }
                                                 ],
@@ -5563,6 +5723,22 @@
                                         },
                                         "type": "dict"
                                     }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "bigint=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "NestedObject.bigint",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
                                 }
                             ],
                             "inputDelimiter": ",\n\t\t",
@@ -5834,6 +6010,22 @@
                                                 "path": "NestedObject.map"
                                             },
                                             "type": "dict"
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "value": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "bigint=$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": "NestedObject.bigint",
+                                                    "type": "payload"
+                                                }
+                                            ],
+                                            "type": "generic"
                                         }
                                     }
                                 ],

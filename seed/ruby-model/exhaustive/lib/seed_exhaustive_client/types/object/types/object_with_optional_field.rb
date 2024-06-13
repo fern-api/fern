@@ -33,6 +33,8 @@ module SeedExhaustiveClient
         attr_reader :set
         # @return [Hash{Integer => String}]
         attr_reader :map
+        # @return [String]
+        attr_reader :bigint
         # @return [OpenStruct] Additional properties unmapped to the current class definition
         attr_reader :additional_properties
         # @return [Object]
@@ -53,10 +55,11 @@ module SeedExhaustiveClient
         # @param list [Array<String>]
         # @param set [Set<String>]
         # @param map [Hash{Integer => String}]
+        # @param bigint [String]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
         def initialize(string: OMIT, integer: OMIT, long: OMIT, double: OMIT, bool: OMIT, datetime: OMIT, date: OMIT,
-                       uuid: OMIT, base_64: OMIT, list: OMIT, set: OMIT, map: OMIT, additional_properties: nil)
+                       uuid: OMIT, base_64: OMIT, list: OMIT, set: OMIT, map: OMIT, bigint: OMIT, additional_properties: nil)
           @string = string if string != OMIT
           @integer = integer if integer != OMIT
           @long = long if long != OMIT
@@ -69,6 +72,7 @@ module SeedExhaustiveClient
           @list = list if list != OMIT
           @set = set if set != OMIT
           @map = map if map != OMIT
+          @bigint = bigint if bigint != OMIT
           @additional_properties = additional_properties
           @_field_set = {
             "string": string,
@@ -82,7 +86,8 @@ module SeedExhaustiveClient
             "base64": base_64,
             "list": list,
             "set": set,
-            "map": map
+            "map": map,
+            "bigint": bigint
           }.reject do |_k, v|
             v == OMIT
           end
@@ -112,6 +117,7 @@ module SeedExhaustiveClient
             set = Set.new(set)
           end
           map = struct["map"]
+          bigint = struct["bigint"]
           new(
             string: string,
             integer: integer,
@@ -125,6 +131,7 @@ module SeedExhaustiveClient
             list: list,
             set: set,
             map: map,
+            bigint: bigint,
             additional_properties: struct
           )
         end
@@ -155,6 +162,7 @@ module SeedExhaustiveClient
           obj.list&.is_a?(Array) != false || raise("Passed value for field obj.list is not the expected type, validation failed.")
           obj.set&.is_a?(Set) != false || raise("Passed value for field obj.set is not the expected type, validation failed.")
           obj.map&.is_a?(Hash) != false || raise("Passed value for field obj.map is not the expected type, validation failed.")
+          obj.bigint&.is_a?(String) != false || raise("Passed value for field obj.bigint is not the expected type, validation failed.")
         end
       end
     end

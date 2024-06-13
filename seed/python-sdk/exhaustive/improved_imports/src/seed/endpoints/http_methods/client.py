@@ -155,6 +155,7 @@ class HttpMethodsClient:
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
         set_: typing.Optional[typing.Set[str]] = OMIT,
         map_: typing.Optional[typing.Dict[int, str]] = OMIT,
+        bigint: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
@@ -185,6 +186,8 @@ class HttpMethodsClient:
         set_ : typing.Optional[typing.Set[str]]
 
         map_ : typing.Optional[typing.Dict[int, str]]
+
+        bigint : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -224,6 +227,7 @@ class HttpMethodsClient:
             list_=["string"],
             set_={"string"},
             map_={1: "string"},
+            bigint="123456789123456789",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -242,6 +246,7 @@ class HttpMethodsClient:
                 "list": list_,
                 "set": set_,
                 "map": map_,
+                "bigint": bigint,
             },
             request_options=request_options,
             omit=OMIT,
@@ -430,6 +435,7 @@ class AsyncHttpMethodsClient:
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
         set_: typing.Optional[typing.Set[str]] = OMIT,
         map_: typing.Optional[typing.Dict[int, str]] = OMIT,
+        bigint: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
@@ -460,6 +466,8 @@ class AsyncHttpMethodsClient:
         set_ : typing.Optional[typing.Set[str]]
 
         map_ : typing.Optional[typing.Dict[int, str]]
+
+        bigint : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -499,6 +507,7 @@ class AsyncHttpMethodsClient:
             list_=["string"],
             set_={"string"},
             map_={1: "string"},
+            bigint="123456789123456789",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -517,6 +526,7 @@ class AsyncHttpMethodsClient:
                 "list": list_,
                 "set": set_,
                 "map": map_,
+                "bigint": bigint,
             },
             request_options=request_options,
             omit=OMIT,

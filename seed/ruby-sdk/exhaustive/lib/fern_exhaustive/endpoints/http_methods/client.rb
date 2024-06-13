@@ -97,6 +97,7 @@ module SeedExhaustiveClient
       #   * :list (Array<String>)
       #   * :set (Set<String>)
       #   * :map (Hash{Integer => String})
+      #   * :bigint (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
       # @example
@@ -234,6 +235,7 @@ module SeedExhaustiveClient
       #   * :list (Array<String>)
       #   * :set (Set<String>)
       #   * :map (Hash{Integer => String})
+      #   * :bigint (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
       # @example

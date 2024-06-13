@@ -15,6 +15,7 @@ import resources.inlinedrequest.requests.SendEnumInlinedRequest;
 public interface InlinedRequestService {
   @PostMapping(
       value = "/inlined",
+      produces = "application/json",
       consumes = "application/json"
   )
   void send(@RequestBody SendEnumInlinedRequest body);
