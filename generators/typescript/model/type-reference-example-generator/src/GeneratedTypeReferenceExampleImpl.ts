@@ -186,7 +186,11 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     case "alias":
                         return this.getExampleAsPropertyName({ example: example.value, context, opts });
                     case "undiscriminatedUnion":
-                        throw new Error("Cannot convert undiscriminated union to property name");
+                        return this.getExampleAsPropertyName({
+                            example: example.singleUnionType,
+                            context,
+                            opts
+                        });
                     default:
                         assertNever(example);
                 }
