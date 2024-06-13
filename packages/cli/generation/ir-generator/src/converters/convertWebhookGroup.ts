@@ -162,7 +162,8 @@ function convertWebhookExamples({
         throw new Error(`Example webhook payload is not an object. Got: ${JSON.stringify(webhook.payload)}`);
     }
     // The payload example is a simple object of key, value pairs, so we format the example as
-    // a map<string, unknown> for simplicity.
+    // a map<string, unknown> for simplicity. If we ever add support for webhooks in the generated
+    // SDKs, we'll need to revisit this.
     return examples.map((example) => ({
         docs: webhook.docs,
         name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
