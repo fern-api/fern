@@ -19,14 +19,14 @@ class _Factory:
 class UnionWithLiteral(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get_as_union(self) -> typing.Union[_UnionWithLiteral.Fern]:
+    def get_as_union(self) -> _UnionWithLiteral.Fern:
         return self.__root__
 
     def visit(self, fern: typing.Callable[[typing.Literal["fern"]], T_Result]) -> T_Result:
         if self.__root__.type == "fern":
             return fern(self.__root__.value)
 
-    __root__: typing.Union[_UnionWithLiteral.Fern]
+    __root__: _UnionWithLiteral.Fern
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

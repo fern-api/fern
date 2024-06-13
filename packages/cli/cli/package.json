@@ -76,7 +76,7 @@
     "@types/get-port": "^4.2.0",
     "ansi-escapes": "^5.0.0",
     "axios": "^0.28.0",
-    "boxen": "^7.0.0",
+    "boxen": "^7.1.1",
     "chalk": "^5.0.1",
     "get-port": "^7.1.0",
     "immer": "^9.0.15",

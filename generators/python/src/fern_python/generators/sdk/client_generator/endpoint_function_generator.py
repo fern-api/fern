@@ -351,6 +351,13 @@ class EndpointFunctionGenerator:
                 if request_body_parameters is not None and request_body_parameters.get_files() is not None
                 else None
             )
+
+            if self.is_paginated and self.pagination is not None and self.pagination.get_as_union().type == "offset":
+                page_parameter = self.pagination.get_as_union().page
+                writer.write_line(
+                    f"{page_parameter.name.name.snake_case.safe_name} = {page_parameter.name.name.snake_case.safe_name} or 1"
+                )
+
             writer.write_node(
                 HttpX.make_request(
                     is_streaming=is_streaming,

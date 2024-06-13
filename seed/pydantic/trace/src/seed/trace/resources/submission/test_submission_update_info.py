@@ -18,6 +18,26 @@ class TestSubmissionUpdateInfo_Running(pydantic_v1.BaseModel):
     type: typing.Literal["running"] = "running"
 
 
+class TestSubmissionUpdateInfo_Stopped(pydantic_v1.BaseModel):
+    type: typing.Literal["stopped"] = "stopped"
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
+
+
 class TestSubmissionUpdateInfo_Errored(pydantic_v1.BaseModel):
     value: ErrorInfo
     type: typing.Literal["errored"] = "errored"
@@ -71,9 +91,31 @@ class TestSubmissionUpdateInfo_RecordedTestCase(pydantic_v1.BaseModel):
         json_encoders = {dt.datetime: serialize_datetime}
 
 
+class TestSubmissionUpdateInfo_Finished(pydantic_v1.BaseModel):
+    type: typing.Literal["finished"] = "finished"
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
+
+
 TestSubmissionUpdateInfo = typing.Union[
     TestSubmissionUpdateInfo_Running,
+    TestSubmissionUpdateInfo_Stopped,
     TestSubmissionUpdateInfo_Errored,
     TestSubmissionUpdateInfo_GradedTestCase,
     TestSubmissionUpdateInfo_RecordedTestCase,
+    TestSubmissionUpdateInfo_Finished,
 ]

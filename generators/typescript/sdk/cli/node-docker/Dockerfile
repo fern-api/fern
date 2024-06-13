@@ -9,6 +9,7 @@ COPY generators/typescript/utils/core-utilities/callback-queue/src/ /assets/call
 COPY generators/typescript/utils/core-utilities/auth/src/ /assets/auth
 COPY generators/typescript/utils/core-utilities/zurg/src/ /assets/zurg
 COPY generators/typescript/utils/core-utilities/base/src/ /assets/base-core-utilities
+COPY generators/typescript/sdk/features.yml /assets/features.yml
 RUN find /assets -name __test__ -exec rm -rf {} \+
 
 COPY generators/typescript/sdk/cli/node-docker/dist/nodeCli.cjs /nodeCli.cjs

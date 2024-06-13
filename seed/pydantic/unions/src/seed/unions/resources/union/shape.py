@@ -29,7 +29,7 @@ class Base(pydantic_v1.BaseModel):
         json_encoders = {dt.datetime: serialize_datetime}
 
 
-class Shape_Circle(pydantic_v1.BaseModel):
+class Shape_Circle(Base):
     radius: float
     type: typing.Literal["circle"] = "circle"
 
@@ -46,11 +46,13 @@ class Shape_Circle(pydantic_v1.BaseModel):
         )
 
     class Config:
+        allow_population_by_field_name = True
+        populate_by_name = True
         extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}
 
 
-class Shape_Square(pydantic_v1.BaseModel):
+class Shape_Square(Base):
     length: float
     type: typing.Literal["square"] = "square"
 
@@ -67,6 +69,8 @@ class Shape_Square(pydantic_v1.BaseModel):
         )
 
     class Config:
+        allow_population_by_field_name = True
+        populate_by_name = True
         extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}
 

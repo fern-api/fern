@@ -545,6 +545,48 @@ func (u *UnionWithPrimitive) Accept(visitor UnionWithPrimitiveVisitor) error {
 	return fmt.Errorf("type %T does not define a non-empty union type", u)
 }
 
+type UnionWithSingleElement struct {
+	Type string
+	Foo  *Foo
+}
+
+func (u *UnionWithSingleElement) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	u.Type = unmarshaler.Type
+	switch unmarshaler.Type {
+	case "foo":
+		value := new(Foo)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		u.Foo = value
+	}
+	return nil
+}
+
+func (u UnionWithSingleElement) MarshalJSON() ([]byte, error) {
+	if u.Foo != nil {
+		return core.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+}
+
+type UnionWithSingleElementVisitor interface {
+	VisitFoo(*Foo) error
+}
+
+func (u *UnionWithSingleElement) Accept(visitor UnionWithSingleElementVisitor) error {
+	if u.Foo != nil {
+		return visitor.VisitFoo(u.Foo)
+	}
+	return fmt.Errorf("type %T does not define a non-empty union type", u)
+}
+
 type UnionWithTime struct {
 	Type     string
 	Value    int

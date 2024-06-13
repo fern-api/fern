@@ -108,6 +108,13 @@ fixtures:
     - customConfig:
         inline_request_params: true
       outputFolder: inline_request_params
+  unions:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        pydantic_config:
+          include_union_utils: true
+      outputFolder: union-utils 
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
@@ -138,6 +145,7 @@ allowedFailures:
   - trace
   - circular-references-advanced
   - oauth-client-credentials-default
+  - unions:union-utils
   # === Allowed failures due to unit testing ===
   # We don't have oauth tests yet
   - oauth-client-credentials

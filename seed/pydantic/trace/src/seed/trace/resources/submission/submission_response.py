@@ -11,9 +11,49 @@ from ..commons.problem_id import ProblemId
 from .code_execution_update import CodeExecutionUpdate
 
 
+class SubmissionResponse_ServerInitialized(pydantic_v1.BaseModel):
+    type: typing.Literal["serverInitialized"] = "serverInitialized"
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
+
+
 class SubmissionResponse_ProblemInitialized(pydantic_v1.BaseModel):
     value: ProblemId
     type: typing.Literal["problemInitialized"] = "problemInitialized"
+
+
+class SubmissionResponse_WorkspaceInitialized(pydantic_v1.BaseModel):
+    type: typing.Literal["workspaceInitialized"] = "workspaceInitialized"
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class SubmissionResponse_ServerErrored(pydantic_v1.BaseModel):
@@ -67,7 +107,9 @@ class SubmissionResponse_Terminated(pydantic_v1.BaseModel):
 
 
 SubmissionResponse = typing.Union[
+    SubmissionResponse_ServerInitialized,
     SubmissionResponse_ProblemInitialized,
+    SubmissionResponse_WorkspaceInitialized,
     SubmissionResponse_ServerErrored,
     SubmissionResponse_CodeExecutionUpdate,
     SubmissionResponse_Terminated,

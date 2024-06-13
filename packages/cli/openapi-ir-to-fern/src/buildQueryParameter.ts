@@ -124,6 +124,50 @@ function getQueryParameterTypeReference({
                 };
             }
 
+            if (resolvedSchema.value.schemas.length === 2) {
+                const [firstSchema, secondSchema] = resolvedSchema.value.schemas;
+                if (
+                    firstSchema != null &&
+                    secondSchema != null &&
+                    hasSamePrimitiveValueType({ array: firstSchema, primitive: secondSchema })
+                ) {
+                    return {
+                        value: buildTypeReference({
+                            schema: Schema.optional({
+                                nameOverride: schema.nameOverride,
+                                generatedName: schema.generatedName,
+                                value: secondSchema,
+                                description: schema.description,
+                                groupName: undefined
+                            }),
+                            context,
+                            fileContainingReference
+                        }),
+                        allowMultiple: true
+                    };
+                }
+                if (
+                    firstSchema != null &&
+                    secondSchema != null &&
+                    hasSamePrimitiveValueType({ array: firstSchema, primitive: secondSchema })
+                ) {
+                    return {
+                        value: buildTypeReference({
+                            schema: Schema.optional({
+                                nameOverride: schema.nameOverride,
+                                generatedName: schema.generatedName,
+                                value: firstSchema,
+                                description: schema.description,
+                                groupName: undefined
+                            }),
+                            context,
+                            fileContainingReference
+                        }),
+                        allowMultiple: true
+                    };
+                }
+            }
+
             // If no literal values, just pick the first schema of the undiscriminated union
             for (const [_, schema] of Object.entries(resolvedSchema.value.schemas)) {
                 return getQueryParameterTypeReference({
@@ -202,6 +246,50 @@ function getQueryParameterTypeReference({
                 };
             }
 
+            if (schema.value.value.schemas.length === 2) {
+                const [firstSchema, secondSchema] = schema.value.value.schemas;
+                if (
+                    firstSchema != null &&
+                    secondSchema != null &&
+                    hasSamePrimitiveValueType({ array: firstSchema, primitive: secondSchema })
+                ) {
+                    return {
+                        value: buildTypeReference({
+                            schema: Schema.optional({
+                                nameOverride: schema.nameOverride,
+                                generatedName: schema.generatedName,
+                                value: secondSchema,
+                                description: schema.description,
+                                groupName: undefined
+                            }),
+                            context,
+                            fileContainingReference
+                        }),
+                        allowMultiple: true
+                    };
+                }
+                if (
+                    firstSchema != null &&
+                    secondSchema != null &&
+                    hasSamePrimitiveValueType({ array: secondSchema, primitive: firstSchema })
+                ) {
+                    return {
+                        value: buildTypeReference({
+                            schema: Schema.optional({
+                                nameOverride: schema.nameOverride,
+                                generatedName: schema.generatedName,
+                                value: firstSchema,
+                                description: schema.description,
+                                groupName: undefined
+                            }),
+                            context,
+                            fileContainingReference
+                        }),
+                        allowMultiple: true
+                    };
+                }
+            }
+
             // If no literal values, just pick the first schema of the undiscriminated union
             for (const [_, oneOfSchema] of Object.entries(schema.value.value.schemas)) {
                 return getQueryParameterTypeReference({
@@ -254,4 +342,13 @@ function getQueryParameterTypeReference({
             allowMultiple: false
         };
     }
+}
+
+function hasSamePrimitiveValueType({ array, primitive }: { array: Schema; primitive: Schema }): boolean {
+    return (
+        array?.type === "array" &&
+        array.value.type === "primitive" &&
+        primitive?.type === "primitive" &&
+        array.value.schema.type === primitive.schema.type
+    );
 }
