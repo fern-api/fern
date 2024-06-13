@@ -29,13 +29,16 @@ export function buildWebhooks(context: OpenApiIrConverterContext): void {
                 context,
                 fileContainingReference: webhookLocation.file
             }),
-            examples: webhook.examples.map((exampleWebhookCall) => {
-                return {
-                    docs: exampleWebhookCall.description,
-                    name: exampleWebhookCall.name,
-                    payload: convertFullExample(exampleWebhookCall.payload)
-                };
-            })
+            examples:
+                webhook.examples != null
+                    ? webhook.examples.map((exampleWebhookCall) => {
+                          return {
+                              docs: exampleWebhookCall.description,
+                              name: exampleWebhookCall.name,
+                              payload: convertFullExample(exampleWebhookCall.payload)
+                          };
+                      })
+                    : undefined
         };
         context.builder.addWebhook(webhookLocation.file, {
             name: webhookLocation.endpointId,
