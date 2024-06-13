@@ -944,7 +944,7 @@ public abstract class AbstractEndpointWriter {
             //            codeBlocks.add(getterCodeBlock());
             addPreviousIfPresent();
             //            codeBlocks.add(getterCodeBlock(previousProperty.get(), typeReference));
-            return new GetSnippetOutput(typeReference, codeBlocks);
+            return new GetSnippetOutput(previousTypeReference.get(), codeBlocks);
         }
 
         @Override
