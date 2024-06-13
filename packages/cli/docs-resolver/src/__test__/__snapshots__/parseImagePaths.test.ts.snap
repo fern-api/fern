@@ -630,6 +630,12 @@ description: >-
 ]
 `;
 
+exports[`hume should replace all images with full path 1`] = `[]`;
+
+exports[`hume should replace all images with full path 2`] = `[]`;
+
+exports[`hume should replace all images with full path 3`] = `[]`;
+
 exports[`multimedia-file should replace all images with full path 1`] = `
 [
   "/Volume/git/fern/my/docs/folder/image.png",

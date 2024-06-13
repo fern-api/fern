@@ -460,3 +460,9 @@ describe("zep", () => {
         testMdxFixture("zep.mdx");
     });
 });
+
+describe("hume", () => {
+    it("should replace all images with full path", () => {
+        testMdxFixture("hume.mdx");
+    });
+});
