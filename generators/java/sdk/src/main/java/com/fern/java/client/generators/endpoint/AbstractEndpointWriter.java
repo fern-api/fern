@@ -551,7 +551,7 @@ public abstract class AbstractEndpointWriter {
 
     private final class SuccessResponseWriter implements HttpResponse.Visitor<Void> {
 
-        private final CodeBlock.Builder httpResponseBuilder;
+        private final com.squareup.javapoet.CodeBlock.Builder httpResponseBuilder;
         private final MethodSpec.Builder endpointMethodBuilder;
         private final GeneratedObjectMapper generatedObjectMapper;
         private final ClientGeneratorContext clientGeneratorContext;
@@ -651,7 +651,12 @@ public abstract class AbstractEndpointWriter {
                         System.out.println("Before");
                         GetSnippetOutput getSnippetOutput = body.getResponseBodyType()
                                 .visit(new NestedPropertySnippetGenerator(
-                                        body.getResponseBodyType(), propertyPath, false, false, Optional.empty()));
+                                        body.getResponseBodyType(),
+                                        propertyPath,
+                                        false,
+                                        false,
+                                        Optional.empty(),
+                                        Optional.empty()));
                         System.out.println("After");
                         Builder codeBlockBuilder = CodeBlock.builder();
                         getSnippetOutput.code.forEach(codeBlockBuilder::add);
@@ -751,6 +756,31 @@ public abstract class AbstractEndpointWriter {
         }
     }
 
+    //    private CodeBlock getNestedPropertySnippet(
+    //            Optional<List<Name>> propertyPath,
+    //            ObjectProperty objectProperty,
+    //            com.fern.irV42.model.types.TypeReference typeReference) {
+    //        ArrayList<Name> fullPropertyPath = propertyPath.map(ArrayList::new).orElse(new ArrayList<>());
+    //        fullPropertyPath.add(objectProperty.getName().getName());
+    //        System.out.println("---------- Before ---------");
+    //        GetSnippetOutput getSnippetOutput = typeReference.visit(new NestedPropertySnippetGenerator(
+    //                typeReference, fullPropertyPath, false, false, Optional.empty(), Optional.empty()));
+    //        System.out.println("--------- After ---------\n\n\n");
+    //        Builder codeBlockBuilder = CodeBlock.builder();
+    //        getSnippetOutput.code.forEach(codeBlockBuilder::add);
+    //        new SnippetAndResultType(getcodeBlockBuilder.build();
+    //    }
+
+    private class SnippetAndResultType {
+        private final com.fern.irV42.model.types.TypeReference typeReference;
+        private final CodeBlock codeBlock;
+
+        private SnippetAndResultType(com.fern.irV42.model.types.TypeReference typeReference, CodeBlock codeBlock) {
+            this.typeReference = typeReference;
+            this.codeBlock = codeBlock;
+        }
+    }
+
     private class NestedPropertySnippetGenerator
             implements com.fern.irV42.model.types.TypeReference.Visitor<GetSnippetOutput> {
 
@@ -762,59 +792,65 @@ public abstract class AbstractEndpointWriter {
         private final List<Name> propertyPath;
         private final Boolean previousWasOptional;
         private final Boolean currentOptional;
-        private final Optional<Name> writeName;
+        private final Optional<Name> previousProperty;
+        private final Optional<com.fern.irV42.model.types.TypeReference> previousTypeReference;
+        private final ArrayList<CodeBlock> codeBlocks = new ArrayList<>();
 
         private NestedPropertySnippetGenerator(
                 com.fern.irV42.model.types.TypeReference typeReference,
                 List<Name> propertyPath,
                 Boolean previousWasOptional,
                 Boolean currentOptional,
-                Optional<Name> writeName) {
+                Optional<Name> previousProperty,
+                Optional<com.fern.irV42.model.types.TypeReference> previousTypeReference) {
             this.typeReference = typeReference;
             this.propertyPath = propertyPath;
-            this.previousWasOptional = previousWasOptional;
+            this.previousWasOptional = false;
             this.currentOptional = currentOptional;
-            this.writeName = writeName;
-            System.out.println("\nproperty path: "
+            this.previousProperty = previousProperty;
+            this.previousTypeReference = previousTypeReference;
+            System.out.println("\n\nproperty path: "
                     + propertyPath.stream().map(Name::getOriginalName).collect(Collectors.toList()));
             System.out.println("previous optional: " + previousWasOptional);
             System.out.println("current optional: " + currentOptional);
+            System.out.println("type reference: "
+                    + clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, typeReference) + "\n");
         }
 
-        private boolean isFinalProperty() {
-            return propertyPath.size() == 0;
-        }
-
-        private String getCurrentPropertyPascal() {
-            return getCurrentProperty().getPascalCase().getUnsafeName();
+        private void addPreviousIfPresent() {
+            previousProperty.ifPresent(previousProperty -> {
+                System.out.println("⏮️ Previous is present! " + previousProperty.getOriginalName());
+                codeBlocks.add(getterCodeBlock(previousProperty, previousTypeReference.get()));
+            });
         }
 
         private Name getCurrentProperty() {
             return propertyPath.get(0);
         }
 
-        private CodeBlock getterCodeBlock() {
+        private CodeBlock getterCodeBlock(
+                Name property, com.fern.irV42.model.types.TypeReference overrideTypeReference) {
             if (previousWasOptional) {
                 String mappingOperation = currentOptional ? "flatMap" : "map";
                 return CodeBlock.of(
                         ".$L($T::get$L)",
                         mappingOperation,
-                        clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, typeReference),
-                        getCurrentPropertyPascal());
+                        clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, overrideTypeReference),
+                        property.getPascalCase().getUnsafeName());
             }
-            return CodeBlock.of(".get$L()", getCurrentPropertyPascal());
+            return CodeBlock.of(".get$L()", property.getPascalCase().getUnsafeName());
         }
 
         @Override
         public GetSnippetOutput visitContainer(ContainerType container) {
+            // todo: make sure list handled properly
             com.fern.irV42.model.types.TypeReference ref = container
                     .getOptional()
                     .orElseThrow(
                             () -> new RuntimeException("Unexpected non-optional container type in snippet generation"));
-            System.out.println("Calling nested from visitContainer with propertyPath "
-                    + propertyPath.stream().map(Name::getOriginalName).collect(Collectors.toList()));
-            return ref.visit(
-                    new NestedPropertySnippetGenerator(ref, propertyPath, previousWasOptional, true, writeName));
+            System.out.println("Calling nested from visitContainer");
+            return ref.visit(new NestedPropertySnippetGenerator(
+                    ref, propertyPath, previousWasOptional, true, previousProperty, previousTypeReference));
         }
 
         @Override
@@ -824,11 +860,15 @@ public abstract class AbstractEndpointWriter {
             return typeDeclaration.getShape().visit(new Type.Visitor<>() {
                 @Override
                 public GetSnippetOutput visitAlias(AliasTypeDeclaration alias) {
-                    System.out.println("Calling nested from visitAlias with propertyPath "
-                            + propertyPath.stream().map(Name::getOriginalName).collect(Collectors.toList()));
+                    System.out.println("Calling nested from visitAlias");
                     return alias.getAliasOf()
                             .visit(new NestedPropertySnippetGenerator(
-                                    typeReference, propertyPath, previousWasOptional, currentOptional, writeName));
+                                    alias.getAliasOf(),
+                                    propertyPath,
+                                    previousWasOptional,
+                                    currentOptional,
+                                    previousProperty,
+                                    Optional.of(typeReference)));
                 }
 
                 @Override
@@ -839,10 +879,7 @@ public abstract class AbstractEndpointWriter {
 
                 @Override
                 public GetSnippetOutput visitObject(ObjectTypeDeclaration object) {
-                    System.out.println(object.getProperties().stream()
-                            .map(property -> property.getName().getWireValue())
-                            .collect(Collectors.toList()));
-                    System.out.println(getCurrentProperty().getOriginalName());
+                    addPreviousIfPresent();
                     Optional<ObjectProperty> maybeMatchingProperty = object.getProperties().stream()
                             .filter(property -> property.getName()
                                     .getName()
@@ -861,27 +898,19 @@ public abstract class AbstractEndpointWriter {
                                 + getCurrentProperty().getOriginalName());
                     }
                     ObjectProperty matchingProperty = maybeMatchingProperty.get();
-                    if (isFinalProperty()) {
-                        System.out.println("Final property!");
-                        // todo: handle if this is optional
-                        return new GetSnippetOutput(matchingProperty.getValueType(), List.of(getterCodeBlock()));
-                    }
                     List<Name> newPropertyPath = propertyPath.subList(1, propertyPath.size());
-                    System.out.println("Calling nested from visitObject with propertyPath "
-                            + newPropertyPath.stream()
-                                    .map(Name::getOriginalName)
-                                    .collect(Collectors.toList()));
-                    GetSnippetOutput nextSnippet = matchingProperty
+                    System.out.println("Calling nested from visitObject");
+                    GetSnippetOutput output = matchingProperty
                             .getValueType()
                             .visit(new NestedPropertySnippetGenerator(
                                     matchingProperty.getValueType(),
                                     newPropertyPath,
                                     currentOptional,
                                     false,
-                                    writeName));
-                    ArrayList<CodeBlock> newCodeBlocks = new ArrayList<>(nextSnippet.code);
-                    newCodeBlocks.add(0, getterCodeBlock());
-                    return new GetSnippetOutput(nextSnippet.typeReference, newCodeBlocks);
+                                    Optional.of(getCurrentProperty()),
+                                    Optional.of(typeReference)));
+                    codeBlocks.addAll(output.code);
+                    return new GetSnippetOutput(output.typeReference, codeBlocks);
                 }
 
                 @Override
@@ -904,10 +933,13 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public GetSnippetOutput visitPrimitive(PrimitiveType primitive) {
-            if (!isFinalProperty()) {
-                throw new RuntimeException("Unexpected primitive with property path remaining");
-            }
-            return new GetSnippetOutput(typeReference, List.of(getterCodeBlock()));
+            //            if (!propertyPath.isEmpty()) {
+            //                throw new RuntimeException("Unexpected primitive with property path remaining");
+            //            }
+            //            codeBlocks.add(getterCodeBlock());
+            addPreviousIfPresent();
+            //            codeBlocks.add(getterCodeBlock(previousProperty.get(), typeReference));
+            return new GetSnippetOutput(typeReference, codeBlocks);
         }
 
         @Override
