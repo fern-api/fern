@@ -614,6 +614,7 @@ public abstract class AbstractEndpointWriter {
                 httpResponseBuilder.add("$T $L = ", responseType, getParsedResponseVariableName());
             } else {
                 httpResponseBuilder.add("return ");
+                endpointMethodBuilder.returns(responseType);
             }
             if (body.getResponseBodyType().isContainer() || isAliasContainer(body.getResponseBodyType())) {
                 httpResponseBuilder.addStatement(
