@@ -17,11 +17,18 @@ module SeedSingleUrlEnvironmentNoDefaultClient
 
     # @param request_options [SeedSingleUrlEnvironmentNoDefaultClient::RequestOptions]
     # @return [String]
+    # @example
+    #  single_url_environment_no_default = SeedSingleUrlEnvironmentNoDefaultClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  single_url_environment_no_default.dummy.get_dummy
     def get_dummy(request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/dummy"
       end
       JSON.parse(response.body)
@@ -40,12 +47,19 @@ module SeedSingleUrlEnvironmentNoDefaultClient
 
     # @param request_options [SeedSingleUrlEnvironmentNoDefaultClient::RequestOptions]
     # @return [String]
+    # @example
+    #  single_url_environment_no_default = SeedSingleUrlEnvironmentNoDefaultClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  single_url_environment_no_default.dummy.get_dummy
     def get_dummy(request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/dummy"
         end
         parsed_json = JSON.parse(response.body)

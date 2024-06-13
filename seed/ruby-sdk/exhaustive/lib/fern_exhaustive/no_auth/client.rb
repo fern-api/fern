@@ -20,11 +20,18 @@ module SeedExhaustiveClient
     # @param request [Object]
     # @param request_options [SeedExhaustiveClient::RequestOptions]
     # @return [Boolean]
+    # @example
+    #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  exhaustive.no_auth.post_with_no_auth(request: {"key":"value"})
     def post_with_no_auth(request: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/no-auth"
       end
@@ -47,12 +54,19 @@ module SeedExhaustiveClient
     # @param request [Object]
     # @param request_options [SeedExhaustiveClient::RequestOptions]
     # @return [Boolean]
+    # @example
+    #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  exhaustive.no_auth.post_with_no_auth(request: {"key":"value"})
     def post_with_no_auth(request: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/no-auth"
         end

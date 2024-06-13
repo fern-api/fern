@@ -21,11 +21,18 @@ module SeedExhaustiveClient
       # @param request [Array<String>]
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Array<String>]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.container.get_and_return_list_of_primitives(request: ["string"])
       def get_and_return_list_of_primitives(request:, request_options: nil)
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/container/list-of-primitives"
         end
@@ -36,11 +43,18 @@ module SeedExhaustiveClient
       #   * :string (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Array<SeedExhaustiveClient::Types::Object::ObjectWithRequiredField>]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.container.get_and_return_list_of_objects(request: [{ string: "string" }])
       def get_and_return_list_of_objects(request:, request_options: nil)
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/container/list-of-objects"
         end
@@ -54,11 +68,18 @@ module SeedExhaustiveClient
       # @param request [Set<String>]
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Set<String>]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.container.get_and_return_set_of_primitives(request: Set["string"])
       def get_and_return_set_of_primitives(request:, request_options: nil)
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/container/set-of-primitives"
         end
@@ -68,11 +89,18 @@ module SeedExhaustiveClient
       # @param request [Set<SeedExhaustiveClient::Types::Object::ObjectWithRequiredField>]
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Set<SeedExhaustiveClient::Types::Object::ObjectWithRequiredField>]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.container.get_and_return_set_of_objects(request: Set[{ string: "string" }])
       def get_and_return_set_of_objects(request:, request_options: nil)
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/container/set-of-objects"
         end
@@ -82,11 +110,18 @@ module SeedExhaustiveClient
       # @param request [Hash{String => String}]
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Hash{String => String}]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.container.get_and_return_map_prim_to_prim(request: { "string": "string" })
       def get_and_return_map_prim_to_prim(request:, request_options: nil)
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/container/map-prim-to-prim"
         end
@@ -96,11 +131,18 @@ module SeedExhaustiveClient
       # @param request [Hash{String => SeedExhaustiveClient::Types::Object::ObjectWithRequiredField}]
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Hash{String => SeedExhaustiveClient::Types::Object::ObjectWithRequiredField}]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.container.get_and_return_map_of_prim_to_object(request: { "string": { string: "string" } })
       def get_and_return_map_of_prim_to_object(request:, request_options: nil)
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/container/map-prim-to-object"
         end
@@ -115,11 +157,18 @@ module SeedExhaustiveClient
       #   * :string (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::ObjectWithRequiredField]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.container.get_and_return_optional(request: { string: "string" })
       def get_and_return_optional(request: nil, request_options: nil)
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/container/opt-objects"
         end
@@ -140,12 +189,19 @@ module SeedExhaustiveClient
       # @param request [Array<String>]
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Array<String>]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.container.get_and_return_list_of_primitives(request: ["string"])
       def get_and_return_list_of_primitives(request:, request_options: nil)
         Async do
           response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/container/list-of-primitives"
           end
@@ -158,12 +214,19 @@ module SeedExhaustiveClient
       #   * :string (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Array<SeedExhaustiveClient::Types::Object::ObjectWithRequiredField>]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.container.get_and_return_list_of_objects(request: [{ string: "string" }])
       def get_and_return_list_of_objects(request:, request_options: nil)
         Async do
           response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/container/list-of-objects"
           end
@@ -178,12 +241,19 @@ module SeedExhaustiveClient
       # @param request [Set<String>]
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Set<String>]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.container.get_and_return_set_of_primitives(request: Set["string"])
       def get_and_return_set_of_primitives(request:, request_options: nil)
         Async do
           response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/container/set-of-primitives"
           end
@@ -194,12 +264,19 @@ module SeedExhaustiveClient
       # @param request [Set<SeedExhaustiveClient::Types::Object::ObjectWithRequiredField>]
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Set<SeedExhaustiveClient::Types::Object::ObjectWithRequiredField>]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.container.get_and_return_set_of_objects(request: Set[{ string: "string" }])
       def get_and_return_set_of_objects(request:, request_options: nil)
         Async do
           response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/container/set-of-objects"
           end
@@ -210,12 +287,19 @@ module SeedExhaustiveClient
       # @param request [Hash{String => String}]
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Hash{String => String}]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.container.get_and_return_map_prim_to_prim(request: { "string": "string" })
       def get_and_return_map_prim_to_prim(request:, request_options: nil)
         Async do
           response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/container/map-prim-to-prim"
           end
@@ -227,12 +311,19 @@ module SeedExhaustiveClient
       # @param request [Hash{String => SeedExhaustiveClient::Types::Object::ObjectWithRequiredField}]
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Hash{String => SeedExhaustiveClient::Types::Object::ObjectWithRequiredField}]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.container.get_and_return_map_of_prim_to_object(request: { "string": { string: "string" } })
       def get_and_return_map_of_prim_to_object(request:, request_options: nil)
         Async do
           response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/container/map-prim-to-object"
           end
@@ -248,12 +339,19 @@ module SeedExhaustiveClient
       #   * :string (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::ObjectWithRequiredField]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.container.get_and_return_optional(request: { string: "string" })
       def get_and_return_optional(request: nil, request_options: nil)
         Async do
           response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/container/opt-objects"
           end

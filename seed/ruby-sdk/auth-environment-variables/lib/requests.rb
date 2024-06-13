@@ -6,12 +6,12 @@ require "async/http/faraday"
 
 module SeedAuthEnvironmentVariablesClient
   class RequestClient
-    # @return [Hash{String => String}]
-    attr_reader :headers
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
     attr_reader :base_url
+    # @return [String]
+    attr_reader :api_key
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -21,12 +21,8 @@ module SeedAuthEnvironmentVariablesClient
     # @return [SeedAuthEnvironmentVariablesClient::RequestClient]
     def initialize(x_another_header:, base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: nil)
       @base_url = base_url
-      @headers = {
-        "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_auth_environment_variables",
-        "X-Fern-SDK-Version": "0.0.1",
-        "X-FERN-API-KEY": (api_key || ENV["FERN_API_KEY"]).to_s
-      }
+      @api_key = api_key
+      @headers = {}
       @headers["X-Another-Header"] = x_another_header unless x_another_header.nil?
       @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
@@ -41,15 +37,26 @@ module SeedAuthEnvironmentVariablesClient
     def get_url(request_options: nil)
       request_options&.base_url || @base_url
     end
+
+    # @return [Hash{String => String}]
+    def get_headers
+      headers = {
+        "X-Fern-Language": "Ruby",
+        "X-Fern-SDK-Name": "fern_auth_environment_variables",
+        "X-Fern-SDK-Version": "0.0.1"
+      }
+      headers["X-FERN-API-KEY"] = api_key unless api_key.nil?
+      headers
+    end
   end
 
   class AsyncRequestClient
-    # @return [Hash{String => String}]
-    attr_reader :headers
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
     attr_reader :base_url
+    # @return [String]
+    attr_reader :api_key
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -59,12 +66,8 @@ module SeedAuthEnvironmentVariablesClient
     # @return [SeedAuthEnvironmentVariablesClient::AsyncRequestClient]
     def initialize(x_another_header:, base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: nil)
       @base_url = base_url
-      @headers = {
-        "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_auth_environment_variables",
-        "X-Fern-SDK-Version": "0.0.1",
-        "X-FERN-API-KEY": (api_key || ENV["FERN_API_KEY"]).to_s
-      }
+      @api_key = api_key
+      @headers = {}
       @headers["X-Another-Header"] = x_another_header unless x_another_header.nil?
       @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
@@ -79,6 +82,17 @@ module SeedAuthEnvironmentVariablesClient
     # @return [String]
     def get_url(request_options: nil)
       request_options&.base_url || @base_url
+    end
+
+    # @return [Hash{String => String}]
+    def get_headers
+      headers = {
+        "X-Fern-Language": "Ruby",
+        "X-Fern-SDK-Name": "fern_auth_environment_variables",
+        "X-Fern-SDK-Version": "0.0.1"
+      }
+      headers["X-FERN-API-KEY"] = api_key unless api_key.nil?
+      headers
     end
   end
 

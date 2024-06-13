@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "requests"
-require_relative "fern_oauth_client_credentials/auth/client"
+require_relative "fern_oauth_client_credentials_nested_root/auth/client"
 require_relative "core/oauth"
 
 module SeedOauthClientCredentialsClient
@@ -38,7 +38,7 @@ module SeedOauthClientCredentialsClient
     def initialize(client_id:, client_secret:, request_client:)
       @client_id = client_id
       @client_secret = client_secret
-      @auth_client = SeedOauthClientCredentialsClient::AuthClient.new(request_client: request_client)
+      @auth_client = SeedOauthClientCredentialsClient::Auth::AuthClient.new(request_client: request_client)
     end
 
     # Returns a cached access token retrieved from the provided client credentials,
@@ -54,8 +54,7 @@ module SeedOauthClientCredentialsClient
 
     # @return [SeedOauthClientCredentialsClient::AccessToken]
     def refresh_token
-      token_response = @auth_client.auth.get_token_with_client_credentials(client_id: @client_id,
-                                                                           client_secret: @client_secret)
+      token_response = @auth_client.auth.get_token(client_id: @client_id, client_secret: @client_secret)
       SeedOauthClientCredentialsClient::AccessToken.new(access_token: token_response.access_token,
                                                         expires_at: Time.now + token_response.expires_in - EXPIRY_BUFFER_MINUTES * 60)
     end

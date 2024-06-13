@@ -3,6 +3,7 @@
 require_relative "../../requests"
 require "date"
 require_relative "types/user"
+require_relative "types/nested_user"
 require "async"
 
 module SeedQueryParametersClient
@@ -21,20 +22,50 @@ module SeedQueryParametersClient
     # @param date [Date]
     # @param deadline [DateTime]
     # @param bytes [String]
-    # @param user [String]
-    # @param key_value [String]
+    # @param user [Hash] Request of type SeedQueryParametersClient::User::User, as a Hash
+    #   * :name (String)
+    #   * :tags (Array<String>)
+    # @param key_value [Hash{String => String}]
     # @param optional_string [String]
-    # @param nested_user [String]
-    # @param optional_user [String]
-    # @param exclude_user [String]
+    # @param nested_user [Hash] Request of type SeedQueryParametersClient::User::NestedUser, as a Hash
+    #   * :name (String)
+    #   * :user (Hash)
+    #     * :name (String)
+    #     * :tags (Array<String>)
+    # @param optional_user [Hash] Request of type SeedQueryParametersClient::User::User, as a Hash
+    #   * :name (String)
+    #   * :tags (Array<String>)
+    # @param exclude_user [Hash] Request of type SeedQueryParametersClient::User::User, as a Hash
+    #   * :name (String)
+    #   * :tags (Array<String>)
     # @param filter [String]
     # @param request_options [SeedQueryParametersClient::RequestOptions]
     # @return [SeedQueryParametersClient::User::User]
-    def get_username(limit:, id:, date:, deadline:, bytes:, filter:, user: nil, key_value: nil, optional_string: nil,
-                     nested_user: nil, optional_user: nil, exclude_user: nil, request_options: nil)
+    # @example
+    #  query_parameters = SeedQueryParametersClient::Client.new(base_url: "https://api.example.com")
+    #  query_parameters.user.get_username(
+    #    limit: 1,
+    #    id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    #    date: DateTime.parse(2023-01-15),
+    #    deadline: DateTime.parse(2024-01-15T09:30:00.000Z),
+    #    bytes: "SGVsbG8gd29ybGQh",
+    #    user: { name: "string", tags: ["string"] },
+    #    key_value: { "string": "string" },
+    #    optional_string: "string",
+    #    nested_user: { name: "string", user: { name: "string", tags: ["string"] } },
+    #    optional_user: { name: "string", tags: ["string"] },
+    #    exclude_user: { name: "string", tags: ["string"] },
+    #    filter: "string"
+    #  )
+    def get_username(limit:, id:, date:, deadline:, bytes:, user:, key_value:, nested_user:, exclude_user:, filter:, optional_string: nil,
+                     optional_user: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.params = {
           **(request_options&.additional_query_parameters || {}),
           "limit": limit,
@@ -71,21 +102,51 @@ module SeedQueryParametersClient
     # @param date [Date]
     # @param deadline [DateTime]
     # @param bytes [String]
-    # @param user [String]
-    # @param key_value [String]
+    # @param user [Hash] Request of type SeedQueryParametersClient::User::User, as a Hash
+    #   * :name (String)
+    #   * :tags (Array<String>)
+    # @param key_value [Hash{String => String}]
     # @param optional_string [String]
-    # @param nested_user [String]
-    # @param optional_user [String]
-    # @param exclude_user [String]
+    # @param nested_user [Hash] Request of type SeedQueryParametersClient::User::NestedUser, as a Hash
+    #   * :name (String)
+    #   * :user (Hash)
+    #     * :name (String)
+    #     * :tags (Array<String>)
+    # @param optional_user [Hash] Request of type SeedQueryParametersClient::User::User, as a Hash
+    #   * :name (String)
+    #   * :tags (Array<String>)
+    # @param exclude_user [Hash] Request of type SeedQueryParametersClient::User::User, as a Hash
+    #   * :name (String)
+    #   * :tags (Array<String>)
     # @param filter [String]
     # @param request_options [SeedQueryParametersClient::RequestOptions]
     # @return [SeedQueryParametersClient::User::User]
-    def get_username(limit:, id:, date:, deadline:, bytes:, filter:, user: nil, key_value: nil, optional_string: nil,
-                     nested_user: nil, optional_user: nil, exclude_user: nil, request_options: nil)
+    # @example
+    #  query_parameters = SeedQueryParametersClient::Client.new(base_url: "https://api.example.com")
+    #  query_parameters.user.get_username(
+    #    limit: 1,
+    #    id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    #    date: DateTime.parse(2023-01-15),
+    #    deadline: DateTime.parse(2024-01-15T09:30:00.000Z),
+    #    bytes: "SGVsbG8gd29ybGQh",
+    #    user: { name: "string", tags: ["string"] },
+    #    key_value: { "string": "string" },
+    #    optional_string: "string",
+    #    nested_user: { name: "string", user: { name: "string", tags: ["string"] } },
+    #    optional_user: { name: "string", tags: ["string"] },
+    #    exclude_user: { name: "string", tags: ["string"] },
+    #    filter: "string"
+    #  )
+    def get_username(limit:, id:, date:, deadline:, bytes:, user:, key_value:, nested_user:, exclude_user:, filter:, optional_string: nil,
+                     optional_user: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.params = {
             **(request_options&.additional_query_parameters || {}),
             "limit": limit,

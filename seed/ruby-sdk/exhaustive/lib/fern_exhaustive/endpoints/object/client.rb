@@ -35,11 +35,18 @@ module SeedExhaustiveClient
       #   * :map (Hash{Integer => String})
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.object.get_and_return_with_optional_field(request: { string: "string", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(2024-01-15T09:30:00.000Z), date: DateTime.parse(2023-01-15), uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", base_64: "SGVsbG8gd29ybGQh", list: ["string"], set: Set["string"], map: { 1: "string" } })
       def get_and_return_with_optional_field(request:, request_options: nil)
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-with-optional-field"
         end
@@ -50,11 +57,18 @@ module SeedExhaustiveClient
       #   * :string (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::ObjectWithRequiredField]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.object.get_and_return_with_required_field(request: { string: "string" })
       def get_and_return_with_required_field(request:, request_options: nil)
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-with-required-field"
         end
@@ -65,11 +79,18 @@ module SeedExhaustiveClient
       #   * :map (Hash{String => Hash})
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::ObjectWithMapOfMap]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.object.get_and_return_with_map_of_map(request: { map: { "string": { "string": "string" } } })
       def get_and_return_with_map_of_map(request:, request_options: nil)
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-with-map-of-map"
         end
@@ -93,11 +114,18 @@ module SeedExhaustiveClient
       #     * :map (Hash{Integer => String})
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::NestedObjectWithOptionalField]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.object.get_and_return_nested_with_optional_field(request: { string: "string", nested_object: { string: "string", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(2024-01-15T09:30:00.000Z), date: DateTime.parse(2023-01-15), uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", base_64: "SGVsbG8gd29ybGQh", list: ["string"], set: Set["string"], map: { 1: "string" } } })
       def get_and_return_nested_with_optional_field(request:, request_options: nil)
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-nested-with-optional-field"
         end
@@ -122,11 +150,18 @@ module SeedExhaustiveClient
       #     * :map (Hash{Integer => String})
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::NestedObjectWithRequiredField]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.object.get_and_return_nested_with_required_field(string: "string", request: { string: "string", nested_object: { string: "string", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(2024-01-15T09:30:00.000Z), date: DateTime.parse(2023-01-15), uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", base_64: "SGVsbG8gd29ybGQh", list: ["string"], set: Set["string"], map: { 1: "string" } } })
       def get_and_return_nested_with_required_field(string:, request:, request_options: nil)
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-nested-with-required-field/#{string}"
         end
@@ -150,11 +185,18 @@ module SeedExhaustiveClient
       #     * :map (Hash{Integer => String})
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::NestedObjectWithRequiredField]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{ string: "string", nested_object: { string: "string", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(2024-01-15T09:30:00.000Z), date: DateTime.parse(2023-01-15), uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", base_64: "SGVsbG8gd29ybGQh", list: ["string"], set: Set["string"], map: { 1: "string" } } }])
       def get_and_return_nested_with_required_field_as_list(request:, request_options: nil)
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-nested-with-required-field-list"
         end
@@ -187,12 +229,19 @@ module SeedExhaustiveClient
       #   * :map (Hash{Integer => String})
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.object.get_and_return_with_optional_field(request: { string: "string", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(2024-01-15T09:30:00.000Z), date: DateTime.parse(2023-01-15), uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", base_64: "SGVsbG8gd29ybGQh", list: ["string"], set: Set["string"], map: { 1: "string" } })
       def get_and_return_with_optional_field(request:, request_options: nil)
         Async do
           response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-with-optional-field"
           end
@@ -204,12 +253,19 @@ module SeedExhaustiveClient
       #   * :string (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::ObjectWithRequiredField]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.object.get_and_return_with_required_field(request: { string: "string" })
       def get_and_return_with_required_field(request:, request_options: nil)
         Async do
           response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-with-required-field"
           end
@@ -221,12 +277,19 @@ module SeedExhaustiveClient
       #   * :map (Hash{String => Hash})
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::ObjectWithMapOfMap]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.object.get_and_return_with_map_of_map(request: { map: { "string": { "string": "string" } } })
       def get_and_return_with_map_of_map(request:, request_options: nil)
         Async do
           response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-with-map-of-map"
           end
@@ -251,12 +314,19 @@ module SeedExhaustiveClient
       #     * :map (Hash{Integer => String})
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::NestedObjectWithOptionalField]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.object.get_and_return_nested_with_optional_field(request: { string: "string", nested_object: { string: "string", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(2024-01-15T09:30:00.000Z), date: DateTime.parse(2023-01-15), uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", base_64: "SGVsbG8gd29ybGQh", list: ["string"], set: Set["string"], map: { 1: "string" } } })
       def get_and_return_nested_with_optional_field(request:, request_options: nil)
         Async do
           response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-nested-with-optional-field"
           end
@@ -282,12 +352,19 @@ module SeedExhaustiveClient
       #     * :map (Hash{Integer => String})
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::NestedObjectWithRequiredField]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.object.get_and_return_nested_with_required_field(string: "string", request: { string: "string", nested_object: { string: "string", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(2024-01-15T09:30:00.000Z), date: DateTime.parse(2023-01-15), uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", base_64: "SGVsbG8gd29ybGQh", list: ["string"], set: Set["string"], map: { 1: "string" } } })
       def get_and_return_nested_with_required_field(string:, request:, request_options: nil)
         Async do
           response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-nested-with-required-field/#{string}"
           end
@@ -312,12 +389,19 @@ module SeedExhaustiveClient
       #     * :map (Hash{Integer => String})
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::NestedObjectWithRequiredField]
+      # @example
+      #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  exhaustive.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{ string: "string", nested_object: { string: "string", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(2024-01-15T09:30:00.000Z), date: DateTime.parse(2023-01-15), uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", base_64: "SGVsbG8gd29ybGQh", list: ["string"], set: Set["string"], map: { 1: "string" } } }])
       def get_and_return_nested_with_required_field_as_list(request:, request_options: nil)
         Async do
           response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-nested-with-required-field-list"
           end

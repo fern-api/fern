@@ -24,11 +24,18 @@ module SeedApiClient
     #   * :rating (Float)
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [String]
+    # @example
+    #  api = SeedApiClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  api.imdb.create_movie(request: { title: "string", rating: 1.1 })
     def create_movie(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movies/create-movie"
       end
@@ -38,11 +45,18 @@ module SeedApiClient
     # @param movie_id [String]
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [SeedApiClient::Imdb::Movie]
+    # @example
+    #  api = SeedApiClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  api.imdb.get_movie(movie_id: "string")
     def get_movie(movie_id:, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movies/#{movie_id}"
       end
       SeedApiClient::Imdb::Movie.from_json(json_object: response.body)
@@ -66,12 +80,19 @@ module SeedApiClient
     #   * :rating (Float)
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [String]
+    # @example
+    #  api = SeedApiClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  api.imdb.create_movie(request: { title: "string", rating: 1.1 })
     def create_movie(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movies/create-movie"
         end
@@ -83,12 +104,19 @@ module SeedApiClient
     # @param movie_id [String]
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [SeedApiClient::Imdb::Movie]
+    # @example
+    #  api = SeedApiClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  api.imdb.get_movie(movie_id: "string")
     def get_movie(movie_id:, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movies/#{movie_id}"
         end
         SeedApiClient::Imdb::Movie.from_json(json_object: response.body)

@@ -18,10 +18,17 @@ module SeedObjectsWithImportsClient
     # @param request [Hash{String => Object}]
     # @param request_options [SeedObjectsWithImportsClient::RequestOptions]
     # @return [String]
+    # @example
+    #  objects_with_imports = SeedObjectsWithImportsClient::Client.new(base_url: "https://api.example.com")
+    #  objects_with_imports.optional.send_optional_body(request: { "string": {"key":"value"} })
     def send_optional_body(request: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/send-optional-body"
       end
@@ -42,11 +49,18 @@ module SeedObjectsWithImportsClient
     # @param request [Hash{String => Object}]
     # @param request_options [SeedObjectsWithImportsClient::RequestOptions]
     # @return [String]
+    # @example
+    #  objects_with_imports = SeedObjectsWithImportsClient::Client.new(base_url: "https://api.example.com")
+    #  objects_with_imports.optional.send_optional_body(request: { "string": {"key":"value"} })
     def send_optional_body(request: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/send-optional-body"
         end

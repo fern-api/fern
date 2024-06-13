@@ -6,8 +6,6 @@ require "async/http/faraday"
 
 module SeedEnumClient
   class RequestClient
-    # @return [Hash{String => String}]
-    attr_reader :headers
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
@@ -19,8 +17,7 @@ module SeedEnumClient
     # @return [SeedEnumClient::RequestClient]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
       @base_url = base_url
-      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_enum", "X-Fern-SDK-Version": "0.0.1" }
-      @conn = Faraday.new(headers: @headers) do |faraday|
+      @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
         faraday.request :retry, { max: max_retries } unless max_retries.nil?
@@ -33,11 +30,14 @@ module SeedEnumClient
     def get_url(request_options: nil)
       request_options&.base_url || @base_url
     end
+
+    # @return [Hash{String => String}]
+    def get_headers
+      { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_enum", "X-Fern-SDK-Version": "0.0.1" }
+    end
   end
 
   class AsyncRequestClient
-    # @return [Hash{String => String}]
-    attr_reader :headers
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
@@ -49,8 +49,7 @@ module SeedEnumClient
     # @return [SeedEnumClient::AsyncRequestClient]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
       @base_url = base_url
-      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_enum", "X-Fern-SDK-Version": "0.0.1" }
-      @conn = Faraday.new(headers: @headers) do |faraday|
+      @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
         faraday.adapter :async_http
@@ -63,6 +62,11 @@ module SeedEnumClient
     # @return [String]
     def get_url(request_options: nil)
       request_options&.base_url || @base_url
+    end
+
+    # @return [Hash{String => String}]
+    def get_headers
+      { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_enum", "X-Fern-SDK-Version": "0.0.1" }
     end
   end
 

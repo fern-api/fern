@@ -18,10 +18,17 @@ module SeedApiClient
 
         # @param request_options [SeedApiClient::RequestOptions]
         # @return [Void]
+        # @example
+        #  api = SeedApiClient::Client.new(base_url: "https://api.example.com")
+        #  api.a.c.foo
         def foo(request_options: nil)
           @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/"
           end
         end
@@ -39,11 +46,18 @@ module SeedApiClient
 
         # @param request_options [SeedApiClient::RequestOptions]
         # @return [Void]
+        # @example
+        #  api = SeedApiClient::Client.new(base_url: "https://api.example.com")
+        #  api.a.c.foo
         def foo(request_options: nil)
           Async do
             @request_client.conn.post do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-              req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+              req.headers = {
+            **(req.headers || {}),
+            **@request_client.get_headers,
+            **(request_options&.additional_headers || {})
+              }.compact
               req.url "#{@request_client.get_url(request_options: request_options)}/"
             end
           end
