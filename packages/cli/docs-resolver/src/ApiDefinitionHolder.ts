@@ -13,6 +13,15 @@ export interface SubpackageHolder {
 
 const ROOT_PACKAGE_ID = "root" as const;
 
+/**
+ * A holder for an API definition, which provides a way to resolve endpoint, websocket, and webhook IDs.
+ * This class is intended to be used in the ApiReferenceNodeConverter, which is responsible for resolving
+ * endpoint references such as:
+ *
+ *  - `GET /users/{userId}`
+ *
+ * into the corresponding endpoint definition, when constructing the API reference tree.
+ */
 export class ApiDefinitionHolder {
     public static create(api: APIV1Read.ApiDefinition): ApiDefinitionHolder {
         return new ApiDefinitionHolder(api);

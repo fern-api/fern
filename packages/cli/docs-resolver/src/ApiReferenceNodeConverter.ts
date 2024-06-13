@@ -35,12 +35,15 @@ export class ApiReferenceNodeConverter {
         this.apiDefinitionId = FernNavigation.ApiDefinitionId(api.id);
         this.#holder = ApiDefinitionHolder.create(api);
 
+        // we are assuming that the apiDefinitionId is unique.
         const idgen = NodeIdGenerator.init(this.apiDefinitionId);
+
         this.#overviewPageId =
             this.apiSection.summaryAbsolutePath != null
                 ? FernNavigation.PageId(this.toRelativeFilepath(this.apiSection.summaryAbsolutePath))
                 : undefined;
 
+        // the overview page markdown could contain a full slug, which would be used as the base slug for the API section.
         const maybeFullSlug =
             this.apiSection.summaryAbsolutePath != null
                 ? this.markdownFilesToFullSlugs.get(this.apiSection.summaryAbsolutePath)
@@ -54,7 +57,7 @@ export class ApiReferenceNodeConverter {
 
         // Step 1. Convert the navigation items that are manually defined in the API section.
         if (this.apiSection.navigation != null) {
-            this.#children = this.convertApiNavigationItems(
+            this.#children = this.#convertApiNavigationItems(
                 this.apiSection.navigation,
                 this.#holder.api.rootPackage,
                 this.#slug,
@@ -62,8 +65,8 @@ export class ApiReferenceNodeConverter {
             );
         }
 
-        // Step 2. Fill in the any missing navigation items from the API definition.
-        this.#children = this.convertApiDefinitionPackage("root", this.#children, this.#slug, idgen);
+        // Step 2. Fill in the any missing navigation items from the API definition
+        this.#children = this.#convertApiDefinitionPackage("root", this.#children, this.#slug, idgen);
     }
 
     public get(): FernNavigation.ApiReferenceNode {
@@ -91,7 +94,7 @@ export class ApiReferenceNodeConverter {
         };
     }
 
-    private convertApiNavigationItems(
+    #convertApiNavigationItems(
         navigation: docsYml.ParsedApiNavigationItem[],
         apiDefinitionPackage: APIV1Read.ApiDefinitionPackage | undefined,
         parentSlug: FernNavigation.SlugGenerator,
@@ -127,205 +130,84 @@ export class ApiReferenceNodeConverter {
                             hidden: page.hidden
                         };
                     },
-                    package: (pkg) => {
-                        const subpackage = this.#holder.getSubpackage(pkg.package);
-
-                        const overviewPageId =
-                            pkg.summaryAbsolutePath != null
-                                ? FernNavigation.PageId(this.toRelativeFilepath(pkg.summaryAbsolutePath))
-                                : undefined;
-
-                        const maybeFullSlug =
-                            pkg.summaryAbsolutePath != null
-                                ? this.markdownFilesToFullSlugs.get(pkg.summaryAbsolutePath)
-                                : undefined;
-
-                        if (subpackage != null) {
-                            const subpackageId = ApiDefinitionHolder.getSubpackageId(subpackage);
-                            const subpackageNodeId = idgen.append(subpackageId);
-                            this.#visitedSubpackages.add(subpackageId);
-                            this.#nodeIdToSubpackageId.set(subpackageNodeId.get(), subpackageId);
-                            const urlSlug =
-                                pkg.slug ??
-                                (isSubpackage(subpackage) ? subpackage.urlSlug : kebabCase(pkg.titleOverride ?? ""));
-                            const slug = parentSlug.apply({
-                                fullSlug: maybeFullSlug?.split("/"),
-                                skipUrlSlug: pkg.skipUrlSlug,
-                                urlSlug
-                            });
-                            const convertedItems = this.convertApiNavigationItems(
-                                pkg.contents,
-                                subpackage,
-                                slug,
-                                subpackageNodeId
-                            );
-                            return {
-                                id: subpackageNodeId.get(),
-                                type: "apiPackage",
-                                children: convertedItems,
-                                title:
-                                    pkg.titleOverride ??
-                                    (isSubpackage(subpackage)
-                                        ? subpackage.displayName ?? titleCase(subpackage.name)
-                                        : this.apiSection.title),
-                                slug: slug.get(),
-                                icon: pkg.icon,
-                                hidden: pkg.hidden,
-                                overviewPageId,
-                                availability: undefined,
-                                apiDefinitionId: this.apiDefinitionId,
-                                pointsTo: undefined
-                            };
-                        } else {
-                            const urlSlug = pkg.slug ?? kebabCase(pkg.titleOverride ?? pkg.package);
-                            const slug = parentSlug.apply({
-                                fullSlug: maybeFullSlug?.split("/"),
-                                skipUrlSlug: pkg.skipUrlSlug,
-                                urlSlug
-                            });
-                            const convertedItems = this.convertApiNavigationItems(
-                                pkg.contents,
-                                subpackage,
-                                slug,
-                                idgen
-                            );
-                            return {
-                                id: idgen.append(kebabCase(pkg.package)).get(),
-                                type: "apiPackage",
-                                children: convertedItems,
-                                title: pkg.titleOverride ?? pkg.package,
-                                slug: slug.get(),
-                                icon: pkg.icon,
-                                hidden: pkg.hidden,
-                                overviewPageId,
-                                availability: undefined,
-                                apiDefinitionId: this.apiDefinitionId,
-                                pointsTo: undefined
-                            };
-                        }
-                    },
-                    item: ({ value: unknownIdentifier }): FernNavigation.ApiPackageChild | undefined => {
-                        // unknownIdentifier could either be a package, endpoint, websocket, or webhook.
-                        // We need to determine which one it is.
-                        const subpackage = this.#holder.getSubpackage(unknownIdentifier);
-                        if (subpackage != null) {
-                            const subpackageId = ApiDefinitionHolder.getSubpackageId(subpackage);
-                            const subpackageNodeId = idgen.append(subpackageId);
-                            this.#visitedSubpackages.add(subpackageId);
-                            this.#nodeIdToSubpackageId.set(subpackageNodeId.get(), subpackageId);
-                            const urlSlug = isSubpackage(subpackage) ? subpackage.urlSlug : "";
-                            const slug = parentSlug.apply({ urlSlug });
-                            return {
-                                id: subpackageNodeId.get(),
-                                type: "apiPackage",
-                                children: [],
-                                title: unknownIdentifier,
-                                slug: slug.get(),
-                                icon: undefined,
-                                hidden: undefined,
-                                overviewPageId: undefined,
-                                availability: undefined,
-                                apiDefinitionId: this.apiDefinitionId,
-                                pointsTo: undefined
-                            };
-                        }
-
-                        const endpoint =
-                            (apiDefinitionPackageId != null
-                                ? this.#holder.subpackages.get(apiDefinitionPackageId)?.endpoints.get(unknownIdentifier)
-                                : undefined) ??
-                            this.#holder.endpoints.get(FernNavigation.EndpointId(unknownIdentifier)) ??
-                            this.#holder.endpointsByPath.get(unknownIdentifier);
-
-                        if (endpoint != null) {
-                            const endpointId = this.#holder.getEndpointId(endpoint);
-                            if (endpointId == null) {
-                                throw new Error(`Expected Endpoint ID for ${endpoint.id}. Got undefined.`);
-                            }
-                            this.#visitedEndpoints.add(endpointId);
-                            return {
-                                id: idgen.append(endpoint.id).get(),
-                                type: "endpoint",
-                                method: endpoint.method,
-                                endpointId,
-                                apiDefinitionId: this.apiDefinitionId,
-                                availability: FernNavigation.utils.convertAvailability(endpoint.availability),
-                                isResponseStream: endpoint.response?.type.type === "stream",
-                                title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
-                                slug: parentSlug.apply(endpoint).get(),
-                                icon: undefined,
-                                hidden: undefined
-                            };
-                        }
-
-                        const webSocket =
-                            (apiDefinitionPackageId != null
-                                ? this.#holder.subpackages
-                                      .get(apiDefinitionPackageId)
-                                      ?.webSockets.get(unknownIdentifier)
-                                : undefined) ??
-                            this.#holder.webSockets.get(FernNavigation.WebSocketId(unknownIdentifier)) ??
-                            this.#holder.webSocketsByPath.get(unknownIdentifier);
-
-                        if (webSocket != null) {
-                            const webSocketId = this.#holder.getWebSocketId(webSocket);
-                            if (webSocketId == null) {
-                                throw new Error(`Expected WebSocket ID for ${webSocket.id}. Got undefined.`);
-                            }
-                            this.#visitedWebSockets.add(webSocketId);
-                            return {
-                                id: idgen.append(webSocket.id).get(),
-                                type: "webSocket",
-                                webSocketId,
-                                title: webSocket.name ?? stringifyEndpointPathParts(webSocket.path.parts),
-                                slug: parentSlug.apply(webSocket).get(),
-                                icon: undefined,
-                                hidden: undefined,
-                                apiDefinitionId: this.apiDefinitionId,
-                                availability: FernNavigation.utils.convertAvailability(webSocket.availability)
-                            };
-                        }
-
-                        // TODO: webhook by path is not implemented yet
-                        const webhook =
-                            (apiDefinitionPackageId != null
-                                ? this.#holder.subpackages.get(apiDefinitionPackageId)?.webhooks.get(unknownIdentifier)
-                                : undefined) ?? this.#holder.webhooks.get(FernNavigation.WebhookId(unknownIdentifier));
-
-                        if (webhook != null) {
-                            const webhookId = this.#holder.getWebhookId(webhook);
-                            if (webhookId == null) {
-                                throw new Error(`Expected Webhook ID for ${webhook.id}. Got undefined.`);
-                            }
-                            this.#visitedWebhooks.add(webhookId);
-                            return {
-                                id: idgen.append(webhook.id).get(),
-                                type: "webhook",
-                                webhookId,
-                                method: webhook.method,
-                                title: webhook.name ?? urlJoin("/", ...webhook.path),
-                                slug: parentSlug.apply(webhook).get(),
-                                icon: undefined,
-                                hidden: undefined,
-                                apiDefinitionId: this.apiDefinitionId,
-                                availability: undefined
-                            };
-                        }
-
-                        this.taskContext.logger.warn(
-                            "Unknown identifier in the API Reference layout: ",
-                            unknownIdentifier,
-                            "Skipping..."
-                        );
-
-                        return;
-                    }
+                    package: (pkg) => this.#convertPackage(pkg, parentSlug, idgen),
+                    item: ({ value: unknownIdentifier }): FernNavigation.ApiPackageChild | undefined =>
+                        this.#convertUnknownIdentifier(unknownIdentifier, apiDefinitionPackageId, parentSlug, idgen)
                 })
             )
             .filter(isNonNullish);
     }
 
-    private convertApiDefinitionPackage(
+    #convertPackage(
+        pkg: docsYml.ParsedApiNavigationItem.Package,
+        parentSlug: FernNavigation.SlugGenerator,
+        idgen: NodeIdGenerator
+    ): FernNavigation.ApiPackageNode {
+        const subpackage = this.#holder.getSubpackage(pkg.package);
+
+        const overviewPageId =
+            pkg.summaryAbsolutePath != null
+                ? FernNavigation.PageId(this.toRelativeFilepath(pkg.summaryAbsolutePath))
+                : undefined;
+
+        const maybeFullSlug =
+            pkg.summaryAbsolutePath != null ? this.markdownFilesToFullSlugs.get(pkg.summaryAbsolutePath) : undefined;
+
+        if (subpackage != null) {
+            const subpackageId = ApiDefinitionHolder.getSubpackageId(subpackage);
+            const subpackageNodeId = idgen.append(subpackageId);
+            this.#visitedSubpackages.add(subpackageId);
+            this.#nodeIdToSubpackageId.set(subpackageNodeId.get(), subpackageId);
+            const urlSlug =
+                pkg.slug ?? (isSubpackage(subpackage) ? subpackage.urlSlug : kebabCase(pkg.titleOverride ?? ""));
+            const slug = parentSlug.apply({
+                fullSlug: maybeFullSlug?.split("/"),
+                skipUrlSlug: pkg.skipUrlSlug,
+                urlSlug
+            });
+            const convertedItems = this.#convertApiNavigationItems(pkg.contents, subpackage, slug, subpackageNodeId);
+            return {
+                id: subpackageNodeId.get(),
+                type: "apiPackage",
+                children: convertedItems,
+                title:
+                    pkg.titleOverride ??
+                    (isSubpackage(subpackage)
+                        ? subpackage.displayName ?? titleCase(subpackage.name)
+                        : this.apiSection.title),
+                slug: slug.get(),
+                icon: pkg.icon,
+                hidden: pkg.hidden,
+                overviewPageId,
+                availability: undefined,
+                apiDefinitionId: this.apiDefinitionId,
+                pointsTo: undefined
+            };
+        } else {
+            const urlSlug = pkg.slug ?? kebabCase(pkg.titleOverride ?? pkg.package);
+            const slug = parentSlug.apply({
+                fullSlug: maybeFullSlug?.split("/"),
+                skipUrlSlug: pkg.skipUrlSlug,
+                urlSlug
+            });
+            const convertedItems = this.#convertApiNavigationItems(pkg.contents, subpackage, slug, idgen);
+            return {
+                id: idgen.append(kebabCase(pkg.package)).get(),
+                type: "apiPackage",
+                children: convertedItems,
+                title: pkg.titleOverride ?? pkg.package,
+                slug: slug.get(),
+                icon: pkg.icon,
+                hidden: pkg.hidden,
+                overviewPageId,
+                availability: undefined,
+                apiDefinitionId: this.apiDefinitionId,
+                pointsTo: undefined
+            };
+        }
+    }
+
+    #convertApiDefinitionPackage(
         packageId: string | undefined,
         children: FernNavigation.ApiPackageChild[],
         parentSlug: FernNavigation.SlugGenerator,
@@ -419,7 +301,7 @@ export class ApiReferenceNodeConverter {
             children.push({
                 id: subpackageNodeId.get(),
                 type: "apiPackage",
-                children: this.convertApiDefinitionPackage(subpackageId, [], slug, subpackageNodeId),
+                children: this.#convertApiDefinitionPackage(subpackageId, [], slug, subpackageNodeId),
                 title: isSubpackage(subpackage)
                     ? subpackage.displayName ?? titleCase(subpackage.name)
                     : this.apiSection.title,
@@ -445,7 +327,7 @@ export class ApiReferenceNodeConverter {
             ...children.map((child) => {
                 if (child.type === "apiPackage") {
                     const subpackageId = this.#nodeIdToSubpackageId.get(child.id);
-                    const newChildren = this.convertApiDefinitionPackage(
+                    const newChildren = this.#convertApiDefinitionPackage(
                         subpackageId,
                         child.children,
                         parentSlug.set(child.slug),
@@ -466,6 +348,126 @@ export class ApiReferenceNodeConverter {
         toRet = this.mergeEndpointPairs(toRet, idgen);
 
         return toRet;
+    }
+
+    #convertUnknownIdentifier(
+        unknownIdentifier: string,
+        apiDefinitionPackageId: string | undefined,
+        parentSlug: FernNavigation.SlugGenerator,
+        idgen: NodeIdGenerator
+    ): FernNavigation.ApiPackageChild | undefined {
+        // unknownIdentifier could either be a package, endpoint, websocket, or webhook.
+        // We need to determine which one it is.
+        const subpackage = this.#holder.getSubpackage(unknownIdentifier);
+        if (subpackage != null) {
+            const subpackageId = ApiDefinitionHolder.getSubpackageId(subpackage);
+            const subpackageNodeId = idgen.append(subpackageId);
+            this.#visitedSubpackages.add(subpackageId);
+            this.#nodeIdToSubpackageId.set(subpackageNodeId.get(), subpackageId);
+            const urlSlug = isSubpackage(subpackage) ? subpackage.urlSlug : "";
+            const slug = parentSlug.apply({ urlSlug });
+            return {
+                id: subpackageNodeId.get(),
+                type: "apiPackage",
+                children: [],
+                title: unknownIdentifier,
+                slug: slug.get(),
+                icon: undefined,
+                hidden: undefined,
+                overviewPageId: undefined,
+                availability: undefined,
+                apiDefinitionId: this.apiDefinitionId,
+                pointsTo: undefined
+            };
+        }
+
+        const endpoint =
+            (apiDefinitionPackageId != null
+                ? this.#holder.subpackages.get(apiDefinitionPackageId)?.endpoints.get(unknownIdentifier)
+                : undefined) ??
+            this.#holder.endpoints.get(FernNavigation.EndpointId(unknownIdentifier)) ??
+            this.#holder.endpointsByPath.get(unknownIdentifier);
+
+        if (endpoint != null) {
+            const endpointId = this.#holder.getEndpointId(endpoint);
+            if (endpointId == null) {
+                throw new Error(`Expected Endpoint ID for ${endpoint.id}. Got undefined.`);
+            }
+            this.#visitedEndpoints.add(endpointId);
+            return {
+                id: idgen.append(endpoint.id).get(),
+                type: "endpoint",
+                method: endpoint.method,
+                endpointId,
+                apiDefinitionId: this.apiDefinitionId,
+                availability: FernNavigation.utils.convertAvailability(endpoint.availability),
+                isResponseStream: endpoint.response?.type.type === "stream",
+                title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
+                slug: parentSlug.apply(endpoint).get(),
+                icon: undefined,
+                hidden: undefined
+            };
+        }
+
+        const webSocket =
+            (apiDefinitionPackageId != null
+                ? this.#holder.subpackages.get(apiDefinitionPackageId)?.webSockets.get(unknownIdentifier)
+                : undefined) ??
+            this.#holder.webSockets.get(FernNavigation.WebSocketId(unknownIdentifier)) ??
+            this.#holder.webSocketsByPath.get(unknownIdentifier);
+
+        if (webSocket != null) {
+            const webSocketId = this.#holder.getWebSocketId(webSocket);
+            if (webSocketId == null) {
+                throw new Error(`Expected WebSocket ID for ${webSocket.id}. Got undefined.`);
+            }
+            this.#visitedWebSockets.add(webSocketId);
+            return {
+                id: idgen.append(webSocket.id).get(),
+                type: "webSocket",
+                webSocketId,
+                title: webSocket.name ?? stringifyEndpointPathParts(webSocket.path.parts),
+                slug: parentSlug.apply(webSocket).get(),
+                icon: undefined,
+                hidden: undefined,
+                apiDefinitionId: this.apiDefinitionId,
+                availability: FernNavigation.utils.convertAvailability(webSocket.availability)
+            };
+        }
+
+        // TODO: webhook by path is not implemented yet
+        const webhook =
+            (apiDefinitionPackageId != null
+                ? this.#holder.subpackages.get(apiDefinitionPackageId)?.webhooks.get(unknownIdentifier)
+                : undefined) ?? this.#holder.webhooks.get(FernNavigation.WebhookId(unknownIdentifier));
+
+        if (webhook != null) {
+            const webhookId = this.#holder.getWebhookId(webhook);
+            if (webhookId == null) {
+                throw new Error(`Expected Webhook ID for ${webhook.id}. Got undefined.`);
+            }
+            this.#visitedWebhooks.add(webhookId);
+            return {
+                id: idgen.append(webhook.id).get(),
+                type: "webhook",
+                webhookId,
+                method: webhook.method,
+                title: webhook.name ?? urlJoin("/", ...webhook.path),
+                slug: parentSlug.apply(webhook).get(),
+                icon: undefined,
+                hidden: undefined,
+                apiDefinitionId: this.apiDefinitionId,
+                availability: undefined
+            };
+        }
+
+        this.taskContext.logger.warn(
+            "Unknown identifier in the API Reference layout: ",
+            unknownIdentifier,
+            "Skipping..."
+        );
+
+        return;
     }
 
     private mergeEndpointPairs(
