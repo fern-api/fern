@@ -52,7 +52,6 @@ import com.fern.irV42.model.http.StreamingResponse;
 import com.fern.irV42.model.http.TextResponse;
 import com.fern.irV42.model.http.TextStreamChunk;
 import com.fern.irV42.model.types.AliasTypeDeclaration;
-import com.fern.irV42.model.types.ContainerType;
 import com.fern.irV42.model.types.DeclaredTypeName;
 import com.fern.irV42.model.types.EnumTypeDeclaration;
 import com.fern.irV42.model.types.ObjectProperty;
@@ -73,6 +72,7 @@ import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.utils.JavaDocUtils;
+import com.fern.java.utils.TypeReferenceUtils.ContainerTypeToUnderlyingType;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.CodeBlock.Builder;
@@ -528,6 +528,10 @@ public abstract class AbstractEndpointWriter {
         return getVariableName("result");
     }
 
+    protected final String getNewPageNumberVariableName() {
+        return getVariableName("newPageNumber");
+    }
+
     private List<ParameterSpec> getPathParameters() {
         List<ParameterSpec> pathParameterSpecs = new ArrayList<>();
         httpService.getPathParameters().forEach(pathParameter -> {
@@ -606,18 +610,6 @@ public abstract class AbstractEndpointWriter {
             TypeName responseType =
                     clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, body.getResponseBodyType());
             boolean isProperty = body.getResponseProperty().isPresent();
-            Optional<TypeName> propertyType = body.getResponseProperty().map(objectProperty -> clientGeneratorContext
-                    .getPoetTypeNameMapper()
-                    .convertToTypeName(true, objectProperty.getValueType()));
-            Boolean responseIsOptional = body.getResponseBodyType().visit(new TypeReferenceIsOptional(true));
-            TypeName returnType = propertyType
-                    .map(type -> {
-                        if (responseIsOptional) {
-                            return ParameterizedTypeName.get(ClassName.get(Optional.class), type);
-                        } else return type;
-                    })
-                    .orElse(responseType);
-            endpointMethodBuilder.returns(returnType);
             if (isProperty || pagination) {
                 httpResponseBuilder.add("$T $L = ", responseType, getParsedResponseVariableName());
             } else {
@@ -639,20 +631,25 @@ public abstract class AbstractEndpointWriter {
                         responseType);
             }
             if (isProperty) {
-                Name responsePropertyName =
-                        body.getResponseProperty().get().getName().getName();
-                if (responseIsOptional) {
-                    httpResponseBuilder.addStatement(
-                            "return $L.map(res -> res.get$L())",
-                            getParsedResponseVariableName(),
-                            responsePropertyName.getPascalCase().getUnsafeName());
-                } else {
-                    httpResponseBuilder.addStatement(
-                            "return $L.get$L()",
-                            getParsedResponseVariableName(),
-                            responsePropertyName.getPascalCase().getUnsafeName());
-                }
+                SnippetAndResultType snippet = getNestedPropertySnippet(
+                        Optional.empty(), body.getResponseProperty().get(), body.getResponseBodyType());
+                httpResponseBuilder.addStatement(CodeBlock.builder()
+                        .add("return $L", getParsedResponseVariableName())
+                        .add(snippet.codeBlock)
+                        .build());
+                endpointMethodBuilder.returns(snippet.typeName);
             } else if (pagination) {
+                ParameterSpec requestParameterSpec = requestParameterSpec()
+                        .orElseThrow(() -> new RuntimeException("Unexpected no parameter spec for paginated endpoint"));
+                ClassName pagerClassName =
+                        clientGeneratorContext.getPoetClassNameFactory().getPaginationClassName("SyncPagingIterable");
+                String endpointName =
+                        httpEndpoint.getName().get().getCamelCase().getSafeName();
+                String methodParameters = endpointMethodBuilder.parameters.stream()
+                        .map(parameterSpec -> parameterSpec.name.equals(requestParameterSpec.name)
+                                ? getNextRequestVariableName()
+                                : parameterSpec.name)
+                        .collect(Collectors.joining(", "));
                 httpEndpoint.getPagination().get().visit(new Visitor<Void>() {
                     @Override
                     public Void visitCursor(CursorPagination cursor) {
@@ -669,9 +666,6 @@ public abstract class AbstractEndpointWriter {
                                 .add(nextSnippet.codeBlock)
                                 .build();
                         httpResponseBuilder.addStatement(nextBlock);
-                        ParameterSpec requestParameterSpec = requestParameterSpec()
-                                .orElseThrow(() ->
-                                        new RuntimeException("Unexpected no parameter spec for paginated endpoint"));
                         String builderStartingAfterProperty = cursor.getPage()
                                 .getName()
                                 .getName()
@@ -698,28 +692,106 @@ public abstract class AbstractEndpointWriter {
                                 .add(resultSnippet.codeBlock)
                                 .build();
                         httpResponseBuilder.addStatement(resultBlock);
-                        ClassName pagerClassName = clientGeneratorContext
-                                .getPoetClassNameFactory()
-                                .getPaginationClassName("SyncPagingIterable");
-                        String endpointName =
-                                httpEndpoint.getName().get().getCamelCase().getSafeName();
-                        String methodParameters = endpointMethodBuilder.parameters.stream()
-                                .map(parameterSpec -> parameterSpec.name.equals(requestParameterSpec.name)
-                                        ? getNextRequestVariableName()
-                                        : parameterSpec.name)
-                                .collect(Collectors.joining(", "));
                         httpResponseBuilder.addStatement(
-                                "return new $T<>($L.isPresent(), $L, () -> $L($L)",
+                                "return new $T<>($L.isPresent(), $L, () -> $L($L))",
                                 pagerClassName,
                                 getStartingAfterVariableName(),
                                 getResultVariableName(),
                                 endpointName,
                                 methodParameters);
+                        com.fern.irV42.model.types.ContainerType resultContainerType = resultSnippet
+                                .typeReference
+                                .getContainer()
+                                .orElseThrow(
+                                        () -> new RuntimeException("Unexpected non-container pagination result type"));
+                        com.fern.irV42.model.types.TypeReference resultUnderlyingType =
+                                resultContainerType.visit(new ContainerTypeToUnderlyingType());
+                        endpointMethodBuilder.returns(ParameterizedTypeName.get(
+                                pagerClassName,
+                                clientGeneratorContext
+                                        .getPoetTypeNameMapper()
+                                        .convertToTypeName(true, resultUnderlyingType)));
                         return null;
                     }
 
                     @Override
                     public Void visitOffset(OffsetPagination offset) {
+                        com.fern.irV42.model.types.TypeReference pageType =
+                                offset.getPage().getValueType();
+                        Boolean pageIsOptional = pageType.visit(new TypeReferenceIsOptional(true));
+                        if (pageIsOptional) {
+                            com.fern.irV42.model.types.TypeReference numberType =
+                                    pageType.getContainer().get().visit(new ContainerTypeToUnderlyingType());
+                            httpResponseBuilder.addStatement(CodeBlock.of(
+                                    "$T $L = $L.get$L().map(page -> page + 1).orElse(1)",
+                                    clientGeneratorContext
+                                            .getPoetTypeNameMapper()
+                                            .convertToTypeName(true, numberType),
+                                    getNewPageNumberVariableName(),
+                                    requestParameterSpec.name,
+                                    offset.getPage()
+                                            .getName()
+                                            .getName()
+                                            .getPascalCase()
+                                            .getUnsafeName()));
+                        } else {
+                            httpResponseBuilder.addStatement(CodeBlock.of(
+                                    "$T $L = $L.get$L() + 1",
+                                    clientGeneratorContext
+                                            .getPoetTypeNameMapper()
+                                            .convertToTypeName(true, pageType),
+                                    getNewPageNumberVariableName(),
+                                    requestParameterSpec.name,
+                                    offset.getPage()
+                                            .getName()
+                                            .getName()
+                                            .getPascalCase()
+                                            .getUnsafeName()));
+                        }
+                        httpResponseBuilder.addStatement(
+                                "$T $L = $T.builder().from($L).$L($L).build()",
+                                requestParameterSpec.type,
+                                getNextRequestVariableName(),
+                                requestParameterSpec.type,
+                                requestParameterSpec.name,
+                                offset.getPage()
+                                        .getName()
+                                        .getName()
+                                        .getCamelCase()
+                                        .getUnsafeName(),
+                                getNewPageNumberVariableName());
+
+                        SnippetAndResultType resultSnippet = getNestedPropertySnippet(
+                                offset.getResults().getPropertyPath(),
+                                offset.getResults().getProperty(),
+                                body.getResponseBodyType());
+                        CodeBlock resultBlock = CodeBlock.builder()
+                                .add(
+                                        "$T $L = $L",
+                                        resultSnippet.typeName,
+                                        getResultVariableName(),
+                                        getParsedResponseVariableName())
+                                .add(resultSnippet.codeBlock)
+                                .build();
+                        httpResponseBuilder.addStatement(resultBlock);
+                        httpResponseBuilder.addStatement(
+                                "return new $T<>(true, $L, () -> $L($L))",
+                                pagerClassName,
+                                getResultVariableName(),
+                                endpointName,
+                                methodParameters);
+                        com.fern.irV42.model.types.ContainerType resultContainerType = resultSnippet
+                                .typeReference
+                                .getContainer()
+                                .orElseThrow(
+                                        () -> new RuntimeException("Unexpected non-container pagination result type"));
+                        com.fern.irV42.model.types.TypeReference resultUnderlyingType =
+                                resultContainerType.visit(new ContainerTypeToUnderlyingType());
+                        endpointMethodBuilder.returns(ParameterizedTypeName.get(
+                                pagerClassName,
+                                clientGeneratorContext
+                                        .getPoetTypeNameMapper()
+                                        .convertToTypeName(true, resultUnderlyingType)));
                         return null;
                     }
 
@@ -822,15 +894,19 @@ public abstract class AbstractEndpointWriter {
         Builder codeBlockBuilder = CodeBlock.builder();
         getSnippetOutput.code.forEach(codeBlockBuilder::add);
         return new SnippetAndResultType(
+                getSnippetOutput.typeReference,
                 clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, getSnippetOutput.typeReference),
                 codeBlockBuilder.build());
     }
 
     private class SnippetAndResultType {
+        private final com.fern.irV42.model.types.TypeReference typeReference;
         private final TypeName typeName;
         private final CodeBlock codeBlock;
 
-        private SnippetAndResultType(TypeName typeName, CodeBlock codeBlock) {
+        private SnippetAndResultType(
+                com.fern.irV42.model.types.TypeReference typeReference, TypeName typeName, CodeBlock codeBlock) {
+            this.typeReference = typeReference;
             this.typeName = typeName;
             this.codeBlock = codeBlock;
         }
@@ -905,7 +981,7 @@ public abstract class AbstractEndpointWriter {
         }
 
         @Override
-        public GetSnippetOutput visitContainer(ContainerType container) {
+        public GetSnippetOutput visitContainer(com.fern.irV42.model.types.ContainerType container) {
             System.out.println("🤙 visitContainer");
             if (propertyPath.isEmpty() && !container.isOptional()) {
                 addPreviousIfPresent();
@@ -957,7 +1033,7 @@ public abstract class AbstractEndpointWriter {
                         if (currentOptional || previousWasOptional) {
                             return new GetSnippetOutput(
                                     com.fern.irV42.model.types.TypeReference.container(
-                                            ContainerType.optional(typeReference)),
+                                            com.fern.irV42.model.types.ContainerType.optional(typeReference)),
                                     codeBlocks);
                         }
                         return new GetSnippetOutput(typeReference, codeBlocks);
@@ -1021,7 +1097,8 @@ public abstract class AbstractEndpointWriter {
             addPreviousIfPresent();
             if (currentOptional || previousWasOptional) {
                 return new GetSnippetOutput(
-                        com.fern.irV42.model.types.TypeReference.container(ContainerType.optional(typeReference)),
+                        com.fern.irV42.model.types.TypeReference.container(
+                                com.fern.irV42.model.types.ContainerType.optional(typeReference)),
                         codeBlocks);
             }
             return new GetSnippetOutput(typeReference, codeBlocks);
@@ -1125,7 +1202,7 @@ public abstract class AbstractEndpointWriter {
         }
 
         @Override
-        public Boolean visitContainer(ContainerType container) {
+        public Boolean visitContainer(com.fern.irV42.model.types.ContainerType container) {
             return container.isOptional();
         }
 
