@@ -9,7 +9,7 @@ import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import matter from "gray-matter";
-import { kebabCase, orderBy } from "lodash-es";
+import { kebabCase } from "lodash-es";
 import urlJoin from "url-join";
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
 import { convertDocsSnippetsConfigToFdr } from "./convertDocsSnippetsConfigToFdr";
@@ -349,68 +349,6 @@ export class DocsDefinitionResolver {
             default:
                 assertNever(item);
         }
-    }
-
-    private groupByYear(
-        entries: FernNavigation.ChangelogEntryNode[],
-        parentSlug: string,
-        apiDefinitionId: string
-    ): FernNavigation.ChangelogYearNode[] {
-        const years = new Map<number, FernNavigation.ChangelogEntryNode[]>();
-        for (const entry of entries) {
-            const year = dayjs.utc(entry.date).year();
-            const yearEntries = years.get(year) ?? [];
-            yearEntries.push(entry);
-            years.set(year, yearEntries);
-        }
-        return orderBy(
-            Array.from(years.entries()).map(([year, entries]) => {
-                const slug = FernNavigation.Slug(FernNavigation.utils.slugjoin(parentSlug, year.toString()));
-                return {
-                    id: FernNavigation.NodeId(`${apiDefinitionId}:changelog:${year}`),
-                    type: "changelogYear" as const,
-                    title: year.toString(),
-                    year,
-                    slug,
-                    icon: undefined,
-                    hidden: undefined,
-                    children: this.groupByMonth(entries, slug, apiDefinitionId)
-                };
-            }),
-            "year",
-            "desc"
-        );
-    }
-
-    private groupByMonth(
-        entries: FernNavigation.ChangelogEntryNode[],
-        parentSlug: string,
-        apiDefinitionId: string
-    ): FernNavigation.ChangelogMonthNode[] {
-        const months = new Map<number, FernNavigation.ChangelogEntryNode[]>();
-        for (const entry of entries) {
-            const month = dayjs.utc(entry.date).month() + 1;
-            const monthEntries = months.get(month) ?? [];
-            monthEntries.push(entry);
-            months.set(month, monthEntries);
-        }
-        return orderBy(
-            Array.from(months.entries()).map(([month, entries]) => {
-                const date = dayjs(new Date(0, month - 1));
-                return {
-                    id: FernNavigation.NodeId(`${apiDefinitionId}:changelog:${date.format("YYYY-M")}`),
-                    type: "changelogMonth" as const,
-                    title: date.format("MMMM YYYY"),
-                    month,
-                    slug: FernNavigation.Slug(FernNavigation.utils.slugjoin(parentSlug, month.toString())),
-                    icon: undefined,
-                    hidden: undefined,
-                    children: entries
-                };
-            }),
-            "month",
-            "desc"
-        );
     }
 
     private async convertUnversionedNavigationConfig({
