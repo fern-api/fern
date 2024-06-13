@@ -3312,7 +3312,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/auth@workspace:*, @fern-api/auth@workspace:^, @fern-api/auth@workspace:packages/cli/auth":
+"@fern-api/auth@workspace:*, @fern-api/auth@workspace:packages/cli/auth":
   version: 0.0.0-use.local
   resolution: "@fern-api/auth@workspace:packages/cli/auth"
   dependencies:
@@ -3493,7 +3493,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/core@workspace:*, @fern-api/core@workspace:^, @fern-api/core@workspace:packages/core":
+"@fern-api/core@workspace:*, @fern-api/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@fern-api/core@workspace:packages/core"
   dependencies:
@@ -3597,15 +3597,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/docs-resolver@workspace:packages/cli/docs-resolver"
   dependencies:
-    "@fern-api/auth": "workspace:^"
     "@fern-api/configuration": "workspace:*"
-    "@fern-api/core": "workspace:^"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fdr-sdk": 0.98.0-70bd155ad
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-sdk": "workspace:*"
-    "@fern-api/register": "workspace:^"
+    "@fern-api/register": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@types/diff": ^5.2.1
@@ -4332,7 +4330,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/register@workspace:*, @fern-api/register@workspace:^, @fern-api/register@workspace:packages/cli/register":
+"@fern-api/register@workspace:*, @fern-api/register@workspace:packages/cli/register":
   version: 0.0.0-use.local
   resolution: "@fern-api/register@workspace:packages/cli/register"
   dependencies:

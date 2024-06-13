@@ -6643,9 +6643,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/cli/docs-resolver/",\
           "packageDependencies": [\
             ["@fern-api/docs-resolver", "workspace:packages/cli/docs-resolver"],\
-            ["@fern-api/auth", "workspace:packages/cli/auth"],\
             ["@fern-api/configuration", "workspace:packages/cli/configuration"],\
-            ["@fern-api/core", "workspace:packages/core"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/fdr-sdk", "npm:0.98.0-70bd155ad"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\

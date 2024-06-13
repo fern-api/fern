@@ -8,6 +8,7 @@
     { "path": "../../ir-sdk" },
     { "path": "../configuration" },
     { "path": "../generation/ir-generator" },
+    { "path": "../register" },
     { "path": "../task-context" },
     { "path": "../workspace-loader" }
   ]
