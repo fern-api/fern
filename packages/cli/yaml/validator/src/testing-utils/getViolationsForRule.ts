@@ -22,7 +22,8 @@ export async function getViolationsForRule({
         absolutePathToWorkspace,
         context: createMockTaskContext(),
         cliVersion: "0.0.0",
-        workspaceName: undefined
+        workspaceName: undefined,
+        sdkLanguage: undefined
     });
     if (!parseResult.didSucceed) {
         throw new Error("Failed to parse workspace: " + JSON.stringify(parseResult));

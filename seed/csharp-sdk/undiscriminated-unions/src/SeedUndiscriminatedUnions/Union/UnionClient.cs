@@ -59,4 +59,19 @@ public class UnionClient
         }
         throw new Exception(responseBody);
     }
+
+    public async Task<Dictionary<OneOf<KeyType, string>, string>> GetMetadataAsync()
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/metadata" }
+        );
+        string responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        {
+            return JsonSerializer.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(
+                responseBody
+            );
+        }
+        throw new Exception(responseBody);
+    }
 }

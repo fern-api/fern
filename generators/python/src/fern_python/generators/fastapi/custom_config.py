@@ -1,10 +1,17 @@
-import pydantic
+from typing import Literal, Optional
 
-from ..pydantic_model.custom_config import BasePydanticModelCustomConfig
+import pydantic
+from fern_python.generators.pydantic_model.custom_config import (
+    BasePydanticModelCustomConfig,
+)
+
+
+class FastApiPydanticModelCustomConfig(BasePydanticModelCustomConfig):
+    extra_fields: Optional[Literal["allow", "forbid"]] = "forbid"
 
 
 class FastAPICustomConfig(pydantic.BaseModel):
     include_validators: bool = False
     skip_formatting: bool = False
     async_handlers: bool = False
-    pydantic_config: BasePydanticModelCustomConfig = BasePydanticModelCustomConfig()
+    pydantic_config: FastApiPydanticModelCustomConfig = FastApiPydanticModelCustomConfig()

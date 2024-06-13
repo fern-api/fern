@@ -25,6 +25,9 @@ module SeedQueryParametersClient
     # @param user [Hash] Request of type SeedQueryParametersClient::User::User, as a Hash
     #   * :name (String)
     #   * :tags (Array<String>)
+    # @param user_list [Array<Hash>] Request of type Array<SeedQueryParametersClient::User::User>, as a Hash
+    #   * :name (String)
+    #   * :tags (Array<String>)
     # @param key_value [Hash{String => String}]
     # @param optional_string [String]
     # @param nested_user [Hash] Request of type SeedQueryParametersClient::User::NestedUser, as a Hash
@@ -50,6 +53,7 @@ module SeedQueryParametersClient
     #    deadline: DateTime.parse(2024-01-15T09:30:00.000Z),
     #    bytes: "SGVsbG8gd29ybGQh",
     #    user: { name: "string", tags: ["string"] },
+    #    user_list: [{ name: "string", tags: ["string"] }],
     #    key_value: { "string": "string" },
     #    optional_string: "string",
     #    nested_user: { name: "string", user: { name: "string", tags: ["string"] } },
@@ -57,8 +61,8 @@ module SeedQueryParametersClient
     #    exclude_user: { name: "string", tags: ["string"] },
     #    filter: "string"
     #  )
-    def get_username(limit:, id:, date:, deadline:, bytes:, user:, key_value:, nested_user:, exclude_user:, filter:, optional_string: nil,
-                     optional_user: nil, request_options: nil)
+    def get_username(limit:, id:, date:, deadline:, bytes:, user:, user_list:, key_value:, nested_user:, exclude_user:,
+                     filter:, optional_string: nil, optional_user: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = {
@@ -74,6 +78,7 @@ module SeedQueryParametersClient
           "deadline": deadline,
           "bytes": bytes,
           "user": user,
+          "userList": user_list,
           "keyValue": key_value,
           "optionalString": optional_string,
           "nestedUser": nested_user,
@@ -105,6 +110,9 @@ module SeedQueryParametersClient
     # @param user [Hash] Request of type SeedQueryParametersClient::User::User, as a Hash
     #   * :name (String)
     #   * :tags (Array<String>)
+    # @param user_list [Array<Hash>] Request of type Array<SeedQueryParametersClient::User::User>, as a Hash
+    #   * :name (String)
+    #   * :tags (Array<String>)
     # @param key_value [Hash{String => String}]
     # @param optional_string [String]
     # @param nested_user [Hash] Request of type SeedQueryParametersClient::User::NestedUser, as a Hash
@@ -130,6 +138,7 @@ module SeedQueryParametersClient
     #    deadline: DateTime.parse(2024-01-15T09:30:00.000Z),
     #    bytes: "SGVsbG8gd29ybGQh",
     #    user: { name: "string", tags: ["string"] },
+    #    user_list: [{ name: "string", tags: ["string"] }],
     #    key_value: { "string": "string" },
     #    optional_string: "string",
     #    nested_user: { name: "string", user: { name: "string", tags: ["string"] } },
@@ -137,8 +146,8 @@ module SeedQueryParametersClient
     #    exclude_user: { name: "string", tags: ["string"] },
     #    filter: "string"
     #  )
-    def get_username(limit:, id:, date:, deadline:, bytes:, user:, key_value:, nested_user:, exclude_user:, filter:, optional_string: nil,
-                     optional_user: nil, request_options: nil)
+    def get_username(limit:, id:, date:, deadline:, bytes:, user:, user_list:, key_value:, nested_user:, exclude_user:,
+                     filter:, optional_string: nil, optional_user: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -155,6 +164,7 @@ module SeedQueryParametersClient
             "deadline": deadline,
             "bytes": bytes,
             "user": user,
+            "userList": user_list,
             "keyValue": key_value,
             "optionalString": optional_string,
             "nestedUser": nested_user,

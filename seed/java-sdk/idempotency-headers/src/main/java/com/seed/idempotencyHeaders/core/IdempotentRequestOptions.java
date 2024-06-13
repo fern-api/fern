@@ -65,7 +65,7 @@ public final class IdempotentRequestOptions {
 
         private String idempotencyExpiration = null;
 
-        private Optional<Integer> timeout = null;
+        private Optional<Integer> timeout = Optional.empty();
 
         private TimeUnit timeoutTimeUnit = TimeUnit.SECONDS;
 

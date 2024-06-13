@@ -145,6 +145,46 @@ class DebugVariableValue_DoublyLinkedListNodeValue(pydantic_v1.BaseModel):
         json_encoders = {dt.datetime: serialize_datetime}
 
 
+class DebugVariableValue_UndefinedValue(pydantic_v1.BaseModel):
+    type: typing.Literal["undefinedValue"] = "undefinedValue"
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
+
+
+class DebugVariableValue_NullValue(pydantic_v1.BaseModel):
+    type: typing.Literal["nullValue"] = "nullValue"
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
+
+
 class DebugVariableValue_GenericValue(pydantic_v1.BaseModel):
     stringified_type: typing.Optional[str] = pydantic_v1.Field(alias="stringifiedType", default=None)
     stringified_value: str = pydantic_v1.Field(alias="stringifiedValue")
@@ -180,6 +220,8 @@ DebugVariableValue = typing.Union[
     DebugVariableValue_BinaryTreeNodeValue,
     DebugVariableValue_SinglyLinkedListNodeValue,
     DebugVariableValue_DoublyLinkedListNodeValue,
+    DebugVariableValue_UndefinedValue,
+    DebugVariableValue_NullValue,
     DebugVariableValue_GenericValue,
 ]
 from .debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402

@@ -1,0 +1,131 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`open api ir to fern default-content docs 1`] = `
+{
+  "definitionFiles": {
+    "generativelanguage.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "GenerateContent": {
+            "auth": false,
+            "docs": undefined,
+            "examples": [
+              {
+                "path-parameters": {
+                  "model": "model",
+                },
+                "response": {
+                  "body": {
+                    "bar": "bar",
+                  },
+                },
+              },
+            ],
+            "method": "POST",
+            "pagination": undefined,
+            "path": "/generateContent",
+            "path-parameters": {
+              "model": "string",
+            },
+            "response": {
+              "docs": "Successful operation",
+              "type": "root.GenerateContentResponse",
+            },
+          },
+        },
+      },
+    },
+  },
+  "packageMarkerFile": {
+    "types": {
+      "GenerateContentResponse": {
+        "docs": undefined,
+        "properties": {
+          "bar": "optional<string>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "default-environment": "Default",
+    "display-name": "Default Content Type",
+    "environments": {
+      "Default": "https://ai.com",
+    },
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`open api ir to fern default-content simple 1`] = `
+{
+  "definitionFiles": {
+    "generativelanguage.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "GenerateContent": {
+            "auth": false,
+            "docs": undefined,
+            "examples": [
+              {
+                "path-parameters": {
+                  "model": "model",
+                },
+                "response": {
+                  "body": {
+                    "bar": "bar",
+                  },
+                },
+              },
+            ],
+            "method": "POST",
+            "pagination": undefined,
+            "path": "/generateContent",
+            "path-parameters": {
+              "model": "string",
+            },
+            "response": {
+              "docs": "Successful operation",
+              "type": "root.GenerateContentResponse",
+            },
+          },
+        },
+      },
+    },
+  },
+  "packageMarkerFile": {
+    "types": {
+      "GenerateContentResponse": {
+        "docs": undefined,
+        "properties": {
+          "bar": "optional<string>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "default-environment": "Default",
+    "display-name": "Default Content Type",
+    "environments": {
+      "Default": "https://ai.com",
+    },
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;

@@ -76,7 +76,7 @@
     "@types/get-port": "^4.2.0",
     "ansi-escapes": "^5.0.0",
     "axios": "^0.28.0",
-    "boxen": "^7.0.0",
+    "boxen": "^7.1.1",
     "chalk": "^5.0.1",
     "get-port": "^7.1.0",
     "immer": "^9.0.15",
@@ -87,7 +87,7 @@
     "ora": "^7.0.1",
     "tar": "^6.2.1",
     "tmp-promise": "^3.0.3",
-    "validate-npm-package-name": "^4.0.0",
+    "validate-npm-package-name": "^5.0.1",
     "yargs": "^17.4.1"
   },
   "devDependencies": {

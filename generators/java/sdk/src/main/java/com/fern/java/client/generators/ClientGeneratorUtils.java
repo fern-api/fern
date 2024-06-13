@@ -16,6 +16,7 @@
 
 package com.fern.java.client.generators;
 
+import com.fern.irV42.model.commons.ErrorId;
 import com.fern.irV42.model.commons.SubpackageId;
 import com.fern.irV42.model.commons.TypeId;
 import com.fern.irV42.model.http.HttpEndpoint;
@@ -58,6 +59,7 @@ public final class ClientGeneratorUtils {
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
     private final List<GeneratedWrappedRequest> generatedWrappedRequests = new ArrayList<>();
     private final GeneratedJavaFile requestOptionsFile;
+    private final Map<ErrorId, GeneratedJavaFile> generatedErrors;
 
     public ClientGeneratorUtils(
             ClassName clientImplName,
@@ -68,7 +70,8 @@ public final class ClientGeneratorUtils {
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
             GeneratedJavaFile generatedSuppliersFile,
             GeneratedJavaFile requestOptionsFile,
-            IPackage fernPackage) {
+            IPackage fernPackage,
+            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         this.generatorContext = clientGeneratorContext;
         this.clientOptionsField = FieldSpec.builder(generatedClientOptions.getClassName(), "clientOptions")
                 .addModifiers(Modifier.PROTECTED, Modifier.FINAL)
@@ -83,6 +86,7 @@ public final class ClientGeneratorUtils {
         this.generatedClientOptions = generatedClientOptions;
         this.generatedEnvironmentsClass = generatedEnvironmentsClass;
         this.requestOptionsFile = requestOptionsFile;
+        this.generatedErrors = generatedErrors;
     }
 
     public Result buildClients() {
@@ -105,7 +109,8 @@ public final class ClientGeneratorUtils {
                         generatedClientOptions,
                         clientOptionsField,
                         generatedEnvironmentsClass,
-                        allGeneratedInterfaces);
+                        allGeneratedInterfaces,
+                        generatedErrors);
                 HttpEndpointMethodSpecs httpEndpointMethodSpecs = httpEndpointMethodSpecFactory.create();
                 if (httpEndpointMethodSpecs.getNoRequestBodyMethodSpec().isPresent()) {
                     implBuilder.addMethod(

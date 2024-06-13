@@ -17,6 +17,7 @@ type GetUsersRequest struct {
 	Deadline       time.Time         `json:"-" url:"deadline"`
 	Bytes          []byte            `json:"-" url:"bytes"`
 	User           *User             `json:"-" url:"user,omitempty"`
+	UserList       []*User           `json:"-" url:"userList,omitempty"`
 	KeyValue       map[string]string `json:"-" url:"keyValue,omitempty"`
 	OptionalString *string           `json:"-" url:"optionalString,omitempty"`
 	NestedUser     *NestedUser       `json:"-" url:"nestedUser,omitempty"`

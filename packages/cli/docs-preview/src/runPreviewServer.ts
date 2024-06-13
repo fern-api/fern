@@ -106,6 +106,7 @@ export async function runPreviewServer({
         debounce: 1000,
         renameDetection: true
     });
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
         context.logger.info(chalk.dim(`[${event}] ${targetPath}`));
         sendData({
@@ -123,6 +124,7 @@ export async function runPreviewServer({
         });
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     app.post("/v2/registry/docs/load-with-url", async (_, res) => {
         try {
             // set to empty in case docsDefinition is null which happens when the initial docs definition is invalid
@@ -157,6 +159,7 @@ export async function runPreviewServer({
 
     app.use("/_next", express.static(path.join(getPathToBundleFolder(), "/_next")));
 
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     app.use("*", async (_req, res) => {
         return res.sendFile(path.join(getPathToBundleFolder(), "/[[...slug]].html"));
     });

@@ -3,8 +3,10 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src/**/*"],
   "references": [
+    { "path": "../../../../packages/cli/logger" },
     { "path": "../../../../packages/commons/core-utils" },
     { "path": "../../../../packages/commons/fs-utils" },
+    { "path": "../../../../packages/commons/logging-execa" },
     { "path": "../../model/type-generator" },
     { "path": "../../model/type-reference-converters" },
     { "path": "../../model/type-reference-example-generator" },

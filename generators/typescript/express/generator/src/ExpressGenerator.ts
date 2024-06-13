@@ -255,7 +255,8 @@ export class ExpressGenerator {
             extraPeerDependenciesMeta: {},
             resolutions: {
                 "@types/mime": "3.0.4"
-            }
+            },
+            extraConfigs: undefined
         });
     }
 

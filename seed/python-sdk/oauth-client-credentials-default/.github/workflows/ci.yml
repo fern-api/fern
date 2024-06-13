@@ -32,8 +32,11 @@ jobs:
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
       - name: Install dependencies
         run: poetry install
+
+      - name: Install Fern
+        run: npm install -g fern-api
       - name: Test
-        run: poetry run pytest ./tests/custom/
+        run: fern test --command "poetry run pytest -rP ."
 
   publish:
     needs: [compile, test]

@@ -38,7 +38,7 @@ public final class OAuthTokenSupplier implements Supplier<String> {
         return authClient.getToken(getTokenRequest);
     }
 
-    @Override
+    @java.lang.Override
     public String get() {
         if (accessToken == null || expiresAt.isBefore(Instant.now())) {
             TokenResponse authResponse = fetchToken();

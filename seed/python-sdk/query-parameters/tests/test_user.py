@@ -11,7 +11,7 @@ from .utilities import validate_response
 
 
 async def test_get_username(client: SeedQueryParameters, async_client: AsyncSeedQueryParameters) -> None:
-    expected_response = {"name": "string", "tags": ["string"]}
+    expected_response: typing.Any = {"name": "string", "tags": ["string"]}
     expected_types: typing.Any = {"name": None, "tags": ("list", {0: None})}
     response = client.user.get_username(
         limit=1,
@@ -20,6 +20,7 @@ async def test_get_username(client: SeedQueryParameters, async_client: AsyncSeed
         deadline=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
         bytes="SGVsbG8gd29ybGQh",
         user=User(name="string", tags=["string"]),
+        user_list=[User(name="string", tags=["string"])],
         key_value={"string": "string"},
         optional_string="string",
         nested_user=NestedUser(name="string", user=User(name="string", tags=["string"])),
@@ -36,6 +37,7 @@ async def test_get_username(client: SeedQueryParameters, async_client: AsyncSeed
         deadline=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
         bytes="SGVsbG8gd29ybGQh",
         user=User(name="string", tags=["string"]),
+        user_list=[User(name="string", tags=["string"])],
         key_value={"string": "string"},
         optional_string="string",
         nested_user=NestedUser(name="string", user=User(name="string", tags=["string"])),

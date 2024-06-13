@@ -27,6 +27,7 @@ import { GithubLicenseSchema } from "./schemas/GithubLicenseSchema";
 import { MavenOutputLocationSchema } from "./schemas/MavenOutputLocationSchema";
 import { OutputMetadataSchema } from "./schemas/OutputMetadataSchema";
 import { PypiOutputMetadataSchema } from "./schemas/PypiOutputMetadataSchema";
+import { ReadmeSchema } from "./schemas/ReadmeSchema";
 
 export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
@@ -36,6 +37,7 @@ export async function convertGeneratorsConfiguration({
     rawGeneratorsConfiguration: GeneratorsConfigurationSchema;
 }): Promise<GeneratorsConfiguration> {
     const maybeTopLevelMetadata = getOutputMetadata(rawGeneratorsConfiguration.metadata);
+    const readme = rawGeneratorsConfiguration.readme;
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         api: await parseAPIConfiguration(rawGeneratorsConfiguration),
@@ -49,7 +51,8 @@ export async function convertGeneratorsConfiguration({
                               absolutePathToGeneratorsConfiguration,
                               groupName,
                               group,
-                              maybeTopLevelMetadata
+                              maybeTopLevelMetadata,
+                              readme
                           })
                       )
                   )
@@ -75,7 +78,7 @@ async function parseAPIConfiguration(
                 origin: undefined,
                 overrides: undefined,
                 audiences: [],
-                shouldUseTitleAsName: undefined
+                settings: { shouldUseTitleAsName: undefined, shouldUseUndiscriminatedUnionsWithLiterals: undefined }
             });
         } else if (Array.isArray(apiConfiguration)) {
             for (const definition of apiConfiguration) {
@@ -85,7 +88,10 @@ async function parseAPIConfiguration(
                         origin: undefined,
                         overrides: undefined,
                         audiences: [],
-                        shouldUseTitleAsName: undefined
+                        settings: {
+                            shouldUseTitleAsName: undefined,
+                            shouldUseUndiscriminatedUnionsWithLiterals: undefined
+                        }
                     });
                 } else {
                     apiDefinitions.push({
@@ -93,7 +99,10 @@ async function parseAPIConfiguration(
                         origin: definition.origin,
                         overrides: definition.overrides,
                         audiences: definition.audiences,
-                        shouldUseTitleAsName: definition.settings?.["use-title"]
+                        settings: {
+                            shouldUseTitleAsName: definition.settings?.["use-title"],
+                            shouldUseUndiscriminatedUnionsWithLiterals: definition.settings?.unions === "v1"
+                        }
                     });
                 }
             }
@@ -103,7 +112,10 @@ async function parseAPIConfiguration(
                 origin: apiConfiguration.origin,
                 overrides: apiConfiguration.overrides,
                 audiences: apiConfiguration.audiences,
-                shouldUseTitleAsName: apiConfiguration.settings?.["use-title"]
+                settings: {
+                    shouldUseTitleAsName: apiConfiguration.settings?.["use-title"],
+                    shouldUseUndiscriminatedUnionsWithLiterals: apiConfiguration.settings?.unions === "v1"
+                }
             });
         }
     } else {
@@ -119,7 +131,10 @@ async function parseAPIConfiguration(
                 origin: apiOrigin,
                 overrides: openapiOverrides,
                 audiences: [],
-                shouldUseTitleAsName: settings?.["use-title"]
+                settings: {
+                    shouldUseTitleAsName: settings?.["use-title"],
+                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1"
+                }
             });
         } else if (openapi != null) {
             apiDefinitions.push({
@@ -127,7 +142,10 @@ async function parseAPIConfiguration(
                 origin: openapi.origin,
                 overrides: openapi.overrides,
                 audiences: [],
-                shouldUseTitleAsName: openapi.settings?.["use-title"]
+                settings: {
+                    shouldUseTitleAsName: openapi.settings?.["use-title"],
+                    shouldUseUndiscriminatedUnionsWithLiterals: openapi.settings?.unions === "v1"
+                }
             });
         }
 
@@ -137,7 +155,10 @@ async function parseAPIConfiguration(
                 origin: apiOrigin,
                 overrides: undefined,
                 audiences: [],
-                shouldUseTitleAsName: settings?.["use-title"]
+                settings: {
+                    shouldUseTitleAsName: settings?.["use-title"],
+                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1"
+                }
             });
         }
     }
@@ -152,12 +173,14 @@ async function convertGroup({
     absolutePathToGeneratorsConfiguration,
     groupName,
     group,
-    maybeTopLevelMetadata
+    maybeTopLevelMetadata,
+    readme
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     groupName: string;
     group: GeneratorGroupSchema;
     maybeTopLevelMetadata: OutputMetadata | undefined;
+    readme: ReadmeSchema | undefined;
 }): Promise<GeneratorGroup> {
     const maybeGroupLevelMetadata = getOutputMetadata(group.metadata);
     return {
@@ -169,7 +192,8 @@ async function convertGroup({
                     absolutePathToGeneratorsConfiguration,
                     generator,
                     maybeTopLevelMetadata,
-                    maybeGroupLevelMetadata
+                    maybeGroupLevelMetadata,
+                    readme
                 })
             )
         )
@@ -180,12 +204,14 @@ async function convertGenerator({
     absolutePathToGeneratorsConfiguration,
     generator,
     maybeGroupLevelMetadata,
-    maybeTopLevelMetadata
+    maybeTopLevelMetadata,
+    readme
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: GeneratorInvocationSchema;
     maybeGroupLevelMetadata: OutputMetadata | undefined;
     maybeTopLevelMetadata: OutputMetadata | undefined;
+    readme: ReadmeSchema | undefined;
 }): Promise<GeneratorInvocation> {
     return {
         name: generator.name,
@@ -197,6 +223,7 @@ async function convertGenerator({
             maybeGroupLevelMetadata,
             maybeTopLevelMetadata
         }),
+        keywords: generator.keywords,
         smartCasing: generator["smart-casing"] ?? false,
         disableExamples: generator["disable-examples"] ?? false,
         absolutePathToLocalOutput:
@@ -209,7 +236,8 @@ async function convertGenerator({
                 : undefined,
         language: getLanguageFromGeneratorName(generator.name),
         irVersionOverride: generator["ir-version"] ?? undefined,
-        publishMetadata: getPublishMetadata({ generatorInvocation: generator })
+        publishMetadata: getPublishMetadata({ generatorInvocation: generator }),
+        readme
     };
 }
 

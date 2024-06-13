@@ -10,7 +10,8 @@ export async function getIrForApi(absolutePathToWorkspace: AbsoluteFilePath): Pr
         absolutePathToWorkspace,
         context,
         cliVersion: "0.0.0",
-        workspaceName: undefined
+        workspaceName: undefined,
+        sdkLanguage: undefined
     });
     if (!workspace.didSucceed) {
         return context.failAndThrow("Failed to load workspace", workspace.failures);
@@ -21,7 +22,9 @@ export async function getIrForApi(absolutePathToWorkspace: AbsoluteFilePath): Pr
         workspace: workspace.workspace,
         generationLanguage: undefined,
         audiences: { type: "all" },
+        keywords: undefined,
         smartCasing: true, // Verify the special casing convention in tests.
-        disableExamples: false
+        disableExamples: false,
+        readme: undefined
     });
 }

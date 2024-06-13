@@ -106,7 +106,11 @@ def maybe_filter_request_body(
     omit: typing.Optional[typing.Any],
 ) -> typing.Optional[typing.Any]:
     if data is None:
-        return None
+        return (
+            jsonable_encoder(request_options.get("additional_body_parameters", {}))
+            if request_options is not None
+            else None
+        )
     elif not isinstance(data, typing.Mapping):
         data_content = jsonable_encoder(data)
     else:
@@ -151,7 +155,7 @@ class HttpClient:
         json: typing.Optional[typing.Any] = None,
         data: typing.Optional[typing.Any] = None,
         content: typing.Optional[typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]] = None,
-        files: typing.Optional[typing.Dict[str, typing.Union[File, typing.List[File]]]] = None,
+        files: typing.Optional[typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]]] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
         retries: int = 0,
@@ -166,7 +170,7 @@ class HttpClient:
 
         response = self.httpx_client.request(
             method=method,
-            url=urllib.parse.urljoin(base_url, path),
+            url=urllib.parse.urljoin(f"{base_url}/", path),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -178,16 +182,18 @@ class HttpClient:
             ),
             params=encode_query(
                 jsonable_encoder(
-                    remove_omit_from_dict(
-                        {
-                            **(params if params is not None else {}),
-                            **(
-                                request_options.get("additional_query_parameters", {})
-                                if request_options is not None
-                                else {}
-                            ),
-                        },
-                        omit,
+                    remove_none_from_dict(
+                        remove_omit_from_dict(
+                            {
+                                **(params if params is not None else {}),
+                                **(
+                                    request_options.get("additional_query_parameters", {})
+                                    if request_options is not None
+                                    else {}
+                                ),
+                            },
+                            omit,
+                        )
                     )
                 )
             ),
@@ -229,7 +235,7 @@ class HttpClient:
         json: typing.Optional[typing.Any] = None,
         data: typing.Optional[typing.Any] = None,
         content: typing.Optional[typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]] = None,
-        files: typing.Optional[typing.Dict[str, typing.Union[File, typing.List[File]]]] = None,
+        files: typing.Optional[typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]]] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
         retries: int = 0,
@@ -244,7 +250,7 @@ class HttpClient:
 
         with self.httpx_client.stream(
             method=method,
-            url=urllib.parse.urljoin(base_url, path),
+            url=urllib.parse.urljoin(f"{base_url}/", path),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -256,16 +262,18 @@ class HttpClient:
             ),
             params=encode_query(
                 jsonable_encoder(
-                    remove_omit_from_dict(
-                        {
-                            **(params if params is not None else {}),
-                            **(
-                                request_options.get("additional_query_parameters", {})
-                                if request_options is not None
-                                else {}
-                            ),
-                        },
-                        omit,
+                    remove_none_from_dict(
+                        remove_omit_from_dict(
+                            {
+                                **(params if params is not None else {}),
+                                **(
+                                    request_options.get("additional_query_parameters", {})
+                                    if request_options is not None
+                                    else {}
+                                ),
+                            },
+                            omit,
+                        )
                     )
                 )
             ),
@@ -308,7 +316,7 @@ class AsyncHttpClient:
         json: typing.Optional[typing.Any] = None,
         data: typing.Optional[typing.Any] = None,
         content: typing.Optional[typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]] = None,
-        files: typing.Optional[typing.Dict[str, typing.Union[File, typing.List[File]]]] = None,
+        files: typing.Optional[typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]]] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
         retries: int = 0,
@@ -324,7 +332,7 @@ class AsyncHttpClient:
         # Add the input to each of these and do None-safety checks
         response = await self.httpx_client.request(
             method=method,
-            url=urllib.parse.urljoin(base_url, path),
+            url=urllib.parse.urljoin(f"{base_url}/", path),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -336,16 +344,18 @@ class AsyncHttpClient:
             ),
             params=encode_query(
                 jsonable_encoder(
-                    remove_omit_from_dict(
-                        {
-                            **(params if params is not None else {}),
-                            **(
-                                request_options.get("additional_query_parameters", {})
-                                if request_options is not None
-                                else {}
-                            ),
-                        },
-                        omit,
+                    remove_none_from_dict(
+                        remove_omit_from_dict(
+                            {
+                                **(params if params is not None else {}),
+                                **(
+                                    request_options.get("additional_query_parameters", {})
+                                    if request_options is not None
+                                    else {}
+                                ),
+                            },
+                            omit,
+                        )
                     )
                 )
             ),
@@ -386,7 +396,7 @@ class AsyncHttpClient:
         json: typing.Optional[typing.Any] = None,
         data: typing.Optional[typing.Any] = None,
         content: typing.Optional[typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]] = None,
-        files: typing.Optional[typing.Dict[str, typing.Union[File, typing.List[File]]]] = None,
+        files: typing.Optional[typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]]] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
         retries: int = 0,
@@ -401,7 +411,7 @@ class AsyncHttpClient:
 
         async with self.httpx_client.stream(
             method=method,
-            url=urllib.parse.urljoin(base_url, path),
+            url=urllib.parse.urljoin(f"{base_url}/", path),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -413,16 +423,18 @@ class AsyncHttpClient:
             ),
             params=encode_query(
                 jsonable_encoder(
-                    remove_omit_from_dict(
-                        {
-                            **(params if params is not None else {}),
-                            **(
-                                request_options.get("additional_query_parameters", {})
-                                if request_options is not None
-                                else {}
-                            ),
-                        },
-                        omit=omit,
+                    remove_none_from_dict(
+                        remove_omit_from_dict(
+                            {
+                                **(params if params is not None else {}),
+                                **(
+                                    request_options.get("additional_query_parameters", {})
+                                    if request_options is not None
+                                    else {}
+                                ),
+                            },
+                            omit=omit,
+                        )
                     )
                 )
             ),

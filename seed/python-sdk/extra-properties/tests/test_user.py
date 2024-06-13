@@ -8,7 +8,7 @@ from .utilities import validate_response
 
 
 async def test_create_user(client: SeedExtraProperties, async_client: AsyncSeedExtraProperties) -> None:
-    expected_response = {"name": "string"}
+    expected_response: typing.Any = {"name": "string"}
     expected_types: typing.Any = {"name": None}
     response = client.user.create_user(name="string")
     validate_response(response, expected_response, expected_types)

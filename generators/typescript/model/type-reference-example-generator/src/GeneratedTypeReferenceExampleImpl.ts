@@ -83,6 +83,17 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                         exampleItem != null
                             ? this.buildExample({ example: exampleItem, context, opts })
                             : ts.factory.createIdentifier("undefined"),
+                    literal: (exampleItem) =>
+                        exampleItem != null
+                            ? this.buildExample({
+                                  example: {
+                                      jsonExample: this.getJsonExampleForPrimitive(exampleItem),
+                                      shape: ExampleTypeReferenceShape.primitive(exampleItem)
+                                  },
+                                  context,
+                                  opts
+                              })
+                            : ts.factory.createIdentifier("undefined"),
                     _other: () => {
                         throw new Error("Unknown example container type: " + exampleContainer.type);
                     }
@@ -102,6 +113,29 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                 throw new Error("Unknown example type: " + example.shape.type);
             }
         });
+    }
+
+    private getJsonExampleForPrimitive(primitiveExample: ExamplePrimitive): unknown {
+        switch (primitiveExample.type) {
+            case "string":
+                return `"${primitiveExample.string.original}"`;
+            case "integer":
+                return primitiveExample.integer;
+            case "double":
+                return primitiveExample.double;
+            case "long":
+                return primitiveExample.long;
+            case "boolean":
+                return primitiveExample.boolean;
+            case "uuid":
+                return `"${primitiveExample.uuid}"`;
+            case "datetime":
+                return `"${primitiveExample.datetime.toISOString()}"`;
+            case "date":
+                return `"${primitiveExample.date}"`;
+            default:
+                assertNever(primitiveExample);
+        }
     }
 
     private getExampleAsPropertyName({
@@ -152,7 +186,11 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     case "alias":
                         return this.getExampleAsPropertyName({ example: example.value, context, opts });
                     case "undiscriminatedUnion":
-                        throw new Error("Cannot convert undiscriminated union to property name");
+                        return this.getExampleAsPropertyName({
+                            example: example.singleUnionType,
+                            context,
+                            opts
+                        });
                     default:
                         assertNever(example);
                 }

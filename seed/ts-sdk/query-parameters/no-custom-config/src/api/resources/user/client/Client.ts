@@ -38,6 +38,10 @@ export class User {
      *             name: "string",
      *             tags: ["string"]
      *         },
+     *         userList: [{
+     *                 name: "string",
+     *                 tags: ["string"]
+     *             }],
      *         keyValue: {
      *             "string": "string"
      *         },
@@ -71,6 +75,7 @@ export class User {
             deadline,
             bytes,
             user,
+            userList,
             keyValue,
             optionalString,
             nestedUser,
@@ -90,6 +95,7 @@ export class User {
             allowUnrecognizedEnumValues: true,
             breadcrumbsPrefix: ["request", "user"],
         });
+        _queryParams["userList"] = JSON.stringify(userList);
         _queryParams["keyValue"] = JSON.stringify(keyValue);
         if (optionalString != null) {
             _queryParams["optionalString"] = optionalString;

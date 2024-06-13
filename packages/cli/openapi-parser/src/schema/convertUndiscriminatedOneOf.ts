@@ -2,7 +2,7 @@ import { LiteralSchemaValue, OneOfSchemaWithExample, SchemaWithExample, SdkGroup
 import { difference } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { convertEnum } from "./convertEnum";
-import { convertSchema } from "./convertSchemas";
+import { convertReferenceObject, convertSchema } from "./convertSchemas";
 import { SchemaParserContext } from "./SchemaParserContext";
 import { getGeneratedTypeName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
@@ -43,6 +43,108 @@ export function convertUndiscriminatedOneOf({
             });
         }
         return [convertSchema(schema, false, context, [...breadcrumbs, subtypePrefixes[index] ?? `${index}`])];
+    });
+
+    const uniqueSubtypes: SchemaWithExample[] = [];
+    for (let i = 0; i < convertedSubtypes.length; ++i) {
+        const a = convertedSubtypes[i];
+        let isDuplicate = false;
+        for (let j = i + 1; j < convertedSubtypes.length; ++j) {
+            const b = convertedSubtypes[j];
+            if (a != null && b != null && isSchemaEqual(a, b)) {
+                isDuplicate = true;
+                break;
+            }
+        }
+        if (a != null && !isDuplicate) {
+            uniqueSubtypes.push(a);
+        }
+    }
+
+    const everySubTypeIsLiteral = Object.entries(uniqueSubtypes).every(([_, schema]) => {
+        return schema.type === "literal";
+    });
+    if (everySubTypeIsLiteral) {
+        const enumDescriptions: Record<string, { description: string }> = {};
+        const enumValues: string[] = [];
+        Object.entries(uniqueSubtypes).forEach(([_, schema]) => {
+            if (schema.type === "literal" && schema.value.type === "string") {
+                enumValues.push(schema.value.value);
+                if (schema.description != null) {
+                    enumDescriptions[schema.value.value] = {
+                        description: schema.description
+                    };
+                }
+            }
+        });
+        return convertEnum({
+            nameOverride,
+            generatedName,
+            wrapAsNullable,
+            description,
+            fernEnum: enumDescriptions,
+            enumVarNames: undefined,
+            enumValues,
+            groupName,
+            context
+        });
+    }
+
+    if (uniqueSubtypes.length === 1 && uniqueSubtypes[0] != null) {
+        return uniqueSubtypes[0];
+    }
+
+    return wrapUndiscriminantedOneOf({
+        nameOverride,
+        generatedName,
+        wrapAsNullable,
+        description,
+        subtypes: uniqueSubtypes,
+        groupName
+    });
+}
+
+export function convertUndiscriminatedOneOfWithDiscriminant({
+    nameOverride,
+    generatedName,
+    description,
+    wrapAsNullable,
+    context,
+    groupName,
+    discriminator
+}: {
+    nameOverride: string | undefined;
+    generatedName: string;
+    description: string | undefined;
+    wrapAsNullable: boolean;
+    context: SchemaParserContext;
+    groupName: SdkGroupName | undefined;
+    discriminator: OpenAPIV3.DiscriminatorObject;
+}): SchemaWithExample {
+    const convertedSubtypes = Object.entries(discriminator.mapping ?? {}).map(([discriminantValue, schema], index) => {
+        const subtypeReferenceSchema = {
+            $ref: schema
+        };
+        const subtypeReference = convertReferenceObject(subtypeReferenceSchema, false, context, [schema]);
+        context.markSchemaWithDiscriminantValue(subtypeReferenceSchema, discriminator.propertyName, discriminantValue);
+
+        // If the reference is an object (which I think it has to be?), add the discriminant value as a property
+        if (subtypeReference.type === "object") {
+            subtypeReference.properties = {
+                [discriminator.propertyName]: SchemaWithExample.literal({
+                    nameOverride: undefined,
+                    generatedName: getGeneratedTypeName([generatedName, discriminantValue]),
+                    value: LiteralSchemaValue.string(discriminantValue),
+                    groupName: undefined,
+                    description: undefined
+                }),
+                ...subtypeReference.properties.filter((objectProperty) => {
+                    return objectProperty.key !== discriminator.propertyName;
+                })
+            };
+        }
+
+        return subtypeReference;
     });
 
     const uniqueSubtypes: SchemaWithExample[] = [];

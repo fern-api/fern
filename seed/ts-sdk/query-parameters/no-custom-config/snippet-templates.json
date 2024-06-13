@@ -164,6 +164,73 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
+                                        "containerTemplateString": "userList: [\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "delimiter": ",\n\t\t\t",
+                                        "innerTemplate": {
+                                            "imports": [],
+                                            "templateString": "{\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                            "isOptional": true,
+                                            "inputDelimiter": ",\n\t\t\t\t",
+                                            "templateInputs": [
+                                                {
+                                                    "value": {
+                                                        "imports": [],
+                                                        "templateString": "name: $FERN_INPUT",
+                                                        "isOptional": true,
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "RELATIVE",
+                                                                "path": "name",
+                                                                "type": "payload"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "type": "template"
+                                                },
+                                                {
+                                                    "value": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "containerTemplateString": "tags: [\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t]",
+                                                        "delimiter": ",\n\t\t\t\t\t",
+                                                        "innerTemplate": {
+                                                            "imports": [],
+                                                            "templateString": "$FERN_INPUT",
+                                                            "isOptional": true,
+                                                            "templateInputs": [
+                                                                {
+                                                                    "location": "RELATIVE",
+                                                                    "type": "payload"
+                                                                }
+                                                            ],
+                                                            "type": "generic"
+                                                        },
+                                                        "templateInput": {
+                                                            "location": "RELATIVE",
+                                                            "path": "tags",
+                                                            "type": "payload"
+                                                        },
+                                                        "type": "iterable"
+                                                    },
+                                                    "type": "template"
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "templateInput": {
+                                            "location": "QUERY",
+                                            "path": "userList",
+                                            "type": "payload"
+                                        },
+                                        "type": "iterable"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
                                         "containerTemplateString": "keyValue: {\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "delimiter": ",\n\t\t\t",
                                         "keyValueSeparator": ": ",

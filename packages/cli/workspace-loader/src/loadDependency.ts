@@ -1,6 +1,6 @@
+import { dependenciesYml, generatorsYml } from "@fern-api/configuration";
 import { createFiddleService } from "@fern-api/core";
 import { assertNever, noop, visitObject } from "@fern-api/core-utils";
-import { dependenciesYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { parseVersion } from "@fern-api/semver-utils";
 import { TaskContext } from "@fern-api/task-context";
@@ -39,13 +39,15 @@ export async function loadDependency({
     dependenciesConfiguration,
     context,
     rootApiFile,
-    cliVersion
+    cliVersion,
+    sdkLanguage
 }: {
     dependencyName: string;
     dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
     context: TaskContext;
     rootApiFile: RootApiFileSchema;
     cliVersion: string;
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<loadDependency.Return> {
     let definition: FernDefinition | undefined;
     let failure: WorkspaceLoader.DependencyFailure = {
@@ -69,14 +71,16 @@ export async function loadDependency({
                         definition = await validateVersionedDependencyAndGetDefinition({
                             context: contextForDependency,
                             dependency,
-                            cliVersion
+                            cliVersion,
+                            sdkLanguage
                         });
                         return;
                     case "local":
                         definition = await validateLocalDependencyAndGetDefinition({
                             context: contextForDependency,
                             dependency,
-                            cliVersion
+                            cliVersion,
+                            sdkLanguage
                         });
                         return;
                     default:
@@ -96,11 +100,13 @@ export async function loadDependency({
 async function validateLocalDependencyAndGetDefinition({
     dependency,
     context,
-    cliVersion
+    cliVersion,
+    sdkLanguage
 }: {
     dependency: dependenciesYml.LocalApiDependency;
     context: TaskContext;
     cliVersion: string;
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<FernDefinition | undefined> {
     // parse workspace
     context.logger.info("Parsing...");
@@ -108,7 +114,8 @@ async function validateLocalDependencyAndGetDefinition({
         absolutePathToWorkspace: dependency.absoluteFilepath,
         context,
         cliVersion,
-        workspaceName: undefined
+        workspaceName: undefined,
+        sdkLanguage
     });
     if (!loadDependencyWorkspaceResult.didSucceed) {
         context.failWithoutThrowing("Failed to load api definition", loadDependencyWorkspaceResult.failures);
@@ -118,7 +125,7 @@ async function validateLocalDependencyAndGetDefinition({
     const workspaceOfDependency =
         loadDependencyWorkspaceResult.workspace.type === "fern"
             ? loadDependencyWorkspaceResult.workspace
-            : await convertToFernWorkspace(loadDependencyWorkspaceResult.workspace, context);
+            : await convertToFernWorkspace(loadDependencyWorkspaceResult.workspace, context, false, sdkLanguage);
 
     return workspaceOfDependency.definition;
 }
@@ -126,11 +133,13 @@ async function validateLocalDependencyAndGetDefinition({
 async function validateVersionedDependencyAndGetDefinition({
     dependency,
     context,
-    cliVersion
+    cliVersion,
+    sdkLanguage
 }: {
     dependency: dependenciesYml.VersionedDependency;
     context: TaskContext;
     cliVersion: string;
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<FernDefinition | undefined> {
     // load API
     context.logger.info("Downloading manifest...");
@@ -207,7 +216,8 @@ async function validateVersionedDependencyAndGetDefinition({
         absolutePathToWorkspace: pathToDependency,
         context,
         cliVersion: response.body.cliVersion,
-        workspaceName: undefined
+        workspaceName: undefined,
+        sdkLanguage
     });
     if (!loadDependencyWorkspaceResult.didSucceed) {
         context.failWithoutThrowing(

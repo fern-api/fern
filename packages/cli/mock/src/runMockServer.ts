@@ -225,7 +225,7 @@ function getRequestHandler(endpoints: HttpEndpoint[]): RequestHandler {
         res.status(404).send(
             `Unrecognized example request: ${JSON.stringify(req.headers)} ${JSON.stringify(
                 req.params
-            )} ${JSON.stringify(req.body)} of examples ${JSON.stringify(endpoints.map((e) => e.examples))}`
+            )} ${JSON.stringify(req.query)} ${JSON.stringify(req.body)}`
         );
     };
 }

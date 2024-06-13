@@ -1,4 +1,4 @@
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
+import { FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { convert } from "@fern-api/openapi-ir-to-fern";
 import { parse } from "@fern-api/openapi-parser";
@@ -10,11 +10,13 @@ import { FernWorkspace, OSSWorkspace } from "../types/Workspace";
 export async function convertToFernWorkspace(
     openapiWorkspace: OSSWorkspace,
     context: TaskContext,
-    enableUniqueErrorsPerEndpoint = false
+    enableUniqueErrorsPerEndpoint = false,
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined
 ): Promise<FernWorkspace> {
     const openApiIr = await parse({
         workspace: openapiWorkspace,
-        taskContext: context
+        taskContext: context,
+        sdkLanguage
     });
     const definition = convert({
         taskContext: context,

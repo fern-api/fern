@@ -6,6 +6,8 @@ export interface TabConfig {
     displayName: string;
     icon?: string;
     slug?: string;
+    skipSlug?: boolean;
+    hidden?: boolean;
     /**
      * If `href` is set, clicking on the tab will redirect to the given URL.
      *

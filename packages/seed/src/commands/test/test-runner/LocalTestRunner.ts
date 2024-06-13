@@ -40,7 +40,8 @@ export class LocalTestRunner extends TestRunner {
         publishConfig,
         outputMode,
         irVersion,
-        publishMetadata
+        publishMetadata,
+        readme
     }: TestRunner.DoRunArgs): Promise<void> {
         const generatorConfigFile = await tmp.file();
         const absolutePathToGeneratorConfig = AbsoluteFilePath.of(generatorConfigFile.path);
@@ -60,7 +61,8 @@ export class LocalTestRunner extends TestRunner {
             outputMode,
             fixtureName: fixture,
             irVersion,
-            publishMetadata
+            publishMetadata,
+            readme
         });
         const ir = await getIntermediateRepresentation({
             workspace: fernWorkspace,
@@ -77,7 +79,9 @@ export class LocalTestRunner extends TestRunner {
             workspaceName: fernWorkspace.name,
             outputVersion: undefined,
             organization: DUMMY_ORGANIZATION,
-            absolutePathToSnippetTemplates: undefined,
+            absolutePathToSnippetTemplates: AbsoluteFilePath.of(
+                join(absolutePathToLocalOutputDirectory, RelativeFilePath.of(SNIPPET_TEMPLATES_JSON_FILENAME))
+            ),
             writeUnitTests: true,
             generateOauthClients: true,
             generatePaginatedClients: true,
@@ -91,6 +95,10 @@ export class LocalTestRunner extends TestRunner {
             output: {
                 ...generatorConfig.output,
                 path: absolutePathToLocalOutputDirectory,
+                snippetTemplateFilepath: join(
+                    absolutePathToLocalOutputDirectory,
+                    RelativeFilePath.of(SNIPPET_TEMPLATES_JSON_FILENAME)
+                ),
                 snippetFilepath: join(absolutePathToLocalOutputDirectory, RelativeFilePath.of(SNIPPET_JSON_FILENAME))
             }
         };
@@ -126,15 +134,15 @@ export class LocalTestRunner extends TestRunner {
                     generatorConfig.output.snippetFilepath != null
                         ? AbsoluteFilePath.of(generatorConfig.output.snippetFilepath)
                         : undefined,
-                absolutePathToLocalSnippetTemplateJSON: join(
-                    outputDir,
-                    RelativeFilePath.of(SNIPPET_TEMPLATES_JSON_FILENAME)
-                ),
-                absolutePathToTmpSnippetJSON: join(outputDir, RelativeFilePath.of(SNIPPET_JSON_FILENAME)),
-                absolutePathToTmpSnippetTemplatesJSON:
+                absolutePathToLocalSnippetTemplateJSON:
                     generatorConfig.output.snippetTemplateFilepath != null
                         ? AbsoluteFilePath.of(generatorConfig.output.snippetTemplateFilepath)
-                        : undefined
+                        : undefined,
+                absolutePathToTmpSnippetJSON: join(outputDir, RelativeFilePath.of(SNIPPET_JSON_FILENAME)),
+                absolutePathToTmpSnippetTemplatesJSON: join(
+                    outputDir,
+                    RelativeFilePath.of(SNIPPET_TEMPLATES_JSON_FILENAME)
+                )
             });
             await localTaskHandler.copyGeneratedFiles();
             taskContext.logger.info(`Wrote generated files to ${outputDir}`);

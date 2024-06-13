@@ -78,12 +78,32 @@ types:
       publishConfig: unknown
       publishMetadata: unknown
       customConfig: unknown
+      readmeConfig: optional<ReadmeConfig>
       audiences: optional<list<string>>
       outputFolder: string
       outputVersion: optional<string>
       outputMode: 
         type: optional<OutputMode>
         docs: Overrides the default output mode
+
+  ReadmeConfig:
+    properties:
+      defaultEndpoint: optional<ReadmeEndpoint>
+      bannerLink: optional<string>
+      apiReferenceLink: optional<string>
+      features: optional<map<string, list<ReadmeEndpoint>>>
+
+  ReadmeEndpoint:
+    discriminated: false
+    union: 
+      - string
+      - ReadmeEndpointObject
+
+  ReadmeEndpointObject:
+    properties:
+      method: string
+      path: string
+      stream: optional<boolean>
   
   OutputMode: 
     enum: 

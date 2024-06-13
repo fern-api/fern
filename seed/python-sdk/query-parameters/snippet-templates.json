@@ -159,6 +159,74 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
+                            "containerTemplateString": "user_list=[\n\t\t$FERN_INPUT\n\t]",
+                            "delimiter": ",\n\t\t",
+                            "innerTemplate": {
+                                "imports": [
+                                    "from seed import User"
+                                ],
+                                "isOptional": true,
+                                "templateString": "User(\n\t\t\t$FERN_INPUT\n\t\t)",
+                                "templateInputs": [
+                                    {
+                                        "type": "template",
+                                        "value": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "name=$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "RELATIVE",
+                                                    "path": "name",
+                                                    "type": "payload"
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "value": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "containerTemplateString": "tags=[\n\t\t\t\t$FERN_INPUT\n\t\t\t]",
+                                            "delimiter": ",\n\t\t\t\t",
+                                            "innerTemplate": {
+                                                "imports": [],
+                                                "isOptional": true,
+                                                "templateString": "$FERN_INPUT",
+                                                "templateInputs": [
+                                                    {
+                                                        "location": "RELATIVE",
+                                                        "path": null,
+                                                        "type": "payload"
+                                                    }
+                                                ],
+                                                "type": "generic"
+                                            },
+                                            "templateInput": {
+                                                "location": "RELATIVE",
+                                                "path": "tags"
+                                            },
+                                            "type": "iterable"
+                                        }
+                                    }
+                                ],
+                                "inputDelimiter": ",\n\t\t\t",
+                                "type": "generic"
+                            },
+                            "templateInput": {
+                                "location": "QUERY",
+                                "path": "userList"
+                            },
+                            "type": "iterable"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
                             "containerTemplateString": "key_value={\n\t\t$FERN_INPUT\n\t}",
                             "delimiter": ",\n\t\t",
                             "keyTemplate": {
@@ -577,6 +645,74 @@
                                 ],
                                 "inputDelimiter": ",\n\t\t",
                                 "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "containerTemplateString": "user_list=[\n\t\t$FERN_INPUT\n\t]",
+                                "delimiter": ",\n\t\t",
+                                "innerTemplate": {
+                                    "imports": [
+                                        "from seed import User"
+                                    ],
+                                    "isOptional": true,
+                                    "templateString": "User(\n\t\t\t$FERN_INPUT\n\t\t)",
+                                    "templateInputs": [
+                                        {
+                                            "type": "template",
+                                            "value": {
+                                                "imports": [],
+                                                "isOptional": true,
+                                                "templateString": "name=$FERN_INPUT",
+                                                "templateInputs": [
+                                                    {
+                                                        "location": "RELATIVE",
+                                                        "path": "name",
+                                                        "type": "payload"
+                                                    }
+                                                ],
+                                                "type": "generic"
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "value": {
+                                                "imports": [],
+                                                "isOptional": true,
+                                                "containerTemplateString": "tags=[\n\t\t\t\t$FERN_INPUT\n\t\t\t]",
+                                                "delimiter": ",\n\t\t\t\t",
+                                                "innerTemplate": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "$FERN_INPUT",
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "RELATIVE",
+                                                            "path": null,
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "templateInput": {
+                                                    "location": "RELATIVE",
+                                                    "path": "tags"
+                                                },
+                                                "type": "iterable"
+                                            }
+                                        }
+                                    ],
+                                    "inputDelimiter": ",\n\t\t\t",
+                                    "type": "generic"
+                                },
+                                "templateInput": {
+                                    "location": "QUERY",
+                                    "path": "userList"
+                                },
+                                "type": "iterable"
                             }
                         },
                         {

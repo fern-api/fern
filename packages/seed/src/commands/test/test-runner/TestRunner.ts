@@ -48,6 +48,7 @@ export declare namespace TestRunner {
         outputFolder: string;
         keepDocker: boolean | undefined;
         publishMetadata: unknown;
+        readme: generatorsYml.ReadmeSchema | undefined;
     }
 
     type TestResult = TestSuccess | TestFailure;
@@ -137,10 +138,12 @@ export abstract class TestRunner {
         const outputMode = configuration?.outputMode ?? this.generator.workspaceConfig.defaultOutputMode;
         const irVersion = this.generator.workspaceConfig.irVersion;
         const publishMetadata = configuration?.publishMetadata ?? undefined;
+        const readme = configuration?.readmeConfig ?? undefined;
         const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
             absolutePathToAPIDefinition,
             taskContext,
-            fixture
+            fixture,
+            sdkLanguage: language
         });
         if (fernWorkspace == null) {
             return {
@@ -177,7 +180,8 @@ export abstract class TestRunner {
                     outputMode,
                     outputFolder,
                     keepDocker: this.keepDocker,
-                    publishMetadata
+                    publishMetadata,
+                    readme
                 });
                 generationStopwatch.stop();
                 metrics.generationTime = generationStopwatch.duration();

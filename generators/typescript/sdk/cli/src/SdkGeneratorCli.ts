@@ -53,7 +53,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             tolerateRepublish: parsed?.tolerateRepublish ?? false,
             retainOriginalCasing: parsed?.retainOriginalCasing ?? false,
             allowExtraFields: parsed?.allowExtraFields ?? false,
-            inlineFileProperties: parsed?.inlineFileProperties ?? false
+            inlineFileProperties: parsed?.inlineFileProperties ?? false,
+            packageJson: parsed?.packageJson
         };
     }
 
@@ -85,6 +86,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 apiName: intermediateRepresentation.apiName.originalName,
                 whitelabel: config.whitelabel,
                 generateOAuthClients: config.generateOauthClients,
+                originalReadmeFilepath:
+                    config.originalReadmeFilepath != null
+                        ? AbsoluteFilePath.of(config.originalReadmeFilepath)
+                        : undefined,
                 snippetFilepath:
                     config.output.snippetFilepath != null
                         ? AbsoluteFilePath.of(config.output.snippetFilepath)
@@ -120,7 +125,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 allowExtraFields: customConfig.allowExtraFields ?? false,
                 inlineFileProperties: customConfig.inlineFileProperties ?? false,
                 writeUnitTests: false,
-                executionEnvironment: this.exectuionEnvironment(config)
+                executionEnvironment: this.exectuionEnvironment(config),
+                packageJson: customConfig.packageJson
             }
         });
         const typescriptProject = await sdkGenerator.generate();
