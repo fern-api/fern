@@ -551,7 +551,8 @@ async function convertNavigationItem({
         return {
             type: "link",
             text: rawConfig.link,
-            url: rawConfig.href
+            url: rawConfig.href,
+            icon: rawConfig.icon
         };
     }
     assertNever(rawConfig);
