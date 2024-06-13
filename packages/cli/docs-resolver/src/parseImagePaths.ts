@@ -168,7 +168,10 @@ export function replaceImagePathsAndUrls(
     const { content, data } = grayMatter(markdown);
     let replacedContent = content;
 
-    const tree = fromMarkdown(content);
+    const tree = fromMarkdown(content, {
+        extensions: [mdx()],
+        mdastExtensions: [mdxFromMarkdown()]
+    });
 
     let offset = 0;
 
@@ -179,8 +182,8 @@ export function replaceImagePathsAndUrls(
         const { start, length } = getPosition(content, node.position);
         const original = replacedContent.slice(start + offset, start + offset + length);
         let replaced = original;
-        if (node.type === "image") {
-            const src = trimAnchor(node.url);
+
+        function replaceSrc(src: string | undefined) {
             if (src != null && !isExternalUrl(src)) {
                 try {
                     const fileId = fileIdsMap.get(AbsoluteFilePath.of(src));
@@ -193,28 +196,11 @@ export function replaceImagePathsAndUrls(
             }
         }
 
-        if (node.type === "html" || node.type === "text") {
-            const srcRegex = /src={?['"]([^'"]+)['"](?! \+)}?/g;
-
-            let match;
-            while ((match = srcRegex.exec(node.value)) != null) {
-                const pathToImage = trimAnchor(match[1]);
-                if (pathToImage != null && !isExternalUrl(pathToImage)) {
-                    try {
-                        const fileId = fileIdsMap.get(AbsoluteFilePath.of(pathToImage));
-                        if (fileId != null) {
-                            replaced = replaced.replaceAll(pathToImage, `file:${fileId}`);
-                        }
-                    } catch (e) {
-                        // do nothing
-                    }
-                }
+        function replaceHref(href: string | undefined) {
+            if (href == null) {
+                return;
             }
-        }
-
-        if (node.type === "link") {
-            const href = trimAnchor(node.url);
-            if (href != null && (href.endsWith(".md") || href.endsWith(".mdx"))) {
+            if (href.endsWith(".md") || href.endsWith(".mdx")) {
                 const absoluteFilePath = resolvePath(href, metadata);
                 if (absoluteFilePath != null) {
                     const pathName = markdownFilesToPathName.get(absoluteFilePath);
@@ -235,31 +221,80 @@ export function replaceImagePathsAndUrls(
             }
         }
 
-        if (node.type === "html" || node.type === "text") {
+        if (node.type === "image") {
+            const src = trimAnchor(node.url);
+            replaceSrc(src);
+        }
+
+        if (node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement") {
+            if (node.name && MEDIA_NODE_NAMES.includes(node.name)) {
+                const srcAttr = node.attributes.find((attr) => attr.type === "mdxJsxAttribute" && attr.name === "src");
+
+                if (srcAttr?.value) {
+                    let srcValue = srcAttr.value;
+                    if (typeof srcValue !== "string") {
+                        const match = srcValue.value.match(STR_REGEX);
+                        if (match?.[1]) {
+                            srcValue = match[1];
+                        }
+                    }
+
+                    const pathToImage = trimAnchor(srcValue);
+                    replaceSrc(pathToImage);
+                }
+            } else {
+                node.attributes.forEach((attr) => {
+                    if (attr.type === "mdxJsxAttribute" && attr.value && typeof attr.value !== "string") {
+                        const match = SRC_REGEX.exec(attr.value.value);
+                        if (match?.[1]) {
+                            const pathToImage = trimAnchor(match[1]);
+                            replaceSrc(pathToImage);
+                        }
+                    }
+                });
+            }
+        }
+
+        if (node.type === "html" || node.type === "text" || node.type === "mdxTextExpression") {
+            const srcRegex = /src={?['"]([^'"]+)['"](?! \+)}?/g;
+
+            let match;
+            while ((match = srcRegex.exec(node.value)) != null) {
+                const pathToImage = trimAnchor(match[1]);
+                replaceSrc(pathToImage);
+            }
+        }
+
+        if (node.type === "link") {
+            replaceHref(trimAnchor(node.url));
+        }
+
+        if (node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement") {
+            if (node.name === "a") {
+                const hrefAttr = node.attributes.find(
+                    (attr) => attr.type === "mdxJsxAttribute" && attr.name === "href"
+                );
+
+                if (hrefAttr?.value) {
+                    let href = hrefAttr.value;
+                    if (typeof href !== "string") {
+                        const match = href.value.match(STR_REGEX);
+                        if (match?.[1]) {
+                            href = match[1];
+                        }
+                    }
+                    replaceHref(trimAnchor(href));
+                }
+            }
+        }
+
+        if (node.type === "html" || node.type === "text" || node.type === "mdxTextExpression") {
             const hrefRegex = /href={?['"]([^'"]+)['"](?! \+)}?/g;
 
             let match;
             while ((match = hrefRegex.exec(node.value)) != null) {
                 const href = trimAnchor(match[1]);
-                if (href != null && (href.endsWith(".md") || href.endsWith(".mdx"))) {
-                    const absoluteFilePath = resolvePath(href, metadata);
-                    if (absoluteFilePath != null) {
-                        const pathName = markdownFilesToPathName.get(absoluteFilePath);
-                        if (pathName != null) {
-                            replaced = replaced.replaceAll(href, pathName);
-                        } else {
-                            context.logger.error(
-                                `${relative(
-                                    metadata.absolutePathToFernFolder,
-                                    absoluteFilePath
-                                )} has no slug defined but is referenced by ${relative(
-                                    metadata.absolutePathToFernFolder,
-                                    metadata.absolutePathToMdx
-                                )}`
-                            );
-                        }
-                    }
-                }
+                replaceHref(href);
             }
         }
 

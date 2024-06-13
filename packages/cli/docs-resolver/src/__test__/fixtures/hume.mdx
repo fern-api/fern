@@ -35,6 +35,25 @@ step-by-step instructions on how to create and use an EVI Configuration.
 For EVI to leverage tools or call functions, a configuration must be created with the tool’s definition. Our step-by-step guide below walks you through creating a tool and adding it to a configuration, either via our [Portal](https://beta.hume.ai) or a POST request.
 
 <Tabs>
+    <Tab>
+        <Frame>
+            ![image](./img/add-tool-view.png)
+        </Frame>
+    </Tab>
+</Tabs>
+
+<Tabs>
+  <Tab title="tab 1">
+    <Frame>
+      ![test](./img/add-tool-view.png)
+    </Frame>  
+  </Tab>
+  <Tab title="tab 2">
+    text and image
+  </Tab>
+</Tabs>
+
+<Tabs>
   <Tab title='Portal'>
     <Steps>
     ### Create a Tool
@@ -42,7 +61,7 @@ For EVI to leverage tools or call functions, a configuration must be created wit
     We will first create a Tool with a specified function. In this case, we will create a tool for getting the weather. In the Portal, navigate to the [EVI Tools page](https://beta.hume.ai/evi/tools). Click the **Create function** button to begin.
     
     <Frame>
-      <img src="../img/evi-tools-view.png" alt="EVI Tools page" />
+      <img src="./img/evi-tools-view.png" alt="EVI Tools page" />
     </Frame>
 
     ### Fill in the Tool details.
@@ -53,7 +72,7 @@ For EVI to leverage tools or call functions, a configuration must be created wit
     - **Parameters**: Define the parameters your function accepts using a JSON schema. This schema specifies the expected structure and data types of the input parameters.
 
     <Frame>
-      <img src="../img/create-function-interface.png" alt="EVI Create function interface" />
+      <img src="./img/create-function-interface.png" alt="EVI Create function interface" />
     </Frame>
 
     The JSON schema defines the structure of the parameters your function will accept. The key components of the schema are:
@@ -86,7 +105,7 @@ For EVI to leverage tools or call functions, a configuration must be created wit
     After creating an EVI Configuration using our [Configuration guide](https://dev.hume.ai/docs/empathic-voice-interface-evi/configuration), navgiate to the specific configuration where you want to add your tool. In the **Tools** section, click the **Add** button to add a tool to your configuration.  
 
     <Frame>
-      <img src="../img/add-tool-view.png" alt="Add tool to configuration within the Hume portal"/>
+      <img src="./img/add-tool-view.png" alt="Add tool to configuration within the Hume portal"/>
     </Frame>
 
     </Steps>
