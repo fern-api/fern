@@ -502,6 +502,7 @@ types:
     properties:
       link: string
       href: string
+      icon: optional<string>
 
   VersionedSnippetLanguageConfiguration:
     properties:

@@ -196,6 +196,7 @@ export declare namespace DocsNavigationItem {
         type: "link";
         text: string;
         url: string;
+        icon: string | undefined;
     }
 
     export interface VersionedSnippetLanguageConfiguration {

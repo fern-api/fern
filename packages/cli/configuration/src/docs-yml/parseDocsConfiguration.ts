@@ -582,7 +582,8 @@ function parseApiNavigationItem(
             {
                 type: "link",
                 text: item.link,
-                url: item.href
+                url: item.href,
+                icon: item.icon
             }
         ];
     } else if (isRawApiPackageConfiguration(item)) {

@@ -5,4 +5,5 @@
 export interface LinkConfiguration {
     link: string;
     href: string;
+    icon?: string;
 }
