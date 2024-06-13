@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.16.1] - 2024-06-13
 
-- Fix: Undiscriminated union examples no longer return an error.
+- Fix: Undiscriminated unions used as map keys examples no longer return an error.
 
 ## [0.16.0] - 2024-06-05
 
