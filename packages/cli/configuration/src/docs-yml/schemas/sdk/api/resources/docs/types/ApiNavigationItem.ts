@@ -17,7 +17,6 @@ export type ApiNavigationItem =
      * Keyed by subpackage ID, this object allows you to group endpoints and pages together.
      *  */
     | Record<string, FernDocsConfig.ApiNavigationItems>
-    /**
-     * This should be a markdown file that will be displayed in the API section.
-     *  */
-    | FernDocsConfig.PageConfiguration;
+    | FernDocsConfig.PageConfiguration
+    | FernDocsConfig.LinkConfiguration
+    | FernDocsConfig.ApiPackageConfiguration;

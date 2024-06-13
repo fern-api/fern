@@ -21,7 +21,9 @@ export const ApiSectionConfiguration: core.serialization.ObjectSchema<
     slug: core.serialization.string().optional(),
     hidden: core.serialization.boolean().optional(),
     skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
+    alphabetized: core.serialization.boolean().optional(),
     flattened: core.serialization.boolean().optional(),
+    paginated: core.serialization.boolean().optional(),
 });
 
 export declare namespace ApiSectionConfiguration {
@@ -37,6 +39,8 @@ export declare namespace ApiSectionConfiguration {
         slug?: string | null;
         hidden?: boolean | null;
         "skip-slug"?: boolean | null;
+        alphabetized?: boolean | null;
         flattened?: boolean | null;
+        paginated?: boolean | null;
     }
 }

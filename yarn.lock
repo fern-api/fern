@@ -3312,7 +3312,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/auth@workspace:*, @fern-api/auth@workspace:packages/cli/auth":
+"@fern-api/auth@workspace:*, @fern-api/auth@workspace:^, @fern-api/auth@workspace:packages/cli/auth":
   version: 0.0.0-use.local
   resolution: "@fern-api/auth@workspace:packages/cli/auth"
   dependencies:
@@ -3450,7 +3450,7 @@ __metadata:
   resolution: "@fern-api/configuration@workspace:packages/cli/configuration"
   dependencies:
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/fdr-sdk": 0.97.0-2e949e344
+    "@fern-api/fdr-sdk": 0.97.1-4ac4509c2
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.552
@@ -3493,11 +3493,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/core@workspace:*, @fern-api/core@workspace:packages/core":
+"@fern-api/core@workspace:*, @fern-api/core@workspace:^, @fern-api/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@fern-api/core@workspace:packages/core"
   dependencies:
-    "@fern-api/fdr-sdk": 0.97.0-2e949e344
+    "@fern-api/fdr-sdk": 0.97.1-4ac4509c2
     "@fern-api/venus-api-sdk": 0.0.38
     "@fern-fern/fdr-test-sdk": ^0.0.5297
     "@fern-fern/fiddle-sdk": ^0.0.552
@@ -3559,7 +3559,7 @@ __metadata:
   resolution: "@fern-api/docs-preview@workspace:packages/cli/docs-preview"
   dependencies:
     "@fern-api/docs-resolver": "workspace:*"
-    "@fern-api/fdr-sdk": 0.97.0-2e949e344
+    "@fern-api/fdr-sdk": 0.97.1-4ac4509c2
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-sdk": "workspace:*"
     "@fern-api/logger": "workspace:*"
@@ -3597,18 +3597,22 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/docs-resolver@workspace:packages/cli/docs-resolver"
   dependencies:
+    "@fern-api/auth": "workspace:^"
     "@fern-api/configuration": "workspace:*"
+    "@fern-api/core": "workspace:^"
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/fdr-sdk": 0.97.0-2e949e344
+    "@fern-api/fdr-sdk": 0.97.1-4ac4509c2
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-sdk": "workspace:*"
+    "@fern-api/register": "workspace:^"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@types/diff": ^5.2.1
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
+    dayjs: ^1.11.11
     depcheck: ^1.4.6
     diff: ^5.2.0
     eslint: ^8.56.0
@@ -3679,9 +3683,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/fdr-sdk@npm:0.97.0-2e949e344":
-  version: 0.97.0-2e949e344
-  resolution: "@fern-api/fdr-sdk@npm:0.97.0-2e949e344"
+"@fern-api/fdr-sdk@npm:0.97.1-4ac4509c2":
+  version: 0.97.1-4ac4509c2
+  resolution: "@fern-api/fdr-sdk@npm:0.97.1-4ac4509c2"
   dependencies:
     dayjs: ^1.11.11
     fast-deep-equal: ^3.1.3
@@ -3693,7 +3697,7 @@ __metadata:
     tinycolor2: ^1.6.0
     title: ^3.5.3
     url-join: 4.0.1
-  checksum: 2c44d4459d451d678bee04e668e767abafe5c645dedca5ed9c988c95d67411bfafc6e16d1b2e5569b7ab06ec29d2f36d9a60c1699e6f230a8841ebaebcce0da3
+  checksum: d9814ffe0d8222b9da55099e66f06c48d286672a12ccc899f57101490bd9dd421ff78ebffab8d8ed0ac97a309c8a83972dcf9f0e5d5371864bbed94894acd64a
   languageName: node
   linkType: hard
 
@@ -4328,7 +4332,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/register@workspace:*, @fern-api/register@workspace:packages/cli/register":
+"@fern-api/register@workspace:*, @fern-api/register@workspace:^, @fern-api/register@workspace:packages/cli/register":
   version: 0.0.0-use.local
   resolution: "@fern-api/register@workspace:packages/cli/register"
   dependencies:
@@ -4336,7 +4340,7 @@ __metadata:
     "@fern-api/configuration": "workspace:*"
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/fdr-sdk": 0.97.0-2e949e344
+    "@fern-api/fdr-sdk": 0.97.1-4ac4509c2
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-sdk": "workspace:*"
     "@fern-api/task-context": "workspace:*"
@@ -4363,7 +4367,7 @@ __metadata:
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/docs-resolver": "workspace:*"
-    "@fern-api/fdr-sdk": 0.97.0-2e949e344
+    "@fern-api/fdr-sdk": 0.97.1-4ac4509c2
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-migrations": "workspace:*"

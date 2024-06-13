@@ -16,8 +16,15 @@ export const ApiNavigationItem: core.serialization.Schema<
         core.serialization.lazy(async () => (await import("../../..")).ApiNavigationItems)
     ),
     core.serialization.lazyObject(async () => (await import("../../..")).PageConfiguration),
+    core.serialization.lazyObject(async () => (await import("../../..")).LinkConfiguration),
+    core.serialization.lazyObject(async () => (await import("../../..")).ApiPackageConfiguration),
 ]);
 
 export declare namespace ApiNavigationItem {
-    type Raw = string | Record<string, serializers.ApiNavigationItems.Raw> | serializers.PageConfiguration.Raw;
+    type Raw =
+        | string
+        | Record<string, serializers.ApiNavigationItems.Raw>
+        | serializers.PageConfiguration.Raw
+        | serializers.LinkConfiguration.Raw
+        | serializers.ApiPackageConfiguration.Raw;
 }

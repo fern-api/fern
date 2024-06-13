@@ -1,21 +1,24 @@
 import { docsYml, WithoutQuestionMarks } from "@fern-api/configuration";
 import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
-import { APIV1Write, DocsV1Write } from "@fern-api/fdr-sdk/dist";
+import { APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk/dist";
 import { AbsoluteFilePath, relative, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import matter from "gray-matter";
-import { last, orderBy } from "lodash-es";
+import { kebabCase, last, orderBy } from "lodash-es";
 import urlJoin from "url-join";
 import { convertDocsSnippetsConfigToFdr } from "./convertDocsSnippetsConfigToFdr";
-import { convertIrToNavigation } from "./convertIrToNavigation";
 import { extractDatetimeFromChangelogTitle } from "./extractDatetimeFromChangelogTitle";
 import { collectFilesFromDocsConfig } from "./getImageFilepathsToUpload";
 import { parseImagePaths, replaceImagePathsAndUrls } from "./parseImagePaths";
 import { replaceReferencedMarkdown } from "./replaceReferencedMarkdown";
 import { wrapWithHttps } from "./wrapWithHttps";
+
+dayjs.extend(utc);
 
 export interface FilePathPair {
     absoluteFilePath: AbsoluteFilePath;
@@ -112,7 +115,7 @@ export class DocsDefinitionResolver {
         });
 
         // postprocess markdown files after uploading all images to replace the image paths in the markdown files with the fileIDs
-        const basePath = this.getDocsBasePath() ?? "/";
+        const basePath = this.getDocsBasePath();
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = replaceImagePathsAndUrls(
                 markdown,
@@ -154,7 +157,12 @@ export class DocsDefinitionResolver {
         return resolve(this.docsWorkspace.absoluteFilepath, unresolvedFilepath);
     }
 
-    private toRelativeFilepath(filepath: AbsoluteFilePath): RelativeFilePath {
+    private toRelativeFilepath(filepath: AbsoluteFilePath): RelativeFilePath;
+    private toRelativeFilepath(filepath: AbsoluteFilePath | undefined): RelativeFilePath | undefined;
+    private toRelativeFilepath(filepath: AbsoluteFilePath | undefined): RelativeFilePath | undefined {
+        if (filepath == null) {
+            return undefined;
+        }
         return relative(this.docsWorkspace.absoluteFilepath, filepath);
     }
 
@@ -172,7 +180,7 @@ export class DocsDefinitionResolver {
         return mdxFilePathToSlug;
     }
 
-    private getDocsBasePath(): string | undefined {
+    private getDocsBasePath(): string {
         const url = new URL(wrapWithHttps(this.domain));
         return url.pathname;
     }
@@ -222,10 +230,11 @@ export class DocsDefinitionResolver {
     }
 
     private async convertNavigationConfig(): Promise<DocsV1Write.NavigationConfig> {
+        const slug = this.getDocsBasePath().replace(/^\//, "");
         switch (this.parsedDocsConfig.navigation.type) {
             case "untabbed": {
                 const items = await Promise.all(
-                    this.parsedDocsConfig.navigation.items.map((item) => this.convertNavigationItem(item))
+                    this.parsedDocsConfig.navigation.items.map((item) => this.convertNavigationItem(item, slug))
                 );
                 return { items };
             }
@@ -233,7 +242,8 @@ export class DocsDefinitionResolver {
                 return {
                     tabsV2: await this.convertTabbedNavigation(
                         this.parsedDocsConfig.navigation.items,
-                        this.parsedDocsConfig.tabs
+                        this.parsedDocsConfig.tabs,
+                        slug
                     )
                 };
             }
@@ -241,9 +251,14 @@ export class DocsDefinitionResolver {
                 const versions = await Promise.all(
                     this.parsedDocsConfig.navigation.versions.map(
                         async (version): Promise<DocsV1Write.VersionedNavigationConfigData> => {
+                            const versionSlug = FernNavigation.utils.slugjoin(
+                                slug,
+                                version.slug ?? kebabCase(version.version)
+                            );
                             const convertedNavigation = await this.convertUnversionedNavigationConfig({
                                 navigationConfig: version.navigation,
-                                tabs: version.tabs
+                                tabs: version.tabs,
+                                slug: versionSlug
                             });
                             return {
                                 version: version.version,
@@ -264,7 +279,10 @@ export class DocsDefinitionResolver {
         }
     }
 
-    private async convertNavigationItem(item: docsYml.DocsNavigationItem): Promise<DocsV1Write.NavigationItem> {
+    private async convertNavigationItem(
+        item: docsYml.DocsNavigationItem,
+        parentSlug: string
+    ): Promise<DocsV1Write.NavigationItem> {
         switch (item.type) {
             case "page": {
                 return {
@@ -278,8 +296,11 @@ export class DocsDefinitionResolver {
                 };
             }
             case "section": {
+                const slug = item.skipUrlSlug
+                    ? parentSlug
+                    : FernNavigation.utils.slugjoin(parentSlug, item.slug ?? kebabCase(item.title));
                 const sectionItems = await Promise.all(
-                    item.contents.map((nestedItem) => this.convertNavigationItem(nestedItem))
+                    item.contents.map((nestedItem) => this.convertNavigationItem(nestedItem, slug))
                 );
                 return {
                     type: "section",
@@ -321,38 +342,78 @@ export class DocsDefinitionResolver {
                     }
                 }
 
+                const slug = item.skipUrlSlug
+                    ? parentSlug
+                    : FernNavigation.utils.slugjoin(parentSlug, item.slug ?? kebabCase(item.title));
+
                 // sort changelog items by date, in descending order
-                const changelogItems = orderBy(unsortedChangelogItems, (item) => item.date, "desc").map(
-                    (item): DocsV1Write.ChangelogItem => ({
+                const changelogItems = unsortedChangelogItems.map((item): FernNavigation.ChangelogEntryNode => {
+                    const date = dayjs.utc(item.date);
+                    return {
+                        id: FernNavigation.NodeId(`${apiDefinitionId}:changelog:${date.format("YYYY-M-D")}`),
+                        type: "changelogEntry",
+                        title: date.format("MMMM D, YYYY"),
+                        slug: FernNavigation.Slug(FernNavigation.utils.slugjoin(slug, date.format("YYYY/M/D"))),
+                        icon: undefined,
+                        hidden: undefined,
                         date: item.date.toISOString(),
-                        pageId: item.pageId
-                    })
-                );
+                        pageId: FernNavigation.PageId(item.pageId)
+                    };
+                });
+
+                const entries = orderBy(changelogItems, (entry) => entry.date, "desc");
+                const changelogYears = this.groupByYear(entries, parentSlug, apiDefinitionId);
+
+                item.navigation;
 
                 return {
-                    type: "api",
-                    title: item.title,
-                    icon: item.icon,
-                    api: apiDefinitionId,
-                    urlSlugOverride: item.slug,
-                    skipUrlSlug: item.skipUrlSlug,
-                    showErrors: item.showErrors,
-                    changelog:
-                        changelogItems.length > 0
-                            ? {
-                                  urlSlug: "changelog",
-                                  items: changelogItems
-                              }
-                            : undefined,
-                    hidden: item.hidden,
-                    navigation: convertIrToNavigation(
-                        ir,
-                        item.summaryAbsolutePath,
-                        item.navigation,
-                        this.docsWorkspace.absoluteFilepathToDocsConfig,
-                        this.markdownFilesToFullSlugs
-                    ),
-                    flattened: item.flattened
+                    type: "apiV2",
+                    node: {
+                        id: FernNavigation.NodeId(apiDefinitionId),
+                        type: "apiReference",
+                        disableLongScrolling: item.paginated,
+                        showErrors: item.showErrors,
+                        hideTitle: item.flattened,
+                        title: item.title,
+                        slug: FernNavigation.Slug(slug),
+                        icon: item.icon,
+                        hidden: item.hidden,
+                        apiDefinitionId,
+                        overviewPageId: this.toRelativeFilepath(item.summaryAbsolutePath),
+                        changelog:
+                            changelogYears.length > 0
+                                ? {
+                                      id: `${apiDefinitionId}:changelog`,
+                                      type: "changelog",
+                                      title: `${item.title} Changelog`,
+                                      slug,
+                                      children: changelogYears
+                                  }
+                                : undefined,
+                        children
+                        // title: item.title,
+                        // icon: item.icon,
+                        // api: apiDefinitionId,
+                        // urlSlugOverride: item.slug,
+                        // skipUrlSlug: item.skipUrlSlug,
+                        // showErrors: item.showErrors,
+                        // changelog:
+                        //     changelogItems.length > 0
+                        //         ? {
+                        //               urlSlug: "changelog",
+                        //               items: changelogItems
+                        //           }
+                        //         : undefined,
+                        // hidden: item.hidden,
+                        // navigation: convertIrToNavigation(
+                        //     ir,
+                        //     apiDefinitionId,
+                        //     item,
+                        //     this.docsWorkspace.absoluteFilepathToDocsConfig,
+                        //     this.markdownFilesToFullSlugs
+                        // ),
+                        // flattened: item.flattened
+                    }
                 };
             }
             case "link": {
@@ -367,17 +428,81 @@ export class DocsDefinitionResolver {
         }
     }
 
+    private groupByYear(
+        entries: FernNavigation.ChangelogEntryNode[],
+        parentSlug: string,
+        apiDefinitionId: string
+    ): FernNavigation.ChangelogYearNode[] {
+        const years = new Map<number, FernNavigation.ChangelogEntryNode[]>();
+        for (const entry of entries) {
+            const year = dayjs.utc(entry.date).year();
+            const yearEntries = years.get(year) ?? [];
+            yearEntries.push(entry);
+            years.set(year, yearEntries);
+        }
+        return orderBy(
+            Array.from(years.entries()).map(([year, entries]) => {
+                const slug = FernNavigation.Slug(FernNavigation.utils.slugjoin(parentSlug, year.toString()));
+                return {
+                    id: FernNavigation.NodeId(`${apiDefinitionId}:changelog:${year}`),
+                    type: "changelogYear" as const,
+                    title: year.toString(),
+                    year,
+                    slug,
+                    icon: undefined,
+                    hidden: undefined,
+                    children: this.groupByMonth(entries, slug, apiDefinitionId)
+                };
+            }),
+            "year",
+            "desc"
+        );
+    }
+
+    private groupByMonth(
+        entries: FernNavigation.ChangelogEntryNode[],
+        parentSlug: string,
+        apiDefinitionId: string
+    ): FernNavigation.ChangelogMonthNode[] {
+        const months = new Map<number, FernNavigation.ChangelogEntryNode[]>();
+        for (const entry of entries) {
+            const month = dayjs.utc(entry.date).month() + 1;
+            const monthEntries = months.get(month) ?? [];
+            monthEntries.push(entry);
+            months.set(month, monthEntries);
+        }
+        return orderBy(
+            Array.from(months.entries()).map(([month, entries]) => {
+                const date = dayjs(new Date(0, month - 1));
+                return {
+                    id: FernNavigation.NodeId(`${apiDefinitionId}:changelog:${date.format("YYYY-M")}`),
+                    type: "changelogMonth" as const,
+                    title: date.format("MMMM YYYY"),
+                    month,
+                    slug: FernNavigation.Slug(FernNavigation.utils.slugjoin(parentSlug, month.toString())),
+                    icon: undefined,
+                    hidden: undefined,
+                    children: entries
+                };
+            }),
+            "month",
+            "desc"
+        );
+    }
+
     private async convertUnversionedNavigationConfig({
         navigationConfig,
-        tabs
+        tabs,
+        slug
     }: {
         navigationConfig: docsYml.UnversionedNavigationConfiguration;
         tabs: Record<string, docsYml.RawSchemas.TabConfig> | undefined;
+        slug: string;
     }): Promise<DocsV1Write.UnversionedNavigationConfig> {
         switch (navigationConfig.type) {
             case "untabbed": {
                 const untabbedItems = await Promise.all(
-                    navigationConfig.items.map((item) => this.convertNavigationItem(item))
+                    navigationConfig.items.map((item) => this.convertNavigationItem(item, slug))
                 );
                 return {
                     items: untabbedItems
@@ -385,7 +510,7 @@ export class DocsDefinitionResolver {
             }
             case "tabbed": {
                 return {
-                    tabsV2: await this.convertTabbedNavigation(navigationConfig.items, tabs)
+                    tabsV2: await this.convertTabbedNavigation(navigationConfig.items, tabs, slug)
                 };
             }
             default:
@@ -395,7 +520,8 @@ export class DocsDefinitionResolver {
 
     private async convertTabbedNavigation(
         items: docsYml.TabbedNavigation[],
-        tabs: Record<string, docsYml.RawSchemas.TabConfig> | undefined
+        tabs: Record<string, docsYml.RawSchemas.TabConfig> | undefined,
+        parentSlug: string
     ): Promise<DocsV1Write.NavigationTabV2[]> {
         return Promise.all(
             items.map(async (tabbedItem): Promise<WithoutQuestionMarks<DocsV1Write.NavigationTabV2>> => {
@@ -425,8 +551,12 @@ export class DocsDefinitionResolver {
                     );
                 }
 
+                const slug = tabConfig.skipSlug
+                    ? parentSlug
+                    : FernNavigation.utils.slugjoin(parentSlug, tabConfig.slug ?? kebabCase(tabConfig.displayName));
+
                 const tabbedItems = await Promise.all(
-                    tabbedItem.layout.map((item) => this.convertNavigationItem(item))
+                    tabbedItem.layout.map((item) => this.convertNavigationItem(item, slug))
                 );
 
                 return {

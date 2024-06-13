@@ -187,7 +187,9 @@ export declare namespace DocsNavigationItem {
         hidden: boolean | undefined;
         slug: string | undefined;
         skipUrlSlug: boolean | undefined;
-        flattened: boolean | undefined;
+        alphabetized: boolean;
+        flattened: boolean;
+        paginated: boolean;
     }
 
     export interface Link {
@@ -210,11 +212,16 @@ export declare namespace DocsNavigationItem {
 }
 
 export declare namespace ParsedApiNavigationItem {
-    export interface Subpackage {
-        type: "subpackage";
-        subpackageId: string;
+    export interface Package {
+        type: "package";
+        package: string; // title or subpackage ID
+        titleOverride: string | undefined;
         summaryAbsolutePath: AbsoluteFilePath | undefined;
-        items: ParsedApiNavigationItem[];
+        contents: ParsedApiNavigationItem[];
+        slug: string | undefined;
+        hidden: boolean | undefined;
+        icon: string | undefined;
+        skipUrlSlug: boolean | undefined;
     }
 
     export interface Item {
@@ -225,5 +232,6 @@ export declare namespace ParsedApiNavigationItem {
 
 export type ParsedApiNavigationItem =
     | ParsedApiNavigationItem.Item
-    | ParsedApiNavigationItem.Subpackage
-    | DocsNavigationItem.Page;
+    | ParsedApiNavigationItem.Package
+    | DocsNavigationItem.Page
+    | DocsNavigationItem.Link;

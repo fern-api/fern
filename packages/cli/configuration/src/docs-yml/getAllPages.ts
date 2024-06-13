@@ -119,10 +119,10 @@ async function getAllPagesFromApiNavigationItem({
                 await readFile(item.absolutePath)
             ).toString()
         };
-    } else if (item.type === "subpackage") {
+    } else if (item.type === "package") {
         const toRet = combineMaps(
             await Promise.all(
-                item.items.map(async (subItem) => {
+                item.contents.map(async (subItem) => {
                     return await getAllPagesFromApiNavigationItem({ item: subItem, absolutePathToFernFolder });
                 })
             )

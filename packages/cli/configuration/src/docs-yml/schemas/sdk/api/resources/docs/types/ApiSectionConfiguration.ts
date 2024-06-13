@@ -20,10 +20,14 @@ export interface ApiSectionConfiguration {
     slug?: string;
     hidden?: boolean;
     skipSlug?: boolean;
+    /** If `alphabetized` is set to true, packages and endpoints will be sorted alphabetically, unless explicitly ordered in the `layout` object. */
+    alphabetized?: boolean;
     /**
      * If `flattened` is set to true, the title specified in `api` will be hidden, and its endpoints and subpackages won't be grouped under it.
      *
      * This setting is useful if the API reference is short and you want to display all endpoints at the top level.
      */
     flattened?: boolean;
+    /** If true, the API reference will be paginated rather than displayed in a single page (long-scrolling). */
+    paginated?: boolean;
 }

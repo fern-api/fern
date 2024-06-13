@@ -542,7 +542,9 @@ async function convertNavigationItem({
             hidden: rawConfig.hidden ?? undefined,
             slug: rawConfig.slug,
             skipUrlSlug: rawConfig.skipSlug ?? false,
-            flattened: rawConfig.flattened ?? false
+            flattened: rawConfig.flattened ?? false,
+            alphabetized: rawConfig.alphabetized ?? false,
+            paginated: rawConfig.paginated ?? false
         };
     }
     if (isRawLinkConfig(rawConfig)) {
@@ -575,16 +577,43 @@ function parseApiNavigationItem(
                 hidden: item.hidden
             }
         ];
+    } else if (isRawLinkConfig(item)) {
+        return [
+            {
+                type: "link",
+                text: item.link,
+                url: item.href
+            }
+        ];
+    } else if (isRawApiPackageConfiguration(item)) {
+        return [
+            {
+                type: "package",
+                package: item.package,
+                titleOverride: item.title,
+                summaryAbsolutePath: resolveFilepath(item.summary, absolutePathToConfig),
+                contents: item.contents.flatMap((value) => parseApiNavigationItem(value, absolutePathToConfig)),
+                slug: item.slug,
+                hidden: item.hidden,
+                skipUrlSlug: item.skipSlug,
+                icon: item.icon
+            }
+        ];
     }
 
-    return Object.entries(item).map(([key, values]): ParsedApiNavigationItem.Subpackage => {
-        return {
-            type: "subpackage",
-            subpackageId: key,
-            summaryAbsolutePath: undefined, // TODO: implement subpackage summary page
-            items: values.flatMap((value) => parseApiNavigationItem(value, absolutePathToConfig))
-        };
-    });
+    return Object.entries(item).map(
+        ([key, values]): ParsedApiNavigationItem.Package => ({
+            type: "package",
+            package: key,
+            titleOverride: undefined,
+            summaryAbsolutePath: undefined,
+            contents: values.flatMap((value) => parseApiNavigationItem(value, absolutePathToConfig)),
+            hidden: false,
+            slug: undefined,
+            skipUrlSlug: false,
+            icon: undefined
+        })
+    );
 }
 
 function convertSnippetsConfiguration({
@@ -614,9 +643,13 @@ function isRawApiSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.Ap
     return (item as RawDocs.ApiSectionConfiguration).api != null;
 }
 
-function isRawLinkConfig(item: RawDocs.NavigationItem): item is RawDocs.LinkConfiguration {
+function isRawLinkConfig(item: unknown): item is RawDocs.LinkConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as RawDocs.LinkConfiguration).link != null;
+    return isPlainObject(item) && typeof item.link === "string" && typeof item.href === "string";
+}
+
+function isRawApiPackageConfiguration(item: unknown): item is RawDocs.ApiPackageConfiguration {
+    return isPlainObject(item) && typeof item.package === "string" && Array.isArray(item.contents);
 }
 
 export function resolveFilepath(unresolvedFilepath: string, absolutePath: AbsoluteFilePath): AbsoluteFilePath;
