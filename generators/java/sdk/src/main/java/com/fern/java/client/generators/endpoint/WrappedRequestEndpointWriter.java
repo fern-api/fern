@@ -123,9 +123,14 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 parameterSpecs.add(fileParameter);
             });
         }
-        parameterSpecs.add(ParameterSpec.builder(generatedWrappedRequest.getClassName(), requestParameterName)
-                .build());
+        parameterSpecs.add(requestParameterSpec().get());
         return parameterSpecs;
+    }
+
+    @Override
+    public Optional<ParameterSpec> requestParameterSpec() {
+        return Optional.of(ParameterSpec.builder(generatedWrappedRequest.getClassName(), requestParameterName)
+                .build());
     }
 
     @SuppressWarnings("checkstyle:CyclomaticComplexity")

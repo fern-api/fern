@@ -122,14 +122,18 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
 
     @Override
     public List<ParameterSpec> additionalParameters() {
+        return List.of(requestParameterSpec().get());
+    }
+
+    @Override
+    public Optional<ParameterSpec> requestParameterSpec() {
         if (generatedWrappedRequest != null) {
-            return Collections.singletonList(ParameterSpec.builder(
+            return Optional.of(ParameterSpec.builder(
                             generatedWrappedRequest.getClassName(),
                             sdkRequest.getRequestParameterName().getCamelCase().getSafeName())
                     .build());
         } else if (sdkRequestBodyType != null) {
-            ParameterSpec parameterSpec = sdkRequestBodyType.visit(new SdkRequestBodyType.Visitor<ParameterSpec>() {
-
+            ParameterSpec parameterSpec = sdkRequestBodyType.visit(new SdkRequestBodyType.Visitor<>() {
                 @Override
                 public ParameterSpec visitTypeReference(HttpRequestBodyReference typeReference) {
                     return ParameterSpec.builder(
@@ -163,7 +167,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     throw new RuntimeException("Encountered unknown sdk request body type: " + unknownType);
                 }
             });
-            return Collections.singletonList(parameterSpec);
+            return Optional.of(parameterSpec);
         } else {
             throw new RuntimeException("Unexpected, both generatedWrappedRequest and sdkRequestBodyType are null");
         }

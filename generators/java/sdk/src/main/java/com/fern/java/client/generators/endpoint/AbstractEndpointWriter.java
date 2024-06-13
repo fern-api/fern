@@ -316,6 +316,8 @@ public abstract class AbstractEndpointWriter {
 
     public abstract List<ParameterSpec> additionalParameters();
 
+    public abstract Optional<ParameterSpec> requestParameterSpec();
+
     public abstract CodeBlock getInitializeRequestCodeBlock(
             FieldSpec clientOptionsMember,
             GeneratedClientOptions clientOptions,
@@ -514,6 +516,18 @@ public abstract class AbstractEndpointWriter {
         return getVariableName("body");
     }
 
+    protected final String getStartingAfterVariableName() {
+        return getVariableName("startingAfter");
+    }
+
+    protected final String getNextRequestVariableName() {
+        return getVariableName("nextRequest");
+    }
+
+    protected final String getResultVariableName() {
+        return getVariableName("result");
+    }
+
     private List<ParameterSpec> getPathParameters() {
         List<ParameterSpec> pathParameterSpecs = new ArrayList<>();
         httpService.getPathParameters().forEach(pathParameter -> {
@@ -557,7 +571,7 @@ public abstract class AbstractEndpointWriter {
         private final ClientGeneratorContext clientGeneratorContext;
 
         SuccessResponseWriter(
-                CodeBlock.Builder httpResponseBuilder,
+                Builder httpResponseBuilder,
                 MethodSpec.Builder endpointMethodBuilder,
                 ClientGeneratorContext clientGeneratorContext,
                 GeneratedObjectMapper generatedObjectMapper) {
@@ -642,15 +656,65 @@ public abstract class AbstractEndpointWriter {
                 httpEndpoint.getPagination().get().visit(new Visitor<Void>() {
                     @Override
                     public Void visitCursor(CursorPagination cursor) {
-                        SnippetAndResultType result = getNestedPropertySnippet(
+                        SnippetAndResultType nextSnippet = getNestedPropertySnippet(
                                 cursor.getNext().getPropertyPath(),
                                 cursor.getNext().getProperty(),
                                 body.getResponseBodyType());
-                        CodeBlock block = CodeBlock.builder()
-                                .add("$T startingAfter = $L", result.typeName, getParsedResponseVariableName())
-                                .add(result.codeBlock)
+                        CodeBlock nextBlock = CodeBlock.builder()
+                                .add(
+                                        "$T $L = $L",
+                                        nextSnippet.typeName,
+                                        getStartingAfterVariableName(),
+                                        getParsedResponseVariableName())
+                                .add(nextSnippet.codeBlock)
                                 .build();
-                        httpResponseBuilder.addStatement(block);
+                        httpResponseBuilder.addStatement(nextBlock);
+                        ParameterSpec requestParameterSpec = requestParameterSpec()
+                                .orElseThrow(() ->
+                                        new RuntimeException("Unexpected no parameter spec for paginated endpoint"));
+                        String builderStartingAfterProperty = cursor.getPage()
+                                .getName()
+                                .getName()
+                                .getCamelCase()
+                                .getUnsafeName();
+                        httpResponseBuilder.addStatement(
+                                "$T $L = $T.builder().from($L).$L($L).build()",
+                                requestParameterSpec.type,
+                                getNextRequestVariableName(),
+                                requestParameterSpec.type,
+                                requestParameterSpec.name,
+                                builderStartingAfterProperty,
+                                getStartingAfterVariableName());
+                        SnippetAndResultType resultSnippet = getNestedPropertySnippet(
+                                cursor.getResults().getPropertyPath(),
+                                cursor.getResults().getProperty(),
+                                body.getResponseBodyType());
+                        CodeBlock resultBlock = CodeBlock.builder()
+                                .add(
+                                        "$T $L = $L",
+                                        resultSnippet.typeName,
+                                        getResultVariableName(),
+                                        getParsedResponseVariableName())
+                                .add(resultSnippet.codeBlock)
+                                .build();
+                        httpResponseBuilder.addStatement(resultBlock);
+                        ClassName pagerClassName = clientGeneratorContext
+                                .getPoetClassNameFactory()
+                                .getPaginationClassName("SyncPagingIterable");
+                        String endpointName =
+                                httpEndpoint.getName().get().getCamelCase().getSafeName();
+                        String methodParameters = endpointMethodBuilder.parameters.stream()
+                                .map(parameterSpec -> parameterSpec.name.equals(requestParameterSpec.name)
+                                        ? getNextRequestVariableName()
+                                        : parameterSpec.name)
+                                .collect(Collectors.joining(", "));
+                        httpResponseBuilder.addStatement(
+                                "return new $T<>($L.isPresent(), $L, () -> $L($L)",
+                                pagerClassName,
+                                getStartingAfterVariableName(),
+                                getResultVariableName(),
+                                endpointName,
+                                methodParameters);
                         return null;
                     }
 
@@ -847,7 +911,6 @@ public abstract class AbstractEndpointWriter {
                 addPreviousIfPresent();
                 return new GetSnippetOutput(typeReference, codeBlocks);
             }
-            // todo: make sure list handled properly
             com.fern.irV42.model.types.TypeReference ref = container
                     .getOptional()
                     .orElseThrow(
@@ -891,6 +954,12 @@ public abstract class AbstractEndpointWriter {
                     System.out.println("🤙🤙 visitObject");
                     addPreviousIfPresent();
                     if (propertyPath.isEmpty()) {
+                        if (currentOptional || previousWasOptional) {
+                            return new GetSnippetOutput(
+                                    com.fern.irV42.model.types.TypeReference.container(
+                                            ContainerType.optional(typeReference)),
+                                    codeBlocks);
+                        }
                         return new GetSnippetOutput(typeReference, codeBlocks);
                     }
                     Optional<ObjectProperty> maybeMatchingProperty = object.getProperties().stream()
@@ -950,6 +1019,11 @@ public abstract class AbstractEndpointWriter {
                 throw new RuntimeException("Unexpected primitive with property path remaining");
             }
             addPreviousIfPresent();
+            if (currentOptional || previousWasOptional) {
+                return new GetSnippetOutput(
+                        com.fern.irV42.model.types.TypeReference.container(ContainerType.optional(typeReference)),
+                        codeBlocks);
+            }
             return new GetSnippetOutput(typeReference, codeBlocks);
         }
 
