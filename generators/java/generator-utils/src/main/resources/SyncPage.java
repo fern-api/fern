@@ -10,7 +10,7 @@ public class SyncPage<T> extends BasePage<T> {
         this.nextSupplier = nextSupplier;
     }
 
-    public SyncPage<T> getNext() {
+    public SyncPage<T> nextPage() {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }

@@ -48,7 +48,7 @@ public class SyncPagingIterable<T> extends SyncPage<T> implements Iterable<T> {
             }
 
             private void advancePage() {
-                currentPage = currentPage.getNext();
+                currentPage = currentPage.nextPage();
                 itemsIterator = currentPage.getItems().iterator();
             }
         };
