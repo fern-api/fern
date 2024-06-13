@@ -41,4 +41,7 @@ public class ObjectWithOptionalField
 
     [JsonPropertyName("map")]
     public Dictionary<int, string>? Map { get; init; }
+
+    [JsonPropertyName("bigint")]
+    public string? Bigint { get; init; }
 }

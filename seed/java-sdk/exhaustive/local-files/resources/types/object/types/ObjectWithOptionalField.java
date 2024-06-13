@@ -19,6 +19,7 @@ import java.lang.Integer;
 import java.lang.Long;
 import java.lang.Object;
 import java.lang.String;
+import java.math.BigInteger;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -57,13 +58,16 @@ public final class ObjectWithOptionalField {
 
   private final Optional<Map<Integer, String>> map;
 
+  private final Optional<BigInteger> bigint;
+
   private final Map<String, Object> additionalProperties;
 
   private ObjectWithOptionalField(Optional<String> string, Optional<Integer> integer,
       Optional<Long> long_, Optional<Double> double_, Optional<Boolean> bool,
       Optional<OffsetDateTime> datetime, Optional<String> date, Optional<UUID> uuid,
       Optional<byte[]> base64, Optional<List<String>> list, Optional<Set<String>> set,
-      Optional<Map<Integer, String>> map, Map<String, Object> additionalProperties) {
+      Optional<Map<Integer, String>> map, Optional<BigInteger> bigint,
+      Map<String, Object> additionalProperties) {
     this.string = string;
     this.integer = integer;
     this.long_ = long_;
@@ -76,6 +80,7 @@ public final class ObjectWithOptionalField {
     this.list = list;
     this.set = set;
     this.map = map;
+    this.bigint = bigint;
     this.additionalProperties = additionalProperties;
   }
 
@@ -139,6 +144,11 @@ public final class ObjectWithOptionalField {
     return map;
   }
 
+  @JsonProperty("bigint")
+  public Optional<BigInteger> getBigint() {
+    return bigint;
+  }
+
   @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
@@ -151,12 +161,12 @@ public final class ObjectWithOptionalField {
   }
 
   private boolean equalTo(ObjectWithOptionalField other) {
-    return string.equals(other.string) && integer.equals(other.integer) && long_.equals(other.long_) && double_.equals(other.double_) && bool.equals(other.bool) && datetime.equals(other.datetime) && date.equals(other.date) && uuid.equals(other.uuid) && base64.equals(other.base64) && list.equals(other.list) && set.equals(other.set) && map.equals(other.map);
+    return string.equals(other.string) && integer.equals(other.integer) && long_.equals(other.long_) && double_.equals(other.double_) && bool.equals(other.bool) && datetime.equals(other.datetime) && date.equals(other.date) && uuid.equals(other.uuid) && base64.equals(other.base64) && list.equals(other.list) && set.equals(other.set) && map.equals(other.map) && bigint.equals(other.bigint);
   }
 
   @java.lang.Override
   public int hashCode() {
-    return Objects.hash(this.string, this.integer, this.long_, this.double_, this.bool, this.datetime, this.date, this.uuid, this.base64, this.list, this.set, this.map);
+    return Objects.hash(this.string, this.integer, this.long_, this.double_, this.bool, this.datetime, this.date, this.uuid, this.base64, this.list, this.set, this.map, this.bigint);
   }
 
   @java.lang.Override
@@ -196,6 +206,8 @@ public final class ObjectWithOptionalField {
 
     private Optional<Map<Integer, String>> map = Optional.empty();
 
+    private Optional<BigInteger> bigint = Optional.empty();
+
     @JsonAnySetter
     private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -215,6 +227,7 @@ public final class ObjectWithOptionalField {
       list(other.getList());
       set(other.getSet());
       map(other.getMap());
+      bigint(other.getBigint());
       return this;
     }
 
@@ -386,8 +399,22 @@ public final class ObjectWithOptionalField {
       return this;
     }
 
+    @JsonSetter(
+        value = "bigint",
+        nulls = Nulls.SKIP
+    )
+    public Builder bigint(Optional<BigInteger> bigint) {
+      this.bigint = bigint;
+      return this;
+    }
+
+    public Builder bigint(BigInteger bigint) {
+      this.bigint = Optional.of(bigint);
+      return this;
+    }
+
     public ObjectWithOptionalField build() {
-      return new ObjectWithOptionalField(string, integer, long_, double_, bool, datetime, date, uuid, base64, list, set, map, additionalProperties);
+      return new ObjectWithOptionalField(string, integer, long_, double_, bool, datetime, date, uuid, base64, list, set, map, bigint, additionalProperties);
     }
   }
 }

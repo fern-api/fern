@@ -76,6 +76,7 @@ module SeedExhaustiveClient
       #   * :list (Array<String>)
       #   * :set (Set<String>)
       #   * :map (Hash{Integer => String})
+      #   * :bigint (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
       def test_patch(id:, request:, request_options: nil)
@@ -178,6 +179,7 @@ module SeedExhaustiveClient
       #   * :list (Array<String>)
       #   * :set (Set<String>)
       #   * :map (Hash{Integer => String})
+      #   * :bigint (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
       def test_patch(id:, request:, request_options: nil)
