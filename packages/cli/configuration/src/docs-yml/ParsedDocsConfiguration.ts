@@ -213,10 +213,20 @@ export declare namespace DocsNavigationItem {
 }
 
 export declare namespace ParsedApiNavigationItem {
+    export interface Section {
+        type: "section";
+        section: string; // title
+        subpackages: string[]; // subpackage IDs
+        summaryAbsolutePath: AbsoluteFilePath | undefined;
+        contents: ParsedApiNavigationItem[];
+        slug: string | undefined;
+        hidden: boolean | undefined;
+        icon: string | undefined;
+        skipUrlSlug: boolean | undefined;
+    }
     export interface Package {
         type: "package";
-        package: string; // title or subpackage ID
-        subpackages: string[]; // subpackage IDs
+        package: string; // subpackage ID
         summaryAbsolutePath: AbsoluteFilePath | undefined;
         contents: ParsedApiNavigationItem[];
         slug: string | undefined;
@@ -233,6 +243,7 @@ export declare namespace ParsedApiNavigationItem {
 
 export type ParsedApiNavigationItem =
     | ParsedApiNavigationItem.Item
+    | ParsedApiNavigationItem.Section
     | ParsedApiNavigationItem.Package
     | DocsNavigationItem.Page
     | DocsNavigationItem.Link;

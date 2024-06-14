@@ -19,4 +19,5 @@ export type ApiNavigationItem =
     | Record<string, FernDocsConfig.ApiNavigationItems>
     | FernDocsConfig.PageConfiguration
     | FernDocsConfig.LinkConfiguration
-    | FernDocsConfig.ApiPackageConfiguration;
+    | FernDocsConfig.ApiReferenceSectionConfiguration
+    | FernDocsConfig.ApiReferencePackageConfiguration;

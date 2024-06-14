@@ -131,6 +131,7 @@ export class ApiReferenceNodeConverter {
                         };
                     },
                     package: (pkg) => this.#convertPackage(pkg, parentSlug, idgen),
+                    section: (section) => this.#convertSection(section, parentSlug, idgen),
                     item: ({ value: unknownIdentifier }): FernNavigation.ApiPackageChild | undefined =>
                         this.#convertUnknownIdentifier(unknownIdentifier, apiDefinitionPackageId, parentSlug, idgen)
                 })
@@ -150,60 +151,6 @@ export class ApiReferenceNodeConverter {
 
         const maybeFullSlug =
             pkg.summaryAbsolutePath != null ? this.markdownFilesToFullSlugs.get(pkg.summaryAbsolutePath) : undefined;
-
-        if (pkg.subpackages.length > 0) {
-            let subpackage: APIV1Read.ApiDefinitionPackage | undefined = undefined;
-            let i = 0;
-            while (subpackage == null && i < pkg.subpackages.length) {
-                subpackage = this.#holder.getSubpackage(pkg.subpackages[i]);
-                i++;
-            }
-
-            if (subpackage != null) {
-                const subpackageId = ApiDefinitionHolder.getSubpackageId(subpackage);
-                const subpackageNodeId = idgen.append(subpackageId);
-                this.#visitedSubpackages.add(subpackageId);
-                this.#nodeIdToSubpackageId.set(subpackageNodeId.get(), subpackageId);
-                const urlSlug =
-                    pkg.slug ??
-                    (isSubpackage(subpackage)
-                        ? subpackage.urlSlug
-                        : this.apiSection.slug ?? kebabCase(this.apiSection.title));
-                const slug = parentSlug.apply({
-                    fullSlug: maybeFullSlug?.split("/"),
-                    skipUrlSlug: pkg.skipUrlSlug,
-                    urlSlug
-                });
-                const convertedItems: FernNavigation.ApiPackageChild[] = [];
-                pkg.subpackages.forEach((subpackageId) => {
-                    const subpackage = this.#holder.getSubpackage(subpackageId);
-                    if (subpackage == null) {
-                        this.taskContext.logger.error(
-                            `Subpackage ${subpackageId} not found in ${this.apiDefinitionId}`
-                        );
-                        return;
-                    }
-                    this.#visitedSubpackages.add(subpackageId);
-                    this.#nodeIdToSubpackageId.set(subpackageNodeId.get(), subpackageId);
-                    convertedItems.push(
-                        ...this.#convertApiNavigationItems(pkg.contents, subpackage, slug, subpackageNodeId)
-                    );
-                });
-                return {
-                    id: subpackageNodeId.get(),
-                    type: "apiPackage",
-                    children: convertedItems,
-                    title: pkg.package,
-                    slug: slug.get(),
-                    icon: pkg.icon,
-                    hidden: pkg.hidden,
-                    overviewPageId,
-                    availability: undefined,
-                    apiDefinitionId: this.apiDefinitionId,
-                    pointsTo: undefined
-                };
-            }
-        }
 
         const subpackage = this.#holder.getSubpackage(pkg.package);
 
@@ -239,6 +186,7 @@ export class ApiReferenceNodeConverter {
                 pointsTo: undefined
             };
         } else {
+            this.taskContext.logger.error(`Subpackage ${pkg.package} not found in ${this.apiDefinitionId}`);
             const urlSlug = pkg.slug ?? kebabCase(pkg.package);
             const slug = parentSlug.apply({
                 fullSlug: maybeFullSlug?.split("/"),
@@ -260,6 +208,60 @@ export class ApiReferenceNodeConverter {
                 pointsTo: undefined
             };
         }
+    }
+
+    #convertSection(
+        section: docsYml.ParsedApiNavigationItem.Section,
+        parentSlug: FernNavigation.SlugGenerator,
+        idgen: NodeIdGenerator
+    ): FernNavigation.ApiPackageNode {
+        const overviewPageId =
+            section.summaryAbsolutePath != null
+                ? FernNavigation.PageId(this.toRelativeFilepath(section.summaryAbsolutePath))
+                : undefined;
+
+        const maybeFullSlug =
+            section.summaryAbsolutePath != null
+                ? this.markdownFilesToFullSlugs.get(section.summaryAbsolutePath)
+                : undefined;
+
+        const nodeId = idgen.append(`section:${kebabCase(section.section)}`);
+
+        section.subpackages.forEach((subpackageId) => {
+            const subpackage = this.#holder.getSubpackage(subpackageId);
+            if (subpackage == null) {
+                this.taskContext.logger.error(`Subpackage ${subpackageId} not found in ${this.apiDefinitionId}`);
+                return;
+            }
+            this.#visitedSubpackages.add(subpackageId);
+            this.#nodeIdToSubpackageId.set(nodeId.get(), subpackageId);
+        });
+
+        const urlSlug = section.slug ?? kebabCase(section.section);
+        const slug = parentSlug.apply({
+            fullSlug: maybeFullSlug?.split("/"),
+            skipUrlSlug: section.skipUrlSlug,
+            urlSlug
+        });
+        const convertedItems = this.#convertApiNavigationItems(
+            section.contents,
+            section.subpackages.length === 1 ? this.#holder.getSubpackage(section.subpackages[0]) : undefined,
+            slug,
+            idgen
+        );
+        return {
+            id: nodeId.get(),
+            type: "apiPackage",
+            children: convertedItems,
+            title: section.section,
+            slug: slug.get(),
+            icon: section.icon,
+            hidden: section.hidden,
+            overviewPageId,
+            availability: undefined,
+            apiDefinitionId: this.apiDefinitionId,
+            pointsTo: undefined
+        };
     }
 
     #convertApiDefinitionPackage(

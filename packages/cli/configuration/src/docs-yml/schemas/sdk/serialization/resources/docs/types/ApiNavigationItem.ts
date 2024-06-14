@@ -17,7 +17,8 @@ export const ApiNavigationItem: core.serialization.Schema<
     ),
     core.serialization.lazyObject(async () => (await import("../../..")).PageConfiguration),
     core.serialization.lazyObject(async () => (await import("../../..")).LinkConfiguration),
-    core.serialization.lazyObject(async () => (await import("../../..")).ApiPackageConfiguration),
+    core.serialization.lazyObject(async () => (await import("../../..")).ApiReferenceSectionConfiguration),
+    core.serialization.lazyObject(async () => (await import("../../..")).ApiReferencePackageConfiguration),
 ]);
 
 export declare namespace ApiNavigationItem {
@@ -26,5 +27,6 @@ export declare namespace ApiNavigationItem {
         | Record<string, serializers.ApiNavigationItems.Raw>
         | serializers.PageConfiguration.Raw
         | serializers.LinkConfiguration.Raw
-        | serializers.ApiPackageConfiguration.Raw;
+        | serializers.ApiReferenceSectionConfiguration.Raw
+        | serializers.ApiReferencePackageConfiguration.Raw;
 }

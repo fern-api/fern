@@ -6,12 +6,11 @@ import * as serializers from "../../..";
 import * as FernDocsConfig from "../../../../api";
 import * as core from "../../../../core";
 
-export const ApiPackageConfiguration: core.serialization.ObjectSchema<
-    serializers.ApiPackageConfiguration.Raw,
-    FernDocsConfig.ApiPackageConfiguration
+export const ApiReferencePackageConfiguration: core.serialization.ObjectSchema<
+    serializers.ApiReferencePackageConfiguration.Raw,
+    FernDocsConfig.ApiReferencePackageConfiguration
 > = core.serialization.object({
     package: core.serialization.string(),
-    subpackage: core.serialization.lazy(async () => (await import("../../..")).SubpackageOrSubpackages).optional(),
     summary: core.serialization.string().optional(),
     contents: core.serialization.lazy(async () => (await import("../../..")).ApiNavigationItems),
     slug: core.serialization.string().optional(),
@@ -20,10 +19,9 @@ export const ApiPackageConfiguration: core.serialization.ObjectSchema<
     skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
 });
 
-export declare namespace ApiPackageConfiguration {
+export declare namespace ApiReferencePackageConfiguration {
     interface Raw {
         package: string;
-        subpackage?: serializers.SubpackageOrSubpackages.Raw | null;
         summary?: string | null;
         contents: serializers.ApiNavigationItems.Raw;
         slug?: string | null;

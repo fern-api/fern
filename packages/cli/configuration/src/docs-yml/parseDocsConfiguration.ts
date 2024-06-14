@@ -587,12 +587,25 @@ function parseApiNavigationItem(
                 icon: item.icon
             }
         ];
-    } else if (isRawApiPackageConfiguration(item)) {
+    } else if (isRawApiRefSectionConfiguration(item)) {
+        return [
+            {
+                type: "section",
+                section: item.section,
+                subpackages: typeof item.package === "string" ? [item.package] : item.package ?? [],
+                summaryAbsolutePath: resolveFilepath(item.summary, absolutePathToConfig),
+                contents: item.contents.flatMap((value) => parseApiNavigationItem(value, absolutePathToConfig)),
+                slug: item.slug,
+                hidden: item.hidden,
+                skipUrlSlug: item.skipSlug,
+                icon: item.icon
+            }
+        ];
+    } else if (isRawApiRefPackageConfiguration(item)) {
         return [
             {
                 type: "package",
                 package: item.package,
-                subpackages: typeof item.subpackage === "string" ? [item.subpackage] : item.subpackage ?? [],
                 summaryAbsolutePath: resolveFilepath(item.summary, absolutePathToConfig),
                 contents: item.contents.flatMap((value) => parseApiNavigationItem(value, absolutePathToConfig)),
                 slug: item.slug,
@@ -607,7 +620,6 @@ function parseApiNavigationItem(
         ([key, values]): ParsedApiNavigationItem.Package => ({
             type: "package",
             package: key,
-            subpackages: [],
             summaryAbsolutePath: undefined,
             contents: values.flatMap((value) => parseApiNavigationItem(value, absolutePathToConfig)),
             hidden: false,
@@ -650,8 +662,14 @@ function isRawLinkConfig(item: unknown): item is RawDocs.LinkConfiguration {
     return isPlainObject(item) && typeof item.link === "string" && typeof item.href === "string";
 }
 
-function isRawApiPackageConfiguration(item: unknown): item is RawDocs.ApiPackageConfiguration {
-    return isPlainObject(item) && typeof item.package === "string" && Array.isArray(item.contents);
+function isRawApiRefSectionConfiguration(item: unknown): item is RawDocs.ApiReferenceSectionConfiguration {
+    return isPlainObject(item) && typeof item.section === "string" && Array.isArray(item.contents);
+}
+
+function isRawApiRefPackageConfiguration(item: unknown): item is RawDocs.ApiReferencePackageConfiguration {
+    return (
+        isPlainObject(item) && item.section == null && typeof item.package === "string" && Array.isArray(item.contents)
+    );
 }
 
 export function resolveFilepath(unresolvedFilepath: string, absolutePath: AbsoluteFilePath): AbsoluteFilePath;
