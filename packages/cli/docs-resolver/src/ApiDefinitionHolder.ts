@@ -33,11 +33,12 @@ export class ApiDefinitionHolder {
     #endpointsInverted = new Map<APIV1Read.EndpointDefinition, FernNavigation.EndpointId>();
     #webSocketsInverted = new Map<APIV1Read.WebSocketChannel, FernNavigation.WebSocketId>();
     #webhooksInverted = new Map<APIV1Read.WebhookDefinition, FernNavigation.WebhookId>();
-    #subpackages = new Map<APIV1Read.SubpackageId, SubpackageHolder>();
 
-    #endpointsByPath = new Map<string, APIV1Read.EndpointDefinition>();
-    #webSocketsByPath = new Map<string, APIV1Read.WebSocketChannel>();
-    // #webhooksByPath = new Map<string, APIV1Read.WebhookDefinition>();
+    #subpackages = new Map<APIV1Read.SubpackageId, SubpackageHolder>();
+    #endpointsByLocator = new Map<string, APIV1Read.EndpointDefinition>();
+    #webSocketsByLocator = new Map<string, APIV1Read.WebSocketChannel>();
+    #webhooksByLocator = new Map<string, APIV1Read.WebhookDefinition>();
+    #subpackagesByLocator = new Map<string, APIV1Read.ApiDefinitionPackage>();
 
     public static getSubpackageId(pkg: APIV1Read.ApiDefinitionPackage): string {
         return isSubpackage(pkg) ? pkg.subpackageId : ROOT_PACKAGE_ID;
@@ -46,12 +47,11 @@ export class ApiDefinitionHolder {
     public getSubpackage(subpackageId: string | undefined): APIV1Read.ApiDefinitionPackage | undefined {
         if (subpackageId == null) {
             return undefined;
+        } else if (subpackageId === ROOT_PACKAGE_ID) {
+            return this.api.rootPackage;
+        } else {
+            return this.api.subpackages[subpackageId] ?? this.#subpackagesByLocator.get(subpackageId);
         }
-        return subpackageId === ROOT_PACKAGE_ID
-            ? this.api.rootPackage
-            : this.api.subpackages[
-                  subpackageId.startsWith("subpackage_") ? subpackageId : `subpackage_${subpackageId}`
-              ];
     }
 
     public resolveSubpackage(
@@ -81,28 +81,28 @@ export class ApiDefinitionHolder {
                 this.#endpoints.set(endpointId, endpoint);
 
                 if (endpointId.startsWith("subpackage_")) {
-                    this.#endpointsByPath.set(endpointId.substring("subpackage_".length), endpoint);
+                    this.#endpointsByLocator.set(endpointId.substring("subpackage_".length), endpoint);
                 } else if (endpointId.startsWith("root.")) {
-                    this.#endpointsByPath.set(endpointId.substring("root.".length), endpoint);
+                    this.#endpointsByLocator.set(endpointId.substring("root.".length), endpoint);
                 }
 
-                this.#endpointsByPath.set(
+                this.#endpointsByLocator.set(
                     `${endpoint.method} ${stringifyEndpointPathParts(endpoint.path.parts)}`,
                     endpoint
                 );
-                this.#endpointsByPath.set(
+                this.#endpointsByLocator.set(
                     `${endpoint.method} ${stringifyEndpointPathParts2(endpoint.path.parts)}`,
                     endpoint
                 );
                 endpoint.environments.forEach((environment) => {
-                    this.#endpointsByPath.set(
+                    this.#endpointsByLocator.set(
                         `${endpoint.method} ${urlJoin(
                             environment.baseUrl,
                             stringifyEndpointPathParts(endpoint.path.parts)
                         )}`,
                         endpoint
                     );
-                    this.#endpointsByPath.set(
+                    this.#endpointsByLocator.set(
                         `${endpoint.method} ${urlJoin(
                             environment.baseUrl,
                             stringifyEndpointPathParts2(endpoint.path.parts)
@@ -111,11 +111,11 @@ export class ApiDefinitionHolder {
                     );
                     const basePath = getBasePath(environment);
                     if (basePath != null) {
-                        this.#endpointsByPath.set(
+                        this.#endpointsByLocator.set(
                             `${endpoint.method} ${urlJoin(basePath, stringifyEndpointPathParts(endpoint.path.parts))}`,
                             endpoint
                         );
-                        this.#endpointsByPath.set(
+                        this.#endpointsByLocator.set(
                             `${endpoint.method} ${urlJoin(basePath, stringifyEndpointPathParts2(endpoint.path.parts))}`,
                             endpoint
                         );
@@ -128,31 +128,31 @@ export class ApiDefinitionHolder {
                 this.#webSockets.set(webSocketId, webSocket);
 
                 if (webSocketId.startsWith("subpackage_")) {
-                    this.#webSocketsByPath.set(webSocketId.substring("subpackage_".length), webSocket);
+                    this.#webSocketsByLocator.set(webSocketId.substring("subpackage_".length), webSocket);
                 } else if (webSocketId.startsWith("root.")) {
-                    this.#webSocketsByPath.set(webSocketId.substring("root.".length), webSocket);
+                    this.#webSocketsByLocator.set(webSocketId.substring("root.".length), webSocket);
                 }
 
                 // websockets are always GET.
                 // TODO: should we resolve without the GET method?
-                this.#webSocketsByPath.set(`GET ${stringifyEndpointPathParts(webSocket.path.parts)}`, webSocket);
-                this.#webSocketsByPath.set(`GET ${stringifyEndpointPathParts2(webSocket.path.parts)}`, webSocket);
+                this.#webSocketsByLocator.set(`GET ${stringifyEndpointPathParts(webSocket.path.parts)}`, webSocket);
+                this.#webSocketsByLocator.set(`GET ${stringifyEndpointPathParts2(webSocket.path.parts)}`, webSocket);
                 webSocket.environments.forEach((environment) => {
-                    this.#webSocketsByPath.set(
+                    this.#webSocketsByLocator.set(
                         `GET ${urlJoin(environment.baseUrl, stringifyEndpointPathParts(webSocket.path.parts))}`,
                         webSocket
                     );
-                    this.#webSocketsByPath.set(
+                    this.#webSocketsByLocator.set(
                         `GET ${urlJoin(environment.baseUrl, stringifyEndpointPathParts2(webSocket.path.parts))}`,
                         webSocket
                     );
                     const basePath = getBasePath(environment);
                     if (basePath != null) {
-                        this.#webSocketsByPath.set(
+                        this.#webSocketsByLocator.set(
                             `GET ${urlJoin(basePath, stringifyEndpointPathParts(webSocket.path.parts))}`,
                             webSocket
                         );
-                        this.#webSocketsByPath.set(
+                        this.#webSocketsByLocator.set(
                             `GET ${urlJoin(basePath, stringifyEndpointPathParts2(webSocket.path.parts))}`,
                             webSocket
                         );
@@ -175,6 +175,44 @@ export class ApiDefinitionHolder {
         this.#webhooks.forEach((webhook, webhookId) => {
             this.#webhooksInverted.set(webhook, webhookId);
         });
+
+        this.#constructSubpackageLocators(api.rootPackage, []);
+    }
+
+    #constructSubpackageLocators(pkg: APIV1Read.ApiDefinitionPackage | undefined, parents: string[]): void {
+        if (pkg == null) {
+            return;
+        }
+
+        const packageList = isSubpackage(pkg) ? [...parents, pkg.name] : pkg.subpackages;
+
+        this.#subpackagesByLocator.set(packageList.length === 0 ? ROOT_PACKAGE_ID : packageList.join("."), pkg);
+
+        if (pkg.pointsTo != null) {
+            return this.#constructSubpackageLocators(this.api.subpackages[pkg.pointsTo], packageList);
+        }
+
+        pkg.endpoints.forEach((endpoint) => {
+            if (endpoint.name != null) {
+                this.#endpointsByLocator.set([...packageList, endpoint.id].join("."), endpoint);
+            }
+        });
+
+        pkg.websockets.forEach((webSocket) => {
+            if (webSocket.name != null) {
+                this.#webSocketsByLocator.set([...packageList, webSocket.id].join("."), webSocket);
+            }
+        });
+
+        pkg.webhooks.forEach((webhook) => {
+            if (webhook.name != null) {
+                this.#webhooksByLocator.set([...packageList, webhook.id].join("."), webhook);
+            }
+        });
+
+        pkg.subpackages.forEach((subpackageId) => {
+            this.#constructSubpackageLocators(this.api.subpackages[subpackageId], packageList);
+        });
     }
 
     get endpoints(): ReadonlyMap<FernNavigation.EndpointId, APIV1Read.EndpointDefinition> {
@@ -189,12 +227,16 @@ export class ApiDefinitionHolder {
         return this.#webhooks;
     }
 
-    get endpointsByPath(): ReadonlyMap<string, APIV1Read.EndpointDefinition> {
-        return this.#endpointsByPath;
+    get endpointsByLocator(): ReadonlyMap<string, APIV1Read.EndpointDefinition> {
+        return this.#endpointsByLocator;
     }
 
-    get webSocketsByPath(): ReadonlyMap<string, APIV1Read.WebSocketChannel> {
-        return this.#webSocketsByPath;
+    get webSocketsByLocator(): ReadonlyMap<string, APIV1Read.WebSocketChannel> {
+        return this.#webSocketsByLocator;
+    }
+
+    get webhooksByLocator(): ReadonlyMap<string, APIV1Read.WebhookDefinition> {
+        return this.#webhooksByLocator;
     }
 
     get subpackages(): ReadonlyMap<APIV1Read.SubpackageId, SubpackageHolder> {

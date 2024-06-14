@@ -417,6 +417,13 @@ export class ApiReferenceNodeConverter {
         if (subpackage != null) {
             const subpackageId = ApiDefinitionHolder.getSubpackageId(subpackage);
             const subpackageNodeId = idgen.append(subpackageId);
+
+            if (this.#visitedSubpackages.has(subpackageId)) {
+                this.taskContext.logger.error(
+                    `Duplicate subpackage found in the API Reference layout: ${subpackageId}`
+                );
+            }
+
             this.#visitedSubpackages.add(subpackageId);
             this.#nodeIdToSubpackageId.set(subpackageNodeId.get(), subpackageId);
             const urlSlug = isSubpackage(subpackage) ? subpackage.urlSlug : "";
@@ -441,9 +448,7 @@ export class ApiReferenceNodeConverter {
         const endpoint =
             (apiDefinitionPackageId != null
                 ? this.#holder.subpackages.get(apiDefinitionPackageId)?.endpoints.get(unknownIdentifier)
-                : undefined) ??
-            this.#holder.endpoints.get(FernNavigation.EndpointId(unknownIdentifier)) ??
-            this.#holder.endpointsByPath.get(unknownIdentifier);
+                : undefined) ?? this.#holder.endpointsByLocator.get(unknownIdentifier);
 
         if (endpoint != null) {
             const endpointId = this.#holder.getEndpointId(endpoint);
@@ -472,9 +477,7 @@ export class ApiReferenceNodeConverter {
         const webSocket =
             (apiDefinitionPackageId != null
                 ? this.#holder.subpackages.get(apiDefinitionPackageId)?.webSockets.get(unknownIdentifier)
-                : undefined) ??
-            this.#holder.webSockets.get(FernNavigation.WebSocketId(unknownIdentifier)) ??
-            this.#holder.webSocketsByPath.get(unknownIdentifier);
+                : undefined) ?? this.#holder.webSocketsByLocator.get(unknownIdentifier);
 
         if (webSocket != null) {
             const webSocketId = this.#holder.getWebSocketId(webSocket);
