@@ -1,4 +1,5 @@
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { TaskContext } from "@fern-api/task-context";
 import urlJoin from "url-join";
 import { isSubpackage } from "./utils/isSubpackage";
 import { stringifyEndpointPathParts, stringifyEndpointPathParts2 } from "./utils/stringifyEndpointPathParts";
@@ -23,8 +24,8 @@ const ROOT_PACKAGE_ID = "root" as const;
  * into the corresponding endpoint definition, when constructing the API reference tree.
  */
 export class ApiDefinitionHolder {
-    public static create(api: APIV1Read.ApiDefinition): ApiDefinitionHolder {
-        return new ApiDefinitionHolder(api);
+    public static create(api: APIV1Read.ApiDefinition, context?: TaskContext): ApiDefinitionHolder {
+        return new ApiDefinitionHolder(api, context);
     }
 
     #endpoints = new Map<FernNavigation.EndpointId, APIV1Read.EndpointDefinition>();
@@ -66,7 +67,7 @@ export class ApiDefinitionHolder {
         return pkg;
     }
 
-    private constructor(public readonly api: APIV1Read.ApiDefinition) {
+    private constructor(public readonly api: APIV1Read.ApiDefinition, private readonly context?: TaskContext) {
         [api.rootPackage, ...Object.values(api.subpackages)].forEach((pkg) => {
             const subpackageId = ApiDefinitionHolder.getSubpackageId(pkg);
             const subpackageHolder = {
@@ -79,47 +80,43 @@ export class ApiDefinitionHolder {
                 subpackageHolder.endpoints.set(endpoint.id, endpoint);
                 const endpointId = ApiDefinitionHolder.createEndpointId(endpoint, subpackageId);
                 this.#endpoints.set(endpointId, endpoint);
+                const locators: string[] = [];
 
-                if (endpointId.startsWith("subpackage_")) {
-                    this.#endpointsByLocator.set(endpointId.substring("subpackage_".length), endpoint);
-                } else if (endpointId.startsWith("root.")) {
-                    this.#endpointsByLocator.set(endpointId.substring("root.".length), endpoint);
+                const methods: string[] = [endpoint.method];
+
+                if (endpoint.response?.type.type === "stream") {
+                    methods.push("STREAM");
                 }
 
-                this.#endpointsByLocator.set(
-                    `${endpoint.method} ${stringifyEndpointPathParts(endpoint.path.parts)}`,
-                    endpoint
-                );
-                this.#endpointsByLocator.set(
-                    `${endpoint.method} ${stringifyEndpointPathParts2(endpoint.path.parts)}`,
-                    endpoint
-                );
-                endpoint.environments.forEach((environment) => {
-                    this.#endpointsByLocator.set(
-                        `${endpoint.method} ${urlJoin(
-                            environment.baseUrl,
-                            stringifyEndpointPathParts(endpoint.path.parts)
-                        )}`,
-                        endpoint
-                    );
-                    this.#endpointsByLocator.set(
-                        `${endpoint.method} ${urlJoin(
-                            environment.baseUrl,
-                            stringifyEndpointPathParts2(endpoint.path.parts)
-                        )}`,
-                        endpoint
-                    );
-                    const basePath = getBasePath(environment);
-                    if (basePath != null) {
-                        this.#endpointsByLocator.set(
-                            `${endpoint.method} ${urlJoin(basePath, stringifyEndpointPathParts(endpoint.path.parts))}`,
-                            endpoint
+                methods.forEach((method) => {
+                    locators.push(`${method} ${stringifyEndpointPathParts(endpoint.path.parts)}`);
+                    locators.push(`${method} ${stringifyEndpointPathParts2(endpoint.path.parts)}`);
+
+                    endpoint.environments.forEach((environment) => {
+                        locators.push(
+                            `${method} ${urlJoin(environment.baseUrl, stringifyEndpointPathParts(endpoint.path.parts))}`
                         );
-                        this.#endpointsByLocator.set(
-                            `${endpoint.method} ${urlJoin(basePath, stringifyEndpointPathParts2(endpoint.path.parts))}`,
-                            endpoint
+                        locators.push(
+                            `${method} ${urlJoin(
+                                environment.baseUrl,
+                                stringifyEndpointPathParts2(endpoint.path.parts)
+                            )}`
                         );
-                    }
+                        const basePath = getBasePath(environment);
+                        if (basePath != null) {
+                            locators.push(
+                                `${method} ${urlJoin(basePath, stringifyEndpointPathParts(endpoint.path.parts))}`
+                            );
+                            locators.push(
+                                `${method} ${urlJoin(basePath, stringifyEndpointPathParts2(endpoint.path.parts))}`
+                            );
+                        }
+                    });
+                });
+
+                locators.forEach((locator) => {
+                    this.context?.logger.debug(`Registering endpoint locator: ${locator}`);
+                    this.#endpointsByLocator.set(locator, endpoint);
                 });
             });
             pkg.websockets.forEach((webSocket) => {
@@ -127,42 +124,53 @@ export class ApiDefinitionHolder {
                 const webSocketId = ApiDefinitionHolder.createWebSocketId(webSocket, subpackageId);
                 this.#webSockets.set(webSocketId, webSocket);
 
-                if (webSocketId.startsWith("subpackage_")) {
-                    this.#webSocketsByLocator.set(webSocketId.substring("subpackage_".length), webSocket);
-                } else if (webSocketId.startsWith("root.")) {
-                    this.#webSocketsByLocator.set(webSocketId.substring("root.".length), webSocket);
-                }
+                const locators: string[] = [];
+                const methods: string[] = ["GET", "WSS"];
 
-                // websockets are always GET.
-                // TODO: should we resolve without the GET method?
-                this.#webSocketsByLocator.set(`GET ${stringifyEndpointPathParts(webSocket.path.parts)}`, webSocket);
-                this.#webSocketsByLocator.set(`GET ${stringifyEndpointPathParts2(webSocket.path.parts)}`, webSocket);
-                webSocket.environments.forEach((environment) => {
-                    this.#webSocketsByLocator.set(
-                        `GET ${urlJoin(environment.baseUrl, stringifyEndpointPathParts(webSocket.path.parts))}`,
-                        webSocket
-                    );
-                    this.#webSocketsByLocator.set(
-                        `GET ${urlJoin(environment.baseUrl, stringifyEndpointPathParts2(webSocket.path.parts))}`,
-                        webSocket
-                    );
-                    const basePath = getBasePath(environment);
-                    if (basePath != null) {
-                        this.#webSocketsByLocator.set(
-                            `GET ${urlJoin(basePath, stringifyEndpointPathParts(webSocket.path.parts))}`,
-                            webSocket
+                methods.forEach((method) => {
+                    locators.push(`${method} ${stringifyEndpointPathParts(webSocket.path.parts)}`);
+                    locators.push(`${method} ${stringifyEndpointPathParts2(webSocket.path.parts)}`);
+
+                    webSocket.environments.forEach((environment) => {
+                        locators.push(
+                            `${method} ${urlJoin(
+                                environment.baseUrl,
+                                stringifyEndpointPathParts(webSocket.path.parts)
+                            )}`
                         );
-                        this.#webSocketsByLocator.set(
-                            `GET ${urlJoin(basePath, stringifyEndpointPathParts2(webSocket.path.parts))}`,
-                            webSocket
+                        locators.push(
+                            `${method} ${urlJoin(
+                                environment.baseUrl,
+                                stringifyEndpointPathParts2(webSocket.path.parts)
+                            )}`
                         );
-                    }
+                        const basePath = getBasePath(environment);
+                        if (basePath != null) {
+                            locators.push(
+                                `${method} ${urlJoin(basePath, stringifyEndpointPathParts(webSocket.path.parts))}`
+                            );
+                            locators.push(
+                                `${method} ${urlJoin(basePath, stringifyEndpointPathParts2(webSocket.path.parts))}`
+                            );
+                        }
+                    });
+                });
+
+                locators.forEach((locator) => {
+                    this.context?.logger.debug(`Registering websocket locator: ${locator}`);
+                    this.#webSocketsByLocator.set(locator, webSocket);
                 });
             });
             pkg.webhooks.forEach((webhook) => {
                 subpackageHolder.webhooks.set(webhook.id, webhook);
                 this.#webhooks.set(ApiDefinitionHolder.createWebhookId(webhook, subpackageId), webhook);
-                // TODO: Implement webhook path resolution
+                const locators: string[] = [];
+                locators.push(`${webhook.method} ${urlJoin("/", ...webhook.path)}`);
+
+                locators.forEach((locator) => {
+                    this.context?.logger.debug(`Registering webhook locator: ${locator}`);
+                    this.#webhooksByLocator.set(locator, webhook);
+                });
             });
         });
 
@@ -194,16 +202,19 @@ export class ApiDefinitionHolder {
 
         pkg.endpoints.forEach((endpoint) => {
             const locator = [...packageList, endpoint.id].join(".");
+            this.context?.logger.debug(`Registering endpoint locator: ${locator}`);
             this.#endpointsByLocator.set(locator, endpoint);
         });
 
         pkg.websockets.forEach((webSocket) => {
             const locator = [...packageList, webSocket.id].join(".");
+            this.context?.logger.debug(`Registering websocket locator: ${locator}`);
             this.#webSocketsByLocator.set(locator, webSocket);
         });
 
         pkg.webhooks.forEach((webhook) => {
             const locator = [...packageList, webhook.id].join(".");
+            this.context?.logger.debug(`Registering webhook locator: ${locator}`);
             this.#webhooksByLocator.set(locator, webhook);
         });
 

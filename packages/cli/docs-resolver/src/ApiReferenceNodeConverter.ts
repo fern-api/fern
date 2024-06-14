@@ -33,7 +33,7 @@ export class ApiReferenceNodeConverter {
         private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string>
     ) {
         this.apiDefinitionId = FernNavigation.ApiDefinitionId(api.id);
-        this.#holder = ApiDefinitionHolder.create(api);
+        this.#holder = ApiDefinitionHolder.create(api, taskContext);
 
         // we are assuming that the apiDefinitionId is unique.
         const idgen = NodeIdGenerator.init(this.apiDefinitionId);
