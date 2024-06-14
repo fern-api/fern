@@ -1,6 +1,5 @@
 from typing import Dict, List, Optional, Tuple, Union
 
-import fern.ir.resources as ir_types
 from fdr import (
     DictTemplate,
     DiscriminatedUnionTemplate,
@@ -20,8 +19,6 @@ from fdr import (
     TemplateInput,
     VersionedSnippetTemplate,
 )
-from fern.generator_exec.resources import GeneratorUpdate, LogLevel, LogUpdate
-
 from fern_python.codegen import AST
 from fern_python.codegen.imports_manager import ImportsManager
 from fern_python.codegen.project import Project
@@ -54,6 +51,9 @@ from fern_python.generators.sdk.client_generator.request_body_parameters.referen
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.snippet.snippet_writer import SnippetWriter
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
+
+import fern.ir.resources as ir_types
+from fern.generator_exec.resources import GeneratorUpdate, LogLevel, LogUpdate
 
 
 class SnippetTemplateFactory:
@@ -102,14 +102,15 @@ class SnippetTemplateFactory:
         snippet_without_imports = snippet.to_str(include_imports=False)
 
         # For some reason we're appending newlines to snippets, so we need to strip them for tempaltes
-        return snippet_full.replace(snippet_without_imports, "").strip(), snippet_without_imports.strip()
+        return snippet_full.replace(
+            snippet_without_imports, ""
+        ).strip(), snippet_without_imports.strip()
 
-    def _generate_client(self, is_async: Optional[bool] = False) -> str:
-        return self._expression_to_snippet_str(
-            self._generated_root_client.async_instantiation
-            if is_async
-            else self._generated_root_client.sync_instantiation
-        )
+    def _generate_client(self, is_async: Optional[bool] = False) -> Template:
+        if is_async:
+            return self._generated_root_client.async_instantiation_template
+        else:
+            return self._generated_root_client.sync_instantiation_template
 
     def _get_subpackage_client_accessor(
         self,
@@ -120,13 +121,17 @@ class SnippetTemplateFactory:
             components += [fern_filepath.file]
         if len(components) == 0:
             return ""
-        return ".".join([component.snake_case.safe_name for component in components]) + "."
+        return (
+            ".".join([component.snake_case.safe_name for component in components]) + "."
+        )
 
     def _is_type_literal(self, type_reference: ir_types.TypeReference) -> bool:
         return self._context.get_literal_value(reference=type_reference) is not None
 
     def _get_breadcrumb_path(
-        self, wire_or_original_name: Optional[str], name_breadcrumbs: Optional[List[str]]
+        self,
+        wire_or_original_name: Optional[str],
+        name_breadcrumbs: Optional[List[str]],
     ) -> Union[str, None]:
         if wire_or_original_name is None and name_breadcrumbs is None:
             return None
@@ -147,12 +152,16 @@ class SnippetTemplateFactory:
             GenericTemplate(
                 imports=[],
                 is_optional=True,
-                template_string=f"{name}={self.TEMPLATE_SENTINEL}" if name is not None else f"{self.TEMPLATE_SENTINEL}",
+                template_string=f"{name}={self.TEMPLATE_SENTINEL}"
+                if name is not None
+                else f"{self.TEMPLATE_SENTINEL}",
                 template_inputs=[
                     TemplateInput.factory.payload(
                         PayloadInput(
                             location=location,
-                            path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs),
+                            path=self._get_breadcrumb_path(
+                                wire_or_original_name, name_breadcrumbs
+                            ),
                         )
                     )
                 ],
@@ -187,7 +196,10 @@ class SnippetTemplateFactory:
                         delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
                         inner_template=inner_template,
                         template_input=PayloadInput(
-                            location=location, path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs)
+                            location=location,
+                            path=self._get_breadcrumb_path(
+                                wire_or_original_name, name_breadcrumbs
+                            ),
                         ),
                     )
                 )
@@ -210,17 +222,30 @@ class SnippetTemplateFactory:
                     delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
                     inner_template=inner_template,
                     template_input=PayloadInput(
-                        location=location, path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs)
+                        location=location,
+                        path=self._get_breadcrumb_path(
+                            wire_or_original_name, name_breadcrumbs
+                        ),
                     ),
                 )
             ) if inner_template is not None else None
 
         if container_union.type == "map":
             key_template = self.get_type_reference_template(
-                container_union.key_type, None, "RELATIVE", None, None, child_indentation_level
+                container_union.key_type,
+                None,
+                "RELATIVE",
+                None,
+                None,
+                child_indentation_level,
             )
             value_template = self.get_type_reference_template(
-                container_union.value_type, None, "RELATIVE", None, None, child_indentation_level
+                container_union.value_type,
+                None,
+                "RELATIVE",
+                None,
+                None,
+                child_indentation_level,
             )
             return (
                 Template.factory.dict(
@@ -235,7 +260,10 @@ class SnippetTemplateFactory:
                         key_template=key_template,
                         value_template=value_template,
                         template_input=PayloadInput(
-                            location=location, path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs)
+                            location=location,
+                            path=self._get_breadcrumb_path(
+                                wire_or_original_name, name_breadcrumbs
+                            ),
                         ),
                     )
                 )
@@ -246,13 +274,20 @@ class SnippetTemplateFactory:
         if container_union.type == "optional":
             value = container_union.optional
             return self.get_type_reference_template(
-                value, name, location, wire_or_original_name, name_breadcrumbs, indentation_level
+                value,
+                name,
+                location,
+                wire_or_original_name,
+                name_breadcrumbs,
+                indentation_level,
             )
 
         return None
 
     def _convert_enum_value_to_str(
-        self, type_name: ir_types.DeclaredTypeName, enum_value: ir_types.NameAndWireValue
+        self,
+        type_name: ir_types.DeclaredTypeName,
+        enum_value: ir_types.NameAndWireValue,
     ) -> Tuple[str, str]:
         enum_snippet = EnumSnippetGenerator(
             snippet_writer=self._snippet_writer,
@@ -273,7 +308,9 @@ class SnippetTemplateFactory:
     ) -> Template:
         # TODO: we should also be making it so you can easily grab the right import depending on the enum you use
         value_map = {
-            value.name.wire_value: self._convert_enum_value_to_str(type_name=type_name, enum_value=value.name)[1]
+            value.name.wire_value: self._convert_enum_value_to_str(
+                type_name=type_name, enum_value=value.name
+            )[1]
             for value in values
         }
         return Template.factory.enum(
@@ -281,10 +318,14 @@ class SnippetTemplateFactory:
                 imports=[],
                 is_optional=True,
                 values=value_map,
-                template_string=f"{name}={self.TEMPLATE_SENTINEL}" if name is not None else f"{self.TEMPLATE_SENTINEL}",
+                template_string=f"{name}={self.TEMPLATE_SENTINEL}"
+                if name is not None
+                else f"{self.TEMPLATE_SENTINEL}",
                 template_input=PayloadInput(
                     location=location,
-                    path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs),
+                    path=self._get_breadcrumb_path(
+                        wire_or_original_name, name_breadcrumbs
+                    ),
                 ),
             )
         )
@@ -300,7 +341,9 @@ class SnippetTemplateFactory:
         indentation_level: int = 0,
     ) -> Union[Template, None]:
         child_indentation_level = indentation_level + 1
-        example_expression = f"\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}"
+        example_expression = (
+            f"\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}"
+        )
         sut_shape = sut.shape.get_as_union()
         if sut_shape.properties_type == "samePropertiesAsObject":
             object_properties = self._context.pydantic_generator_context.get_all_properties_including_extensions(
@@ -334,7 +377,9 @@ class SnippetTemplateFactory:
                 single_union_type=sut,
             ).generate_snippet_template()
             if snippet_template is not None:
-                imports, snippet_template_str = self._expression_to_snippet_str_and_imports(snippet_template)
+                imports, snippet_template_str = (
+                    self._expression_to_snippet_str_and_imports(snippet_template)
+                )
                 return Template.factory.generic(
                     GenericTemplate(
                         imports=[imports] if imports is not None else [],
@@ -363,7 +408,9 @@ class SnippetTemplateFactory:
                 child_breadcrumbs.append(wire_or_original_name)
 
             if snippet_template is not None:
-                imports, snippet_template_str = self._expression_to_snippet_str_and_imports(snippet_template)
+                imports, snippet_template_str = (
+                    self._expression_to_snippet_str_and_imports(snippet_template)
+                )
 
                 return Template.factory.generic(
                     GenericTemplate(
@@ -398,7 +445,9 @@ class SnippetTemplateFactory:
             ).generate_snippet_template()
 
             if snippet_template is not None:
-                imports, snippet_template_str = self._expression_to_snippet_str_and_imports(snippet_template)
+                imports, snippet_template_str = (
+                    self._expression_to_snippet_str_and_imports(snippet_template)
+                )
 
                 return Template.factory.generic(
                     GenericTemplate(
@@ -443,7 +492,9 @@ class SnippetTemplateFactory:
                 imports=[],
                 is_optional=True,
                 discriminant_field=union_declaration.discriminant.wire_value,
-                template_string=f"{name}={self.TEMPLATE_SENTINEL}" if name is not None else f"{self.TEMPLATE_SENTINEL}",
+                template_string=f"{name}={self.TEMPLATE_SENTINEL}"
+                if name is not None
+                else f"{self.TEMPLATE_SENTINEL}",
                 members=member_templates,
                 template_input=PayloadInput(location="RELATIVE"),
             )
@@ -459,7 +510,11 @@ class SnippetTemplateFactory:
         name_breadcrumbs: Optional[List[str]],
         indentation_level: int = 0,
     ) -> Template:
-        object_reference = self._snippet_writer.get_class_reference_for_declared_type_name(name=type_name)
+        object_reference = (
+            self._snippet_writer.get_class_reference_for_declared_type_name(
+                name=type_name
+            )
+        )
         object_properties = self._context.pydantic_generator_context.get_all_properties_including_extensions(
             type_name=type_name.type_id
         )
@@ -485,7 +540,11 @@ class SnippetTemplateFactory:
         object_class_name = type_name.name.pascal_case.safe_name
         return Template.factory.generic(
             GenericTemplate(
-                imports=[self._imports_manager._get_import_as_string(object_reference.import_)]
+                imports=[
+                    self._imports_manager._get_import_as_string(
+                        object_reference.import_
+                    )
+                ]
                 if object_reference.import_ is not None
                 else [],
                 is_optional=True,
@@ -507,8 +566,10 @@ class SnippetTemplateFactory:
         name_breadcrumbs: Optional[List[str]],
         indentation_level: int = 0,
     ) -> Union[Template, None]:
-        type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(
-            type_id=type_name.type_id
+        type_declaration = (
+            self._context.pydantic_generator_context.get_declaration_for_type_id(
+                type_id=type_name.type_id
+            )
         )
 
         if type_declaration is not None:
@@ -616,7 +677,11 @@ class SnippetTemplateFactory:
             name_breadcrumbs=name_breadcrumbs,
             indentation_level=indentation_level,
         )
-        return self._get_template_input_from_template(template=template) if template is not None else None
+        return (
+            self._get_template_input_from_template(template=template)
+            if template is not None
+            else None
+        )
 
     def _get_template_input_from_template(self, template: Template) -> TemplateInput:
         return TemplateInput.factory.template(template)
@@ -717,27 +782,29 @@ class SnippetTemplateFactory:
                         top_level_template_inputs.append(ti)
 
                 if endpoint.request_body is not None:
-                    parameters: List[AST.NamedFunctionParameter] = endpoint.request_body.visit(
-                        inlined_request_body=lambda request: InlinedRequestBodyParameters(
-                            context=self._context,
-                            request_body=request,
-                            endpoint=endpoint,
-                        ).get_parameters(),
-                        reference=lambda request: ReferencedRequestBodyParameters(
-                            endpoint=endpoint,
-                            request_body=request,
-                            context=self._context,
-                        ).get_parameters(),
-                        file_upload=lambda request: FileUploadRequestBodyParameters(
-                            endpoint=endpoint,
-                            request=request,
-                            context=self._context,
-                        ).get_parameters(),
-                        bytes=lambda request: BytesRequestBodyParameters(
-                            endpoint=endpoint,
-                            request=request,
-                            context=self._context,
-                        ).get_parameters(),
+                    parameters: List[AST.NamedFunctionParameter] = (
+                        endpoint.request_body.visit(
+                            inlined_request_body=lambda request: InlinedRequestBodyParameters(
+                                context=self._context,
+                                request_body=request,
+                                endpoint=endpoint,
+                            ).get_parameters(),
+                            reference=lambda request: ReferencedRequestBodyParameters(
+                                endpoint=endpoint,
+                                request_body=request,
+                                context=self._context,
+                            ).get_parameters(),
+                            file_upload=lambda request: FileUploadRequestBodyParameters(
+                                endpoint=endpoint,
+                                request=request,
+                                context=self._context,
+                            ).get_parameters(),
+                            bytes=lambda request: BytesRequestBodyParameters(
+                                endpoint=endpoint,
+                                request=request,
+                                context=self._context,
+                            ).get_parameters(),
+                        )
                     )
 
                     for parameter in parameters:
@@ -760,7 +827,9 @@ class SnippetTemplateFactory:
                 async_init_expression = AST.Expression(
                     f"await {self.CLIENT_FIXTURE_NAME}.{package_path}{get_endpoint_name(endpoint)}(\n\t{self.TEMPLATE_SENTINEL}\n)"
                 )
-                async_init_string_template = self._expression_to_snippet_str(async_init_expression)
+                async_init_string_template = self._expression_to_snippet_str(
+                    async_init_expression
+                )
                 async_function_template = Template.factory.generic(
                     GenericTemplate(
                         imports=[],
@@ -795,25 +864,30 @@ class SnippetTemplateFactory:
                     )
                 )
 
-                client_instantiation = self._generate_client()
-                async_client_instantiation = self._generate_client(is_async=True)
+                client_instantiation_template = self._generate_client()
+                async_client_instantiation_template = self._generate_client(
+                    is_async=True
+                )
                 snippet_templates.append(
                     SnippetRegistryEntry(
                         sdk=sdk,
                         endpoint_id=self._endpoint_to_identifier(endpoint),
                         snippet_template=VersionedSnippetTemplate.factory.v_1(
                             SnippetTemplate(
-                                client_instantiation=client_instantiation, function_invocation=function_template
+                                client_instantiation=client_instantiation_template,
+                                function_invocation=function_template,
                             )
                         ),
                         additional_templates={
                             "async": VersionedSnippetTemplate.factory.v_1(
                                 SnippetTemplate(
-                                    client_instantiation=async_client_instantiation,
+                                    client_instantiation=async_client_instantiation_template,
                                     function_invocation=async_function_template,
                                 )
                             )
                         },
                     )
                 )
+
+        print("PIYUSH Snippet templates generated successfully.", snippet_templates)
         return snippet_templates

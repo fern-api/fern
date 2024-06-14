@@ -785,13 +785,12 @@ export class TemplateGenerator {
         return header.name.name.camelCase.unsafeName;
     }
 
-    private generateTopLevelClientInstantiationSnippetTemplateInput(): FdrSnippetTemplate.TemplateInput[] {
+    private generateTopLevelClientInstantiationSnippetTemplateInput(
+        addEnvironmentPropery: boolean
+    ): FdrSnippetTemplate.TemplateInput[] {
         const topLevelTemplateInputs: FdrSnippetTemplate.TemplateInput[] = [];
 
-        const defaultEnvironment = this.clientContext.environments
-            .getGeneratedEnvironments()
-            .getReferenceToDefaultEnvironment(this.clientContext);
-        if (!this.requireDefaultEnvironment && defaultEnvironment == null) {
+        if (addEnvironmentPropery) {
             const firstEnvironment = this.clientContext.environments.getReferenceToFirstEnvironmentEnum();
             topLevelTemplateInputs.push(
                 FdrSnippetTemplate.TemplateInput.template(
@@ -1033,11 +1032,16 @@ export class TemplateGenerator {
 
         const clientReference = getTextOfTsNode(this.clientContext.sdkInstanceReferenceForSnippet);
 
+        const defaultEnvironment = this.clientContext.environments
+            .getGeneratedEnvironments()
+            .getReferenceToDefaultEnvironment(this.clientContext);
+        const addEnvironmentProperty = !this.requireDefaultEnvironment && defaultEnvironment == null;
+
         const topLevelClientInstantiationTemplateInputs =
-            this.generateTopLevelClientInstantiationSnippetTemplateInput();
+            this.generateTopLevelClientInstantiationSnippetTemplateInput(addEnvironmentProperty);
 
         const clientInstantiationTemplateString =
-            this.auth.schemes.length > 0 || this.headers.length > 0
+            this.auth.schemes.length > 0 || this.headers.length > 0 || addEnvironmentProperty
                 ? `const ${clientReference} = new ${rootSdkClientName}(${TEMPLATE_SENTINEL});`
                 : `const ${clientReference} = new ${rootSdkClientName}();`;
 
