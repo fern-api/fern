@@ -236,6 +236,15 @@ export declare namespace ParsedApiReferenceLayoutItem {
         skipUrlSlug: boolean | undefined;
     }
 
+    export interface Endpoint {
+        type: "endpoint";
+        endpoint: string; // endpoint locator
+        title: string | undefined;
+        icon: string | undefined;
+        slug: string | undefined;
+        hidden: boolean | undefined;
+    }
+
     export interface Item {
         type: "item";
         value: string; // this could be either an endpoint or subpackage.
@@ -246,5 +255,6 @@ export type ParsedApiReferenceLayoutItem =
     | ParsedApiReferenceLayoutItem.Item
     | ParsedApiReferenceLayoutItem.Section
     | ParsedApiReferenceLayoutItem.Package
+    | ParsedApiReferenceLayoutItem.Endpoint
     | DocsNavigationItem.Page
     | DocsNavigationItem.Link;

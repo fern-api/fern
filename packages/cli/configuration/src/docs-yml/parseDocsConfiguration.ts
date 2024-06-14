@@ -603,8 +603,18 @@ function parseApiReferenceLayoutItem(
                 icon: item.icon
             }
         ];
+    } else if (isRawApiRefEndpointConfiguration(item)) {
+        return [
+            {
+                type: "endpoint",
+                endpoint: item.endpoint,
+                title: item.title,
+                icon: item.icon,
+                slug: item.slug,
+                hidden: item.hidden
+            }
+        ];
     }
-
     return Object.entries(item).map(([key, value]): ParsedApiReferenceLayoutItem.Package => {
         if (isRawApiRefPackageConfiguration(value)) {
             return {
@@ -669,6 +679,10 @@ function isRawLinkConfig(item: unknown): item is RawDocs.LinkConfiguration {
 
 function isRawApiRefSectionConfiguration(item: unknown): item is RawDocs.ApiReferenceSectionConfiguration {
     return isPlainObject(item) && typeof item.section === "string" && Array.isArray(item.contents);
+}
+
+function isRawApiRefEndpointConfiguration(item: unknown): item is RawDocs.ApiReferenceEndpointConfiguration {
+    return isPlainObject(item) && typeof item.endpoint === "string";
 }
 
 function isRawApiRefPackageConfiguration(

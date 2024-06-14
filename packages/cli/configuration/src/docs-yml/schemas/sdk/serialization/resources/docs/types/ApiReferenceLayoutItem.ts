@@ -15,16 +15,18 @@ export const ApiReferenceLayoutItem: core.serialization.Schema<
         core.serialization.string(),
         core.serialization.lazy(async () => (await import("../../..")).ApiReferencePackageConfiguration)
     ),
+    core.serialization.lazyObject(async () => (await import("../../..")).ApiReferenceSectionConfiguration),
+    core.serialization.lazyObject(async () => (await import("../../..")).ApiReferenceEndpointConfiguration),
     core.serialization.lazyObject(async () => (await import("../../..")).PageConfiguration),
     core.serialization.lazyObject(async () => (await import("../../..")).LinkConfiguration),
-    core.serialization.lazyObject(async () => (await import("../../..")).ApiReferenceSectionConfiguration),
 ]);
 
 export declare namespace ApiReferenceLayoutItem {
     type Raw =
         | string
         | Record<string, serializers.ApiReferencePackageConfiguration.Raw>
+        | serializers.ApiReferenceSectionConfiguration.Raw
+        | serializers.ApiReferenceEndpointConfiguration.Raw
         | serializers.PageConfiguration.Raw
-        | serializers.LinkConfiguration.Raw
-        | serializers.ApiReferenceSectionConfiguration.Raw;
+        | serializers.LinkConfiguration.Raw;
 }

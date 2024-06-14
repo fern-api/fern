@@ -35,6 +35,7 @@ export * from "./SubpackageOrSubpackages";
 export * from "./ApiReferenceSectionConfiguration";
 export * from "./ApiReferencePackageConfiguration";
 export * from "./ApiReferencePackageConfigurationWithOptions";
+export * from "./ApiReferenceEndpointConfiguration";
 export * from "./LinkConfiguration";
 export * from "./VersionedSnippetLanguageConfiguration";
 export * from "./SnippetLanguageConfiguration";

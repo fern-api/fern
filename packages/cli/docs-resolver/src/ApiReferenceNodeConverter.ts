@@ -115,17 +115,16 @@ export class ApiReferenceNodeConverter {
                     }),
                     page: (page) => {
                         const pageId = FernNavigation.PageId(this.toRelativeFilepath(page.absolutePath));
+                        const pageSlug = parentSlug.apply({
+                            fullSlug: this.markdownFilesToFullSlugs.get(page.absolutePath)?.split("/"),
+                            urlSlug: page.slug ?? kebabCase(page.title)
+                        });
                         return {
                             id: idgen.append(`page:${pageId}`).get(),
                             type: "page",
                             pageId,
                             title: page.title,
-                            slug: parentSlug
-                                .apply({
-                                    fullSlug: this.markdownFilesToFullSlugs.get(page.absolutePath)?.split("/"),
-                                    urlSlug: page.slug ?? kebabCase(page.title)
-                                })
-                                .get(),
+                            slug: pageSlug.get(),
                             icon: page.icon,
                             hidden: page.hidden
                         };
@@ -133,7 +132,8 @@ export class ApiReferenceNodeConverter {
                     package: (pkg) => this.#convertPackage(pkg, parentSlug, idgen),
                     section: (section) => this.#convertSection(section, parentSlug, idgen),
                     item: ({ value: unknownIdentifier }): FernNavigation.ApiPackageChild | undefined =>
-                        this.#convertUnknownIdentifier(unknownIdentifier, apiDefinitionPackageId, parentSlug, idgen)
+                        this.#convertUnknownIdentifier(unknownIdentifier, apiDefinitionPackageId, parentSlug, idgen),
+                    endpoint: (endpoint) => this.#convertEndpoint(endpoint, apiDefinitionPackageId, parentSlug, idgen)
                 })
             )
             .filter(isNonNullish);
@@ -451,10 +451,32 @@ export class ApiReferenceNodeConverter {
             };
         }
 
+        // if the unknownIdentifier is not a subpackage, it could be an http endpoint, websocket, or webhook.
+        return this.#convertEndpoint(
+            {
+                type: "endpoint",
+                endpoint: unknownIdentifier,
+                title: undefined,
+                icon: undefined,
+                slug: undefined,
+                hidden: undefined
+            },
+            apiDefinitionPackageId,
+            parentSlug,
+            idgen
+        );
+    }
+
+    #convertEndpoint(
+        endpointItem: docsYml.ParsedApiReferenceLayoutItem.Endpoint,
+        apiDefinitionPackageId: string | undefined,
+        parentSlug: FernNavigation.SlugGenerator,
+        idgen: NodeIdGenerator
+    ): FernNavigation.ApiPackageChild | undefined {
         const endpoint =
             (apiDefinitionPackageId != null
-                ? this.#holder.subpackages.get(apiDefinitionPackageId)?.endpoints.get(unknownIdentifier)
-                : undefined) ?? this.#holder.endpointsByLocator.get(unknownIdentifier);
+                ? this.#holder.subpackages.get(apiDefinitionPackageId)?.endpoints.get(endpointItem.endpoint)
+                : undefined) ?? this.#holder.endpointsByLocator.get(endpointItem.endpoint);
 
         if (endpoint != null) {
             const endpointId = this.#holder.getEndpointId(endpoint);
@@ -473,17 +495,20 @@ export class ApiReferenceNodeConverter {
                 apiDefinitionId: this.apiDefinitionId,
                 availability: FernNavigation.utils.convertAvailability(endpoint.availability),
                 isResponseStream: endpoint.response?.type.type === "stream",
-                title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
-                slug: parentSlug.apply(endpoint).get(),
-                icon: undefined,
-                hidden: undefined
+                title: endpointItem.title ?? endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
+                slug: (endpointItem.slug != null
+                    ? parentSlug.append(endpointItem.slug)
+                    : parentSlug.apply(endpoint)
+                ).get(),
+                icon: endpointItem.icon,
+                hidden: endpointItem.hidden
             };
         }
 
         const webSocket =
             (apiDefinitionPackageId != null
-                ? this.#holder.subpackages.get(apiDefinitionPackageId)?.webSockets.get(unknownIdentifier)
-                : undefined) ?? this.#holder.webSocketsByLocator.get(unknownIdentifier);
+                ? this.#holder.subpackages.get(apiDefinitionPackageId)?.webSockets.get(endpointItem.endpoint)
+                : undefined) ?? this.#holder.webSocketsByLocator.get(endpointItem.endpoint);
 
         if (webSocket != null) {
             const webSocketId = this.#holder.getWebSocketId(webSocket);
@@ -498,20 +523,22 @@ export class ApiReferenceNodeConverter {
                 id: idgen.append(webSocket.id).get(),
                 type: "webSocket",
                 webSocketId,
-                title: webSocket.name ?? stringifyEndpointPathParts(webSocket.path.parts),
-                slug: parentSlug.apply(webSocket).get(),
-                icon: undefined,
-                hidden: undefined,
+                title: endpointItem.title ?? webSocket.name ?? stringifyEndpointPathParts(webSocket.path.parts),
+                slug: (endpointItem.slug != null
+                    ? parentSlug.append(endpointItem.slug)
+                    : parentSlug.apply(webSocket)
+                ).get(),
+                icon: endpointItem.icon,
+                hidden: endpointItem.hidden,
                 apiDefinitionId: this.apiDefinitionId,
                 availability: FernNavigation.utils.convertAvailability(webSocket.availability)
             };
         }
 
-        // TODO: webhook by path is not implemented yet
         const webhook =
             (apiDefinitionPackageId != null
-                ? this.#holder.subpackages.get(apiDefinitionPackageId)?.webhooks.get(unknownIdentifier)
-                : undefined) ?? this.#holder.webhooks.get(FernNavigation.WebhookId(unknownIdentifier));
+                ? this.#holder.subpackages.get(apiDefinitionPackageId)?.webhooks.get(endpointItem.endpoint)
+                : undefined) ?? this.#holder.webhooks.get(FernNavigation.WebhookId(endpointItem.endpoint));
 
         if (webhook != null) {
             const webhookId = this.#holder.getWebhookId(webhook);
@@ -527,16 +554,19 @@ export class ApiReferenceNodeConverter {
                 type: "webhook",
                 webhookId,
                 method: webhook.method,
-                title: webhook.name ?? urlJoin("/", ...webhook.path),
-                slug: parentSlug.apply(webhook).get(),
-                icon: undefined,
-                hidden: undefined,
+                title: endpointItem.title ?? webhook.name ?? urlJoin("/", ...webhook.path),
+                slug: (endpointItem.slug != null
+                    ? parentSlug.append(endpointItem.slug)
+                    : parentSlug.apply(webhook)
+                ).get(),
+                icon: endpointItem.icon,
+                hidden: endpointItem.hidden,
                 apiDefinitionId: this.apiDefinitionId,
                 availability: undefined
             };
         }
 
-        this.taskContext.logger.error("Unknown identifier in the API Reference layout: ", unknownIdentifier);
+        this.taskContext.logger.error("Unknown identifier in the API Reference layout: ", endpointItem.endpoint);
 
         return;
     }

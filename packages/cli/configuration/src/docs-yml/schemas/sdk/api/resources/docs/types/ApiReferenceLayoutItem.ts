@@ -15,6 +15,7 @@ export type ApiReferenceLayoutItem =
     /**
      * Keyed by subpackage name, this object allows you to group endpoints and pages together. */
     | Record<string, FernDocsConfig.ApiReferencePackageConfiguration>
+    | FernDocsConfig.ApiReferenceSectionConfiguration
+    | FernDocsConfig.ApiReferenceEndpointConfiguration
     | FernDocsConfig.PageConfiguration
-    | FernDocsConfig.LinkConfiguration
-    | FernDocsConfig.ApiReferenceSectionConfiguration;
+    | FernDocsConfig.LinkConfiguration;
