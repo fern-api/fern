@@ -189,28 +189,42 @@ export class ApiDefinitionHolder {
 
         const packageList = isSubpackage(pkg) ? [...parents, pkg.name] : parents;
 
-        this.#subpackagesByLocator.set(packageList.length === 0 ? ROOT_PACKAGE_ID : packageList.join("."), pkg);
+        const path = packageList.length === 0 ? [ROOT_PACKAGE_ID] : packageList;
+        const locators = [path.join("."), path.join("/"), `${path.join(".")}.yml`];
+        locators.forEach((locator) => {
+            this.context?.logger.debug(`Registering subpackage locator: ${locator}`);
+            this.#subpackagesByLocator.set(locator, pkg);
+        });
 
         if (pkg.pointsTo != null) {
             return this.#constructSubpackageLocators(this.api.subpackages[pkg.pointsTo], packageList);
         }
 
         pkg.endpoints.forEach((endpoint) => {
-            const locator = [...packageList, endpoint.id].join(".");
-            this.context?.logger.debug(`Registering endpoint locator: ${locator}`);
-            this.#endpointsByLocator.set(locator, endpoint);
+            const path = [...packageList, endpoint.id];
+            const locators = [path.join("."), path.join("/")];
+            locators.forEach((locator) => {
+                this.context?.logger.debug(`Registering endpoint locator: ${locator}`);
+                this.#endpointsByLocator.set(locator, endpoint);
+            });
         });
 
         pkg.websockets.forEach((webSocket) => {
-            const locator = [...packageList, webSocket.id].join(".");
-            this.context?.logger.debug(`Registering websocket locator: ${locator}`);
-            this.#webSocketsByLocator.set(locator, webSocket);
+            const path = [...packageList, webSocket.id];
+            const locators = [path.join("."), path.join("/")];
+            locators.forEach((locator) => {
+                this.context?.logger.debug(`Registering websocket locator: ${locator}`);
+                this.#webSocketsByLocator.set(locator, webSocket);
+            });
         });
 
         pkg.webhooks.forEach((webhook) => {
-            const locator = [...packageList, webhook.id].join(".");
-            this.context?.logger.debug(`Registering webhook locator: ${locator}`);
-            this.#webhooksByLocator.set(locator, webhook);
+            const path = [...packageList, webhook.id];
+            const locators = [path.join("."), path.join("/")];
+            locators.forEach((locator) => {
+                this.context?.logger.debug(`Registering webhook locator: ${locator}`);
+                this.#webhooksByLocator.set(locator, webhook);
+            });
         });
 
         pkg.subpackages.forEach((subpackageId) => {
