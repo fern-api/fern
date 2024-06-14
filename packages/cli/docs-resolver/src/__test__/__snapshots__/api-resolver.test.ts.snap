@@ -89,804 +89,230 @@ exports[`converts to api reference node 1`] = `
 `;
 
 exports[`converts to api reference node 2`] = `
-Map {
-  "POST /movies/create-movie" => {
-    "authed": false,
-    "availability": undefined,
-    "defaultEnvironment": undefined,
-    "description": "Add a movie to the database",
-    "environments": [],
-    "errors": [],
-    "errorsV2": [],
-    "examples": [
+[
+  "POST /movies/create-movie",
+  "GET /movies/{id}",
+  "GET /movies/:id",
+  "DELETE /movies/{id}",
+  "DELETE /movies/:id",
+  "imdb.createMovie",
+  "imdb.getMovie",
+  "imdb.deleteMovie",
+]
+`;
+
+exports[`converts to api reference node: DELETE /movies/{id} 1`] = `
+{
+  "authed": false,
+  "availability": undefined,
+  "defaultEnvironment": undefined,
+  "description": "Remove a movie from the database based on the ID",
+  "environments": [],
+  "errors": [],
+  "errorsV2": [],
+  "examples": [
+    {
+      "codeExamples": {
+        "goSdk": undefined,
+        "nodeAxios": "",
+        "pythonSdk": undefined,
+        "rubySdk": undefined,
+        "typescriptSdk": undefined,
+      },
+      "codeSamples": [],
+      "description": undefined,
+      "headers": {},
+      "name": undefined,
+      "path": "/movies/:id",
+      "pathParameters": {
+        "id": ":id",
+      },
+      "queryParameters": {},
+      "requestBody": undefined,
+      "requestBodyV3": undefined,
+      "responseBody": undefined,
+      "responseBodyV3": undefined,
+      "responseStatusCode": 200,
+    },
+  ],
+  "headers": [],
+  "id": "deleteMovie",
+  "method": "DELETE",
+  "migratedFromUrlSlugs": undefined,
+  "name": "Delete Movie",
+  "originalEndpointId": "endpoint_imdb.deleteMovie",
+  "path": {
+    "parts": [
       {
-        "codeExamples": {
-          "goSdk": undefined,
-          "nodeAxios": "",
-          "pythonSdk": undefined,
-          "rubySdk": undefined,
-          "typescriptSdk": undefined,
-        },
-        "codeSamples": [],
-        "description": undefined,
-        "headers": {},
-        "name": undefined,
-        "path": "/movies/create-movie",
-        "pathParameters": {},
-        "queryParameters": {},
-        "requestBody": undefined,
-        "requestBodyV3": {
-          "type": "json",
-          "value": {
-            "rating": 1,
-            "title": "string",
-          },
-        },
-        "responseBody": undefined,
-        "responseBodyV3": {
-          "type": "json",
-          "value": "string",
-        },
-        "responseStatusCode": 200,
+        "type": "literal",
+        "value": "/movies",
+      },
+      {
+        "type": "literal",
+        "value": "/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "id",
+      },
+      {
+        "type": "literal",
+        "value": "",
       },
     ],
-    "headers": [],
-    "id": "createMovie",
-    "method": "POST",
-    "migratedFromUrlSlugs": undefined,
-    "name": "Create Movie",
-    "originalEndpointId": "endpoint_imdb.createMovie",
-    "path": {
-      "parts": [
-        {
-          "type": "literal",
-          "value": "/movies",
-        },
-        {
-          "type": "literal",
-          "value": "/create-movie",
-        },
-      ],
-      "pathParameters": [],
-    },
-    "queryParameters": [],
-    "request": {
-      "contentType": "application/json",
-      "description": undefined,
-      "type": {
-        "type": "reference",
-        "value": {
+    "pathParameters": [
+      {
+        "description": undefined,
+        "key": "id",
+        "type": {
           "type": "id",
-          "value": "type_imdb:CreateMovieRequest",
+          "value": "type_imdb:MovieId",
         },
       },
-    },
-    "response": {
-      "statusCode": undefined,
+    ],
+  },
+  "queryParameters": [],
+  "request": undefined,
+  "response": undefined,
+  "snippetTemplates": undefined,
+  "urlSlug": "delete-movie",
+}
+`;
+
+exports[`converts to api reference node: imdb.getMovie 1`] = `
+{
+  "authed": false,
+  "availability": undefined,
+  "defaultEnvironment": undefined,
+  "description": "Retrieve a movie from the database based on the ID",
+  "environments": [],
+  "errors": [],
+  "errorsV2": [
+    {
+      "description": undefined,
+      "examples": [],
+      "name": undefined,
+      "statusCode": 404,
       "type": {
-        "type": "reference",
+        "type": "alias",
         "value": {
           "type": "id",
           "value": "type_imdb:MovieId",
         },
       },
     },
-    "snippetTemplates": undefined,
-    "urlSlug": "create-movie",
-  },
-  "GET /movies/{id}" => {
-    "authed": false,
-    "availability": undefined,
-    "defaultEnvironment": undefined,
-    "description": "Retrieve a movie from the database based on the ID",
-    "environments": [],
-    "errors": [],
-    "errorsV2": [
-      {
-        "description": undefined,
-        "examples": [],
-        "name": undefined,
-        "statusCode": 404,
-        "type": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "value": "type_imdb:MovieId",
-          },
-        },
+  ],
+  "examples": [
+    {
+      "codeExamples": {
+        "goSdk": undefined,
+        "nodeAxios": "",
+        "pythonSdk": undefined,
+        "rubySdk": undefined,
+        "typescriptSdk": undefined,
       },
-    ],
-    "examples": [
-      {
-        "codeExamples": {
-          "goSdk": undefined,
-          "nodeAxios": "",
-          "pythonSdk": undefined,
-          "rubySdk": undefined,
-          "typescriptSdk": undefined,
-        },
-        "codeSamples": [],
-        "description": undefined,
-        "headers": {},
-        "name": undefined,
-        "path": "/movies/tt0111161",
-        "pathParameters": {
-          "id": "tt0111161",
-        },
-        "queryParameters": {},
-        "requestBody": undefined,
-        "requestBodyV3": undefined,
-        "responseBody": {
-          "id": "tt0111161",
-          "rating": 9.3,
-          "title": "The Shawshank Redemption",
-        },
-        "responseBodyV3": {
-          "type": "json",
-          "value": {
-            "id": "tt0111161",
-            "rating": 9.3,
-            "title": "The Shawshank Redemption",
-          },
-        },
-        "responseStatusCode": 200,
-      },
-      {
-        "codeExamples": {
-          "goSdk": undefined,
-          "nodeAxios": "",
-          "pythonSdk": undefined,
-          "rubySdk": undefined,
-          "typescriptSdk": undefined,
-        },
-        "codeSamples": [],
-        "description": undefined,
-        "headers": {},
-        "name": undefined,
-        "path": "/movies/tt1234",
-        "pathParameters": {
-          "id": "tt1234",
-        },
-        "queryParameters": {},
-        "requestBody": undefined,
-        "requestBodyV3": undefined,
-        "responseBody": "tt1234",
-        "responseBodyV3": {
-          "type": "json",
-          "value": "tt1234",
-        },
-        "responseStatusCode": 404,
-      },
-    ],
-    "headers": [],
-    "id": "getMovie",
-    "method": "GET",
-    "migratedFromUrlSlugs": undefined,
-    "name": "Get Movie",
-    "originalEndpointId": "endpoint_imdb.getMovie",
-    "path": {
-      "parts": [
-        {
-          "type": "literal",
-          "value": "/movies",
-        },
-        {
-          "type": "literal",
-          "value": "/",
-        },
-        {
-          "type": "pathParameter",
-          "value": "id",
-        },
-        {
-          "type": "literal",
-          "value": "",
-        },
-      ],
-      "pathParameters": [
-        {
-          "description": undefined,
-          "key": "id",
-          "type": {
-            "type": "id",
-            "value": "type_imdb:MovieId",
-          },
-        },
-      ],
-    },
-    "queryParameters": [],
-    "request": undefined,
-    "response": {
-      "statusCode": undefined,
-      "type": {
-        "type": "reference",
-        "value": {
-          "type": "id",
-          "value": "type_imdb:Movie",
-        },
-      },
-    },
-    "snippetTemplates": undefined,
-    "urlSlug": "get-movie",
-  },
-  "GET /movies/:id" => {
-    "authed": false,
-    "availability": undefined,
-    "defaultEnvironment": undefined,
-    "description": "Retrieve a movie from the database based on the ID",
-    "environments": [],
-    "errors": [],
-    "errorsV2": [
-      {
-        "description": undefined,
-        "examples": [],
-        "name": undefined,
-        "statusCode": 404,
-        "type": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "value": "type_imdb:MovieId",
-          },
-        },
-      },
-    ],
-    "examples": [
-      {
-        "codeExamples": {
-          "goSdk": undefined,
-          "nodeAxios": "",
-          "pythonSdk": undefined,
-          "rubySdk": undefined,
-          "typescriptSdk": undefined,
-        },
-        "codeSamples": [],
-        "description": undefined,
-        "headers": {},
-        "name": undefined,
-        "path": "/movies/tt0111161",
-        "pathParameters": {
-          "id": "tt0111161",
-        },
-        "queryParameters": {},
-        "requestBody": undefined,
-        "requestBodyV3": undefined,
-        "responseBody": {
-          "id": "tt0111161",
-          "rating": 9.3,
-          "title": "The Shawshank Redemption",
-        },
-        "responseBodyV3": {
-          "type": "json",
-          "value": {
-            "id": "tt0111161",
-            "rating": 9.3,
-            "title": "The Shawshank Redemption",
-          },
-        },
-        "responseStatusCode": 200,
-      },
-      {
-        "codeExamples": {
-          "goSdk": undefined,
-          "nodeAxios": "",
-          "pythonSdk": undefined,
-          "rubySdk": undefined,
-          "typescriptSdk": undefined,
-        },
-        "codeSamples": [],
-        "description": undefined,
-        "headers": {},
-        "name": undefined,
-        "path": "/movies/tt1234",
-        "pathParameters": {
-          "id": "tt1234",
-        },
-        "queryParameters": {},
-        "requestBody": undefined,
-        "requestBodyV3": undefined,
-        "responseBody": "tt1234",
-        "responseBodyV3": {
-          "type": "json",
-          "value": "tt1234",
-        },
-        "responseStatusCode": 404,
-      },
-    ],
-    "headers": [],
-    "id": "getMovie",
-    "method": "GET",
-    "migratedFromUrlSlugs": undefined,
-    "name": "Get Movie",
-    "originalEndpointId": "endpoint_imdb.getMovie",
-    "path": {
-      "parts": [
-        {
-          "type": "literal",
-          "value": "/movies",
-        },
-        {
-          "type": "literal",
-          "value": "/",
-        },
-        {
-          "type": "pathParameter",
-          "value": "id",
-        },
-        {
-          "type": "literal",
-          "value": "",
-        },
-      ],
-      "pathParameters": [
-        {
-          "description": undefined,
-          "key": "id",
-          "type": {
-            "type": "id",
-            "value": "type_imdb:MovieId",
-          },
-        },
-      ],
-    },
-    "queryParameters": [],
-    "request": undefined,
-    "response": {
-      "statusCode": undefined,
-      "type": {
-        "type": "reference",
-        "value": {
-          "type": "id",
-          "value": "type_imdb:Movie",
-        },
-      },
-    },
-    "snippetTemplates": undefined,
-    "urlSlug": "get-movie",
-  },
-  "DELETE /movies/{id}" => {
-    "authed": false,
-    "availability": undefined,
-    "defaultEnvironment": undefined,
-    "description": "Remove a movie from the database based on the ID",
-    "environments": [],
-    "errors": [],
-    "errorsV2": [],
-    "examples": [
-      {
-        "codeExamples": {
-          "goSdk": undefined,
-          "nodeAxios": "",
-          "pythonSdk": undefined,
-          "rubySdk": undefined,
-          "typescriptSdk": undefined,
-        },
-        "codeSamples": [],
-        "description": undefined,
-        "headers": {},
-        "name": undefined,
-        "path": "/movies/:id",
-        "pathParameters": {
-          "id": ":id",
-        },
-        "queryParameters": {},
-        "requestBody": undefined,
-        "requestBodyV3": undefined,
-        "responseBody": undefined,
-        "responseBodyV3": undefined,
-        "responseStatusCode": 200,
-      },
-    ],
-    "headers": [],
-    "id": "deleteMovie",
-    "method": "DELETE",
-    "migratedFromUrlSlugs": undefined,
-    "name": "Delete Movie",
-    "originalEndpointId": "endpoint_imdb.deleteMovie",
-    "path": {
-      "parts": [
-        {
-          "type": "literal",
-          "value": "/movies",
-        },
-        {
-          "type": "literal",
-          "value": "/",
-        },
-        {
-          "type": "pathParameter",
-          "value": "id",
-        },
-        {
-          "type": "literal",
-          "value": "",
-        },
-      ],
-      "pathParameters": [
-        {
-          "description": undefined,
-          "key": "id",
-          "type": {
-            "type": "id",
-            "value": "type_imdb:MovieId",
-          },
-        },
-      ],
-    },
-    "queryParameters": [],
-    "request": undefined,
-    "response": undefined,
-    "snippetTemplates": undefined,
-    "urlSlug": "delete-movie",
-  },
-  "DELETE /movies/:id" => {
-    "authed": false,
-    "availability": undefined,
-    "defaultEnvironment": undefined,
-    "description": "Remove a movie from the database based on the ID",
-    "environments": [],
-    "errors": [],
-    "errorsV2": [],
-    "examples": [
-      {
-        "codeExamples": {
-          "goSdk": undefined,
-          "nodeAxios": "",
-          "pythonSdk": undefined,
-          "rubySdk": undefined,
-          "typescriptSdk": undefined,
-        },
-        "codeSamples": [],
-        "description": undefined,
-        "headers": {},
-        "name": undefined,
-        "path": "/movies/:id",
-        "pathParameters": {
-          "id": ":id",
-        },
-        "queryParameters": {},
-        "requestBody": undefined,
-        "requestBodyV3": undefined,
-        "responseBody": undefined,
-        "responseBodyV3": undefined,
-        "responseStatusCode": 200,
-      },
-    ],
-    "headers": [],
-    "id": "deleteMovie",
-    "method": "DELETE",
-    "migratedFromUrlSlugs": undefined,
-    "name": "Delete Movie",
-    "originalEndpointId": "endpoint_imdb.deleteMovie",
-    "path": {
-      "parts": [
-        {
-          "type": "literal",
-          "value": "/movies",
-        },
-        {
-          "type": "literal",
-          "value": "/",
-        },
-        {
-          "type": "pathParameter",
-          "value": "id",
-        },
-        {
-          "type": "literal",
-          "value": "",
-        },
-      ],
-      "pathParameters": [
-        {
-          "description": undefined,
-          "key": "id",
-          "type": {
-            "type": "id",
-            "value": "type_imdb:MovieId",
-          },
-        },
-      ],
-    },
-    "queryParameters": [],
-    "request": undefined,
-    "response": undefined,
-    "snippetTemplates": undefined,
-    "urlSlug": "delete-movie",
-  },
-  "imdb.createMovie" => {
-    "authed": false,
-    "availability": undefined,
-    "defaultEnvironment": undefined,
-    "description": "Add a movie to the database",
-    "environments": [],
-    "errors": [],
-    "errorsV2": [],
-    "examples": [
-      {
-        "codeExamples": {
-          "goSdk": undefined,
-          "nodeAxios": "",
-          "pythonSdk": undefined,
-          "rubySdk": undefined,
-          "typescriptSdk": undefined,
-        },
-        "codeSamples": [],
-        "description": undefined,
-        "headers": {},
-        "name": undefined,
-        "path": "/movies/create-movie",
-        "pathParameters": {},
-        "queryParameters": {},
-        "requestBody": undefined,
-        "requestBodyV3": {
-          "type": "json",
-          "value": {
-            "rating": 1,
-            "title": "string",
-          },
-        },
-        "responseBody": undefined,
-        "responseBodyV3": {
-          "type": "json",
-          "value": "string",
-        },
-        "responseStatusCode": 200,
-      },
-    ],
-    "headers": [],
-    "id": "createMovie",
-    "method": "POST",
-    "migratedFromUrlSlugs": undefined,
-    "name": "Create Movie",
-    "originalEndpointId": "endpoint_imdb.createMovie",
-    "path": {
-      "parts": [
-        {
-          "type": "literal",
-          "value": "/movies",
-        },
-        {
-          "type": "literal",
-          "value": "/create-movie",
-        },
-      ],
-      "pathParameters": [],
-    },
-    "queryParameters": [],
-    "request": {
-      "contentType": "application/json",
+      "codeSamples": [],
       "description": undefined,
-      "type": {
-        "type": "reference",
+      "headers": {},
+      "name": undefined,
+      "path": "/movies/tt0111161",
+      "pathParameters": {
+        "id": "tt0111161",
+      },
+      "queryParameters": {},
+      "requestBody": undefined,
+      "requestBodyV3": undefined,
+      "responseBody": {
+        "id": "tt0111161",
+        "rating": 9.3,
+        "title": "The Shawshank Redemption",
+      },
+      "responseBodyV3": {
+        "type": "json",
         "value": {
-          "type": "id",
-          "value": "type_imdb:CreateMovieRequest",
+          "id": "tt0111161",
+          "rating": 9.3,
+          "title": "The Shawshank Redemption",
         },
       },
+      "responseStatusCode": 200,
     },
-    "response": {
-      "statusCode": undefined,
-      "type": {
-        "type": "reference",
-        "value": {
+    {
+      "codeExamples": {
+        "goSdk": undefined,
+        "nodeAxios": "",
+        "pythonSdk": undefined,
+        "rubySdk": undefined,
+        "typescriptSdk": undefined,
+      },
+      "codeSamples": [],
+      "description": undefined,
+      "headers": {},
+      "name": undefined,
+      "path": "/movies/tt1234",
+      "pathParameters": {
+        "id": "tt1234",
+      },
+      "queryParameters": {},
+      "requestBody": undefined,
+      "requestBodyV3": undefined,
+      "responseBody": "tt1234",
+      "responseBodyV3": {
+        "type": "json",
+        "value": "tt1234",
+      },
+      "responseStatusCode": 404,
+    },
+  ],
+  "headers": [],
+  "id": "getMovie",
+  "method": "GET",
+  "migratedFromUrlSlugs": undefined,
+  "name": "Get Movie",
+  "originalEndpointId": "endpoint_imdb.getMovie",
+  "path": {
+    "parts": [
+      {
+        "type": "literal",
+        "value": "/movies",
+      },
+      {
+        "type": "literal",
+        "value": "/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "id",
+      },
+      {
+        "type": "literal",
+        "value": "",
+      },
+    ],
+    "pathParameters": [
+      {
+        "description": undefined,
+        "key": "id",
+        "type": {
           "type": "id",
           "value": "type_imdb:MovieId",
         },
       },
-    },
-    "snippetTemplates": undefined,
-    "urlSlug": "create-movie",
-  },
-  "imdb.getMovie" => {
-    "authed": false,
-    "availability": undefined,
-    "defaultEnvironment": undefined,
-    "description": "Retrieve a movie from the database based on the ID",
-    "environments": [],
-    "errors": [],
-    "errorsV2": [
-      {
-        "description": undefined,
-        "examples": [],
-        "name": undefined,
-        "statusCode": 404,
-        "type": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "value": "type_imdb:MovieId",
-          },
-        },
-      },
     ],
-    "examples": [
-      {
-        "codeExamples": {
-          "goSdk": undefined,
-          "nodeAxios": "",
-          "pythonSdk": undefined,
-          "rubySdk": undefined,
-          "typescriptSdk": undefined,
-        },
-        "codeSamples": [],
-        "description": undefined,
-        "headers": {},
-        "name": undefined,
-        "path": "/movies/tt0111161",
-        "pathParameters": {
-          "id": "tt0111161",
-        },
-        "queryParameters": {},
-        "requestBody": undefined,
-        "requestBodyV3": undefined,
-        "responseBody": {
-          "id": "tt0111161",
-          "rating": 9.3,
-          "title": "The Shawshank Redemption",
-        },
-        "responseBodyV3": {
-          "type": "json",
-          "value": {
-            "id": "tt0111161",
-            "rating": 9.3,
-            "title": "The Shawshank Redemption",
-          },
-        },
-        "responseStatusCode": 200,
-      },
-      {
-        "codeExamples": {
-          "goSdk": undefined,
-          "nodeAxios": "",
-          "pythonSdk": undefined,
-          "rubySdk": undefined,
-          "typescriptSdk": undefined,
-        },
-        "codeSamples": [],
-        "description": undefined,
-        "headers": {},
-        "name": undefined,
-        "path": "/movies/tt1234",
-        "pathParameters": {
-          "id": "tt1234",
-        },
-        "queryParameters": {},
-        "requestBody": undefined,
-        "requestBodyV3": undefined,
-        "responseBody": "tt1234",
-        "responseBodyV3": {
-          "type": "json",
-          "value": "tt1234",
-        },
-        "responseStatusCode": 404,
-      },
-    ],
-    "headers": [],
-    "id": "getMovie",
-    "method": "GET",
-    "migratedFromUrlSlugs": undefined,
-    "name": "Get Movie",
-    "originalEndpointId": "endpoint_imdb.getMovie",
-    "path": {
-      "parts": [
-        {
-          "type": "literal",
-          "value": "/movies",
-        },
-        {
-          "type": "literal",
-          "value": "/",
-        },
-        {
-          "type": "pathParameter",
-          "value": "id",
-        },
-        {
-          "type": "literal",
-          "value": "",
-        },
-      ],
-      "pathParameters": [
-        {
-          "description": undefined,
-          "key": "id",
-          "type": {
-            "type": "id",
-            "value": "type_imdb:MovieId",
-          },
-        },
-      ],
-    },
-    "queryParameters": [],
-    "request": undefined,
-    "response": {
-      "statusCode": undefined,
-      "type": {
-        "type": "reference",
-        "value": {
-          "type": "id",
-          "value": "type_imdb:Movie",
-        },
-      },
-    },
-    "snippetTemplates": undefined,
-    "urlSlug": "get-movie",
   },
-  "imdb.deleteMovie" => {
-    "authed": false,
-    "availability": undefined,
-    "defaultEnvironment": undefined,
-    "description": "Remove a movie from the database based on the ID",
-    "environments": [],
-    "errors": [],
-    "errorsV2": [],
-    "examples": [
-      {
-        "codeExamples": {
-          "goSdk": undefined,
-          "nodeAxios": "",
-          "pythonSdk": undefined,
-          "rubySdk": undefined,
-          "typescriptSdk": undefined,
-        },
-        "codeSamples": [],
-        "description": undefined,
-        "headers": {},
-        "name": undefined,
-        "path": "/movies/:id",
-        "pathParameters": {
-          "id": ":id",
-        },
-        "queryParameters": {},
-        "requestBody": undefined,
-        "requestBodyV3": undefined,
-        "responseBody": undefined,
-        "responseBodyV3": undefined,
-        "responseStatusCode": 200,
+  "queryParameters": [],
+  "request": undefined,
+  "response": {
+    "statusCode": undefined,
+    "type": {
+      "type": "reference",
+      "value": {
+        "type": "id",
+        "value": "type_imdb:Movie",
       },
-    ],
-    "headers": [],
-    "id": "deleteMovie",
-    "method": "DELETE",
-    "migratedFromUrlSlugs": undefined,
-    "name": "Delete Movie",
-    "originalEndpointId": "endpoint_imdb.deleteMovie",
-    "path": {
-      "parts": [
-        {
-          "type": "literal",
-          "value": "/movies",
-        },
-        {
-          "type": "literal",
-          "value": "/",
-        },
-        {
-          "type": "pathParameter",
-          "value": "id",
-        },
-        {
-          "type": "literal",
-          "value": "",
-        },
-      ],
-      "pathParameters": [
-        {
-          "description": undefined,
-          "key": "id",
-          "type": {
-            "type": "id",
-            "value": "type_imdb:MovieId",
-          },
-        },
-      ],
     },
-    "queryParameters": [],
-    "request": undefined,
-    "response": undefined,
-    "snippetTemplates": undefined,
-    "urlSlug": "delete-movie",
   },
+  "snippetTemplates": undefined,
+  "urlSlug": "get-movie",
 }
 `;

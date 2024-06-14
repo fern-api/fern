@@ -83,5 +83,11 @@ it("converts to api reference node", async () => {
 
     expect(node).toMatchSnapshot();
 
-    expect(ApiDefinitionHolder.create(apiDefinition).endpointsByLocator).toMatchSnapshot();
+    const holder = ApiDefinitionHolder.create(apiDefinition);
+
+    expect([...holder.endpointsByLocator.keys()]).toMatchSnapshot();
+
+    expect(holder.endpointsByLocator.get("DELETE /movies/{id}")).toMatchSnapshot("DELETE /movies/{id}");
+
+    expect(holder.endpointsByLocator.get("imdb.getMovie")).toMatchSnapshot("imdb.getMovie");
 });

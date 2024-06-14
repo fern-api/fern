@@ -402,7 +402,7 @@ export class ApiReferenceNodeConverter {
 
         toRet = this.mergeEndpointPairs(toRet, idgen);
 
-        return toRet;
+        return toRet.filter((child) => (child.type === "apiPackage" ? child.children.length > 0 : true));
     }
 
     #convertUnknownIdentifier(
@@ -411,6 +411,7 @@ export class ApiReferenceNodeConverter {
         parentSlug: FernNavigation.SlugGenerator,
         idgen: NodeIdGenerator
     ): FernNavigation.ApiPackageChild | undefined {
+        unknownIdentifier = unknownIdentifier.trim();
         // unknownIdentifier could either be a package, endpoint, websocket, or webhook.
         // We need to determine which one it is.
         const subpackage = this.#holder.getSubpackage(unknownIdentifier);

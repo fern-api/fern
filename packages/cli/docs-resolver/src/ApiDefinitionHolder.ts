@@ -193,21 +193,18 @@ export class ApiDefinitionHolder {
         }
 
         pkg.endpoints.forEach((endpoint) => {
-            if (endpoint.name != null) {
-                this.#endpointsByLocator.set([...packageList, endpoint.id].join("."), endpoint);
-            }
+            const locator = [...packageList, endpoint.id].join(".");
+            this.#endpointsByLocator.set(locator, endpoint);
         });
 
         pkg.websockets.forEach((webSocket) => {
-            if (webSocket.name != null) {
-                this.#webSocketsByLocator.set([...packageList, webSocket.id].join("."), webSocket);
-            }
+            const locator = [...packageList, webSocket.id].join(".");
+            this.#webSocketsByLocator.set(locator, webSocket);
         });
 
         pkg.webhooks.forEach((webhook) => {
-            if (webhook.name != null) {
-                this.#webhooksByLocator.set([...packageList, webhook.id].join("."), webhook);
-            }
+            const locator = [...packageList, webhook.id].join(".");
+            this.#webhooksByLocator.set(locator, webhook);
         });
 
         pkg.subpackages.forEach((subpackageId) => {
