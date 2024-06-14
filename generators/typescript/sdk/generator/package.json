@@ -33,7 +33,7 @@
     "@fern-fern/generator-cli-sdk": "^0.0.25",
     "@fern-fern/generator-exec-sdk": "^0.0.879",
     "@fern-fern/ir-sdk": "^0.0.3515",
-    "@fern-fern/snippet-sdk": "^0.0.5434",
+    "@fern-fern/snippet-sdk": "^0.0.5492",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/endpoint-error-union-generator": "workspace:*",

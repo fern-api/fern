@@ -354,16 +354,21 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return ts.factory.createNewExpression(referenceToClient, undefined, [referenceToOptions]);
     }
 
-    public instantiateAsRoot(args: { context: SdkContext; npmPackage: NpmPackage }): ts.Expression {
+    public instantiateAsRoot(args: {
+        context: SdkContext;
+        npmPackage: NpmPackage;
+        templateSentinel: string | undefined;
+    }): ts.Expression {
         const rootSdkClientName = args.context.sdkClientClass.getReferenceToClientClass(this.packageId, {
             npmPackage: args.npmPackage
         });
-        const optionsProperties = this.getOptionsPropertiesForSnippet(args.context);
-        return ts.factory.createNewExpression(
+
+        const expression = ts.factory.createNewExpression(
             rootSdkClientName.getExpression(),
             undefined,
-            optionsProperties.length > 0 ? [ts.factory.createObjectLiteralExpression(optionsProperties)] : undefined
+            args.templateSentinel ? [ts.factory.createStringLiteral(args.templateSentinel)] : []
         );
+        return expression;
     }
 
     public writeToFile(context: SdkContext): void {

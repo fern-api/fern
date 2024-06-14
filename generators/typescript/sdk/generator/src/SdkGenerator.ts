@@ -350,10 +350,7 @@ export class SdkGenerator {
         this.FdrClient =
             this.config.executionEnvironment !== "local"
                 ? new FdrSnippetTemplateClient({
-                      environment:
-                          this.config.executionEnvironment === "dev"
-                              ? FdrSnippetTemplateEnvironment.Dev
-                              : FdrSnippetTemplateEnvironment.Prod
+                      environment: FdrSnippetTemplateEnvironment.Prod
                   })
                 : undefined;
     }
@@ -728,7 +725,7 @@ export class SdkGenerator {
         const context = this.generateSdkContext({ sourceFile, importsManager }, { isForSnippet: true });
         const clientInstantiation = context.sdkClientClass
             .getGeneratedSdkClientClass(rootPackage)
-            .instantiateAsRoot({ context, npmPackage: this.npmPackage });
+            .instantiateAsRoot({ context, npmPackage: this.npmPackage, templateSentinel: undefined });
         const clientAssignment = ts.factory.createVariableStatement(
             undefined,
             ts.factory.createVariableDeclarationList(
@@ -801,6 +798,8 @@ export class SdkGenerator {
                         endpointContext,
                         clientContext,
                         npmPackage: this.npmPackage,
+                        auth: this.intermediateRepresentation.auth,
+                        headers: this.intermediateRepresentation.headers,
                         endpoint,
                         packageId,
                         rootPackageId: rootPackage,
