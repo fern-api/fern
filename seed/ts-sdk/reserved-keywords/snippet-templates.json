@@ -11,7 +11,7 @@
             "identifierOverride": "endpoint_package.test"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedNurseryApi = new SeedNurseryApiClient;\n",
+            "clientInstantiation": "const seedNurseryApi = new SeedNurseryApiClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedNurseryApi.package.test(\n\t$FERN_INPUT\n)",

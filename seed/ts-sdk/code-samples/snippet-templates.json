@@ -11,7 +11,7 @@
             "identifierOverride": "endpoint_service.hello"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedCodeSamples = new SeedCodeSamplesClient;\n",
+            "clientInstantiation": "const seedCodeSamples = new SeedCodeSamplesClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedCodeSamples.service.hello(\n\t$FERN_INPUT\n)",

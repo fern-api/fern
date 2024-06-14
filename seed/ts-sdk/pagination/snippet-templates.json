@@ -11,7 +11,7 @@
             "identifierOverride": "endpoint_users.listWithCursorPagination"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": "const seedPagination = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedPagination.users.listWithCursorPagination(\n\t$FERN_INPUT\n)",
@@ -114,7 +114,7 @@
             "identifierOverride": "endpoint_users.listWithOffsetPagination"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": "const seedPagination = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedPagination.users.listWithOffsetPagination(\n\t$FERN_INPUT\n)",
@@ -217,7 +217,7 @@
             "identifierOverride": "endpoint_users.listWithExtendedResults"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": "const seedPagination = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedPagination.users.listWithExtendedResults(\n\t$FERN_INPUT\n)",
@@ -270,7 +270,7 @@
             "identifierOverride": "endpoint_users.listUsernames"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": "const seedPagination = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedPagination.users.listUsernames(\n\t$FERN_INPUT\n)",
@@ -323,7 +323,7 @@
             "identifierOverride": "endpoint_users.listWithGlobalConfig"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": "const seedPagination = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedPagination.users.listWithGlobalConfig(\n\t$FERN_INPUT\n)",

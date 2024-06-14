@@ -11,7 +11,7 @@
             "identifierOverride": "endpoint_service.getWithApiKey"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedAuthEnvironmentVariables = new SeedAuthEnvironmentVariablesClient({ apiKey: \"YOUR_API_KEY\", xAnotherHeader: \"YOUR_X_ANOTHER_HEADER\" });\n",
+            "clientInstantiation": "const seedAuthEnvironmentVariables = new SeedAuthEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", apiKey: \"YOUR_API_KEY\", xAnotherHeader: \"YOUR_X_ANOTHER_HEADER\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedAuthEnvironmentVariables.service.getWithApiKey()",
@@ -35,7 +35,7 @@
             "identifierOverride": "endpoint_service.getWithHeader"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedAuthEnvironmentVariables = new SeedAuthEnvironmentVariablesClient({ apiKey: \"YOUR_API_KEY\", xAnotherHeader: \"YOUR_X_ANOTHER_HEADER\" });\n",
+            "clientInstantiation": "const seedAuthEnvironmentVariables = new SeedAuthEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", apiKey: \"YOUR_API_KEY\", xAnotherHeader: \"YOUR_X_ANOTHER_HEADER\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedAuthEnvironmentVariables.service.getWithHeader(\n\t$FERN_INPUT\n)",

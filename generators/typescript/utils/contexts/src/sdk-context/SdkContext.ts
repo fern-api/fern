@@ -14,7 +14,7 @@ import { TimeoutSdkErrorContext } from "./timeout-sdk-error";
 
 export interface SdkContext extends ModelContext {
     sdkInstanceReferenceForSnippet: ts.Identifier;
-    namespaceExport: string | undefined;
+    namespaceExport: string;
     endpointErrorUnion: EndpointErrorUnionContext;
     environments: EnvironmentsContext;
     genericAPISdkError: GenericAPISdkErrorContext;

@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedMultiLineDocsClient } from "@fern/multi-line-docs";
 
-const seedMultiLineDocs = new SeedMultiLineDocsClient();
+const seedMultiLineDocs = new SeedMultiLineDocsClient({ environment: "YOUR_BASE_URL" });
 await seedMultiLineDocs.user.createUser({
     name: "string",
     age: 1,
@@ -45,7 +45,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedMultiLineDocsError } from '@fern/multi-line-docs';
+import { SeedMultiLineDocsError } from "@fern/multi-line-docs";
 
 try {
     await seedMultiLineDocs.createUser(...);
@@ -118,7 +118,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedMultiLineDocsClient } from '@fern/multi-line-docs';
+import { SeedMultiLineDocsClient } from "@fern/multi-line-docs";
 
 const seedMultiLineDocs = new SeedMultiLineDocsClient({
     ...

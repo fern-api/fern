@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedEnumClient, SeedEnum } from "@fern/enum";
 
-const seedEnum = new SeedEnumClient();
+const seedEnum = new SeedEnumClient({ environment: "YOUR_BASE_URL" });
 await seedEnum.inlinedRequest.send({
     operand: SeedEnum.Operand.GreaterThan,
     operandOrColor: SeedEnum.Color.Red,
@@ -45,7 +45,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedEnumError } from '@fern/enum';
+import { SeedEnumError } from "@fern/enum";
 
 try {
     await seedEnum.send(...);
@@ -118,7 +118,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedEnumClient } from '@fern/enum';
+import { SeedEnumClient } from "@fern/enum";
 
 const seedEnum = new SeedEnumClient({
     ...

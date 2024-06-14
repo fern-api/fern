@@ -14,6 +14,11 @@ import { SdkContext } from "@fern-typescript/contexts";
 import { camelCase } from "lodash-es";
 import { code, Code } from "ts-poet";
 
+interface EndpointWithRequest {
+    endpoint: HttpEndpoint;
+    requestWrapper: SdkRequestWrapper;
+}
+
 export class ReadmeSnippetBuilder {
     private static ABORTING_REQUESTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ABORTING_REQUESTS";
     private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
@@ -86,7 +91,7 @@ export class ReadmeSnippetBuilder {
         return exceptionHandlingEndpoints.map((exceptionHandlingEndpoint) =>
             this.writeCode(
                 code`
-import { ${this.genericAPISdkErrorName} } from '${this.rootPackageName}';
+import { ${this.genericAPISdkErrorName} } from "${this.rootPackageName}";
 
 try {
     await ${this.getMethodCall(exceptionHandlingEndpoint)}(...);
@@ -170,7 +175,7 @@ controller.abort(); // aborts the request
     private buildRuntimeCompatibilitySnippets(): string[] {
         const snippet = this.writeCode(
             code`
-import { ${this.rootClientConstructorName} } from '${this.rootPackageName}';
+import { ${this.rootClientConstructorName} } from "${this.rootPackageName}";
 
 const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
     ...
@@ -275,7 +280,11 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
     }
 
     private getRootPackageName(npmPackage: NpmPackage | undefined): string {
-        return npmPackage?.packageName ?? "src";
+        const packageName = npmPackage?.packageName;
+        if (packageName == null || packageName.length === 0) {
+            return this.context.namespaceExport;
+        }
+        return packageName;
     }
 
     private getRootClientConstructorName(context: SdkContext): string {
@@ -309,9 +318,4 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
     private writeCode(code: Code): string {
         return code.toString({ dprintOptions: { indentWidth: 4 } }).trim() + "\n";
     }
-}
-
-interface EndpointWithRequest {
-    endpoint: HttpEndpoint;
-    requestWrapper: SdkRequestWrapper;
 }

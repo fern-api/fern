@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedVariablesClient } from "@fern/variables";
 
-const seedVariables = new SeedVariablesClient();
+const seedVariables = new SeedVariablesClient({ environment: "YOUR_BASE_URL" });
 await seedVariables.service.post();
 ```
 
@@ -28,7 +28,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedVariablesError } from '@fern/variables';
+import { SeedVariablesError } from "@fern/variables";
 
 try {
     await seedVariables.post(...);
@@ -101,7 +101,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedVariablesClient } from '@fern/variables';
+import { SeedVariablesClient } from "@fern/variables";
 
 const seedVariables = new SeedVariablesClient({
     ...

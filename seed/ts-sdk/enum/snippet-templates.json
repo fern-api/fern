@@ -11,7 +11,7 @@
             "identifierOverride": "endpoint_inlined-request.send"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedEnum = new SeedEnumClient;\n",
+            "clientInstantiation": "const seedEnum = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedEnum.inlinedRequest.send(\n\t$FERN_INPUT\n)",
@@ -86,7 +86,7 @@
             "identifierOverride": "endpoint_path-param.send"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedEnum = new SeedEnumClient;\n",
+            "clientInstantiation": "const seedEnum = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedEnum.pathParam.send(\n\t$FERN_INPUT\n)",
@@ -161,7 +161,7 @@
             "identifierOverride": "endpoint_query-param.send"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedEnum = new SeedEnumClient;\n",
+            "clientInstantiation": "const seedEnum = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedEnum.queryParam.send(\n\t$FERN_INPUT\n)",
@@ -236,7 +236,7 @@
             "identifierOverride": "endpoint_query-param.sendList"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedEnum = new SeedEnumClient;\n",
+            "clientInstantiation": "const seedEnum = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedEnum.queryParam.sendList(\n\t$FERN_INPUT\n)",

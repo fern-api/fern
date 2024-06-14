@@ -11,7 +11,7 @@
             "identifierOverride": "endpoint_user.getUsername"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedQueryParameters = new SeedQueryParametersClient;\n",
+            "clientInstantiation": "const seedQueryParameters = new SeedQueryParametersClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedQueryParameters.user.getUsername(\n\t$FERN_INPUT\n)",

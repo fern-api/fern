@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedExhaustiveClient } from "@fern/exhaustive";
 
-const seedExhaustive = new SeedExhaustiveClient({ token: "YOUR_TOKEN" });
+const seedExhaustive = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await seedExhaustive.endpoints.container.getAndReturnListOfPrimitives(["string"]);
 ```
 
@@ -42,7 +42,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedExhaustiveError } from '@fern/exhaustive';
+import { SeedExhaustiveError } from "@fern/exhaustive";
 
 try {
     await seedExhaustive.getAndReturnListOfPrimitives(...);
@@ -115,7 +115,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedExhaustiveClient } from '@fern/exhaustive';
+import { SeedExhaustiveClient } from "@fern/exhaustive";
 
 const seedExhaustive = new SeedExhaustiveClient({
     ...
