@@ -16,10 +16,16 @@ npm i -s @fern/single-url-environment-default
 Instantiate and use the client with the following:
 
 ```typescript
+import * as environments from "../src/environments";
 import { SeedSingleUrlEnvironmentDefaultClient } from "@fern/single-url-environment-default";
 
+<<<<<<< HEAD
 const client = new SeedSingleUrlEnvironmentDefaultClient({ token: "YOUR_TOKEN" });
 await client.dummy.getDummy();
+=======
+const seedSingleUrlEnvironmentDefault = new SeedSingleUrlEnvironmentDefaultClient({ token: "YOUR_TOKEN" });
+await seedSingleUrlEnvironmentDefault.dummy.getDummy();
+>>>>>>> 817067be3d (fix readme snippets to include env params)
 ```
 
 ## Exception Handling

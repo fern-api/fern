@@ -19,10 +19,14 @@ Instantiate and use the client with the following:
 import { SeedPaginationClient, SeedPagination } from "@fern/pagination";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.users.listWithCursorPagination({
 =======
 const seedPagination = new SeedPaginationClient();
+=======
+const seedPagination = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+>>>>>>> 817067be3d (fix readme snippets to include env params)
 await seedPagination.users.listWithCursorPagination({
 >>>>>>> 52b1822299 (merge env variable changes)
     page: 1,

@@ -16,10 +16,16 @@ npm i -s @fern/multi-url-environment
 Instantiate and use the client with the following:
 
 ```typescript
+import * as environments from "../src/environments";
 import { SeedMultiUrlEnvironmentClient } from "@fern/multi-url-environment";
 
+<<<<<<< HEAD
 const client = new SeedMultiUrlEnvironmentClient({ token: "YOUR_TOKEN" });
 await client.ec2.bootInstance({
+=======
+const seedMultiUrlEnvironment = new SeedMultiUrlEnvironmentClient({ token: "YOUR_TOKEN" });
+await seedMultiUrlEnvironment.ec2.bootInstance({
+>>>>>>> 817067be3d (fix readme snippets to include env params)
     size: "string",
 });
 ```

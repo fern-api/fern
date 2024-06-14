@@ -19,10 +19,14 @@ Instantiate and use the client with the following:
 import { SeedApiWideBasePathClient } from "@fern/api-wide-base-path";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const client = new SeedApiWideBasePathClient({ environment: "YOUR_BASE_URL" });
 await client.service.post("string", "string", 1);
 =======
 const seedApiWideBasePath = new SeedApiWideBasePathClient();
+=======
+const seedApiWideBasePath = new SeedApiWideBasePathClient({ environment: "YOUR_BASE_URL" });
+>>>>>>> 817067be3d (fix readme snippets to include env params)
 await seedApiWideBasePath.service.post("string", "string", 1);
 >>>>>>> 52b1822299 (merge env variable changes)
 ```

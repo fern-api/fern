@@ -20,10 +20,14 @@ import { SeedFileUploadClient } from "@fern/file-upload";
 import * as fs from "fs";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const client = new SeedFileUploadClient({ environment: "YOUR_BASE_URL" });
 await client.service.post(
 =======
 const seedFileUpload = new SeedFileUploadClient();
+=======
+const seedFileUpload = new SeedFileUploadClient({ environment: "YOUR_BASE_URL" });
+>>>>>>> 817067be3d (fix readme snippets to include env params)
 await seedFileUpload.service.post(
 >>>>>>> 52b1822299 (merge env variable changes)
     fs.createReadStream("/path/to/your/file"),

@@ -19,10 +19,14 @@ Instantiate and use the client with the following:
 import { SeedNurseryApiClient } from "@fern/reserved-keywords";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const client = new SeedNurseryApiClient({ environment: "YOUR_BASE_URL" });
 await client.package.test({
 =======
 const seedNurseryApi = new SeedNurseryApiClient();
+=======
+const seedNurseryApi = new SeedNurseryApiClient({ environment: "YOUR_BASE_URL" });
+>>>>>>> 817067be3d (fix readme snippets to include env params)
 await seedNurseryApi.package.test({
 >>>>>>> 52b1822299 (merge env variable changes)
     for: "string",

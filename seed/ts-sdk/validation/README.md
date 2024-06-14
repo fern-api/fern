@@ -19,10 +19,14 @@ Instantiate and use the client with the following:
 import { SeedValidationClient } from "@fern/validation";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const client = new SeedValidationClient({ environment: "YOUR_BASE_URL" });
 await client.create({
 =======
 const seedValidation = new SeedValidationClient();
+=======
+const seedValidation = new SeedValidationClient({ environment: "YOUR_BASE_URL" });
+>>>>>>> 817067be3d (fix readme snippets to include env params)
 await seedValidation.create({
 >>>>>>> 52b1822299 (merge env variable changes)
     decimal: 1.1,

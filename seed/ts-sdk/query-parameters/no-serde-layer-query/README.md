@@ -19,10 +19,14 @@ Instantiate and use the client with the following:
 import { SeedQueryParametersClient } from "@fern/query-parameters";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const client = new SeedQueryParametersClient({ environment: "YOUR_BASE_URL" });
 await client.user.getUsername({
 =======
 const seedQueryParameters = new SeedQueryParametersClient();
+=======
+const seedQueryParameters = new SeedQueryParametersClient({ environment: "YOUR_BASE_URL" });
+>>>>>>> 817067be3d (fix readme snippets to include env params)
 await seedQueryParameters.user.getUsername({
 >>>>>>> 52b1822299 (merge env variable changes)
     limit: 1,

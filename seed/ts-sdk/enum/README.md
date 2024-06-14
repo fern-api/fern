@@ -19,10 +19,14 @@ Instantiate and use the client with the following:
 import { SeedEnumClient, SeedEnum } from "@fern/enum";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const client = new SeedEnumClient({ environment: "YOUR_BASE_URL" });
 await client.inlinedRequest.send({
 =======
 const seedEnum = new SeedEnumClient();
+=======
+const seedEnum = new SeedEnumClient({ environment: "YOUR_BASE_URL" });
+>>>>>>> 817067be3d (fix readme snippets to include env params)
 await seedEnum.inlinedRequest.send({
 >>>>>>> 52b1822299 (merge env variable changes)
     operand: SeedEnum.Operand.GreaterThan,

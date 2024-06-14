@@ -9,10 +9,14 @@
             "snippet": {
                 "type": "typescript",
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "client": "import { SeedBasicAuthClient } from \"@fern/basic-auth\";\n\nconst client = new SeedBasicAuthClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\nawait client.basicAuth.getWithBasicAuth();\n"
 =======
                 "client": "import { SeedBasicAuthClient } from \"@fern/basic-auth\";\n\nconst seedBasicAuth = new SeedBasicAuthClient();\nawait seedBasicAuth.basicAuth.getWithBasicAuth();\n"
 >>>>>>> 52b1822299 (merge env variable changes)
+=======
+                "client": "import { SeedBasicAuthClient } from \"@fern/basic-auth\";\n\nconst seedBasicAuth = new SeedBasicAuthClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\nawait seedBasicAuth.basicAuth.getWithBasicAuth();\n"
+>>>>>>> 817067be3d (fix readme snippets to include env params)
             }
         },
         {
@@ -24,10 +28,14 @@
             "snippet": {
                 "type": "typescript",
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "client": "import { SeedBasicAuthClient } from \"@fern/basic-auth\";\n\nconst client = new SeedBasicAuthClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\nawait client.basicAuth.postWithBasicAuth({\n    \"key\": \"value\"\n});\n"
 =======
                 "client": "import { SeedBasicAuthClient } from \"@fern/basic-auth\";\n\nconst seedBasicAuth = new SeedBasicAuthClient();\nawait seedBasicAuth.basicAuth.postWithBasicAuth({\n    \"key\": \"value\"\n});\n"
 >>>>>>> 52b1822299 (merge env variable changes)
+=======
+                "client": "import { SeedBasicAuthClient } from \"@fern/basic-auth\";\n\nconst seedBasicAuth = new SeedBasicAuthClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\nawait seedBasicAuth.basicAuth.postWithBasicAuth({\n    \"key\": \"value\"\n});\n"
+>>>>>>> 817067be3d (fix readme snippets to include env params)
             }
         }
     ],

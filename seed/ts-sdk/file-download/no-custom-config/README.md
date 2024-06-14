@@ -19,10 +19,14 @@ Instantiate and use the client with the following:
 import { SeedFileDownloadClient } from "@fern/file-download";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const client = new SeedFileDownloadClient({ environment: "YOUR_BASE_URL" });
 await client.service.downloadFile();
 =======
 const seedFileDownload = new SeedFileDownloadClient();
+=======
+const seedFileDownload = new SeedFileDownloadClient({ environment: "YOUR_BASE_URL" });
+>>>>>>> 817067be3d (fix readme snippets to include env params)
 await seedFileDownload.service.downloadFile();
 >>>>>>> 52b1822299 (merge env variable changes)
 ```

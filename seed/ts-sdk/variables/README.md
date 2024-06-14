@@ -19,10 +19,14 @@ Instantiate and use the client with the following:
 import { SeedVariablesClient } from "@fern/variables";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const client = new SeedVariablesClient({ environment: "YOUR_BASE_URL" });
 await client.service.post();
 =======
 const seedVariables = new SeedVariablesClient();
+=======
+const seedVariables = new SeedVariablesClient({ environment: "YOUR_BASE_URL" });
+>>>>>>> 817067be3d (fix readme snippets to include env params)
 await seedVariables.service.post();
 >>>>>>> 52b1822299 (merge env variable changes)
 ```

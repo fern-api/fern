@@ -16,10 +16,16 @@ npm i -s @fern/trace
 Instantiate and use the client with the following:
 
 ```typescript
+import * as environments from "../src/environments";
 import { SeedTraceClient, SeedTrace } from "@fern/trace";
 
+<<<<<<< HEAD
 const client = new SeedTraceClient({ token: "YOUR_TOKEN", xRandomHeader: "YOUR_X_RANDOM_HEADER" });
 await client.admin.updateTestSubmissionStatus(
+=======
+const seedTrace = new SeedTraceClient({ token: "YOUR_TOKEN", xRandomHeader: "YOUR_X_RANDOM_HEADER" });
+await seedTrace.admin.updateTestSubmissionStatus(
+>>>>>>> 817067be3d (fix readme snippets to include env params)
     SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     SeedTrace.TestSubmissionStatus.stopped()
 );

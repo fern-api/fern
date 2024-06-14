@@ -19,14 +19,21 @@ Instantiate and use the client with the following:
 import { SeedAuthEnvironmentVariablesClient } from "@fern/auth-environment-variables";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const client = new SeedAuthEnvironmentVariablesClient({
+=======
+const seedAuthEnvironmentVariables = new SeedAuthEnvironmentVariablesClient({
+>>>>>>> 817067be3d (fix readme snippets to include env params)
     environment: "YOUR_BASE_URL",
     apiKey: "YOUR_API_KEY",
     xAnotherHeader: "YOUR_X_ANOTHER_HEADER",
 });
+<<<<<<< HEAD
 await client.service.getWithApiKey();
 =======
 const seedAuthEnvironmentVariables = new SeedAuthEnvironmentVariablesClient();
+=======
+>>>>>>> 817067be3d (fix readme snippets to include env params)
 await seedAuthEnvironmentVariables.service.getWithApiKey();
 >>>>>>> 52b1822299 (merge env variable changes)
 ```

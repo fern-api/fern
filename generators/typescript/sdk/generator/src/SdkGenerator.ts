@@ -725,7 +725,7 @@ export class SdkGenerator {
         const context = this.generateSdkContext({ sourceFile, importsManager }, { isForSnippet: true });
         const clientInstantiation = context.sdkClientClass
             .getGeneratedSdkClientClass(rootPackage)
-            .instantiateAsRoot({ context, npmPackage: this.npmPackage, templateSentinel: undefined });
+            .instantiateAsRoot({ context, npmPackage: this.npmPackage });
         const clientAssignment = ts.factory.createVariableStatement(
             undefined,
             ts.factory.createVariableDeclarationList(

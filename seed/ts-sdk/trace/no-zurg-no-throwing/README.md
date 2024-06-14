@@ -16,13 +16,18 @@ npm i -s @fern/trace
 Instantiate and use the client with the following:
 
 ```typescript
+import * as environments from "../src/environments";
 import { SeedTraceClient } from "@fern/trace";
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 const client = new SeedTraceClient({ token: "YOUR_TOKEN", xRandomHeader: "YOUR_X_RANDOM_HEADER" });
 await client.admin.updateTestSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
 =======
 const seedTrace = new SeedTraceClient();
+=======
+const seedTrace = new SeedTraceClient({ token: "YOUR_TOKEN", xRandomHeader: "YOUR_X_RANDOM_HEADER" });
+>>>>>>> 817067be3d (fix readme snippets to include env params)
 await seedTrace.admin.updateTestSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
     type: "stopped",

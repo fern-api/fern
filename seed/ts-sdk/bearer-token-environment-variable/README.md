@@ -19,10 +19,17 @@ Instantiate and use the client with the following:
 import { SeedBearerTokenEnvironmentVariableClient } from "@fern/bearer-token-environment-variable";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const client = new SeedBearerTokenEnvironmentVariableClient({ environment: "YOUR_BASE_URL", apiKey: "YOUR_API_KEY" });
 await client.service.getWithBearerToken();
 =======
 const seedBearerTokenEnvironmentVariable = new SeedBearerTokenEnvironmentVariableClient();
+=======
+const seedBearerTokenEnvironmentVariable = new SeedBearerTokenEnvironmentVariableClient({
+    environment: "YOUR_BASE_URL",
+    apiKey: "YOUR_API_KEY",
+});
+>>>>>>> 817067be3d (fix readme snippets to include env params)
 await seedBearerTokenEnvironmentVariable.service.getWithBearerToken();
 >>>>>>> 52b1822299 (merge env variable changes)
 ```

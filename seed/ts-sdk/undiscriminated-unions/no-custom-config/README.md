@@ -19,10 +19,14 @@ Instantiate and use the client with the following:
 import { SeedUndiscriminatedUnionsClient } from "@fern/undiscriminated-unions";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const client = new SeedUndiscriminatedUnionsClient({ environment: "YOUR_BASE_URL" });
 await client.union.get("string");
 =======
 const seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient();
+=======
+const seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient({ environment: "YOUR_BASE_URL" });
+>>>>>>> 817067be3d (fix readme snippets to include env params)
 await seedUndiscriminatedUnions.union.get("string");
 >>>>>>> 52b1822299 (merge env variable changes)
 ```

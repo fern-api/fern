@@ -19,10 +19,14 @@ Instantiate and use the client with the following:
 import { SeedPlainTextClient } from "@fern/plain-text";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const client = new SeedPlainTextClient({ environment: "YOUR_BASE_URL" });
 await client.service.getText();
 =======
 const seedPlainText = new SeedPlainTextClient();
+=======
+const seedPlainText = new SeedPlainTextClient({ environment: "YOUR_BASE_URL" });
+>>>>>>> 817067be3d (fix readme snippets to include env params)
 await seedPlainText.service.getText();
 >>>>>>> 52b1822299 (merge env variable changes)
 ```

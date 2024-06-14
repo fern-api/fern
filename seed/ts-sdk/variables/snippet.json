@@ -9,10 +9,14 @@
             "snippet": {
                 "type": "typescript",
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "client": "import { SeedVariablesClient } from \"@fern/variables\";\n\nconst client = new SeedVariablesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.post();\n"
 =======
                 "client": "import { SeedVariablesClient } from \"@fern/variables\";\n\nconst seedVariables = new SeedVariablesClient();\nawait seedVariables.service.post();\n"
 >>>>>>> 52b1822299 (merge env variable changes)
+=======
+                "client": "import { SeedVariablesClient } from \"@fern/variables\";\n\nconst seedVariables = new SeedVariablesClient({ environment: \"YOUR_BASE_URL\" });\nawait seedVariables.service.post();\n"
+>>>>>>> 817067be3d (fix readme snippets to include env params)
             }
         }
     ],

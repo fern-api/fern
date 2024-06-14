@@ -9,10 +9,14 @@
             "snippet": {
                 "type": "typescript",
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "client": "import { SeedOauthClientCredentialsDefaultClient } from \"@fern/oauth-client-credentials-default\";\n\nconst client = new SeedOauthClientCredentialsDefaultClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.getToken({\n    clientId: \"string\",\n    clientSecret: \"string\",\n    grantType: \"client_credentials\"\n});\n"
 =======
                 "client": "import { SeedOauthClientCredentialsDefaultClient } from \"@fern/oauth-client-credentials-default\";\n\nconst seedOauthClientCredentialsDefault = new SeedOauthClientCredentialsDefaultClient();\nawait seedOauthClientCredentialsDefault.auth.getToken({\n    clientId: \"string\",\n    clientSecret: \"string\",\n    grantType: \"client_credentials\"\n});\n"
 >>>>>>> 52b1822299 (merge env variable changes)
+=======
+                "client": "import { SeedOauthClientCredentialsDefaultClient } from \"@fern/oauth-client-credentials-default\";\n\nconst seedOauthClientCredentialsDefault = new SeedOauthClientCredentialsDefaultClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait seedOauthClientCredentialsDefault.auth.getToken({\n    clientId: \"string\",\n    clientSecret: \"string\",\n    grantType: \"client_credentials\"\n});\n"
+>>>>>>> 817067be3d (fix readme snippets to include env params)
             }
         }
     ],

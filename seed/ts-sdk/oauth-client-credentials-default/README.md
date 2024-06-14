@@ -19,14 +19,21 @@ Instantiate and use the client with the following:
 import { SeedOauthClientCredentialsDefaultClient } from "@fern/oauth-client-credentials-default";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const client = new SeedOauthClientCredentialsDefaultClient({
+=======
+const seedOauthClientCredentialsDefault = new SeedOauthClientCredentialsDefaultClient({
+>>>>>>> 817067be3d (fix readme snippets to include env params)
     environment: "YOUR_BASE_URL",
     clientId: "YOUR_CLIENT_ID",
     clientSecret: "YOUR_CLIENT_SECRET",
 });
+<<<<<<< HEAD
 await client.auth.getToken({
 =======
 const seedOauthClientCredentialsDefault = new SeedOauthClientCredentialsDefaultClient();
+=======
+>>>>>>> 817067be3d (fix readme snippets to include env params)
 await seedOauthClientCredentialsDefault.auth.getToken({
 >>>>>>> 52b1822299 (merge env variable changes)
     clientId: "string",

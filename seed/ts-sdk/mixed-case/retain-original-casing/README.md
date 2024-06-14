@@ -19,10 +19,14 @@ Instantiate and use the client with the following:
 import { SeedMixedCaseClient } from "@fern/mixed-case";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const client = new SeedMixedCaseClient({ environment: "YOUR_BASE_URL" });
 await client.service.getResource("rsc-xyz");
 =======
 const seedMixedCase = new SeedMixedCaseClient();
+=======
+const seedMixedCase = new SeedMixedCaseClient({ environment: "YOUR_BASE_URL" });
+>>>>>>> 817067be3d (fix readme snippets to include env params)
 await seedMixedCase.service.getResource("rsc-xyz");
 >>>>>>> 52b1822299 (merge env variable changes)
 ```

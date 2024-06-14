@@ -19,10 +19,14 @@ Instantiate and use the client with the following:
 import { SeedPackageYmlClient } from "@fern/package-yml";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const client = new SeedPackageYmlClient({ environment: "YOUR_BASE_URL" });
 await client.echo("Hello world!");
 =======
 const seedPackageYml = new SeedPackageYmlClient();
+=======
+const seedPackageYml = new SeedPackageYmlClient({ environment: "YOUR_BASE_URL" });
+>>>>>>> 817067be3d (fix readme snippets to include env params)
 await seedPackageYml.echo("Hello world!");
 >>>>>>> 52b1822299 (merge env variable changes)
 ```

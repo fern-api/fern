@@ -19,10 +19,14 @@ Instantiate and use the client with the following:
 import { SeedApiClient } from "@fern/folders";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.foo();
 =======
 const seedApi = new SeedApiClient();
+=======
+const seedApi = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+>>>>>>> 817067be3d (fix readme snippets to include env params)
 await seedApi.foo();
 >>>>>>> 52b1822299 (merge env variable changes)
 ```

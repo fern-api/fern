@@ -9,10 +9,14 @@
             "snippet": {
                 "type": "typescript",
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "client": "import { SeedCustomAuthClient } from \"@fern/custom-auth\";\n\nconst client = new SeedCustomAuthClient({ environment: \"YOUR_BASE_URL\", customAuthScheme: \"YOUR_CUSTOM_AUTH_SCHEME\" });\nawait client.customAuth.getWithCustomAuth();\n"
 =======
                 "client": "import { SeedCustomAuthClient } from \"@fern/custom-auth\";\n\nconst seedCustomAuth = new SeedCustomAuthClient();\nawait seedCustomAuth.customAuth.getWithCustomAuth();\n"
 >>>>>>> 52b1822299 (merge env variable changes)
+=======
+                "client": "import { SeedCustomAuthClient } from \"@fern/custom-auth\";\n\nconst seedCustomAuth = new SeedCustomAuthClient({ environment: \"YOUR_BASE_URL\", customAuthScheme: \"YOUR_CUSTOM_AUTH_SCHEME\" });\nawait seedCustomAuth.customAuth.getWithCustomAuth();\n"
+>>>>>>> 817067be3d (fix readme snippets to include env params)
             }
         },
         {
@@ -24,10 +28,14 @@
             "snippet": {
                 "type": "typescript",
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "client": "import { SeedCustomAuthClient } from \"@fern/custom-auth\";\n\nconst client = new SeedCustomAuthClient({ environment: \"YOUR_BASE_URL\", customAuthScheme: \"YOUR_CUSTOM_AUTH_SCHEME\" });\nawait client.customAuth.postWithCustomAuth({\n    \"key\": \"value\"\n});\n"
 =======
                 "client": "import { SeedCustomAuthClient } from \"@fern/custom-auth\";\n\nconst seedCustomAuth = new SeedCustomAuthClient();\nawait seedCustomAuth.customAuth.postWithCustomAuth({\n    \"key\": \"value\"\n});\n"
 >>>>>>> 52b1822299 (merge env variable changes)
+=======
+                "client": "import { SeedCustomAuthClient } from \"@fern/custom-auth\";\n\nconst seedCustomAuth = new SeedCustomAuthClient({ environment: \"YOUR_BASE_URL\", customAuthScheme: \"YOUR_CUSTOM_AUTH_SCHEME\" });\nawait seedCustomAuth.customAuth.postWithCustomAuth({\n    \"key\": \"value\"\n});\n"
+>>>>>>> 817067be3d (fix readme snippets to include env params)
             }
         }
     ],
