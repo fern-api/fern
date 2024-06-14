@@ -298,9 +298,9 @@ export async function generateIntermediateRepresentation({
                 Object.entries(webhooks).forEach(([key, webhook]) => {
                     const irWebhook = webhooksByOriginalName[key];
                     if (irWebhook != null) {
-                        irGraph.addWebhook(irWebhook, webhook);
+                        irGraph.addWebhook(file, irWebhook, webhook);
                         if (webhook.audiences != null) {
-                            irGraph.markWebhookForAudiences(irWebhook, webhook.audiences);
+                            irGraph.markWebhookForAudiences(file, irWebhook, webhook.audiences);
                         }
                     }
                 });

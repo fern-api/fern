@@ -17,6 +17,7 @@ import {
 } from "@fern-api/ir-sdk";
 import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
 import { isReferencedWebhookPayloadSchema } from "../converters/convertWebhookGroup";
+import { FernFileContext } from "../FernFileContext";
 import { IdGenerator } from "../IdGenerator";
 import { getPropertiesForAudience } from "../utils/getPropertiesForAudience";
 import { FilteredIr, FilteredIrImpl } from "./FilteredIr";
@@ -247,7 +248,7 @@ export class IrGraph {
         }
     }
 
-    public addWebhook(webhook: Webhook, rawWebhook?: RawSchemas.WebhookSchema): void {
+    public addWebhook(file: FernFileContext, webhook: Webhook, rawWebhook?: RawSchemas.WebhookSchema): void {
         const webhookId = webhook.id;
         if (webhookId == null) {
             return;
@@ -284,6 +285,7 @@ export class IrGraph {
                 }
             });
         }
+        referencedSubpackages.add(file.fernFilepath);
         this.webhooks[webhookId] = {
             webhookId,
             referencedTypes,
@@ -291,7 +293,7 @@ export class IrGraph {
         };
     }
 
-    public markWebhookForAudiences(webhook: Webhook, audiences: AudienceId[]): void {
+    public markWebhookForAudiences(file: FernFileContext, webhook: Webhook, audiences: AudienceId[]): void {
         const webhookId = webhook.id;
         if (webhookId == null) {
             return;
@@ -299,6 +301,7 @@ export class IrGraph {
 
         if (this.hasAudience(audiences)) {
             this.webhooksNeededForAudience.add(webhookId);
+            this.addSubpackages(file.fernFilepath);
         }
     }
 
