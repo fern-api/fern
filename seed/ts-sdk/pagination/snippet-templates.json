@@ -29,7 +29,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
                                         "isOptional": false,
                                         "templateInputs": [],
                                         "type": "generic"
@@ -181,7 +181,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
                                         "isOptional": false,
                                         "templateInputs": [],
                                         "type": "generic"
@@ -337,10 +337,14 @@
                                     "value": {
                                         "imports": [],
 <<<<<<< HEAD
+<<<<<<< HEAD
                                         "templateString": "page: $FERN_INPUT",
                                         "isOptional": true,
 =======
                                         "templateString": "environment: YOUR_BASE_URL",
+=======
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+>>>>>>> 1604c5c654 (add quotes around default env value)
                                         "isOptional": false,
                                         "templateInputs": [],
                                         "type": "generic"
@@ -495,7 +499,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
                                         "isOptional": false,
                                         "templateInputs": [],
                                         "type": "generic"
@@ -597,7 +601,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
                                         "isOptional": false,
                                         "templateInputs": [],
                                         "type": "generic"
