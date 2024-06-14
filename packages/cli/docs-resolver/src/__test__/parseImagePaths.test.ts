@@ -112,14 +112,12 @@ describe("parseImagePaths", () => {
     });
 
     it("should parse img tag with src on multiple lines", () => {
-        const page = "This is a test page with an image <img \n\n src='path/to/image.png' \n\n alt='image' />";
+        const page = "This is a test page with an image <img \n src='path/to/image.png' \n alt='image' />";
         const result = parseImagePaths(page, PATHS);
         expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
         expect(result.markdown.trim()).toMatchInlineSnapshot(`
             "This is a test page with an image <img 
-
              src='/Volume/git/fern/my/docs/folder/path/to/image.png' 
-
              alt='image' />"
         `);
     });
@@ -165,20 +163,20 @@ describe("parseImagePaths", () => {
     });
 
     it("should relative absolute paths in mdx img tags with other props before src", () => {
-        const page = "This is a test page with an image <img src={'/path/to/image.png'} alt='image' />";
+        const page = "This is a test page with an image <img alt='image' src={'/path/to/image.png'} />";
         const result = parseImagePaths(page, PATHS);
         expect(result.filepaths).toEqual(["/Volume/git/fern/path/to/image.png"]);
         expect(result.markdown.trim()).toMatchInlineSnapshot(
-            "\"This is a test page with an image <img src={'/Volume/git/fern/path/to/image.png'} alt='image' />\""
+            "\"This is a test page with an image <img alt='image' src={'/Volume/git/fern/path/to/image.png'} />\""
         );
     });
 
     it("should relative absolute paths in mdx img tags with other props after src", () => {
-        const page = "This is a test page with an image <img style={{border: '1px'}} src={'/path/to/image.png'} />";
+        const page = "This is a test page with an image <img src={'/path/to/image.png'} style={{border: '1px'}} />";
         const result = parseImagePaths(page, PATHS);
         expect(result.filepaths).toEqual(["/Volume/git/fern/path/to/image.png"]);
         expect(result.markdown.trim()).toMatchInlineSnapshot(
-            "\"This is a test page with an image <img style={{border: '1px'}} src={'/Volume/git/fern/path/to/image.png'} />\""
+            "\"This is a test page with an image <img src={'/Volume/git/fern/path/to/image.png'} style={{border: '1px'}} />\""
         );
     });
 
@@ -343,6 +341,83 @@ describe("parseImagePaths", () => {
             "\"This is a test page with an image <img src='/Volume/git/fern/my/docs/folder/path/to/image.png#anchor' />\""
         );
     });
+
+    it("should parse images inside of tabs and frame", () => {
+        const page = `
+<Tabs>
+    <Tab>
+        <Frame>
+            <img src="./add-tool-view.png" alt="Add tool to configuration within the portal"/>
+        </Frame>
+    </Tab>
+</Tabs>
+        `;
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/add-tool-view.png"]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(`
+            "<Tabs>
+                <Tab>
+                    <Frame>
+                        <img src="/Volume/git/fern/my/docs/folder/add-tool-view.png" alt="Add tool to configuration within the portal"/>
+                    </Frame>
+                </Tab>
+            </Tabs>"
+        `);
+    });
+
+    it("should parse images inside of tabs and frame with other markdown", () => {
+        const page = `
+<Tabs>
+    <Tab>
+        <Frame>
+            ### Create a Tool
+
+            We will first create a Tool with a specified function. In this case, we will create a tool for getting the weather. In the Portal, navigate to the [EVI Tools page](https://beta.hume.ai/evi/tools). Click the **Create function** button to begin.
+
+            <img src="./add-tool-view.png" alt="Add tool to configuration within the portal"/>
+        </Frame>
+    </Tab>
+</Tabs>
+        `;
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/add-tool-view.png"]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(`
+            "<Tabs>
+                <Tab>
+                    <Frame>
+                        ### Create a Tool
+
+                        We will first create a Tool with a specified function. In this case, we will create a tool for getting the weather. In the Portal, navigate to the [EVI Tools page](https://beta.hume.ai/evi/tools). Click the **Create function** button to begin.
+
+                        <img src="/Volume/git/fern/my/docs/folder/add-tool-view.png" alt="Add tool to configuration within the portal"/>
+                    </Frame>
+                </Tab>
+            </Tabs>"
+        `);
+    });
+
+    it("should parse images inside of tabs and frame using markdown", () => {
+        const page = `
+<Tabs>
+    <Tab>
+        <Frame>
+            ![Add tool to configuration within the portal](./add-tool-view.png)
+        </Frame>
+    </Tab>
+</Tabs>
+        `;
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/add-tool-view.png"]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(`
+            "<Tabs>
+                <Tab>
+                    <Frame>
+                        ![Add tool to configuration within the portal](/Volume/git/fern/my/docs/folder/add-tool-view.png)
+                    </Frame>
+                </Tab>
+            </Tabs>"
+        `);
+    });
 });
 
 describe("replaceImagePaths", () => {
@@ -412,5 +487,11 @@ describe("multimedia-file", () => {
 describe("zep", () => {
     it("should replace all images with full path", () => {
         testMdxFixture("zep.mdx");
+    });
+});
+
+describe("hume", () => {
+    it("should replace all images with full path", () => {
+        testMdxFixture("hume.mdx");
     });
 });

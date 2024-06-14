@@ -18,7 +18,11 @@ Instantiate and use the client with the following:
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
+<<<<<<< HEAD
 const fiddle = new FiddleClient();
+=======
+const fiddle = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
 await fiddle.endpoints.container.getAndReturnListOfPrimitives(["string"]);
 ```
 
@@ -42,7 +46,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { FiddleError } from '@fern/exhaustive';
+import { FiddleError } from "@fern/exhaustive";
 
 try {
     await fiddle.getAndReturnListOfPrimitives(...);
@@ -115,7 +119,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { FiddleClient } from '@fern/exhaustive';
+import { FiddleClient } from "@fern/exhaustive";
 
 const fiddle = new FiddleClient({
     ...

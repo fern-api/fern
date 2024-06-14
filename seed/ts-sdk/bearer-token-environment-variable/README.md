@@ -18,7 +18,14 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedBearerTokenEnvironmentVariableClient } from "@fern/bearer-token-environment-variable";
 
+<<<<<<< HEAD
 const seedBearerTokenEnvironmentVariable = new SeedBearerTokenEnvironmentVariableClient();
+=======
+const seedBearerTokenEnvironmentVariable = new SeedBearerTokenEnvironmentVariableClient({
+    environment: "YOUR_BASE_URL",
+    apiKey: "YOUR_API_KEY",
+});
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
 await seedBearerTokenEnvironmentVariable.service.getWithBearerToken();
 ```
 
@@ -28,7 +35,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedBearerTokenEnvironmentVariableError } from '@fern/bearer-token-environment-variable';
+import { SeedBearerTokenEnvironmentVariableError } from "@fern/bearer-token-environment-variable";
 
 try {
     await seedBearerTokenEnvironmentVariable.getWithBearerToken(...);
@@ -101,7 +108,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedBearerTokenEnvironmentVariableClient } from '@fern/bearer-token-environment-variable';
+import { SeedBearerTokenEnvironmentVariableClient } from "@fern/bearer-token-environment-variable";
 
 const seedBearerTokenEnvironmentVariable = new SeedBearerTokenEnvironmentVariableClient({
     ...

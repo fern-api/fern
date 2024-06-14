@@ -11,6 +11,7 @@
             "identifierOverride": "endpoint_payment.create"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedIdempotencyHeaders = new SeedIdempotencyHeadersClient($FERN_INPUT);",
@@ -47,6 +48,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedIdempotencyHeaders = new SeedIdempotencyHeadersClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedIdempotencyHeaders.payment.create(\n\t$FERN_INPUT\n)",
@@ -117,6 +121,7 @@
             "identifierOverride": "endpoint_payment.delete"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedIdempotencyHeaders = new SeedIdempotencyHeadersClient($FERN_INPUT);",
@@ -153,6 +158,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedIdempotencyHeaders = new SeedIdempotencyHeadersClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedIdempotencyHeaders.payment.delete(\n\t$FERN_INPUT\n)",

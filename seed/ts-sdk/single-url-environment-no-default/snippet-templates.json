@@ -11,6 +11,7 @@
             "identifierOverride": "endpoint_dummy.getDummy"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedSingleUrlEnvironmentNoDefault = new SeedSingleUrlEnvironmentNoDefaultClient($FERN_INPUT);",
@@ -47,6 +48,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedSingleUrlEnvironmentNoDefault = new SeedSingleUrlEnvironmentNoDefaultClient({ environment: environments.SeedSingleUrlEnvironmentNoDefaultEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedSingleUrlEnvironmentNoDefault.dummy.getDummy()",

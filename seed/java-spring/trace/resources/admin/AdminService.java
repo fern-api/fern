@@ -28,6 +28,7 @@ import resources.v2.problem.types.TestCaseId;
 public interface AdminService {
   @PostMapping(
       value = "/store-test-submission-status/{submissionId}",
+      produces = "application/json",
       consumes = "application/json"
   )
   void updateTestSubmissionStatus(@RequestHeader("X-Random-Header") Optional<String> xRandomHeader,
@@ -36,6 +37,7 @@ public interface AdminService {
 
   @PostMapping(
       value = "/store-test-submission-status-v2/{submissionId}",
+      produces = "application/json",
       consumes = "application/json"
   )
   void sendTestSubmissionUpdate(@RequestHeader("X-Random-Header") Optional<String> xRandomHeader,
@@ -44,6 +46,7 @@ public interface AdminService {
 
   @PostMapping(
       value = "/store-workspace-submission-status/{submissionId}",
+      produces = "application/json",
       consumes = "application/json"
   )
   void updateWorkspaceSubmissionStatus(
@@ -53,6 +56,7 @@ public interface AdminService {
 
   @PostMapping(
       value = "/store-workspace-submission-status-v2/{submissionId}",
+      produces = "application/json",
       consumes = "application/json"
   )
   void sendWorkspaceSubmissionUpdate(
@@ -62,6 +66,7 @@ public interface AdminService {
 
   @PostMapping(
       value = "/store-test-trace/submission/{submissionId}/testCase/{testCaseId}",
+      produces = "application/json",
       consumes = "application/json"
   )
   void storeTracedTestCase(@RequestHeader("X-Random-Header") Optional<String> xRandomHeader,
@@ -70,6 +75,7 @@ public interface AdminService {
 
   @PostMapping(
       value = "/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}",
+      produces = "application/json",
       consumes = "application/json"
   )
   void storeTracedTestCaseV2(@RequestHeader("X-Random-Header") Optional<String> xRandomHeader,
@@ -78,6 +84,7 @@ public interface AdminService {
 
   @PostMapping(
       value = "/store-workspace-trace/submission/{submissionId}",
+      produces = "application/json",
       consumes = "application/json"
   )
   void storeTracedWorkspace(@RequestHeader("X-Random-Header") Optional<String> xRandomHeader,
@@ -86,6 +93,7 @@ public interface AdminService {
 
   @PostMapping(
       value = "/store-workspace-trace-v2/submission/{submissionId}",
+      produces = "application/json",
       consumes = "application/json"
   )
   void storeTracedWorkspaceV2(@RequestHeader("X-Random-Header") Optional<String> xRandomHeader,

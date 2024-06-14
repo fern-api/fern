@@ -1,4 +1,5 @@
 import { GeneratorName } from "@fern-api/configuration";
+import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
 
@@ -15,9 +16,9 @@ export const V46_TO_V45_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_EXPRESS]: "0.16.0",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA_MODEL]: "0.9.0",
+        [GeneratorName.JAVA_SDK]: "0.10.0",
+        [GeneratorName.JAVA_SPRING]: "0.9.0",
         [GeneratorName.PYTHON_FASTAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -33,7 +34,11 @@ export const V46_TO_V45_MIGRATION: IrMigration<
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
     },
-    jsonifyEarlierVersion: (ir) => ir,
+    jsonifyEarlierVersion: (ir) =>
+        IrSerialization.V45.IntermediateRepresentation.jsonOrThrow(ir, {
+            unrecognizedObjectKeys: "strip",
+            skipValidation: true
+        }),
     migrateBackwards: (v46): IrVersions.V45.ir.IntermediateRepresentation => {
         return {
             ...v46,
@@ -123,12 +128,12 @@ function convertExampleTypeReference(v46ETR: IrVersions.V46.ExampleTypeReference
                             date: (date) => IrVersions.V45.ExamplePrimitive.date(date),
                             uuid: (uuid) => IrVersions.V45.ExamplePrimitive.uuid(uuid),
                             _other: (value) => {
-                                throw new Error(`Unexpected value: ${value}`);
+                                throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
                             }
                         })
                     ),
                 _other: (value) => {
-                    throw new Error(`Unexpected value: ${value}`);
+                    throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
                 }
             })
         }),
@@ -152,14 +157,14 @@ function convertExampleTypeReference(v46ETR: IrVersions.V46.ExampleTypeReference
                     date: (date) => IrVersions.V45.ExamplePrimitive.date(date),
                     uuid: (uuid) => IrVersions.V45.ExamplePrimitive.uuid(uuid),
                     _other: (value) => {
-                        throw new Error(`Unexpected value: ${value}`);
+                        throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
                     }
                 })
             )
         }),
         unknown: (value) => ({ ...v46ETR, shape: IrVersions.V45.ExampleTypeReferenceShape.unknown(value) }),
         _other: (value) => {
-            throw new Error(`Unexpected value: ${value}`);
+            throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
         }
     });
 }
@@ -196,7 +201,7 @@ function convertExampleTypeShape(v46ETS: IrVersions.V46.ExampleTypeShape): IrVer
                         IrVersions.V45.ExampleSingleUnionTypeProperties.singleProperty(convertExampleTypeReference(sp)),
                     noProperties: () => IrVersions.V45.ExampleSingleUnionTypeProperties.noProperties(),
                     _other: (value) => {
-                        throw new Error(`Unexpected value: ${value}`);
+                        throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
                     }
                 })
             }
@@ -261,7 +266,7 @@ function convertEndpointExamples(v46ETs: IrVersions.V46.HttpEndpointExample[]): 
                     }),
                 reference: (value) => IrVersions.V45.ExampleRequestBody.reference(convertExampleTypeReference(value)),
                 _other: (value) => {
-                    throw new Error(`Unexpected value: ${value}`);
+                    throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
                 }
             }),
             response: et.response._visit<IrVersions.V45.ExampleResponse>({
@@ -281,7 +286,7 @@ function convertEndpointExamples(v46ETs: IrVersions.V46.HttpEndpointExample[]): 
                                     value.map((v) => ({ ...v, data: convertExampleTypeReference(v.data) }))
                                 ),
                             _other: (value) => {
-                                throw new Error(`Unexpected value: ${value}`);
+                                throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
                             }
                         })
                     ),
@@ -291,7 +296,7 @@ function convertEndpointExamples(v46ETs: IrVersions.V46.HttpEndpointExample[]): 
                         body: value.body != null ? convertExampleTypeReference(value.body) : undefined
                     }),
                 _other: (value) => {
-                    throw new Error(`Unexpected value: ${value}`);
+                    throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
                 }
             })
         };
@@ -299,7 +304,7 @@ function convertEndpointExamples(v46ETs: IrVersions.V46.HttpEndpointExample[]): 
             userProvided: () => IrVersions.V45.HttpEndpointExample.userProvided(bones),
             generated: () => IrVersions.V45.HttpEndpointExample.generated(bones),
             _other: (value) => {
-                throw new Error(`Unexpected value: ${value}`);
+                throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
             }
         });
     });
@@ -327,7 +332,7 @@ function convertWebsocketExamples(
                 reference: (value) =>
                     IrVersions.V45.ExampleWebSocketMessageBody.reference(convertExampleTypeReference(value)),
                 _other: (value) => {
-                    throw new Error(`Unexpected value: ${value}`);
+                    throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
                 }
             })
         }))

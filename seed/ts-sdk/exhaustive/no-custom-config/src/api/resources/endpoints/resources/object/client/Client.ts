@@ -43,7 +43,8 @@ export class Object_ {
      *         set: new Set(["string"]),
      *         map: {
      *             1: "string"
-     *         }
+     *         },
+     *         bigint: "123456789123456789"
      *     })
      */
     public async getAndReturnWithOptionalField(
@@ -255,7 +256,8 @@ export class Object_ {
      *             set: new Set(["string"]),
      *             map: {
      *                 1: "string"
-     *             }
+     *             },
+     *             bigint: "123456789123456789"
      *         }
      *     })
      */
@@ -338,7 +340,8 @@ export class Object_ {
      *             set: new Set(["string"]),
      *             map: {
      *                 1: "string"
-     *             }
+     *             },
+     *             bigint: "123456789123456789"
      *         }
      *     })
      */
@@ -421,7 +424,8 @@ export class Object_ {
      *                 set: new Set(["string"]),
      *                 map: {
      *                     1: "string"
-     *                 }
+     *                 },
+     *                 bigint: "123456789123456789"
      *             }
      *         }])
      */

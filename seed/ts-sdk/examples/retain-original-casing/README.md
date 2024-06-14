@@ -16,9 +16,17 @@ npm i -s @fern/examples
 Instantiate and use the client with the following:
 
 ```typescript
+import * as environments from "../src/environments";
 import { SeedExamplesClient } from "@fern/examples";
 
+<<<<<<< HEAD
 const seedExamples = new SeedExamplesClient();
+=======
+const seedExamples = new SeedExamplesClient({
+    environment: environments.SeedExamplesEnvironment.Production,
+    token: "YOUR_TOKEN",
+});
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
 await seedExamples.echo("Hello world!\\n\\nwith\\n\\tnewlines");
 ```
 
@@ -42,7 +50,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedExamplesError } from '@fern/examples';
+import { SeedExamplesError } from "@fern/examples";
 
 try {
     await seedExamples.echo(...);
@@ -115,7 +123,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedExamplesClient } from '@fern/examples';
+import { SeedExamplesClient } from "@fern/examples";
 
 const seedExamples = new SeedExamplesClient({
     ...

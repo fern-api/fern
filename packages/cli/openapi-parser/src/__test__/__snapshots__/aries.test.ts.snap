@@ -38970,19 +38970,13 @@ exports[`open api parser aries parse open api 1`] = `
                             "value": {
                               "type": "unknown",
                               "value": {
-                                "type": "map",
+                                "type": "array",
                                 "value": [
                                   {
-                                    "key": {
-                                      "type": "string",
-                                      "value": "0",
-                                    },
+                                    "type": "primitive",
                                     "value": {
-                                      "type": "primitive",
-                                      "value": {
-                                        "type": "string",
-                                        "value": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                                      },
+                                      "type": "string",
+                                      "value": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
                                     },
                                   },
                                 ],
@@ -38997,19 +38991,13 @@ exports[`open api parser aries parse open api 1`] = `
                             "value": {
                               "type": "unknown",
                               "value": {
-                                "type": "map",
+                                "type": "array",
                                 "value": [
                                   {
-                                    "key": {
-                                      "type": "string",
-                                      "value": "0",
-                                    },
+                                    "type": "primitive",
                                     "value": {
-                                      "type": "primitive",
-                                      "value": {
-                                        "type": "string",
-                                        "value": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                                      },
+                                      "type": "string",
+                                      "value": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
                                     },
                                   },
                                 ],
@@ -39500,19 +39488,13 @@ exports[`open api parser aries parse open api 1`] = `
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                                  },
+                                  "type": "string",
+                                  "value": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
                                 },
                               },
                             ],
@@ -39527,19 +39509,13 @@ exports[`open api parser aries parse open api 1`] = `
                         "value": {
                           "type": "unknown",
                           "value": {
-                            "type": "map",
+                            "type": "array",
                             "value": [
                               {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                                  },
+                                  "type": "string",
+                                  "value": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
                                 },
                               },
                             ],
@@ -39908,19 +39884,13 @@ exports[`open api parser aries parse open api 1`] = `
                             "value": {
                               "type": "unknown",
                               "value": {
-                                "type": "map",
+                                "type": "array",
                                 "value": [
                                   {
-                                    "key": {
-                                      "type": "string",
-                                      "value": "0",
-                                    },
+                                    "type": "primitive",
                                     "value": {
-                                      "type": "primitive",
-                                      "value": {
-                                        "type": "string",
-                                        "value": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                                      },
+                                      "type": "string",
+                                      "value": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
                                     },
                                   },
                                 ],
@@ -39935,19 +39905,13 @@ exports[`open api parser aries parse open api 1`] = `
                             "value": {
                               "type": "unknown",
                               "value": {
-                                "type": "map",
+                                "type": "array",
                                 "value": [
                                   {
-                                    "key": {
-                                      "type": "string",
-                                      "value": "0",
-                                    },
+                                    "type": "primitive",
                                     "value": {
-                                      "type": "primitive",
-                                      "value": {
-                                        "type": "string",
-                                        "value": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                                      },
+                                      "type": "string",
+                                      "value": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
                                     },
                                   },
                                 ],

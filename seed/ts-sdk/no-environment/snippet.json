@@ -8,7 +8,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedNoEnvironmentClient } from \"@fern/no-environment\";\n\nconst seedNoEnvironment = new SeedNoEnvironmentClient();\nawait seedNoEnvironment.dummy.getDummy();\n"
+=======
+                "client": "import { SeedNoEnvironmentClient } from \"@fern/no-environment\";\n\nconst seedNoEnvironment = new SeedNoEnvironmentClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait seedNoEnvironment.dummy.getDummy();\n"
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         }
     ],

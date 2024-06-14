@@ -11,6 +11,7 @@
             "identifierOverride": "endpoint_service.getMovie"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedResponseProperty = new SeedResponsePropertyClient();",
@@ -30,6 +31,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedResponseProperty.service.getMovie(\n\t$FERN_INPUT\n)",
@@ -81,6 +85,7 @@
             "identifierOverride": "endpoint_service.getMovieDocs"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedResponseProperty = new SeedResponsePropertyClient();",
@@ -100,6 +105,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedResponseProperty.service.getMovieDocs(\n\t$FERN_INPUT\n)",
@@ -151,6 +159,7 @@
             "identifierOverride": "endpoint_service.getMovieName"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedResponseProperty = new SeedResponsePropertyClient();",
@@ -170,6 +179,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedResponseProperty.service.getMovieName(\n\t$FERN_INPUT\n)",
@@ -221,6 +233,7 @@
             "identifierOverride": "endpoint_service.getMovieMetadata"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedResponseProperty = new SeedResponsePropertyClient();",
@@ -240,6 +253,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedResponseProperty.service.getMovieMetadata(\n\t$FERN_INPUT\n)",
@@ -291,6 +307,7 @@
             "identifierOverride": "endpoint_service.getOptionalMovie"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedResponseProperty = new SeedResponsePropertyClient();",
@@ -310,6 +327,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedResponseProperty.service.getOptionalMovie(\n\t$FERN_INPUT\n)",
@@ -361,6 +381,7 @@
             "identifierOverride": "endpoint_service.getOptionalMovieDocs"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedResponseProperty = new SeedResponsePropertyClient();",
@@ -380,6 +401,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedResponseProperty.service.getOptionalMovieDocs(\n\t$FERN_INPUT\n)",
@@ -431,6 +455,7 @@
             "identifierOverride": "endpoint_service.getOptionalMovieName"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedResponseProperty = new SeedResponsePropertyClient();",
@@ -450,6 +475,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedResponseProperty.service.getOptionalMovieName(\n\t$FERN_INPUT\n)",

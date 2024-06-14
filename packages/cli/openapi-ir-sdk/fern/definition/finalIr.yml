@@ -74,6 +74,13 @@ types:
         docs: |
           Populated as ${operationId}Payload
       payload: Schema
+      examples: list<WebhookExampleCall>
+
+  WebhookExampleCall:
+    extends: commons.WithDescription
+    properties:
+      name: optional<string>
+      payload: example.FullExample
 
   WebsocketChannel:
     extends: commons.WithDescription

@@ -11,6 +11,7 @@
             "identifierOverride": "endpoint_headers.send"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedLiteral = new SeedLiteralClient($FERN_INPUT);",
@@ -63,6 +64,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedLiteral = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedLiteral.headers.send(\n\t$FERN_INPUT\n)",
@@ -115,6 +119,7 @@
             "identifierOverride": "endpoint_inlined.send"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedLiteral = new SeedLiteralClient($FERN_INPUT);",
@@ -167,6 +172,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedLiteral = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedLiteral.inlined.send(\n\t$FERN_INPUT\n)",
@@ -235,6 +243,7 @@
             "identifierOverride": "endpoint_path.send"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedLiteral = new SeedLiteralClient($FERN_INPUT);",
@@ -287,6 +296,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedLiteral = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedLiteral.path.send()",
@@ -310,6 +322,7 @@
             "identifierOverride": "endpoint_query.send"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedLiteral = new SeedLiteralClient($FERN_INPUT);",
@@ -362,6 +375,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedLiteral = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedLiteral.query.send(\n\t$FERN_INPUT\n)",
@@ -414,6 +430,7 @@
             "identifierOverride": "endpoint_reference.send"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedLiteral = new SeedLiteralClient($FERN_INPUT);",
@@ -466,6 +483,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedLiteral = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedLiteral.reference.send(\n\t$FERN_INPUT\n)",

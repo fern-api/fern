@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedQueryParametersClient } from "@fern/query-parameters";
 
-const seedQueryParameters = new SeedQueryParametersClient();
+const seedQueryParameters = new SeedQueryParametersClient({ environment: "YOUR_BASE_URL" });
 await seedQueryParameters.user.getUsername({
     limit: 1,
     id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -78,7 +78,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedQueryParametersError } from '@fern/query-parameters';
+import { SeedQueryParametersError } from "@fern/query-parameters";
 
 try {
     await seedQueryParameters.getUsername(...);
@@ -151,7 +151,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedQueryParametersClient } from '@fern/query-parameters';
+import { SeedQueryParametersClient } from "@fern/query-parameters";
 
 const seedQueryParameters = new SeedQueryParametersClient({
     ...

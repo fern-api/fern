@@ -8,7 +8,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedSingleUrlEnvironmentDefaultClient } from \"@fern/single-url-environment-default\";\n\nconst seedSingleUrlEnvironmentDefault = new SeedSingleUrlEnvironmentDefaultClient();\nawait seedSingleUrlEnvironmentDefault.dummy.getDummy();\n"
+=======
+                "client": "import * as environments from \"../src/environments\";\nimport { SeedSingleUrlEnvironmentDefaultClient } from \"@fern/single-url-environment-default\";\n\nconst seedSingleUrlEnvironmentDefault = new SeedSingleUrlEnvironmentDefaultClient({ token: \"YOUR_TOKEN\" });\nawait seedSingleUrlEnvironmentDefault.dummy.getDummy();\n"
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         }
     ],

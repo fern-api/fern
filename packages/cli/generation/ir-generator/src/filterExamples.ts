@@ -1,6 +1,7 @@
 import { isNonNullish } from "@fern-api/core-utils";
 import {
     ExampleContainer,
+    ExampleEndpointCall,
     ExampleEndpointSuccessResponse,
     ExampleInlinedRequestBodyProperty,
     ExampleKeyValuePair,
@@ -14,7 +15,6 @@ import {
     ExampleTypeReference,
     ExampleTypeReferenceShape,
     ExampleTypeShape,
-    HttpEndpointExample,
     NameAndWireValue
 } from "@fern-api/ir-sdk";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
@@ -368,8 +368,8 @@ export function filterEndpointExample({
     example
 }: {
     filteredIr: FilteredIr;
-    example: HttpEndpointExample;
-}): HttpEndpointExample {
+    example: ExampleEndpointCall;
+}): ExampleEndpointCall {
     return {
         ...example,
         rootPathParameters: filterExamplePathParameters({ filteredIr, pathParameters: example.rootPathParameters }),

@@ -1,11 +1,12 @@
 package com.fern.java.utils;
 
-import com.fern.irV42.model.types.ContainerType;
-import com.fern.irV42.model.types.DeclaredTypeName;
-import com.fern.irV42.model.types.Literal;
-import com.fern.irV42.model.types.MapType;
-import com.fern.irV42.model.types.PrimitiveType;
-import com.fern.irV42.model.types.TypeReference;
+import com.fern.ir.model.types.ContainerType;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.Literal;
+import com.fern.ir.model.types.MapType;
+import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.PrimitiveTypeV1;
+import com.fern.ir.model.types.TypeReference;
 import java.util.Optional;
 
 public class TypeReferenceUtils {
@@ -61,7 +62,7 @@ public class TypeReferenceUtils {
 
         @Override
         public String visitPrimitive(PrimitiveType primitive) {
-            return primitive.visit(new PrimitiveTypeToName());
+            return primitive.getV1().visit(new PrimitiveTypeToName());
         }
 
         @Override
@@ -71,6 +72,39 @@ public class TypeReferenceUtils {
 
         @Override
         public String _visitUnknown(Object unknownType) {
+            throw new RuntimeException("Unknown type reference type " + unknownType);
+        }
+    }
+
+    public static class ContainerTypeToUnderlyingType implements ContainerType.Visitor<TypeReference> {
+
+        @Override
+        public TypeReference visitList(TypeReference list) {
+            return list;
+        }
+
+        @Override
+        public TypeReference visitMap(MapType map) {
+            throw new RuntimeException("Unexpected non collection type of literal");
+        }
+
+        @Override
+        public TypeReference visitOptional(TypeReference optional) {
+            return optional;
+        }
+
+        @Override
+        public TypeReference visitSet(TypeReference set) {
+            return set;
+        }
+
+        @Override
+        public TypeReference visitLiteral(Literal literal) {
+            throw new RuntimeException("Unexpected non collection type of literal");
+        }
+
+        @Override
+        public TypeReference _visitUnknown(Object unknownType) {
             throw new RuntimeException("Unknown type reference type " + unknownType);
         }
     }
@@ -110,7 +144,7 @@ public class TypeReferenceUtils {
         }
     }
 
-    public static class PrimitiveTypeToName implements PrimitiveType.Visitor<String> {
+    public static class PrimitiveTypeToName implements PrimitiveTypeV1.Visitor<String> {
 
         @Override
         public String visitInteger() {
@@ -155,6 +189,11 @@ public class TypeReferenceUtils {
         @Override
         public String visitBase64() {
             return "Base64";
+        }
+
+        @Override
+        public String visitBigInteger() {
+            return "BigInteger";
         }
 
         @Override

@@ -16,6 +16,7 @@ npm i -s @fern/trace
 Instantiate and use the client with the following:
 
 ```typescript
+import * as environments from "../src/environments";
 import { SeedTraceClient } from "@fern/trace";
 
 const seedTrace = new SeedTraceClient();
@@ -44,7 +45,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedTraceError } from '@fern/trace';
+import { SeedTraceError } from "@fern/trace";
 
 try {
     await seedTrace.updateTestSubmissionStatus(...);
@@ -117,7 +118,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedTraceClient } from '@fern/trace';
+import { SeedTraceClient } from "@fern/trace";
 
 const seedTrace = new SeedTraceClient({
     ...

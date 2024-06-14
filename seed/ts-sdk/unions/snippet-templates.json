@@ -11,25 +11,7 @@
             "identifierOverride": "endpoint_union.get"
         },
         "snippetTemplate": {
-            "clientInstantiation": {
-                "imports": [],
-                "templateString": "const seedUnions = new SeedUnionsClient();",
-                "isOptional": false,
-                "inputDelimiter": ",",
-                "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "{ $FERN_INPUT }",
-                            "isOptional": true,
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    }
-                ],
-                "type": "generic"
-            },
+            "clientInstantiation": "const seedUnions = new SeedUnionsClient;\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedUnions.union.get(\n\t$FERN_INPUT\n)",
@@ -82,25 +64,7 @@
             "identifierOverride": "endpoint_union.update"
         },
         "snippetTemplate": {
-            "clientInstantiation": {
-                "imports": [],
-                "templateString": "const seedUnions = new SeedUnionsClient();",
-                "isOptional": false,
-                "inputDelimiter": ",",
-                "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "{ $FERN_INPUT }",
-                            "isOptional": true,
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    }
-                ],
-                "type": "generic"
-            },
+            "clientInstantiation": "const seedUnions = new SeedUnionsClient;\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedUnions.union.update(\n\t$FERN_INPUT\n)",

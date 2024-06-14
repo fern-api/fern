@@ -8306,32 +8306,20 @@ Log.d("TAG", group.toString())
                                   "value": "dpi",
                                 },
                                 "value": {
-                                  "type": "map",
+                                  "type": "array",
                                   "value": [
                                     {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "0",
-                                      },
+                                      "type": "primitive",
                                       "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "int",
-                                          "value": 72,
-                                        },
+                                        "type": "int",
+                                        "value": 72,
                                       },
                                     },
                                     {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "1",
-                                      },
+                                      "type": "primitive",
                                       "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "int",
-                                          "value": 72,
-                                        },
+                                        "type": "int",
+                                        "value": 72,
                                       },
                                     },
                                   ],
@@ -8527,32 +8515,20 @@ Log.d("TAG", group.toString())
                                         "value": "dpi",
                                       },
                                       "value": {
-                                        "type": "map",
+                                        "type": "array",
                                         "value": [
                                           {
-                                            "key": {
-                                              "type": "string",
-                                              "value": "0",
-                                            },
+                                            "type": "primitive",
                                             "value": {
-                                              "type": "primitive",
-                                              "value": {
-                                                "type": "int",
-                                                "value": 72,
-                                              },
+                                              "type": "int",
+                                              "value": 72,
                                             },
                                           },
                                           {
-                                            "key": {
-                                              "type": "string",
-                                              "value": "1",
-                                            },
+                                            "type": "primitive",
                                             "value": {
-                                              "type": "primitive",
-                                              "value": {
-                                                "type": "int",
-                                                "value": 72,
-                                              },
+                                              "type": "int",
+                                              "value": 72,
                                             },
                                           },
                                         ],
@@ -9344,32 +9320,20 @@ Log.d("TAG", group.toString())
                                   "value": "dpi",
                                 },
                                 "value": {
-                                  "type": "map",
+                                  "type": "array",
                                   "value": [
                                     {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "0",
-                                      },
+                                      "type": "primitive",
                                       "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "int",
-                                          "value": 72,
-                                        },
+                                        "type": "int",
+                                        "value": 72,
                                       },
                                     },
                                     {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "1",
-                                      },
+                                      "type": "primitive",
                                       "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "int",
-                                          "value": 72,
-                                        },
+                                        "type": "int",
+                                        "value": 72,
                                       },
                                     },
                                   ],
@@ -9565,32 +9529,20 @@ Log.d("TAG", group.toString())
                                         "value": "dpi",
                                       },
                                       "value": {
-                                        "type": "map",
+                                        "type": "array",
                                         "value": [
                                           {
-                                            "key": {
-                                              "type": "string",
-                                              "value": "0",
-                                            },
+                                            "type": "primitive",
                                             "value": {
-                                              "type": "primitive",
-                                              "value": {
-                                                "type": "int",
-                                                "value": 72,
-                                              },
+                                              "type": "int",
+                                              "value": 72,
                                             },
                                           },
                                           {
-                                            "key": {
-                                              "type": "string",
-                                              "value": "1",
-                                            },
+                                            "type": "primitive",
                                             "value": {
-                                              "type": "primitive",
-                                              "value": {
-                                                "type": "int",
-                                                "value": 72,
-                                              },
+                                              "type": "int",
+                                              "value": 72,
                                             },
                                           },
                                         ],

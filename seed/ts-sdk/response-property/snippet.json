@@ -8,7 +8,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst seedResponseProperty = new SeedResponsePropertyClient();\nawait seedResponseProperty.service.getMovie(\"string\");\n"
+=======
+                "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst seedResponseProperty = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait seedResponseProperty.service.getMovie(\"string\");\n"
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -19,7 +23,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst seedResponseProperty = new SeedResponsePropertyClient();\nawait seedResponseProperty.service.getMovieDocs(\"string\");\n"
+=======
+                "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst seedResponseProperty = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait seedResponseProperty.service.getMovieDocs(\"string\");\n"
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -30,7 +38,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst seedResponseProperty = new SeedResponsePropertyClient();\nawait seedResponseProperty.service.getMovieName(\"string\");\n"
+=======
+                "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst seedResponseProperty = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait seedResponseProperty.service.getMovieName(\"string\");\n"
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -41,7 +53,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst seedResponseProperty = new SeedResponsePropertyClient();\nawait seedResponseProperty.service.getMovieMetadata(\"string\");\n"
+=======
+                "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst seedResponseProperty = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait seedResponseProperty.service.getMovieMetadata(\"string\");\n"
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -52,7 +68,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst seedResponseProperty = new SeedResponsePropertyClient();\nawait seedResponseProperty.service.getOptionalMovie(\"string\");\n"
+=======
+                "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst seedResponseProperty = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait seedResponseProperty.service.getOptionalMovie(\"string\");\n"
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -63,7 +83,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst seedResponseProperty = new SeedResponsePropertyClient();\nawait seedResponseProperty.service.getOptionalMovieDocs(\"string\");\n"
+=======
+                "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst seedResponseProperty = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait seedResponseProperty.service.getOptionalMovieDocs(\"string\");\n"
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -74,7 +98,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst seedResponseProperty = new SeedResponsePropertyClient();\nawait seedResponseProperty.service.getOptionalMovieName(\"string\");\n"
+=======
+                "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst seedResponseProperty = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait seedResponseProperty.service.getOptionalMovieName(\"string\");\n"
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         }
     ],

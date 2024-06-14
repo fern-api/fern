@@ -8,7 +8,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient();\nawait seedApi.foo();\n"
+=======
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait seedApi.foo();\n"
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -19,7 +23,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient();\nawait seedApi.a.b.foo();\n"
+=======
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait seedApi.a.b.foo();\n"
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -30,7 +38,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient();\nawait seedApi.a.c.foo();\n"
+=======
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait seedApi.a.c.foo();\n"
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -41,7 +53,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient();\nawait seedApi.folder.foo();\n"
+=======
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait seedApi.folder.foo();\n"
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -52,7 +68,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient();\nawait seedApi.folder.service.endpoint();\n"
+=======
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait seedApi.folder.service.endpoint();\n"
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -63,7 +83,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient();\nawait seedApi.folder.service.unknownRequest({\n    \"key\": \"value\"\n});\n"
+=======
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait seedApi.folder.service.unknownRequest({\n    \"key\": \"value\"\n});\n"
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         }
     ],

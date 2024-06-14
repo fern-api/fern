@@ -11,6 +11,7 @@
             "identifierOverride": "endpoint_folder-a/service.getDirectThread"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedAudiences = new SeedAudiencesClient();",
@@ -30,6 +31,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedAudiences = new SeedAudiencesClient({ environment: \"YOUR_BASE_URL\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedAudiences.folderA.service.getDirectThread()",
@@ -53,6 +57,7 @@
             "identifierOverride": "endpoint_foo.find"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedAudiences = new SeedAudiencesClient();",
@@ -72,6 +77,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedAudiences = new SeedAudiencesClient({ environment: \"YOUR_BASE_URL\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedAudiences.foo.find(\n\t$FERN_INPUT\n)",

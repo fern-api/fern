@@ -1,4 +1,5 @@
-import { Webhook } from "@fern-api/openapi-ir-sdk";
+import { NamedFullExample, Webhook, WebhookExampleCall } from "@fern-api/openapi-ir-sdk";
+import { convertToFullExample } from "../../../../schema/examples/convertToFullExample";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { OperationContext } from "../contexts";
@@ -59,6 +60,26 @@ export function convertWebhookOperation({
         headers: convertedParameters.headers,
         generatedPayloadName: getGeneratedTypeName(payloadBreadcrumbs),
         payload: convertedPayload.schema,
-        description: operation.description
+        description: operation.description,
+        examples: convertWebhookExamples(convertedPayload.fullExamples)
     };
+}
+
+function convertWebhookExamples(payloadExamples: NamedFullExample[] | undefined): WebhookExampleCall[] {
+    if (payloadExamples == null) {
+        return [];
+    }
+    const webhookExampleCalls: WebhookExampleCall[] = [];
+    for (const payloadExample of payloadExamples) {
+        const fullExample = convertToFullExample(payloadExample.value);
+        if (fullExample == null) {
+            continue;
+        }
+        webhookExampleCalls.push({
+            description: payloadExample.description,
+            name: payloadExample.name,
+            payload: fullExample
+        });
+    }
+    return webhookExampleCalls;
 }

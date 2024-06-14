@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedNurseryApiClient } from "@fern/reserved-keywords";
 
-const seedNurseryApi = new SeedNurseryApiClient();
+const seedNurseryApi = new SeedNurseryApiClient({ environment: "YOUR_BASE_URL" });
 await seedNurseryApi.package.test({
     for: "string",
 });
@@ -44,7 +44,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedNurseryApiError } from '@fern/reserved-keywords';
+import { SeedNurseryApiError } from "@fern/reserved-keywords";
 
 try {
     await seedNurseryApi.test(...);
@@ -117,7 +117,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedNurseryApiClient } from '@fern/reserved-keywords';
+import { SeedNurseryApiClient } from "@fern/reserved-keywords";
 
 const seedNurseryApi = new SeedNurseryApiClient({
     ...

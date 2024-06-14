@@ -16,6 +16,7 @@ npm i -s @fern/multi-url-environment
 Instantiate and use the client with the following:
 
 ```typescript
+import * as environments from "../src/environments";
 import { SeedMultiUrlEnvironmentClient } from "@fern/multi-url-environment";
 
 const seedMultiUrlEnvironment = new SeedMultiUrlEnvironmentClient();
@@ -44,7 +45,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedMultiUrlEnvironmentError } from '@fern/multi-url-environment';
+import { SeedMultiUrlEnvironmentError } from "@fern/multi-url-environment";
 
 try {
     await seedMultiUrlEnvironment.bootInstance(...);
@@ -117,7 +118,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedMultiUrlEnvironmentClient } from '@fern/multi-url-environment';
+import { SeedMultiUrlEnvironmentClient } from "@fern/multi-url-environment";
 
 const seedMultiUrlEnvironment = new SeedMultiUrlEnvironmentClient({
     ...

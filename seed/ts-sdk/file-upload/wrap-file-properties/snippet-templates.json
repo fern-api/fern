@@ -11,6 +11,7 @@
             "identifierOverride": "endpoint_service.post"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedFileUpload = new SeedFileUploadClient();",
@@ -30,6 +31,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedFileUpload = new SeedFileUploadClient({ environment: \"YOUR_BASE_URL\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedFileUpload.service.post(\n\t$FERN_INPUT\n)",
@@ -263,6 +267,7 @@
             "identifierOverride": "endpoint_service.justFile"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedFileUpload = new SeedFileUploadClient();",
@@ -282,6 +287,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedFileUpload = new SeedFileUploadClient({ environment: \"YOUR_BASE_URL\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedFileUpload.service.justFile(\n\t$FERN_INPUT\n)",
@@ -336,6 +344,7 @@
             "identifierOverride": "endpoint_service.justFileWithQueryParams"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedFileUpload = new SeedFileUploadClient();",
@@ -355,6 +364,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedFileUpload = new SeedFileUploadClient({ environment: \"YOUR_BASE_URL\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedFileUpload.service.justFileWithQueryParams(\n\t$FERN_INPUT\n)",

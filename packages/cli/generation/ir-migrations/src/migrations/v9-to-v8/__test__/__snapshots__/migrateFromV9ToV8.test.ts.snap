@@ -1,0 +1,267 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`migrateFromV9ToV8 migrates maps to list 1`] = `
+{
+  "apiDisplayName": undefined,
+  "apiDocs": undefined,
+  "apiName": {
+    "camelCase": {
+      "safeName": "api",
+      "unsafeName": "api",
+    },
+    "originalName": "api",
+    "pascalCase": {
+      "safeName": "API",
+      "unsafeName": "API",
+    },
+    "screamingSnakeCase": {
+      "safeName": "API",
+      "unsafeName": "API",
+    },
+    "snakeCase": {
+      "safeName": "api",
+      "unsafeName": "api",
+    },
+  },
+  "auth": {
+    "docs": undefined,
+    "requirement": "ALL",
+    "schemes": [],
+  },
+  "basePath": undefined,
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceID",
+          "unsafeName": "errorInstanceID",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceID",
+          "unsafeName": "ErrorInstanceID",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "environments": undefined,
+  "errorDiscriminationStrategy": {
+    "_visit": [Function],
+    "type": "statusCode",
+  },
+  "errors": [],
+  "headers": [],
+  "pathParameters": [],
+  "rootPackage": {
+    "docs": undefined,
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": undefined,
+      "packagePath": [],
+    },
+    "hasEndpointsInTree": false,
+    "navigationConfig": undefined,
+    "service": undefined,
+    "subpackages": [
+      "subpackage_file",
+    ],
+    "types": [],
+    "webhooks": undefined,
+    "websocket": undefined,
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": false,
+    "platformHeaders": {
+      "language": "X-Fern-Language",
+      "sdkName": "X-Fern-SDK-Name",
+      "sdkVersion": "X-Fern-SDK-Version",
+    },
+  },
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [
+      "type_file:StringType",
+    ],
+    "typesReferencedOnlyByService": {},
+  },
+  "services": [],
+  "subpackages": {
+    "subpackage_file": {
+      "docs": undefined,
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "file",
+              "unsafeName": "file",
+            },
+            "originalName": "file",
+            "pascalCase": {
+              "safeName": "File",
+              "unsafeName": "File",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FILE",
+              "unsafeName": "FILE",
+            },
+            "snakeCase": {
+              "safeName": "file",
+              "unsafeName": "file",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "file",
+            "unsafeName": "file",
+          },
+          "originalName": "file",
+          "pascalCase": {
+            "safeName": "File",
+            "unsafeName": "File",
+          },
+          "screamingSnakeCase": {
+            "safeName": "FILE",
+            "unsafeName": "FILE",
+          },
+          "snakeCase": {
+            "safeName": "file",
+            "unsafeName": "file",
+          },
+        },
+        "packagePath": [],
+      },
+      "hasEndpointsInTree": false,
+      "name": {
+        "camelCase": {
+          "safeName": "file",
+          "unsafeName": "file",
+        },
+        "originalName": "file",
+        "pascalCase": {
+          "safeName": "File",
+          "unsafeName": "File",
+        },
+        "screamingSnakeCase": {
+          "safeName": "FILE",
+          "unsafeName": "FILE",
+        },
+        "snakeCase": {
+          "safeName": "file",
+          "unsafeName": "file",
+        },
+      },
+      "navigationConfig": undefined,
+      "service": undefined,
+      "subpackages": [],
+      "types": [
+        "type_file:StringType",
+      ],
+      "webhooks": undefined,
+      "websocket": undefined,
+    },
+  },
+  "types": [
+    {
+      "availability": {
+        "message": undefined,
+        "status": "GENERAL_AVAILABILITY",
+      },
+      "docs": undefined,
+      "examples": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "file",
+                "unsafeName": "file",
+              },
+              "originalName": "file",
+              "pascalCase": {
+                "safeName": "File",
+                "unsafeName": "File",
+              },
+              "screamingSnakeCase": {
+                "safeName": "FILE",
+                "unsafeName": "FILE",
+              },
+              "snakeCase": {
+                "safeName": "file",
+                "unsafeName": "file",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "file",
+              "unsafeName": "file",
+            },
+            "originalName": "file",
+            "pascalCase": {
+              "safeName": "File",
+              "unsafeName": "File",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FILE",
+              "unsafeName": "FILE",
+            },
+            "snakeCase": {
+              "safeName": "file",
+              "unsafeName": "file",
+            },
+          },
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "stringType",
+            "unsafeName": "stringType",
+          },
+          "originalName": "StringType",
+          "pascalCase": {
+            "safeName": "StringType",
+            "unsafeName": "StringType",
+          },
+          "screamingSnakeCase": {
+            "safeName": "STRING_TYPE",
+            "unsafeName": "STRING_TYPE",
+          },
+          "snakeCase": {
+            "safeName": "string_type",
+            "unsafeName": "string_type",
+          },
+        },
+        "typeId": "type_file:StringType",
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "alias",
+        "aliasOf": {
+          "_type": "primitive",
+          "primitive": "STRING",
+        },
+        "resolvedType": {
+          "_type": "primitive",
+          "primitive": "STRING",
+        },
+      },
+    },
+  ],
+  "variables": [],
+  "webhookGroups": {},
+}
+`;

@@ -8,7 +8,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedAudiencesClient } from \"@fern/audiences\";\n\nconst seedAudiences = new SeedAudiencesClient();\nawait seedAudiences.folderA.service.getDirectThread();\n"
+=======
+                "client": "import { SeedAudiencesClient } from \"@fern/audiences\";\n\nconst seedAudiences = new SeedAudiencesClient({ environment: \"YOUR_BASE_URL\" });\nawait seedAudiences.folderA.service.getDirectThread();\n"
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -19,7 +23,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedAudiencesClient } from \"@fern/audiences\";\n\nconst seedAudiences = new SeedAudiencesClient();\nawait seedAudiences.foo.find({\n    optionalString: \"string\",\n    publicProperty: \"string\",\n    privateProperty: 1\n});\n"
+=======
+                "client": "import { SeedAudiencesClient } from \"@fern/audiences\";\n\nconst seedAudiences = new SeedAudiencesClient({ environment: \"YOUR_BASE_URL\" });\nawait seedAudiences.foo.find({\n    optionalString: \"string\",\n    publicProperty: \"string\",\n    privateProperty: 1\n});\n"
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         }
     ],

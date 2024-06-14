@@ -18,7 +18,15 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedAuthEnvironmentVariablesClient } from "@fern/auth-environment-variables";
 
+<<<<<<< HEAD
 const seedAuthEnvironmentVariables = new SeedAuthEnvironmentVariablesClient();
+=======
+const seedAuthEnvironmentVariables = new SeedAuthEnvironmentVariablesClient({
+    environment: "YOUR_BASE_URL",
+    apiKey: "YOUR_API_KEY",
+    xAnotherHeader: "YOUR_X_ANOTHER_HEADER",
+});
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
 await seedAuthEnvironmentVariables.service.getWithApiKey();
 ```
 
@@ -42,7 +50,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedAuthEnvironmentVariablesError } from '@fern/auth-environment-variables';
+import { SeedAuthEnvironmentVariablesError } from "@fern/auth-environment-variables";
 
 try {
     await seedAuthEnvironmentVariables.getWithApiKey(...);
@@ -115,7 +123,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedAuthEnvironmentVariablesClient } from '@fern/auth-environment-variables';
+import { SeedAuthEnvironmentVariablesClient } from "@fern/auth-environment-variables";
 
 const seedAuthEnvironmentVariables = new SeedAuthEnvironmentVariablesClient({
     ...

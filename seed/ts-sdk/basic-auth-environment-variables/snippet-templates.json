@@ -11,6 +11,7 @@
             "identifierOverride": "endpoint_basic-auth.getWithBasicAuth"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedBasicAuthEnvironmentVariables = new SeedBasicAuthEnvironmentVariablesClient($FERN_INPUT);",
@@ -63,6 +64,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedBasicAuthEnvironmentVariables = new SeedBasicAuthEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedBasicAuthEnvironmentVariables.basicAuth.getWithBasicAuth()",
@@ -86,6 +90,7 @@
             "identifierOverride": "endpoint_basic-auth.postWithBasicAuth"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedBasicAuthEnvironmentVariables = new SeedBasicAuthEnvironmentVariablesClient($FERN_INPUT);",
@@ -138,6 +143,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedBasicAuthEnvironmentVariables = new SeedBasicAuthEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedBasicAuthEnvironmentVariables.basicAuth.postWithBasicAuth(\n\t$FERN_INPUT\n)",

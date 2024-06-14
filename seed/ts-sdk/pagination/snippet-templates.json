@@ -11,6 +11,7 @@
             "identifierOverride": "endpoint_users.listWithCursorPagination"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedPagination = new SeedPaginationClient($FERN_INPUT);",
@@ -47,6 +48,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedPagination = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedPagination.users.listWithCursorPagination(\n\t$FERN_INPUT\n)",
@@ -149,6 +153,7 @@
             "identifierOverride": "endpoint_users.listWithOffsetPagination"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedPagination = new SeedPaginationClient($FERN_INPUT);",
@@ -185,6 +190,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedPagination = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedPagination.users.listWithOffsetPagination(\n\t$FERN_INPUT\n)",
@@ -287,6 +295,7 @@
             "identifierOverride": "endpoint_users.listWithExtendedResults"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedPagination = new SeedPaginationClient($FERN_INPUT);",
@@ -323,6 +332,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedPagination = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedPagination.users.listWithExtendedResults(\n\t$FERN_INPUT\n)",
@@ -375,6 +387,7 @@
             "identifierOverride": "endpoint_users.listUsernames"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedPagination = new SeedPaginationClient($FERN_INPUT);",
@@ -411,6 +424,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedPagination = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedPagination.users.listUsernames(\n\t$FERN_INPUT\n)",
@@ -463,6 +479,7 @@
             "identifierOverride": "endpoint_users.listWithGlobalConfig"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedPagination = new SeedPaginationClient($FERN_INPUT);",
@@ -499,6 +516,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedPagination = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedPagination.users.listWithGlobalConfig(\n\t$FERN_INPUT\n)",

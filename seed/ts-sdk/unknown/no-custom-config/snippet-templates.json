@@ -11,6 +11,7 @@
             "identifierOverride": "endpoint_unknown.post"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedUnknownAsAny = new SeedUnknownAsAnyClient();",
@@ -30,6 +31,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedUnknownAsAny = new SeedUnknownAsAnyClient({ environment: \"YOUR_BASE_URL\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedUnknownAsAny.unknown.post(\n\t$FERN_INPUT\n)",

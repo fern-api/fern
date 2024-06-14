@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedUnknownAsAnyClient } from "@fern/unknown";
 
-const seedUnknownAsAny = new SeedUnknownAsAnyClient();
+const seedUnknownAsAny = new SeedUnknownAsAnyClient({ environment: "YOUR_BASE_URL" });
 await seedUnknownAsAny.unknown.post({
     key: "value",
 });
@@ -30,7 +30,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedUnknownAsAnyError } from '@fern/unknown';
+import { SeedUnknownAsAnyError } from "@fern/unknown";
 
 try {
     await seedUnknownAsAny.post(...);
@@ -103,7 +103,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedUnknownAsAnyClient } from '@fern/unknown';
+import { SeedUnknownAsAnyClient } from "@fern/unknown";
 
 const seedUnknownAsAny = new SeedUnknownAsAnyClient({
     ...

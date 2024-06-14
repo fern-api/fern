@@ -11,6 +11,7 @@
             "identifierOverride": "endpoint_property-based-error.ThrowError"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedErrorProperty = new SeedErrorPropertyClient();",
@@ -30,6 +31,9 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedErrorProperty = new SeedErrorPropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedErrorProperty.propertyBasedError.throwError()",

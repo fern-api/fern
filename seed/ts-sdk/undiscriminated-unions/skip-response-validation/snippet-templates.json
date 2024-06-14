@@ -11,6 +11,7 @@
             "identifierOverride": "endpoint_union.get"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient();",
@@ -30,9 +31,36 @@
                 ],
                 "type": "generic"
             },
+=======
+            "clientInstantiation": "const seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient({ environment: \"YOUR_BASE_URL\" });\n",
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedUndiscriminatedUnions.union.get()",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/undiscriminated-unions",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/metadata",
+            "method": "GET",
+            "identifierOverride": "endpoint_union.getMetadata"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedUndiscriminatedUnions.union.getMetadata()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [],

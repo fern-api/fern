@@ -18,7 +18,14 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedCustomAuthClient } from "@fern/custom-auth";
 
+<<<<<<< HEAD
 const seedCustomAuth = new SeedCustomAuthClient();
+=======
+const seedCustomAuth = new SeedCustomAuthClient({
+    environment: "YOUR_BASE_URL",
+    customAuthScheme: "YOUR_CUSTOM_AUTH_SCHEME",
+});
+>>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
 await seedCustomAuth.customAuth.postWithCustomAuth({
     key: "value",
 });
@@ -30,7 +37,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedCustomAuthError } from '@fern/custom-auth';
+import { SeedCustomAuthError } from "@fern/custom-auth";
 
 try {
     await seedCustomAuth.postWithCustomAuth(...);
@@ -103,7 +110,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedCustomAuthClient } from '@fern/custom-auth';
+import { SeedCustomAuthClient } from "@fern/custom-auth";
 
 const seedCustomAuth = new SeedCustomAuthClient({
     ...
