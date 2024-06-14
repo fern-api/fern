@@ -443,12 +443,6 @@ types:
       - PageConfiguration
       - LinkConfiguration
 
-  SubpackageOrSubpackages:
-    discriminated: false
-    union:
-      - string
-      - list<string>
-
   ApiReferenceSectionConfiguration:
     properties:
       section:

@@ -31,7 +31,6 @@ export * from "./PageConfiguration";
 export * from "./SectionConfiguration";
 export * from "./ApiReferenceConfiguration";
 export * from "./ApiReferenceLayoutItem";
-export * from "./SubpackageOrSubpackages";
 export * from "./ApiReferenceSectionConfiguration";
 export * from "./ApiReferencePackageConfiguration";
 export * from "./ApiReferencePackageConfigurationWithOptions";

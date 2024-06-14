@@ -123,7 +123,7 @@ async function getAllPagesFromApiReferenceLayoutItem({
                 await readFile(item.absolutePath)
             ).toString()
         };
-    } else if (item.type === "package") {
+    } else if (item.type === "package" || item.type === "section") {
         const toRet = combineMaps(
             await Promise.all(
                 item.contents.map(async (subItem) => {
