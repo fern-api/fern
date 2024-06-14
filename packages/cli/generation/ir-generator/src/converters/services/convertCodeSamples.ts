@@ -7,7 +7,7 @@ export function convertCodeSample({
     codeSample,
     file
 }: {
-    codeSample: ExampleCodeSampleSchema;
+    codeSample: RawSchemas.ExampleCodeSampleSchema;
     file: FernFileContext;
 }): ExampleCodeSample {
     return visitExampleCodeSampleSchema<ExampleCodeSample>(codeSample, {
