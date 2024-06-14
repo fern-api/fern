@@ -44,7 +44,11 @@ export class ApiDefinitionHolder {
     }
 
     public getSubpackage(subpackageId: string): APIV1Read.ApiDefinitionPackage | undefined {
-        return subpackageId === ROOT_PACKAGE_ID ? this.api.rootPackage : this.api.subpackages[subpackageId];
+        return subpackageId === ROOT_PACKAGE_ID
+            ? this.api.rootPackage
+            : this.api.subpackages[
+                  subpackageId.startsWith("subpackage_") ? subpackageId : `subpackage_${subpackageId}`
+              ];
     }
 
     public resolveSubpackage(

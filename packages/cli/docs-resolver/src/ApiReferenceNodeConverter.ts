@@ -217,7 +217,7 @@ export class ApiReferenceNodeConverter {
             packageId != null ? this.#holder.resolveSubpackage(this.#holder.getSubpackage(packageId)) : undefined;
 
         // if an endpoint, websocket, webhook, or subpackage is not visited, add it to the additional children list
-        const additionalChildren: FernNavigation.ApiPackageChild[] = [];
+        let additionalChildren: FernNavigation.ApiPackageChild[] = [];
 
         pkg?.endpoints.forEach((endpoint) => {
             const endpointId = this.#holder.getEndpointId(endpoint);
@@ -227,7 +227,7 @@ export class ApiReferenceNodeConverter {
             if (this.#visitedEndpoints.has(endpointId)) {
                 return;
             }
-            children.push({
+            additionalChildren.push({
                 id: idgen.append(endpoint.id).get(),
                 type: "endpoint",
                 method: endpoint.method,
@@ -250,7 +250,7 @@ export class ApiReferenceNodeConverter {
             if (this.#visitedWebSockets.has(webSocketId)) {
                 return;
             }
-            children.push({
+            additionalChildren.push({
                 id: idgen.append(webSocket.id).get(),
                 type: "webSocket",
                 webSocketId,
@@ -271,7 +271,7 @@ export class ApiReferenceNodeConverter {
             if (this.#visitedWebhooks.has(webhookId)) {
                 return;
             }
-            children.push({
+            additionalChildren.push({
                 id: idgen.append(webhook.id).get(),
                 type: "webhook",
                 webhookId,
@@ -298,7 +298,7 @@ export class ApiReferenceNodeConverter {
 
             const subpackageNodeId = idgen.append(subpackageId);
             const slug = isSubpackage(subpackage) ? parentSlug.apply(subpackage) : parentSlug;
-            children.push({
+            additionalChildren.push({
                 id: subpackageNodeId.get(),
                 type: "apiPackage",
                 children: this.#convertApiDefinitionPackage(subpackageId, [], slug, subpackageNodeId),
@@ -316,7 +316,7 @@ export class ApiReferenceNodeConverter {
         });
 
         if (this.apiSection.alphabetized) {
-            additionalChildren.sort((a, b) => {
+            additionalChildren = additionalChildren.sort((a, b) => {
                 const aTitle = a.type === "endpointPair" ? a.nonStream.title : a.title;
                 const bTitle = b.type === "endpointPair" ? b.nonStream.title : b.title;
                 return aTitle.localeCompare(bTitle);
@@ -370,7 +370,9 @@ export class ApiReferenceNodeConverter {
                 id: subpackageNodeId.get(),
                 type: "apiPackage",
                 children: [],
-                title: unknownIdentifier,
+                title: isSubpackage(subpackage)
+                    ? subpackage.displayName ?? titleCase(subpackage.name)
+                    : this.apiSection.title,
                 slug: slug.get(),
                 icon: undefined,
                 hidden: undefined,
@@ -392,6 +394,9 @@ export class ApiReferenceNodeConverter {
             const endpointId = this.#holder.getEndpointId(endpoint);
             if (endpointId == null) {
                 throw new Error(`Expected Endpoint ID for ${endpoint.id}. Got undefined.`);
+            }
+            if (this.#visitedEndpoints.has(endpointId)) {
+                this.taskContext.logger.error(`Duplicate endpoint found in the API Reference layout: ${endpointId}`);
             }
             this.#visitedEndpoints.add(endpointId);
             return {
@@ -421,6 +426,9 @@ export class ApiReferenceNodeConverter {
             if (webSocketId == null) {
                 throw new Error(`Expected WebSocket ID for ${webSocket.id}. Got undefined.`);
             }
+            if (this.#visitedWebSockets.has(webSocketId)) {
+                this.taskContext.logger.error(`Duplicate web socket found in the API Reference layout: ${webSocketId}`);
+            }
             this.#visitedWebSockets.add(webSocketId);
             return {
                 id: idgen.append(webSocket.id).get(),
@@ -446,6 +454,9 @@ export class ApiReferenceNodeConverter {
             if (webhookId == null) {
                 throw new Error(`Expected Webhook ID for ${webhook.id}. Got undefined.`);
             }
+            if (this.#visitedWebhooks.has(webhookId)) {
+                this.taskContext.logger.error(`Duplicate webhook found in the API Reference layout: ${webhookId}`);
+            }
             this.#visitedWebhooks.add(webhookId);
             return {
                 id: idgen.append(webhook.id).get(),
@@ -461,11 +472,7 @@ export class ApiReferenceNodeConverter {
             };
         }
 
-        this.taskContext.logger.warn(
-            "Unknown identifier in the API Reference layout: ",
-            unknownIdentifier,
-            "Skipping..."
-        );
+        this.taskContext.logger.error("Unknown identifier in the API Reference layout: ", unknownIdentifier);
 
         return;
     }
