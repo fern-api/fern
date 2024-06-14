@@ -299,6 +299,9 @@ export async function generateIntermediateRepresentation({
                     const irWebhook = webhooksByOriginalName[key];
                     if (irWebhook != null) {
                         irGraph.addWebhook(irWebhook, webhook);
+                        if (webhook.audiences != null) {
+                            irGraph.markWebhookForAudiences(irWebhook, webhook.audiences);
+                        }
                     }
                 });
 
@@ -487,18 +490,20 @@ function filterIntermediateRepresentationForAudiences(
 
     const filteredWebhookGroups = Object.fromEntries(
         Object.entries(intermediateRepresentation.webhookGroups).map(([webhookGroupId, webhookGroup]) => {
-            const filteredWebhooks = webhookGroup.filter(filteredIr.hasWebhook).map((webhook) => {
-                const webhookId = webhook.id;
-                if (webhook.payload.type === "inlinedPayload" && webhookId != null) {
-                    webhook.payload = {
-                        ...webhook.payload,
-                        properties: webhook.payload.properties.filter((property) => {
-                            return filteredIr.hasWebhookPayloadProperty(webhookId, property.name.wireValue);
-                        })
-                    };
-                }
-                return webhook;
-            });
+            const filteredWebhooks = webhookGroup
+                .filter((webhook) => filteredIr.hasWebhook(webhook))
+                .map((webhook) => {
+                    const webhookId = webhook.id;
+                    if (webhook.payload.type === "inlinedPayload" && webhookId != null) {
+                        webhook.payload = {
+                            ...webhook.payload,
+                            properties: webhook.payload.properties.filter((property) => {
+                                return filteredIr.hasWebhookPayloadProperty(webhookId, property.name.wireValue);
+                            })
+                        };
+                    }
+                    return webhook;
+                });
             return [webhookGroupId, filteredWebhooks];
         })
     );
