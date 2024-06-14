@@ -6,9 +6,9 @@ import * as serializers from "../../..";
 import * as FernDocsConfig from "../../../../api";
 import * as core from "../../../../core";
 
-export const ApiSectionConfiguration: core.serialization.ObjectSchema<
-    serializers.ApiSectionConfiguration.Raw,
-    FernDocsConfig.ApiSectionConfiguration
+export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
+    serializers.ApiReferenceConfiguration.Raw,
+    FernDocsConfig.ApiReferenceConfiguration
 > = core.serialization.object({
     api: core.serialization.string(),
     apiName: core.serialization.property("api-name", core.serialization.string().optional()),
@@ -16,7 +16,9 @@ export const ApiSectionConfiguration: core.serialization.ObjectSchema<
     displayErrors: core.serialization.property("display-errors", core.serialization.boolean().optional()),
     snippets: core.serialization.lazyObject(async () => (await import("../../..")).SnippetsConfiguration).optional(),
     summary: core.serialization.string().optional(),
-    layout: core.serialization.lazy(async () => (await import("../../..")).ApiNavigationItems).optional(),
+    layout: core.serialization
+        .list(core.serialization.lazy(async () => (await import("../../..")).ApiReferenceLayoutItem))
+        .optional(),
     icon: core.serialization.string().optional(),
     slug: core.serialization.string().optional(),
     hidden: core.serialization.boolean().optional(),
@@ -26,7 +28,7 @@ export const ApiSectionConfiguration: core.serialization.ObjectSchema<
     paginated: core.serialization.boolean().optional(),
 });
 
-export declare namespace ApiSectionConfiguration {
+export declare namespace ApiReferenceConfiguration {
     interface Raw {
         api: string;
         "api-name"?: string | null;
@@ -34,7 +36,7 @@ export declare namespace ApiSectionConfiguration {
         "display-errors"?: boolean | null;
         snippets?: serializers.SnippetsConfiguration.Raw | null;
         summary?: string | null;
-        layout?: serializers.ApiNavigationItems.Raw | null;
+        layout?: serializers.ApiReferenceLayoutItem.Raw[] | null;
         icon?: string | null;
         slug?: string | null;
         hidden?: boolean | null;

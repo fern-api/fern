@@ -6,27 +6,14 @@ import * as serializers from "../../..";
 import * as FernDocsConfig from "../../../../api";
 import * as core from "../../../../core";
 
-export const ApiReferencePackageConfiguration: core.serialization.ObjectSchema<
+export const ApiReferencePackageConfiguration: core.serialization.Schema<
     serializers.ApiReferencePackageConfiguration.Raw,
     FernDocsConfig.ApiReferencePackageConfiguration
-> = core.serialization.object({
-    package: core.serialization.string(),
-    summary: core.serialization.string().optional(),
-    contents: core.serialization.lazy(async () => (await import("../../..")).ApiNavigationItems),
-    slug: core.serialization.string().optional(),
-    icon: core.serialization.string().optional(),
-    hidden: core.serialization.boolean().optional(),
-    skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
-});
+> = core.serialization.undiscriminatedUnion([
+    core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).ApiReferenceLayoutItem)),
+    core.serialization.lazyObject(async () => (await import("../../..")).ApiReferencePackageConfigurationWithOptions),
+]);
 
 export declare namespace ApiReferencePackageConfiguration {
-    interface Raw {
-        package: string;
-        summary?: string | null;
-        contents: serializers.ApiNavigationItems.Raw;
-        slug?: string | null;
-        icon?: string | null;
-        hidden?: boolean | null;
-        "skip-slug"?: boolean | null;
-    }
+    type Raw = serializers.ApiReferenceLayoutItem.Raw[] | serializers.ApiReferencePackageConfigurationWithOptions.Raw;
 }

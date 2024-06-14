@@ -1,7 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
-import { DocsNavigationConfiguration, DocsNavigationItem, ParsedApiNavigationItem } from "./ParsedDocsConfiguration";
+import {
+    DocsNavigationConfiguration,
+    DocsNavigationItem,
+    ParsedApiReferenceLayoutItem
+} from "./ParsedDocsConfiguration";
 
 export async function getAllPages({
     navigation,
@@ -70,7 +74,7 @@ export async function getAllPagesFromNavigationItem({
             const toRet = combineMaps(
                 await Promise.all(
                     item.navigation.map((apiNavigation) =>
-                        getAllPagesFromApiNavigationItem({ item: apiNavigation, absolutePathToFernFolder })
+                        getAllPagesFromApiReferenceLayoutItem({ item: apiNavigation, absolutePathToFernFolder })
                     )
                 )
             );
@@ -106,11 +110,11 @@ function combineMaps(maps: Record<RelativeFilePath, string>[]) {
     return maps.reduce((acc, record) => ({ ...acc, ...record }), {});
 }
 
-async function getAllPagesFromApiNavigationItem({
+async function getAllPagesFromApiReferenceLayoutItem({
     item,
     absolutePathToFernFolder
 }: {
-    item: ParsedApiNavigationItem;
+    item: ParsedApiReferenceLayoutItem;
     absolutePathToFernFolder: AbsoluteFilePath;
 }): Promise<Record<RelativeFilePath, string>> {
     if (item.type === "page") {
@@ -123,7 +127,7 @@ async function getAllPagesFromApiNavigationItem({
         const toRet = combineMaps(
             await Promise.all(
                 item.contents.map(async (subItem) => {
-                    return await getAllPagesFromApiNavigationItem({ item: subItem, absolutePathToFernFolder });
+                    return await getAllPagesFromApiReferenceLayoutItem({ item: subItem, absolutePathToFernFolder });
                 })
             )
         );

@@ -19,7 +19,7 @@ export class ApiReferenceNodeConverter {
     #visitedWebSockets = new Set<FernNavigation.WebSocketId>();
     #visitedWebhooks = new Set<FernNavigation.WebhookId>();
     #visitedSubpackages = new Set<string>();
-    #nodeIdToSubpackageId = new Map<string, string>();
+    #nodeIdToSubpackageId = new Map<string, string[]>();
     #children: FernNavigation.ApiPackageChild[] = [];
     #overviewPageId: FernNavigation.PageId | undefined;
     #slug: FernNavigation.SlugGenerator;
@@ -57,7 +57,7 @@ export class ApiReferenceNodeConverter {
 
         // Step 1. Convert the navigation items that are manually defined in the API section.
         if (this.apiSection.navigation != null) {
-            this.#children = this.#convertApiNavigationItems(
+            this.#children = this.#convertApiReferenceLayoutItems(
                 this.apiSection.navigation,
                 this.#holder.api.rootPackage,
                 this.#slug,
@@ -94,8 +94,8 @@ export class ApiReferenceNodeConverter {
         };
     }
 
-    #convertApiNavigationItems(
-        navigation: docsYml.ParsedApiNavigationItem[],
+    #convertApiReferenceLayoutItems(
+        navigation: docsYml.ParsedApiReferenceLayoutItem[],
         apiDefinitionPackage: APIV1Read.ApiDefinitionPackage | undefined,
         parentSlug: FernNavigation.SlugGenerator,
         idgen: NodeIdGenerator
@@ -140,7 +140,7 @@ export class ApiReferenceNodeConverter {
     }
 
     #convertPackage(
-        pkg: docsYml.ParsedApiNavigationItem.Package,
+        pkg: docsYml.ParsedApiReferenceLayoutItem.Package,
         parentSlug: FernNavigation.SlugGenerator,
         idgen: NodeIdGenerator
     ): FernNavigation.ApiPackageNode {
@@ -158,7 +158,7 @@ export class ApiReferenceNodeConverter {
             const subpackageId = ApiDefinitionHolder.getSubpackageId(subpackage);
             const subpackageNodeId = idgen.append(subpackageId);
             this.#visitedSubpackages.add(subpackageId);
-            this.#nodeIdToSubpackageId.set(subpackageNodeId.get(), subpackageId);
+            this.#nodeIdToSubpackageId.set(subpackageNodeId.get(), [subpackageId]);
             const urlSlug =
                 pkg.slug ??
                 (isSubpackage(subpackage)
@@ -169,7 +169,12 @@ export class ApiReferenceNodeConverter {
                 skipUrlSlug: pkg.skipUrlSlug,
                 urlSlug
             });
-            const convertedItems = this.#convertApiNavigationItems(pkg.contents, subpackage, slug, subpackageNodeId);
+            const convertedItems = this.#convertApiReferenceLayoutItems(
+                pkg.contents,
+                subpackage,
+                slug,
+                subpackageNodeId
+            );
             return {
                 id: subpackageNodeId.get(),
                 type: "apiPackage",
@@ -193,7 +198,7 @@ export class ApiReferenceNodeConverter {
                 skipUrlSlug: pkg.skipUrlSlug,
                 urlSlug
             });
-            const convertedItems = this.#convertApiNavigationItems(pkg.contents, subpackage, slug, idgen);
+            const convertedItems = this.#convertApiReferenceLayoutItems(pkg.contents, subpackage, slug, idgen);
             return {
                 id: idgen.append(kebabCase(pkg.package)).get(),
                 type: "apiPackage",
@@ -211,7 +216,7 @@ export class ApiReferenceNodeConverter {
     }
 
     #convertSection(
-        section: docsYml.ParsedApiNavigationItem.Section,
+        section: docsYml.ParsedApiReferenceLayoutItem.Section,
         parentSlug: FernNavigation.SlugGenerator,
         idgen: NodeIdGenerator
     ): FernNavigation.ApiPackageNode {
@@ -225,35 +230,31 @@ export class ApiReferenceNodeConverter {
                 ? this.markdownFilesToFullSlugs.get(section.summaryAbsolutePath)
                 : undefined;
 
-        const nodeId = idgen.append(`section:${kebabCase(section.section)}`);
+        const nodeId = idgen.append(`section:${kebabCase(section.title)}`);
 
-        section.subpackages.forEach((subpackageId) => {
+        const subpackages = section.referencedSubpackages.filter((subpackageId) => {
             const subpackage = this.#holder.getSubpackage(subpackageId);
             if (subpackage == null) {
                 this.taskContext.logger.error(`Subpackage ${subpackageId} not found in ${this.apiDefinitionId}`);
-                return;
+                return false;
             }
-            this.#visitedSubpackages.add(subpackageId);
-            this.#nodeIdToSubpackageId.set(nodeId.get(), subpackageId);
+            return true;
         });
 
-        const urlSlug = section.slug ?? kebabCase(section.section);
+        this.#nodeIdToSubpackageId.set(nodeId.get(), subpackages);
+
+        const urlSlug = section.slug ?? kebabCase(section.title);
         const slug = parentSlug.apply({
             fullSlug: maybeFullSlug?.split("/"),
             skipUrlSlug: section.skipUrlSlug,
             urlSlug
         });
-        const convertedItems = this.#convertApiNavigationItems(
-            section.contents,
-            section.subpackages.length === 1 ? this.#holder.getSubpackage(section.subpackages[0]) : undefined,
-            slug,
-            idgen
-        );
+        const convertedItems = this.#convertApiReferenceLayoutItems(section.contents, undefined, slug, idgen);
         return {
             id: nodeId.get(),
             type: "apiPackage",
             children: convertedItems,
-            title: section.section,
+            title: section.title,
             slug: slug.get(),
             icon: section.icon,
             hidden: section.hidden,
@@ -383,12 +384,14 @@ export class ApiReferenceNodeConverter {
         let toRet = [
             ...children.map((child) => {
                 if (child.type === "apiPackage") {
-                    const subpackageId = this.#nodeIdToSubpackageId.get(child.id);
-                    const newChildren = this.#convertApiDefinitionPackage(
-                        subpackageId,
-                        child.children,
-                        parentSlug.set(child.slug),
-                        idgen.append(subpackageId ?? kebabCase(child.title))
+                    const subpackageIds = this.#nodeIdToSubpackageId.get(child.id) ?? [];
+                    const newChildren = subpackageIds.flatMap((subpackageId) =>
+                        this.#convertApiDefinitionPackage(
+                            subpackageId,
+                            child.children,
+                            parentSlug.set(child.slug),
+                            idgen.append(subpackageId ?? kebabCase(child.title))
+                        )
                     );
 
                     return {
@@ -428,7 +431,7 @@ export class ApiReferenceNodeConverter {
             }
 
             this.#visitedSubpackages.add(subpackageId);
-            this.#nodeIdToSubpackageId.set(subpackageNodeId.get(), subpackageId);
+            this.#nodeIdToSubpackageId.set(subpackageNodeId.get(), [subpackageId]);
             const urlSlug = isSubpackage(subpackage) ? subpackage.urlSlug : "";
             const slug = parentSlug.apply({ urlSlug });
             return {

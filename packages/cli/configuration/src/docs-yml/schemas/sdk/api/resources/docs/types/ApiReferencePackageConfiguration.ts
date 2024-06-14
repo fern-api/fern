@@ -4,13 +4,6 @@
 
 import * as FernDocsConfig from "../../..";
 
-export interface ApiReferencePackageConfiguration {
-    package: string;
-    /** Relative path to the markdown file. This summary is displayed at the top of the API section. */
-    summary?: string;
-    contents: FernDocsConfig.ApiNavigationItems;
-    slug?: string;
-    icon?: string;
-    hidden?: boolean;
-    skipSlug?: boolean;
-}
+export type ApiReferencePackageConfiguration =
+    | FernDocsConfig.ApiReferenceLayoutItem[]
+    | FernDocsConfig.ApiReferencePackageConfigurationWithOptions;

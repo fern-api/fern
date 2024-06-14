@@ -183,7 +183,7 @@ export declare namespace DocsNavigationItem {
         showErrors: boolean;
         snippetsConfiguration: SnippetsConfiguration | undefined;
         summaryAbsolutePath: AbsoluteFilePath | undefined;
-        navigation: ParsedApiNavigationItem[];
+        navigation: ParsedApiReferenceLayoutItem[];
         hidden: boolean | undefined;
         slug: string | undefined;
         skipUrlSlug: boolean | undefined;
@@ -212,13 +212,13 @@ export declare namespace DocsNavigationItem {
     }
 }
 
-export declare namespace ParsedApiNavigationItem {
+export declare namespace ParsedApiReferenceLayoutItem {
     export interface Section {
         type: "section";
-        section: string; // title
-        subpackages: string[]; // subpackage IDs
+        title: string; // title
+        referencedSubpackages: string[]; // subpackage IDs
         summaryAbsolutePath: AbsoluteFilePath | undefined;
-        contents: ParsedApiNavigationItem[];
+        contents: ParsedApiReferenceLayoutItem[];
         slug: string | undefined;
         hidden: boolean | undefined;
         icon: string | undefined;
@@ -226,9 +226,10 @@ export declare namespace ParsedApiNavigationItem {
     }
     export interface Package {
         type: "package";
+        title: string | undefined; // defaults to subpackage title
         package: string; // subpackage ID
         summaryAbsolutePath: AbsoluteFilePath | undefined;
-        contents: ParsedApiNavigationItem[];
+        contents: ParsedApiReferenceLayoutItem[];
         slug: string | undefined;
         hidden: boolean | undefined;
         icon: string | undefined;
@@ -241,9 +242,9 @@ export declare namespace ParsedApiNavigationItem {
     }
 }
 
-export type ParsedApiNavigationItem =
-    | ParsedApiNavigationItem.Item
-    | ParsedApiNavigationItem.Section
-    | ParsedApiNavigationItem.Package
+export type ParsedApiReferenceLayoutItem =
+    | ParsedApiReferenceLayoutItem.Item
+    | ParsedApiReferenceLayoutItem.Section
+    | ParsedApiReferenceLayoutItem.Package
     | DocsNavigationItem.Page
     | DocsNavigationItem.Link;

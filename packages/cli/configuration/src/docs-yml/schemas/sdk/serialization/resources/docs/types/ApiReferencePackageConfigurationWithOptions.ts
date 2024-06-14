@@ -6,15 +6,11 @@ import * as serializers from "../../..";
 import * as FernDocsConfig from "../../../../api";
 import * as core from "../../../../core";
 
-export const ApiReferenceSectionConfiguration: core.serialization.ObjectSchema<
-    serializers.ApiReferenceSectionConfiguration.Raw,
-    FernDocsConfig.ApiReferenceSectionConfiguration
+export const ApiReferencePackageConfigurationWithOptions: core.serialization.ObjectSchema<
+    serializers.ApiReferencePackageConfigurationWithOptions.Raw,
+    FernDocsConfig.ApiReferencePackageConfigurationWithOptions
 > = core.serialization.object({
-    section: core.serialization.string(),
-    referencedPackages: core.serialization.property(
-        "referenced-packages",
-        core.serialization.list(core.serialization.string()).optional()
-    ),
+    title: core.serialization.string().optional(),
     summary: core.serialization.string().optional(),
     contents: core.serialization
         .list(core.serialization.lazy(async () => (await import("../../..")).ApiReferenceLayoutItem))
@@ -25,10 +21,9 @@ export const ApiReferenceSectionConfiguration: core.serialization.ObjectSchema<
     skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
 });
 
-export declare namespace ApiReferenceSectionConfiguration {
+export declare namespace ApiReferencePackageConfigurationWithOptions {
     interface Raw {
-        section: string;
-        "referenced-packages"?: string[] | null;
+        title?: string | null;
         summary?: string | null;
         contents?: serializers.ApiReferenceLayoutItem.Raw[] | null;
         slug?: string | null;

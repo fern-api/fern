@@ -1,28 +1,28 @@
-types: 
-  DocsUrlConfig: 
-    union: 
+types:
+  DocsUrlConfig:
+    union:
       customDomain: string
       customSubpath: string
 
-  DocsApiConfig: 
-    properties: 
-      id: 
+  DocsApiConfig:
+    properties:
+      id:
         type: string
         docs: |
           The ID of the API. This ID can be referenced in 
           the navigation configuration.
       definition: ApiDefinition
-  
-  ApiDefinition: 
-    docs: | 
+
+  ApiDefinition:
+    docs: |
       The definition of the API.
-    union: 
+    union:
       openapi: OpenApiSpec
       fern: FernDefinition
-  
-  OpenApiSpec: 
-    union: 
-      url: 
+
+  OpenApiSpec:
+    union:
+      url:
         type: string
         docs: |
           The URL of the OpenAPI specification.
@@ -30,7 +30,7 @@ types:
         type: string
         docs: |
           The OpenAPI specification in JSON or YAML format.
-  
+
   FernDefinition:
     union:
       url:
@@ -41,40 +41,40 @@ types:
         type: string
         docs: |
           The Fern definition in YAML format.
-  
-  DocsNavigationConfig: 
-    union: 
+
+  DocsNavigationConfig:
+    union:
       versioned: list<SingleDocsVersion>
       unversioned: SingleDocsVersion
-  
+
   SingleDocsVersion:
-    union: 
+    union:
       tabbed: list<DocsTab>
       untabbed: list<DocsNavigationItem>
-  
-  DocsTab: 
-    properties: 
-      id: 
+
+  DocsTab:
+    properties:
+      id:
         type: string
         docs: |
           The ID of the tab. This ID can be referenced in 
           the navigation configuration.
-      name: 
+      name:
         type: string
         docs: |
           The name of the tab.
-      icon: 
+      icon:
         type: optional<string>
         docs: |
           The icon of the tab.
       layout: list<DocsNavigationItem>
-  
-  DocsNavigationItem: 
-    union: 
+
+  DocsNavigationItem:
+    union:
       section: SectionConfiguration
-      api: ApiSectionConfiguration
+      api: ApiReferenceConfiguration
       page: PageConfiguration
-  
+
   PageConfiguration:
     properties:
       title: string
@@ -88,7 +88,7 @@ types:
       collapsed: optional<boolean>
       slug: optional<string>
 
-  ApiSectionConfiguration:
+  ApiReferenceConfiguration:
     properties:
       title: string
       id: string
@@ -97,7 +97,7 @@ types:
       display-errors:
         type: optional<boolean>
         docs: Defaults to false
-  
+
   ColorsConfiguration:
     properties:
       accent-primary:
@@ -106,12 +106,12 @@ types:
           The primary accent color is used for buttons, links, and other interactive elements. 
 
           The default is #818CF8
-      
+
       accentPrimary:
         type: optional<ColorConfig>
         name: accentPrimaryDeprecated
         availability: deprecated
-        docs: | 
+        docs: |
           Use `accent-primary` instead.
 
       background:
@@ -170,7 +170,7 @@ types:
       display-name: string
       icon: optional<string>
       slug: optional<string>
-  
+
   LayoutConfig:
     properties:
       page-width:
@@ -257,27 +257,27 @@ types:
       - fixed
       - static
 
-  GenerateDocsResponse: 
-    properties: 
-      generationID: 
+  GenerateDocsResponse:
+    properties:
+      generationID:
         type: uuid
         docs: |
           The ID of the generation request. Use this ID to check the status of 
           the generation request.
-      status: 
+      status:
         type: DocsGenerationStatus
         docs: |
           The status of the generation request.
-  
+
   DocsGenerationStatus:
     enum:
       - pending
       - generating
       - completed
-  
-  DocsGenerationStatusResponse: 
-    properties: 
-      status: 
+
+  DocsGenerationStatusResponse:
+    properties:
+      status:
         type: DocsGenerationStatus
         docs: |
           The status of the generation request.
@@ -293,27 +293,27 @@ service:
       method: POST
       request:
         name: GenerateDocsRequest
-        body: 
-          properties: 
+        body:
+          properties:
             url: DocsUrlConfig
             navigation: DocsNavigationConfig
             colors: optional<ColorsConfiguration>
             apis: optional<list<DocsApiConfig>>
             layout: optional<LayoutConfig>
       response: GenerateDocsResponse
-      examples: 
-        - request: 
-            url: 
+      examples:
+        - request:
+            url:
               type: customDomain
               value: https://docs.petstore.com
             navigation:
               type: unversioned
-              value: 
+              value:
                 type: untabbed
-                value: 
+                value:
                   - type: section
                     title: Introduction
-                    contents: 
+                    contents:
                       - type: page
                         title: Overview
                         contents: Welcome to the Petstore API documentation.
@@ -324,26 +324,25 @@ service:
                       # - type: api
                       #   id: plantstore
                       #   title: Plantstore API
-            # apis: 
+            # apis:
             #   - id: petstore
-            #     definition: 
+            #     definition:
             #       type: openapi
-            #       value: 
+            #       value:
             #         type: url
             #         url: https://petstore.swagger.io/v2/swagger.json
-          response: 
-            body: 
+          response:
+            body:
               generationID: 123e4567-e89b-12d3-a456-426614174000
               status: pending
-
 
     getGenerationStatus:
       display-name: Get Docs generation status
       path: /generate/{generationId}
       docs: Get the status of a docs generation request
       method: GET
-      path-parameters: 
-        generationId: 
+      path-parameters:
+        generationId:
           type: uuid
           docs: |
             The ID of the generation request.

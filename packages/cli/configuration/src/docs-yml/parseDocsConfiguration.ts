@@ -14,7 +14,7 @@ import {
     FilepathOrUrl,
     FontConfig,
     JavascriptConfig,
-    ParsedApiNavigationItem,
+    ParsedApiReferenceLayoutItem,
     ParsedDocsConfiguration,
     ParsedMetadataConfig,
     TabbedDocsNavigation,
@@ -537,7 +537,8 @@ async function convertNavigationItem({
                 rawConfig.snippets != null
                     ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets })
                     : undefined,
-            navigation: rawConfig.layout?.flatMap((item) => parseApiNavigationItem(item, absolutePathToConfig)) ?? [],
+            navigation:
+                rawConfig.layout?.flatMap((item) => parseApiReferenceLayoutItem(item, absolutePathToConfig)) ?? [],
             summaryAbsolutePath: resolveFilepath(rawConfig.summary, absolutePathToConfig),
             hidden: rawConfig.hidden ?? undefined,
             slug: rawConfig.slug,
@@ -558,10 +559,10 @@ async function convertNavigationItem({
     assertNever(rawConfig);
 }
 
-function parseApiNavigationItem(
-    item: RawDocs.ApiNavigationItem,
+function parseApiReferenceLayoutItem(
+    item: RawDocs.ApiReferenceLayoutItem,
     absolutePathToConfig: AbsoluteFilePath
-): ParsedApiNavigationItem[] {
+): ParsedApiReferenceLayoutItem[] {
     if (typeof item === "string") {
         return [{ type: "item", value: item }];
     }
@@ -591,23 +592,11 @@ function parseApiNavigationItem(
         return [
             {
                 type: "section",
-                section: item.section,
-                subpackages: typeof item.package === "string" ? [item.package] : item.package ?? [],
+                title: item.section,
+                referencedSubpackages: item.referencedPackages ?? [],
                 summaryAbsolutePath: resolveFilepath(item.summary, absolutePathToConfig),
-                contents: item.contents.flatMap((value) => parseApiNavigationItem(value, absolutePathToConfig)),
-                slug: item.slug,
-                hidden: item.hidden,
-                skipUrlSlug: item.skipSlug,
-                icon: item.icon
-            }
-        ];
-    } else if (isRawApiRefPackageConfiguration(item)) {
-        return [
-            {
-                type: "package",
-                package: item.package,
-                summaryAbsolutePath: resolveFilepath(item.summary, absolutePathToConfig),
-                contents: item.contents.flatMap((value) => parseApiNavigationItem(value, absolutePathToConfig)),
+                contents:
+                    item.contents?.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig)) ?? [],
                 slug: item.slug,
                 hidden: item.hidden,
                 skipUrlSlug: item.skipSlug,
@@ -616,18 +605,33 @@ function parseApiNavigationItem(
         ];
     }
 
-    return Object.entries(item).map(
-        ([key, values]): ParsedApiNavigationItem.Package => ({
+    return Object.entries(item).map(([key, value]): ParsedApiReferenceLayoutItem.Package => {
+        if (isRawApiRefPackageConfiguration(value)) {
+            return {
+                type: "package",
+                title: value.title,
+                package: key,
+                summaryAbsolutePath: resolveFilepath(value.summary, absolutePathToConfig),
+                contents:
+                    value.contents?.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig)) ?? [],
+                slug: value.slug,
+                hidden: value.hidden,
+                skipUrlSlug: value.skipSlug,
+                icon: value.icon
+            };
+        }
+        return {
             type: "package",
+            title: undefined,
             package: key,
             summaryAbsolutePath: undefined,
-            contents: values.flatMap((value) => parseApiNavigationItem(value, absolutePathToConfig)),
+            contents: value.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig)),
             hidden: false,
             slug: undefined,
             skipUrlSlug: false,
             icon: undefined
-        })
-    );
+        };
+    });
 }
 
 function convertSnippetsConfiguration({
@@ -652,13 +656,14 @@ function isRawSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.Secti
     return (item as RawDocs.SectionConfiguration).section != null;
 }
 
-function isRawApiSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.ApiSectionConfiguration {
+function isRawApiSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.ApiReferenceConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as RawDocs.ApiSectionConfiguration).api != null;
+    return (item as RawDocs.ApiReferenceConfiguration).api != null;
 }
 
 function isRawLinkConfig(item: unknown): item is RawDocs.LinkConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    RawDocs;
     return isPlainObject(item) && typeof item.link === "string" && typeof item.href === "string";
 }
 
@@ -666,10 +671,10 @@ function isRawApiRefSectionConfiguration(item: unknown): item is RawDocs.ApiRefe
     return isPlainObject(item) && typeof item.section === "string" && Array.isArray(item.contents);
 }
 
-function isRawApiRefPackageConfiguration(item: unknown): item is RawDocs.ApiReferencePackageConfiguration {
-    return (
-        isPlainObject(item) && item.section == null && typeof item.package === "string" && Array.isArray(item.contents)
-    );
+function isRawApiRefPackageConfiguration(
+    item: RawDocs.ApiReferencePackageConfiguration
+): item is RawDocs.ApiReferencePackageConfigurationWithOptions {
+    return !Array.isArray(item);
 }
 
 export function resolveFilepath(unresolvedFilepath: string, absolutePath: AbsoluteFilePath): AbsoluteFilePath;

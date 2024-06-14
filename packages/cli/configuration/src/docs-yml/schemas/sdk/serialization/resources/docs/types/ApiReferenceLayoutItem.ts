@@ -6,27 +6,25 @@ import * as serializers from "../../..";
 import * as FernDocsConfig from "../../../../api";
 import * as core from "../../../../core";
 
-export const ApiNavigationItem: core.serialization.Schema<
-    serializers.ApiNavigationItem.Raw,
-    FernDocsConfig.ApiNavigationItem
+export const ApiReferenceLayoutItem: core.serialization.Schema<
+    serializers.ApiReferenceLayoutItem.Raw,
+    FernDocsConfig.ApiReferenceLayoutItem
 > = core.serialization.undiscriminatedUnion([
     core.serialization.string(),
     core.serialization.record(
         core.serialization.string(),
-        core.serialization.lazy(async () => (await import("../../..")).ApiNavigationItems)
+        core.serialization.lazy(async () => (await import("../../..")).ApiReferencePackageConfiguration)
     ),
     core.serialization.lazyObject(async () => (await import("../../..")).PageConfiguration),
     core.serialization.lazyObject(async () => (await import("../../..")).LinkConfiguration),
     core.serialization.lazyObject(async () => (await import("../../..")).ApiReferenceSectionConfiguration),
-    core.serialization.lazyObject(async () => (await import("../../..")).ApiReferencePackageConfiguration),
 ]);
 
-export declare namespace ApiNavigationItem {
+export declare namespace ApiReferenceLayoutItem {
     type Raw =
         | string
-        | Record<string, serializers.ApiNavigationItems.Raw>
+        | Record<string, serializers.ApiReferencePackageConfiguration.Raw>
         | serializers.PageConfiguration.Raw
         | serializers.LinkConfiguration.Raw
-        | serializers.ApiReferenceSectionConfiguration.Raw
-        | serializers.ApiReferencePackageConfiguration.Raw;
+        | serializers.ApiReferenceSectionConfiguration.Raw;
 }
