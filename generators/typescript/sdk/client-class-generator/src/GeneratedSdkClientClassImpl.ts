@@ -354,16 +354,21 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return ts.factory.createNewExpression(referenceToClient, undefined, [referenceToOptions]);
     }
 
-    public instantiateAsRoot(args: { context: SdkContext; npmPackage: NpmPackage }): ts.Expression {
+    public instantiateAsRoot(args: {
+        context: SdkContext;
+        npmPackage: NpmPackage;
+        templateSentinel: string | undefined;
+    }): ts.Expression {
         const rootSdkClientName = args.context.sdkClientClass.getReferenceToClientClass(this.packageId, {
             npmPackage: args.npmPackage
         });
-        const optionsProperties = this.getOptionsPropertiesForSnippet(args.context);
-        return ts.factory.createNewExpression(
+
+        const expression = ts.factory.createNewExpression(
             rootSdkClientName.getExpression(),
             undefined,
-            optionsProperties.length > 0 ? [ts.factory.createObjectLiteralExpression(optionsProperties)] : undefined
+            args.templateSentinel ? [ts.factory.createStringLiteral(args.templateSentinel)] : []
         );
+        return expression;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -806,75 +811,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     /***********
      * OPTIONS *
      ***********/
-
-    public getOptionsPropertiesForSnippet(context: SdkContext): ts.ObjectLiteralElementLike[] {
-        const properties: ts.ObjectLiteralElementLike[] = [];
-
-        if (this.oauthAuthScheme != null && context.generateOAuthClients) {
-            properties.push(
-                ts.factory.createPropertyAssignment(
-                    OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME,
-                    ts.factory.createStringLiteral("YOUR_CLIENT_ID")
-                )
-            );
-            properties.push(
-                ts.factory.createPropertyAssignment(
-                    OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME,
-                    ts.factory.createStringLiteral("YOUR_CLIENT_SECRET")
-                )
-            );
-        }
-
-        if (this.bearerAuthScheme != null) {
-            properties.push(
-                ts.factory.createPropertyAssignment(
-                    this.getBearerAuthOptionKey(this.bearerAuthScheme),
-                    ts.factory.createStringLiteral(`YOUR_${this.bearerAuthScheme.token.screamingSnakeCase.unsafeName}`)
-                )
-            );
-        }
-
-        if (this.basicAuthScheme != null) {
-            properties.push(
-                ts.factory.createPropertyAssignment(
-                    this.getBasicAuthUsernameOptionKey(this.basicAuthScheme),
-                    ts.factory.createStringLiteral(
-                        `YOUR_${this.basicAuthScheme.username.screamingSnakeCase.unsafeName}`
-                    )
-                )
-            );
-            properties.push(
-                ts.factory.createPropertyAssignment(
-                    this.getBasicAuthPasswordOptionKey(this.basicAuthScheme),
-                    ts.factory.createStringLiteral(
-                        `YOUR_${this.basicAuthScheme.password.screamingSnakeCase.unsafeName}`
-                    )
-                )
-            );
-        }
-
-        for (const header of this.authHeaders) {
-            properties.push(
-                ts.factory.createPropertyAssignment(
-                    this.getOptionKeyForAuthHeader(header),
-                    ts.factory.createStringLiteral(`YOUR_${header.name.name.screamingSnakeCase.unsafeName}`)
-                )
-            );
-        }
-
-        for (const header of this.intermediateRepresentation.headers) {
-            if (!isLiteralHeader(header, context)) {
-                properties.push(
-                    ts.factory.createPropertyAssignment(
-                        this.getOptionKeyForNonLiteralHeader(header),
-                        ts.factory.createStringLiteral(`YOUR_${header.name.name.screamingSnakeCase.unsafeName}`)
-                    )
-                );
-            }
-        }
-
-        return properties;
-    }
 
     private generateOptionsInterface(context: SdkContext): OptionalKind<InterfaceDeclarationStructure> {
         const properties: OptionalKind<PropertySignatureStructure>[] = [];

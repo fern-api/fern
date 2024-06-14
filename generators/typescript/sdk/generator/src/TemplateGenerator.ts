@@ -1,9 +1,15 @@
 import {
+    ApiAuth,
+    AuthScheme,
+    BasicAuthScheme,
+    BearerAuthScheme,
     ContainerType,
     DeclaredTypeName,
     EnumTypeDeclaration,
     ExampleTypeShape,
+    HeaderAuthScheme,
     HttpEndpoint,
+    HttpHeader,
     Name,
     NameAndWireValue,
     ObjectTypeDeclaration,
@@ -11,9 +17,10 @@ import {
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { FdrSnippetTemplate } from "@fern-fern/snippet-sdk";
-import { GetReferenceOpts, getTextOfTsNode, ImportsManager, NpmPackage, PackageId } from "@fern-typescript/commons";
+import { GetReferenceOpts, getTextOfTsNode, NpmPackage, PackageId } from "@fern-typescript/commons";
 import { GeneratedEnumType, SdkContext } from "@fern-typescript/contexts";
-import { Project, ts } from "ts-morph";
+import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
+import { Project } from "ts-morph";
 
 // Write this in the fern def to share between FE + BE
 const TEMPLATE_SENTINEL = "$FERN_INPUT";
@@ -23,6 +30,8 @@ export class TemplateGenerator {
     private clientContext: SdkContext;
     private opts: GetReferenceOpts;
     private npmPackage: NpmPackage;
+    private auth: ApiAuth;
+    private headers: HttpHeader[];
     private endpoint: HttpEndpoint;
     private packageId: PackageId;
     private rootPackageId: PackageId;
@@ -33,6 +42,8 @@ export class TemplateGenerator {
         clientContext,
         endpointContext,
         npmPackage,
+        auth,
+        headers,
         endpoint,
         packageId,
         rootPackageId,
@@ -42,6 +53,8 @@ export class TemplateGenerator {
         clientContext: SdkContext;
         endpointContext: SdkContext;
         npmPackage: NpmPackage;
+        auth: ApiAuth;
+        headers: HttpHeader[];
         endpoint: HttpEndpoint;
         packageId: PackageId;
         rootPackageId: PackageId;
@@ -51,6 +64,8 @@ export class TemplateGenerator {
         this.endpointContext = endpointContext;
         this.clientContext = clientContext;
         this.npmPackage = npmPackage;
+        this.auth = auth;
+        this.headers = headers;
         this.endpoint = endpoint;
         this.packageId = packageId;
         this.rootPackageId = rootPackageId;
@@ -749,10 +764,170 @@ export class TemplateGenerator {
         });
     }
 
+    private getBearerAuthOptionKey(bearerAuthScheme: BearerAuthScheme): string {
+        return bearerAuthScheme.token.camelCase.safeName;
+    }
+
+    private getBasicAuthUsernameOptionKey(basicAuthScheme: BasicAuthScheme): string {
+        return basicAuthScheme.username.camelCase.safeName;
+    }
+
+    private getBasicAuthPasswordOptionKey(basicAuthScheme: BasicAuthScheme): string {
+        return basicAuthScheme.password.camelCase.safeName;
+    }
+
+    private getOptionKeyForAuthHeader(header: HeaderAuthScheme): string {
+        return header.name.name.camelCase.unsafeName;
+    }
+
+    private generateTopLevelClientInstantiationSnippetTemplateInput(): FdrSnippetTemplate.TemplateInput[] {
+        const topLevelTemplateInputs: FdrSnippetTemplate.TemplateInput[] = [];
+
+        for (const authScheme of this.auth.schemes) {
+            AuthScheme._visit(authScheme, {
+                basic: (basicAuthScheme) => {
+                    topLevelTemplateInputs.push(
+                        FdrSnippetTemplate.TemplateInput.template(
+                            FdrSnippetTemplate.Template.generic({
+                                imports: [],
+                                templateString: `${this.getBasicAuthUsernameOptionKey(
+                                    basicAuthScheme
+                                )}: ${TEMPLATE_SENTINEL}`,
+                                isOptional: false,
+                                templateInputs: [
+                                    FdrSnippetTemplate.TemplateInput.payload({
+                                        location: FdrSnippetTemplate.PayloadLocation.Auth,
+                                        path: "username"
+                                    })
+                                ]
+                            })
+                        ),
+                        FdrSnippetTemplate.TemplateInput.template(
+                            FdrSnippetTemplate.Template.generic({
+                                imports: [],
+                                templateString: `${this.getBasicAuthPasswordOptionKey(
+                                    basicAuthScheme
+                                )}: ${TEMPLATE_SENTINEL}`,
+                                isOptional: false,
+                                templateInputs: [
+                                    FdrSnippetTemplate.TemplateInput.payload({
+                                        location: FdrSnippetTemplate.PayloadLocation.Auth,
+                                        path: "password"
+                                    })
+                                ]
+                            })
+                        )
+                    );
+                },
+                bearer: (bearerAuthScheme) => {
+                    topLevelTemplateInputs.push(
+                        FdrSnippetTemplate.TemplateInput.template(
+                            FdrSnippetTemplate.Template.generic({
+                                imports: [],
+                                templateString: `${this.getBearerAuthOptionKey(
+                                    bearerAuthScheme
+                                )}: ${TEMPLATE_SENTINEL}`,
+                                isOptional: false,
+                                templateInputs: [
+                                    FdrSnippetTemplate.TemplateInput.payload({
+                                        location: FdrSnippetTemplate.PayloadLocation.Auth,
+                                        path: "token"
+                                    })
+                                ]
+                            })
+                        )
+                    );
+                },
+                // TODO: header & oauth are likely incorrect. payload path needs to be changed.
+                header: (header) => {
+                    topLevelTemplateInputs.push(
+                        FdrSnippetTemplate.TemplateInput.template(
+                            FdrSnippetTemplate.Template.generic({
+                                imports: [],
+                                templateString: `${this.getOptionKeyForAuthHeader(header)}: ${TEMPLATE_SENTINEL}`,
+                                isOptional: false,
+                                templateInputs: [
+                                    FdrSnippetTemplate.TemplateInput.payload({
+                                        location: FdrSnippetTemplate.PayloadLocation.Auth,
+                                        path: "Authorization"
+                                    })
+                                ]
+                            })
+                        )
+                    );
+                },
+                oauth: (oauthScheme) => {
+                    topLevelTemplateInputs.push(
+                        FdrSnippetTemplate.TemplateInput.template(
+                            FdrSnippetTemplate.Template.generic({
+                                imports: [],
+                                templateString: `${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME}: ${TEMPLATE_SENTINEL}`,
+                                isOptional: false,
+                                templateInputs: [
+                                    FdrSnippetTemplate.TemplateInput.payload({
+                                        location: FdrSnippetTemplate.PayloadLocation.Auth,
+                                        path: "Authorization" // TO CHANGE
+                                    })
+                                ]
+                            })
+                        )
+                    );
+                    topLevelTemplateInputs.push(
+                        FdrSnippetTemplate.TemplateInput.template(
+                            FdrSnippetTemplate.Template.generic({
+                                imports: [],
+                                templateString: `${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME}: ${TEMPLATE_SENTINEL}`,
+                                isOptional: false,
+                                templateInputs: [
+                                    FdrSnippetTemplate.TemplateInput.payload({
+                                        location: FdrSnippetTemplate.PayloadLocation.Auth,
+                                        path: "Authorization" // TO CHANGE
+                                    })
+                                ]
+                            })
+                        )
+                    );
+                },
+                _other: () => {
+                    throw new Error("Unknown auth scheme: " + authScheme.type);
+                }
+            });
+        }
+
+        for (const header of this.headers) {
+            topLevelTemplateInputs.push(
+                FdrSnippetTemplate.TemplateInput.template(
+                    FdrSnippetTemplate.Template.generic({
+                        imports: [],
+                        templateString: `${header.name.name.camelCase.safeName}: ${TEMPLATE_SENTINEL}`,
+                        isOptional: true,
+                        templateInputs: [
+                            FdrSnippetTemplate.TemplateInput.payload({
+                                location: FdrSnippetTemplate.PayloadLocation.Headers,
+                                path: header.name.wireValue
+                            })
+                        ]
+                    })
+                )
+            );
+        }
+
+        return [
+            FdrSnippetTemplate.TemplateInput.template(
+                FdrSnippetTemplate.Template.generic({
+                    imports: [],
+                    templateString: `{ ${TEMPLATE_SENTINEL} }`,
+                    isOptional: true,
+                    templateInputs: topLevelTemplateInputs
+                })
+            )
+        ];
+    }
+
     // Should take in all params, filter out request to put at the back
     // Then create type reference templates for everything
     // Then make the request param manual to ensure that it acts like a hash
-    private generateTopLevelSnippetTemplateInput(): FdrSnippetTemplate.TemplateInput[] {
+    private generateTopLevelFunctionInvocationSnippetTemplateInput(): FdrSnippetTemplate.TemplateInput[] {
         const topLevelTemplateInputs: FdrSnippetTemplate.TemplateInput[] = [];
         // TS params are essentially going to be ordered, if they're not named request then they're going to go in loose (no name)
         // if they're in the request object then they're named within this hash (this.requestExample)
@@ -820,33 +995,28 @@ export class TemplateGenerator {
         const project = new Project({
             useInMemoryFileSystem: true
         });
-        const clientInstantiationSourceFile = project.createSourceFile("snippet");
-        const ciImportsManager = new ImportsManager();
 
-        const clientInstantiation = this.clientContext.sdkClientClass
-            .getGeneratedSdkClientClass(this.rootPackageId)
-            .instantiateAsRoot({ context: this.clientContext, npmPackage: this.npmPackage });
-        const clientAssignment = ts.factory.createVariableStatement(
-            undefined,
-            ts.factory.createVariableDeclarationList(
-                [
-                    ts.factory.createVariableDeclaration(
-                        this.clientContext.sdkInstanceReferenceForSnippet,
-                        undefined,
-                        undefined,
-                        clientInstantiation
-                    )
-                ],
-                ts.NodeFlags.Const
-            )
-        );
         // Create the client instantiation snippet
-        clientInstantiationSourceFile.addStatements([getTextOfTsNode(clientAssignment)]);
-        ciImportsManager.writeImportsToSourceFile(clientInstantiationSourceFile);
-        const clientInstantiationString = clientInstantiationSourceFile.getText();
+        const rootSdkClientName = getTextOfTsNode(
+            this.clientContext.sdkClientClass
+                .getReferenceToClientClass(this.rootPackageId, {
+                    npmPackage: this.npmPackage
+                })
+                .getEntityName()
+        );
+
+        const clientReference = getTextOfTsNode(this.clientContext.sdkInstanceReferenceForSnippet);
+
+        const topLevelClientInstantiationTemplateInputs =
+            this.generateTopLevelClientInstantiationSnippetTemplateInput();
+
+        const clientInstantiationTemplateString =
+            this.auth.schemes.length > 0 || this.headers.length > 0
+                ? `const ${clientReference} = new ${rootSdkClientName}(${TEMPLATE_SENTINEL});`
+                : `const ${clientReference} = new ${rootSdkClientName}();`;
 
         // Recurse over the parameters to the function
-        const topLevelTemplateInputs = this.generateTopLevelSnippetTemplateInput();
+        const topLevelFunctionInvocationTemplateInputs = this.generateTopLevelFunctionInvocationSnippetTemplateInput();
 
         // Create the outer function snippet
         const clientClass = this.clientContext.sdkClientClass.getGeneratedSdkClientClass(this.packageId);
@@ -854,21 +1024,27 @@ export class TemplateGenerator {
             referenceToRootClient: this.clientContext.sdkInstanceReferenceForSnippet
         });
         const endpointClientAccessString = getTextOfTsNode(endpointClientAccess);
-        const templateString =
-            topLevelTemplateInputs.length > 0
+        const functionInvocationTemplateString =
+            topLevelFunctionInvocationTemplateInputs.length > 0
                 ? `await ${endpointClientAccessString}.${this.getEndpointFunctionName(
                       this.endpoint
                   )}(\n\t${TEMPLATE_SENTINEL}\n)`
                 : `await ${endpointClientAccessString}.${this.getEndpointFunctionName(this.endpoint)}()`;
 
         return FdrSnippetTemplate.VersionedSnippetTemplate.v1({
-            clientInstantiation: clientInstantiationString,
+            clientInstantiation: FdrSnippetTemplate.Template.generic({
+                imports: [],
+                templateString: clientInstantiationTemplateString,
+                isOptional: false,
+                inputDelimiter: ",",
+                templateInputs: topLevelClientInstantiationTemplateInputs
+            }),
             functionInvocation: FdrSnippetTemplate.Template.generic({
                 imports: [],
-                templateString,
+                templateString: functionInvocationTemplateString,
                 isOptional: false,
                 inputDelimiter: ",\n\t",
-                templateInputs: topLevelTemplateInputs
+                templateInputs: topLevelFunctionInvocationTemplateInputs
             })
         });
     }
