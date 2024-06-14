@@ -2,7 +2,8 @@ instances: []
 navigation:
   - api: API Reference
     layout:
-      - package: Testing
-        contents:
-          - DELETE /movies/{id}
-          - GET /movies/{id}
+      - testing:
+          title: Testing
+          contents:
+            - DELETE /movies/{id}
+            - GET /movies/{id}

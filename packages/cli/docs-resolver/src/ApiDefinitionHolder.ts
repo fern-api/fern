@@ -164,13 +164,8 @@ export class ApiDefinitionHolder {
             pkg.webhooks.forEach((webhook) => {
                 subpackageHolder.webhooks.set(webhook.id, webhook);
                 this.#webhooks.set(ApiDefinitionHolder.createWebhookId(webhook, subpackageId), webhook);
-                const locators: string[] = [];
-                locators.push(`${webhook.method} ${urlJoin("/", ...webhook.path)}`);
 
-                locators.forEach((locator) => {
-                    this.context?.logger.debug(`Registering webhook locator: ${locator}`);
-                    this.#webhooksByLocator.set(locator, webhook);
-                });
+                // webhooks don't have paths, so we just register them by their ID in a later step
             });
         });
 
