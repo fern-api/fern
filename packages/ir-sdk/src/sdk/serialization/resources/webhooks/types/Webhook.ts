@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 
 export const Webhook: core.serialization.ObjectSchema<serializers.Webhook.Raw, FernIr.Webhook> = core.serialization
     .objectWithoutOptionalProperties({
+        id: core.serialization.lazy(async () => (await import("../../..")).WebhookId).optional(),
         name: core.serialization.lazyObject(async () => (await import("../../..")).WebhookName),
         displayName: core.serialization.string().optional(),
         method: core.serialization.lazy(async () => (await import("../../..")).WebhookHttpMethod),
@@ -23,6 +24,7 @@ export const Webhook: core.serialization.ObjectSchema<serializers.Webhook.Raw, F
 
 export declare namespace Webhook {
     interface Raw extends serializers.Declaration.Raw {
+        id?: serializers.WebhookId.Raw | null;
         name: serializers.WebhookName.Raw;
         displayName?: string | null;
         method: serializers.WebhookHttpMethod.Raw;

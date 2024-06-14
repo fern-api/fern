@@ -8,6 +8,7 @@ types:
   Webhook:
     extends: commons.Declaration
     properties:
+      id: optional<commons.WebhookId>
       name: WebhookName
       displayName: optional<string>
       method: WebhookHttpMethod

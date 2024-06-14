@@ -10,10 +10,11 @@ import { generateIntermediateRepresentation } from "../generateIntermediateRepre
 require("jest-specific-snapshot");
 
 const FHIR_DIR = path.join(__dirname, "../../../../../../fern/apis/fhir");
+const AUDIENCES_DIR = path.join(__dirname, "fixtures/audiences/fern");
 
 const TEST_DEFINITION_CONFIG: Record<string, TestConfig> = {
     audiences: {
-        audiences: { type: "select", audiences: ["public"] }
+        audiences: { type: "select", audiences: ["external"] }
     }
 };
 
@@ -23,10 +24,8 @@ interface TestConfig {
 
 it("generate IR", async () => {
     const apiWorkspaces: APIWorkspace[] = [];
-    // FHIR
-    // The FHIR API definition is huge and we previously encountered issues with serializing it.
-    // Here we add the FHIR spec to the list of API definitions to test. If this test doesn't
-    // error out, we know that the FHIR spec can be serialized.
+
+    // Test for scale
     const fhirWorkspace = await loadAPIWorkspace({
         absolutePathToWorkspace: AbsoluteFilePath.of(FHIR_DIR),
         context: createMockTaskContext(),
@@ -36,6 +35,18 @@ it("generate IR", async () => {
     });
     if (fhirWorkspace.didSucceed) {
         apiWorkspaces.push(fhirWorkspace.workspace);
+    }
+
+    // Test for audiences
+    const audiences = await loadAPIWorkspace({
+        absolutePathToWorkspace: AbsoluteFilePath.of(AUDIENCES_DIR),
+        context: createMockTaskContext(),
+        cliVersion: "0.0.0",
+        workspaceName: "audiences",
+        sdkLanguage: undefined
+    });
+    if (audiences.didSucceed) {
+        apiWorkspaces.push(audiences.workspace);
     }
 
     for (const workspace of apiWorkspaces) {
@@ -59,6 +70,6 @@ it("generate IR", async () => {
                 unrecognizedObjectKeys: "strip"
             }
         );
-        expect(intermediateRepresentationJson).toMatchSpecificSnapshot(`__snapshots__/${workspace.name}.txt`);
+        expect(intermediateRepresentationJson).toMatchSpecificSnapshot(`__snapshots__/${workspace.workspaceName}.txt`);
     }
 });

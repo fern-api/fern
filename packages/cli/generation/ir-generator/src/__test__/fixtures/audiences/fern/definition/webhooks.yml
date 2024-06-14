@@ -1,0 +1,17 @@
+webhooks: 
+  userAdded:  
+    audiences: 
+      - external
+    display-name: User Added
+    method: POST 
+    payload: User
+  
+  userDeleted:  
+    display-name: User Added
+    method: POST 
+    payload: User
+
+types: 
+  User: 
+    properties:
+      name: string

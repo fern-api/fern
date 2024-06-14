@@ -35231,6 +35231,7 @@ exports[`ir {"name":"webhooks"} 1`] = `
     "webhookGroups": {
         "webhooks_webhooks": [
             {
+                "id": "webhooks_webhooks.sendNotification",
                 "displayName": null,
                 "method": "POST",
                 "name": {

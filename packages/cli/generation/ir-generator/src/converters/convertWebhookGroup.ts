@@ -9,6 +9,7 @@ import {
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../FernFileContext";
+import { IdGenerator } from "../IdGenerator";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
 import { TypeResolver } from "../resolvers/TypeResolver";
 import { parseTypeName } from "../utils/parseTypeName";
@@ -33,6 +34,7 @@ export async function convertWebhookGroup({
     const webhookGroup: Webhook[] = [];
     for (const [webhookId, webhook] of Object.entries(webhooks)) {
         webhookGroup.push({
+            id: IdGenerator.generateWebhookId(file.fernFilepath, webhookId),
             availability: convertAvailability(webhook.availability),
             displayName: webhook["display-name"],
             docs: webhook.docs,
