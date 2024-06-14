@@ -56,7 +56,7 @@ exports[`converts to api reference node 1`] = `
           "endpointId": "endpoint_imdb.createMovie",
           "hidden": undefined,
           "icon": undefined,
-          "id": "550e8400-e29b-41d4-a716-446655440000.root.subpackage_imdb.subpackage_imdb.createMovie",
+          "id": "550e8400-e29b-41d4-a716-446655440000.__package__.subpackage_imdb.subpackage_imdb.createMovie",
           "isResponseStream": false,
           "method": "POST",
           "slug": "base/path/api-reference/imdb/create-movie",
@@ -66,7 +66,7 @@ exports[`converts to api reference node 1`] = `
       ],
       "hidden": undefined,
       "icon": undefined,
-      "id": "550e8400-e29b-41d4-a716-446655440000.root.subpackage_imdb",
+      "id": "550e8400-e29b-41d4-a716-446655440000.__package__.subpackage_imdb",
       "overviewPageId": undefined,
       "pointsTo": "base/path/api-reference/imdb/create-movie",
       "slug": "base/path/api-reference/imdb",
@@ -86,19 +86,6 @@ exports[`converts to api reference node 1`] = `
   "title": "API Reference",
   "type": "apiReference",
 }
-`;
-
-exports[`converts to api reference node 2`] = `
-[
-  "POST /movies/create-movie",
-  "GET /movies/{id}",
-  "GET /movies/:id",
-  "DELETE /movies/{id}",
-  "DELETE /movies/:id",
-  "imdb.createMovie",
-  "imdb.getMovie",
-  "imdb.deleteMovie",
-]
 `;
 
 exports[`converts to api reference node: DELETE /movies/{id} 1`] = `
@@ -177,6 +164,22 @@ exports[`converts to api reference node: DELETE /movies/{id} 1`] = `
   "snippetTemplates": undefined,
   "urlSlug": "delete-movie",
 }
+`;
+
+exports[`converts to api reference node: endpointsByLocator keys 1`] = `
+[
+  "POST /movies/create-movie",
+  "GET /movies/{id}",
+  "GET /movies/:id",
+  "DELETE /movies/{id}",
+  "DELETE /movies/:id",
+  "imdb.createMovie",
+  "imdb/createMovie",
+  "imdb.getMovie",
+  "imdb/getMovie",
+  "imdb.deleteMovie",
+  "imdb/deleteMovie",
+]
 `;
 
 exports[`converts to api reference node: imdb.getMovie 1`] = `
@@ -315,4 +318,13 @@ exports[`converts to api reference node: imdb.getMovie 1`] = `
   "snippetTemplates": undefined,
   "urlSlug": "get-movie",
 }
+`;
+
+exports[`converts to api reference node: subpackagesByLocator keys 1`] = `
+[
+  "__package__",
+  "__package__.yml",
+  "imdb",
+  "imdb.yml",
+]
 `;

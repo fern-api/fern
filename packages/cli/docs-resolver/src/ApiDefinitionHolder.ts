@@ -12,7 +12,7 @@ export interface SubpackageHolder {
     readonly webhooks: ReadonlyMap<APIV1Read.WebhookId, APIV1Read.WebhookDefinition>;
 }
 
-const ROOT_PACKAGE_ID = "root" as const;
+export const ROOT_PACKAGE_ID = "__package__" as const;
 
 /**
  * A holder for an API definition, which provides a way to resolve endpoint, websocket, and webhook IDs.
@@ -258,6 +258,10 @@ export class ApiDefinitionHolder {
 
     get subpackages(): ReadonlyMap<APIV1Read.SubpackageId, SubpackageHolder> {
         return this.#subpackages;
+    }
+
+    get subpackagesByLocator(): ReadonlyMap<string, APIV1Read.ApiDefinitionPackage> {
+        return this.#subpackagesByLocator;
     }
 
     public getEndpointId(endpoint: APIV1Read.EndpointDefinition): FernNavigation.EndpointId | undefined {

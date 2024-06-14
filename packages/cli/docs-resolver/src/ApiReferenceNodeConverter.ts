@@ -6,7 +6,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { kebabCase } from "lodash-es";
 import urlJoin from "url-join";
-import { ApiDefinitionHolder } from "./ApiDefinitionHolder";
+import { ApiDefinitionHolder, ROOT_PACKAGE_ID } from "./ApiDefinitionHolder";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { isSubpackage } from "./utils/isSubpackage";
@@ -493,7 +493,7 @@ export class ApiReferenceNodeConverter {
         // if an endpoint, websocket, webhook, or subpackage is not visited, add it to the additional children list
         let additionalChildren: FernNavigation.ApiPackageChild[] = [];
 
-        idgen = idgen.append(isSubpackage(pkg) ? pkg.subpackageId : "root");
+        idgen = idgen.append(isSubpackage(pkg) ? pkg.subpackageId : ROOT_PACKAGE_ID);
 
         pkg.endpoints.forEach((endpoint) => {
             const endpointId = this.#holder.getEndpointId(endpoint);
