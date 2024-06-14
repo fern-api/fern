@@ -1,6 +1,6 @@
-import { ErrorDeclaration, HttpEndpoint, HttpService, TypeDeclaration } from "@fern-api/ir-sdk";
+import { ErrorDeclaration, HttpEndpoint, HttpService, TypeDeclaration, Webhook } from "@fern-api/ir-sdk";
 import { IdGenerator } from "../IdGenerator";
-import { EndpointId, ErrorId, ServiceId, SubpackageId, TypeId } from "./ids";
+import { EndpointId, ErrorId, ServiceId, SubpackageId, TypeId, WebhookId } from "./ids";
 
 export interface FilteredIr {
     hasType(type: TypeDeclaration): boolean;
@@ -11,6 +11,8 @@ export interface FilteredIr {
     hasService(service: HttpService): boolean;
     hasServiceId(type: string): boolean;
     hasEndpoint(endpoint: HttpEndpoint): boolean;
+    hasWebhook(webhook: Webhook): boolean;
+    hasWebhookPayloadProperty(webhookId: string, property: string): boolean;
     hasRequestProperty(endpoint: string, property: string): boolean;
     hasSubpackageId(subpackageId: string): boolean;
 }
@@ -22,6 +24,8 @@ export class FilteredIrImpl implements FilteredIr {
     private services: Set<ServiceId> = new Set();
     private endpoints: Set<EndpointId> = new Set();
     private requestProperties: Record<EndpointId, Set<string>>;
+    private webhooks: Set<WebhookId> = new Set();
+    private webhookPayloadProperties: Record<WebhookId, Set<string>>;
     private subpackages: Set<SubpackageId> = new Set();
 
     public constructor({
@@ -29,8 +33,10 @@ export class FilteredIrImpl implements FilteredIr {
         errors,
         services,
         endpoints,
+        webhooks,
         subpackages,
         requestProperties,
+        webhookPayloadProperties,
         properties
     }: {
         types: Set<TypeId>;
@@ -39,6 +45,8 @@ export class FilteredIrImpl implements FilteredIr {
         services: Set<ServiceId>;
         requestProperties: Record<EndpointId, Set<string>>;
         endpoints: Set<EndpointId>;
+        webhooks: Set<WebhookId>;
+        webhookPayloadProperties: Record<WebhookId, Set<string>>;
         subpackages: Set<SubpackageId>;
     }) {
         this.types = types;
@@ -46,6 +54,8 @@ export class FilteredIrImpl implements FilteredIr {
         this.errors = errors;
         this.services = services;
         this.endpoints = endpoints;
+        this.webhooks = webhooks;
+        this.webhookPayloadProperties = webhookPayloadProperties;
         this.subpackages = subpackages;
         this.requestProperties = requestProperties;
     }
@@ -53,9 +63,11 @@ export class FilteredIrImpl implements FilteredIr {
     public hasTypeId(typeId: string): boolean {
         return this.types.has(typeId);
     }
+
     public hasErrorId(errorId: string): boolean {
         return this.errors.has(errorId);
     }
+
     public hasServiceId(serviceId: string): boolean {
         return this.services.has(serviceId);
     }
@@ -103,5 +115,21 @@ export class FilteredIrImpl implements FilteredIr {
 
     public hasSubpackage(subpackageId: string): boolean {
         return this.subpackages.has(subpackageId);
+    }
+
+    public hasWebhook(webhook: Webhook): boolean {
+        if (webhook.id) {
+            return this.webhooks.has(webhook.id);
+        }
+        return true;
+    }
+
+    public hasWebhookPayloadProperty(webhookId: string, property: string): boolean {
+        const properties = this.webhookPayloadProperties[webhookId];
+        // no properties were filtered for inlined request
+        if (properties == null) {
+            return true;
+        }
+        return properties.has(property);
     }
 }

@@ -5,6 +5,7 @@
 import * as FernIr from "../../..";
 
 export interface Webhook extends FernIr.Declaration {
+    id: FernIr.WebhookId | undefined;
     name: FernIr.WebhookName;
     displayName: string | undefined;
     method: FernIr.WebhookHttpMethod;

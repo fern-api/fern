@@ -10,7 +10,8 @@ import {
     ServiceId,
     ServiceTypeReferenceInfo,
     Type,
-    TypeId
+    TypeId,
+    Webhook
 } from "@fern-api/ir-sdk";
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/workspace-loader";
 import { mapValues, pickBy } from "lodash-es";
@@ -288,6 +289,19 @@ export async function generateIntermediateRepresentation({
                     exampleResolver,
                     workspace
                 });
+
+                const webhooksByOriginalName: Record<string, Webhook> = {};
+                for (const convertedWebhook of convertedWebhookGroup) {
+                    webhooksByOriginalName[convertedWebhook.name.originalName] = convertedWebhook;
+                }
+
+                Object.entries(webhooks).forEach(([key, webhook]) => {
+                    const irWebhook = webhooksByOriginalName[key];
+                    if (irWebhook != null) {
+                        irGraph.addWebhook(irWebhook, webhook);
+                    }
+                });
+
                 intermediateRepresentation.webhookGroups[webhookGroupId] = convertedWebhookGroup;
                 packageTreeGenerator.addWebhookGroup(webhookGroupId, file.fernFilepath);
             },
@@ -471,6 +485,24 @@ function filterIntermediateRepresentationForAudiences(
         })
     );
 
+    const filteredWebhookGroups = Object.fromEntries(
+        Object.entries(intermediateRepresentation.webhookGroups).map(([webhookGroupId, webhookGroup]) => {
+            const filteredWebhooks = webhookGroup.filter(filteredIr.hasWebhook).map((webhook) => {
+                const webhookId = webhook.id;
+                if (webhook.payload.type === "inlinedPayload" && webhookId != null) {
+                    webhook.payload = {
+                        ...webhook.payload,
+                        properties: webhook.payload.properties.filter((property) => {
+                            return filteredIr.hasWebhookPayloadProperty(webhookId, property.name.wireValue);
+                        })
+                    };
+                }
+                return webhook;
+            });
+            return [webhookGroupId, filteredWebhooks];
+        })
+    );
+
     return {
         ...intermediateRepresentation,
         types: filteredTypesAndProperties,
@@ -512,6 +544,7 @@ function filterIntermediateRepresentationForAudiences(
                     })
             })
         ),
+        webhookGroups: filteredWebhookGroups,
         serviceTypeReferenceInfo: filterServiceTypeReferenceInfoForAudiences(
             intermediateRepresentation.serviceTypeReferenceInfo,
             filteredIr
