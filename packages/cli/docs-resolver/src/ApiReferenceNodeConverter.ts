@@ -298,10 +298,11 @@ export class ApiReferenceNodeConverter {
 
             const subpackageNodeId = idgen.append(subpackageId);
             const slug = isSubpackage(subpackage) ? parentSlug.apply(subpackage) : parentSlug;
+            const subpackageChildren = this.#convertApiDefinitionPackage(subpackageId, [], slug, subpackageNodeId);
             additionalChildren.push({
                 id: subpackageNodeId.get(),
                 type: "apiPackage",
-                children: this.#convertApiDefinitionPackage(subpackageId, [], slug, subpackageNodeId),
+                children: subpackageChildren,
                 title: isSubpackage(subpackage)
                     ? subpackage.displayName ?? titleCase(subpackage.name)
                     : this.apiSection.title,
@@ -311,7 +312,7 @@ export class ApiReferenceNodeConverter {
                 overviewPageId: undefined,
                 availability: undefined,
                 apiDefinitionId: this.apiDefinitionId,
-                pointsTo: undefined
+                pointsTo: FernNavigation.utils.followRedirects(subpackageChildren)
             });
         });
 
@@ -500,11 +501,7 @@ export class ApiReferenceNodeConverter {
             const existing = methodAndPathToEndpointNode.get(methodAndPath);
             methodAndPathToEndpointNode.set(methodAndPath, child);
 
-            if (
-                existing == null ||
-                toRet.indexOf(existing) === -1 ||
-                existing.isResponseStream === child.isResponseStream
-            ) {
+            if (existing == null || toRet.includes(existing) || existing.isResponseStream === child.isResponseStream) {
                 toRet.push(child);
                 return;
             }
