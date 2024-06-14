@@ -1,7 +1,7 @@
-import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk/dist";
+import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import urlJoin from "url-join";
-import { isSubpackage } from "./isSubpackage";
-import { stringifyEndpointPathParts, stringifyEndpointPathParts2 } from "./stringifyEndpointPathParts";
+import { isSubpackage } from "./utils/isSubpackage";
+import { stringifyEndpointPathParts, stringifyEndpointPathParts2 } from "./utils/stringifyEndpointPathParts";
 
 // unlike `FernNavigation.EndpointId`, which concatenates the subpackageId and endpointId with a dot,
 // SubpackageHolder is intended to help resolve the endpointId from within a subpackage.

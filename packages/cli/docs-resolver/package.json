@@ -29,13 +29,12 @@
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/fdr-sdk": "0.98.0-70bd155ad",
+    "@fern-api/fdr-sdk": "0.98.0-rc1",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/register": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-api/workspace-loader": "workspace:*",
     "dayjs": "^1.11.11",
     "gray-matter": "^4.0.3",
     "lodash-es": "^4.17.21",
@@ -44,6 +43,7 @@
     "url-join": "^5.0.0"
   },
   "devDependencies": {
+    "@fern-api/workspace-loader": "workspace:*",
     "@types/diff": "^5.2.1",
     "@types/jest": "^29.0.3",
     "@types/lodash-es": "^4.17.12",

@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk/dist";
+import { FernNavigation } from "@fern-api/fdr-sdk";
 
 export class NodeIdGenerator {
     public static init(id: string): NodeIdGenerator {

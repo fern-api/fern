@@ -1,11 +1,11 @@
-import { FernNavigation } from "@fern-api/fdr-sdk/dist";
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { last } from "lodash-es";
-import { extractDatetimeFromChangelogTitle } from "./extractDatetimeFromChangelogTitle";
 import { NodeIdGenerator } from "./NodeIdGenerator";
+import { extractDatetimeFromChangelogTitle } from "./utils/extractDatetimeFromChangelogTitle";
 
 dayjs.extend(utc);
 

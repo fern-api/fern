@@ -1,6 +1,6 @@
 import { docsYml, WithoutQuestionMarks } from "@fern-api/configuration";
 import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
-import { APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk/dist";
+import { APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, relative, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
@@ -12,11 +12,11 @@ import matter from "gray-matter";
 import { kebabCase } from "lodash-es";
 import urlJoin from "url-join";
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
-import { convertDocsSnippetsConfigToFdr } from "./convertDocsSnippetsConfigToFdr";
-import { convertIrToApiDefinition } from "./convertIrToApiDefinition";
-import { collectFilesFromDocsConfig } from "./getImageFilepathsToUpload";
-import { parseImagePaths, replaceImagePathsAndUrls } from "./parseImagePaths";
-import { replaceReferencedMarkdown } from "./replaceReferencedMarkdown";
+import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr";
+import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
+import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
+import { parseImagePaths, replaceImagePathsAndUrls } from "./utils/parseImagePaths";
+import { replaceReferencedMarkdown } from "./utils/replaceReferencedMarkdown";
 import { wrapWithHttps } from "./wrapWithHttps";
 
 dayjs.extend(utc);

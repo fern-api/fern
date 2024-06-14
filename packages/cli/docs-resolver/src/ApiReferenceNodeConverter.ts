@@ -1,6 +1,6 @@
 import { docsYml } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
-import { APIV1Read, FernNavigation, titleCase, visitDiscriminatedUnion } from "@fern-api/fdr-sdk/dist";
+import { APIV1Read, FernNavigation, titleCase, visitDiscriminatedUnion } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
@@ -8,9 +8,9 @@ import { kebabCase } from "lodash-es";
 import urlJoin from "url-join";
 import { ApiDefinitionHolder } from "./ApiDefinitionHolder";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
-import { isSubpackage } from "./isSubpackage";
 import { NodeIdGenerator } from "./NodeIdGenerator";
-import { stringifyEndpointPathParts } from "./stringifyEndpointPathParts";
+import { isSubpackage } from "./utils/isSubpackage";
+import { stringifyEndpointPathParts } from "./utils/stringifyEndpointPathParts";
 
 export class ApiReferenceNodeConverter {
     apiDefinitionId: FernNavigation.ApiDefinitionId;

@@ -1,4 +1,4 @@
-import { APIV1Read } from "@fern-api/fdr-sdk/dist";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 
 /**
  * Converts an array of endpoint path parts into a string.

@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { APIV1Write } from "@fern-api/fdr-sdk/dist";
+import { APIV1Write } from "@fern-api/fdr-sdk";
 import { FernIr as Ir } from "@fern-api/ir-sdk";
 
 export function convertAuth(auth: Ir.auth.ApiAuth): APIV1Write.ApiAuth | undefined {

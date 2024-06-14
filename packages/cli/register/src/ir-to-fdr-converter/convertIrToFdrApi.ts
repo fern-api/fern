@@ -1,5 +1,5 @@
 import { entries } from "@fern-api/core-utils";
-import { APIV1Write } from "@fern-api/fdr-sdk/dist";
+import { APIV1Write } from "@fern-api/fdr-sdk";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { convertIrAvailability, convertPackage } from "./convertPackage";
 import { convertTypeReference, convertTypeShape } from "./convertTypeShape";
