@@ -8,7 +8,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.v2.test();\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.v2.test();\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -19,7 +23,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.updateTestSubmissionStatus(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    type: \"stopped\"\n});\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.admin.updateTestSubmissionStatus(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    type: \"stopped\"\n});\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -30,7 +38,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.sendTestSubmissionUpdate(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    updateTime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    updateInfo: {\n        type: \"running\",\n        value: SeedTrace.RunningSubmissionState.QueueingSubmission\n    }\n});\n"
+=======
+                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.admin.sendTestSubmissionUpdate(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    updateTime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    updateInfo: {\n        type: \"running\",\n        value: SeedTrace.RunningSubmissionState.QueueingSubmission\n    }\n});\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -41,7 +53,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.updateWorkspaceSubmissionStatus(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    type: \"stopped\"\n});\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.admin.updateWorkspaceSubmissionStatus(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    type: \"stopped\"\n});\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -52,7 +68,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.sendWorkspaceSubmissionUpdate(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    updateTime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    updateInfo: {\n        type: \"running\",\n        value: SeedTrace.RunningSubmissionState.QueueingSubmission\n    }\n});\n"
+=======
+                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.admin.sendWorkspaceSubmissionUpdate(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    updateTime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    updateInfo: {\n        type: \"running\",\n        value: SeedTrace.RunningSubmissionState.QueueingSubmission\n    }\n});\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -63,7 +83,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.storeTracedTestCase(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", \"string\", {\n    result: {\n        result: {},\n        stdout: \"string\"\n    },\n    traceResponses: [{\n            submissionId: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            lineNumber: 1,\n            returnValue: {\n                type: \"integerValue\",\n                value: 1\n            },\n            expressionLocation: {},\n            stack: {},\n            stdout: \"string\"\n        }]\n});\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.admin.storeTracedTestCase(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", \"string\", {\n    result: {\n        result: {},\n        stdout: \"string\"\n    },\n    traceResponses: [{\n            submissionId: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            lineNumber: 1,\n            returnValue: {\n                type: \"integerValue\",\n                value: 1\n            },\n            expressionLocation: {},\n            stack: {},\n            stdout: \"string\"\n        }]\n});\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -74,7 +98,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.storeTracedTestCaseV2(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", \"string\", [{\n        submissionId: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        lineNumber: 1,\n        file: {},\n        returnValue: {\n            type: \"integerValue\",\n            value: 1\n        },\n        expressionLocation: {},\n        stack: {},\n        stdout: \"string\"\n    }]);\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.admin.storeTracedTestCaseV2(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", \"string\", [{\n        submissionId: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        lineNumber: 1,\n        file: {},\n        returnValue: {\n            type: \"integerValue\",\n            value: 1\n        },\n        expressionLocation: {},\n        stack: {},\n        stdout: \"string\"\n    }]);\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -85,7 +113,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.storeTracedWorkspace(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    workspaceRunDetails: {\n        exceptionV2: {\n            type: \"generic\"\n        },\n        exception: {},\n        stdout: \"string\"\n    },\n    traceResponses: [{\n            submissionId: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            lineNumber: 1,\n            returnValue: {\n                type: \"integerValue\",\n                value: 1\n            },\n            expressionLocation: {},\n            stack: {},\n            stdout: \"string\"\n        }]\n});\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.admin.storeTracedWorkspace(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    workspaceRunDetails: {\n        exceptionV2: {\n            type: \"generic\"\n        },\n        exception: {},\n        stdout: \"string\"\n    },\n    traceResponses: [{\n            submissionId: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            lineNumber: 1,\n            returnValue: {\n                type: \"integerValue\",\n                value: 1\n            },\n            expressionLocation: {},\n            stack: {},\n            stdout: \"string\"\n        }]\n});\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -96,7 +128,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.storeTracedWorkspaceV2(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", [{\n        submissionId: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        lineNumber: 1,\n        file: {},\n        returnValue: {\n            type: \"integerValue\",\n            value: 1\n        },\n        expressionLocation: {},\n        stack: {},\n        stdout: \"string\"\n    }]);\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.admin.storeTracedWorkspaceV2(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", [{\n        submissionId: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        lineNumber: 1,\n        file: {},\n        returnValue: {\n            type: \"integerValue\",\n            value: 1\n        },\n        expressionLocation: {},\n        stack: {},\n        stdout: \"string\"\n    }]);\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -107,7 +143,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.homepage.getHomepageProblems();\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.homepage.getHomepageProblems();\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -118,7 +158,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.homepage.setHomepageProblems([\"string\"]);\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.homepage.setHomepageProblems([\"string\"]);\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -129,7 +173,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.migration.getAttemptedMigrations({\n    adminKeyHeader: \"string\"\n});\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.migration.getAttemptedMigrations({\n    adminKeyHeader: \"string\"\n});\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -140,7 +188,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.playlist.createPlaylist(1, {\n    datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    optionalDatetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    body: {\n        name: \"string\",\n        problems: [\"string\"]\n    }\n});\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.playlist.createPlaylist(1, {\n    datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    optionalDatetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    body: {\n        name: \"string\",\n        problems: [\"string\"]\n    }\n});\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -151,7 +203,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.playlist.getPlaylists(1, {\n    limit: 1,\n    otherField: \"string\",\n    multiLineDocs: \"string\",\n    optionalMultipleField: \"string\",\n    multipleField: \"string\"\n});\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.playlist.getPlaylists(1, {\n    limit: 1,\n    otherField: \"string\",\n    multiLineDocs: \"string\",\n    optionalMultipleField: \"string\",\n    multipleField: \"string\"\n});\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -162,7 +218,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.playlist.getPlaylist(1, \"string\");\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.playlist.getPlaylist(1, \"string\");\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -173,7 +233,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.playlist.updatePlaylist(1, \"string\", {\n    name: \"string\",\n    problems: [\"string\"]\n});\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.playlist.updatePlaylist(1, \"string\", {\n    name: \"string\",\n    problems: [\"string\"]\n});\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -184,7 +248,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.playlist.deletePlaylist(1, \"string\");\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.playlist.deletePlaylist(1, \"string\");\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -195,7 +263,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.problem.createProblem({\n    problemName: \"string\",\n    problemDescription: {\n        boards: [{\n                type: \"html\",\n                value: \"string\"\n            }]\n    },\n    files: {\n        [SeedTrace.Language.Java]: {\n            solutionFile: {\n                filename: \"string\",\n                contents: \"string\"\n            },\n            readOnlyFiles: [{\n                    filename: \"string\",\n                    contents: \"string\"\n                }]\n        }\n    },\n    inputParams: [{\n            variableType: {\n                type: \"integerType\"\n            },\n            name: \"string\"\n        }],\n    outputType: {\n        type: \"integerType\"\n    },\n    testcases: [{\n            testCase: {\n                id: \"string\",\n                params: [{\n                        type: \"integerValue\",\n                        value: 1\n                    }]\n            },\n            expectedResult: {\n                type: \"integerValue\",\n                value: 1\n            }\n        }],\n    methodName: \"string\"\n});\n"
+=======
+                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.problem.createProblem({\n    problemName: \"string\",\n    problemDescription: {\n        boards: [{\n                type: \"html\",\n                value: \"string\"\n            }]\n    },\n    files: {\n        [SeedTrace.Language.Java]: {\n            solutionFile: {\n                filename: \"string\",\n                contents: \"string\"\n            },\n            readOnlyFiles: [{\n                    filename: \"string\",\n                    contents: \"string\"\n                }]\n        }\n    },\n    inputParams: [{\n            variableType: {\n                type: \"integerType\"\n            },\n            name: \"string\"\n        }],\n    outputType: {\n        type: \"integerType\"\n    },\n    testcases: [{\n            testCase: {\n                id: \"string\",\n                params: [{\n                        type: \"integerValue\",\n                        value: 1\n                    }]\n            },\n            expectedResult: {\n                type: \"integerValue\",\n                value: 1\n            }\n        }],\n    methodName: \"string\"\n});\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -206,7 +278,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.problem.updateProblem(\"string\", {\n    problemName: \"string\",\n    problemDescription: {\n        boards: [{\n                type: \"html\",\n                value: \"string\"\n            }]\n    },\n    files: {\n        [SeedTrace.Language.Java]: {\n            solutionFile: {\n                filename: \"string\",\n                contents: \"string\"\n            },\n            readOnlyFiles: [{\n                    filename: \"string\",\n                    contents: \"string\"\n                }]\n        }\n    },\n    inputParams: [{\n            variableType: {\n                type: \"integerType\"\n            },\n            name: \"string\"\n        }],\n    outputType: {\n        type: \"integerType\"\n    },\n    testcases: [{\n            testCase: {\n                id: \"string\",\n                params: [{\n                        type: \"integerValue\",\n                        value: 1\n                    }]\n            },\n            expectedResult: {\n                type: \"integerValue\",\n                value: 1\n            }\n        }],\n    methodName: \"string\"\n});\n"
+=======
+                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.problem.updateProblem(\"string\", {\n    problemName: \"string\",\n    problemDescription: {\n        boards: [{\n                type: \"html\",\n                value: \"string\"\n            }]\n    },\n    files: {\n        [SeedTrace.Language.Java]: {\n            solutionFile: {\n                filename: \"string\",\n                contents: \"string\"\n            },\n            readOnlyFiles: [{\n                    filename: \"string\",\n                    contents: \"string\"\n                }]\n        }\n    },\n    inputParams: [{\n            variableType: {\n                type: \"integerType\"\n            },\n            name: \"string\"\n        }],\n    outputType: {\n        type: \"integerType\"\n    },\n    testcases: [{\n            testCase: {\n                id: \"string\",\n                params: [{\n                        type: \"integerValue\",\n                        value: 1\n                    }]\n            },\n            expectedResult: {\n                type: \"integerValue\",\n                value: 1\n            }\n        }],\n    methodName: \"string\"\n});\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -217,7 +293,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.problem.deleteProblem(\"string\");\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.problem.deleteProblem(\"string\");\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -228,7 +308,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.problem.getDefaultStarterFiles({\n    inputParams: [{\n            variableType: {\n                type: \"integerType\"\n            },\n            name: \"string\"\n        }],\n    outputType: {\n        type: \"integerType\"\n    },\n    methodName: \"string\"\n});\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.problem.getDefaultStarterFiles({\n    inputParams: [{\n            variableType: {\n                type: \"integerType\"\n            },\n            name: \"string\"\n        }],\n    outputType: {\n        type: \"integerType\"\n    },\n    methodName: \"string\"\n});\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -239,7 +323,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.submission.createExecutionSession(SeedTrace.Language.Java);\n"
+=======
+                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.submission.createExecutionSession(SeedTrace.Language.Java);\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -250,7 +338,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.submission.getExecutionSession(\"string\");\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.submission.getExecutionSession(\"string\");\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -261,7 +353,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.submission.stopExecutionSession(\"string\");\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.submission.stopExecutionSession(\"string\");\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -272,7 +368,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.submission.getExecutionSessionsState();\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.submission.getExecutionSessionsState();\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -283,7 +383,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.sysprop.setNumWarmInstances(SeedTrace.Language.Java, 1);\n"
+=======
+                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.sysprop.setNumWarmInstances(SeedTrace.Language.Java, 1);\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -294,7 +398,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.sysprop.getNumWarmInstances();\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.sysprop.getNumWarmInstances();\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -305,7 +413,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.v2.problem.getLightweightProblems();\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.v2.problem.getLightweightProblems();\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -316,7 +428,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.v2.problem.getProblems();\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.v2.problem.getProblems();\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -327,7 +443,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.v2.problem.getLatestProblem(\"string\");\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.v2.problem.getLatestProblem(\"string\");\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -338,7 +458,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.v2.problem.getProblemVersion(\"string\", 1);\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.v2.problem.getProblemVersion(\"string\", 1);\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -349,7 +473,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.v2.v3.problem.getLightweightProblems();\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.v2.v3.problem.getLightweightProblems();\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -360,7 +488,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.v2.v3.problem.getProblems();\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.v2.v3.problem.getProblems();\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -371,7 +503,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.v2.v3.problem.getLatestProblem(\"string\");\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.v2.v3.problem.getLatestProblem(\"string\");\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         },
         {
@@ -382,7 +518,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.v2.v3.problem.getProblemVersion(\"string\", 1);\n"
+=======
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.v2.v3.problem.getProblemVersion(\"string\", 1);\n"
+>>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
             }
         }
     ],
