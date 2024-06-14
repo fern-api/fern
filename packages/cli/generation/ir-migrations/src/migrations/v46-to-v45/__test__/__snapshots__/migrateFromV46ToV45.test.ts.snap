@@ -2,8 +2,8 @@
 
 exports[`migrateFromV46ToV45 snapshot 1`] = `
 {
-  "apiDisplayName": undefined,
-  "apiDocs": undefined,
+  "apiDisplayName": null,
+  "apiDocs": null,
   "apiName": {
     "camelCase": {
       "safeName": "simpleAPI",
@@ -24,12 +24,12 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
     },
   },
   "auth": {
-    "docs": undefined,
+    "docs": null,
     "requirement": "ALL",
     "schemes": [
       {
-        "_visit": [Function],
-        "docs": undefined,
+        "_type": "bearer",
+        "docs": null,
         "token": {
           "camelCase": {
             "safeName": "token",
@@ -49,12 +49,11 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
             "unsafeName": "token",
           },
         },
-        "tokenEnvVar": undefined,
-        "type": "bearer",
+        "tokenEnvVar": null,
       },
     ],
   },
-  "basePath": undefined,
+  "basePath": null,
   "constants": {
     "errorInstanceIdKey": {
       "name": {
@@ -79,33 +78,31 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
       "wireValue": "errorInstanceId",
     },
   },
-  "environments": undefined,
+  "environments": null,
   "errorDiscriminationStrategy": {
-    "_visit": [Function],
     "type": "statusCode",
   },
   "errors": {},
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
-  "readmeConfig": undefined,
   "rootPackage": {
-    "docs": undefined,
+    "docs": null,
     "errors": [],
     "fernFilepath": {
       "allParts": [],
-      "file": undefined,
+      "file": null,
       "packagePath": [],
     },
     "hasEndpointsInTree": true,
-    "navigationConfig": undefined,
-    "service": undefined,
+    "navigationConfig": null,
+    "service": null,
     "subpackages": [
       "subpackage_service",
     ],
     "types": [],
-    "webhooks": undefined,
-    "websocket": undefined,
+    "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -129,38 +126,34 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
   },
   "services": {
     "service_service": {
-      "availability": undefined,
+      "availability": null,
       "basePath": {
         "head": "/",
         "parts": [],
       },
-      "displayName": undefined,
+      "displayName": null,
       "endpoints": [
         {
           "allPathParameters": [],
           "auth": false,
-          "availability": undefined,
-          "baseUrl": undefined,
-          "displayName": undefined,
-          "docs": undefined,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
           "errors": [],
           "examples": [
             {
-              "_visit": [Function],
-              "codeSamples": undefined,
-              "docs": undefined,
+              "codeSamples": null,
+              "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "userProvided",
-              "id": undefined,
-              "name": undefined,
+              "name": null,
               "queryParameters": [],
-              "request": undefined,
+              "request": null,
               "response": {
-                "_visit": [Function],
                 "type": "ok",
                 "value": {
-                  "_visit": [Function],
                   "type": "body",
                   "value": {
                     "jsonExample": {
@@ -176,9 +169,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                       ],
                     },
                     "shape": {
-                      "_visit": [Function],
                       "shape": {
-                        "_visit": [Function],
                         "properties": [
                           {
                             "name": {
@@ -280,9 +271,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                                 },
                               ],
                               "shape": {
-                                "_visit": [Function],
                                 "container": {
-                                  "_visit": [Function],
                                   "list": [
                                     {
                                       "jsonExample": {
@@ -290,9 +279,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                                         "type": "goose",
                                       },
                                       "shape": {
-                                        "_visit": [Function],
                                         "shape": {
-                                          "_visit": [Function],
                                           "properties": [
                                             {
                                               "name": {
@@ -385,9 +372,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                                               "value": {
                                                 "jsonExample": "Alice",
                                                 "shape": {
-                                                  "_visit": [Function],
                                                   "primitive": {
-                                                    "_visit": [Function],
                                                     "string": {
                                                       "original": "Alice",
                                                     },
@@ -488,9 +473,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                                               "value": {
                                                 "jsonExample": "goose",
                                                 "shape": {
-                                                  "_visit": [Function],
                                                   "primitive": {
-                                                    "_visit": [Function],
                                                     "string": {
                                                       "original": "goose",
                                                     },
@@ -577,9 +560,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                                         "type": "goose",
                                       },
                                       "shape": {
-                                        "_visit": [Function],
                                         "shape": {
-                                          "_visit": [Function],
                                           "properties": [
                                             {
                                               "name": {
@@ -672,9 +653,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                                               "value": {
                                                 "jsonExample": "Bob",
                                                 "shape": {
-                                                  "_visit": [Function],
                                                   "primitive": {
-                                                    "_visit": [Function],
                                                     "string": {
                                                       "original": "Bob",
                                                     },
@@ -775,9 +754,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                                               "value": {
                                                 "jsonExample": "goose",
                                                 "shape": {
-                                                  "_visit": [Function],
                                                   "primitive": {
-                                                    "_visit": [Function],
                                                     "string": {
                                                       "original": "goose",
                                                     },
@@ -944,14 +921,12 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
               "url": "//list",
             },
             {
-              "_visit": [Function],
-              "codeSamples": undefined,
-              "docs": undefined,
+              "codeSamples": null,
+              "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "1af67111af06ca3e92b999909174fc4363a47b08",
-              "name": undefined,
+              "name": null,
               "queryParameters": [
                 {
                   "name": {
@@ -979,9 +954,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                   "value": {
                     "jsonExample": "123456789123456789",
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "string": {
                           "original": "123456789123456789",
                         },
@@ -1017,9 +990,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                   "value": {
                     "jsonExample": 1,
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "integer": 1,
                         "type": "integer",
                       },
@@ -1028,12 +999,10 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                   },
                 },
               ],
-              "request": undefined,
+              "request": null,
               "response": {
-                "_visit": [Function],
                 "type": "ok",
                 "value": {
-                  "_visit": [Function],
                   "type": "body",
                   "value": {
                     "jsonExample": {
@@ -1049,9 +1018,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                       ],
                     },
                     "shape": {
-                      "_visit": [Function],
                       "shape": {
-                        "_visit": [Function],
                         "properties": [
                           {
                             "name": {
@@ -1153,9 +1120,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                                 },
                               ],
                               "shape": {
-                                "_visit": [Function],
                                 "container": {
-                                  "_visit": [Function],
                                   "list": [
                                     {
                                       "jsonExample": {
@@ -1163,9 +1128,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                                         "type": "goose",
                                       },
                                       "shape": {
-                                        "_visit": [Function],
                                         "shape": {
-                                          "_visit": [Function],
                                           "properties": [
                                             {
                                               "name": {
@@ -1258,9 +1221,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                                               "value": {
                                                 "jsonExample": "Alice",
                                                 "shape": {
-                                                  "_visit": [Function],
                                                   "primitive": {
-                                                    "_visit": [Function],
                                                     "string": {
                                                       "original": "Alice",
                                                     },
@@ -1361,9 +1322,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                                               "value": {
                                                 "jsonExample": "goose",
                                                 "shape": {
-                                                  "_visit": [Function],
                                                   "primitive": {
-                                                    "_visit": [Function],
                                                     "string": {
                                                       "original": "goose",
                                                     },
@@ -1450,9 +1409,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                                         "type": "goose",
                                       },
                                       "shape": {
-                                        "_visit": [Function],
                                         "shape": {
-                                          "_visit": [Function],
                                           "properties": [
                                             {
                                               "name": {
@@ -1545,9 +1502,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                                               "value": {
                                                 "jsonExample": "Bob",
                                                 "shape": {
-                                                  "_visit": [Function],
                                                   "primitive": {
-                                                    "_visit": [Function],
                                                     "string": {
                                                       "original": "Bob",
                                                     },
@@ -1648,9 +1603,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                                               "value": {
                                                 "jsonExample": "goose",
                                                 "shape": {
-                                                  "_visit": [Function],
                                                   "primitive": {
-                                                    "_visit": [Function],
                                                     "string": {
                                                       "original": "goose",
                                                     },
@@ -1844,7 +1797,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
               "unsafeName": "list",
             },
           },
-          "pagination": undefined,
+          "pagination": null,
           "path": {
             "head": "/list",
             "parts": [],
@@ -1853,8 +1806,8 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
           "queryParameters": [
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -1878,18 +1831,17 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                 "wireValue": "big",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": {
                   "v1": "BIG_INTEGER",
-                  "v2": undefined,
+                  "v2": null,
                 },
-                "type": "primitive",
               },
             },
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -1913,30 +1865,26 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                 "wireValue": "pageNum",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": {
                   "v1": "INTEGER",
                   "v2": {
-                    "_visit": [Function],
-                    "default": undefined,
+                    "default": null,
                     "type": "integer",
-                    "validation": undefined,
+                    "validation": null,
                   },
                 },
-                "type": "primitive",
               },
             },
           ],
-          "requestBody": undefined,
+          "requestBody": null,
           "response": {
             "body": {
-              "_visit": [Function],
               "type": "json",
               "value": {
-                "_visit": [Function],
-                "docs": undefined,
+                "docs": null,
                 "responseBodyType": {
-                  "_visit": [Function],
+                  "_type": "named",
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -1999,13 +1947,12 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                       "unsafeName": "list_users_response",
                     },
                   },
-                  "type": "named",
                   "typeId": "type_service:ListUsersResponse",
                 },
                 "type": "response",
               },
             },
-            "statusCode": 201,
+            "status-code": 201,
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -2028,7 +1975,6 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
               },
             },
             "shape": {
-              "_visit": [Function],
               "bodyKey": {
                 "camelCase": {
                   "safeName": "body",
@@ -2074,28 +2020,24 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
         {
           "allPathParameters": [],
           "auth": false,
-          "availability": undefined,
-          "baseUrl": undefined,
-          "displayName": undefined,
-          "docs": undefined,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
           "errors": [],
           "examples": [
             {
-              "_visit": [Function],
-              "codeSamples": undefined,
-              "docs": undefined,
+              "codeSamples": null,
+              "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "userProvided",
-              "id": undefined,
-              "name": undefined,
+              "name": null,
               "queryParameters": [],
-              "request": undefined,
+              "request": null,
               "response": {
-                "_visit": [Function],
                 "type": "ok",
                 "value": {
-                  "_visit": [Function],
                   "type": "stream",
                   "value": [
                     {
@@ -2104,9 +2046,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                         "type": "goose",
                       },
                       "shape": {
-                        "_visit": [Function],
                         "shape": {
-                          "_visit": [Function],
                           "properties": [
                             {
                               "name": {
@@ -2199,9 +2139,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                               "value": {
                                 "jsonExample": "Alice",
                                 "shape": {
-                                  "_visit": [Function],
                                   "primitive": {
-                                    "_visit": [Function],
                                     "string": {
                                       "original": "Alice",
                                     },
@@ -2302,9 +2240,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                               "value": {
                                 "jsonExample": "goose",
                                 "shape": {
-                                  "_visit": [Function],
                                   "primitive": {
-                                    "_visit": [Function],
                                     "string": {
                                       "original": "goose",
                                     },
@@ -2391,9 +2327,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                         "type": "goose",
                       },
                       "shape": {
-                        "_visit": [Function],
                         "shape": {
-                          "_visit": [Function],
                           "properties": [
                             {
                               "name": {
@@ -2486,9 +2420,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                               "value": {
                                 "jsonExample": "Bob",
                                 "shape": {
-                                  "_visit": [Function],
                                   "primitive": {
-                                    "_visit": [Function],
                                     "string": {
                                       "original": "Bob",
                                     },
@@ -2589,9 +2521,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                               "value": {
                                 "jsonExample": "goose",
                                 "shape": {
-                                  "_visit": [Function],
                                   "primitive": {
-                                    "_visit": [Function],
                                     "string": {
                                       "original": "goose",
                                     },
@@ -2681,14 +2611,12 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
               "url": "//list/stream",
             },
             {
-              "_visit": [Function],
-              "codeSamples": undefined,
-              "docs": undefined,
+              "codeSamples": null,
+              "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "267bf417357fbc6d1fb8c843d4c083bf4fccd355",
-              "name": undefined,
+              "name": null,
               "queryParameters": [
                 {
                   "name": {
@@ -2716,9 +2644,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                   "value": {
                     "jsonExample": 1,
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "integer": 1,
                         "type": "integer",
                       },
@@ -2727,12 +2653,10 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                   },
                 },
               ],
-              "request": undefined,
+              "request": null,
               "response": {
-                "_visit": [Function],
                 "type": "ok",
                 "value": {
-                  "_visit": [Function],
                   "type": "stream",
                   "value": [
                     {
@@ -2741,9 +2665,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                         "type": "goose",
                       },
                       "shape": {
-                        "_visit": [Function],
                         "shape": {
-                          "_visit": [Function],
                           "properties": [
                             {
                               "name": {
@@ -2836,9 +2758,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                               "value": {
                                 "jsonExample": "Alice",
                                 "shape": {
-                                  "_visit": [Function],
                                   "primitive": {
-                                    "_visit": [Function],
                                     "string": {
                                       "original": "Alice",
                                     },
@@ -2939,9 +2859,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                               "value": {
                                 "jsonExample": "goose",
                                 "shape": {
-                                  "_visit": [Function],
                                   "primitive": {
-                                    "_visit": [Function],
                                     "string": {
                                       "original": "goose",
                                     },
@@ -3028,9 +2946,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                         "type": "goose",
                       },
                       "shape": {
-                        "_visit": [Function],
                         "shape": {
-                          "_visit": [Function],
                           "properties": [
                             {
                               "name": {
@@ -3123,9 +3039,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                               "value": {
                                 "jsonExample": "Bob",
                                 "shape": {
-                                  "_visit": [Function],
                                   "primitive": {
-                                    "_visit": [Function],
                                     "string": {
                                       "original": "Bob",
                                     },
@@ -3226,9 +3140,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                               "value": {
                                 "jsonExample": "goose",
                                 "shape": {
-                                  "_visit": [Function],
                                   "primitive": {
-                                    "_visit": [Function],
                                     "string": {
                                       "original": "goose",
                                     },
@@ -3345,7 +3257,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
               "unsafeName": "list_stream",
             },
           },
-          "pagination": undefined,
+          "pagination": null,
           "path": {
             "head": "/list/stream",
             "parts": [],
@@ -3354,8 +3266,8 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
           "queryParameters": [
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -3379,30 +3291,26 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                 "wireValue": "pageNum",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": {
                   "v1": "INTEGER",
                   "v2": {
-                    "_visit": [Function],
-                    "default": undefined,
+                    "default": null,
                     "type": "integer",
-                    "validation": undefined,
+                    "validation": null,
                   },
                 },
-                "type": "primitive",
               },
             },
           ],
-          "requestBody": undefined,
+          "requestBody": null,
           "response": {
             "body": {
-              "_visit": [Function],
               "type": "streaming",
               "value": {
-                "_visit": [Function],
-                "docs": undefined,
+                "docs": null,
                 "payload": {
-                  "_visit": [Function],
+                  "_type": "named",
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -3465,14 +3373,13 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                       "unsafeName": "user",
                     },
                   },
-                  "type": "named",
                   "typeId": "type_service:User",
                 },
-                "terminator": undefined,
+                "terminator": null,
                 "type": "json",
               },
             },
-            "statusCode": undefined,
+            "status-code": null,
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -3495,7 +3402,6 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
               },
             },
             "shape": {
-              "_visit": [Function],
               "bodyKey": {
                 "camelCase": {
                   "safeName": "body",
@@ -3541,28 +3447,24 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
         {
           "allPathParameters": [],
           "auth": false,
-          "availability": undefined,
-          "baseUrl": undefined,
-          "displayName": undefined,
-          "docs": undefined,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
           "errors": [],
           "examples": [
             {
-              "_visit": [Function],
-              "codeSamples": undefined,
-              "docs": undefined,
+              "codeSamples": null,
+              "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "userProvided",
-              "id": "151c7ad3-7a05-46f1-bff6-f373ef401960",
-              "name": undefined,
+              "name": null,
               "queryParameters": [],
-              "request": undefined,
+              "request": null,
               "response": {
-                "_visit": [Function],
                 "type": "ok",
                 "value": {
-                  "_visit": [Function],
                   "type": "sse",
                   "value": [
                     {
@@ -3571,9 +3473,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                           "name": "Alice",
                         },
                         "shape": {
-                          "_visit": [Function],
                           "shape": {
-                            "_visit": [Function],
                             "properties": [
                               {
                                 "name": {
@@ -3666,9 +3566,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                                 "value": {
                                   "jsonExample": "Alice",
                                   "shape": {
-                                    "_visit": [Function],
                                     "primitive": {
-                                      "_visit": [Function],
                                       "string": {
                                         "original": "Alice",
                                       },
@@ -3757,9 +3655,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                           "name": "Bob",
                         },
                         "shape": {
-                          "_visit": [Function],
                           "shape": {
-                            "_visit": [Function],
                             "properties": [
                               {
                                 "name": {
@@ -3852,9 +3748,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                                 "value": {
                                   "jsonExample": "Bob",
                                   "shape": {
-                                    "_visit": [Function],
                                     "primitive": {
-                                      "_visit": [Function],
                                       "string": {
                                         "original": "Bob",
                                       },
@@ -3946,14 +3840,12 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
               "url": "//list/sse",
             },
             {
-              "_visit": [Function],
-              "codeSamples": undefined,
-              "docs": undefined,
+              "codeSamples": null,
+              "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "a92495e5fe0dd0c8be990ba7958b2cf012f0d99b",
-              "name": undefined,
+              "name": null,
               "queryParameters": [
                 {
                   "name": {
@@ -3981,9 +3873,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                   "value": {
                     "jsonExample": 1,
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "integer": 1,
                         "type": "integer",
                       },
@@ -3992,12 +3882,10 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                   },
                 },
               ],
-              "request": undefined,
+              "request": null,
               "response": {
-                "_visit": [Function],
                 "type": "ok",
                 "value": {
-                  "_visit": [Function],
                   "type": "sse",
                   "value": [
                     {
@@ -4006,9 +3894,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                           "name": "Alice",
                         },
                         "shape": {
-                          "_visit": [Function],
                           "shape": {
-                            "_visit": [Function],
                             "properties": [
                               {
                                 "name": {
@@ -4101,9 +3987,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                                 "value": {
                                   "jsonExample": "Alice",
                                   "shape": {
-                                    "_visit": [Function],
                                     "primitive": {
-                                      "_visit": [Function],
                                       "string": {
                                         "original": "Alice",
                                       },
@@ -4192,9 +4076,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                           "name": "Bob",
                         },
                         "shape": {
-                          "_visit": [Function],
                           "shape": {
-                            "_visit": [Function],
                             "properties": [
                               {
                                 "name": {
@@ -4287,9 +4169,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                                 "value": {
                                   "jsonExample": "Bob",
                                   "shape": {
-                                    "_visit": [Function],
                                     "primitive": {
-                                      "_visit": [Function],
                                       "string": {
                                         "original": "Bob",
                                       },
@@ -4408,7 +4288,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
               "unsafeName": "list_stream_sse",
             },
           },
-          "pagination": undefined,
+          "pagination": null,
           "path": {
             "head": "/list/sse",
             "parts": [],
@@ -4417,8 +4297,8 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
           "queryParameters": [
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -4442,30 +4322,26 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                 "wireValue": "pageNum",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": {
                   "v1": "INTEGER",
                   "v2": {
-                    "_visit": [Function],
-                    "default": undefined,
+                    "default": null,
                     "type": "integer",
-                    "validation": undefined,
+                    "validation": null,
                   },
                 },
-                "type": "primitive",
               },
             },
           ],
-          "requestBody": undefined,
+          "requestBody": null,
           "response": {
             "body": {
-              "_visit": [Function],
               "type": "streaming",
               "value": {
-                "_visit": [Function],
-                "docs": undefined,
+                "docs": null,
                 "payload": {
-                  "_visit": [Function],
+                  "_type": "named",
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -4528,14 +4404,13 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                       "unsafeName": "user",
                     },
                   },
-                  "type": "named",
                   "typeId": "type_service:User",
                 },
-                "terminator": undefined,
+                "terminator": null,
                 "type": "sse",
               },
             },
-            "statusCode": undefined,
+            "status-code": null,
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -4558,7 +4433,6 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
               },
             },
             "shape": {
-              "_visit": [Function],
               "bodyKey": {
                 "camelCase": {
                   "safeName": "body",
@@ -4653,7 +4527,7 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
   },
   "subpackages": {
     "subpackage_service": {
-      "docs": undefined,
+      "docs": null,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -4718,21 +4592,21 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
           "unsafeName": "service",
         },
       },
-      "navigationConfig": undefined,
+      "navigationConfig": null,
       "service": "service_service",
       "subpackages": [],
       "types": [
         "type_service:User",
         "type_service:ListUsersResponse",
       ],
-      "webhooks": undefined,
-      "websocket": undefined,
+      "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
     "type_service:ListUsersResponse": {
-      "availability": undefined,
-      "docs": undefined,
+      "availability": null,
+      "docs": null,
       "examples": [],
       "name": {
         "fernFilepath": {
@@ -4799,17 +4673,17 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
         },
         "typeId": "type_service:ListUsersResponse",
       },
-      "referencedTypes": Set {
+      "referencedTypes": [
         "type_service:User",
-      },
+      ],
       "shape": {
-        "_visit": [Function],
+        "_type": "object",
         "extends": [],
-        "extraProperties": false,
+        "extra-properties": false,
         "properties": [
           {
-            "availability": undefined,
-            "docs": undefined,
+            "availability": null,
+            "docs": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -4833,11 +4707,11 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
               "wireValue": "users",
             },
             "valueType": {
-              "_visit": [Function],
+              "_type": "container",
               "container": {
-                "_visit": [Function],
+                "_type": "list",
                 "list": {
-                  "_visit": [Function],
+                  "_type": "named",
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -4900,21 +4774,17 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
                       "unsafeName": "user",
                     },
                   },
-                  "type": "named",
                   "typeId": "type_service:User",
                 },
-                "type": "list",
               },
-              "type": "container",
             },
           },
         ],
-        "type": "object",
       },
     },
     "type_service:User": {
-      "availability": undefined,
-      "docs": undefined,
+      "availability": null,
+      "docs": null,
       "examples": [],
       "name": {
         "fernFilepath": {
@@ -4981,15 +4851,15 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
         },
         "typeId": "type_service:User",
       },
-      "referencedTypes": Set {},
+      "referencedTypes": [],
       "shape": {
-        "_visit": [Function],
+        "_type": "object",
         "extends": [],
-        "extraProperties": false,
+        "extra-properties": false,
         "properties": [
           {
-            "availability": undefined,
-            "docs": undefined,
+            "availability": null,
+            "docs": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -5013,22 +4883,20 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
               "wireValue": "name",
             },
             "valueType": {
-              "_visit": [Function],
+              "_type": "primitive",
               "primitive": {
                 "v1": "STRING",
                 "v2": {
-                  "_visit": [Function],
-                  "default": undefined,
+                  "default": null,
                   "type": "string",
-                  "validation": undefined,
+                  "validation": null,
                 },
               },
-              "type": "primitive",
             },
           },
           {
-            "availability": undefined,
-            "docs": undefined,
+            "availability": null,
+            "docs": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -5052,21 +4920,17 @@ exports[`migrateFromV46ToV45 snapshot 1`] = `
               "wireValue": "type",
             },
             "valueType": {
-              "_visit": [Function],
+              "_type": "container",
               "container": {
-                "_visit": [Function],
+                "_type": "literal",
                 "literal": {
-                  "_visit": [Function],
                   "string": "goose",
                   "type": "string",
                 },
-                "type": "literal",
               },
-              "type": "container",
             },
           },
         ],
-        "type": "object",
       },
     },
   },

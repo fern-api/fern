@@ -78,7 +78,7 @@ describe("migrateFromV29ToV28", () => {
         const migrated = await runMigration({
             pathToFixture
         });
-        expect(migrated.types["type_types:Car"]?.referencedTypes).toEqual(expectedReferenceTypes);
-        expect(migrated).toMatchSnapshot();
+        expect(migrated.ir.types["type_types:Car"]?.referencedTypes).toEqual(expectedReferenceTypes);
+        expect(await migrated.jsonify()).toMatchSnapshot();
     });
 });

@@ -10,6 +10,6 @@ describe("migrateFromV37ToV36", () => {
         const migrated = await runMigration({
             pathToFixture
         });
-        expect(migrated).toMatchSnapshot();
+        expect(await migrated.jsonify()).toMatchSnapshot();
     });
 });
