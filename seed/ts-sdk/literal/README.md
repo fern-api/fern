@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedLiteralClient } from "@fern/literal";
 
-const seedLiteral = new SeedLiteralClient();
+const seedLiteral = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
 await seedLiteral.headers.send({
     endpointVersion: "02-12-2024",
     async: true,
@@ -46,7 +46,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedLiteralError } from '@fern/literal';
+import { SeedLiteralError } from "@fern/literal";
 
 try {
     await seedLiteral.send(...);
@@ -119,7 +119,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedLiteralClient } from '@fern/literal';
+import { SeedLiteralClient } from "@fern/literal";
 
 const seedLiteral = new SeedLiteralClient({
     ...

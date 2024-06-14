@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedMixedCaseClient } from "@fern/mixed-case";
 
-const seedMixedCase = new SeedMixedCaseClient();
+const seedMixedCase = new SeedMixedCaseClient({ environment: "YOUR_BASE_URL" });
 await seedMixedCase.service.getResource("rsc-xyz");
 ```
 
@@ -42,7 +42,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedMixedCaseError } from '@fern/mixed-case';
+import { SeedMixedCaseError } from "@fern/mixed-case";
 
 try {
     await seedMixedCase.getResource(...);
@@ -115,7 +115,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedMixedCaseClient } from '@fern/mixed-case';
+import { SeedMixedCaseClient } from "@fern/mixed-case";
 
 const seedMixedCase = new SeedMixedCaseClient({
     ...

@@ -110,7 +110,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly npmPackage: NpmPackage | undefined;
     public readonly type: TypeContextImpl;
     public readonly typeSchema: TypeSchemaContextImpl;
-    public readonly namespaceExport: string | undefined;
+    public readonly namespaceExport: string;
     public readonly rootClientVariableName: string;
     public readonly sdkInstanceReferenceForSnippet: ts.Identifier;
 

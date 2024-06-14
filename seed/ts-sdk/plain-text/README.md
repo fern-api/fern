@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedPlainTextClient } from "@fern/plain-text";
 
-const seedPlainText = new SeedPlainTextClient();
+const seedPlainText = new SeedPlainTextClient({ environment: "YOUR_BASE_URL" });
 await seedPlainText.service.getText();
 ```
 
@@ -28,7 +28,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedPlainTextError } from '@fern/plain-text';
+import { SeedPlainTextError } from "@fern/plain-text";
 
 try {
     await seedPlainText.getText(...);
@@ -101,7 +101,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedPlainTextClient } from '@fern/plain-text';
+import { SeedPlainTextClient } from "@fern/plain-text";
 
 const seedPlainText = new SeedPlainTextClient({
     ...

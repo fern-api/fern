@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApiClient } from "@fern/imdb";
 
-const seedApi = new SeedApiClient({ token: "YOUR_TOKEN" });
+const seedApi = new SeedApiClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await seedApi.imdb.createMovie({
     title: "string",
     rating: 1.1,
@@ -31,7 +31,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedApiError } from '@fern/imdb';
+import { SeedApiError } from "@fern/imdb";
 
 try {
     await seedApi.createMovie(...);
@@ -104,7 +104,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedApiClient } from '@fern/imdb';
+import { SeedApiClient } from "@fern/imdb";
 
 const seedApi = new SeedApiClient({
     ...

@@ -19,6 +19,7 @@ Instantiate and use the client with the following:
 import { SeedOauthClientCredentialsClient } from "@fern/oauth-client-credentials-nested-root";
 
 const seedOauthClientCredentials = new SeedOauthClientCredentialsClient({
+    environment: "YOUR_BASE_URL",
     clientId: "YOUR_CLIENT_ID",
     clientSecret: "YOUR_CLIENT_SECRET",
 });
@@ -51,7 +52,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedOauthClientCredentialsError } from '@fern/oauth-client-credentials-nested-root';
+import { SeedOauthClientCredentialsError } from "@fern/oauth-client-credentials-nested-root";
 
 try {
     await seedOauthClientCredentials.getToken(...);
@@ -124,7 +125,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedOauthClientCredentialsClient } from '@fern/oauth-client-credentials-nested-root';
+import { SeedOauthClientCredentialsClient } from "@fern/oauth-client-credentials-nested-root";
 
 const seedOauthClientCredentials = new SeedOauthClientCredentialsClient({
     ...

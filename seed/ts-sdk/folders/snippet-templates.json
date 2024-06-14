@@ -11,7 +11,7 @@
             "identifierOverride": "endpoint_.foo"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedApi = new SeedApiClient;\n",
+            "clientInstantiation": "const seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApi.foo()",
@@ -35,7 +35,7 @@
             "identifierOverride": "endpoint_a/b.foo"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedApi = new SeedApiClient;\n",
+            "clientInstantiation": "const seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApi.a.b.foo()",
@@ -59,7 +59,7 @@
             "identifierOverride": "endpoint_a/c.foo"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedApi = new SeedApiClient;\n",
+            "clientInstantiation": "const seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApi.a.c.foo()",
@@ -83,7 +83,7 @@
             "identifierOverride": "endpoint_folder.foo"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedApi = new SeedApiClient;\n",
+            "clientInstantiation": "const seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApi.folder.foo()",
@@ -107,7 +107,7 @@
             "identifierOverride": "endpoint_folder/service.endpoint"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedApi = new SeedApiClient;\n",
+            "clientInstantiation": "const seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApi.folder.service.endpoint()",
@@ -131,7 +131,7 @@
             "identifierOverride": "endpoint_folder/service.unknownRequest"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedApi = new SeedApiClient;\n",
+            "clientInstantiation": "const seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApi.folder.service.unknownRequest(\n\t$FERN_INPUT\n)",

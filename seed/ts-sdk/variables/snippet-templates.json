@@ -11,7 +11,7 @@
             "identifierOverride": "endpoint_service.post"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedVariables = new SeedVariablesClient;\n",
+            "clientInstantiation": "const seedVariables = new SeedVariablesClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedVariables.service.post(\n\t$FERN_INPUT\n)",

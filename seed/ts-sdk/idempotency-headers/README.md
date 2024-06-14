@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedIdempotencyHeadersClient, SeedIdempotencyHeaders } from "@fern/idempotency-headers";
 
-const seedIdempotencyHeaders = new SeedIdempotencyHeadersClient({ token: "YOUR_TOKEN" });
+const seedIdempotencyHeaders = new SeedIdempotencyHeadersClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await seedIdempotencyHeaders.payment.create({
     amount: 1,
     currency: SeedIdempotencyHeaders.Currency.Usd,
@@ -45,7 +45,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedIdempotencyHeadersError } from '@fern/idempotency-headers';
+import { SeedIdempotencyHeadersError } from "@fern/idempotency-headers";
 
 try {
     await seedIdempotencyHeaders.create(...);
@@ -118,7 +118,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedIdempotencyHeadersClient } from '@fern/idempotency-headers';
+import { SeedIdempotencyHeadersClient } from "@fern/idempotency-headers";
 
 const seedIdempotencyHeaders = new SeedIdempotencyHeadersClient({
     ...

@@ -19,7 +19,7 @@ Instantiate and use the client with the following:
 import { SeedFileUploadClient } from "@fern/file-upload";
 import * as fs from "fs";
 
-const seedFileUpload = new SeedFileUploadClient();
+const seedFileUpload = new SeedFileUploadClient({ environment: "YOUR_BASE_URL" });
 await seedFileUpload.service.post({
     file: fs.createReadStream("/path/to/your/file"),
     fileList: [fs.createReadStream("/path/to/your/file")],
@@ -46,7 +46,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedFileUploadError } from '@fern/file-upload';
+import { SeedFileUploadError } from "@fern/file-upload";
 
 try {
     await seedFileUpload.post(...);
@@ -119,7 +119,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedFileUploadClient } from '@fern/file-upload';
+import { SeedFileUploadClient } from "@fern/file-upload";
 
 const seedFileUpload = new SeedFileUploadClient({
     ...

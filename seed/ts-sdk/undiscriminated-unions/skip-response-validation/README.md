@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedUndiscriminatedUnionsClient } from "@fern/undiscriminated-unions";
 
-const seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient();
+const seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient({ environment: "YOUR_BASE_URL" });
 await seedUndiscriminatedUnions.union.get("string");
 ```
 
@@ -28,7 +28,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedUndiscriminatedUnionsError } from '@fern/undiscriminated-unions';
+import { SeedUndiscriminatedUnionsError } from "@fern/undiscriminated-unions";
 
 try {
     await seedUndiscriminatedUnions.get(...);
@@ -101,7 +101,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedUndiscriminatedUnionsClient } from '@fern/undiscriminated-unions';
+import { SeedUndiscriminatedUnionsClient } from "@fern/undiscriminated-unions";
 
 const seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient({
     ...

@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedExtraPropertiesClient } from "@fern/extra-properties";
 
-const seedExtraProperties = new SeedExtraPropertiesClient();
+const seedExtraProperties = new SeedExtraPropertiesClient({ environment: "YOUR_BASE_URL" });
 await seedExtraProperties.user.createUser({
     type: "CreateUserRequest",
     version: "v1",
@@ -46,7 +46,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedExtraPropertiesError } from '@fern/extra-properties';
+import { SeedExtraPropertiesError } from "@fern/extra-properties";
 
 try {
     await seedExtraProperties.createUser(...);
@@ -119,7 +119,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedExtraPropertiesClient } from '@fern/extra-properties';
+import { SeedExtraPropertiesClient } from "@fern/extra-properties";
 
 const seedExtraProperties = new SeedExtraPropertiesClient({
     ...

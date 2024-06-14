@@ -11,7 +11,7 @@
             "identifierOverride": "endpoint_completions.stream"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedServerSentEvents = new SeedServerSentEventsClient;\n",
+            "clientInstantiation": "const seedServerSentEvents = new SeedServerSentEventsClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedServerSentEvents.completions.stream(\n\t$FERN_INPUT\n)",

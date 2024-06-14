@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedObjectsWithImportsClient } from "@fern/optional";
 
-const seedObjectsWithImports = new SeedObjectsWithImportsClient();
+const seedObjectsWithImports = new SeedObjectsWithImportsClient({ environment: "YOUR_BASE_URL" });
 await seedObjectsWithImports.optional.sendOptionalBody({
     string: {
         key: "value",
@@ -32,7 +32,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedObjectsWithImportsError } from '@fern/optional';
+import { SeedObjectsWithImportsError } from "@fern/optional";
 
 try {
     await seedObjectsWithImports.sendOptionalBody(...);
@@ -105,7 +105,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedObjectsWithImportsClient } from '@fern/optional';
+import { SeedObjectsWithImportsClient } from "@fern/optional";
 
 const seedObjectsWithImports = new SeedObjectsWithImportsClient({
     ...
