@@ -11,7 +11,7 @@
             "identifierOverride": "endpoint_service.downloadFile"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedFileDownload = new SeedFileDownloadClient;\n",
+            "clientInstantiation": "const seedFileDownload = new SeedFileDownloadClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedFileDownload.service.downloadFile()",

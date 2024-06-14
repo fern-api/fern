@@ -18,7 +18,11 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedBasicAuthClient } from "@fern/basic-auth";
 
-const seedBasicAuth = new SeedBasicAuthClient({ username: "YOUR_USERNAME", password: "YOUR_PASSWORD" });
+const seedBasicAuth = new SeedBasicAuthClient({
+    environment: "YOUR_BASE_URL",
+    username: "YOUR_USERNAME",
+    password: "YOUR_PASSWORD",
+});
 await seedBasicAuth.basicAuth.postWithBasicAuth({
     key: "value",
 });
@@ -30,7 +34,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedBasicAuthError } from '@fern/basic-auth';
+import { SeedBasicAuthError } from "@fern/basic-auth";
 
 try {
     await seedBasicAuth.postWithBasicAuth(...);
@@ -103,7 +107,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedBasicAuthClient } from '@fern/basic-auth';
+import { SeedBasicAuthClient } from "@fern/basic-auth";
 
 const seedBasicAuth = new SeedBasicAuthClient({
     ...

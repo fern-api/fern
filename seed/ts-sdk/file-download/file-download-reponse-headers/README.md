@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedFileDownloadClient } from "@fern/file-download";
 
-const seedFileDownload = new SeedFileDownloadClient();
+const seedFileDownload = new SeedFileDownloadClient({ environment: "YOUR_BASE_URL" });
 await seedFileDownload.service.downloadFile();
 ```
 
@@ -28,7 +28,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedFileDownloadError } from '@fern/file-download';
+import { SeedFileDownloadError } from "@fern/file-download";
 
 try {
     await seedFileDownload.downloadFile(...);
@@ -101,7 +101,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedFileDownloadClient } from '@fern/file-download';
+import { SeedFileDownloadClient } from "@fern/file-download";
 
 const seedFileDownload = new SeedFileDownloadClient({
     ...

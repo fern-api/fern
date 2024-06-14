@@ -16,9 +16,13 @@ npm i -s @fern/single-url-environment-no-default
 Instantiate and use the client with the following:
 
 ```typescript
+import * as environments from "../src/environments";
 import { SeedSingleUrlEnvironmentNoDefaultClient } from "@fern/single-url-environment-no-default";
 
-const seedSingleUrlEnvironmentNoDefault = new SeedSingleUrlEnvironmentNoDefaultClient({ token: "YOUR_TOKEN" });
+const seedSingleUrlEnvironmentNoDefault = new SeedSingleUrlEnvironmentNoDefaultClient({
+    environment: environments.SeedSingleUrlEnvironmentNoDefaultEnvironment.Production,
+    token: "YOUR_TOKEN",
+});
 await seedSingleUrlEnvironmentNoDefault.dummy.getDummy();
 ```
 
@@ -28,7 +32,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedSingleUrlEnvironmentNoDefaultError } from '@fern/single-url-environment-no-default';
+import { SeedSingleUrlEnvironmentNoDefaultError } from "@fern/single-url-environment-no-default";
 
 try {
     await seedSingleUrlEnvironmentNoDefault.getDummy(...);
@@ -101,7 +105,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedSingleUrlEnvironmentNoDefaultClient } from '@fern/single-url-environment-no-default';
+import { SeedSingleUrlEnvironmentNoDefaultClient } from "@fern/single-url-environment-no-default";
 
 const seedSingleUrlEnvironmentNoDefault = new SeedSingleUrlEnvironmentNoDefaultClient({
     ...

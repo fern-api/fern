@@ -11,7 +11,7 @@
             "identifierOverride": "endpoint_basic-auth.getWithBasicAuth"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedBasicAuth = new SeedBasicAuthClient({ username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\n",
+            "clientInstantiation": "const seedBasicAuth = new SeedBasicAuthClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedBasicAuth.basicAuth.getWithBasicAuth()",
@@ -35,7 +35,7 @@
             "identifierOverride": "endpoint_basic-auth.postWithBasicAuth"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedBasicAuth = new SeedBasicAuthClient({ username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\n",
+            "clientInstantiation": "const seedBasicAuth = new SeedBasicAuthClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedBasicAuth.basicAuth.postWithBasicAuth(\n\t$FERN_INPUT\n)",

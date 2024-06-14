@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedResponsePropertyClient } from "@fern/response-property";
 
-const seedResponseProperty = new SeedResponsePropertyClient();
+const seedResponseProperty = new SeedResponsePropertyClient({ environment: "YOUR_BASE_URL" });
 await seedResponseProperty.service.getMovie("string");
 ```
 
@@ -28,7 +28,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedResponsePropertyError } from '@fern/response-property';
+import { SeedResponsePropertyError } from "@fern/response-property";
 
 try {
     await seedResponseProperty.getMovie(...);
@@ -101,7 +101,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedResponsePropertyClient } from '@fern/response-property';
+import { SeedResponsePropertyClient } from "@fern/response-property";
 
 const seedResponseProperty = new SeedResponsePropertyClient({
     ...

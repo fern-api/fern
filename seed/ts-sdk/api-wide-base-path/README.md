@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApiWideBasePathClient } from "@fern/api-wide-base-path";
 
-const seedApiWideBasePath = new SeedApiWideBasePathClient();
+const seedApiWideBasePath = new SeedApiWideBasePathClient({ environment: "YOUR_BASE_URL" });
 await seedApiWideBasePath.service.post("string", "string", 1);
 ```
 
@@ -28,7 +28,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedApiWideBasePathError } from '@fern/api-wide-base-path';
+import { SeedApiWideBasePathError } from "@fern/api-wide-base-path";
 
 try {
     await seedApiWideBasePath.post(...);
@@ -101,7 +101,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedApiWideBasePathClient } from '@fern/api-wide-base-path';
+import { SeedApiWideBasePathClient } from "@fern/api-wide-base-path";
 
 const seedApiWideBasePath = new SeedApiWideBasePathClient({
     ...

@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedNoEnvironmentClient } from "@fern/no-environment";
 
-const seedNoEnvironment = new SeedNoEnvironmentClient({ token: "YOUR_TOKEN" });
+const seedNoEnvironment = new SeedNoEnvironmentClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await seedNoEnvironment.dummy.getDummy();
 ```
 
@@ -28,7 +28,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedNoEnvironmentError } from '@fern/no-environment';
+import { SeedNoEnvironmentError } from "@fern/no-environment";
 
 try {
     await seedNoEnvironment.getDummy(...);
@@ -101,7 +101,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedNoEnvironmentClient } from '@fern/no-environment';
+import { SeedNoEnvironmentClient } from "@fern/no-environment";
 
 const seedNoEnvironment = new SeedNoEnvironmentClient({
     ...

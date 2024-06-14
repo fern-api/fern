@@ -19,6 +19,7 @@ Instantiate and use the client with the following:
 import { SeedOauthClientCredentialsEnvironmentVariablesClient } from "@fern/oauth-client-credentials-environment-variables";
 
 const seedOauthClientCredentialsEnvironmentVariables = new SeedOauthClientCredentialsEnvironmentVariablesClient({
+    environment: "YOUR_BASE_URL",
     clientId: "YOUR_CLIENT_ID",
     clientSecret: "YOUR_CLIENT_SECRET",
 });
@@ -51,7 +52,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedOauthClientCredentialsEnvironmentVariablesError } from '@fern/oauth-client-credentials-environment-variables';
+import { SeedOauthClientCredentialsEnvironmentVariablesError } from "@fern/oauth-client-credentials-environment-variables";
 
 try {
     await seedOauthClientCredentialsEnvironmentVariables.getTokenWithClientCredentials(...);
@@ -124,7 +125,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedOauthClientCredentialsEnvironmentVariablesClient } from '@fern/oauth-client-credentials-environment-variables';
+import { SeedOauthClientCredentialsEnvironmentVariablesClient } from "@fern/oauth-client-credentials-environment-variables";
 
 const seedOauthClientCredentialsEnvironmentVariables = new SeedOauthClientCredentialsEnvironmentVariablesClient({
     ...

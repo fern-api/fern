@@ -11,7 +11,7 @@
             "identifierOverride": "endpoint_dummy.getDummy"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedSingleUrlEnvironmentNoDefault = new SeedSingleUrlEnvironmentNoDefaultClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": "const seedSingleUrlEnvironmentNoDefault = new SeedSingleUrlEnvironmentNoDefaultClient({ environment: environments.SeedSingleUrlEnvironmentNoDefaultEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedSingleUrlEnvironmentNoDefault.dummy.getDummy()",

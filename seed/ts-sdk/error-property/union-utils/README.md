@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedErrorPropertyClient } from "@fern/error-property";
 
-const seedErrorProperty = new SeedErrorPropertyClient();
+const seedErrorProperty = new SeedErrorPropertyClient({ environment: "YOUR_BASE_URL" });
 await seedErrorProperty.propertyBasedError.throwError();
 ```
 
@@ -28,7 +28,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedErrorPropertyError } from '@fern/error-property';
+import { SeedErrorPropertyError } from "@fern/error-property";
 
 try {
     await seedErrorProperty.throwError(...);
@@ -101,7 +101,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedErrorPropertyClient } from '@fern/error-property';
+import { SeedErrorPropertyClient } from "@fern/error-property";
 
 const seedErrorProperty = new SeedErrorPropertyClient({
     ...
