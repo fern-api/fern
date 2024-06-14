@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedUndiscriminatedUnionsClient } from "@fern/undiscriminated-unions";
 
-const seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient({ environment: "YOUR_BASE_URL" });
+const seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient();
 await seedUndiscriminatedUnions.union.get("string");
 ```
 

@@ -8,11 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedMultiLineDocsClient } from \"@fern/multi-line-docs\";\n\nconst seedMultiLineDocs = new SeedMultiLineDocsClient();\nawait seedMultiLineDocs.user.getUser(\"string\");\n"
-=======
-                "client": "import { SeedMultiLineDocsClient } from \"@fern/multi-line-docs\";\n\nconst seedMultiLineDocs = new SeedMultiLineDocsClient({ environment: \"YOUR_BASE_URL\" });\nawait seedMultiLineDocs.user.getUser(\"string\");\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -23,11 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedMultiLineDocsClient } from \"@fern/multi-line-docs\";\n\nconst seedMultiLineDocs = new SeedMultiLineDocsClient();\nawait seedMultiLineDocs.user.createUser({\n    name: \"string\",\n    age: 1\n});\n"
-=======
-                "client": "import { SeedMultiLineDocsClient } from \"@fern/multi-line-docs\";\n\nconst seedMultiLineDocs = new SeedMultiLineDocsClient({ environment: \"YOUR_BASE_URL\" });\nawait seedMultiLineDocs.user.createUser({\n    name: \"string\",\n    age: 1\n});\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         }
     ],

@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedPlainTextClient } from "@fern/plain-text";
 
-const seedPlainText = new SeedPlainTextClient({ environment: "YOUR_BASE_URL" });
+const seedPlainText = new SeedPlainTextClient();
 await seedPlainText.service.getText();
 ```
 

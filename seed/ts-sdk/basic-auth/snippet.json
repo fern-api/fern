@@ -8,11 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedBasicAuthClient } from \"@fern/basic-auth\";\n\nconst seedBasicAuth = new SeedBasicAuthClient();\nawait seedBasicAuth.basicAuth.getWithBasicAuth();\n"
-=======
-                "client": "import { SeedBasicAuthClient } from \"@fern/basic-auth\";\n\nconst seedBasicAuth = new SeedBasicAuthClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\nawait seedBasicAuth.basicAuth.getWithBasicAuth();\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -23,11 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedBasicAuthClient } from \"@fern/basic-auth\";\n\nconst seedBasicAuth = new SeedBasicAuthClient();\nawait seedBasicAuth.basicAuth.postWithBasicAuth({\n    \"key\": \"value\"\n});\n"
-=======
-                "client": "import { SeedBasicAuthClient } from \"@fern/basic-auth\";\n\nconst seedBasicAuth = new SeedBasicAuthClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\nawait seedBasicAuth.basicAuth.postWithBasicAuth({\n    \"key\": \"value\"\n});\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         }
     ],

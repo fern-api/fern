@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedUnionsClient } from "@fern/unions";
 
-const seedUnions = new SeedUnionsClient({ environment: "YOUR_BASE_URL" });
+const seedUnions = new SeedUnionsClient();
 await seedUnions.union.get("string");
 ```
 

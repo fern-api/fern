@@ -18,11 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-<<<<<<< HEAD
 const fiddle = new FiddleClient();
-=======
-const fiddle = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
 await fiddle.endpoints.container.getAndReturnListOfPrimitives(["string"]);
 ```
 

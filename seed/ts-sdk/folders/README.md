@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApiClient } from "@fern/folders";
 
-const seedApi = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+const seedApi = new SeedApiClient();
 await seedApi.foo();
 ```
 

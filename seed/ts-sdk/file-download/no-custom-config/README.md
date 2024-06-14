@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedFileDownloadClient } from "@fern/file-download";
 
-const seedFileDownload = new SeedFileDownloadClient({ environment: "YOUR_BASE_URL" });
+const seedFileDownload = new SeedFileDownloadClient();
 await seedFileDownload.service.downloadFile();
 ```
 

@@ -8,11 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedObjectsWithImportsClient } from \"@fern/optional\";\n\nconst seedObjectsWithImports = new SeedObjectsWithImportsClient();\nawait seedObjectsWithImports.optional.sendOptionalBody({\n    \"string\": {\n        \"key\": \"value\"\n    }\n});\n"
-=======
-                "client": "import { SeedObjectsWithImportsClient } from \"@fern/optional\";\n\nconst seedObjectsWithImports = new SeedObjectsWithImportsClient({ environment: \"YOUR_BASE_URL\" });\nawait seedObjectsWithImports.optional.sendOptionalBody({\n    \"string\": {\n        \"key\": \"value\"\n    }\n});\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         }
     ],

@@ -11,7 +11,6 @@
             "identifierOverride": "endpoint_endpoints/container.getAndReturnListOfPrimitives"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -24,6 +23,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -48,9 +57,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.container.getAndReturnListOfPrimitives(\n\t$FERN_INPUT\n)",
@@ -113,7 +119,6 @@
             "identifierOverride": "endpoint_endpoints/container.getAndReturnListOfObjects"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -126,6 +131,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -150,9 +165,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.container.getAndReturnListOfObjects(\n\t$FERN_INPUT\n)",
@@ -228,7 +240,6 @@
             "identifierOverride": "endpoint_endpoints/container.getAndReturnSetOfPrimitives"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -241,6 +252,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -265,9 +286,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.container.getAndReturnSetOfPrimitives(\n\t$FERN_INPUT\n)",
@@ -330,7 +348,6 @@
             "identifierOverride": "endpoint_endpoints/container.getAndReturnSetOfObjects"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -343,6 +360,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -367,9 +394,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.container.getAndReturnSetOfObjects(\n\t$FERN_INPUT\n)",
@@ -445,7 +469,6 @@
             "identifierOverride": "endpoint_endpoints/container.getAndReturnMapPrimToPrim"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -458,6 +481,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -482,9 +515,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.container.getAndReturnMapPrimToPrim(\n\t$FERN_INPUT\n)",
@@ -560,7 +590,6 @@
             "identifierOverride": "endpoint_endpoints/container.getAndReturnMapOfPrimToObject"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -573,6 +602,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -597,9 +636,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.container.getAndReturnMapOfPrimToObject(\n\t$FERN_INPUT\n)",
@@ -688,7 +724,6 @@
             "identifierOverride": "endpoint_endpoints/container.getAndReturnOptional"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -701,6 +736,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -725,9 +770,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.container.getAndReturnOptional(\n\t$FERN_INPUT\n)",
@@ -792,7 +834,6 @@
             "identifierOverride": "endpoint_endpoints/enum.getAndReturnEnum"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -805,6 +846,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -829,9 +880,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.enum.getAndReturnEnum(\n\t$FERN_INPUT\n)",
@@ -887,7 +935,6 @@
             "identifierOverride": "endpoint_endpoints/http-methods.testGet"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -900,6 +947,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -924,9 +981,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.httpMethods.testGet(\n\t$FERN_INPUT\n)",
@@ -979,12 +1033,7 @@
             "identifierOverride": "endpoint_endpoints/http-methods.testPost"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
-            "functionInvocation": {
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
@@ -996,6 +1045,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -1084,7 +1143,6 @@
             "identifierOverride": "endpoint_endpoints/http-methods.testPut"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -1097,6 +1155,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -1121,9 +1189,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.httpMethods.testPut(\n\t$FERN_INPUT\n)",
@@ -1216,7 +1281,6 @@
             "identifierOverride": "endpoint_endpoints/http-methods.testPatch"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -1229,6 +1293,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -1253,9 +1327,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.httpMethods.testPatch(\n\t$FERN_INPUT\n)",
@@ -1541,22 +1612,6 @@
                                                     "type": "dict"
                                                 },
                                                 "type": "template"
-                                            },
-                                            {
-                                                "value": {
-                                                    "imports": [],
-                                                    "templateString": "bigint: $FERN_INPUT",
-                                                    "isOptional": true,
-                                                    "templateInputs": [
-                                                        {
-                                                            "location": "BODY",
-                                                            "path": "bigint",
-                                                            "type": "payload"
-                                                        }
-                                                    ],
-                                                    "type": "generic"
-                                                },
-                                                "type": "template"
                                             }
                                         ],
                                         "type": "generic"
@@ -1586,7 +1641,6 @@
             "identifierOverride": "endpoint_endpoints/http-methods.testDelete"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -1599,6 +1653,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -1623,9 +1687,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.httpMethods.testDelete(\n\t$FERN_INPUT\n)",
@@ -1678,7 +1739,6 @@
             "identifierOverride": "endpoint_endpoints/object.getAndReturnWithOptionalField"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -1691,6 +1751,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -1715,9 +1785,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.object.getAndReturnWithOptionalField(\n\t$FERN_INPUT\n)",
@@ -1975,22 +2042,6 @@
                                                     "type": "dict"
                                                 },
                                                 "type": "template"
-                                            },
-                                            {
-                                                "value": {
-                                                    "imports": [],
-                                                    "templateString": "bigint: $FERN_INPUT",
-                                                    "isOptional": true,
-                                                    "templateInputs": [
-                                                        {
-                                                            "location": "BODY",
-                                                            "path": "bigint",
-                                                            "type": "payload"
-                                                        }
-                                                    ],
-                                                    "type": "generic"
-                                                },
-                                                "type": "template"
                                             }
                                         ],
                                         "type": "generic"
@@ -2020,7 +2071,6 @@
             "identifierOverride": "endpoint_endpoints/object.getAndReturnWithRequiredField"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -2033,6 +2083,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -2057,9 +2117,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.object.getAndReturnWithRequiredField(\n\t$FERN_INPUT\n)",
@@ -2124,7 +2181,6 @@
             "identifierOverride": "endpoint_endpoints/object.getAndReturnWithMapOfMap"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -2137,6 +2193,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -2161,9 +2227,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.object.getAndReturnWithMapOfMap(\n\t$FERN_INPUT\n)",
@@ -2276,7 +2339,6 @@
             "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithOptionalField"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -2289,6 +2351,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -2313,9 +2385,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.object.getAndReturnNestedWithOptionalField(\n\t$FERN_INPUT\n)",
@@ -2596,22 +2665,6 @@
                                                                 "type": "dict"
                                                             },
                                                             "type": "template"
-                                                        },
-                                                        {
-                                                            "value": {
-                                                                "imports": [],
-                                                                "templateString": "bigint: $FERN_INPUT",
-                                                                "isOptional": true,
-                                                                "templateInputs": [
-                                                                    {
-                                                                        "location": "BODY",
-                                                                        "path": "NestedObject.bigint",
-                                                                        "type": "payload"
-                                                                    }
-                                                                ],
-                                                                "type": "generic"
-                                                            },
-                                                            "type": "template"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -2646,7 +2699,6 @@
             "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithRequiredField"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -2659,6 +2711,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -2683,9 +2745,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.object.getAndReturnNestedWithRequiredField(\n\t$FERN_INPUT\n)",
@@ -2994,22 +3053,6 @@
                                                                 "type": "dict"
                                                             },
                                                             "type": "template"
-                                                        },
-                                                        {
-                                                            "value": {
-                                                                "imports": [],
-                                                                "templateString": "bigint: $FERN_INPUT",
-                                                                "isOptional": true,
-                                                                "templateInputs": [
-                                                                    {
-                                                                        "location": "BODY",
-                                                                        "path": "NestedObject.bigint",
-                                                                        "type": "payload"
-                                                                    }
-                                                                ],
-                                                                "type": "generic"
-                                                            },
-                                                            "type": "template"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -3044,7 +3087,6 @@
             "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithRequiredFieldAsList"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -3057,6 +3099,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -3081,9 +3133,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(\n\t$FERN_INPUT\n)",
@@ -3369,22 +3418,6 @@
                                                                     "type": "dict"
                                                                 },
                                                                 "type": "template"
-                                                            },
-                                                            {
-                                                                "value": {
-                                                                    "imports": [],
-                                                                    "templateString": "bigint: $FERN_INPUT",
-                                                                    "isOptional": true,
-                                                                    "templateInputs": [
-                                                                        {
-                                                                            "location": "RELATIVE",
-                                                                            "path": "NestedObject.bigint",
-                                                                            "type": "payload"
-                                                                        }
-                                                                    ],
-                                                                    "type": "generic"
-                                                                },
-                                                                "type": "template"
                                                             }
                                                         ],
                                                         "type": "generic"
@@ -3425,7 +3458,6 @@
             "identifierOverride": "endpoint_endpoints/params.getWithPath"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -3438,6 +3470,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -3462,9 +3504,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.params.getWithPath(\n\t$FERN_INPUT\n)",
@@ -3517,7 +3556,6 @@
             "identifierOverride": "endpoint_endpoints/params.getWithQuery"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -3530,6 +3568,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -3554,9 +3602,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.params.getWithQuery(\n\t$FERN_INPUT\n)",
@@ -3625,7 +3670,6 @@
             "identifierOverride": "endpoint_endpoints/params.getWithAllowMultipleQuery"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -3638,6 +3682,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -3662,9 +3716,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.params.getWithAllowMultipleQuery(\n\t$FERN_INPUT\n)",
@@ -3733,7 +3784,6 @@
             "identifierOverride": "endpoint_endpoints/params.getWithPathAndQuery"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -3746,6 +3796,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -3770,9 +3830,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.params.getWithPathAndQuery(\n\t$FERN_INPUT\n)",
@@ -3853,7 +3910,6 @@
             "identifierOverride": "endpoint_endpoints/params.modifyWithPath"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -3866,6 +3922,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -3890,9 +3956,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.params.modifyWithPath(\n\t$FERN_INPUT\n)",
@@ -3972,7 +4035,6 @@
             "identifierOverride": "endpoint_endpoints/primitive.getAndReturnString"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -3985,6 +4047,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -4009,9 +4081,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.primitive.getAndReturnString(\n\t$FERN_INPUT\n)",
@@ -4063,7 +4132,6 @@
             "identifierOverride": "endpoint_endpoints/primitive.getAndReturnInt"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -4076,6 +4144,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -4166,6 +4244,16 @@
                                 {
                                     "value": {
                                         "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
                                         "templateString": "token: $FERN_INPUT",
                                         "isOptional": false,
                                         "templateInputs": [
@@ -4250,6 +4338,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -4340,6 +4438,16 @@
                                 {
                                     "value": {
                                         "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
                                         "templateString": "token: $FERN_INPUT",
                                         "isOptional": false,
                                         "templateInputs": [
@@ -4427,6 +4535,16 @@
                                 {
                                     "value": {
                                         "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
                                         "templateString": "token: $FERN_INPUT",
                                         "isOptional": false,
                                         "templateInputs": [
@@ -4448,9 +4566,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.primitive.getAndReturnDatetime(\n\t$FERN_INPUT\n)",
@@ -4502,12 +4617,7 @@
             "identifierOverride": "endpoint_endpoints/primitive.getAndReturnDate"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
-            "functionInvocation": {
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
@@ -4519,6 +4629,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -4543,25 +4663,6 @@
                 ],
                 "type": "generic"
             },
-<<<<<<< HEAD
-=======
-            "type": "v1"
-        }
-    },
-    {
-        "sdk": {
-            "package": "@fern/exhaustive",
-            "version": "0.0.1",
-            "type": "typescript"
-        },
-        "endpointId": {
-            "path": "/primitive/double",
-            "method": "POST",
-            "identifierOverride": "endpoint_endpoints/primitive.getAndReturnDouble"
-        },
-        "snippetTemplate": {
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.primitive.getAndReturnDate(\n\t$FERN_INPUT\n)",
@@ -4613,12 +4714,7 @@
             "identifierOverride": "endpoint_endpoints/primitive.getAndReturnUUID"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
-            "functionInvocation": {
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
@@ -4630,6 +4726,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -4654,25 +4760,6 @@
                 ],
                 "type": "generic"
             },
-<<<<<<< HEAD
-=======
-            "type": "v1"
-        }
-    },
-    {
-        "sdk": {
-            "package": "@fern/exhaustive",
-            "version": "0.0.1",
-            "type": "typescript"
-        },
-        "endpointId": {
-            "path": "/primitive/datetime",
-            "method": "POST",
-            "identifierOverride": "endpoint_endpoints/primitive.getAndReturnDatetime"
-        },
-        "snippetTemplate": {
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.primitive.getAndReturnUuid(\n\t$FERN_INPUT\n)",
@@ -4724,12 +4811,7 @@
             "identifierOverride": "endpoint_endpoints/primitive.getAndReturnBase64"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
-            "functionInvocation": {
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
@@ -4741,6 +4823,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -4765,25 +4857,6 @@
                 ],
                 "type": "generic"
             },
-<<<<<<< HEAD
-=======
-            "type": "v1"
-        }
-    },
-    {
-        "sdk": {
-            "package": "@fern/exhaustive",
-            "version": "0.0.1",
-            "type": "typescript"
-        },
-        "endpointId": {
-            "path": "/primitive/uuid",
-            "method": "POST",
-            "identifierOverride": "endpoint_endpoints/primitive.getAndReturnUUID"
-        },
-        "snippetTemplate": {
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.primitive.getAndReturnBase64(\n\t$FERN_INPUT\n)",
@@ -4835,12 +4908,7 @@
             "identifierOverride": "endpoint_endpoints/union.getAndReturnUnion"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
-            "functionInvocation": {
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
                 "isOptional": false,
@@ -4852,6 +4920,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -4876,25 +4954,6 @@
                 ],
                 "type": "generic"
             },
-<<<<<<< HEAD
-=======
-            "type": "v1"
-        }
-    },
-    {
-        "sdk": {
-            "package": "@fern/exhaustive",
-            "version": "0.0.1",
-            "type": "typescript"
-        },
-        "endpointId": {
-            "path": "/union",
-            "method": "POST",
-            "identifierOverride": "endpoint_endpoints/union.getAndReturnUnion"
-        },
-        "snippetTemplate": {
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.endpoints.union.getAndReturnUnion(\n\t$FERN_INPUT\n)",
@@ -5051,7 +5110,6 @@
             "identifierOverride": "endpoint_inlined-requests.postWithObjectBodyandResponse"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -5064,6 +5122,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -5088,9 +5156,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.inlinedRequests.postWithObjectBodyandResponse(\n\t$FERN_INPUT\n)",
@@ -5380,22 +5445,6 @@
                                                     "type": "dict"
                                                 },
                                                 "type": "template"
-                                            },
-                                            {
-                                                "value": {
-                                                    "imports": [],
-                                                    "templateString": "bigint: $FERN_INPUT",
-                                                    "isOptional": true,
-                                                    "templateInputs": [
-                                                        {
-                                                            "location": "BODY",
-                                                            "path": "NestedObject.bigint",
-                                                            "type": "payload"
-                                                        }
-                                                    ],
-                                                    "type": "generic"
-                                                },
-                                                "type": "template"
                                             }
                                         ],
                                         "type": "generic"
@@ -5425,7 +5474,6 @@
             "identifierOverride": "endpoint_no-auth.postWithNoAuth"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -5438,6 +5486,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -5462,9 +5520,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.noAuth.postWithNoAuth(\n\t$FERN_INPUT\n)",
@@ -5516,7 +5571,6 @@
             "identifierOverride": "endpoint_no-req-body.getWithNoRequestBody"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -5529,6 +5583,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -5553,9 +5617,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.noReqBody.getWithNoRequestBody()",
@@ -5579,7 +5640,6 @@
             "identifierOverride": "endpoint_no-req-body.postWithNoRequestBody"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -5592,6 +5652,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -5616,9 +5686,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.noReqBody.postWithNoRequestBody()",
@@ -5642,7 +5709,6 @@
             "identifierOverride": "endpoint_req-with-headers.getWithCustomHeader"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedExhaustive = new SeedExhaustiveClient($FERN_INPUT);",
@@ -5655,6 +5721,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -5679,9 +5755,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedExhaustive = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExhaustive.reqWithHeaders.getWithCustomHeader(\n\t$FERN_INPUT\n)",

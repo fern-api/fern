@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedErrorPropertyClient } from "@fern/error-property";
 
-const seedErrorProperty = new SeedErrorPropertyClient({ environment: "YOUR_BASE_URL" });
+const seedErrorProperty = new SeedErrorPropertyClient();
 await seedErrorProperty.propertyBasedError.throwError();
 ```
 

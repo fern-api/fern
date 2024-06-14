@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApiWideBasePathClient } from "@fern/api-wide-base-path";
 
-const seedApiWideBasePath = new SeedApiWideBasePathClient({ environment: "YOUR_BASE_URL" });
+const seedApiWideBasePath = new SeedApiWideBasePathClient();
 await seedApiWideBasePath.service.post("string", "string", 1);
 ```
 

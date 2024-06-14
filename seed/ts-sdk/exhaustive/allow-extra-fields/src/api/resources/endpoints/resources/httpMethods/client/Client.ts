@@ -231,8 +231,7 @@ export class HttpMethods {
      *         set: new Set(["string"]),
      *         map: {
      *             1: "string"
-     *         },
-     *         bigint: "123456789123456789"
+     *         }
      *     })
      */
     public async testPatch(

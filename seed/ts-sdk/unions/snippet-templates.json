@@ -11,7 +11,36 @@
             "identifierOverride": "endpoint_union.get"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedUnions = new SeedUnionsClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedUnions = new SeedUnionsClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedUnions.union.get(\n\t$FERN_INPUT\n)",
@@ -64,7 +93,36 @@
             "identifierOverride": "endpoint_union.update"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedUnions = new SeedUnionsClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedUnions = new SeedUnionsClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedUnions.union.update(\n\t$FERN_INPUT\n)",

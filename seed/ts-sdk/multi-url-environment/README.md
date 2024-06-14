@@ -16,7 +16,6 @@ npm i -s @fern/multi-url-environment
 Instantiate and use the client with the following:
 
 ```typescript
-import * as environments from "../src/environments";
 import { SeedMultiUrlEnvironmentClient } from "@fern/multi-url-environment";
 
 const seedMultiUrlEnvironment = new SeedMultiUrlEnvironmentClient();

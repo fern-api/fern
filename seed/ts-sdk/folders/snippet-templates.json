@@ -11,7 +11,6 @@
             "identifierOverride": "endpoint_.foo"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedApi = new SeedApiClient();",
@@ -23,7 +22,18 @@
                             "imports": [],
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
-                            "templateInputs": [],
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
                             "type": "generic"
                         },
                         "type": "template"
@@ -31,9 +41,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApi.foo()",
@@ -57,7 +64,6 @@
             "identifierOverride": "endpoint_a/b.foo"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedApi = new SeedApiClient();",
@@ -69,7 +75,18 @@
                             "imports": [],
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
-                            "templateInputs": [],
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
                             "type": "generic"
                         },
                         "type": "template"
@@ -77,9 +94,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApi.a.b.foo()",
@@ -103,7 +117,6 @@
             "identifierOverride": "endpoint_a/c.foo"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedApi = new SeedApiClient();",
@@ -115,7 +128,18 @@
                             "imports": [],
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
-                            "templateInputs": [],
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
                             "type": "generic"
                         },
                         "type": "template"
@@ -123,9 +147,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApi.a.c.foo()",
@@ -149,7 +170,6 @@
             "identifierOverride": "endpoint_folder.foo"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedApi = new SeedApiClient();",
@@ -161,7 +181,18 @@
                             "imports": [],
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
-                            "templateInputs": [],
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
                             "type": "generic"
                         },
                         "type": "template"
@@ -169,9 +200,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApi.folder.foo()",
@@ -195,7 +223,6 @@
             "identifierOverride": "endpoint_folder/service.endpoint"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedApi = new SeedApiClient();",
@@ -207,7 +234,18 @@
                             "imports": [],
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
-                            "templateInputs": [],
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
                             "type": "generic"
                         },
                         "type": "template"
@@ -215,9 +253,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApi.folder.service.endpoint()",
@@ -241,7 +276,6 @@
             "identifierOverride": "endpoint_folder/service.unknownRequest"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedApi = new SeedApiClient();",
@@ -253,7 +287,18 @@
                             "imports": [],
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
-                            "templateInputs": [],
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
                             "type": "generic"
                         },
                         "type": "template"
@@ -261,9 +306,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApi.folder.service.unknownRequest(\n\t$FERN_INPUT\n)",

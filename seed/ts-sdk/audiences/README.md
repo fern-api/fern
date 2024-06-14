@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedAudiencesClient } from "@fern/audiences";
 
-const seedAudiences = new SeedAudiencesClient({ environment: "YOUR_BASE_URL" });
+const seedAudiences = new SeedAudiencesClient();
 await seedAudiences.foo.find({
     optionalString: "string",
     publicProperty: "string",

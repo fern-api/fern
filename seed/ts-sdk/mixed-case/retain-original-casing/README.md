@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedMixedCaseClient } from "@fern/mixed-case";
 
-const seedMixedCase = new SeedMixedCaseClient({ environment: "YOUR_BASE_URL" });
+const seedMixedCase = new SeedMixedCaseClient();
 await seedMixedCase.service.getResource("rsc-xyz");
 ```
 

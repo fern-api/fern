@@ -11,7 +11,6 @@
             "identifierOverride": "endpoint_imdb.createMovie"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedApi = new SeedApiClient($FERN_INPUT);",
@@ -24,6 +23,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -48,9 +57,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApi.imdb.createMovie(\n\t$FERN_INPUT\n)",
@@ -131,7 +137,6 @@
             "identifierOverride": "endpoint_imdb.getMovie"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const seedApi = new SeedApiClient($FERN_INPUT);",
@@ -144,6 +149,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -168,9 +183,6 @@
                 ],
                 "type": "generic"
             },
-=======
-            "clientInstantiation": "const seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApi.imdb.getMovie(\n\t$FERN_INPUT\n)",

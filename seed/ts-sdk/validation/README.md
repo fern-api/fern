@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedValidationClient } from "@fern/validation";
 
-const seedValidation = new SeedValidationClient({ environment: "YOUR_BASE_URL" });
+const seedValidation = new SeedValidationClient();
 await seedValidation.create({
     decimal: 1.1,
     even: 1,

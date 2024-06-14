@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedLiteralClient } from "@fern/literal";
 
-const seedLiteral = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
+const seedLiteral = new SeedLiteralClient();
 await seedLiteral.headers.send({
     endpointVersion: "02-12-2024",
     async: true,

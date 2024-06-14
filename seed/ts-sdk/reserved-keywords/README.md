@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedNurseryApiClient } from "@fern/reserved-keywords";
 
-const seedNurseryApi = new SeedNurseryApiClient({ environment: "YOUR_BASE_URL" });
+const seedNurseryApi = new SeedNurseryApiClient();
 await seedNurseryApi.package.test({
     for: "string",
 });

@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedQueryParametersClient } from "@fern/query-parameters";
 
-const seedQueryParameters = new SeedQueryParametersClient({ environment: "YOUR_BASE_URL" });
+const seedQueryParameters = new SeedQueryParametersClient();
 await seedQueryParameters.user.getUsername({
     limit: 1,
     id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",

@@ -16,17 +16,9 @@ npm i -s @fern/examples
 Instantiate and use the client with the following:
 
 ```typescript
-import * as environments from "../src/environments";
 import { SeedExamplesClient } from "@fern/examples";
 
-<<<<<<< HEAD
 const seedExamples = new SeedExamplesClient();
-=======
-const seedExamples = new SeedExamplesClient({
-    environment: environments.SeedExamplesEnvironment.Production,
-    token: "YOUR_TOKEN",
-});
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
 await seedExamples.echo("Hello world!\\n\\nwith\\n\\tnewlines");
 ```
 

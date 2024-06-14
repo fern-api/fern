@@ -19,7 +19,7 @@ Instantiate and use the client with the following:
 import { SeedFileUploadClient } from "@fern/file-upload";
 import * as fs from "fs";
 
-const seedFileUpload = new SeedFileUploadClient({ environment: "YOUR_BASE_URL" });
+const seedFileUpload = new SeedFileUploadClient();
 await seedFileUpload.service.post(
     fs.createReadStream("/path/to/your/file"),
     [fs.createReadStream("/path/to/your/file")],

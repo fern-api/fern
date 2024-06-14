@@ -8,11 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedValidationClient } from \"@fern/validation\";\n\nconst seedValidation = new SeedValidationClient();\nawait seedValidation.create({\n    decimal: 1.1,\n    even: 1,\n    name: \"string\"\n});\n"
-=======
-                "client": "import { SeedValidationClient } from \"@fern/validation\";\n\nconst seedValidation = new SeedValidationClient({ environment: \"YOUR_BASE_URL\" });\nawait seedValidation.create({\n    decimal: 1.1,\n    even: 1,\n    name: \"string\"\n});\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -23,11 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedValidationClient } from \"@fern/validation\";\n\nconst seedValidation = new SeedValidationClient();\nawait seedValidation.get({\n    decimal: 1.1,\n    even: 1,\n    name: \"string\"\n});\n"
-=======
-                "client": "import { SeedValidationClient } from \"@fern/validation\";\n\nconst seedValidation = new SeedValidationClient({ environment: \"YOUR_BASE_URL\" });\nawait seedValidation.get({\n    decimal: 1.1,\n    even: 1,\n    name: \"string\"\n});\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         }
     ],

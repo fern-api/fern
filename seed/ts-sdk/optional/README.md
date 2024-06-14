@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedObjectsWithImportsClient } from "@fern/optional";
 
-const seedObjectsWithImports = new SeedObjectsWithImportsClient({ environment: "YOUR_BASE_URL" });
+const seedObjectsWithImports = new SeedObjectsWithImportsClient();
 await seedObjectsWithImports.optional.sendOptionalBody({
     string: {
         key: "value",

@@ -8,11 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedBasicAuthEnvironmentVariablesClient } from \"@fern/basic-auth-environment-variables\";\n\nconst seedBasicAuthEnvironmentVariables = new SeedBasicAuthEnvironmentVariablesClient();\nawait seedBasicAuthEnvironmentVariables.basicAuth.getWithBasicAuth();\n"
-=======
-                "client": "import { SeedBasicAuthEnvironmentVariablesClient } from \"@fern/basic-auth-environment-variables\";\n\nconst seedBasicAuthEnvironmentVariables = new SeedBasicAuthEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\nawait seedBasicAuthEnvironmentVariables.basicAuth.getWithBasicAuth();\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -23,11 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedBasicAuthEnvironmentVariablesClient } from \"@fern/basic-auth-environment-variables\";\n\nconst seedBasicAuthEnvironmentVariables = new SeedBasicAuthEnvironmentVariablesClient();\nawait seedBasicAuthEnvironmentVariables.basicAuth.postWithBasicAuth({\n    \"key\": \"value\"\n});\n"
-=======
-                "client": "import { SeedBasicAuthEnvironmentVariablesClient } from \"@fern/basic-auth-environment-variables\";\n\nconst seedBasicAuthEnvironmentVariables = new SeedBasicAuthEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\nawait seedBasicAuthEnvironmentVariables.basicAuth.postWithBasicAuth({\n    \"key\": \"value\"\n});\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         }
     ],

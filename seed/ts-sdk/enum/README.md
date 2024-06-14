@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedEnumClient, SeedEnum } from "@fern/enum";
 
-const seedEnum = new SeedEnumClient({ environment: "YOUR_BASE_URL" });
+const seedEnum = new SeedEnumClient();
 await seedEnum.inlinedRequest.send({
     operand: SeedEnum.Operand.GreaterThan,
     operandOrColor: SeedEnum.Color.Red,

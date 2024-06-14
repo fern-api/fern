@@ -8,11 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.v2.test();\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.v2.test();\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -23,11 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.admin.updateTestSubmissionStatus(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), SeedTrace.TestSubmissionStatus.stopped());\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.admin.updateTestSubmissionStatus(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), SeedTrace.TestSubmissionStatus.stopped());\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -38,11 +30,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.admin.sendTestSubmissionUpdate(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), {\n    updateTime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    updateInfo: SeedTrace.TestSubmissionUpdateInfo.running(SeedTrace.RunningSubmissionState.QueueingSubmission)\n});\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.admin.sendTestSubmissionUpdate(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), {\n    updateTime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    updateInfo: SeedTrace.TestSubmissionUpdateInfo.running(SeedTrace.RunningSubmissionState.QueueingSubmission)\n});\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -53,11 +41,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.admin.updateWorkspaceSubmissionStatus(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), SeedTrace.WorkspaceSubmissionStatus.stopped());\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.admin.updateWorkspaceSubmissionStatus(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), SeedTrace.WorkspaceSubmissionStatus.stopped());\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -68,11 +52,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.admin.sendWorkspaceSubmissionUpdate(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), {\n    updateTime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    updateInfo: SeedTrace.WorkspaceSubmissionUpdateInfo.running(SeedTrace.RunningSubmissionState.QueueingSubmission)\n});\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.admin.sendWorkspaceSubmissionUpdate(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), {\n    updateTime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    updateInfo: SeedTrace.WorkspaceSubmissionUpdateInfo.running(SeedTrace.RunningSubmissionState.QueueingSubmission)\n});\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -83,11 +63,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.admin.storeTracedTestCase(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), \"string\", {\n    result: {\n        result: {},\n        stdout: \"string\"\n    },\n    traceResponses: [{\n            submissionId: SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"),\n            lineNumber: 1,\n            returnValue: SeedTrace.DebugVariableValue.integerValue(1),\n            expressionLocation: {},\n            stack: {},\n            stdout: \"string\"\n        }]\n});\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.admin.storeTracedTestCase(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), \"string\", {\n    result: {\n        result: {},\n        stdout: \"string\"\n    },\n    traceResponses: [{\n            submissionId: SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"),\n            lineNumber: 1,\n            returnValue: SeedTrace.DebugVariableValue.integerValue(1),\n            expressionLocation: {},\n            stack: {},\n            stdout: \"string\"\n        }]\n});\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -98,11 +74,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.admin.storeTracedTestCaseV2(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), SeedTrace.TestCaseId(\"string\"), [{\n        submissionId: SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"),\n        lineNumber: 1,\n        file: {},\n        returnValue: SeedTrace.DebugVariableValue.integerValue(1),\n        expressionLocation: {},\n        stack: {},\n        stdout: \"string\"\n    }]);\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.admin.storeTracedTestCaseV2(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), SeedTrace.TestCaseId(\"string\"), [{\n        submissionId: SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"),\n        lineNumber: 1,\n        file: {},\n        returnValue: SeedTrace.DebugVariableValue.integerValue(1),\n        expressionLocation: {},\n        stack: {},\n        stdout: \"string\"\n    }]);\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -113,11 +85,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.admin.storeTracedWorkspace(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), {\n    workspaceRunDetails: {\n        exceptionV2: SeedTrace.ExceptionV2.generic({}),\n        exception: {},\n        stdout: \"string\"\n    },\n    traceResponses: [{\n            submissionId: SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"),\n            lineNumber: 1,\n            returnValue: SeedTrace.DebugVariableValue.integerValue(1),\n            expressionLocation: {},\n            stack: {},\n            stdout: \"string\"\n        }]\n});\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.admin.storeTracedWorkspace(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), {\n    workspaceRunDetails: {\n        exceptionV2: SeedTrace.ExceptionV2.generic({}),\n        exception: {},\n        stdout: \"string\"\n    },\n    traceResponses: [{\n            submissionId: SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"),\n            lineNumber: 1,\n            returnValue: SeedTrace.DebugVariableValue.integerValue(1),\n            expressionLocation: {},\n            stack: {},\n            stdout: \"string\"\n        }]\n});\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -128,11 +96,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.admin.storeTracedWorkspaceV2(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), [{\n        submissionId: SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"),\n        lineNumber: 1,\n        file: {},\n        returnValue: SeedTrace.DebugVariableValue.integerValue(1),\n        expressionLocation: {},\n        stack: {},\n        stdout: \"string\"\n    }]);\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.admin.storeTracedWorkspaceV2(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), [{\n        submissionId: SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"),\n        lineNumber: 1,\n        file: {},\n        returnValue: SeedTrace.DebugVariableValue.integerValue(1),\n        expressionLocation: {},\n        stack: {},\n        stdout: \"string\"\n    }]);\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -143,11 +107,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.homepage.getHomepageProblems();\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.homepage.getHomepageProblems();\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -158,11 +118,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.homepage.setHomepageProblems([SeedTrace.ProblemId(\"string\")]);\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.homepage.setHomepageProblems([SeedTrace.ProblemId(\"string\")]);\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -173,11 +129,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.migration.getAttemptedMigrations({\n    adminKeyHeader: \"string\"\n});\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.migration.getAttemptedMigrations({\n    adminKeyHeader: \"string\"\n});\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -188,11 +140,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.playlist.createPlaylist(1, {\n    datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    optionalDatetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    body: {\n        name: \"string\",\n        problems: [SeedTrace.ProblemId(\"string\")]\n    }\n});\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.playlist.createPlaylist(1, {\n    datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    optionalDatetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    body: {\n        name: \"string\",\n        problems: [SeedTrace.ProblemId(\"string\")]\n    }\n});\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -203,11 +151,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.playlist.getPlaylists(1, {\n    limit: 1,\n    otherField: \"string\",\n    multiLineDocs: \"string\",\n    optionalMultipleField: \"string\",\n    multipleField: \"string\"\n});\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.playlist.getPlaylists(1, {\n    limit: 1,\n    otherField: \"string\",\n    multiLineDocs: \"string\",\n    optionalMultipleField: \"string\",\n    multipleField: \"string\"\n});\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -218,11 +162,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.playlist.getPlaylist(1, SeedTrace.PlaylistId(\"string\"));\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.playlist.getPlaylist(1, SeedTrace.PlaylistId(\"string\"));\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -233,11 +173,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.playlist.updatePlaylist(1, SeedTrace.PlaylistId(\"string\"), {\n    name: \"string\",\n    problems: [SeedTrace.ProblemId(\"string\")]\n});\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.playlist.updatePlaylist(1, SeedTrace.PlaylistId(\"string\"), {\n    name: \"string\",\n    problems: [SeedTrace.ProblemId(\"string\")]\n});\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -248,11 +184,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.playlist.deletePlaylist(1, SeedTrace.PlaylistId(\"string\"));\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.playlist.deletePlaylist(1, SeedTrace.PlaylistId(\"string\"));\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -263,11 +195,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.problem.createProblem({\n    problemName: \"string\",\n    problemDescription: {\n        boards: [SeedTrace.ProblemDescriptionBoard.html(\"string\")]\n    },\n    files: {\n        [SeedTrace.Language.Java]: {\n            solutionFile: {\n                filename: \"string\",\n                contents: \"string\"\n            },\n            readOnlyFiles: [{\n                    filename: \"string\",\n                    contents: \"string\"\n                }]\n        }\n    },\n    inputParams: [{\n            variableType: SeedTrace.VariableType.integerType(),\n            name: \"string\"\n        }],\n    outputType: SeedTrace.VariableType.integerType(),\n    testcases: [{\n            testCase: {\n                id: \"string\",\n                params: [SeedTrace.VariableValue.integerValue(1)]\n            },\n            expectedResult: SeedTrace.VariableValue.integerValue(1)\n        }],\n    methodName: \"string\"\n});\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.problem.createProblem({\n    problemName: \"string\",\n    problemDescription: {\n        boards: [SeedTrace.ProblemDescriptionBoard.html(\"string\")]\n    },\n    files: {\n        [SeedTrace.Language.Java]: {\n            solutionFile: {\n                filename: \"string\",\n                contents: \"string\"\n            },\n            readOnlyFiles: [{\n                    filename: \"string\",\n                    contents: \"string\"\n                }]\n        }\n    },\n    inputParams: [{\n            variableType: SeedTrace.VariableType.integerType(),\n            name: \"string\"\n        }],\n    outputType: SeedTrace.VariableType.integerType(),\n    testcases: [{\n            testCase: {\n                id: \"string\",\n                params: [SeedTrace.VariableValue.integerValue(1)]\n            },\n            expectedResult: SeedTrace.VariableValue.integerValue(1)\n        }],\n    methodName: \"string\"\n});\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -278,11 +206,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.problem.updateProblem(SeedTrace.ProblemId(\"string\"), {\n    problemName: \"string\",\n    problemDescription: {\n        boards: [SeedTrace.ProblemDescriptionBoard.html(\"string\")]\n    },\n    files: {\n        [SeedTrace.Language.Java]: {\n            solutionFile: {\n                filename: \"string\",\n                contents: \"string\"\n            },\n            readOnlyFiles: [{\n                    filename: \"string\",\n                    contents: \"string\"\n                }]\n        }\n    },\n    inputParams: [{\n            variableType: SeedTrace.VariableType.integerType(),\n            name: \"string\"\n        }],\n    outputType: SeedTrace.VariableType.integerType(),\n    testcases: [{\n            testCase: {\n                id: \"string\",\n                params: [SeedTrace.VariableValue.integerValue(1)]\n            },\n            expectedResult: SeedTrace.VariableValue.integerValue(1)\n        }],\n    methodName: \"string\"\n});\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.problem.updateProblem(SeedTrace.ProblemId(\"string\"), {\n    problemName: \"string\",\n    problemDescription: {\n        boards: [SeedTrace.ProblemDescriptionBoard.html(\"string\")]\n    },\n    files: {\n        [SeedTrace.Language.Java]: {\n            solutionFile: {\n                filename: \"string\",\n                contents: \"string\"\n            },\n            readOnlyFiles: [{\n                    filename: \"string\",\n                    contents: \"string\"\n                }]\n        }\n    },\n    inputParams: [{\n            variableType: SeedTrace.VariableType.integerType(),\n            name: \"string\"\n        }],\n    outputType: SeedTrace.VariableType.integerType(),\n    testcases: [{\n            testCase: {\n                id: \"string\",\n                params: [SeedTrace.VariableValue.integerValue(1)]\n            },\n            expectedResult: SeedTrace.VariableValue.integerValue(1)\n        }],\n    methodName: \"string\"\n});\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -293,11 +217,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.problem.deleteProblem(SeedTrace.ProblemId(\"string\"));\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.problem.deleteProblem(SeedTrace.ProblemId(\"string\"));\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -308,11 +228,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.problem.getDefaultStarterFiles({\n    inputParams: [{\n            variableType: SeedTrace.VariableType.integerType(),\n            name: \"string\"\n        }],\n    outputType: SeedTrace.VariableType.integerType(),\n    methodName: \"string\"\n});\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.problem.getDefaultStarterFiles({\n    inputParams: [{\n            variableType: SeedTrace.VariableType.integerType(),\n            name: \"string\"\n        }],\n    outputType: SeedTrace.VariableType.integerType(),\n    methodName: \"string\"\n});\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -323,11 +239,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.submission.createExecutionSession(SeedTrace.Language.Java);\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.submission.createExecutionSession(SeedTrace.Language.Java);\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -338,11 +250,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.submission.getExecutionSession(\"string\");\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.submission.getExecutionSession(\"string\");\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -353,11 +261,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.submission.stopExecutionSession(\"string\");\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.submission.stopExecutionSession(\"string\");\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -368,11 +272,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.submission.getExecutionSessionsState();\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.submission.getExecutionSessionsState();\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -383,11 +283,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.sysprop.setNumWarmInstances(SeedTrace.Language.Java, 1);\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.sysprop.setNumWarmInstances(SeedTrace.Language.Java, 1);\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -398,11 +294,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.sysprop.getNumWarmInstances();\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.sysprop.getNumWarmInstances();\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -413,11 +305,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.v2.problem.getLightweightProblems();\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.v2.problem.getLightweightProblems();\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -428,11 +316,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.v2.problem.getProblems();\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.v2.problem.getProblems();\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -443,11 +327,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.v2.problem.getLatestProblem(SeedTrace.ProblemId(\"string\"));\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.v2.problem.getLatestProblem(SeedTrace.ProblemId(\"string\"));\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -458,11 +338,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.v2.problem.getProblemVersion(SeedTrace.ProblemId(\"string\"), 1);\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.v2.problem.getProblemVersion(SeedTrace.ProblemId(\"string\"), 1);\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -473,11 +349,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.v2.v3.problem.getLightweightProblems();\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.v2.v3.problem.getLightweightProblems();\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -488,11 +360,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.v2.v3.problem.getProblems();\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.v2.v3.problem.getProblems();\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -503,11 +371,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.v2.v3.problem.getLatestProblem(SeedTrace.ProblemId(\"string\"));\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.v2.v3.problem.getLatestProblem(SeedTrace.ProblemId(\"string\"));\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -518,11 +382,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient();\nawait seedTrace.v2.v3.problem.getProblemVersion(SeedTrace.ProblemId(\"string\"), 1);\n"
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst seedTrace = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait seedTrace.v2.v3.problem.getProblemVersion(SeedTrace.ProblemId(\"string\"), 1);\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         }
     ],

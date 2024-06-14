@@ -8,11 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedPaginationClient, SeedPagination } from \"@fern/pagination\";\n\nconst seedPagination = new SeedPaginationClient();\nawait seedPagination.users.listWithCursorPagination({\n    page: 1,\n    perPage: 1,\n    order: SeedPagination.Order.Asc,\n    startingAfter: \"string\"\n});\n"
-=======
-                "client": "import { SeedPaginationClient, SeedPagination } from \"@fern/pagination\";\n\nconst seedPagination = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait seedPagination.users.listWithCursorPagination({\n    page: 1,\n    perPage: 1,\n    order: SeedPagination.Order.Asc,\n    startingAfter: \"string\"\n});\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -23,11 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedPaginationClient, SeedPagination } from \"@fern/pagination\";\n\nconst seedPagination = new SeedPaginationClient();\nawait seedPagination.users.listWithOffsetPagination({\n    page: 1,\n    perPage: 1,\n    order: SeedPagination.Order.Asc,\n    startingAfter: \"string\"\n});\n"
-=======
-                "client": "import { SeedPaginationClient, SeedPagination } from \"@fern/pagination\";\n\nconst seedPagination = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait seedPagination.users.listWithOffsetPagination({\n    page: 1,\n    perPage: 1,\n    order: SeedPagination.Order.Asc,\n    startingAfter: \"string\"\n});\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -38,11 +30,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst seedPagination = new SeedPaginationClient();\nawait seedPagination.users.listWithExtendedResults({\n    cursor: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n});\n"
-=======
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst seedPagination = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait seedPagination.users.listWithExtendedResults({\n    cursor: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n});\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -53,11 +41,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst seedPagination = new SeedPaginationClient();\nawait seedPagination.users.listUsernames({\n    startingAfter: \"string\"\n});\n"
-=======
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst seedPagination = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait seedPagination.users.listUsernames({\n    startingAfter: \"string\"\n});\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         },
         {
@@ -68,11 +52,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
                 "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst seedPagination = new SeedPaginationClient();\nawait seedPagination.users.listWithGlobalConfig({\n    offset: 1\n});\n"
-=======
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst seedPagination = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait seedPagination.users.listWithGlobalConfig({\n    offset: 1\n});\n"
->>>>>>> 5eb4012f83ea987bf3173b3a8c7039544dc12329
             }
         }
     ],

@@ -13,7 +13,6 @@ types:
       list: optional<list<string>>
       set: optional<set<string>>
       map: optional<map<integer, string>>
-      bigint: optional<bigint>
 
   ObjectWithRequiredField:
     properties:

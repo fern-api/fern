@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedCodeSamplesClient } from "@fern/code-samples";
 
-const seedCodeSamples = new SeedCodeSamplesClient({ environment: "YOUR_BASE_URL" });
+const seedCodeSamples = new SeedCodeSamplesClient();
 await seedCodeSamples.service.hello({
     numEvents: 5,
 });
