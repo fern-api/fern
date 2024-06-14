@@ -43,7 +43,10 @@ export class ApiDefinitionHolder {
         return isSubpackage(pkg) ? pkg.subpackageId : ROOT_PACKAGE_ID;
     }
 
-    public getSubpackage(subpackageId: string): APIV1Read.ApiDefinitionPackage | undefined {
+    public getSubpackage(subpackageId: string | undefined): APIV1Read.ApiDefinitionPackage | undefined {
+        if (subpackageId == null) {
+            return undefined;
+        }
         return subpackageId === ROOT_PACKAGE_ID
             ? this.api.rootPackage
             : this.api.subpackages[

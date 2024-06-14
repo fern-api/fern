@@ -155,7 +155,7 @@ export class ApiReferenceNodeConverter {
             let subpackage: APIV1Read.ApiDefinitionPackage | undefined = undefined;
             let i = 0;
             while (subpackage == null && i < pkg.subpackages.length) {
-                subpackage = this.#holder.getSubpackage(pkg.subpackages[i]!);
+                subpackage = this.#holder.getSubpackage(pkg.subpackages[i]);
                 i++;
             }
 
