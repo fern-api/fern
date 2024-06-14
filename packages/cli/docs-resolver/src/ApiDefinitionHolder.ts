@@ -74,7 +74,15 @@ export class ApiDefinitionHolder {
             this.#subpackages.set(subpackageId, subpackageHolder);
             pkg.endpoints.forEach((endpoint) => {
                 subpackageHolder.endpoints.set(endpoint.id, endpoint);
-                this.#endpoints.set(ApiDefinitionHolder.createEndpointId(endpoint, subpackageId), endpoint);
+                const endpointId = ApiDefinitionHolder.createEndpointId(endpoint, subpackageId);
+                this.#endpoints.set(endpointId, endpoint);
+
+                if (endpointId.startsWith("subpackage_")) {
+                    this.#endpointsByPath.set(endpointId.substring("subpackage_".length), endpoint);
+                } else if (endpointId.startsWith("root.")) {
+                    this.#endpointsByPath.set(endpointId.substring("root.".length), endpoint);
+                }
+
                 this.#endpointsByPath.set(
                     `${endpoint.method} ${stringifyEndpointPathParts(endpoint.path.parts)}`,
                     endpoint
@@ -113,7 +121,14 @@ export class ApiDefinitionHolder {
             });
             pkg.websockets.forEach((webSocket) => {
                 subpackageHolder.webSockets.set(webSocket.id, webSocket);
-                this.#webSockets.set(ApiDefinitionHolder.createWebSocketId(webSocket, subpackageId), webSocket);
+                const webSocketId = ApiDefinitionHolder.createWebSocketId(webSocket, subpackageId);
+                this.#webSockets.set(webSocketId, webSocket);
+
+                if (webSocketId.startsWith("subpackage_")) {
+                    this.#webSocketsByPath.set(webSocketId.substring("subpackage_".length), webSocket);
+                } else if (webSocketId.startsWith("root.")) {
+                    this.#webSocketsByPath.set(webSocketId.substring("root.".length), webSocket);
+                }
 
                 // websockets are always GET.
                 // TODO: should we resolve without the GET method?
