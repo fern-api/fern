@@ -454,7 +454,7 @@ export class ApiReferenceNodeConverter {
 
     #mergeAndFilterChildren(
         left: FernNavigation.ApiPackageChild[],
-        right: FernNavigation.ApiPackageChild[]
+        right: FernNavigation.ApiPackageChild[] = []
     ): FernNavigation.ApiPackageChild[] {
         return this.mergeEndpointPairs([...left, ...right], NodeIdGenerator.init(this.apiDefinitionId)).filter(
             (child) => (child.type === "apiPackage" ? child.children.length > 0 : true)
@@ -578,7 +578,7 @@ export class ApiReferenceNodeConverter {
             additionalChildren.push({
                 id: subpackageNodeId.get(),
                 type: "apiPackage",
-                children: subpackageChildren,
+                children: this.#mergeAndFilterChildren(subpackageChildren),
                 title: isSubpackage(subpackage)
                     ? subpackage.displayName ?? titleCase(subpackage.name)
                     : this.apiSection.title,
