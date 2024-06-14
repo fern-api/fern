@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedUnions = new SeedUnionsClient();",
+                "templateString": "const seedUnions = new SeedUnionsClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -95,7 +95,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedUnions = new SeedUnionsClient();",
+                "templateString": "const seedUnions = new SeedUnionsClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [

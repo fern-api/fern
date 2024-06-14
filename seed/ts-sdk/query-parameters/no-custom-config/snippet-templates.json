@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedQueryParameters = new SeedQueryParametersClient();",
+                "templateString": "const seedQueryParameters = new SeedQueryParametersClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [

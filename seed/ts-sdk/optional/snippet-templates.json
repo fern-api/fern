@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedObjectsWithImports = new SeedObjectsWithImportsClient();",
+                "templateString": "const seedObjectsWithImports = new SeedObjectsWithImportsClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [

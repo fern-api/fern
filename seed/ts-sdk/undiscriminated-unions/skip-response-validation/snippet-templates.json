@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient();",
+                "templateString": "const seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
