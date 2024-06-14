@@ -16,7 +16,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedServerSentEvents = new SeedServerSentEventsClient();",
+                "templateString": "const seedServerSentEvents = new SeedServerSentEventsClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [

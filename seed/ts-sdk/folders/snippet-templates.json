@@ -16,7 +16,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedApi = new SeedApiClient();",
+                "templateString": "const seedApi = new SeedApiClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -73,7 +73,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedApi = new SeedApiClient();",
+                "templateString": "const seedApi = new SeedApiClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -130,7 +130,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedApi = new SeedApiClient();",
+                "templateString": "const seedApi = new SeedApiClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -187,7 +187,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedApi = new SeedApiClient();",
+                "templateString": "const seedApi = new SeedApiClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -244,7 +244,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedApi = new SeedApiClient();",
+                "templateString": "const seedApi = new SeedApiClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -301,7 +301,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedApi = new SeedApiClient();",
+                "templateString": "const seedApi = new SeedApiClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [

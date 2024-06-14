@@ -16,7 +16,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedEnum = new SeedEnumClient();",
+                "templateString": "const seedEnum = new SeedEnumClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -124,7 +124,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedEnum = new SeedEnumClient();",
+                "templateString": "const seedEnum = new SeedEnumClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -232,7 +232,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedEnum = new SeedEnumClient();",
+                "templateString": "const seedEnum = new SeedEnumClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -340,7 +340,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedEnum = new SeedEnumClient();",
+                "templateString": "const seedEnum = new SeedEnumClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [

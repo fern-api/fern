@@ -16,7 +16,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedApiWideBasePath = new SeedApiWideBasePathClient();",
+                "templateString": "const seedApiWideBasePath = new SeedApiWideBasePathClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [

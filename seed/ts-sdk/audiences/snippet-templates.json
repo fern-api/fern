@@ -16,7 +16,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedAudiences = new SeedAudiencesClient();",
+                "templateString": "const seedAudiences = new SeedAudiencesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -73,7 +73,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedAudiences = new SeedAudiencesClient();",
+                "templateString": "const seedAudiences = new SeedAudiencesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [

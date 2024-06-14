@@ -16,7 +16,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedValidation = new SeedValidationClient();",
+                "templateString": "const seedValidation = new SeedValidationClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -134,7 +134,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedValidation = new SeedValidationClient();",
+                "templateString": "const seedValidation = new SeedValidationClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [

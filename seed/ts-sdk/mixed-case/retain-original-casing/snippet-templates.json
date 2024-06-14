@@ -16,7 +16,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedMixedCase = new SeedMixedCaseClient();",
+                "templateString": "const seedMixedCase = new SeedMixedCaseClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -102,7 +102,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedMixedCase = new SeedMixedCaseClient();",
+                "templateString": "const seedMixedCase = new SeedMixedCaseClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [

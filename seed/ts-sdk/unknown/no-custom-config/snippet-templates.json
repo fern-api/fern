@@ -16,7 +16,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedUnknownAsAny = new SeedUnknownAsAnyClient();",
+                "templateString": "const seedUnknownAsAny = new SeedUnknownAsAnyClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [

@@ -16,7 +16,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedFileUpload = new SeedFileUploadClient();",
+                "templateString": "const seedFileUpload = new SeedFileUploadClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -283,7 +283,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedFileUpload = new SeedFileUploadClient();",
+                "templateString": "const seedFileUpload = new SeedFileUploadClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -371,7 +371,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedFileUpload = new SeedFileUploadClient();",
+                "templateString": "const seedFileUpload = new SeedFileUploadClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [

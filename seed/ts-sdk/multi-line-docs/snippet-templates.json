@@ -16,7 +16,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedMultiLineDocs = new SeedMultiLineDocsClient();",
+                "templateString": "const seedMultiLineDocs = new SeedMultiLineDocsClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -102,7 +102,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedMultiLineDocs = new SeedMultiLineDocsClient();",
+                "templateString": "const seedMultiLineDocs = new SeedMultiLineDocsClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [

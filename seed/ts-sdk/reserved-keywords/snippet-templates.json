@@ -16,7 +16,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedNurseryApi = new SeedNurseryApiClient();",
+                "templateString": "const seedNurseryApi = new SeedNurseryApiClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [

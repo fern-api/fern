@@ -16,7 +16,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedResponseProperty = new SeedResponsePropertyClient();",
+                "templateString": "const seedResponseProperty = new SeedResponsePropertyClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -101,7 +101,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedResponseProperty = new SeedResponsePropertyClient();",
+                "templateString": "const seedResponseProperty = new SeedResponsePropertyClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -186,7 +186,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedResponseProperty = new SeedResponsePropertyClient();",
+                "templateString": "const seedResponseProperty = new SeedResponsePropertyClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -271,7 +271,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedResponseProperty = new SeedResponsePropertyClient();",
+                "templateString": "const seedResponseProperty = new SeedResponsePropertyClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -356,7 +356,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedResponseProperty = new SeedResponsePropertyClient();",
+                "templateString": "const seedResponseProperty = new SeedResponsePropertyClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -441,7 +441,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedResponseProperty = new SeedResponsePropertyClient();",
+                "templateString": "const seedResponseProperty = new SeedResponsePropertyClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -526,7 +526,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedResponseProperty = new SeedResponsePropertyClient();",
+                "templateString": "const seedResponseProperty = new SeedResponsePropertyClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [

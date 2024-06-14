@@ -16,7 +16,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedErrorProperty = new SeedErrorPropertyClient();",
+                "templateString": "const seedErrorProperty = new SeedErrorPropertyClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [

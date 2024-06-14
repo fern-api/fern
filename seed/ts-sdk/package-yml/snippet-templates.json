@@ -16,7 +16,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedPackageYml = new SeedPackageYmlClient();",
+                "templateString": "const seedPackageYml = new SeedPackageYmlClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -129,7 +129,7 @@
 =======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedPackageYml = new SeedPackageYmlClient();",
+                "templateString": "const seedPackageYml = new SeedPackageYmlClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
