@@ -18,8 +18,13 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedObjectsWithImportsClient } from "@fern/optional";
 
+<<<<<<< HEAD
 const client = new SeedObjectsWithImportsClient({ environment: "YOUR_BASE_URL" });
 await client.optional.sendOptionalBody({
+=======
+const seedObjectsWithImports = new SeedObjectsWithImportsClient();
+await seedObjectsWithImports.optional.sendOptionalBody({
+>>>>>>> 52b1822299 (merge env variable changes)
     string: {
         key: "value",
     },

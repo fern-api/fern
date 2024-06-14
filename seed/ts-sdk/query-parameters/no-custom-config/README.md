@@ -18,8 +18,13 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedQueryParametersClient } from "@fern/query-parameters";
 
+<<<<<<< HEAD
 const client = new SeedQueryParametersClient({ environment: "YOUR_BASE_URL" });
 await client.user.getUsername({
+=======
+const seedQueryParameters = new SeedQueryParametersClient();
+await seedQueryParameters.user.getUsername({
+>>>>>>> 52b1822299 (merge env variable changes)
     limit: 1,
     id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     date: "2023-01-15",

@@ -11,7 +11,40 @@
             "identifierOverride": "endpoint_service.downloadFile"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": "const client = new SeedFileDownloadClient({ environment: \"YOUR_BASE_URL\" });\n",
+=======
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedFileDownload = new SeedFileDownloadClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.service.downloadFile()",

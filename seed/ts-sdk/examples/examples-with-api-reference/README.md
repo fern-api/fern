@@ -22,14 +22,18 @@ npm i -s @fern/examples
 Instantiate and use the client with the following:
 
 ```typescript
-import * as environments from "../src/environments";
 import { SeedExamplesClient } from "@fern/examples";
 
+<<<<<<< HEAD
 const client = new SeedExamplesClient({
     environment: environments.SeedExamplesEnvironment.Production,
     token: "YOUR_TOKEN",
 });
 await client.service.createMovie({
+=======
+const seedExamples = new SeedExamplesClient();
+await seedExamples.service.createMovie({
+>>>>>>> 52b1822299 (merge env variable changes)
     id: "movie-c06a4ad7",
     prequel: "movie-cv9b914f",
     title: "The Boy and the Heron",

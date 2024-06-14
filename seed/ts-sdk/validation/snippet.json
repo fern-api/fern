@@ -8,7 +8,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedValidationClient } from \"@fern/validation\";\n\nconst client = new SeedValidationClient({ environment: \"YOUR_BASE_URL\" });\nawait client.create({\n    decimal: 1.1,\n    even: 1,\n    name: \"string\"\n});\n"
+=======
+                "client": "import { SeedValidationClient } from \"@fern/validation\";\n\nconst seedValidation = new SeedValidationClient();\nawait seedValidation.create({\n    decimal: 1.1,\n    even: 1,\n    name: \"string\"\n});\n"
+>>>>>>> 52b1822299 (merge env variable changes)
             }
         },
         {
@@ -19,7 +23,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedValidationClient } from \"@fern/validation\";\n\nconst client = new SeedValidationClient({ environment: \"YOUR_BASE_URL\" });\nawait client.get({\n    decimal: 1.1,\n    even: 1,\n    name: \"string\"\n});\n"
+=======
+                "client": "import { SeedValidationClient } from \"@fern/validation\";\n\nconst seedValidation = new SeedValidationClient();\nawait seedValidation.get({\n    decimal: 1.1,\n    even: 1,\n    name: \"string\"\n});\n"
+>>>>>>> 52b1822299 (merge env variable changes)
             }
         }
     ],

@@ -18,6 +18,12 @@
         "url-join": "4.0.1"
     },
     "devDependencies": {
+<<<<<<< HEAD
+=======
+        "@types/qs": "6.9.8",
+        "@types/node-fetch": "2.6.9",
+        "jest": "29.7.0",
+>>>>>>> 52b1822299 (merge env variable changes)
         "@types/jest": "29.5.5",
         "@types/node": "17.0.33",
         "@types/node-fetch": "2.6.9",

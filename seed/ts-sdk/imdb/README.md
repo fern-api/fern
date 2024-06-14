@@ -18,8 +18,13 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApiClient } from "@fern/imdb";
 
+<<<<<<< HEAD
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.imdb.createMovie({
+=======
+const seedApi = new SeedApiClient();
+await seedApi.imdb.createMovie({
+>>>>>>> 52b1822299 (merge env variable changes)
     title: "string",
     rating: 1.1,
 });

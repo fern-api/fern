@@ -16,7 +16,6 @@ npm i -s @fern/trace
 Instantiate and use the client with the following:
 
 ```typescript
-import * as environments from "../src/environments";
 import { SeedTraceClient } from "@fern/trace";
 
 <<<<<<< HEAD

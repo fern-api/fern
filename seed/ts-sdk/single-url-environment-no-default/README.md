@@ -16,14 +16,18 @@ npm i -s @fern/single-url-environment-no-default
 Instantiate and use the client with the following:
 
 ```typescript
-import * as environments from "../src/environments";
 import { SeedSingleUrlEnvironmentNoDefaultClient } from "@fern/single-url-environment-no-default";
 
+<<<<<<< HEAD
 const client = new SeedSingleUrlEnvironmentNoDefaultClient({
     environment: environments.SeedSingleUrlEnvironmentNoDefaultEnvironment.Production,
     token: "YOUR_TOKEN",
 });
 await client.dummy.getDummy();
+=======
+const seedSingleUrlEnvironmentNoDefault = new SeedSingleUrlEnvironmentNoDefaultClient();
+await seedSingleUrlEnvironmentNoDefault.dummy.getDummy();
+>>>>>>> 52b1822299 (merge env variable changes)
 ```
 
 ## Exception Handling

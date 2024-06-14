@@ -24,6 +24,7 @@ import { Project } from "ts-morph";
 
 // Write this in the fern def to share between FE + BE
 const TEMPLATE_SENTINEL = "$FERN_INPUT";
+const ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
 
 export class TemplateGenerator {
     private endpointContext: SdkContext;
@@ -37,6 +38,7 @@ export class TemplateGenerator {
     private rootPackageId: PackageId;
     private retainOriginalCasing: boolean;
     private inlineFileProperties: boolean;
+    private requireDefaultEnvironment: boolean;
 
     constructor({
         clientContext,
@@ -48,7 +50,8 @@ export class TemplateGenerator {
         packageId,
         rootPackageId,
         retainOriginalCasing,
-        inlineFileProperties
+        inlineFileProperties,
+        requireDefaultEnvironment
     }: {
         clientContext: SdkContext;
         endpointContext: SdkContext;
@@ -60,6 +63,7 @@ export class TemplateGenerator {
         rootPackageId: PackageId;
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
+        requireDefaultEnvironment: boolean;
     }) {
         this.endpointContext = endpointContext;
         this.clientContext = clientContext;
@@ -71,6 +75,7 @@ export class TemplateGenerator {
         this.rootPackageId = rootPackageId;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
+        this.requireDefaultEnvironment = requireDefaultEnvironment;
 
         this.opts = { isForSnippet: true };
     }
@@ -782,6 +787,27 @@ export class TemplateGenerator {
 
     private generateTopLevelClientInstantiationSnippetTemplateInput(): FdrSnippetTemplate.TemplateInput[] {
         const topLevelTemplateInputs: FdrSnippetTemplate.TemplateInput[] = [];
+
+        const defaultEnvironment = this.clientContext.environments
+            .getGeneratedEnvironments()
+            .getReferenceToDefaultEnvironment(this.clientContext);
+        if (!this.requireDefaultEnvironment && defaultEnvironment == null) {
+            const firstEnvironment = this.clientContext.environments.getReferenceToFirstEnvironmentEnum();
+            topLevelTemplateInputs.push(
+                FdrSnippetTemplate.TemplateInput.template(
+                    FdrSnippetTemplate.Template.generic({
+                        imports: [],
+                        templateString: `${ENVIRONMENT_OPTION_PROPERTY_NAME}: ${
+                            firstEnvironment != null
+                                ? getTextOfTsNode(firstEnvironment.getExpression())
+                                : '"YOUR_BASE_URL"'
+                        }`,
+                        isOptional: false,
+                        templateInputs: []
+                    })
+                )
+            );
+        }
 
         for (const authScheme of this.auth.schemes) {
             AuthScheme._visit(authScheme, {

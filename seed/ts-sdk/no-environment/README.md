@@ -18,8 +18,13 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedNoEnvironmentClient } from "@fern/no-environment";
 
+<<<<<<< HEAD
 const client = new SeedNoEnvironmentClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.dummy.getDummy();
+=======
+const seedNoEnvironment = new SeedNoEnvironmentClient();
+await seedNoEnvironment.dummy.getDummy();
+>>>>>>> 52b1822299 (merge env variable changes)
 ```
 
 ## Exception Handling

@@ -8,7 +8,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.foo();\n"
+=======
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient();\nawait seedApi.foo();\n"
+>>>>>>> 52b1822299 (merge env variable changes)
             }
         },
         {
@@ -19,7 +23,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.a.b.foo();\n"
+=======
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient();\nawait seedApi.a.b.foo();\n"
+>>>>>>> 52b1822299 (merge env variable changes)
             }
         },
         {
@@ -30,7 +38,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.a.c.foo();\n"
+=======
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient();\nawait seedApi.a.c.foo();\n"
+>>>>>>> 52b1822299 (merge env variable changes)
             }
         },
         {
@@ -41,7 +53,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.folder.foo();\n"
+=======
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient();\nawait seedApi.folder.foo();\n"
+>>>>>>> 52b1822299 (merge env variable changes)
             }
         },
         {
@@ -52,7 +68,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.folder.service.endpoint();\n"
+=======
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient();\nawait seedApi.folder.service.endpoint();\n"
+>>>>>>> 52b1822299 (merge env variable changes)
             }
         },
         {
@@ -63,7 +83,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.folder.service.unknownRequest({\n    \"key\": \"value\"\n});\n"
+=======
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient();\nawait seedApi.folder.service.unknownRequest({\n    \"key\": \"value\"\n});\n"
+>>>>>>> 52b1822299 (merge env variable changes)
             }
         }
     ],

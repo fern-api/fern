@@ -12,8 +12,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -26,6 +29,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -50,7 +63,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.container.getAndReturnListOfPrimitives(\n\t$FERN_INPUT\n)",
@@ -114,8 +130,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -128,6 +147,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -152,7 +181,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.container.getAndReturnListOfObjects(\n\t$FERN_INPUT\n)",
@@ -229,8 +261,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -243,6 +278,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -267,7 +312,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.container.getAndReturnSetOfPrimitives(\n\t$FERN_INPUT\n)",
@@ -331,8 +379,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -345,6 +396,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -369,7 +430,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.container.getAndReturnSetOfObjects(\n\t$FERN_INPUT\n)",
@@ -446,8 +510,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -460,6 +527,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -484,7 +561,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.container.getAndReturnMapPrimToPrim(\n\t$FERN_INPUT\n)",
@@ -561,8 +641,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -575,6 +658,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -599,7 +692,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.container.getAndReturnMapOfPrimToObject(\n\t$FERN_INPUT\n)",
@@ -689,8 +785,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -703,6 +802,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -727,7 +836,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.container.getAndReturnOptional(\n\t$FERN_INPUT\n)",
@@ -793,8 +905,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -807,6 +922,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -831,7 +956,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.enum.getAndReturnEnum(\n\t$FERN_INPUT\n)",
@@ -888,8 +1016,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -902,6 +1033,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -926,7 +1067,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.httpMethods.testGet(\n\t$FERN_INPUT\n)",
@@ -980,8 +1124,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -994,6 +1141,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -1084,8 +1241,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -1098,6 +1258,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -1122,7 +1292,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.httpMethods.testPut(\n\t$FERN_INPUT\n)",
@@ -1216,8 +1389,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -1230,6 +1406,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -1254,7 +1440,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.httpMethods.testPatch(\n\t$FERN_INPUT\n)",
@@ -1540,22 +1729,6 @@
                                                     "type": "dict"
                                                 },
                                                 "type": "template"
-                                            },
-                                            {
-                                                "value": {
-                                                    "imports": [],
-                                                    "templateString": "bigint: $FERN_INPUT",
-                                                    "isOptional": true,
-                                                    "templateInputs": [
-                                                        {
-                                                            "location": "BODY",
-                                                            "path": "bigint",
-                                                            "type": "payload"
-                                                        }
-                                                    ],
-                                                    "type": "generic"
-                                                },
-                                                "type": "template"
                                             }
                                         ],
                                         "type": "generic"
@@ -1586,8 +1759,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -1600,6 +1776,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -1624,7 +1810,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.httpMethods.testDelete(\n\t$FERN_INPUT\n)",
@@ -1678,8 +1867,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -1692,6 +1884,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -1716,7 +1918,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.object.getAndReturnWithOptionalField(\n\t$FERN_INPUT\n)",
@@ -1974,22 +2179,6 @@
                                                     "type": "dict"
                                                 },
                                                 "type": "template"
-                                            },
-                                            {
-                                                "value": {
-                                                    "imports": [],
-                                                    "templateString": "bigint: $FERN_INPUT",
-                                                    "isOptional": true,
-                                                    "templateInputs": [
-                                                        {
-                                                            "location": "BODY",
-                                                            "path": "bigint",
-                                                            "type": "payload"
-                                                        }
-                                                    ],
-                                                    "type": "generic"
-                                                },
-                                                "type": "template"
                                             }
                                         ],
                                         "type": "generic"
@@ -2020,8 +2209,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -2034,6 +2226,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -2058,7 +2260,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.object.getAndReturnWithRequiredField(\n\t$FERN_INPUT\n)",
@@ -2124,8 +2329,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -2138,6 +2346,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -2162,7 +2380,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.object.getAndReturnWithMapOfMap(\n\t$FERN_INPUT\n)",
@@ -2276,8 +2497,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -2290,6 +2514,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -2314,7 +2548,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.object.getAndReturnNestedWithOptionalField(\n\t$FERN_INPUT\n)",
@@ -2595,22 +2832,6 @@
                                                                 "type": "dict"
                                                             },
                                                             "type": "template"
-                                                        },
-                                                        {
-                                                            "value": {
-                                                                "imports": [],
-                                                                "templateString": "bigint: $FERN_INPUT",
-                                                                "isOptional": true,
-                                                                "templateInputs": [
-                                                                    {
-                                                                        "location": "BODY",
-                                                                        "path": "NestedObject.bigint",
-                                                                        "type": "payload"
-                                                                    }
-                                                                ],
-                                                                "type": "generic"
-                                                            },
-                                                            "type": "template"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -2646,8 +2867,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -2660,6 +2884,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -2684,7 +2918,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.object.getAndReturnNestedWithRequiredField(\n\t$FERN_INPUT\n)",
@@ -2993,22 +3230,6 @@
                                                                 "type": "dict"
                                                             },
                                                             "type": "template"
-                                                        },
-                                                        {
-                                                            "value": {
-                                                                "imports": [],
-                                                                "templateString": "bigint: $FERN_INPUT",
-                                                                "isOptional": true,
-                                                                "templateInputs": [
-                                                                    {
-                                                                        "location": "BODY",
-                                                                        "path": "NestedObject.bigint",
-                                                                        "type": "payload"
-                                                                    }
-                                                                ],
-                                                                "type": "generic"
-                                                            },
-                                                            "type": "template"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -3044,8 +3265,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -3058,6 +3282,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -3082,7 +3316,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(\n\t$FERN_INPUT\n)",
@@ -3368,22 +3605,6 @@
                                                                     "type": "dict"
                                                                 },
                                                                 "type": "template"
-                                                            },
-                                                            {
-                                                                "value": {
-                                                                    "imports": [],
-                                                                    "templateString": "bigint: $FERN_INPUT",
-                                                                    "isOptional": true,
-                                                                    "templateInputs": [
-                                                                        {
-                                                                            "location": "RELATIVE",
-                                                                            "path": "NestedObject.bigint",
-                                                                            "type": "payload"
-                                                                        }
-                                                                    ],
-                                                                    "type": "generic"
-                                                                },
-                                                                "type": "template"
                                                             }
                                                         ],
                                                         "type": "generic"
@@ -3425,8 +3646,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -3439,6 +3663,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -3463,7 +3697,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.params.getWithPath(\n\t$FERN_INPUT\n)",
@@ -3517,8 +3754,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -3531,6 +3771,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -3555,7 +3805,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.params.getWithQuery(\n\t$FERN_INPUT\n)",
@@ -3625,8 +3878,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -3639,6 +3895,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -3663,7 +3929,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.params.getWithAllowMultipleQuery(\n\t$FERN_INPUT\n)",
@@ -3733,8 +4002,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -3747,6 +4019,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -3771,7 +4053,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.params.getWithPathAndQuery(\n\t$FERN_INPUT\n)",
@@ -3853,8 +4138,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -3867,6 +4155,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -3891,7 +4189,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.params.modifyWithPath(\n\t$FERN_INPUT\n)",
@@ -3972,8 +4273,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -3986,6 +4290,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -4010,7 +4324,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.primitive.getAndReturnString(\n\t$FERN_INPUT\n)",
@@ -4063,8 +4380,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -4077,6 +4397,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -4171,6 +4501,16 @@
                                 {
                                     "value": {
                                         "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
                                         "templateString": "token: $FERN_INPUT",
                                         "isOptional": false,
                                         "templateInputs": [
@@ -4259,6 +4599,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -4353,6 +4703,16 @@
                                 {
                                     "value": {
                                         "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
                                         "templateString": "token: $FERN_INPUT",
                                         "isOptional": false,
                                         "templateInputs": [
@@ -4444,6 +4804,16 @@
                                 {
                                     "value": {
                                         "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
                                         "templateString": "token: $FERN_INPUT",
                                         "isOptional": false,
                                         "templateInputs": [
@@ -4465,7 +4835,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.primitive.getAndReturnDatetime(\n\t$FERN_INPUT\n)",
@@ -4518,8 +4891,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -4532,6 +4908,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -4556,7 +4942,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.primitive.getAndReturnDate(\n\t$FERN_INPUT\n)",
@@ -4609,8 +4998,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -4623,6 +5015,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -4647,7 +5049,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.primitive.getAndReturnUuid(\n\t$FERN_INPUT\n)",
@@ -4700,8 +5105,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -4714,6 +5122,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -4738,7 +5156,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.primitive.getAndReturnBase64(\n\t$FERN_INPUT\n)",
@@ -4791,8 +5212,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -4805,6 +5229,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -4829,7 +5263,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.endpoints.union.getAndReturnUnion(\n\t$FERN_INPUT\n)",
@@ -4987,8 +5424,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -5001,6 +5441,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -5025,7 +5475,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.inlinedRequests.postWithObjectBodyandResponse(\n\t$FERN_INPUT\n)",
@@ -5315,22 +5768,6 @@
                                                     "type": "dict"
                                                 },
                                                 "type": "template"
-                                            },
-                                            {
-                                                "value": {
-                                                    "imports": [],
-                                                    "templateString": "bigint: $FERN_INPUT",
-                                                    "isOptional": true,
-                                                    "templateInputs": [
-                                                        {
-                                                            "location": "BODY",
-                                                            "path": "NestedObject.bigint",
-                                                            "type": "payload"
-                                                        }
-                                                    ],
-                                                    "type": "generic"
-                                                },
-                                                "type": "template"
                                             }
                                         ],
                                         "type": "generic"
@@ -5361,8 +5798,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -5375,6 +5815,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -5399,7 +5849,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.noAuth.postWithNoAuth(\n\t$FERN_INPUT\n)",
@@ -5452,8 +5905,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -5466,6 +5922,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -5490,7 +5956,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.noReqBody.getWithNoRequestBody()",
@@ -5515,8 +5984,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -5529,6 +6001,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -5553,7 +6035,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.noReqBody.postWithNoRequestBody()",
@@ -5578,8 +6063,11 @@
         },
         "snippetTemplate": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "clientInstantiation": "const client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "clientInstantiation": {
                 "imports": [],
                 "templateString": "const fiddle = new FiddleClient($FERN_INPUT);",
@@ -5592,6 +6080,16 @@
                             "templateString": "{ $FERN_INPUT }",
                             "isOptional": true,
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -5616,7 +6114,10 @@
                 ],
                 "type": "generic"
             },
+<<<<<<< HEAD
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.reqWithHeaders.getWithCustomHeader(\n\t$FERN_INPUT\n)",

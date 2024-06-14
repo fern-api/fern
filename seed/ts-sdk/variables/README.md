@@ -18,8 +18,13 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedVariablesClient } from "@fern/variables";
 
+<<<<<<< HEAD
 const client = new SeedVariablesClient({ environment: "YOUR_BASE_URL" });
 await client.service.post();
+=======
+const seedVariables = new SeedVariablesClient();
+await seedVariables.service.post();
+>>>>>>> 52b1822299 (merge env variable changes)
 ```
 
 ## Exception Handling

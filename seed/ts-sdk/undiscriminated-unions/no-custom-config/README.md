@@ -18,8 +18,13 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedUndiscriminatedUnionsClient } from "@fern/undiscriminated-unions";
 
+<<<<<<< HEAD
 const client = new SeedUndiscriminatedUnionsClient({ environment: "YOUR_BASE_URL" });
 await client.union.get("string");
+=======
+const seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient();
+await seedUndiscriminatedUnions.union.get("string");
+>>>>>>> 52b1822299 (merge env variable changes)
 ```
 
 ## Exception Handling

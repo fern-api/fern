@@ -8,7 +8,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials-nested-root\";\n\nconst client = new SeedOauthClientCredentialsClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.getToken({\n    clientId: \"string\",\n    clientSecret: \"string\",\n    audience: \"https://api.example.com\",\n    grantType: \"client_credentials\",\n    scope: \"string\"\n});\n"
+=======
+                "client": "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials-nested-root\";\n\nconst seedOauthClientCredentials = new SeedOauthClientCredentialsClient();\nawait seedOauthClientCredentials.auth.getToken({\n    clientId: \"string\",\n    clientSecret: \"string\",\n    audience: \"https://api.example.com\",\n    grantType: \"client_credentials\",\n    scope: \"string\"\n});\n"
+>>>>>>> 52b1822299 (merge env variable changes)
             }
         }
     ],

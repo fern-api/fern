@@ -18,8 +18,13 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedFileDownloadClient } from "@fern/file-download";
 
+<<<<<<< HEAD
 const client = new SeedFileDownloadClient({ environment: "YOUR_BASE_URL" });
 await client.service.downloadFile();
+=======
+const seedFileDownload = new SeedFileDownloadClient();
+await seedFileDownload.service.downloadFile();
+>>>>>>> 52b1822299 (merge env variable changes)
 ```
 
 ## Exception Handling

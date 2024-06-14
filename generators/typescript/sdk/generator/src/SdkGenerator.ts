@@ -804,7 +804,8 @@ export class SdkGenerator {
                         packageId,
                         rootPackageId: rootPackage,
                         retainOriginalCasing: this.config.retainOriginalCasing,
-                        inlineFileProperties: this.config.inlineFileProperties
+                        inlineFileProperties: this.config.inlineFileProperties,
+                        requireDefaultEnvironment: this.config.requireDefaultEnvironment
                     }).generateSnippetTemplate();
 
                     if (snippetTemplate != null) {

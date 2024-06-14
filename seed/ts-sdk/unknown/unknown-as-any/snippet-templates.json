@@ -11,7 +11,40 @@
             "identifierOverride": "endpoint_unknown.post"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": "const client = new SeedUnknownAsAnyClient({ environment: \"YOUR_BASE_URL\" });\n",
+=======
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedUnknownAsAny = new SeedUnknownAsAnyClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.unknown.post(\n\t$FERN_INPUT\n)",

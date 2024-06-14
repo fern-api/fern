@@ -18,8 +18,13 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedPackageYmlClient } from "@fern/package-yml";
 
+<<<<<<< HEAD
 const client = new SeedPackageYmlClient({ environment: "YOUR_BASE_URL" });
 await client.echo("Hello world!");
+=======
+const seedPackageYml = new SeedPackageYmlClient();
+await seedPackageYml.echo("Hello world!");
+>>>>>>> 52b1822299 (merge env variable changes)
 ```
 
 ## Exception Handling

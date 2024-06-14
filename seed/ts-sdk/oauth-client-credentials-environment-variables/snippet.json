@@ -8,7 +8,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedOauthClientCredentialsEnvironmentVariablesClient } from \"@fern/oauth-client-credentials-environment-variables\";\n\nconst client = new SeedOauthClientCredentialsEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.getTokenWithClientCredentials({\n    clientId: \"string\",\n    clientSecret: \"string\",\n    audience: \"https://api.example.com\",\n    grantType: \"client_credentials\",\n    scope: \"string\"\n});\n"
+=======
+                "client": "import { SeedOauthClientCredentialsEnvironmentVariablesClient } from \"@fern/oauth-client-credentials-environment-variables\";\n\nconst seedOauthClientCredentialsEnvironmentVariables = new SeedOauthClientCredentialsEnvironmentVariablesClient();\nawait seedOauthClientCredentialsEnvironmentVariables.auth.getTokenWithClientCredentials({\n    clientId: \"string\",\n    clientSecret: \"string\",\n    audience: \"https://api.example.com\",\n    grantType: \"client_credentials\",\n    scope: \"string\"\n});\n"
+>>>>>>> 52b1822299 (merge env variable changes)
             }
         },
         {
@@ -19,7 +23,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedOauthClientCredentialsEnvironmentVariablesClient } from \"@fern/oauth-client-credentials-environment-variables\";\n\nconst client = new SeedOauthClientCredentialsEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.refreshToken({\n    clientId: \"string\",\n    clientSecret: \"string\",\n    refreshToken: \"string\",\n    audience: \"https://api.example.com\",\n    grantType: \"refresh_token\",\n    scope: \"string\"\n});\n"
+=======
+                "client": "import { SeedOauthClientCredentialsEnvironmentVariablesClient } from \"@fern/oauth-client-credentials-environment-variables\";\n\nconst seedOauthClientCredentialsEnvironmentVariables = new SeedOauthClientCredentialsEnvironmentVariablesClient();\nawait seedOauthClientCredentialsEnvironmentVariables.auth.refreshToken({\n    clientId: \"string\",\n    clientSecret: \"string\",\n    refreshToken: \"string\",\n    audience: \"https://api.example.com\",\n    grantType: \"refresh_token\",\n    scope: \"string\"\n});\n"
+>>>>>>> 52b1822299 (merge env variable changes)
             }
         }
     ],

@@ -19,9 +19,12 @@ Instantiate and use the client with the following:
 import { SeedExhaustiveClient } from "@fern/exhaustive";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.container.getAndReturnListOfPrimitives(["string"]);
 =======
+=======
+>>>>>>> 52b1822299 (merge env variable changes)
 const seedExhaustive = new SeedExhaustiveClient();
 await seedExhaustive.endpoints.container.getAndReturnListOfPrimitives(["string"]);
 >>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)

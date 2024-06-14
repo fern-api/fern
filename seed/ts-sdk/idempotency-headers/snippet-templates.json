@@ -11,7 +11,56 @@
             "identifierOverride": "endpoint_payment.create"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": "const client = new SeedIdempotencyHeadersClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
+=======
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedIdempotencyHeaders = new SeedIdempotencyHeadersClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.payment.create(\n\t$FERN_INPUT\n)",
@@ -82,7 +131,56 @@
             "identifierOverride": "endpoint_payment.delete"
         },
         "snippetTemplate": {
+<<<<<<< HEAD
             "clientInstantiation": "const client = new SeedIdempotencyHeadersClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
+=======
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedIdempotencyHeaders = new SeedIdempotencyHeadersClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+>>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.payment.delete(\n\t$FERN_INPUT\n)",

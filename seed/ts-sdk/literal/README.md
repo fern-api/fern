@@ -18,8 +18,13 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedLiteralClient } from "@fern/literal";
 
+<<<<<<< HEAD
 const client = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
 await client.headers.send({
+=======
+const seedLiteral = new SeedLiteralClient();
+await seedLiteral.headers.send({
+>>>>>>> 52b1822299 (merge env variable changes)
     endpointVersion: "02-12-2024",
     async: true,
     query: "What is the weather today",

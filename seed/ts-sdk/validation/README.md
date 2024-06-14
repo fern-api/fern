@@ -18,8 +18,13 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedValidationClient } from "@fern/validation";
 
+<<<<<<< HEAD
 const client = new SeedValidationClient({ environment: "YOUR_BASE_URL" });
 await client.create({
+=======
+const seedValidation = new SeedValidationClient();
+await seedValidation.create({
+>>>>>>> 52b1822299 (merge env variable changes)
     decimal: 1.1,
     even: 1,
     name: "string",

@@ -18,8 +18,13 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedMixedCaseClient } from "@fern/mixed-case";
 
+<<<<<<< HEAD
 const client = new SeedMixedCaseClient({ environment: "YOUR_BASE_URL" });
 await client.service.getResource("rsc-xyz");
+=======
+const seedMixedCase = new SeedMixedCaseClient();
+await seedMixedCase.service.getResource("rsc-xyz");
+>>>>>>> 52b1822299 (merge env variable changes)
 ```
 
 ## Request And Response Types

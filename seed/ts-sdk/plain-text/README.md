@@ -18,8 +18,13 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedPlainTextClient } from "@fern/plain-text";
 
+<<<<<<< HEAD
 const client = new SeedPlainTextClient({ environment: "YOUR_BASE_URL" });
 await client.service.getText();
+=======
+const seedPlainText = new SeedPlainTextClient();
+await seedPlainText.service.getText();
+>>>>>>> 52b1822299 (merge env variable changes)
 ```
 
 ## Exception Handling

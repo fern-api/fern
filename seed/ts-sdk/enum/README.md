@@ -18,8 +18,13 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedEnumClient, SeedEnum } from "@fern/enum";
 
+<<<<<<< HEAD
 const client = new SeedEnumClient({ environment: "YOUR_BASE_URL" });
 await client.inlinedRequest.send({
+=======
+const seedEnum = new SeedEnumClient();
+await seedEnum.inlinedRequest.send({
+>>>>>>> 52b1822299 (merge env variable changes)
     operand: SeedEnum.Operand.GreaterThan,
     operandOrColor: SeedEnum.Color.Red,
 });

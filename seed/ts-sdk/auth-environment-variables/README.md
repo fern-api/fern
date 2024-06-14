@@ -18,12 +18,17 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedAuthEnvironmentVariablesClient } from "@fern/auth-environment-variables";
 
+<<<<<<< HEAD
 const client = new SeedAuthEnvironmentVariablesClient({
     environment: "YOUR_BASE_URL",
     apiKey: "YOUR_API_KEY",
     xAnotherHeader: "YOUR_X_ANOTHER_HEADER",
 });
 await client.service.getWithApiKey();
+=======
+const seedAuthEnvironmentVariables = new SeedAuthEnvironmentVariablesClient();
+await seedAuthEnvironmentVariables.service.getWithApiKey();
+>>>>>>> 52b1822299 (merge env variable changes)
 ```
 
 ## Request And Response Types

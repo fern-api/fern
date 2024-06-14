@@ -18,8 +18,13 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedNurseryApiClient } from "@fern/reserved-keywords";
 
+<<<<<<< HEAD
 const client = new SeedNurseryApiClient({ environment: "YOUR_BASE_URL" });
 await client.package.test({
+=======
+const seedNurseryApi = new SeedNurseryApiClient();
+await seedNurseryApi.package.test({
+>>>>>>> 52b1822299 (merge env variable changes)
     for: "string",
 });
 ```

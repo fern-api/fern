@@ -18,8 +18,13 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApiClient } from "@fern/folders";
 
+<<<<<<< HEAD
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.foo();
+=======
+const seedApi = new SeedApiClient();
+await seedApi.foo();
+>>>>>>> 52b1822299 (merge env variable changes)
 ```
 
 ## Exception Handling

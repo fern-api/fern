@@ -8,7 +8,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedIdempotencyHeadersClient, SeedIdempotencyHeaders } from \"@fern/idempotency-headers\";\n\nconst client = new SeedIdempotencyHeadersClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.payment.create({\n    amount: 1,\n    currency: SeedIdempotencyHeaders.Currency.Usd\n});\n"
+=======
+                "client": "import { SeedIdempotencyHeadersClient, SeedIdempotencyHeaders } from \"@fern/idempotency-headers\";\n\nconst seedIdempotencyHeaders = new SeedIdempotencyHeadersClient();\nawait seedIdempotencyHeaders.payment.create({\n    amount: 1,\n    currency: SeedIdempotencyHeaders.Currency.Usd\n});\n"
+>>>>>>> 52b1822299 (merge env variable changes)
             }
         },
         {
@@ -19,7 +23,11 @@
             },
             "snippet": {
                 "type": "typescript",
+<<<<<<< HEAD
                 "client": "import { SeedIdempotencyHeadersClient } from \"@fern/idempotency-headers\";\n\nconst client = new SeedIdempotencyHeadersClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.payment.delete(\"string\");\n"
+=======
+                "client": "import { SeedIdempotencyHeadersClient } from \"@fern/idempotency-headers\";\n\nconst seedIdempotencyHeaders = new SeedIdempotencyHeadersClient();\nawait seedIdempotencyHeaders.payment.delete(\"string\");\n"
+>>>>>>> 52b1822299 (merge env variable changes)
             }
         }
     ],

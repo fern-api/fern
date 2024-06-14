@@ -18,8 +18,13 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedUnknownAsAnyClient } from "@fern/unknown";
 
+<<<<<<< HEAD
 const client = new SeedUnknownAsAnyClient({ environment: "YOUR_BASE_URL" });
 await client.unknown.post({
+=======
+const seedUnknownAsAny = new SeedUnknownAsAnyClient();
+await seedUnknownAsAny.unknown.post({
+>>>>>>> 52b1822299 (merge env variable changes)
     key: "value",
 });
 ```

@@ -18,8 +18,13 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedAudiencesClient } from "@fern/audiences";
 
+<<<<<<< HEAD
 const client = new SeedAudiencesClient({ environment: "YOUR_BASE_URL" });
 await client.foo.find({
+=======
+const seedAudiences = new SeedAudiencesClient();
+await seedAudiences.foo.find({
+>>>>>>> 52b1822299 (merge env variable changes)
     optionalString: "string",
     publicProperty: "string",
     privateProperty: 1,
