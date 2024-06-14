@@ -34,9 +34,6 @@ export const ExampleEndpointCall: core.serialization.ObjectSchema<
         ),
         request: core.serialization.lazy(async () => (await import("../../..")).ExampleRequestBody).optional(),
         response: core.serialization.lazy(async () => (await import("../../..")).ExampleResponse),
-        codeSamples: core.serialization
-            .list(core.serialization.lazy(async () => (await import("../../..")).ExampleCodeSample))
-            .optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDocs));
 
@@ -53,6 +50,5 @@ export declare namespace ExampleEndpointCall {
         queryParameters: serializers.ExampleQueryParameter.Raw[];
         request?: serializers.ExampleRequestBody.Raw | null;
         response: serializers.ExampleResponse.Raw;
-        codeSamples?: serializers.ExampleCodeSample.Raw[] | null;
     }
 }

@@ -2,8 +2,8 @@
 
 exports[`migrateFromV33ToV32 snapshot 1`] = `
 {
-  "apiDisplayName": undefined,
-  "apiDocs": undefined,
+  "apiDisplayName": null,
+  "apiDocs": null,
   "apiName": {
     "camelCase": {
       "safeName": "simpleAPI",
@@ -24,11 +24,11 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
     },
   },
   "auth": {
-    "docs": undefined,
+    "docs": null,
     "requirement": "ALL",
     "schemes": [],
   },
-  "basePath": undefined,
+  "basePath": null,
   "constants": {
     "errorInstanceIdKey": {
       "name": {
@@ -53,37 +53,33 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
       "wireValue": "errorInstanceId",
     },
   },
-  "environments": undefined,
+  "environments": null,
   "errorDiscriminationStrategy": {
-    "_visit": [Function],
     "type": "statusCode",
   },
   "errors": {},
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
-  "readmeConfig": undefined,
   "rootPackage": {
-    "docs": undefined,
+    "docs": null,
     "errors": [],
     "fernFilepath": {
       "allParts": [],
-      "file": undefined,
+      "file": null,
       "packagePath": [],
     },
     "hasEndpointsInTree": true,
-    "navigationConfig": undefined,
-    "service": undefined,
+    "navigationConfig": null,
+    "service": null,
     "subpackages": [
       "subpackage_service",
     ],
     "types": [],
-    "webhooks": undefined,
-    "websocket": undefined,
+    "webhooks": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
-    "hasPaginatedEndpoints": false,
     "hasStreamingEndpoints": false,
     "isAuthMandatory": false,
     "platformHeaders": {
@@ -102,18 +98,17 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
   },
   "services": {
     "service_service": {
-      "availability": undefined,
+      "availability": null,
       "basePath": {
         "head": "/",
         "parts": [],
       },
-      "displayName": undefined,
+      "displayName": null,
       "endpoints": [
         {
           "allPathParameters": [
             {
-              "availability": undefined,
-              "docs": undefined,
+              "docs": null,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -135,24 +130,22 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                 },
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "STRING",
-                "type": "primitive",
               },
-              "variable": undefined,
+              "variable": null,
             },
           ],
           "auth": false,
-          "availability": undefined,
-          "baseUrl": undefined,
-          "displayName": undefined,
-          "docs": undefined,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
           "errors": [],
           "examples": [
             {
-              "_visit": [Function],
-              "codeSamples": undefined,
-              "docs": undefined,
+              "codeSamples": null,
+              "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [
                 {
@@ -178,9 +171,7 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                   "value": {
                     "jsonExample": "id-2sdx82h",
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "string": {
                           "original": "id-2sdx82h",
                         },
@@ -191,9 +182,7 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                   },
                 },
               ],
-              "exampleType": "userProvided",
-              "id": undefined,
-              "name": undefined,
+              "name": null,
               "queryParameters": [
                 {
                   "name": {
@@ -221,9 +210,7 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                   "value": {
                     "jsonExample": "4956d3f3-f4c6-43fc-a037-9ad991933993",
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "type": "uuid",
                         "uuid": "4956d3f3-f4c6-43fc-a037-9ad991933993",
                       },
@@ -257,9 +244,7 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                   "value": {
                     "jsonExample": 10,
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "integer": 10,
                         "type": "integer",
                       },
@@ -293,9 +278,7 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                   "value": {
                     "jsonExample": "1994-01-01",
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "date": "1994-01-01",
                         "type": "date",
                       },
@@ -329,9 +312,7 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                   "value": {
                     "jsonExample": "reverse",
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "string": {
                           "original": "reverse",
                         },
@@ -342,10 +323,9 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                   },
                 },
               ],
-              "request": undefined,
+              "request": null,
               "response": {
-                "_visit": [Function],
-                "body": undefined,
+                "body": null,
                 "type": "ok",
               },
               "rootPathParameters": [],
@@ -397,8 +377,7 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
           },
           "pathParameters": [
             {
-              "availability": undefined,
-              "docs": undefined,
+              "docs": null,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -420,18 +399,17 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                 },
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "STRING",
-                "type": "primitive",
               },
-              "variable": undefined,
+              "variable": null,
             },
           ],
           "queryParameters": [
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -455,15 +433,14 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                 "wireValue": "id",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "UUID",
-                "type": "primitive",
               },
             },
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -487,15 +464,14 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                 "wireValue": "limit",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "INTEGER",
-                "type": "primitive",
               },
             },
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -519,15 +495,14 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                 "wireValue": "date",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "DATE",
-                "type": "primitive",
               },
             },
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -551,23 +526,20 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                 "wireValue": "user",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "container",
                 "container": {
-                  "_visit": [Function],
+                  "_type": "optional",
                   "optional": {
-                    "_visit": [Function],
+                    "_type": "primitive",
                     "primitive": "STRING",
-                    "type": "primitive",
                   },
-                  "type": "optional",
                 },
-                "type": "container",
               },
             },
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -591,23 +563,20 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                 "wireValue": "map",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "container",
                 "container": {
-                  "_visit": [Function],
+                  "_type": "optional",
                   "optional": {
-                    "_visit": [Function],
+                    "_type": "primitive",
                     "primitive": "STRING",
-                    "type": "primitive",
                   },
-                  "type": "optional",
                 },
-                "type": "container",
               },
             },
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -631,23 +600,20 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                 "wireValue": "optionalString",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "container",
                 "container": {
-                  "_visit": [Function],
+                  "_type": "optional",
                   "optional": {
-                    "_visit": [Function],
+                    "_type": "primitive",
                     "primitive": "STRING",
-                    "type": "primitive",
                   },
-                  "type": "optional",
                 },
-                "type": "container",
               },
             },
             {
               "allowMultiple": true,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -671,23 +637,20 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                 "wireValue": "multipleUser",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "container",
                 "container": {
-                  "_visit": [Function],
+                  "_type": "optional",
                   "optional": {
-                    "_visit": [Function],
+                    "_type": "primitive",
                     "primitive": "STRING",
-                    "type": "primitive",
                   },
-                  "type": "optional",
                 },
-                "type": "container",
               },
             },
             {
               "allowMultiple": true,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -711,15 +674,14 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                 "wireValue": "filter",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "STRING",
-                "type": "primitive",
               },
             },
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -743,22 +705,19 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
                 "wireValue": "any",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "container",
                 "container": {
-                  "_visit": [Function],
+                  "_type": "optional",
                   "optional": {
-                    "_visit": [Function],
+                    "_type": "primitive",
                     "primitive": "STRING",
-                    "type": "primitive",
                   },
-                  "type": "optional",
                 },
-                "type": "container",
               },
             },
           ],
-          "requestBody": undefined,
-          "response": undefined,
+          "requestBody": null,
+          "response": null,
           "sdkRequest": {
             "requestParameterName": {
               "camelCase": {
@@ -780,7 +739,6 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
               },
             },
             "shape": {
-              "_visit": [Function],
               "bodyKey": {
                 "camelCase": {
                   "safeName": "body",
@@ -875,7 +833,7 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
   },
   "subpackages": {
     "subpackage_service": {
-      "docs": undefined,
+      "docs": null,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -940,20 +898,19 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
           "unsafeName": "service",
         },
       },
-      "navigationConfig": undefined,
+      "navigationConfig": null,
       "service": "service_service",
       "subpackages": [],
       "types": [
         "type_service:User",
       ],
-      "webhooks": undefined,
-      "websocket": undefined,
+      "webhooks": null,
     },
   },
   "types": {
     "type_service:User": {
-      "availability": undefined,
-      "docs": undefined,
+      "availability": null,
+      "docs": null,
       "examples": [],
       "name": {
         "fernFilepath": {
@@ -1020,15 +977,14 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
         },
         "typeId": "type_service:User",
       },
-      "referencedTypes": Set {},
+      "referencedTypes": [],
       "shape": {
-        "_visit": [Function],
+        "_type": "object",
         "extends": [],
-        "extraProperties": false,
         "properties": [
           {
-            "availability": undefined,
-            "docs": undefined,
+            "availability": null,
+            "docs": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -1052,18 +1008,15 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
               "wireValue": "name",
             },
             "valueType": {
-              "_visit": [Function],
+              "_type": "primitive",
               "primitive": "STRING",
-              "type": "primitive",
             },
           },
         ],
-        "type": "object",
       },
     },
   },
   "variables": [],
   "webhookGroups": {},
-  "websocketChannels": {},
 }
 `;
