@@ -216,7 +216,7 @@ export declare namespace ParsedApiNavigationItem {
     export interface Package {
         type: "package";
         package: string; // title or subpackage ID
-        titleOverride: string | undefined;
+        subpackages: string[]; // subpackage IDs
         summaryAbsolutePath: AbsoluteFilePath | undefined;
         contents: ParsedApiNavigationItem[];
         slug: string | undefined;

@@ -143,8 +143,6 @@ export class ApiReferenceNodeConverter {
         parentSlug: FernNavigation.SlugGenerator,
         idgen: NodeIdGenerator
     ): FernNavigation.ApiPackageNode {
-        const subpackage = this.#holder.getSubpackage(pkg.package);
-
         const overviewPageId =
             pkg.summaryAbsolutePath != null
                 ? FernNavigation.PageId(this.toRelativeFilepath(pkg.summaryAbsolutePath))
@@ -153,13 +151,72 @@ export class ApiReferenceNodeConverter {
         const maybeFullSlug =
             pkg.summaryAbsolutePath != null ? this.markdownFilesToFullSlugs.get(pkg.summaryAbsolutePath) : undefined;
 
+        if (pkg.subpackages.length > 0) {
+            let subpackage: APIV1Read.ApiDefinitionPackage | undefined = undefined;
+            let i = 0;
+            while (subpackage == null && i < pkg.subpackages.length) {
+                subpackage = this.#holder.getSubpackage(pkg.subpackages[i]!);
+                i++;
+            }
+
+            if (subpackage != null) {
+                const subpackageId = ApiDefinitionHolder.getSubpackageId(subpackage);
+                const subpackageNodeId = idgen.append(subpackageId);
+                this.#visitedSubpackages.add(subpackageId);
+                this.#nodeIdToSubpackageId.set(subpackageNodeId.get(), subpackageId);
+                const urlSlug =
+                    pkg.slug ??
+                    (isSubpackage(subpackage)
+                        ? subpackage.urlSlug
+                        : this.apiSection.slug ?? kebabCase(this.apiSection.title));
+                const slug = parentSlug.apply({
+                    fullSlug: maybeFullSlug?.split("/"),
+                    skipUrlSlug: pkg.skipUrlSlug,
+                    urlSlug
+                });
+                const convertedItems: FernNavigation.ApiPackageChild[] = [];
+                pkg.subpackages.forEach((subpackageId) => {
+                    const subpackage = this.#holder.getSubpackage(subpackageId);
+                    if (subpackage == null) {
+                        this.taskContext.logger.error(
+                            `Subpackage ${subpackageId} not found in ${this.apiDefinitionId}`
+                        );
+                        return;
+                    }
+                    this.#visitedSubpackages.add(subpackageId);
+                    this.#nodeIdToSubpackageId.set(subpackageNodeId.get(), subpackageId);
+                    convertedItems.push(
+                        ...this.#convertApiNavigationItems(pkg.contents, subpackage, slug, subpackageNodeId)
+                    );
+                });
+                return {
+                    id: subpackageNodeId.get(),
+                    type: "apiPackage",
+                    children: convertedItems,
+                    title: pkg.package,
+                    slug: slug.get(),
+                    icon: pkg.icon,
+                    hidden: pkg.hidden,
+                    overviewPageId,
+                    availability: undefined,
+                    apiDefinitionId: this.apiDefinitionId,
+                    pointsTo: undefined
+                };
+            }
+        }
+
+        const subpackage = this.#holder.getSubpackage(pkg.package);
+
         if (subpackage != null) {
             const subpackageId = ApiDefinitionHolder.getSubpackageId(subpackage);
             const subpackageNodeId = idgen.append(subpackageId);
             this.#visitedSubpackages.add(subpackageId);
             this.#nodeIdToSubpackageId.set(subpackageNodeId.get(), subpackageId);
             const urlSlug =
-                pkg.slug ?? (isSubpackage(subpackage) ? subpackage.urlSlug : kebabCase(pkg.titleOverride ?? ""));
+                pkg.slug ??
+                (isSubpackage(subpackage)
+                    ? subpackage.urlSlug
+                    : this.apiSection.slug ?? kebabCase(this.apiSection.title));
             const slug = parentSlug.apply({
                 fullSlug: maybeFullSlug?.split("/"),
                 skipUrlSlug: pkg.skipUrlSlug,
@@ -170,11 +227,9 @@ export class ApiReferenceNodeConverter {
                 id: subpackageNodeId.get(),
                 type: "apiPackage",
                 children: convertedItems,
-                title:
-                    pkg.titleOverride ??
-                    (isSubpackage(subpackage)
-                        ? subpackage.displayName ?? titleCase(subpackage.name)
-                        : this.apiSection.title),
+                title: isSubpackage(subpackage)
+                    ? subpackage.displayName ?? titleCase(subpackage.name)
+                    : this.apiSection.title,
                 slug: slug.get(),
                 icon: pkg.icon,
                 hidden: pkg.hidden,
@@ -184,7 +239,7 @@ export class ApiReferenceNodeConverter {
                 pointsTo: undefined
             };
         } else {
-            const urlSlug = pkg.slug ?? kebabCase(pkg.titleOverride ?? pkg.package);
+            const urlSlug = pkg.slug ?? kebabCase(pkg.package);
             const slug = parentSlug.apply({
                 fullSlug: maybeFullSlug?.split("/"),
                 skipUrlSlug: pkg.skipUrlSlug,
@@ -195,7 +250,7 @@ export class ApiReferenceNodeConverter {
                 id: idgen.append(kebabCase(pkg.package)).get(),
                 type: "apiPackage",
                 children: convertedItems,
-                title: pkg.titleOverride ?? pkg.package,
+                title: pkg.package,
                 slug: slug.get(),
                 icon: pkg.icon,
                 hidden: pkg.hidden,
@@ -291,8 +346,7 @@ export class ApiReferenceNodeConverter {
             }
             const subpackage = this.#holder.getSubpackage(subpackageId);
             if (subpackage == null) {
-                // eslint-disable-next-line no-console
-                console.error(`Subpackage ${subpackageId} not found in ${this.apiDefinitionId}`);
+                this.taskContext.logger.error(`Subpackage ${subpackageId} not found in ${this.apiDefinitionId}`);
                 return;
             }
 

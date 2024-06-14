@@ -11,7 +11,7 @@ export const ApiPackageConfiguration: core.serialization.ObjectSchema<
     FernDocsConfig.ApiPackageConfiguration
 > = core.serialization.object({
     package: core.serialization.string(),
-    title: core.serialization.string().optional(),
+    subpackage: core.serialization.lazy(async () => (await import("../../..")).SubpackageOrSubpackages).optional(),
     summary: core.serialization.string().optional(),
     contents: core.serialization.lazy(async () => (await import("../../..")).ApiNavigationItems),
     slug: core.serialization.string().optional(),
@@ -23,7 +23,7 @@ export const ApiPackageConfiguration: core.serialization.ObjectSchema<
 export declare namespace ApiPackageConfiguration {
     interface Raw {
         package: string;
-        title?: string | null;
+        subpackage?: serializers.SubpackageOrSubpackages.Raw | null;
         summary?: string | null;
         contents: serializers.ApiNavigationItems.Raw;
         slug?: string | null;

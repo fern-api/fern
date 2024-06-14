@@ -592,7 +592,7 @@ function parseApiNavigationItem(
             {
                 type: "package",
                 package: item.package,
-                titleOverride: item.title,
+                subpackages: typeof item.subpackage === "string" ? [item.subpackage] : item.subpackage ?? [],
                 summaryAbsolutePath: resolveFilepath(item.summary, absolutePathToConfig),
                 contents: item.contents.flatMap((value) => parseApiNavigationItem(value, absolutePathToConfig)),
                 slug: item.slug,
@@ -607,7 +607,7 @@ function parseApiNavigationItem(
         ([key, values]): ParsedApiNavigationItem.Package => ({
             type: "package",
             package: key,
-            titleOverride: undefined,
+            subpackages: [],
             summaryAbsolutePath: undefined,
             contents: values.flatMap((value) => parseApiNavigationItem(value, absolutePathToConfig)),
             hidden: false,

@@ -444,6 +444,12 @@ types:
       - LinkConfiguration
       - ApiPackageConfiguration
 
+  SubpackageOrSubpackages:
+    discriminated: false
+    union:
+      - string
+      - list<string>
+
   ApiPackageConfiguration:
     properties:
       package:
@@ -451,11 +457,11 @@ types:
         docs: |
           The title of the api package that will be displayed in the sidebar.
 
-          Alternatively, if this is a Subpackage ID. The title of this section will be inherited from the subpackage.
+          Alternatively, `subpackage` is unset, and this is a Subpackage ID. The title of this section will be inherited from the subpackage.
           Any endpoints that are not explicitly defined within the contents of this object will be implicitly included.
-      title:
-        type: optional<string>
-        docs: This overrides the title of the package.
+      subpackage:
+        type: optional<SubpackageOrSubpackages>
+        docs: If `subpackage` is set, this section will inherit the endpoints from the specified subpackage(s).
       summary:
         type: optional<string>
         docs: |

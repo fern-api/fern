@@ -31,6 +31,7 @@ export * from "./PageConfiguration";
 export * from "./SectionConfiguration";
 export * from "./ApiSectionConfiguration";
 export * from "./ApiNavigationItem";
+export * from "./SubpackageOrSubpackages";
 export * from "./ApiPackageConfiguration";
 export * from "./ApiNavigationItems";
 export * from "./LinkConfiguration";

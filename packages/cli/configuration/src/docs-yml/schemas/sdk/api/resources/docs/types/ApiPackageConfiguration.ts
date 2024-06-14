@@ -8,12 +8,12 @@ export interface ApiPackageConfiguration {
     /**
      * The title of the api package that will be displayed in the sidebar.
      *
-     * Alternatively, if this is a Subpackage ID. The title of this section will be inherited from the subpackage.
+     * Alternatively, `subpackage` is unset, and this is a Subpackage ID. The title of this section will be inherited from the subpackage.
      * Any endpoints that are not explicitly defined within the contents of this object will be implicitly included.
      */
     package: string;
-    /** This overrides the title of the package. */
-    title?: string;
+    /** If `subpackage` is set, this section will inherit the endpoints from the specified subpackage(s). */
+    subpackage?: FernDocsConfig.SubpackageOrSubpackages;
     /** Relative path to the markdown file. This summary is displayed at the top of the API section. */
     summary?: string;
     contents: FernDocsConfig.ApiNavigationItems;
