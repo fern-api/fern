@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedNoEnvironmentClient } from "@fern/no-environment";
 
-const seedNoEnvironment = new SeedNoEnvironmentClient({ token: "YOUR_TOKEN" });
+const seedNoEnvironment = new SeedNoEnvironmentClient();
 await seedNoEnvironment.dummy.getDummy();
 ```
 

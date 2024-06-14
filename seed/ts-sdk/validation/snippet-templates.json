@@ -11,7 +11,25 @@
             "identifierOverride": "endpoint_.create"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedValidation = new SeedValidationClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedValidation = new SeedValidationClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedValidation.create(\n\t$FERN_INPUT\n)",
@@ -96,7 +114,25 @@
             "identifierOverride": "endpoint_.get"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedValidation = new SeedValidationClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedValidation = new SeedValidationClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedValidation.get(\n\t$FERN_INPUT\n)",

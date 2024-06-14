@@ -11,7 +11,25 @@
             "identifierOverride": "endpoint_.foo"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedApi = new SeedApiClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedApi = new SeedApiClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApi.foo()",
@@ -35,7 +53,25 @@
             "identifierOverride": "endpoint_a/b.foo"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedApi = new SeedApiClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedApi = new SeedApiClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApi.a.b.foo()",
@@ -59,7 +95,25 @@
             "identifierOverride": "endpoint_a/c.foo"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedApi = new SeedApiClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedApi = new SeedApiClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApi.a.c.foo()",
@@ -83,7 +137,25 @@
             "identifierOverride": "endpoint_folder.foo"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedApi = new SeedApiClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedApi = new SeedApiClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApi.folder.foo()",
@@ -107,7 +179,25 @@
             "identifierOverride": "endpoint_folder/service.endpoint"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedApi = new SeedApiClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedApi = new SeedApiClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApi.folder.service.endpoint()",
@@ -131,7 +221,25 @@
             "identifierOverride": "endpoint_folder/service.unknownRequest"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedApi = new SeedApiClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedApi = new SeedApiClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApi.folder.service.unknownRequest(\n\t$FERN_INPUT\n)",

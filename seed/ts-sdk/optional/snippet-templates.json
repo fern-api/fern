@@ -11,7 +11,25 @@
             "identifierOverride": "endpoint_optional.sendOptionalBody"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedObjectsWithImports = new SeedObjectsWithImportsClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedObjectsWithImports = new SeedObjectsWithImportsClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedObjectsWithImports.optional.sendOptionalBody(\n\t$FERN_INPUT\n)",

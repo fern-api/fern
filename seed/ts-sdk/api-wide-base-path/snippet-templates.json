@@ -11,7 +11,25 @@
             "identifierOverride": "endpoint_service.post"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedApiWideBasePath = new SeedApiWideBasePathClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedApiWideBasePath = new SeedApiWideBasePathClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApiWideBasePath.service.post(\n\t$FERN_INPUT\n)",

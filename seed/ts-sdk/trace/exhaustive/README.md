@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedTraceClient, SeedTrace } from "@fern/trace";
 
-const seedTrace = new SeedTraceClient({ token: "YOUR_TOKEN", xRandomHeader: "YOUR_X_RANDOM_HEADER" });
+const seedTrace = new SeedTraceClient();
 await seedTrace.admin.updateTestSubmissionStatus(
     SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     SeedTrace.TestSubmissionStatus.stopped()

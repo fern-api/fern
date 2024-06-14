@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedMultiUrlEnvironmentClient } from "@fern/multi-url-environment";
 
-const seedMultiUrlEnvironment = new SeedMultiUrlEnvironmentClient({ token: "YOUR_TOKEN" });
+const seedMultiUrlEnvironment = new SeedMultiUrlEnvironmentClient();
 await seedMultiUrlEnvironment.ec2.bootInstance({
     size: "string",
 });

@@ -11,7 +11,25 @@
             "identifierOverride": "endpoint_service.post"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedFileUpload = new SeedFileUploadClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedFileUpload = new SeedFileUploadClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedFileUpload.service.post(\n\t$FERN_INPUT\n)",
@@ -245,7 +263,25 @@
             "identifierOverride": "endpoint_service.justFile"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedFileUpload = new SeedFileUploadClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedFileUpload = new SeedFileUploadClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedFileUpload.service.justFile(\n\t$FERN_INPUT\n)",
@@ -300,7 +336,25 @@
             "identifierOverride": "endpoint_service.justFileWithQueryParams"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedFileUpload = new SeedFileUploadClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedFileUpload = new SeedFileUploadClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedFileUpload.service.justFileWithQueryParams(\n\t$FERN_INPUT\n)",

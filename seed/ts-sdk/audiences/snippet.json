@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedAudiencesClient } from \"@fern/audiences\";\n\nconst seedAudiences = new SeedAudiencesClient;\nawait seedAudiences.folderA.service.getDirectThread();\n"
+                "client": "import { SeedAudiencesClient } from \"@fern/audiences\";\n\nconst seedAudiences = new SeedAudiencesClient();\nawait seedAudiences.folderA.service.getDirectThread();\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedAudiencesClient } from \"@fern/audiences\";\n\nconst seedAudiences = new SeedAudiencesClient;\nawait seedAudiences.foo.find({\n    optionalString: \"string\",\n    publicProperty: \"string\",\n    privateProperty: 1\n});\n"
+                "client": "import { SeedAudiencesClient } from \"@fern/audiences\";\n\nconst seedAudiences = new SeedAudiencesClient();\nawait seedAudiences.foo.find({\n    optionalString: \"string\",\n    publicProperty: \"string\",\n    privateProperty: 1\n});\n"
             }
         }
     ],

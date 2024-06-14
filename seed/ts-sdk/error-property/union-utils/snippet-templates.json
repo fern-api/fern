@@ -11,7 +11,25 @@
             "identifierOverride": "endpoint_property-based-error.ThrowError"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedErrorProperty = new SeedErrorPropertyClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedErrorProperty = new SeedErrorPropertyClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedErrorProperty.propertyBasedError.throwError()",

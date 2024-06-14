@@ -18,10 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedOauthClientCredentialsEnvironmentVariablesClient } from "@fern/oauth-client-credentials-environment-variables";
 
-const seedOauthClientCredentialsEnvironmentVariables = new SeedOauthClientCredentialsEnvironmentVariablesClient({
-    clientId: "YOUR_CLIENT_ID",
-    clientSecret: "YOUR_CLIENT_SECRET",
-});
+const seedOauthClientCredentialsEnvironmentVariables = new SeedOauthClientCredentialsEnvironmentVariablesClient();
 await seedOauthClientCredentialsEnvironmentVariables.auth.getTokenWithClientCredentials({
     clientId: "string",
     clientSecret: "string",

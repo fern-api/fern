@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedBearerTokenEnvironmentVariableClient } from "@fern/bearer-token-environment-variable";
 
-const seedBearerTokenEnvironmentVariable = new SeedBearerTokenEnvironmentVariableClient({ apiKey: "YOUR_API_KEY" });
+const seedBearerTokenEnvironmentVariable = new SeedBearerTokenEnvironmentVariableClient();
 await seedBearerTokenEnvironmentVariable.service.getWithBearerToken();
 ```
 

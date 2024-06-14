@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedBasicAuthClient } from "@fern/basic-auth";
 
-const seedBasicAuth = new SeedBasicAuthClient({ username: "YOUR_USERNAME", password: "YOUR_PASSWORD" });
+const seedBasicAuth = new SeedBasicAuthClient();
 await seedBasicAuth.basicAuth.postWithBasicAuth({
     key: "value",
 });

@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedPaginationClient, SeedPagination } from "@fern/pagination";
 
-const seedPagination = new SeedPaginationClient({ token: "YOUR_TOKEN" });
+const seedPagination = new SeedPaginationClient();
 await seedPagination.users.listWithCursorPagination({
     page: 1,
     perPage: 1,

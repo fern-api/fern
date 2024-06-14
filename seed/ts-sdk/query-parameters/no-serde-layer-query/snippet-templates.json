@@ -11,7 +11,25 @@
             "identifierOverride": "endpoint_user.getUsername"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedQueryParameters = new SeedQueryParametersClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedQueryParameters = new SeedQueryParametersClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedQueryParameters.user.getUsername(\n\t$FERN_INPUT\n)",

@@ -11,7 +11,42 @@
             "identifierOverride": "endpoint_.echo"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedExamples = new SeedExamplesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExamples.echo(\n\t$FERN_INPUT\n)",
@@ -63,7 +98,42 @@
             "identifierOverride": "endpoint_file/notification/service.getException"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedExamples = new SeedExamplesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExamples.file.notification.service.getException(\n\t$FERN_INPUT\n)",
@@ -116,7 +186,42 @@
             "identifierOverride": "endpoint_file/service.getFile"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedExamples = new SeedExamplesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExamples.file.service.getFile(\n\t$FERN_INPUT\n)",
@@ -169,7 +274,42 @@
             "identifierOverride": "endpoint_health/service.check"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedExamples = new SeedExamplesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExamples.health.service.check(\n\t$FERN_INPUT\n)",
@@ -222,7 +362,42 @@
             "identifierOverride": "endpoint_health/service.ping"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedExamples = new SeedExamplesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExamples.health.service.ping()",
@@ -246,7 +421,42 @@
             "identifierOverride": "endpoint_service.getMovie"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedExamples = new SeedExamplesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExamples.service.getMovie(\n\t$FERN_INPUT\n)",
@@ -299,7 +509,42 @@
             "identifierOverride": "endpoint_service.createMovie"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedExamples = new SeedExamplesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExamples.service.createMovie(\n\t$FERN_INPUT\n)",
@@ -500,7 +745,42 @@
             "identifierOverride": "endpoint_service.getMetadata"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedExamples = new SeedExamplesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExamples.service.getMetadata(\n\t$FERN_INPUT\n)",
@@ -585,7 +865,42 @@
             "identifierOverride": "endpoint_service.getResponse"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedExamples = new SeedExamplesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExamples.service.getResponse()",

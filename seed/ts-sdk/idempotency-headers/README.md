@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedIdempotencyHeadersClient, SeedIdempotencyHeaders } from "@fern/idempotency-headers";
 
-const seedIdempotencyHeaders = new SeedIdempotencyHeadersClient({ token: "YOUR_TOKEN" });
+const seedIdempotencyHeaders = new SeedIdempotencyHeadersClient();
 await seedIdempotencyHeaders.payment.create({
     amount: 1,
     currency: SeedIdempotencyHeaders.Currency.Usd,

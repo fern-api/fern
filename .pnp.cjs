@@ -8343,10 +8343,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/snippet-sdk", [\
-        ["npm:0.0.5434", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-snippet-sdk-npm-0.0.5434-f14c3d5dcf-dbc9addde9.zip/node_modules/@fern-fern/snippet-sdk/",\
+        ["npm:0.0.5492", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-snippet-sdk-npm-0.0.5492-72fc6421da-dccf0d1e18.zip/node_modules/@fern-fern/snippet-sdk/",\
           "packageDependencies": [\
-            ["@fern-fern/snippet-sdk", "npm:0.0.5434"],\
+            ["@fern-fern/snippet-sdk", "npm:0.0.5492"],\
             ["form-data", "npm:4.0.0"],\
             ["js-base64", "npm:3.7.2"],\
             ["node-fetch", "virtual:25958c3cdea01727abe9184cd62ebdcb7f32f5bd5b1d13e8a0e1d5080a9e9f7be886906e1af797d4fcc43965772a072bf87bbcb6b0a29bf8dd97020f3fa1ccf2#npm:2.7.0"],\
@@ -9016,7 +9016,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/generator-cli-sdk", "npm:0.0.25"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.879"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3515"],\
-            ["@fern-fern/snippet-sdk", "npm:0.0.5434"],\
+            ["@fern-fern/snippet-sdk", "npm:0.0.5492"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@fern-typescript/endpoint-error-union-generator", "workspace:generators/typescript/sdk/endpoint-error-union-generator"],\

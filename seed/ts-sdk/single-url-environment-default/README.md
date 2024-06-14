@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedSingleUrlEnvironmentDefaultClient } from "@fern/single-url-environment-default";
 
-const seedSingleUrlEnvironmentDefault = new SeedSingleUrlEnvironmentDefaultClient({ token: "YOUR_TOKEN" });
+const seedSingleUrlEnvironmentDefault = new SeedSingleUrlEnvironmentDefaultClient();
 await seedSingleUrlEnvironmentDefault.dummy.getDummy();
 ```
 

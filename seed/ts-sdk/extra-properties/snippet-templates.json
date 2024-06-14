@@ -11,7 +11,25 @@
             "identifierOverride": "endpoint_user.createUser"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedExtraProperties = new SeedExtraPropertiesClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedExtraProperties = new SeedExtraPropertiesClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExtraProperties.user.createUser(\n\t$FERN_INPUT\n)",

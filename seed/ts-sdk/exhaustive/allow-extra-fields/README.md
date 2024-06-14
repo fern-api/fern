@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedExhaustiveClient } from "@fern/exhaustive";
 
-const seedExhaustive = new SeedExhaustiveClient({ token: "YOUR_TOKEN" });
+const seedExhaustive = new SeedExhaustiveClient();
 await seedExhaustive.endpoints.container.getAndReturnListOfPrimitives(["string"]);
 ```
 

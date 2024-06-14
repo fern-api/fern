@@ -11,7 +11,25 @@
             "identifierOverride": "endpoint_inlined-request.send"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedEnum = new SeedEnumClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedEnum = new SeedEnumClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedEnum.inlinedRequest.send(\n\t$FERN_INPUT\n)",
@@ -86,7 +104,25 @@
             "identifierOverride": "endpoint_path-param.send"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedEnum = new SeedEnumClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedEnum = new SeedEnumClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedEnum.pathParam.send(\n\t$FERN_INPUT\n)",
@@ -161,7 +197,25 @@
             "identifierOverride": "endpoint_query-param.send"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedEnum = new SeedEnumClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedEnum = new SeedEnumClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedEnum.queryParam.send(\n\t$FERN_INPUT\n)",
@@ -236,7 +290,25 @@
             "identifierOverride": "endpoint_query-param.sendList"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedEnum = new SeedEnumClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedEnum = new SeedEnumClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedEnum.queryParam.sendList(\n\t$FERN_INPUT\n)",

@@ -24,7 +24,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedExamplesClient } from "@fern/examples";
 
-const seedExamples = new SeedExamplesClient({ token: "YOUR_TOKEN" });
+const seedExamples = new SeedExamplesClient();
 await seedExamples.service.createMovie({
     id: "movie-c06a4ad7",
     prequel: "movie-cv9b914f",

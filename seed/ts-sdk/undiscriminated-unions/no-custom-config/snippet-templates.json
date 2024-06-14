@@ -11,7 +11,25 @@
             "identifierOverride": "endpoint_union.get"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedUndiscriminatedUnions.union.get()",

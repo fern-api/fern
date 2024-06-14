@@ -11,7 +11,25 @@
             "identifierOverride": "endpoint_completions.stream"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedServerSentEvents = new SeedServerSentEventsClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedServerSentEvents = new SeedServerSentEventsClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedServerSentEvents.completions.stream(\n\t$FERN_INPUT\n)",

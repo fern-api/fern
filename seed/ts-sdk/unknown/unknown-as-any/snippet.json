@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedUnknownAsAnyClient } from \"@fern/unknown\";\n\nconst seedUnknownAsAny = new SeedUnknownAsAnyClient;\nawait seedUnknownAsAny.unknown.post({\n    \"key\": \"value\"\n});\n"
+                "client": "import { SeedUnknownAsAnyClient } from \"@fern/unknown\";\n\nconst seedUnknownAsAny = new SeedUnknownAsAnyClient();\nawait seedUnknownAsAny.unknown.post({\n    \"key\": \"value\"\n});\n"
             }
         }
     ],

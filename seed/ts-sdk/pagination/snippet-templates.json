@@ -11,7 +11,42 @@
             "identifierOverride": "endpoint_users.listWithCursorPagination"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedPagination = new SeedPaginationClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedPagination.users.listWithCursorPagination(\n\t$FERN_INPUT\n)",
@@ -114,7 +149,42 @@
             "identifierOverride": "endpoint_users.listWithOffsetPagination"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedPagination = new SeedPaginationClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedPagination.users.listWithOffsetPagination(\n\t$FERN_INPUT\n)",
@@ -217,7 +287,42 @@
             "identifierOverride": "endpoint_users.listWithExtendedResults"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedPagination = new SeedPaginationClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedPagination.users.listWithExtendedResults(\n\t$FERN_INPUT\n)",
@@ -270,7 +375,42 @@
             "identifierOverride": "endpoint_users.listUsernames"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedPagination = new SeedPaginationClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedPagination.users.listUsernames(\n\t$FERN_INPUT\n)",
@@ -323,7 +463,42 @@
             "identifierOverride": "endpoint_users.listWithGlobalConfig"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedPagination = new SeedPaginationClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedPagination.users.listWithGlobalConfig(\n\t$FERN_INPUT\n)",

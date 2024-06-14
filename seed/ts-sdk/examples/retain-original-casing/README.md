@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedExamplesClient } from "@fern/examples";
 
-const seedExamples = new SeedExamplesClient({ token: "YOUR_TOKEN" });
+const seedExamples = new SeedExamplesClient();
 await seedExamples.echo("Hello world!\\n\\nwith\\n\\tnewlines");
 ```
 

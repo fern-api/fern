@@ -11,7 +11,42 @@
             "identifierOverride": "endpoint_imdb.createMovie"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedApi = new SeedApiClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedApi = new SeedApiClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApi.imdb.createMovie(\n\t$FERN_INPUT\n)",
@@ -92,7 +127,42 @@
             "identifierOverride": "endpoint_imdb.getMovie"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedApi = new SeedApiClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedApi = new SeedApiClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApi.imdb.getMovie(\n\t$FERN_INPUT\n)",

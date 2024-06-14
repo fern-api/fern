@@ -11,7 +11,25 @@
             "identifierOverride": "endpoint_dummy.generate-stream"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedStreaming = new SeedStreamingClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedStreaming = new SeedStreamingClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedStreaming.dummy.generateStream(\n\t$FERN_INPUT\n)",

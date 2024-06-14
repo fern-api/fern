@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";\n\nconst seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient;\nawait seedUndiscriminatedUnions.union.get(\"string\");\n"
+                "client": "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";\n\nconst seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient();\nawait seedUndiscriminatedUnions.union.get(\"string\");\n"
             }
         }
     ],

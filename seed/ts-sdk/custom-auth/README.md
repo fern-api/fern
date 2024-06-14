@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedCustomAuthClient } from "@fern/custom-auth";
 
-const seedCustomAuth = new SeedCustomAuthClient({ customAuthScheme: "YOUR_CUSTOM_AUTH_SCHEME" });
+const seedCustomAuth = new SeedCustomAuthClient();
 await seedCustomAuth.customAuth.postWithCustomAuth({
     key: "value",
 });

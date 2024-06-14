@@ -11,7 +11,25 @@
             "identifierOverride": "endpoint_service.getResource"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedMixedCase = new SeedMixedCaseClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedMixedCase = new SeedMixedCaseClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedMixedCase.service.getResource(\n\t$FERN_INPUT\n)",
@@ -64,7 +82,25 @@
             "identifierOverride": "endpoint_service.listResources"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedMixedCase = new SeedMixedCaseClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedMixedCase = new SeedMixedCaseClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedMixedCase.service.listResources(\n\t$FERN_INPUT\n)",

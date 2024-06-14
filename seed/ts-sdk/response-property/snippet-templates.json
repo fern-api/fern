@@ -11,7 +11,25 @@
             "identifierOverride": "endpoint_service.getMovie"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedResponseProperty = new SeedResponsePropertyClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedResponseProperty.service.getMovie(\n\t$FERN_INPUT\n)",
@@ -63,7 +81,25 @@
             "identifierOverride": "endpoint_service.getMovieDocs"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedResponseProperty = new SeedResponsePropertyClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedResponseProperty.service.getMovieDocs(\n\t$FERN_INPUT\n)",
@@ -115,7 +151,25 @@
             "identifierOverride": "endpoint_service.getMovieName"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedResponseProperty = new SeedResponsePropertyClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedResponseProperty.service.getMovieName(\n\t$FERN_INPUT\n)",
@@ -167,7 +221,25 @@
             "identifierOverride": "endpoint_service.getMovieMetadata"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedResponseProperty = new SeedResponsePropertyClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedResponseProperty.service.getMovieMetadata(\n\t$FERN_INPUT\n)",
@@ -219,7 +291,25 @@
             "identifierOverride": "endpoint_service.getOptionalMovie"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedResponseProperty = new SeedResponsePropertyClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedResponseProperty.service.getOptionalMovie(\n\t$FERN_INPUT\n)",
@@ -271,7 +361,25 @@
             "identifierOverride": "endpoint_service.getOptionalMovieDocs"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedResponseProperty = new SeedResponsePropertyClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedResponseProperty.service.getOptionalMovieDocs(\n\t$FERN_INPUT\n)",
@@ -323,7 +431,25 @@
             "identifierOverride": "endpoint_service.getOptionalMovieName"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedResponseProperty = new SeedResponsePropertyClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedResponseProperty.service.getOptionalMovieName(\n\t$FERN_INPUT\n)",

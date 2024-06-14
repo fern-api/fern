@@ -11,7 +11,25 @@
             "identifierOverride": "endpoint_service.hello"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedCodeSamples = new SeedCodeSamplesClient;\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const seedCodeSamples = new SeedCodeSamplesClient();",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedCodeSamples.service.hello(\n\t$FERN_INPUT\n)",
