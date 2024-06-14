@@ -327,6 +327,7 @@ export class IrGraph {
 
         const properties: Record<TypeId, Set<string>> = {};
         const requestProperties: Record<EndpointId, Set<string>> = {};
+        const webhookPayloadProperties: Record<WebhookId, Set<string>> = {};
 
         if (this.audiences.type === "filtered") {
             for (const [typeId, typePropertiesNode] of Object.entries(this.properties)) {
@@ -364,6 +365,24 @@ export class IrGraph {
                     requestProperties[endpointId] = propertiesForEndpoint;
                 }
             }
+
+            for (const [webhookId, webhookPaylodPropertiesNode] of Object.entries(this.webhookProperties)) {
+                if (!this.webhooksNeededForAudience.has(webhookId)) {
+                    continue;
+                }
+                const propertiesForWebhook = new Set<string>();
+                for (const audience of this.audiences.audiences) {
+                    const propertiesForAudience = webhookPaylodPropertiesNode.propertiesByAudience[audience];
+                    if (propertiesForAudience != null) {
+                        propertiesForAudience.forEach((property) => {
+                            propertiesForWebhook.add(property);
+                        });
+                    }
+                }
+                if (propertiesForWebhook.size > 0) {
+                    requestProperties[webhookId] = propertiesForWebhook;
+                }
+            }
         }
 
         return new FilteredIrImpl({
@@ -373,8 +392,8 @@ export class IrGraph {
             requestProperties,
             services: this.servicesNeededForAudience,
             endpoints: this.endpointsNeededForAudience,
-            webhooks: this.webhooks,
-            webhookPayloadProperties: this.webhookProperties,
+            webhooks: this.webhooksNeededForAudience,
+            webhookPayloadProperties,
             subpackages: this.subpackagesNeededForAudience
         });
     }
