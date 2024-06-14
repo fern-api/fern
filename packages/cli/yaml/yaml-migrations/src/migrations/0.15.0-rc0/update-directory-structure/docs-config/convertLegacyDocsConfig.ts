@@ -39,7 +39,7 @@ function addApiNameToNavigationConfig({
     });
 }
 
-function isAPIReferenceSection(item: LegacyDocs.NavigationItem): item is LegacyDocs.ApiReferenceConfiguration {
+function isAPIReferenceSection(item: LegacyDocs.NavigationItem): item is LegacyDocs.ApiSectionConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as LegacyDocs.ApiReferenceConfiguration).api != null;
+    return (item as LegacyDocs.ApiSectionConfiguration).api != null;
 }
