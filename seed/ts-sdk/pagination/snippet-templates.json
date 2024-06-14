@@ -26,7 +26,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
                                         "isOptional": false,
                                         "templateInputs": [],
                                         "type": "generic"
@@ -174,7 +174,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
                                         "isOptional": false,
                                         "templateInputs": [],
                                         "type": "generic"
@@ -322,7 +322,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
                                         "isOptional": false,
                                         "templateInputs": [],
                                         "type": "generic"
@@ -420,7 +420,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
                                         "isOptional": false,
                                         "templateInputs": [],
                                         "type": "generic"
@@ -518,7 +518,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: YOUR_BASE_URL",
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
                                         "isOptional": false,
                                         "templateInputs": [],
                                         "type": "generic"
