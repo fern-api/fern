@@ -184,7 +184,7 @@ export class ApiDefinitionHolder {
             return;
         }
 
-        const packageList = isSubpackage(pkg) ? [...parents, pkg.name] : pkg.subpackages;
+        const packageList = isSubpackage(pkg) ? [...parents, pkg.name] : parents;
 
         this.#subpackagesByLocator.set(packageList.length === 0 ? ROOT_PACKAGE_ID : packageList.join("."), pkg);
 

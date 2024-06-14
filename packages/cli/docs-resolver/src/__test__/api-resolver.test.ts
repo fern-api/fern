@@ -4,6 +4,7 @@ import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader";
+import { ApiDefinitionHolder } from "../ApiDefinitionHolder";
 import { ApiReferenceNodeConverter } from "../ApiReferenceNodeConverter";
 import { convertIrToApiDefinition } from "../utils/convertIrToApiDefinition";
 
@@ -81,4 +82,6 @@ it("converts to api reference node", async () => {
     ).get();
 
     expect(node).toMatchSnapshot();
+
+    expect(ApiDefinitionHolder.create(apiDefinition).endpointsByLocator).toMatchSnapshot();
 });
