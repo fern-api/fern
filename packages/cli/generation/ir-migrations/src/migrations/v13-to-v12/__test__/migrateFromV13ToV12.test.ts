@@ -10,7 +10,7 @@ describe("migrateFromV13ToV12", () => {
             pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple"))
         });
 
-        const firstScheme = migrated.auth.schemes[0];
+        const firstScheme = migrated.ir.auth.schemes[0];
         if (firstScheme?._type !== "header") {
             throw new Error("First scheme is not a header");
         }

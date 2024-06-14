@@ -12,7 +12,7 @@ describe("migrateFromV6ToV5", () => {
         const migrated = await runMigration({
             pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/no-environments"))
         });
-        expect(migrated.environments).toEqual([]);
+        expect(migrated.ir.environments).toEqual([]);
     });
 
     it("correctly migrates when using one base-url per environment", async () => {
@@ -74,8 +74,8 @@ describe("migrateFromV6ToV5", () => {
             }
         ];
 
-        expect(migrated.environments).toEqual(expectedEnvironments);
-        expect(migrated.defaultEnvironment).toBe("Production");
+        expect(migrated.ir.environments).toEqual(expectedEnvironments);
+        expect(migrated.ir.defaultEnvironment).toBe("Production");
     });
 
     it("throws when using multiple base-urls per environment", async () => {

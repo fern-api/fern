@@ -1,4 +1,5 @@
 import { GeneratorName } from "@fern-api/configuration";
+import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
 
@@ -33,7 +34,11 @@ export const V46_TO_V45_MIGRATION: IrMigration<
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
     },
-    jsonifyEarlierVersion: (ir) => ir,
+    jsonifyEarlierVersion: (ir) =>
+        IrSerialization.V45.IntermediateRepresentation.jsonOrThrow(ir, {
+            unrecognizedObjectKeys: "strip",
+            skipValidation: true
+        }),
     migrateBackwards: (v46): IrVersions.V45.ir.IntermediateRepresentation => {
         return {
             ...v46,

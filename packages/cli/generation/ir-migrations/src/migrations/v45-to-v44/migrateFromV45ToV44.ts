@@ -1,5 +1,6 @@
 import { GeneratorName } from "@fern-api/configuration";
 import { mapValues } from "lodash-es";
+import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
 
@@ -34,7 +35,11 @@ export const V45_TO_V44_MIGRATION: IrMigration<
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
     },
-    jsonifyEarlierVersion: (ir) => ir,
+    jsonifyEarlierVersion: (ir) =>
+        IrSerialization.V44.IntermediateRepresentation.jsonOrThrow(ir, {
+            unrecognizedObjectKeys: "strip",
+            skipValidation: true
+        }),
     migrateBackwards: (v45): IrVersions.V44.ir.IntermediateRepresentation => {
         const v44Types: Record<string, IrVersions.V44.types.TypeDeclaration> = mapValues(
             v45.types,
