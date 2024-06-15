@@ -6,7 +6,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { kebabCase } from "lodash-es";
 import urlJoin from "url-join";
-import { ApiDefinitionHolder, ROOT_PACKAGE_ID } from "./ApiDefinitionHolder";
+import { ApiDefinitionHolder } from "./ApiDefinitionHolder";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { isSubpackage } from "./utils/isSubpackage";
@@ -67,8 +67,8 @@ export class ApiReferenceNodeConverter {
 
         // Step 2. Fill in the any missing navigation items from the API definition
         this.#children = this.#mergeAndFilterChildren(
-            this.#children.map((child) => this.#convertApiPackageChild(child, this.#slug, idgen)),
-            this.#convertApiDefinitionPackage(this.#holder.api.rootPackage, this.#slug, idgen)
+            this.#children.map((child) => this.#convertApiPackageChild(child, this.#slug)),
+            this.#convertApiDefinitionPackage(this.#holder.api.rootPackage, this.#slug)
         );
     }
 
@@ -454,24 +454,22 @@ export class ApiReferenceNodeConverter {
 
     #mergeAndFilterChildren(
         left: FernNavigation.ApiPackageChild[],
-        right: FernNavigation.ApiPackageChild[] = []
+        right: FernNavigation.ApiPackageChild[]
     ): FernNavigation.ApiPackageChild[] {
-        return this.mergeEndpointPairs([...left, ...right], NodeIdGenerator.init(this.apiDefinitionId)).filter(
-            (child) => (child.type === "apiPackage" ? child.children.length > 0 : true)
+        return this.mergeEndpointPairs([...left, ...right]).filter((child) =>
+            child.type === "apiPackage" ? child.children.length > 0 : true
         );
     }
 
     #convertApiPackageChild(
         child: FernNavigation.ApiPackageChild,
-        parentSlug: FernNavigation.SlugGenerator,
-        idgen: NodeIdGenerator
+        parentSlug: FernNavigation.SlugGenerator
     ): FernNavigation.ApiPackageChild {
         if (child.type === "apiPackage") {
             const slug = parentSlug.set(child.slug);
-            const innerIdgen = idgen.append(kebabCase(child.title));
             const subpackageIds = this.#nodeIdToSubpackageId.get(child.id) ?? [];
             const subpackageChildren = subpackageIds.flatMap((subpackageId) =>
-                this.#convertApiDefinitionPackageId(subpackageId, slug, innerIdgen)
+                this.#convertApiDefinitionPackageId(subpackageId, slug)
             );
 
             const children = this.#mergeAndFilterChildren(child.children, subpackageChildren);
@@ -487,13 +485,10 @@ export class ApiReferenceNodeConverter {
 
     #convertApiDefinitionPackage(
         pkg: APIV1Read.ApiDefinitionPackage,
-        parentSlug: FernNavigation.SlugGenerator,
-        idgen: NodeIdGenerator
+        parentSlug: FernNavigation.SlugGenerator
     ): FernNavigation.ApiPackageChild[] {
         // if an endpoint, websocket, webhook, or subpackage is not visited, add it to the additional children list
         let additionalChildren: FernNavigation.ApiPackageChild[] = [];
-
-        idgen = idgen.append(isSubpackage(pkg) ? pkg.subpackageId : ROOT_PACKAGE_ID);
 
         pkg.endpoints.forEach((endpoint) => {
             const endpointId = this.#holder.getEndpointId(endpoint);
@@ -504,7 +499,7 @@ export class ApiReferenceNodeConverter {
                 return;
             }
             additionalChildren.push({
-                id: idgen.append(endpoint.id).get(),
+                id: FernNavigation.NodeId(`${this.apiDefinitionId}:${endpointId}`),
                 type: "endpoint",
                 method: endpoint.method,
                 endpointId,
@@ -527,7 +522,7 @@ export class ApiReferenceNodeConverter {
                 return;
             }
             additionalChildren.push({
-                id: idgen.append(webSocket.id).get(),
+                id: FernNavigation.NodeId(`${this.apiDefinitionId}:${webSocketId}`),
                 type: "webSocket",
                 webSocketId,
                 title: webSocket.name ?? stringifyEndpointPathParts(webSocket.path.parts),
@@ -548,7 +543,7 @@ export class ApiReferenceNodeConverter {
                 return;
             }
             additionalChildren.push({
-                id: idgen.append(webhook.id).get(),
+                id: FernNavigation.NodeId(`${this.apiDefinitionId}:${webhookId}`),
                 type: "webhook",
                 webhookId,
                 method: webhook.method,
@@ -572,25 +567,28 @@ export class ApiReferenceNodeConverter {
                 return;
             }
 
-            const subpackageNodeId = idgen.append(subpackageId);
             const slug = isSubpackage(subpackage) ? parentSlug.apply(subpackage) : parentSlug;
-            const subpackageChildren = this.#convertApiDefinitionPackageId(subpackageId, slug, subpackageNodeId);
-            additionalChildren.push({
-                id: subpackageNodeId.get(),
-                type: "apiPackage",
-                children: this.#mergeAndFilterChildren(subpackageChildren),
-                title: isSubpackage(subpackage)
-                    ? subpackage.displayName ?? titleCase(subpackage.name)
-                    : this.apiSection.title,
-                slug: slug.get(),
-                icon: undefined,
-                hidden: undefined,
-                overviewPageId: undefined,
-                availability: undefined,
-                apiDefinitionId: this.apiDefinitionId,
-                pointsTo: FernNavigation.utils.followRedirects(subpackageChildren)
-            });
+            const subpackageChildren = this.#convertApiDefinitionPackageId(subpackageId, slug);
+            if (subpackageChildren.length > 0) {
+                additionalChildren.push({
+                    id: FernNavigation.NodeId(`${this.apiDefinitionId}:${subpackageId}`),
+                    type: "apiPackage",
+                    children: subpackageChildren,
+                    title: isSubpackage(subpackage)
+                        ? subpackage.displayName ?? titleCase(subpackage.name)
+                        : this.apiSection.title,
+                    slug: slug.get(),
+                    icon: undefined,
+                    hidden: undefined,
+                    overviewPageId: undefined,
+                    availability: undefined,
+                    apiDefinitionId: this.apiDefinitionId,
+                    pointsTo: FernNavigation.utils.followRedirects(subpackageChildren)
+                });
+            }
         });
+
+        additionalChildren = this.mergeEndpointPairs(additionalChildren);
 
         if (this.apiSection.alphabetized) {
             additionalChildren = additionalChildren.sort((a, b) => {
@@ -605,9 +603,7 @@ export class ApiReferenceNodeConverter {
 
     #convertApiDefinitionPackageId(
         packageId: string | undefined,
-        // children: FernNavigation.ApiPackageChild[],
-        parentSlug: FernNavigation.SlugGenerator,
-        idgen: NodeIdGenerator
+        parentSlug: FernNavigation.SlugGenerator
     ): FernNavigation.ApiPackageChild[] {
         const pkg =
             packageId != null ? this.#holder.resolveSubpackage(this.#holder.getSubpackage(packageId)) : undefined;
@@ -618,13 +614,10 @@ export class ApiReferenceNodeConverter {
         }
 
         // if an endpoint, websocket, webhook, or subpackage is not visited, add it to the additional children list
-        return this.#convertApiDefinitionPackage(pkg, parentSlug, idgen);
+        return this.#convertApiDefinitionPackage(pkg, parentSlug);
     }
 
-    private mergeEndpointPairs(
-        children: FernNavigation.ApiPackageChild[],
-        idgen: NodeIdGenerator
-    ): FernNavigation.ApiPackageChild[] {
+    private mergeEndpointPairs(children: FernNavigation.ApiPackageChild[]): FernNavigation.ApiPackageChild[] {
         const toRet: FernNavigation.ApiPackageChild[] = [];
 
         const methodAndPathToEndpointNode = new Map<string, FernNavigation.EndpointNode>();
@@ -644,17 +637,19 @@ export class ApiReferenceNodeConverter {
             const existing = methodAndPathToEndpointNode.get(methodAndPath);
             methodAndPathToEndpointNode.set(methodAndPath, child);
 
-            if (existing == null || toRet.includes(existing) || existing.isResponseStream === child.isResponseStream) {
+            if (existing == null || existing.isResponseStream === child.isResponseStream) {
                 toRet.push(child);
                 return;
             }
 
             const idx = toRet.indexOf(existing);
+            const stream = child.isResponseStream ? child : existing;
+            const nonStream = child.isResponseStream ? existing : child;
             const pairNode: FernNavigation.EndpointPairNode = {
-                id: idgen.append(`${child.endpointId}:pair`).get(),
+                id: FernNavigation.NodeId(`${this.apiDefinitionId}:${nonStream.endpointId}+${stream.endpointId}`),
                 type: "endpointPair",
-                stream: child.isResponseStream ? child : existing,
-                nonStream: child.isResponseStream ? existing : child
+                stream,
+                nonStream
             };
 
             toRet[idx] = pairNode;
