@@ -16,7 +16,7 @@ export class ChangelogNodeConverter {
         private idgen: NodeIdGenerator
     ) {}
 
-    public convert(parentSlug: FernNavigation.SlugGenerator, title?: string): FernNavigation.ChangelogNode | undefined {
+    public convert(parentSlug: FernNavigation.SlugGenerator): FernNavigation.ChangelogNode | undefined {
         if (this.workspace.changelog == null || this.workspace.changelog.files.length === 0) {
             return undefined;
         }
@@ -56,8 +56,8 @@ export class ChangelogNodeConverter {
         return {
             id: this.idgen.get(),
             type: "changelog",
-            title: title ?? "Changelog",
-            slug: parentSlug.get(),
+            title: "Changelog",
+            slug: parentSlug.append("changelog").get(),
             icon: undefined,
             hidden: undefined,
             children: changelogYears,

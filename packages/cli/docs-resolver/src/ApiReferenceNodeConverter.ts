@@ -87,10 +87,7 @@ export class ApiReferenceNodeConverter {
             hidden: this.apiSection.hidden,
             hideTitle: this.apiSection.flattened,
             showErrors: this.apiSection.showErrors,
-            changelog: new ChangelogNodeConverter(this.workspace, this.docsWorkspace, idgen).convert(
-                this.#slug,
-                `${this.apiSection.title} Changelog`
-            ),
+            changelog: new ChangelogNodeConverter(this.workspace, this.docsWorkspace, idgen).convert(this.#slug),
             children: this.#children,
             availability: undefined,
             pointsTo
