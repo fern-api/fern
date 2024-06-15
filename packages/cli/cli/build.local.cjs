@@ -15,6 +15,7 @@ async function main() {
         entryPoints: ["./src/cli.ts"],
         outfile: "./dist/local/bundle.cjs",
         bundle: true,
+        minify: false,
         external: ["cpu-features"],
         plugins: [jsoncParserResolverPlugin, pnpPlugin()],
         define: {

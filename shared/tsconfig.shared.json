@@ -18,6 +18,7 @@
     "baseUrl": ".",
     "declaration": true,
     "noUncheckedIndexedAccess": true,
+    "types": ["vitest/globals"],
     // "noUnusedLocals": true,
     // "noUnusedParameters": true,
     "noImplicitReturns": true
