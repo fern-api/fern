@@ -2,8 +2,6 @@
 
 import urlJoin from "url-join";
 
-require("jest-specific-snapshot");
-
 describe("encodeURIComponent", () => {
     it("echo", async () => {
         const echo = encodeURIComponent("echo");

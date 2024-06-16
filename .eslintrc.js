@@ -7,7 +7,6 @@ module.exports = {
     plugins: [
         "@typescript-eslint",
         "jest",
-        "@blueprintjs",
         "deprecation",
         "import",
         "react",
@@ -19,7 +18,6 @@ module.exports = {
         "plugin:@typescript-eslint/strict",
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:jest/recommended",
-        "plugin:@blueprintjs/recommended",
         "plugin:react/recommended",
         "plugin:react-hooks/recommended",
         "plugin:tailwindcss/recommended"
@@ -113,9 +111,7 @@ module.exports = {
         "react/react-in-jsx-scope": "off",
         "react/prop-types": "off",
         "@typescript-eslint/await-thenable": "error",
-        "@blueprintjs/classes-constants": "off",
         "tailwindcss/no-custom-classname": "off",
-        "@blueprintjs/html-components": "off",
         "@typescript-eslint/strict-boolean-expressions": "off",
         "@typescript-eslint/no-empty-interface": "off",
         "@typescript-eslint/no-unnecessary-condition": "off",
