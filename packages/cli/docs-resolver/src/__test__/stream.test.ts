@@ -48,7 +48,6 @@ it("converts to api reference node", async () => {
     });
 
     if (!result.didSucceed) {
-        console.error(result.failures);
         throw new Error("API workspace failed to load");
     }
 
