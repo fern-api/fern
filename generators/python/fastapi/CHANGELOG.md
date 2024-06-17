@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.10.0] - 2024-06-06
+
+- Feature: The FastAPI generator now accepts the `extra_fields` configuration. You can allow extra fields with the following:
+
+```yaml
+- name: fernapi/fern-fastapi-server
+  version: 0.10.0
+  config:
+    pydantic_config:
+      extra_fields: allow
+```
+
 ## [0.9.3] - 2024-05-28
 
 - Fix: pydantic utilities are brought inline with the SDK and model generator

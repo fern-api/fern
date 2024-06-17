@@ -301,7 +301,8 @@ export class DocsDefinitionResolver {
                     generationLanguage: undefined,
                     keywords: undefined,
                     smartCasing: false,
-                    disableExamples: false
+                    disableExamples: false,
+                    readme: undefined
                 });
                 const apiDefinitionId = await this.registerApi({ ir, snippetsConfig });
                 const unsortedChangelogItems: { date: Date; pageId: RelativeFilePath }[] = [];

@@ -178,8 +178,8 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                     source_file=self._source_file,
                     docstring=self._docs,
                     snippet=self._snippet,
+                    base_models=base_models,
                 ) as internal_pydantic_model_for_single_union_type:
-
                     object_properties = self._context.get_all_properties_including_extensions(shape.type_id)
                     for object_property in object_properties:
                         internal_pydantic_model_for_single_union_type.add_field(

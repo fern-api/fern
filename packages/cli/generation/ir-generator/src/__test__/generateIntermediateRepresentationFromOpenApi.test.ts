@@ -47,7 +47,8 @@ it("generate IR from OpenAPI", async () => {
             audiences: TEST_DEFINITION_CONFIG[workspace.name]?.audiences ?? { type: "all" },
             keywords: undefined,
             smartCasing: true, // Verify the special casing convention in tests.
-            disableExamples: false
+            disableExamples: false,
+            readme: undefined
         });
 
         const intermediateRepresentationJson = await IrSerialization.IntermediateRepresentation.jsonOrThrow(
