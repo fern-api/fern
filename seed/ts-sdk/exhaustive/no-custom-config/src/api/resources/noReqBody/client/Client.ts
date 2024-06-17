@@ -28,7 +28,7 @@ export class NoReqBody {
      * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.noReqBody.getWithNoRequestBody()
+     *     await client.noReqBody.getWithNoRequestBody()
      */
     public async getWithNoRequestBody(
         requestOptions?: NoReqBody.RequestOptions
@@ -84,7 +84,7 @@ export class NoReqBody {
      * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.noReqBody.postWithNoRequestBody()
+     *     await client.noReqBody.postWithNoRequestBody()
      */
     public async postWithNoRequestBody(requestOptions?: NoReqBody.RequestOptions): Promise<string> {
         const _response = await core.fetcher({

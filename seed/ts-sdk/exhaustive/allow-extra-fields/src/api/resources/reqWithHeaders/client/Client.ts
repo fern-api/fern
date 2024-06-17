@@ -29,7 +29,7 @@ export class ReqWithHeaders {
      * @param {ReqWithHeaders.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.reqWithHeaders.getWithCustomHeader({
+     *     await client.reqWithHeaders.getWithCustomHeader({
      *         xTestServiceHeader: "string",
      *         xTestEndpointHeader: "string",
      *         body: "string"

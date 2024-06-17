@@ -18,8 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const fiddle = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-await fiddle.endpoints.container.getAndReturnListOfPrimitives(["string"]);
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+await client.endpoints.container.getAndReturnListOfPrimitives(["string"]);
 ```
 
 ## Request And Response Types
@@ -33,7 +33,7 @@ import { Fiddle } from "@fern/exhaustive";
 const request: Fiddle.GetWithQuery = {
     ...
 };
-const response = await fiddle.getWithQuery(request);
+const response = await client.getWithQuery(request);
 ```
 
 ## Exception Handling
@@ -45,7 +45,7 @@ will be thrown.
 import { FiddleError } from "@fern/exhaustive";
 
 try {
-    await fiddle.getAndReturnListOfPrimitives(...);
+    await client.getAndReturnListOfPrimitives(...);
 } catch (err) {
     if (err instanceof FiddleError) {
         console.log(err.statusCode);
@@ -70,7 +70,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await fiddle.getAndReturnListOfPrimitives(..., {
+const response = await client.getAndReturnListOfPrimitives(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -80,7 +80,7 @@ const response = await fiddle.getAndReturnListOfPrimitives(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await fiddle.getAndReturnListOfPrimitives(..., {
+const response = await client.getAndReturnListOfPrimitives(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -91,7 +91,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await fiddle.getAndReturnListOfPrimitives(..., {
+const response = await client.getAndReturnListOfPrimitives(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -117,7 +117,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-const fiddle = new FiddleClient({
+const client = new FiddleClient({
     ...
     fetcher: // provide your implementation here
 });

@@ -27,7 +27,7 @@ export class QueryParam {
      * @param {QueryParam.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedEnum.queryParam.send({
+     *     await client.queryParam.send({
      *         operand: SeedEnum.Operand.GreaterThan,
      *         operandOrColor: SeedEnum.Color.Red
      *     })
@@ -97,7 +97,7 @@ export class QueryParam {
      * @param {QueryParam.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedEnum.queryParam.sendList({
+     *     await client.queryParam.sendList({
      *         operand: SeedEnum.Operand.GreaterThan,
      *         maybeOperand: SeedEnum.Operand.GreaterThan,
      *         operandOrColor: SeedEnum.Color.Red,

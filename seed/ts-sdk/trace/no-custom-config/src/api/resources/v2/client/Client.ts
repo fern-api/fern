@@ -29,7 +29,7 @@ export class V2 {
      * @param {V2.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.v2.test()
+     *     await client.v2.test()
      */
     public async test(requestOptions?: V2.RequestOptions): Promise<void> {
         const _response = await core.fetcher({

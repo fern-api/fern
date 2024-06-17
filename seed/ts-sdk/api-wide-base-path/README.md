@@ -18,8 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApiWideBasePathClient } from "@fern/api-wide-base-path";
 
-const seedApiWideBasePath = new SeedApiWideBasePathClient({ environment: "YOUR_BASE_URL" });
-await seedApiWideBasePath.service.post("string", "string", 1);
+const client = new SeedApiWideBasePathClient({ environment: "YOUR_BASE_URL" });
+await client.service.post("string", "string", 1);
 ```
 
 ## Exception Handling
@@ -31,7 +31,7 @@ will be thrown.
 import { SeedApiWideBasePathError } from "@fern/api-wide-base-path";
 
 try {
-    await seedApiWideBasePath.post(...);
+    await client.post(...);
 } catch (err) {
     if (err instanceof SeedApiWideBasePathError) {
         console.log(err.statusCode);
@@ -56,7 +56,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedApiWideBasePath.post(..., {
+const response = await client.post(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -66,7 +66,7 @@ const response = await seedApiWideBasePath.post(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedApiWideBasePath.post(..., {
+const response = await client.post(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -77,7 +77,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedApiWideBasePath.post(..., {
+const response = await client.post(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -103,7 +103,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedApiWideBasePathClient } from "@fern/api-wide-base-path";
 
-const seedApiWideBasePath = new SeedApiWideBasePathClient({
+const client = new SeedApiWideBasePathClient({
     ...
     fetcher: // provide your implementation here
 });

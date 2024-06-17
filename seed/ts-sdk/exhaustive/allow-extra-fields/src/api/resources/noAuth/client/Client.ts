@@ -33,7 +33,7 @@ export class NoAuth {
      * @throws {@link SeedExhaustive.BadRequestBody}
      *
      * @example
-     *     await seedExhaustive.noAuth.postWithNoAuth({
+     *     await client.noAuth.postWithNoAuth({
      *         "key": "value"
      *     })
      */

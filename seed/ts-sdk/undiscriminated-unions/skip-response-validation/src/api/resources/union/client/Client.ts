@@ -28,7 +28,7 @@ export class Union {
      * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedUndiscriminatedUnions.union.get("string")
+     *     await client.union.get("string")
      */
     public async get(
         request: SeedUndiscriminatedUnions.MyUnion,
@@ -86,7 +86,7 @@ export class Union {
      * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedUndiscriminatedUnions.union.getMetadata()
+     *     await client.union.getMetadata()
      */
     public async getMetadata(requestOptions?: Union.RequestOptions): Promise<SeedUndiscriminatedUnions.Metadata> {
         const _response = await core.fetcher({

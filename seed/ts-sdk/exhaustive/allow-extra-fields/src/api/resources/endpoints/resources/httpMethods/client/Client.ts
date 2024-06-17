@@ -29,7 +29,7 @@ export class HttpMethods {
      * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.httpMethods.testGet("string")
+     *     await client.endpoints.httpMethods.testGet("string")
      */
     public async testGet(id: string, requestOptions?: HttpMethods.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
@@ -84,7 +84,7 @@ export class HttpMethods {
      * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.httpMethods.testPost({
+     *     await client.endpoints.httpMethods.testPost({
      *         string: "string"
      *     })
      */
@@ -150,7 +150,7 @@ export class HttpMethods {
      * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.httpMethods.testPut("string", {
+     *     await client.endpoints.httpMethods.testPut("string", {
      *         string: "string"
      *     })
      */
@@ -217,7 +217,7 @@ export class HttpMethods {
      * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.httpMethods.testPatch("string", {
+     *     await client.endpoints.httpMethods.testPatch("string", {
      *         string: "string",
      *         integer: 1,
      *         long: 1000000,
@@ -297,7 +297,7 @@ export class HttpMethods {
      * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.httpMethods.testDelete("string")
+     *     await client.endpoints.httpMethods.testDelete("string")
      */
     public async testDelete(id: string, requestOptions?: HttpMethods.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({

@@ -18,8 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedObjectsWithImportsClient } from "@fern/optional";
 
-const seedObjectsWithImports = new SeedObjectsWithImportsClient({ environment: "YOUR_BASE_URL" });
-await seedObjectsWithImports.optional.sendOptionalBody({
+const client = new SeedObjectsWithImportsClient({ environment: "YOUR_BASE_URL" });
+await client.optional.sendOptionalBody({
     string: {
         key: "value",
     },
@@ -35,7 +35,7 @@ will be thrown.
 import { SeedObjectsWithImportsError } from "@fern/optional";
 
 try {
-    await seedObjectsWithImports.sendOptionalBody(...);
+    await client.sendOptionalBody(...);
 } catch (err) {
     if (err instanceof SeedObjectsWithImportsError) {
         console.log(err.statusCode);
@@ -60,7 +60,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedObjectsWithImports.sendOptionalBody(..., {
+const response = await client.sendOptionalBody(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -70,7 +70,7 @@ const response = await seedObjectsWithImports.sendOptionalBody(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedObjectsWithImports.sendOptionalBody(..., {
+const response = await client.sendOptionalBody(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -81,7 +81,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedObjectsWithImports.sendOptionalBody(..., {
+const response = await client.sendOptionalBody(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -107,7 +107,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedObjectsWithImportsClient } from "@fern/optional";
 
-const seedObjectsWithImports = new SeedObjectsWithImportsClient({
+const client = new SeedObjectsWithImportsClient({
     ...
     fetcher: // provide your implementation here
 });

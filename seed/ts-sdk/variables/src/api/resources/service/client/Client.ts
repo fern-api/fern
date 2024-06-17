@@ -26,7 +26,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedVariables.service.post()
+     *     await client.service.post()
      */
     public async post(requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({

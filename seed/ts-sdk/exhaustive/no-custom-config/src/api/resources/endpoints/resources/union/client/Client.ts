@@ -29,7 +29,7 @@ export class Union {
      * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.union.getAndReturnUnion({
+     *     await client.endpoints.union.getAndReturnUnion({
      *         animal: "dog",
      *         name: "string",
      *         likesToWoof: true

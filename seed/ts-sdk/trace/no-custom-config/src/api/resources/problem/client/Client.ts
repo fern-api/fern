@@ -33,7 +33,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.problem.createProblem({
+     *     await client.problem.createProblem({
      *         problemName: "string",
      *         problemDescription: {
      *             boards: [{
@@ -145,7 +145,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.problem.updateProblem("string", {
+     *     await client.problem.updateProblem("string", {
      *         problemName: "string",
      *         problemDescription: {
      *             boards: [{
@@ -257,7 +257,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.problem.deleteProblem("string")
+     *     await client.problem.deleteProblem("string")
      */
     public async deleteProblem(problemId: SeedTrace.ProblemId, requestOptions?: Problem.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
@@ -316,7 +316,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.problem.getDefaultStarterFiles({
+     *     await client.problem.getDefaultStarterFiles({
      *         inputParams: [{
      *                 variableType: {
      *                     type: "integerType"

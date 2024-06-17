@@ -31,7 +31,7 @@ export class Admin {
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.admin.updateTestSubmissionStatus(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), SeedTrace.TestSubmissionStatus.stopped())
+     *     await client.admin.updateTestSubmissionStatus(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), SeedTrace.TestSubmissionStatus.stopped())
      */
     public async updateTestSubmissionStatus(
         submissionId: SeedTrace.SubmissionId,
@@ -84,7 +84,7 @@ export class Admin {
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.admin.sendTestSubmissionUpdate(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
+     *     await client.admin.sendTestSubmissionUpdate(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
      *         updateTime: new Date("2024-01-15T09:30:00.000Z"),
      *         updateInfo: SeedTrace.TestSubmissionUpdateInfo.running(SeedTrace.RunningSubmissionState.QueueingSubmission)
      *     })
@@ -140,7 +140,7 @@ export class Admin {
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.admin.updateWorkspaceSubmissionStatus(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), SeedTrace.WorkspaceSubmissionStatus.stopped())
+     *     await client.admin.updateWorkspaceSubmissionStatus(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), SeedTrace.WorkspaceSubmissionStatus.stopped())
      */
     public async updateWorkspaceSubmissionStatus(
         submissionId: SeedTrace.SubmissionId,
@@ -193,7 +193,7 @@ export class Admin {
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.admin.sendWorkspaceSubmissionUpdate(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
+     *     await client.admin.sendWorkspaceSubmissionUpdate(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
      *         updateTime: new Date("2024-01-15T09:30:00.000Z"),
      *         updateInfo: SeedTrace.WorkspaceSubmissionUpdateInfo.running(SeedTrace.RunningSubmissionState.QueueingSubmission)
      *     })
@@ -250,7 +250,7 @@ export class Admin {
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.admin.storeTracedTestCase(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), "string", {
+     *     await client.admin.storeTracedTestCase(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), "string", {
      *         result: {
      *             result: {},
      *             stdout: "string"
@@ -320,7 +320,7 @@ export class Admin {
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.admin.storeTracedTestCaseV2(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), SeedTrace.v2.TestCaseId("string"), [{
+     *     await client.admin.storeTracedTestCaseV2(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), SeedTrace.v2.TestCaseId("string"), [{
      *             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
      *             lineNumber: 1,
      *             file: {},
@@ -384,7 +384,7 @@ export class Admin {
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.admin.storeTracedWorkspace(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
+     *     await client.admin.storeTracedWorkspace(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
      *         workspaceRunDetails: {
      *             exceptionV2: SeedTrace.ExceptionV2.generic({}),
      *             exception: {},
@@ -453,7 +453,7 @@ export class Admin {
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.admin.storeTracedWorkspaceV2(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), [{
+     *     await client.admin.storeTracedWorkspaceV2(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), [{
      *             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
      *             lineNumber: 1,
      *             file: {},

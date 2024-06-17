@@ -19,8 +19,8 @@ Instantiate and use the client with the following:
 import * as environments from "../src/environments";
 import { SeedMultiUrlEnvironmentClient } from "@fern/multi-url-environment";
 
-const seedMultiUrlEnvironment = new SeedMultiUrlEnvironmentClient({ token: "YOUR_TOKEN" });
-await seedMultiUrlEnvironment.ec2.bootInstance({
+const client = new SeedMultiUrlEnvironmentClient({ token: "YOUR_TOKEN" });
+await client.ec2.bootInstance({
     size: "string",
 });
 ```
@@ -36,7 +36,7 @@ import { SeedMultiUrlEnvironment } from "@fern/multi-url-environment";
 const request: SeedMultiUrlEnvironment.BootInstanceRequest = {
     ...
 };
-const response = await seedMultiUrlEnvironment.bootInstance(request);
+const response = await client.bootInstance(request);
 ```
 
 ## Exception Handling
@@ -48,7 +48,7 @@ will be thrown.
 import { SeedMultiUrlEnvironmentError } from "@fern/multi-url-environment";
 
 try {
-    await seedMultiUrlEnvironment.bootInstance(...);
+    await client.bootInstance(...);
 } catch (err) {
     if (err instanceof SeedMultiUrlEnvironmentError) {
         console.log(err.statusCode);
@@ -73,7 +73,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedMultiUrlEnvironment.bootInstance(..., {
+const response = await client.bootInstance(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -83,7 +83,7 @@ const response = await seedMultiUrlEnvironment.bootInstance(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedMultiUrlEnvironment.bootInstance(..., {
+const response = await client.bootInstance(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -94,7 +94,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedMultiUrlEnvironment.bootInstance(..., {
+const response = await client.bootInstance(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -120,7 +120,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedMultiUrlEnvironmentClient } from "@fern/multi-url-environment";
 
-const seedMultiUrlEnvironment = new SeedMultiUrlEnvironmentClient({
+const client = new SeedMultiUrlEnvironmentClient({
     ...
     fetcher: // provide your implementation here
 });

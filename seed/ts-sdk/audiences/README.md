@@ -18,8 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedAudiencesClient } from "@fern/audiences";
 
-const seedAudiences = new SeedAudiencesClient({ environment: "YOUR_BASE_URL" });
-await seedAudiences.foo.find({
+const client = new SeedAudiencesClient({ environment: "YOUR_BASE_URL" });
+await client.foo.find({
     optionalString: "string",
     publicProperty: "string",
     privateProperty: 1,
@@ -37,7 +37,7 @@ import { SeedAudiences } from "@fern/audiences";
 const request: SeedAudiences.FindRequest = {
     ...
 };
-const response = await seedAudiences.find(request);
+const response = await client.find(request);
 ```
 
 ## Exception Handling
@@ -49,7 +49,7 @@ will be thrown.
 import { SeedAudiencesError } from "@fern/audiences";
 
 try {
-    await seedAudiences.find(...);
+    await client.find(...);
 } catch (err) {
     if (err instanceof SeedAudiencesError) {
         console.log(err.statusCode);
@@ -74,7 +74,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedAudiences.find(..., {
+const response = await client.find(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -84,7 +84,7 @@ const response = await seedAudiences.find(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedAudiences.find(..., {
+const response = await client.find(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -95,7 +95,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedAudiences.find(..., {
+const response = await client.find(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -121,7 +121,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedAudiencesClient } from "@fern/audiences";
 
-const seedAudiences = new SeedAudiencesClient({
+const client = new SeedAudiencesClient({
     ...
     fetcher: // provide your implementation here
 });

@@ -28,7 +28,7 @@ export class Headers {
      * @param {Headers.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedLiteral.headers.send({
+     *     await client.headers.send({
      *         endpointVersion: "02-12-2024",
      *         async: true,
      *         query: "What is the weather today"

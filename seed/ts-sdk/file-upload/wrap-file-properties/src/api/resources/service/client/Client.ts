@@ -28,7 +28,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedFileUpload.service.post({
+     *     await client.service.post({
      *         file: fs.createReadStream("/path/to/your/file"),
      *         fileList: [fs.createReadStream("/path/to/your/file")]
      *     })
@@ -117,7 +117,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedFileUpload.service.justFile({
+     *     await client.service.justFile({
      *         file: fs.createReadStream("/path/to/your/file")
      *     })
      */
@@ -175,7 +175,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedFileUpload.service.justFileWithQueryParams({
+     *     await client.service.justFileWithQueryParams({
      *         file: fs.createReadStream("/path/to/your/file"),
      *         maybeString: "string",
      *         integer: 1,

@@ -27,7 +27,7 @@ export class Optional {
      * @param {Optional.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedObjectsWithImports.optional.sendOptionalBody({
+     *     await client.optional.sendOptionalBody({
      *         "string": {
      *             "key": "value"
      *         }

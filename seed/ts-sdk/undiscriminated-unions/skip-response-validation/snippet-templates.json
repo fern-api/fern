@@ -11,10 +11,10 @@
             "identifierOverride": "endpoint_union.get"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedUndiscriminatedUnionsClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedUndiscriminatedUnions.union.get()",
+                "templateString": "await client.union.get()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [],
@@ -35,10 +35,10 @@
             "identifierOverride": "endpoint_union.getMetadata"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedUndiscriminatedUnionsClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedUndiscriminatedUnions.union.getMetadata()",
+                "templateString": "await client.union.getMetadata()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [],

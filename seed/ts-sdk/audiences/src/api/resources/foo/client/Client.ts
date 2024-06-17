@@ -27,7 +27,7 @@ export class Foo {
      * @param {Foo.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedAudiences.foo.find({
+     *     await client.foo.find({
      *         optionalString: "string",
      *         publicProperty: "string",
      *         privateProperty: 1

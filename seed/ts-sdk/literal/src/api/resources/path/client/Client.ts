@@ -28,7 +28,7 @@ export class Path {
      * @param {Path.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedLiteral.path.send("123")
+     *     await client.path.send("123")
      */
     public async send(id: "123", requestOptions?: Path.RequestOptions): Promise<SeedLiteral.SendResponse> {
         const _response = await core.fetcher({

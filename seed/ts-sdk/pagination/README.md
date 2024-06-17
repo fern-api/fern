@@ -18,8 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedPaginationClient, SeedPagination } from "@fern/pagination";
 
-const seedPagination = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-await seedPagination.users.listWithCursorPagination({
+const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+await client.users.listWithCursorPagination({
     page: 1,
     perPage: 1,
     order: SeedPagination.Order.Asc,
@@ -38,7 +38,7 @@ import { SeedPagination } from "@fern/pagination";
 const request: SeedPagination.ListUsersCursorPaginationRequest = {
     ...
 };
-const response = await seedPagination.listWithCursorPagination(request);
+const response = await client.listWithCursorPagination(request);
 ```
 
 ## Exception Handling
@@ -50,7 +50,7 @@ will be thrown.
 import { SeedPaginationError } from "@fern/pagination";
 
 try {
-    await seedPagination.listWithCursorPagination(...);
+    await client.listWithCursorPagination(...);
 } catch (err) {
     if (err instanceof SeedPaginationError) {
         console.log(err.statusCode);
@@ -75,7 +75,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedPagination.listWithCursorPagination(..., {
+const response = await client.listWithCursorPagination(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -85,7 +85,7 @@ const response = await seedPagination.listWithCursorPagination(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedPagination.listWithCursorPagination(..., {
+const response = await client.listWithCursorPagination(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -96,7 +96,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedPagination.listWithCursorPagination(..., {
+const response = await client.listWithCursorPagination(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -122,7 +122,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedPaginationClient } from "@fern/pagination";
 
-const seedPagination = new SeedPaginationClient({
+const client = new SeedPaginationClient({
     ...
     fetcher: // provide your implementation here
 });

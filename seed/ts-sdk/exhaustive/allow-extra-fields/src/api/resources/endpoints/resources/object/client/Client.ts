@@ -29,7 +29,7 @@ export class Object_ {
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.object.getAndReturnWithOptionalField({
+     *     await client.endpoints.object.getAndReturnWithOptionalField({
      *         string: "string",
      *         integer: 1,
      *         long: 1000000,
@@ -111,7 +111,7 @@ export class Object_ {
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.object.getAndReturnWithRequiredField({
+     *     await client.endpoints.object.getAndReturnWithRequiredField({
      *         string: "string"
      *     })
      */
@@ -179,7 +179,7 @@ export class Object_ {
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.object.getAndReturnWithMapOfMap({
+     *     await client.endpoints.object.getAndReturnWithMapOfMap({
      *         map: {
      *             "string": {
      *                 "string": "string"
@@ -248,7 +248,7 @@ export class Object_ {
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.object.getAndReturnNestedWithOptionalField({
+     *     await client.endpoints.object.getAndReturnNestedWithOptionalField({
      *         string: "string",
      *         nestedObject: {
      *             string: "string",
@@ -334,7 +334,7 @@ export class Object_ {
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.object.getAndReturnNestedWithRequiredField("string", {
+     *     await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
      *         string: "string",
      *         nestedObject: {
      *             string: "string",
@@ -420,7 +420,7 @@ export class Object_ {
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
+     *     await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
      *             string: "string",
      *             nestedObject: {
      *                 string: "string",

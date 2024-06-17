@@ -18,12 +18,12 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedBasicAuthEnvironmentVariablesClient } from "@fern/basic-auth-environment-variables";
 
-const seedBasicAuthEnvironmentVariables = new SeedBasicAuthEnvironmentVariablesClient({
+const client = new SeedBasicAuthEnvironmentVariablesClient({
     environment: "YOUR_BASE_URL",
     username: "YOUR_USERNAME",
     password: "YOUR_PASSWORD",
 });
-await seedBasicAuthEnvironmentVariables.basicAuth.postWithBasicAuth({
+await client.basicAuth.postWithBasicAuth({
     key: "value",
 });
 ```
@@ -37,7 +37,7 @@ will be thrown.
 import { SeedBasicAuthEnvironmentVariablesError } from "@fern/basic-auth-environment-variables";
 
 try {
-    await seedBasicAuthEnvironmentVariables.postWithBasicAuth(...);
+    await client.postWithBasicAuth(...);
 } catch (err) {
     if (err instanceof SeedBasicAuthEnvironmentVariablesError) {
         console.log(err.statusCode);
@@ -62,7 +62,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedBasicAuthEnvironmentVariables.postWithBasicAuth(..., {
+const response = await client.postWithBasicAuth(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -72,7 +72,7 @@ const response = await seedBasicAuthEnvironmentVariables.postWithBasicAuth(..., 
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedBasicAuthEnvironmentVariables.postWithBasicAuth(..., {
+const response = await client.postWithBasicAuth(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -83,7 +83,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedBasicAuthEnvironmentVariables.postWithBasicAuth(..., {
+const response = await client.postWithBasicAuth(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -109,7 +109,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedBasicAuthEnvironmentVariablesClient } from "@fern/basic-auth-environment-variables";
 
-const seedBasicAuthEnvironmentVariables = new SeedBasicAuthEnvironmentVariablesClient({
+const client = new SeedBasicAuthEnvironmentVariablesClient({
     ...
     fetcher: // provide your implementation here
 });

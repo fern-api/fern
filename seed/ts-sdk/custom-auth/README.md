@@ -18,11 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedCustomAuthClient } from "@fern/custom-auth";
 
-const seedCustomAuth = new SeedCustomAuthClient({
-    environment: "YOUR_BASE_URL",
-    customAuthScheme: "YOUR_CUSTOM_AUTH_SCHEME",
-});
-await seedCustomAuth.customAuth.postWithCustomAuth({
+const client = new SeedCustomAuthClient({ environment: "YOUR_BASE_URL", customAuthScheme: "YOUR_CUSTOM_AUTH_SCHEME" });
+await client.customAuth.postWithCustomAuth({
     key: "value",
 });
 ```
@@ -36,7 +33,7 @@ will be thrown.
 import { SeedCustomAuthError } from "@fern/custom-auth";
 
 try {
-    await seedCustomAuth.postWithCustomAuth(...);
+    await client.postWithCustomAuth(...);
 } catch (err) {
     if (err instanceof SeedCustomAuthError) {
         console.log(err.statusCode);
@@ -61,7 +58,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedCustomAuth.postWithCustomAuth(..., {
+const response = await client.postWithCustomAuth(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -71,7 +68,7 @@ const response = await seedCustomAuth.postWithCustomAuth(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedCustomAuth.postWithCustomAuth(..., {
+const response = await client.postWithCustomAuth(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -82,7 +79,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedCustomAuth.postWithCustomAuth(..., {
+const response = await client.postWithCustomAuth(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -108,7 +105,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedCustomAuthClient } from "@fern/custom-auth";
 
-const seedCustomAuth = new SeedCustomAuthClient({
+const client = new SeedCustomAuthClient({
     ...
     fetcher: // provide your implementation here
 });

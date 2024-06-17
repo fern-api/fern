@@ -11,10 +11,10 @@
             "identifierOverride": "endpoint_service.getText"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedPlainText = new SeedPlainTextClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedPlainTextClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedPlainText.service.getText()",
+                "templateString": "await client.service.getText()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [],

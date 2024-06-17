@@ -32,7 +32,7 @@ export class Sysprop {
      * @param {Sysprop.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.sysprop.setNumWarmInstances(SeedTrace.Language.Java, 1)
+     *     await client.sysprop.setNumWarmInstances(SeedTrace.Language.Java, 1)
      */
     public async setNumWarmInstances(
         language: SeedTrace.Language,
@@ -94,7 +94,7 @@ export class Sysprop {
      * @param {Sysprop.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.sysprop.getNumWarmInstances()
+     *     await client.sysprop.getNumWarmInstances()
      */
     public async getNumWarmInstances(
         requestOptions?: Sysprop.RequestOptions

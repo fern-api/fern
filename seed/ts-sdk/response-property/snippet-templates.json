@@ -11,10 +11,10 @@
             "identifierOverride": "endpoint_service.getMovie"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedResponseProperty.service.getMovie(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.getMovie(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -63,10 +63,10 @@
             "identifierOverride": "endpoint_service.getMovieDocs"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedResponseProperty.service.getMovieDocs(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.getMovieDocs(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -115,10 +115,10 @@
             "identifierOverride": "endpoint_service.getMovieName"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedResponseProperty.service.getMovieName(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.getMovieName(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -167,10 +167,10 @@
             "identifierOverride": "endpoint_service.getMovieMetadata"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedResponseProperty.service.getMovieMetadata(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.getMovieMetadata(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -219,10 +219,10 @@
             "identifierOverride": "endpoint_service.getOptionalMovie"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedResponseProperty.service.getOptionalMovie(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.getOptionalMovie(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -271,10 +271,10 @@
             "identifierOverride": "endpoint_service.getOptionalMovieDocs"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedResponseProperty.service.getOptionalMovieDocs(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.getOptionalMovieDocs(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -323,10 +323,10 @@
             "identifierOverride": "endpoint_service.getOptionalMovieName"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedResponseProperty.service.getOptionalMovieName(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.getOptionalMovieName(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

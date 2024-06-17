@@ -11,10 +11,10 @@
             "identifierOverride": "endpoint_custom-auth.getWithCustomAuth"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedCustomAuth = new SeedCustomAuthClient({ environment: \"YOUR_BASE_URL\", customAuthScheme: \"YOUR_CUSTOM_AUTH_SCHEME\" });\n",
+            "clientInstantiation": "const client = new SeedCustomAuthClient({ environment: \"YOUR_BASE_URL\", customAuthScheme: \"YOUR_CUSTOM_AUTH_SCHEME\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedCustomAuth.customAuth.getWithCustomAuth()",
+                "templateString": "await client.customAuth.getWithCustomAuth()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [],
@@ -35,10 +35,10 @@
             "identifierOverride": "endpoint_custom-auth.postWithCustomAuth"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedCustomAuth = new SeedCustomAuthClient({ environment: \"YOUR_BASE_URL\", customAuthScheme: \"YOUR_CUSTOM_AUTH_SCHEME\" });\n",
+            "clientInstantiation": "const client = new SeedCustomAuthClient({ environment: \"YOUR_BASE_URL\", customAuthScheme: \"YOUR_CUSTOM_AUTH_SCHEME\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedCustomAuth.customAuth.postWithCustomAuth(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.customAuth.postWithCustomAuth(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

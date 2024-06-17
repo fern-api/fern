@@ -29,7 +29,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedApiWideBasePath.service.post("string", "string", 1)
+     *     await client.service.post("string", "string", 1)
      */
     public async post(
         serviceParam: string,

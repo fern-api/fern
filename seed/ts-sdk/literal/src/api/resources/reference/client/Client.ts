@@ -28,7 +28,7 @@ export class Reference {
      * @param {Reference.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedLiteral.reference.send({
+     *     await client.reference.send({
      *         prompt: "You are a helpful assistant",
      *         stream: false,
      *         query: "What is the weather today"

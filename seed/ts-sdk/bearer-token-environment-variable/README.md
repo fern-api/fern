@@ -18,11 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedBearerTokenEnvironmentVariableClient } from "@fern/bearer-token-environment-variable";
 
-const seedBearerTokenEnvironmentVariable = new SeedBearerTokenEnvironmentVariableClient({
-    environment: "YOUR_BASE_URL",
-    apiKey: "YOUR_API_KEY",
-});
-await seedBearerTokenEnvironmentVariable.service.getWithBearerToken();
+const client = new SeedBearerTokenEnvironmentVariableClient({ environment: "YOUR_BASE_URL", apiKey: "YOUR_API_KEY" });
+await client.service.getWithBearerToken();
 ```
 
 ## Exception Handling
@@ -34,7 +31,7 @@ will be thrown.
 import { SeedBearerTokenEnvironmentVariableError } from "@fern/bearer-token-environment-variable";
 
 try {
-    await seedBearerTokenEnvironmentVariable.getWithBearerToken(...);
+    await client.getWithBearerToken(...);
 } catch (err) {
     if (err instanceof SeedBearerTokenEnvironmentVariableError) {
         console.log(err.statusCode);
@@ -59,7 +56,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedBearerTokenEnvironmentVariable.getWithBearerToken(..., {
+const response = await client.getWithBearerToken(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -69,7 +66,7 @@ const response = await seedBearerTokenEnvironmentVariable.getWithBearerToken(...
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedBearerTokenEnvironmentVariable.getWithBearerToken(..., {
+const response = await client.getWithBearerToken(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -80,7 +77,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedBearerTokenEnvironmentVariable.getWithBearerToken(..., {
+const response = await client.getWithBearerToken(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -106,7 +103,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedBearerTokenEnvironmentVariableClient } from "@fern/bearer-token-environment-variable";
 
-const seedBearerTokenEnvironmentVariable = new SeedBearerTokenEnvironmentVariableClient({
+const client = new SeedBearerTokenEnvironmentVariableClient({
     ...
     fetcher: // provide your implementation here
 });
