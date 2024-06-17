@@ -16,7 +16,7 @@ module SeedTraceClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [SeedTraceClient::Problem::CreateProblemResponse]
+      # @return [CreateProblemResponse]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -25,14 +25,14 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of CreateProblemResponse
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Problem::CreateProblemResponse]
+      # @return [CreateProblemResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "success"
                    json_object.value
                  when "error"
-                   SeedTraceClient::Problem::CreateProblemError.from_json(json_object: json_object.value)
+                   CreateProblemError.from_json(json_object: json_object.value)
                  else
                    json_object
                  end
@@ -62,7 +62,7 @@ module SeedTraceClient
         when "success"
           obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "error"
-          SeedTraceClient::Problem::CreateProblemError.validate_raw(obj: obj)
+          CreateProblemError.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -77,13 +77,13 @@ module SeedTraceClient
       end
 
       # @param member [String]
-      # @return [SeedTraceClient::Problem::CreateProblemResponse]
+      # @return [CreateProblemResponse]
       def self.success(member:)
         new(member: member, discriminant: "success")
       end
 
-      # @param member [SeedTraceClient::Problem::CreateProblemError]
-      # @return [SeedTraceClient::Problem::CreateProblemResponse]
+      # @param member [CreateProblemError]
+      # @return [CreateProblemResponse]
       def self.error(member:)
         new(member: member, discriminant: "error")
       end

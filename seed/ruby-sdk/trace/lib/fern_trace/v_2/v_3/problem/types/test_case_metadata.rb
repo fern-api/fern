@@ -26,7 +26,7 @@ module SeedTraceClient
           # @param name [String]
           # @param hidden [Boolean]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-          # @return [SeedTraceClient::V2::V3::Problem::TestCaseMetadata]
+          # @return [V2::V3::TestCaseMetadata]
           def initialize(id:, name:, hidden:, additional_properties: nil)
             @id = id
             @name = name
@@ -38,7 +38,7 @@ module SeedTraceClient
           # Deserialize a JSON object to an instance of TestCaseMetadata
           #
           # @param json_object [String]
-          # @return [SeedTraceClient::V2::V3::Problem::TestCaseMetadata]
+          # @return [V2::V3::TestCaseMetadata]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             id = struct["id"]

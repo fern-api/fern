@@ -18,7 +18,7 @@ module SeedTraceClient
 
         # @param member [Object]
         # @param discriminant [String]
-        # @return [SeedTraceClient::V2::Problem::AssertCorrectnessCheck]
+        # @return [V2::AssertCorrectnessCheck]
         def initialize(member:, discriminant:)
           @member = member
           @discriminant = discriminant
@@ -27,16 +27,16 @@ module SeedTraceClient
         # Deserialize a JSON object to an instance of AssertCorrectnessCheck
         #
         # @param json_object [String]
-        # @return [SeedTraceClient::V2::Problem::AssertCorrectnessCheck]
+        # @return [V2::AssertCorrectnessCheck]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           member = case struct.type
                    when "deepEquality"
-                     SeedTraceClient::V2::Problem::DeepEqualityCorrectnessCheck.from_json(json_object: json_object)
+                     V2::DeepEqualityCorrectnessCheck.from_json(json_object: json_object)
                    when "custom"
-                     SeedTraceClient::V2::Problem::VoidFunctionDefinitionThatTakesActualResult.from_json(json_object: json_object)
+                     V2::VoidFunctionDefinitionThatTakesActualResult.from_json(json_object: json_object)
                    else
-                     SeedTraceClient::V2::Problem::DeepEqualityCorrectnessCheck.from_json(json_object: json_object)
+                     V2::DeepEqualityCorrectnessCheck.from_json(json_object: json_object)
                    end
           new(member: member, discriminant: struct.type)
         end
@@ -65,9 +65,9 @@ module SeedTraceClient
         def self.validate_raw(obj:)
           case obj.type
           when "deepEquality"
-            SeedTraceClient::V2::Problem::DeepEqualityCorrectnessCheck.validate_raw(obj: obj)
+            V2::DeepEqualityCorrectnessCheck.validate_raw(obj: obj)
           when "custom"
-            SeedTraceClient::V2::Problem::VoidFunctionDefinitionThatTakesActualResult.validate_raw(obj: obj)
+            V2::VoidFunctionDefinitionThatTakesActualResult.validate_raw(obj: obj)
           else
             raise("Passed value matched no type within the union, validation failed.")
           end
@@ -81,14 +81,14 @@ module SeedTraceClient
           @member.is_a?(obj)
         end
 
-        # @param member [SeedTraceClient::V2::Problem::DeepEqualityCorrectnessCheck]
-        # @return [SeedTraceClient::V2::Problem::AssertCorrectnessCheck]
+        # @param member [V2::DeepEqualityCorrectnessCheck]
+        # @return [V2::AssertCorrectnessCheck]
         def self.deep_equality(member:)
           new(member: member, discriminant: "deepEquality")
         end
 
-        # @param member [SeedTraceClient::V2::Problem::VoidFunctionDefinitionThatTakesActualResult]
-        # @return [SeedTraceClient::V2::Problem::AssertCorrectnessCheck]
+        # @param member [V2::VoidFunctionDefinitionThatTakesActualResult]
+        # @return [V2::AssertCorrectnessCheck]
         def self.custom(member:)
           new(member: member, discriminant: "custom")
         end

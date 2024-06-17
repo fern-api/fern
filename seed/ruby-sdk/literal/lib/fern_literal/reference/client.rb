@@ -16,12 +16,12 @@ module SeedLiteralClient
       @request_client = request_client
     end
 
-    # @param request [Hash] Request of type SeedLiteralClient::Reference::SendRequest, as a Hash
+    # @param request [Hash] Request of type SendRequest, as a Hash
     #   * :prompt (String)
     #   * :query (String)
     #   * :stream (Boolean)
     # @param request_options [SeedLiteralClient::RequestOptions]
-    # @return [SeedLiteralClient::SendResponse]
+    # @return [SendResponse]
     # @example
     #  literal = SeedLiteralClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -45,7 +45,7 @@ module SeedLiteralClient
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/reference"
       end
-      SeedLiteralClient::SendResponse.from_json(json_object: response.body)
+      SendResponse.from_json(json_object: response.body)
     end
   end
 
@@ -59,12 +59,12 @@ module SeedLiteralClient
       @request_client = request_client
     end
 
-    # @param request [Hash] Request of type SeedLiteralClient::Reference::SendRequest, as a Hash
+    # @param request [Hash] Request of type SendRequest, as a Hash
     #   * :prompt (String)
     #   * :query (String)
     #   * :stream (Boolean)
     # @param request_options [SeedLiteralClient::RequestOptions]
-    # @return [SeedLiteralClient::SendResponse]
+    # @return [SendResponse]
     # @example
     #  literal = SeedLiteralClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -89,7 +89,7 @@ module SeedLiteralClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/reference"
         end
-        SeedLiteralClient::SendResponse.from_json(json_object: response.body)
+        SendResponse.from_json(json_object: response.body)
       end
     end
   end

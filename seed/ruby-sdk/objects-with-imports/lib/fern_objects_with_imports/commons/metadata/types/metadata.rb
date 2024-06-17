@@ -22,7 +22,7 @@ module SeedObjectsWithImportsClient
         # @param id [String]
         # @param data [Hash{String => String}]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [SeedObjectsWithImportsClient::Commons::Metadata::Metadata]
+        # @return [Commons::Metadata]
         def initialize(id:, data: OMIT, additional_properties: nil)
           @id = id
           @data = data if data != OMIT
@@ -35,7 +35,7 @@ module SeedObjectsWithImportsClient
         # Deserialize a JSON object to an instance of Metadata
         #
         # @param json_object [String]
-        # @return [SeedObjectsWithImportsClient::Commons::Metadata::Metadata]
+        # @return [Commons::Metadata]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           id = struct["id"]

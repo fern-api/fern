@@ -21,7 +21,7 @@ module SeedTraceClient
       # @param problem_id [String]
       # @param submission_id [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Submission::CustomTestCasesUnsupported]
+      # @return [CustomTestCasesUnsupported]
       def initialize(problem_id:, submission_id:, additional_properties: nil)
         @problem_id = problem_id
         @submission_id = submission_id
@@ -32,7 +32,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of CustomTestCasesUnsupported
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::CustomTestCasesUnsupported]
+      # @return [CustomTestCasesUnsupported]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         problem_id = struct["problemId"]

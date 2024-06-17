@@ -8,11 +8,11 @@ module SeedTraceClient
     module V3
       class Problem
         class GeneratedFiles
-          # @return [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::V3::Problem::Files}]
+          # @return [Hash{Language => V2::V3::Files}]
           attr_reader :generated_test_case_files
-          # @return [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::V3::Problem::Files}]
+          # @return [Hash{Language => V2::V3::Files}]
           attr_reader :generated_template_files
-          # @return [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::V3::Problem::Files}]
+          # @return [Hash{Language => V2::V3::Files}]
           attr_reader :other
           # @return [OpenStruct] Additional properties unmapped to the current class definition
           attr_reader :additional_properties
@@ -22,11 +22,11 @@ module SeedTraceClient
 
           OMIT = Object.new
 
-          # @param generated_test_case_files [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::V3::Problem::Files}]
-          # @param generated_template_files [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::V3::Problem::Files}]
-          # @param other [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::V3::Problem::Files}]
+          # @param generated_test_case_files [Hash{Language => V2::V3::Files}]
+          # @param generated_template_files [Hash{Language => V2::V3::Files}]
+          # @param other [Hash{Language => V2::V3::Files}]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-          # @return [SeedTraceClient::V2::V3::Problem::GeneratedFiles]
+          # @return [V2::V3::GeneratedFiles]
           def initialize(generated_test_case_files:, generated_template_files:, other:, additional_properties: nil)
             @generated_test_case_files = generated_test_case_files
             @generated_template_files = generated_template_files
@@ -42,21 +42,21 @@ module SeedTraceClient
           # Deserialize a JSON object to an instance of GeneratedFiles
           #
           # @param json_object [String]
-          # @return [SeedTraceClient::V2::V3::Problem::GeneratedFiles]
+          # @return [V2::V3::GeneratedFiles]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             parsed_json = JSON.parse(json_object)
             generated_test_case_files = parsed_json["generatedTestCaseFiles"]&.transform_values do |v|
               v = v.to_json
-              SeedTraceClient::V2::V3::Problem::Files.from_json(json_object: v)
+              V2::V3::Files.from_json(json_object: v)
             end
             generated_template_files = parsed_json["generatedTemplateFiles"]&.transform_values do |v|
               v = v.to_json
-              SeedTraceClient::V2::V3::Problem::Files.from_json(json_object: v)
+              V2::V3::Files.from_json(json_object: v)
             end
             other = parsed_json["other"]&.transform_values do |v|
               v = v.to_json
-              SeedTraceClient::V2::V3::Problem::Files.from_json(json_object: v)
+              V2::V3::Files.from_json(json_object: v)
             end
             new(
               generated_test_case_files: generated_test_case_files,

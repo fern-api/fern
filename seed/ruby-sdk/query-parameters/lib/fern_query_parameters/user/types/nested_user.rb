@@ -9,7 +9,7 @@ module SeedQueryParametersClient
     class NestedUser
       # @return [String]
       attr_reader :name
-      # @return [SeedQueryParametersClient::User::User]
+      # @return [User]
       attr_reader :user
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -20,9 +20,9 @@ module SeedQueryParametersClient
       OMIT = Object.new
 
       # @param name [String]
-      # @param user [SeedQueryParametersClient::User::User]
+      # @param user [User]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedQueryParametersClient::User::NestedUser]
+      # @return [NestedUser]
       def initialize(name:, user:, additional_properties: nil)
         @name = name
         @user = user
@@ -33,7 +33,7 @@ module SeedQueryParametersClient
       # Deserialize a JSON object to an instance of NestedUser
       #
       # @param json_object [String]
-      # @return [SeedQueryParametersClient::User::NestedUser]
+      # @return [NestedUser]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -42,7 +42,7 @@ module SeedQueryParametersClient
           user = nil
         else
           user = parsed_json["user"].to_json
-          user = SeedQueryParametersClient::User::User.from_json(json_object: user)
+          user = User.from_json(json_object: user)
         end
         new(
           name: name,
@@ -66,7 +66,7 @@ module SeedQueryParametersClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
-        SeedQueryParametersClient::User::User.validate_raw(obj: obj.user)
+        User.validate_raw(obj: obj.user)
       end
     end
   end

@@ -24,11 +24,11 @@ module SeedTraceClient
     # @param service_param [Integer]
     # @param datetime [DateTime]
     # @param optional_datetime [DateTime]
-    # @param request [Hash] Request of type SeedTraceClient::Playlist::PlaylistCreateRequest, as a Hash
+    # @param request [Hash] Request of type PlaylistCreateRequest, as a Hash
     #   * :name (String)
     #   * :problems (Array<String>)
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [SeedTraceClient::Playlist::Playlist]
+    # @return [Playlist]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -59,7 +59,7 @@ module SeedTraceClient
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/create"
       end
-      SeedTraceClient::Playlist::Playlist.from_json(json_object: response.body)
+      Playlist.from_json(json_object: response.body)
     end
 
     # Returns the user's playlists
@@ -72,7 +72,7 @@ module SeedTraceClient
     # @param optional_multiple_field [String]
     # @param multiple_field [String]
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [Array<SeedTraceClient::Playlist::Playlist>]
+    # @return [Array<Playlist>]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -111,7 +111,7 @@ module SeedTraceClient
       parsed_json = JSON.parse(response.body)
       parsed_json&.map do |v|
         v = v.to_json
-        SeedTraceClient::Playlist::Playlist.from_json(json_object: v)
+        Playlist.from_json(json_object: v)
       end
     end
 
@@ -120,7 +120,7 @@ module SeedTraceClient
     # @param service_param [Integer]
     # @param playlist_id [String]
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [SeedTraceClient::Playlist::Playlist]
+    # @return [Playlist]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -140,18 +140,18 @@ module SeedTraceClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/#{playlist_id}"
       end
-      SeedTraceClient::Playlist::Playlist.from_json(json_object: response.body)
+      Playlist.from_json(json_object: response.body)
     end
 
     # Updates a playlist
     #
     # @param service_param [Integer]
     # @param playlist_id [String]
-    # @param request [Hash] Request of type SeedTraceClient::Playlist::UpdatePlaylistRequest, as a Hash
+    # @param request [Hash] Request of type UpdatePlaylistRequest, as a Hash
     #   * :name (String)
     #   * :problems (Array<String>)
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [SeedTraceClient::Playlist::Playlist]
+    # @return [Playlist]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -176,7 +176,7 @@ module SeedTraceClient
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/#{playlist_id}"
       end
-      SeedTraceClient::Playlist::Playlist.from_json(json_object: response.body)
+      Playlist.from_json(json_object: response.body)
     end
 
     # Deletes a playlist
@@ -222,11 +222,11 @@ module SeedTraceClient
     # @param service_param [Integer]
     # @param datetime [DateTime]
     # @param optional_datetime [DateTime]
-    # @param request [Hash] Request of type SeedTraceClient::Playlist::PlaylistCreateRequest, as a Hash
+    # @param request [Hash] Request of type PlaylistCreateRequest, as a Hash
     #   * :name (String)
     #   * :problems (Array<String>)
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [SeedTraceClient::Playlist::Playlist]
+    # @return [Playlist]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -258,7 +258,7 @@ module SeedTraceClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/create"
         end
-        SeedTraceClient::Playlist::Playlist.from_json(json_object: response.body)
+        Playlist.from_json(json_object: response.body)
       end
     end
 
@@ -272,7 +272,7 @@ module SeedTraceClient
     # @param optional_multiple_field [String]
     # @param multiple_field [String]
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [Array<SeedTraceClient::Playlist::Playlist>]
+    # @return [Array<Playlist>]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -312,7 +312,7 @@ module SeedTraceClient
         parsed_json = JSON.parse(response.body)
         parsed_json&.map do |v|
           v = v.to_json
-          SeedTraceClient::Playlist::Playlist.from_json(json_object: v)
+          Playlist.from_json(json_object: v)
         end
       end
     end
@@ -322,7 +322,7 @@ module SeedTraceClient
     # @param service_param [Integer]
     # @param playlist_id [String]
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [SeedTraceClient::Playlist::Playlist]
+    # @return [Playlist]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -343,7 +343,7 @@ module SeedTraceClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/#{playlist_id}"
         end
-        SeedTraceClient::Playlist::Playlist.from_json(json_object: response.body)
+        Playlist.from_json(json_object: response.body)
       end
     end
 
@@ -351,11 +351,11 @@ module SeedTraceClient
     #
     # @param service_param [Integer]
     # @param playlist_id [String]
-    # @param request [Hash] Request of type SeedTraceClient::Playlist::UpdatePlaylistRequest, as a Hash
+    # @param request [Hash] Request of type UpdatePlaylistRequest, as a Hash
     #   * :name (String)
     #   * :problems (Array<String>)
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [SeedTraceClient::Playlist::Playlist]
+    # @return [Playlist]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -381,7 +381,7 @@ module SeedTraceClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/#{playlist_id}"
         end
-        SeedTraceClient::Playlist::Playlist.from_json(json_object: response.body)
+        Playlist.from_json(json_object: response.body)
       end
     end
 

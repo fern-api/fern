@@ -9,7 +9,7 @@ module SeedTraceClient
     class BinaryTreeNodeAndTreeValue
       # @return [String]
       attr_reader :node_id
-      # @return [SeedTraceClient::Commons::BinaryTreeValue]
+      # @return [BinaryTreeValue]
       attr_reader :full_tree
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -20,9 +20,9 @@ module SeedTraceClient
       OMIT = Object.new
 
       # @param node_id [String]
-      # @param full_tree [SeedTraceClient::Commons::BinaryTreeValue]
+      # @param full_tree [BinaryTreeValue]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Commons::BinaryTreeNodeAndTreeValue]
+      # @return [BinaryTreeNodeAndTreeValue]
       def initialize(node_id:, full_tree:, additional_properties: nil)
         @node_id = node_id
         @full_tree = full_tree
@@ -33,7 +33,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of BinaryTreeNodeAndTreeValue
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Commons::BinaryTreeNodeAndTreeValue]
+      # @return [BinaryTreeNodeAndTreeValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -42,7 +42,7 @@ module SeedTraceClient
           full_tree = nil
         else
           full_tree = parsed_json["fullTree"].to_json
-          full_tree = SeedTraceClient::Commons::BinaryTreeValue.from_json(json_object: full_tree)
+          full_tree = BinaryTreeValue.from_json(json_object: full_tree)
         end
         new(
           node_id: node_id,
@@ -66,7 +66,7 @@ module SeedTraceClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.node_id.is_a?(String) != false || raise("Passed value for field obj.node_id is not the expected type, validation failed.")
-        SeedTraceClient::Commons::BinaryTreeValue.validate_raw(obj: obj.full_tree)
+        BinaryTreeValue.validate_raw(obj: obj.full_tree)
       end
     end
   end

@@ -18,7 +18,7 @@ module SeedTraceClient
 
       # @param passed [Boolean]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Submission::TestCaseHiddenGrade]
+      # @return [TestCaseHiddenGrade]
       def initialize(passed:, additional_properties: nil)
         @passed = passed
         @additional_properties = additional_properties
@@ -28,7 +28,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of TestCaseHiddenGrade
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::TestCaseHiddenGrade]
+      # @return [TestCaseHiddenGrade]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         passed = struct["passed"]

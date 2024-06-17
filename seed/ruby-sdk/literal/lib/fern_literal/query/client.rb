@@ -17,7 +17,7 @@ module SeedLiteralClient
 
     # @param query [String]
     # @param request_options [SeedLiteralClient::RequestOptions]
-    # @return [SeedLiteralClient::SendResponse]
+    # @return [SendResponse]
     # @example
     #  literal = SeedLiteralClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -46,7 +46,7 @@ module SeedLiteralClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/query"
       end
-      SeedLiteralClient::SendResponse.from_json(json_object: response.body)
+      SendResponse.from_json(json_object: response.body)
     end
   end
 
@@ -62,7 +62,7 @@ module SeedLiteralClient
 
     # @param query [String]
     # @param request_options [SeedLiteralClient::RequestOptions]
-    # @return [SeedLiteralClient::SendResponse]
+    # @return [SendResponse]
     # @example
     #  literal = SeedLiteralClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -92,7 +92,7 @@ module SeedLiteralClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/query"
         end
-        SeedLiteralClient::SendResponse.from_json(json_object: response.body)
+        SendResponse.from_json(json_object: response.body)
       end
     end
   end

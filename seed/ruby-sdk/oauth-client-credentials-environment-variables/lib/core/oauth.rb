@@ -54,10 +54,10 @@ module SeedOauthClientCredentialsEnvironmentVariablesClient
 
     # @return [SeedOauthClientCredentialsEnvironmentVariablesClient::AccessToken]
     def refresh_token
-      token_response = @auth_client.auth.get_token_with_client_credentials(client_id: @client_id,
-                                                                           client_secret: @client_secret)
+      token_response = @auth_client.get_token_with_client_credentials(client_id: @client_id,
+                                                                      client_secret: @client_secret)
       SeedOauthClientCredentialsEnvironmentVariablesClient::AccessToken.new(
-        access_token: token_response.access_token, expires_at: Time.now + token_response.expires_in - EXPIRY_BUFFER_MINUTES * 60
+        access_token: token_response.access_token, expires_at: Time.now + token_response.expires_in - (EXPIRY_BUFFER_MINUTES * 60)
       )
     end
   end

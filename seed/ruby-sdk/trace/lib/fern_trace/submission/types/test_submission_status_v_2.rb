@@ -8,13 +8,13 @@ require "json"
 module SeedTraceClient
   class Submission
     class TestSubmissionStatusV2
-      # @return [Array<SeedTraceClient::Submission::TestSubmissionUpdate>]
+      # @return [Array<TestSubmissionUpdate>]
       attr_reader :updates
       # @return [String]
       attr_reader :problem_id
       # @return [Integer]
       attr_reader :problem_version
-      # @return [SeedTraceClient::V2::Problem::ProblemInfoV2]
+      # @return [V2::ProblemInfoV2]
       attr_reader :problem_info
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -24,12 +24,12 @@ module SeedTraceClient
 
       OMIT = Object.new
 
-      # @param updates [Array<SeedTraceClient::Submission::TestSubmissionUpdate>]
+      # @param updates [Array<TestSubmissionUpdate>]
       # @param problem_id [String]
       # @param problem_version [Integer]
-      # @param problem_info [SeedTraceClient::V2::Problem::ProblemInfoV2]
+      # @param problem_info [V2::ProblemInfoV2]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Submission::TestSubmissionStatusV2]
+      # @return [TestSubmissionStatusV2]
       def initialize(updates:, problem_id:, problem_version:, problem_info:, additional_properties: nil)
         @updates = updates
         @problem_id = problem_id
@@ -47,13 +47,13 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of TestSubmissionStatusV2
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::TestSubmissionStatusV2]
+      # @return [TestSubmissionStatusV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         updates = parsed_json["updates"]&.map do |v|
           v = v.to_json
-          SeedTraceClient::Submission::TestSubmissionUpdate.from_json(json_object: v)
+          TestSubmissionUpdate.from_json(json_object: v)
         end
         problem_id = struct["problemId"]
         problem_version = struct["problemVersion"]
@@ -61,7 +61,7 @@ module SeedTraceClient
           problem_info = nil
         else
           problem_info = parsed_json["problemInfo"].to_json
-          problem_info = SeedTraceClient::V2::Problem::ProblemInfoV2.from_json(json_object: problem_info)
+          problem_info = V2::ProblemInfoV2.from_json(json_object: problem_info)
         end
         new(
           updates: updates,
@@ -89,7 +89,7 @@ module SeedTraceClient
         obj.updates.is_a?(Array) != false || raise("Passed value for field obj.updates is not the expected type, validation failed.")
         obj.problem_id.is_a?(String) != false || raise("Passed value for field obj.problem_id is not the expected type, validation failed.")
         obj.problem_version.is_a?(Integer) != false || raise("Passed value for field obj.problem_version is not the expected type, validation failed.")
-        SeedTraceClient::V2::Problem::ProblemInfoV2.validate_raw(obj: obj.problem_info)
+        V2::ProblemInfoV2.validate_raw(obj: obj.problem_info)
       end
     end
   end

@@ -18,7 +18,7 @@ module SeedApiClient
 
       # @param s [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedApiClient::A::A]
+      # @return [A]
       def initialize(s:, additional_properties: nil)
         @s = s
         @additional_properties = additional_properties
@@ -28,7 +28,7 @@ module SeedApiClient
       # Deserialize a JSON object to an instance of A
       #
       # @param json_object [String]
-      # @return [SeedApiClient::A::A]
+      # @return [A]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         s = struct["s"]

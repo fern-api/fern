@@ -6,7 +6,7 @@ require "json"
 
 module SeedApiClient
   class ImportingA
-    # @return [SeedApiClient::A::A]
+    # @return [A]
     attr_reader :a
     # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
@@ -16,9 +16,9 @@ module SeedApiClient
 
     OMIT = Object.new
 
-    # @param a [SeedApiClient::A::A]
+    # @param a [A]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [SeedApiClient::ImportingA]
+    # @return [ImportingA]
     def initialize(a: OMIT, additional_properties: nil)
       @a = a if a != OMIT
       @additional_properties = additional_properties
@@ -30,7 +30,7 @@ module SeedApiClient
     # Deserialize a JSON object to an instance of ImportingA
     #
     # @param json_object [String]
-    # @return [SeedApiClient::ImportingA]
+    # @return [ImportingA]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
@@ -38,7 +38,7 @@ module SeedApiClient
         a = nil
       else
         a = parsed_json["a"].to_json
-        a = SeedApiClient::A::A.from_json(json_object: a)
+        a = A.from_json(json_object: a)
       end
       new(a: a, additional_properties: struct)
     end
@@ -57,7 +57,7 @@ module SeedApiClient
     # @param obj [Object]
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.a.nil? || SeedApiClient::A::A.validate_raw(obj: obj.a)
+      obj.a.nil? || A.validate_raw(obj: obj.a)
     end
   end
 end

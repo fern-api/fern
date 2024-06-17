@@ -18,7 +18,7 @@ module SeedTraceClient
 
       # @param submission_id [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Submission::StopRequest]
+      # @return [StopRequest]
       def initialize(submission_id:, additional_properties: nil)
         @submission_id = submission_id
         @additional_properties = additional_properties
@@ -28,7 +28,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of StopRequest
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::StopRequest]
+      # @return [StopRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         submission_id = struct["submissionId"]

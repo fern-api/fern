@@ -7,9 +7,9 @@ require "json"
 module SeedTraceClient
   class Problem
     class ProblemFiles
-      # @return [SeedTraceClient::Commons::FileInfo]
+      # @return [FileInfo]
       attr_reader :solution_file
-      # @return [Array<SeedTraceClient::Commons::FileInfo>]
+      # @return [Array<FileInfo>]
       attr_reader :read_only_files
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -19,10 +19,10 @@ module SeedTraceClient
 
       OMIT = Object.new
 
-      # @param solution_file [SeedTraceClient::Commons::FileInfo]
-      # @param read_only_files [Array<SeedTraceClient::Commons::FileInfo>]
+      # @param solution_file [FileInfo]
+      # @param read_only_files [Array<FileInfo>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Problem::ProblemFiles]
+      # @return [ProblemFiles]
       def initialize(solution_file:, read_only_files:, additional_properties: nil)
         @solution_file = solution_file
         @read_only_files = read_only_files
@@ -33,7 +33,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of ProblemFiles
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Problem::ProblemFiles]
+      # @return [ProblemFiles]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -41,11 +41,11 @@ module SeedTraceClient
           solution_file = nil
         else
           solution_file = parsed_json["solutionFile"].to_json
-          solution_file = SeedTraceClient::Commons::FileInfo.from_json(json_object: solution_file)
+          solution_file = FileInfo.from_json(json_object: solution_file)
         end
         read_only_files = parsed_json["readOnlyFiles"]&.map do |v|
           v = v.to_json
-          SeedTraceClient::Commons::FileInfo.from_json(json_object: v)
+          FileInfo.from_json(json_object: v)
         end
         new(
           solution_file: solution_file,
@@ -68,7 +68,7 @@ module SeedTraceClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        SeedTraceClient::Commons::FileInfo.validate_raw(obj: obj.solution_file)
+        FileInfo.validate_raw(obj: obj.solution_file)
         obj.read_only_files.is_a?(Array) != false || raise("Passed value for field obj.read_only_files is not the expected type, validation failed.")
       end
     end

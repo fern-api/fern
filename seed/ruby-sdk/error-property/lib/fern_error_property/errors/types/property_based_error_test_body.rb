@@ -18,7 +18,7 @@ module SeedErrorPropertyClient
 
       # @param message [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedErrorPropertyClient::Errors::PropertyBasedErrorTestBody]
+      # @return [PropertyBasedErrorTestBody]
       def initialize(message:, additional_properties: nil)
         @message = message
         @additional_properties = additional_properties
@@ -28,7 +28,7 @@ module SeedErrorPropertyClient
       # Deserialize a JSON object to an instance of PropertyBasedErrorTestBody
       #
       # @param json_object [String]
-      # @return [SeedErrorPropertyClient::Errors::PropertyBasedErrorTestBody]
+      # @return [PropertyBasedErrorTestBody]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         message = struct["message"]

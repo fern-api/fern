@@ -10,13 +10,13 @@ module SeedTraceClient
   module V2
     class Problem
       class TestCaseV2
-        # @return [SeedTraceClient::V2::Problem::TestCaseMetadata]
+        # @return [V2::TestCaseMetadata]
         attr_reader :metadata
-        # @return [SeedTraceClient::V2::Problem::TestCaseImplementationReference]
+        # @return [V2::TestCaseImplementationReference]
         attr_reader :implementation
-        # @return [Hash{String => SeedTraceClient::Commons::VariableValue}]
+        # @return [Hash{String => VariableValue}]
         attr_reader :arguments
-        # @return [SeedTraceClient::V2::Problem::TestCaseExpects]
+        # @return [V2::TestCaseExpects]
         attr_reader :expects
         # @return [OpenStruct] Additional properties unmapped to the current class definition
         attr_reader :additional_properties
@@ -26,12 +26,12 @@ module SeedTraceClient
 
         OMIT = Object.new
 
-        # @param metadata [SeedTraceClient::V2::Problem::TestCaseMetadata]
-        # @param implementation [SeedTraceClient::V2::Problem::TestCaseImplementationReference]
-        # @param arguments [Hash{String => SeedTraceClient::Commons::VariableValue}]
-        # @param expects [SeedTraceClient::V2::Problem::TestCaseExpects]
+        # @param metadata [V2::TestCaseMetadata]
+        # @param implementation [V2::TestCaseImplementationReference]
+        # @param arguments [Hash{String => VariableValue}]
+        # @param expects [V2::TestCaseExpects]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [SeedTraceClient::V2::Problem::TestCaseV2]
+        # @return [V2::TestCaseV2]
         def initialize(metadata:, implementation:, arguments:, expects: OMIT, additional_properties: nil)
           @metadata = metadata
           @implementation = implementation
@@ -51,7 +51,7 @@ module SeedTraceClient
         # Deserialize a JSON object to an instance of TestCaseV2
         #
         # @param json_object [String]
-        # @return [SeedTraceClient::V2::Problem::TestCaseV2]
+        # @return [V2::TestCaseV2]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
@@ -59,23 +59,23 @@ module SeedTraceClient
             metadata = nil
           else
             metadata = parsed_json["metadata"].to_json
-            metadata = SeedTraceClient::V2::Problem::TestCaseMetadata.from_json(json_object: metadata)
+            metadata = V2::TestCaseMetadata.from_json(json_object: metadata)
           end
           if parsed_json["implementation"].nil?
             implementation = nil
           else
             implementation = parsed_json["implementation"].to_json
-            implementation = SeedTraceClient::V2::Problem::TestCaseImplementationReference.from_json(json_object: implementation)
+            implementation = V2::TestCaseImplementationReference.from_json(json_object: implementation)
           end
           arguments = parsed_json["arguments"]&.transform_values do |v|
             v = v.to_json
-            SeedTraceClient::Commons::VariableValue.from_json(json_object: v)
+            VariableValue.from_json(json_object: v)
           end
           if parsed_json["expects"].nil?
             expects = nil
           else
             expects = parsed_json["expects"].to_json
-            expects = SeedTraceClient::V2::Problem::TestCaseExpects.from_json(json_object: expects)
+            expects = V2::TestCaseExpects.from_json(json_object: expects)
           end
           new(
             metadata: metadata,
@@ -100,10 +100,10 @@ module SeedTraceClient
         # @param obj [Object]
         # @return [Void]
         def self.validate_raw(obj:)
-          SeedTraceClient::V2::Problem::TestCaseMetadata.validate_raw(obj: obj.metadata)
-          SeedTraceClient::V2::Problem::TestCaseImplementationReference.validate_raw(obj: obj.implementation)
+          V2::TestCaseMetadata.validate_raw(obj: obj.metadata)
+          V2::TestCaseImplementationReference.validate_raw(obj: obj.implementation)
           obj.arguments.is_a?(Hash) != false || raise("Passed value for field obj.arguments is not the expected type, validation failed.")
-          obj.expects.nil? || SeedTraceClient::V2::Problem::TestCaseExpects.validate_raw(obj: obj.expects)
+          obj.expects.nil? || V2::TestCaseExpects.validate_raw(obj: obj.expects)
         end
       end
     end

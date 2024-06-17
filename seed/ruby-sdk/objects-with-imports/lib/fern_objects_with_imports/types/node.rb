@@ -10,7 +10,7 @@ module SeedObjectsWithImportsClient
     attr_reader :id
     # @return [String]
     attr_reader :label
-    # @return [SeedObjectsWithImportsClient::Commons::Metadata::Metadata]
+    # @return [Commons::Metadata]
     attr_reader :metadata
     # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
@@ -22,9 +22,9 @@ module SeedObjectsWithImportsClient
 
     # @param id [String]
     # @param label [String]
-    # @param metadata [SeedObjectsWithImportsClient::Commons::Metadata::Metadata]
+    # @param metadata [Commons::Metadata]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [SeedObjectsWithImportsClient::Node]
+    # @return [Node]
     def initialize(id:, label: OMIT, metadata: OMIT, additional_properties: nil)
       @id = id
       @label = label if label != OMIT
@@ -38,7 +38,7 @@ module SeedObjectsWithImportsClient
     # Deserialize a JSON object to an instance of Node
     #
     # @param json_object [String]
-    # @return [SeedObjectsWithImportsClient::Node]
+    # @return [Node]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
@@ -48,7 +48,7 @@ module SeedObjectsWithImportsClient
         metadata = nil
       else
         metadata = parsed_json["metadata"].to_json
-        metadata = SeedObjectsWithImportsClient::Commons::Metadata::Metadata.from_json(json_object: metadata)
+        metadata = Commons::Metadata.from_json(json_object: metadata)
       end
       new(
         id: id,
@@ -74,7 +74,7 @@ module SeedObjectsWithImportsClient
     def self.validate_raw(obj:)
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.label&.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
-      obj.metadata.nil? || SeedObjectsWithImportsClient::Commons::Metadata::Metadata.validate_raw(obj: obj.metadata)
+      obj.metadata.nil? || Commons::Metadata.validate_raw(obj: obj.metadata)
     end
   end
 end

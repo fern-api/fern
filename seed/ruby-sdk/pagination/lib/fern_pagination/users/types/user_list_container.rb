@@ -7,7 +7,7 @@ require "json"
 module SeedPaginationClient
   class Users
     class UserListContainer
-      # @return [Array<SeedPaginationClient::Users::User>]
+      # @return [Array<User>]
       attr_reader :users
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -17,9 +17,9 @@ module SeedPaginationClient
 
       OMIT = Object.new
 
-      # @param users [Array<SeedPaginationClient::Users::User>]
+      # @param users [Array<User>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedPaginationClient::Users::UserListContainer]
+      # @return [UserListContainer]
       def initialize(users:, additional_properties: nil)
         @users = users
         @additional_properties = additional_properties
@@ -29,13 +29,13 @@ module SeedPaginationClient
       # Deserialize a JSON object to an instance of UserListContainer
       #
       # @param json_object [String]
-      # @return [SeedPaginationClient::Users::UserListContainer]
+      # @return [UserListContainer]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         users = parsed_json["users"]&.map do |v|
           v = v.to_json
-          SeedPaginationClient::Users::User.from_json(json_object: v)
+          User.from_json(json_object: v)
         end
         new(users: users, additional_properties: struct)
       end

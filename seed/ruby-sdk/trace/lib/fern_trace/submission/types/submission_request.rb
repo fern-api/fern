@@ -19,7 +19,7 @@ module SeedTraceClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [SeedTraceClient::Submission::SubmissionRequest]
+      # @return [SubmissionRequest]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -28,22 +28,22 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of SubmissionRequest
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::SubmissionRequest]
+      # @return [SubmissionRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "initializeProblemRequest"
-                   SeedTraceClient::Submission::InitializeProblemRequest.from_json(json_object: json_object)
+                   InitializeProblemRequest.from_json(json_object: json_object)
                  when "initializeWorkspaceRequest"
                    nil
                  when "submitV2"
-                   SeedTraceClient::Submission::SubmitRequestV2.from_json(json_object: json_object)
+                   SubmitRequestV2.from_json(json_object: json_object)
                  when "workspaceSubmit"
-                   SeedTraceClient::Submission::WorkspaceSubmitRequest.from_json(json_object: json_object)
+                   WorkspaceSubmitRequest.from_json(json_object: json_object)
                  when "stop"
-                   SeedTraceClient::Submission::StopRequest.from_json(json_object: json_object)
+                   StopRequest.from_json(json_object: json_object)
                  else
-                   SeedTraceClient::Submission::InitializeProblemRequest.from_json(json_object: json_object)
+                   InitializeProblemRequest.from_json(json_object: json_object)
                  end
         new(member: member, discriminant: struct.type)
       end
@@ -78,15 +78,15 @@ module SeedTraceClient
       def self.validate_raw(obj:)
         case obj.type
         when "initializeProblemRequest"
-          SeedTraceClient::Submission::InitializeProblemRequest.validate_raw(obj: obj)
+          InitializeProblemRequest.validate_raw(obj: obj)
         when "initializeWorkspaceRequest"
           # noop
         when "submitV2"
-          SeedTraceClient::Submission::SubmitRequestV2.validate_raw(obj: obj)
+          SubmitRequestV2.validate_raw(obj: obj)
         when "workspaceSubmit"
-          SeedTraceClient::Submission::WorkspaceSubmitRequest.validate_raw(obj: obj)
+          WorkspaceSubmitRequest.validate_raw(obj: obj)
         when "stop"
-          SeedTraceClient::Submission::StopRequest.validate_raw(obj: obj)
+          StopRequest.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -100,31 +100,31 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @param member [SeedTraceClient::Submission::InitializeProblemRequest]
-      # @return [SeedTraceClient::Submission::SubmissionRequest]
+      # @param member [InitializeProblemRequest]
+      # @return [SubmissionRequest]
       def self.initialize_problem_request(member:)
         new(member: member, discriminant: "initializeProblemRequest")
       end
 
-      # @return [SeedTraceClient::Submission::SubmissionRequest]
+      # @return [SubmissionRequest]
       def self.initialize_workspace_request
         new(member: nil, discriminant: "initializeWorkspaceRequest")
       end
 
-      # @param member [SeedTraceClient::Submission::SubmitRequestV2]
-      # @return [SeedTraceClient::Submission::SubmissionRequest]
+      # @param member [SubmitRequestV2]
+      # @return [SubmissionRequest]
       def self.submit_v_2(member:)
         new(member: member, discriminant: "submitV2")
       end
 
-      # @param member [SeedTraceClient::Submission::WorkspaceSubmitRequest]
-      # @return [SeedTraceClient::Submission::SubmissionRequest]
+      # @param member [WorkspaceSubmitRequest]
+      # @return [SubmissionRequest]
       def self.workspace_submit(member:)
         new(member: member, discriminant: "workspaceSubmit")
       end
 
-      # @param member [SeedTraceClient::Submission::StopRequest]
-      # @return [SeedTraceClient::Submission::SubmissionRequest]
+      # @param member [StopRequest]
+      # @return [SubmissionRequest]
       def self.stop(member:)
         new(member: member, discriminant: "stop")
       end

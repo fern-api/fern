@@ -47,8 +47,8 @@ module SeedBasicAuthEnvironmentVariablesClient
         "X-Fern-SDK-Name": "fern_basic_auth_environment_variables",
         "X-Fern-SDK-Version": "0.0.1"
       }
-      headers["username"] = @username unless username.nil?
-      headers["password"] = @password unless password.nil?
+      headers["username"] = ((@username.is_a? Method) ? @username.call : @username) unless token.nil?
+      headers["password"] = ((@password.is_a? Method) ? @password.call : @password) unless token.nil?
       headers
     end
   end
@@ -96,8 +96,8 @@ module SeedBasicAuthEnvironmentVariablesClient
         "X-Fern-SDK-Name": "fern_basic_auth_environment_variables",
         "X-Fern-SDK-Version": "0.0.1"
       }
-      headers["username"] = @username unless username.nil?
-      headers["password"] = @password unless password.nil?
+      headers["username"] = ((@username.is_a? Method) ? @username.call : @username) unless token.nil?
+      headers["password"] = ((@password.is_a? Method) ? @password.call : @password) unless token.nil?
       headers
     end
   end

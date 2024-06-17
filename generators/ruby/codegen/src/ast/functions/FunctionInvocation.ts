@@ -17,6 +17,7 @@ export declare namespace FunctionInvocation {
         arguments_?: Argument[];
         block?: BlockConfiguration;
         optionalSafeCall?: boolean;
+        useFullPath?: boolean;
     }
 }
 export class FunctionInvocation extends AstNode {
@@ -28,6 +29,7 @@ export class FunctionInvocation extends AstNode {
     // after a traditional function invocation.
     public block: BlockConfiguration | undefined;
     public optionalSafeCall: boolean;
+    public useFullPath: boolean;
 
     constructor({
         baseFunction,
@@ -35,6 +37,7 @@ export class FunctionInvocation extends AstNode {
         arguments_ = [],
         block,
         optionalSafeCall,
+        useFullPath = true,
         ...rest
     }: FunctionInvocation.Init) {
         super(rest);
@@ -44,6 +47,8 @@ export class FunctionInvocation extends AstNode {
         this.block = block;
         this.optionalSafeCall =
             optionalSafeCall ?? (this.onObject instanceof Variable ? this.onObject.isOptional : false);
+
+        this.useFullPath = useFullPath;
     }
 
     private writeBlock(startingTabSpaces: number) {
@@ -98,7 +103,7 @@ export class FunctionInvocation extends AstNode {
             startingTabSpaces
         });
         this.addText({
-            stringContent: this.baseFunction?.getInvocationName(),
+            stringContent: this.baseFunction?.getInvocationName(this.useFullPath),
             templateString: onObject === undefined ? undefined : this.optionalSafeCall ? "&.%s" : ".%s",
             startingTabSpaces,
             appendToLastString: true

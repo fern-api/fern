@@ -21,7 +21,7 @@ module SeedResponsePropertyClient
       # @param id [String]
       # @param name [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedResponsePropertyClient::Service::Movie]
+      # @return [Movie]
       def initialize(id:, name:, additional_properties: nil)
         @id = id
         @name = name
@@ -32,7 +32,7 @@ module SeedResponsePropertyClient
       # Deserialize a JSON object to an instance of Movie
       #
       # @param json_object [String]
-      # @return [SeedResponsePropertyClient::Service::Movie]
+      # @return [Movie]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         id = struct["id"]

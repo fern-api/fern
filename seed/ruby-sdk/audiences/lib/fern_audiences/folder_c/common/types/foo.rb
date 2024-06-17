@@ -19,7 +19,7 @@ module SeedAudiencesClient
 
         # @param bar_property [String]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [SeedAudiencesClient::FolderC::Common::Foo]
+        # @return [FolderC::Foo]
         def initialize(bar_property:, additional_properties: nil)
           @bar_property = bar_property
           @additional_properties = additional_properties
@@ -29,7 +29,7 @@ module SeedAudiencesClient
         # Deserialize a JSON object to an instance of Foo
         #
         # @param json_object [String]
-        # @return [SeedAudiencesClient::FolderC::Common::Foo]
+        # @return [FolderC::Foo]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           bar_property = struct["bar_property"]

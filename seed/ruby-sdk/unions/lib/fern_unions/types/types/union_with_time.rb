@@ -16,7 +16,7 @@ module SeedUnionsClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [SeedUnionsClient::Types::UnionWithTime]
+      # @return [UnionWithTime]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -25,7 +25,7 @@ module SeedUnionsClient
       # Deserialize a JSON object to an instance of UnionWithTime
       #
       # @param json_object [String]
-      # @return [SeedUnionsClient::Types::UnionWithTime]
+      # @return [UnionWithTime]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
@@ -82,19 +82,19 @@ module SeedUnionsClient
       end
 
       # @param member [Integer]
-      # @return [SeedUnionsClient::Types::UnionWithTime]
+      # @return [UnionWithTime]
       def self.value(member:)
         new(member: member, discriminant: "value")
       end
 
       # @param member [Date]
-      # @return [SeedUnionsClient::Types::UnionWithTime]
+      # @return [UnionWithTime]
       def self.date(member:)
         new(member: member, discriminant: "date")
       end
 
       # @param member [DateTime]
-      # @return [SeedUnionsClient::Types::UnionWithTime]
+      # @return [UnionWithTime]
       def self.datetime(member:)
         new(member: member, discriminant: "datetime")
       end

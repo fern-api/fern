@@ -9,7 +9,7 @@ module SeedExamplesClient
     class Migration
       # @return [String]
       attr_reader :name
-      # @return [SeedExamplesClient::Types::MigrationStatus]
+      # @return [MigrationStatus]
       attr_reader :status
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -20,9 +20,9 @@ module SeedExamplesClient
       OMIT = Object.new
 
       # @param name [String]
-      # @param status [SeedExamplesClient::Types::MigrationStatus]
+      # @param status [MigrationStatus]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedExamplesClient::Types::Migration]
+      # @return [Migration]
       def initialize(name:, status:, additional_properties: nil)
         @name = name
         @status = status
@@ -33,7 +33,7 @@ module SeedExamplesClient
       # Deserialize a JSON object to an instance of Migration
       #
       # @param json_object [String]
-      # @return [SeedExamplesClient::Types::Migration]
+      # @return [Migration]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         name = struct["name"]
@@ -60,7 +60,7 @@ module SeedExamplesClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
-        obj.status.is_a?(SeedExamplesClient::Types::MigrationStatus) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
+        obj.status.is_a?(MigrationStatus) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
       end
     end
   end

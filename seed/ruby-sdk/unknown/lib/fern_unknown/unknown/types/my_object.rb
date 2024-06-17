@@ -18,7 +18,7 @@ module SeedUnknownAsAnyClient
 
       # @param unknown [Object]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedUnknownAsAnyClient::Unknown::MyObject]
+      # @return [MyObject]
       def initialize(unknown:, additional_properties: nil)
         @unknown = unknown
         @additional_properties = additional_properties
@@ -28,7 +28,7 @@ module SeedUnknownAsAnyClient
       # Deserialize a JSON object to an instance of MyObject
       #
       # @param json_object [String]
-      # @return [SeedUnknownAsAnyClient::Unknown::MyObject]
+      # @return [MyObject]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         unknown = struct["unknown"]

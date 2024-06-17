@@ -22,28 +22,28 @@ module SeedQueryParametersClient
     # @param date [Date]
     # @param deadline [DateTime]
     # @param bytes [String]
-    # @param user [Hash] Request of type SeedQueryParametersClient::User::User, as a Hash
+    # @param user [Hash] Request of type User, as a Hash
     #   * :name (String)
     #   * :tags (Array<String>)
-    # @param user_list [Array<Hash>] Request of type Array<SeedQueryParametersClient::User::User>, as a Hash
+    # @param user_list [Array<Hash>] Request of type Array<User>, as a Hash
     #   * :name (String)
     #   * :tags (Array<String>)
     # @param key_value [Hash{String => String}]
     # @param optional_string [String]
-    # @param nested_user [Hash] Request of type SeedQueryParametersClient::User::NestedUser, as a Hash
+    # @param nested_user [Hash] Request of type NestedUser, as a Hash
     #   * :name (String)
     #   * :user (Hash)
     #     * :name (String)
     #     * :tags (Array<String>)
-    # @param optional_user [Hash] Request of type SeedQueryParametersClient::User::User, as a Hash
+    # @param optional_user [Hash] Request of type User, as a Hash
     #   * :name (String)
     #   * :tags (Array<String>)
-    # @param exclude_user [Hash] Request of type SeedQueryParametersClient::User::User, as a Hash
+    # @param exclude_user [Hash] Request of type User, as a Hash
     #   * :name (String)
     #   * :tags (Array<String>)
     # @param filter [String]
     # @param request_options [SeedQueryParametersClient::RequestOptions]
-    # @return [SeedQueryParametersClient::User::User]
+    # @return [User]
     # @example
     #  query_parameters = SeedQueryParametersClient::Client.new(base_url: "https://api.example.com")
     #  query_parameters.user.get_username(
@@ -88,7 +88,7 @@ module SeedQueryParametersClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/user"
       end
-      SeedQueryParametersClient::User::User.from_json(json_object: response.body)
+      User.from_json(json_object: response.body)
     end
   end
 
@@ -107,28 +107,28 @@ module SeedQueryParametersClient
     # @param date [Date]
     # @param deadline [DateTime]
     # @param bytes [String]
-    # @param user [Hash] Request of type SeedQueryParametersClient::User::User, as a Hash
+    # @param user [Hash] Request of type User, as a Hash
     #   * :name (String)
     #   * :tags (Array<String>)
-    # @param user_list [Array<Hash>] Request of type Array<SeedQueryParametersClient::User::User>, as a Hash
+    # @param user_list [Array<Hash>] Request of type Array<User>, as a Hash
     #   * :name (String)
     #   * :tags (Array<String>)
     # @param key_value [Hash{String => String}]
     # @param optional_string [String]
-    # @param nested_user [Hash] Request of type SeedQueryParametersClient::User::NestedUser, as a Hash
+    # @param nested_user [Hash] Request of type NestedUser, as a Hash
     #   * :name (String)
     #   * :user (Hash)
     #     * :name (String)
     #     * :tags (Array<String>)
-    # @param optional_user [Hash] Request of type SeedQueryParametersClient::User::User, as a Hash
+    # @param optional_user [Hash] Request of type User, as a Hash
     #   * :name (String)
     #   * :tags (Array<String>)
-    # @param exclude_user [Hash] Request of type SeedQueryParametersClient::User::User, as a Hash
+    # @param exclude_user [Hash] Request of type User, as a Hash
     #   * :name (String)
     #   * :tags (Array<String>)
     # @param filter [String]
     # @param request_options [SeedQueryParametersClient::RequestOptions]
-    # @return [SeedQueryParametersClient::User::User]
+    # @return [User]
     # @example
     #  query_parameters = SeedQueryParametersClient::Client.new(base_url: "https://api.example.com")
     #  query_parameters.user.get_username(
@@ -174,7 +174,7 @@ module SeedQueryParametersClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/user"
         end
-        SeedQueryParametersClient::User::User.from_json(json_object: response.body)
+        User.from_json(json_object: response.body)
       end
     end
   end

@@ -15,7 +15,7 @@ module SeedApiClient
       OMIT = Object.new
 
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedApiClient::Ast::ObjectValue]
+      # @return [ObjectValue]
       def initialize(additional_properties: nil)
         @additional_properties = additional_properties
         @_field_set = {}
@@ -24,7 +24,7 @@ module SeedApiClient
       # Deserialize a JSON object to an instance of ObjectValue
       #
       # @param json_object [String]
-      # @return [SeedApiClient::Ast::ObjectValue]
+      # @return [ObjectValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         new(additional_properties: struct)

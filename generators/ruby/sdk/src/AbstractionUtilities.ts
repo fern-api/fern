@@ -267,14 +267,14 @@ export function generateRootPackage(
         initializerArguments.push(
             new Argument({
                 name: OauthTokenProvider.FIELD_NAME,
-                value: `method(@${tokenProviderName}.token)`,
+                value: `@${tokenProviderName}.method(:token)`,
                 isNamed: true
             })
         );
         asyncInitializerArguments.push(
             new Argument({
                 name: OauthTokenProvider.FIELD_NAME,
-                value: `method(@${tokenProviderName}.token)`,
+                value: `@${tokenProviderName}.method(:token)`,
                 isNamed: true
             })
         );
@@ -441,8 +441,7 @@ export function generateRootPackage(
         clientName,
         [clientClass, asyncClientClass],
         undefined,
-        maybeEnvironmentImport !== undefined ? [maybeEnvironmentImport, typeExporterImport] : [typeExporterImport],
-        true
+        maybeEnvironmentImport !== undefined ? [maybeEnvironmentImport, typeExporterImport] : [typeExporterImport]
     );
     return new GeneratedRubyFile({
         rootNode,
@@ -1039,21 +1038,14 @@ function requestClientFunctions(
                 }),
                 ...headersGenerator.getAuthHeadersAsProperties().map(
                     (prop) =>
-                        new ConditionalStatement({
-                            if_: {
-                                rightSide: new FunctionInvocation({
-                                    onObject: prop.name,
-                                    baseFunction: new Function_({ name: "nil?", functionBody: [] })
-                                }),
-                                operation: "!",
-                                expressions: [
-                                    new Expression({
-                                        leftSide: `headers["${prop.wireValue ?? prop.name}"]`,
-                                        rightSide: prop.toVariable(VariableType.INSTANCE),
-                                        isAssignment: true
-                                    })
-                                ]
-                            }
+                        new Expression({
+                            leftSide: `headers["${prop.wireValue ?? prop.name}"]`,
+                            rightSide: `((${prop.toVariable(VariableType.INSTANCE).write({})}.is_a? Method) ? ${prop
+                                .toVariable(VariableType.INSTANCE)
+                                .write({})}.call : ${prop
+                                .toVariable(VariableType.INSTANCE)
+                                .write({})}) unless token.nil?`,
+                            isAssignment: true
                         })
                 ),
                 new Expression({

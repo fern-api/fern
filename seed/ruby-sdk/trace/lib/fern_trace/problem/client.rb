@@ -22,17 +22,17 @@ module SeedTraceClient
 
     # Creates a problem
     #
-    # @param request [Hash] Request of type SeedTraceClient::Problem::CreateProblemRequest, as a Hash
+    # @param request [Hash] Request of type CreateProblemRequest, as a Hash
     #   * :problem_name (String)
     #   * :problem_description (Hash)
-    #     * :boards (Array<SeedTraceClient::Problem::ProblemDescriptionBoard>)
-    #   * :files (Hash{SeedTraceClient::Commons::Language => SeedTraceClient::Problem::ProblemFiles})
-    #   * :input_params (Array<SeedTraceClient::Problem::VariableTypeAndName>)
+    #     * :boards (Array<ProblemDescriptionBoard>)
+    #   * :files (Hash{Language => ProblemFiles})
+    #   * :input_params (Array<VariableTypeAndName>)
     #   * :output_type (Hash)
-    #   * :testcases (Array<SeedTraceClient::Commons::TestCaseWithExpectedResult>)
+    #   * :testcases (Array<TestCaseWithExpectedResult>)
     #   * :method_name (String)
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [SeedTraceClient::Problem::CreateProblemResponse]
+    # @return [CreateProblemResponse]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -53,23 +53,23 @@ module SeedTraceClient
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/problem-crud/create"
       end
-      SeedTraceClient::Problem::CreateProblemResponse.from_json(json_object: response.body)
+      CreateProblemResponse.from_json(json_object: response.body)
     end
 
     # Updates a problem
     #
     # @param problem_id [String]
-    # @param request [Hash] Request of type SeedTraceClient::Problem::CreateProblemRequest, as a Hash
+    # @param request [Hash] Request of type CreateProblemRequest, as a Hash
     #   * :problem_name (String)
     #   * :problem_description (Hash)
-    #     * :boards (Array<SeedTraceClient::Problem::ProblemDescriptionBoard>)
-    #   * :files (Hash{SeedTraceClient::Commons::Language => SeedTraceClient::Problem::ProblemFiles})
-    #   * :input_params (Array<SeedTraceClient::Problem::VariableTypeAndName>)
+    #     * :boards (Array<ProblemDescriptionBoard>)
+    #   * :files (Hash{Language => ProblemFiles})
+    #   * :input_params (Array<VariableTypeAndName>)
     #   * :output_type (Hash)
-    #   * :testcases (Array<SeedTraceClient::Commons::TestCaseWithExpectedResult>)
+    #   * :testcases (Array<TestCaseWithExpectedResult>)
     #   * :method_name (String)
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [SeedTraceClient::Problem::UpdateProblemResponse]
+    # @return [UpdateProblemResponse]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -90,7 +90,7 @@ module SeedTraceClient
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/problem-crud/update/#{problem_id}"
       end
-      SeedTraceClient::Problem::UpdateProblemResponse.from_json(json_object: response.body)
+      UpdateProblemResponse.from_json(json_object: response.body)
     end
 
     # Soft deletes a problem
@@ -121,10 +121,10 @@ module SeedTraceClient
 
     # Returns default starter files for problem
     #
-    # @param input_params [Array<Hash>] Request of type Array<SeedTraceClient::Problem::VariableTypeAndName>, as a Hash
+    # @param input_params [Array<Hash>] Request of type Array<VariableTypeAndName>, as a Hash
     #   * :variable_type (Hash)
     #   * :name (String)
-    # @param output_type [SeedTraceClient::Commons::VariableType]
+    # @param output_type [VariableType]
     # @param method_name [String] The name of the `method` that the student has to complete.
     #  The method name cannot include the following characters:
     #  - Greater Than `>`
@@ -132,7 +132,7 @@ module SeedTraceClient
     #  - Equals `=`
     #  - Period `.`
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [SeedTraceClient::Problem::GetDefaultStarterFilesResponse]
+    # @return [GetDefaultStarterFilesResponse]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -158,7 +158,7 @@ module SeedTraceClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/problem-crud/default-starter-files"
       end
-      SeedTraceClient::Problem::GetDefaultStarterFilesResponse.from_json(json_object: response.body)
+      GetDefaultStarterFilesResponse.from_json(json_object: response.body)
     end
   end
 
@@ -174,17 +174,17 @@ module SeedTraceClient
 
     # Creates a problem
     #
-    # @param request [Hash] Request of type SeedTraceClient::Problem::CreateProblemRequest, as a Hash
+    # @param request [Hash] Request of type CreateProblemRequest, as a Hash
     #   * :problem_name (String)
     #   * :problem_description (Hash)
-    #     * :boards (Array<SeedTraceClient::Problem::ProblemDescriptionBoard>)
-    #   * :files (Hash{SeedTraceClient::Commons::Language => SeedTraceClient::Problem::ProblemFiles})
-    #   * :input_params (Array<SeedTraceClient::Problem::VariableTypeAndName>)
+    #     * :boards (Array<ProblemDescriptionBoard>)
+    #   * :files (Hash{Language => ProblemFiles})
+    #   * :input_params (Array<VariableTypeAndName>)
     #   * :output_type (Hash)
-    #   * :testcases (Array<SeedTraceClient::Commons::TestCaseWithExpectedResult>)
+    #   * :testcases (Array<TestCaseWithExpectedResult>)
     #   * :method_name (String)
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [SeedTraceClient::Problem::CreateProblemResponse]
+    # @return [CreateProblemResponse]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -206,24 +206,24 @@ module SeedTraceClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/problem-crud/create"
         end
-        SeedTraceClient::Problem::CreateProblemResponse.from_json(json_object: response.body)
+        CreateProblemResponse.from_json(json_object: response.body)
       end
     end
 
     # Updates a problem
     #
     # @param problem_id [String]
-    # @param request [Hash] Request of type SeedTraceClient::Problem::CreateProblemRequest, as a Hash
+    # @param request [Hash] Request of type CreateProblemRequest, as a Hash
     #   * :problem_name (String)
     #   * :problem_description (Hash)
-    #     * :boards (Array<SeedTraceClient::Problem::ProblemDescriptionBoard>)
-    #   * :files (Hash{SeedTraceClient::Commons::Language => SeedTraceClient::Problem::ProblemFiles})
-    #   * :input_params (Array<SeedTraceClient::Problem::VariableTypeAndName>)
+    #     * :boards (Array<ProblemDescriptionBoard>)
+    #   * :files (Hash{Language => ProblemFiles})
+    #   * :input_params (Array<VariableTypeAndName>)
     #   * :output_type (Hash)
-    #   * :testcases (Array<SeedTraceClient::Commons::TestCaseWithExpectedResult>)
+    #   * :testcases (Array<TestCaseWithExpectedResult>)
     #   * :method_name (String)
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [SeedTraceClient::Problem::UpdateProblemResponse]
+    # @return [UpdateProblemResponse]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -245,7 +245,7 @@ module SeedTraceClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/problem-crud/update/#{problem_id}"
         end
-        SeedTraceClient::Problem::UpdateProblemResponse.from_json(json_object: response.body)
+        UpdateProblemResponse.from_json(json_object: response.body)
       end
     end
 
@@ -279,10 +279,10 @@ module SeedTraceClient
 
     # Returns default starter files for problem
     #
-    # @param input_params [Array<Hash>] Request of type Array<SeedTraceClient::Problem::VariableTypeAndName>, as a Hash
+    # @param input_params [Array<Hash>] Request of type Array<VariableTypeAndName>, as a Hash
     #   * :variable_type (Hash)
     #   * :name (String)
-    # @param output_type [SeedTraceClient::Commons::VariableType]
+    # @param output_type [VariableType]
     # @param method_name [String] The name of the `method` that the student has to complete.
     #  The method name cannot include the following characters:
     #  - Greater Than `>`
@@ -290,7 +290,7 @@ module SeedTraceClient
     #  - Equals `=`
     #  - Period `.`
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [SeedTraceClient::Problem::GetDefaultStarterFilesResponse]
+    # @return [GetDefaultStarterFilesResponse]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -317,7 +317,7 @@ module SeedTraceClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/problem-crud/default-starter-files"
         end
-        SeedTraceClient::Problem::GetDefaultStarterFilesResponse.from_json(json_object: response.body)
+        GetDefaultStarterFilesResponse.from_json(json_object: response.body)
       end
     end
   end

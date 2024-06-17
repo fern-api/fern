@@ -42,7 +42,7 @@ module SeedExamplesClient
       # @param book [String]
       # @param metadata [Hash{String => Object}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedExamplesClient::Types::Movie]
+      # @return [Movie]
       def initialize(id:, title:, from:, rating:, type:, tag:, metadata:, prequel: OMIT, book: OMIT,
                      additional_properties: nil)
         @id = id
@@ -73,7 +73,7 @@ module SeedExamplesClient
       # Deserialize a JSON object to an instance of Movie
       #
       # @param json_object [String]
-      # @return [SeedExamplesClient::Types::Movie]
+      # @return [Movie]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         id = struct["id"]

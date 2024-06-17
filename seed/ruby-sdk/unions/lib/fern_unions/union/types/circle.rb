@@ -18,7 +18,7 @@ module SeedUnionsClient
 
       # @param radius [Float]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedUnionsClient::Union::Circle]
+      # @return [Circle]
       def initialize(radius:, additional_properties: nil)
         @radius = radius
         @additional_properties = additional_properties
@@ -28,7 +28,7 @@ module SeedUnionsClient
       # Deserialize a JSON object to an instance of Circle
       #
       # @param json_object [String]
-      # @return [SeedUnionsClient::Union::Circle]
+      # @return [Circle]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         radius = struct["radius"]

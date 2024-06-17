@@ -9,7 +9,7 @@ module SeedPaginationClient
     class Page
       # @return [Integer] The current page
       attr_reader :page
-      # @return [SeedPaginationClient::Users::NextPage]
+      # @return [NextPage]
       attr_reader :next_
       # @return [Integer]
       attr_reader :per_page
@@ -24,11 +24,11 @@ module SeedPaginationClient
       OMIT = Object.new
 
       # @param page [Integer] The current page
-      # @param next_ [SeedPaginationClient::Users::NextPage]
+      # @param next_ [NextPage]
       # @param per_page [Integer]
       # @param total_page [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedPaginationClient::Users::Page]
+      # @return [Page]
       def initialize(page:, per_page:, total_page:, next_: OMIT, additional_properties: nil)
         @page = page
         @next_ = next_ if next_ != OMIT
@@ -48,7 +48,7 @@ module SeedPaginationClient
       # Deserialize a JSON object to an instance of Page
       #
       # @param json_object [String]
-      # @return [SeedPaginationClient::Users::Page]
+      # @return [Page]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -57,7 +57,7 @@ module SeedPaginationClient
           next_ = nil
         else
           next_ = parsed_json["next"].to_json
-          next_ = SeedPaginationClient::Users::NextPage.from_json(json_object: next_)
+          next_ = NextPage.from_json(json_object: next_)
         end
         per_page = struct["per_page"]
         total_page = struct["total_page"]
@@ -85,7 +85,7 @@ module SeedPaginationClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.page.is_a?(Integer) != false || raise("Passed value for field obj.page is not the expected type, validation failed.")
-        obj.next_.nil? || SeedPaginationClient::Users::NextPage.validate_raw(obj: obj.next_)
+        obj.next_.nil? || NextPage.validate_raw(obj: obj.next_)
         obj.per_page.is_a?(Integer) != false || raise("Passed value for field obj.per_page is not the expected type, validation failed.")
         obj.total_page.is_a?(Integer) != false || raise("Passed value for field obj.total_page is not the expected type, validation failed.")
       end

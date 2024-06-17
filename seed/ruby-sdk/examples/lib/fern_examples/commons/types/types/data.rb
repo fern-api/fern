@@ -16,7 +16,7 @@ module SeedExamplesClient
 
         # @param member [Object]
         # @param discriminant [String]
-        # @return [SeedExamplesClient::Commons::Types::Data]
+        # @return [Commons::Data]
         def initialize(member:, discriminant:)
           @member = member
           @discriminant = discriminant
@@ -25,7 +25,7 @@ module SeedExamplesClient
         # Deserialize a JSON object to an instance of Data
         #
         # @param json_object [String]
-        # @return [SeedExamplesClient::Commons::Types::Data]
+        # @return [Commons::Data]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           member = case struct.type
@@ -77,13 +77,13 @@ module SeedExamplesClient
         end
 
         # @param member [String]
-        # @return [SeedExamplesClient::Commons::Types::Data]
+        # @return [Commons::Data]
         def self.string(member:)
           new(member: member, discriminant: "string")
         end
 
         # @param member [String]
-        # @return [SeedExamplesClient::Commons::Types::Data]
+        # @return [Commons::Data]
         def self.base_64(member:)
           new(member: member, discriminant: "base64")
         end

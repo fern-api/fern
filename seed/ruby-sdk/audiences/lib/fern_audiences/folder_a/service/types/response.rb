@@ -8,7 +8,7 @@ module SeedAudiencesClient
   module FolderA
     class Service
       class Response
-        # @return [SeedAudiencesClient::FolderB::Common::Foo]
+        # @return [FolderB::Foo]
         attr_reader :foo
         # @return [OpenStruct] Additional properties unmapped to the current class definition
         attr_reader :additional_properties
@@ -18,9 +18,9 @@ module SeedAudiencesClient
 
         OMIT = Object.new
 
-        # @param foo [SeedAudiencesClient::FolderB::Common::Foo]
+        # @param foo [FolderB::Foo]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [SeedAudiencesClient::FolderA::Service::Response]
+        # @return [FolderA::Response]
         def initialize(foo: OMIT, additional_properties: nil)
           @foo = foo if foo != OMIT
           @additional_properties = additional_properties
@@ -32,7 +32,7 @@ module SeedAudiencesClient
         # Deserialize a JSON object to an instance of Response
         #
         # @param json_object [String]
-        # @return [SeedAudiencesClient::FolderA::Service::Response]
+        # @return [FolderA::Response]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
@@ -40,7 +40,7 @@ module SeedAudiencesClient
             foo = nil
           else
             foo = parsed_json["foo"].to_json
-            foo = SeedAudiencesClient::FolderB::Common::Foo.from_json(json_object: foo)
+            foo = FolderB::Foo.from_json(json_object: foo)
           end
           new(foo: foo, additional_properties: struct)
         end
@@ -59,7 +59,7 @@ module SeedAudiencesClient
         # @param obj [Object]
         # @return [Void]
         def self.validate_raw(obj:)
-          obj.foo.nil? || SeedAudiencesClient::FolderB::Common::Foo.validate_raw(obj: obj.foo)
+          obj.foo.nil? || FolderB::Foo.validate_raw(obj: obj.foo)
         end
       end
     end

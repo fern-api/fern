@@ -21,7 +21,7 @@ module SeedNurseryApiClient
       # @param foo [Hash{String => String}]
       # @param _3_d [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedNurseryApiClient::Package::Record]
+      # @return [Record]
       def initialize(foo:, _3_d:, additional_properties: nil)
         @foo = foo
         @_3_d = _3_d
@@ -32,7 +32,7 @@ module SeedNurseryApiClient
       # Deserialize a JSON object to an instance of Record
       #
       # @param json_object [String]
-      # @return [SeedNurseryApiClient::Package::Record]
+      # @return [Record]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         foo = struct["foo"]

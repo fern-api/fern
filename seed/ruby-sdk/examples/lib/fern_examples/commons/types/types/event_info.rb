@@ -17,7 +17,7 @@ module SeedExamplesClient
 
         # @param member [Object]
         # @param discriminant [String]
-        # @return [SeedExamplesClient::Commons::Types::EventInfo]
+        # @return [Commons::EventInfo]
         def initialize(member:, discriminant:)
           @member = member
           @discriminant = discriminant
@@ -26,16 +26,16 @@ module SeedExamplesClient
         # Deserialize a JSON object to an instance of EventInfo
         #
         # @param json_object [String]
-        # @return [SeedExamplesClient::Commons::Types::EventInfo]
+        # @return [Commons::EventInfo]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           member = case struct.type
                    when "metadata"
-                     SeedExamplesClient::Commons::Types::Metadata.from_json(json_object: json_object)
+                     Commons::Metadata.from_json(json_object: json_object)
                    when "tag"
                      json_object.value
                    else
-                     SeedExamplesClient::Commons::Types::Metadata.from_json(json_object: json_object)
+                     Commons::Metadata.from_json(json_object: json_object)
                    end
           new(member: member, discriminant: struct.type)
         end
@@ -64,7 +64,7 @@ module SeedExamplesClient
         def self.validate_raw(obj:)
           case obj.type
           when "metadata"
-            SeedExamplesClient::Commons::Types::Metadata.validate_raw(obj: obj)
+            Commons::Metadata.validate_raw(obj: obj)
           when "tag"
             obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
           else
@@ -80,14 +80,14 @@ module SeedExamplesClient
           @member.is_a?(obj)
         end
 
-        # @param member [SeedExamplesClient::Commons::Types::Metadata]
-        # @return [SeedExamplesClient::Commons::Types::EventInfo]
+        # @param member [Commons::Metadata]
+        # @return [Commons::EventInfo]
         def self.metadata(member:)
           new(member: member, discriminant: "metadata")
         end
 
         # @param member [String]
-        # @return [SeedExamplesClient::Commons::Types::EventInfo]
+        # @return [Commons::EventInfo]
         def self.tag(member:)
           new(member: member, discriminant: "tag")
         end

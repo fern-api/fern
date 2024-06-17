@@ -18,7 +18,7 @@ module SeedUnionsClient
 
       # @param length [Float]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedUnionsClient::Union::Square]
+      # @return [Square]
       def initialize(length:, additional_properties: nil)
         @length = length
         @additional_properties = additional_properties
@@ -28,7 +28,7 @@ module SeedUnionsClient
       # Deserialize a JSON object to an instance of Square
       #
       # @param json_object [String]
-      # @return [SeedUnionsClient::Union::Square]
+      # @return [Square]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         length = struct["length"]

@@ -22,7 +22,7 @@ module SeedExhaustiveClient
         # @param name [String]
         # @param likes_to_meow [Boolean]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [SeedExhaustiveClient::Types::Union::Cat]
+        # @return [Types::Cat]
         def initialize(name:, likes_to_meow:, additional_properties: nil)
           @name = name
           @likes_to_meow = likes_to_meow
@@ -33,7 +33,7 @@ module SeedExhaustiveClient
         # Deserialize a JSON object to an instance of Cat
         #
         # @param json_object [String]
-        # @return [SeedExhaustiveClient::Types::Union::Cat]
+        # @return [Types::Cat]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           name = struct["name"]

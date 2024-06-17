@@ -11,11 +11,11 @@ module SeedTraceClient
       class BasicCustomFiles
         # @return [String]
         attr_reader :method_name
-        # @return [SeedTraceClient::V2::Problem::NonVoidFunctionSignature]
+        # @return [V2::NonVoidFunctionSignature]
         attr_reader :signature
-        # @return [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::Problem::Files}]
+        # @return [Hash{Language => V2::Files}]
         attr_reader :additional_files
-        # @return [SeedTraceClient::V2::Problem::BasicTestCaseTemplate]
+        # @return [V2::BasicTestCaseTemplate]
         attr_reader :basic_test_case_template
         # @return [OpenStruct] Additional properties unmapped to the current class definition
         attr_reader :additional_properties
@@ -26,11 +26,11 @@ module SeedTraceClient
         OMIT = Object.new
 
         # @param method_name [String]
-        # @param signature [SeedTraceClient::V2::Problem::NonVoidFunctionSignature]
-        # @param additional_files [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::Problem::Files}]
-        # @param basic_test_case_template [SeedTraceClient::V2::Problem::BasicTestCaseTemplate]
+        # @param signature [V2::NonVoidFunctionSignature]
+        # @param additional_files [Hash{Language => V2::Files}]
+        # @param basic_test_case_template [V2::BasicTestCaseTemplate]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [SeedTraceClient::V2::Problem::BasicCustomFiles]
+        # @return [V2::BasicCustomFiles]
         def initialize(method_name:, signature:, additional_files:, basic_test_case_template:,
                        additional_properties: nil)
           @method_name = method_name
@@ -49,7 +49,7 @@ module SeedTraceClient
         # Deserialize a JSON object to an instance of BasicCustomFiles
         #
         # @param json_object [String]
-        # @return [SeedTraceClient::V2::Problem::BasicCustomFiles]
+        # @return [V2::BasicCustomFiles]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
@@ -58,17 +58,17 @@ module SeedTraceClient
             signature = nil
           else
             signature = parsed_json["signature"].to_json
-            signature = SeedTraceClient::V2::Problem::NonVoidFunctionSignature.from_json(json_object: signature)
+            signature = V2::NonVoidFunctionSignature.from_json(json_object: signature)
           end
           additional_files = parsed_json["additionalFiles"]&.transform_values do |v|
             v = v.to_json
-            SeedTraceClient::V2::Problem::Files.from_json(json_object: v)
+            V2::Files.from_json(json_object: v)
           end
           if parsed_json["basicTestCaseTemplate"].nil?
             basic_test_case_template = nil
           else
             basic_test_case_template = parsed_json["basicTestCaseTemplate"].to_json
-            basic_test_case_template = SeedTraceClient::V2::Problem::BasicTestCaseTemplate.from_json(json_object: basic_test_case_template)
+            basic_test_case_template = V2::BasicTestCaseTemplate.from_json(json_object: basic_test_case_template)
           end
           new(
             method_name: method_name,
@@ -94,9 +94,9 @@ module SeedTraceClient
         # @return [Void]
         def self.validate_raw(obj:)
           obj.method_name.is_a?(String) != false || raise("Passed value for field obj.method_name is not the expected type, validation failed.")
-          SeedTraceClient::V2::Problem::NonVoidFunctionSignature.validate_raw(obj: obj.signature)
+          V2::NonVoidFunctionSignature.validate_raw(obj: obj.signature)
           obj.additional_files.is_a?(Hash) != false || raise("Passed value for field obj.additional_files is not the expected type, validation failed.")
-          SeedTraceClient::V2::Problem::BasicTestCaseTemplate.validate_raw(obj: obj.basic_test_case_template)
+          V2::BasicTestCaseTemplate.validate_raw(obj: obj.basic_test_case_template)
         end
       end
     end

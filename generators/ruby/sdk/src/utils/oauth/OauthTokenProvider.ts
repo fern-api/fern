@@ -300,7 +300,7 @@ export class OauthTokenProvider extends Class_ {
                 new Argument({
                     value: `Time.now + ${responseVariableName}.${OauthTokenProvider.responsePropertyToObjectAccess(
                         tokenResponseProperty.expiresIn
-                    )} - EXPIRY_BUFFER_MINUTES * 60`,
+                    )} - (EXPIRY_BUFFER_MINUTES * 60)`,
                     name: "expires_at",
                     isNamed: true
                 })
@@ -363,7 +363,8 @@ export class OauthTokenProvider extends Class_ {
                                         rightSide: new FunctionInvocation({
                                             onObject: "@auth_client",
                                             baseFunction: oauthConfiguration.accessTokenFunction.tokenFunction,
-                                            arguments_: clientCredentialArgs
+                                            arguments_: clientCredentialArgs,
+                                            useFullPath: false
                                         }),
                                         isAssignment: true
                                     }),
@@ -393,7 +394,8 @@ export class OauthTokenProvider extends Class_ {
                                                 name: "referesh_token",
                                                 value: "@token.refresh_token"
                                             })
-                                        ]
+                                        ],
+                                        useFullPath: false
                                     }),
                                     isAssignment: true
                                 }),
@@ -417,7 +419,8 @@ export class OauthTokenProvider extends Class_ {
                                 rightSide: new FunctionInvocation({
                                     onObject: "@auth_client",
                                     baseFunction: oauthConfiguration.accessTokenFunction.tokenFunction,
-                                    arguments_: clientCredentialArgs
+                                    arguments_: clientCredentialArgs,
+                                    useFullPath: false
                                 }),
                                 isAssignment: true
                             }),

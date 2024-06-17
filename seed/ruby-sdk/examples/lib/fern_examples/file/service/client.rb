@@ -20,7 +20,7 @@ module SeedExamplesClient
       #
       # @param filename [String] This is a filename
       # @param request_options [SeedExamplesClient::RequestOptions]
-      # @return [SeedExamplesClient::Types::File]
+      # @return [File]
       # @example
       #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  examples.file.service.get_file(filename: "file.txt")
@@ -35,7 +35,7 @@ module SeedExamplesClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/file/#{filename}"
         end
-        SeedExamplesClient::Types::File.from_json(json_object: response.body)
+        File.from_json(json_object: response.body)
       end
     end
 
@@ -53,7 +53,7 @@ module SeedExamplesClient
       #
       # @param filename [String] This is a filename
       # @param request_options [SeedExamplesClient::RequestOptions]
-      # @return [SeedExamplesClient::Types::File]
+      # @return [File]
       # @example
       #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  examples.file.service.get_file(filename: "file.txt")
@@ -69,7 +69,7 @@ module SeedExamplesClient
             }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/file/#{filename}"
           end
-          SeedExamplesClient::Types::File.from_json(json_object: response.body)
+          File.from_json(json_object: response.body)
         end
       end
     end

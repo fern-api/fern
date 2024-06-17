@@ -21,7 +21,7 @@ module SeedStreamingClient
       # @param id [String]
       # @param name [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedStreamingClient::Dummy::StreamResponse]
+      # @return [StreamResponse]
       def initialize(id:, name: OMIT, additional_properties: nil)
         @id = id
         @name = name if name != OMIT
@@ -34,7 +34,7 @@ module SeedStreamingClient
       # Deserialize a JSON object to an instance of StreamResponse
       #
       # @param json_object [String]
-      # @return [SeedStreamingClient::Dummy::StreamResponse]
+      # @return [StreamResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         id = struct["id"]

@@ -18,7 +18,7 @@ module SeedTraceClient
 
       # @param offset [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Submission::GetTraceResponsesPageRequest]
+      # @return [GetTraceResponsesPageRequest]
       def initialize(offset: OMIT, additional_properties: nil)
         @offset = offset if offset != OMIT
         @additional_properties = additional_properties
@@ -30,7 +30,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of GetTraceResponsesPageRequest
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::GetTraceResponsesPageRequest]
+      # @return [GetTraceResponsesPageRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         offset = struct["offset"]

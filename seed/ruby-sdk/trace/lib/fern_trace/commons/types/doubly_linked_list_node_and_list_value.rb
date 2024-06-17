@@ -9,7 +9,7 @@ module SeedTraceClient
     class DoublyLinkedListNodeAndListValue
       # @return [String]
       attr_reader :node_id
-      # @return [SeedTraceClient::Commons::DoublyLinkedListValue]
+      # @return [DoublyLinkedListValue]
       attr_reader :full_list
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -20,9 +20,9 @@ module SeedTraceClient
       OMIT = Object.new
 
       # @param node_id [String]
-      # @param full_list [SeedTraceClient::Commons::DoublyLinkedListValue]
+      # @param full_list [DoublyLinkedListValue]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Commons::DoublyLinkedListNodeAndListValue]
+      # @return [DoublyLinkedListNodeAndListValue]
       def initialize(node_id:, full_list:, additional_properties: nil)
         @node_id = node_id
         @full_list = full_list
@@ -33,7 +33,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of DoublyLinkedListNodeAndListValue
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Commons::DoublyLinkedListNodeAndListValue]
+      # @return [DoublyLinkedListNodeAndListValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -42,7 +42,7 @@ module SeedTraceClient
           full_list = nil
         else
           full_list = parsed_json["fullList"].to_json
-          full_list = SeedTraceClient::Commons::DoublyLinkedListValue.from_json(json_object: full_list)
+          full_list = DoublyLinkedListValue.from_json(json_object: full_list)
         end
         new(
           node_id: node_id,
@@ -66,7 +66,7 @@ module SeedTraceClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.node_id.is_a?(String) != false || raise("Passed value for field obj.node_id is not the expected type, validation failed.")
-        SeedTraceClient::Commons::DoublyLinkedListValue.validate_raw(obj: obj.full_list)
+        DoublyLinkedListValue.validate_raw(obj: obj.full_list)
       end
     end
   end

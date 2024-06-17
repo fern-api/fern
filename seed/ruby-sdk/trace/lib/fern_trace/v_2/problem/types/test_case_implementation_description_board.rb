@@ -16,7 +16,7 @@ module SeedTraceClient
 
         # @param member [Object]
         # @param discriminant [String]
-        # @return [SeedTraceClient::V2::Problem::TestCaseImplementationDescriptionBoard]
+        # @return [V2::TestCaseImplementationDescriptionBoard]
         def initialize(member:, discriminant:)
           @member = member
           @discriminant = discriminant
@@ -26,7 +26,7 @@ module SeedTraceClient
         #  TestCaseImplementationDescriptionBoard
         #
         # @param json_object [String]
-        # @return [SeedTraceClient::V2::Problem::TestCaseImplementationDescriptionBoard]
+        # @return [V2::TestCaseImplementationDescriptionBoard]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           member = case struct.type
@@ -78,13 +78,13 @@ module SeedTraceClient
         end
 
         # @param member [String]
-        # @return [SeedTraceClient::V2::Problem::TestCaseImplementationDescriptionBoard]
+        # @return [V2::TestCaseImplementationDescriptionBoard]
         def self.html(member:)
           new(member: member, discriminant: "html")
         end
 
         # @param member [String]
-        # @return [SeedTraceClient::V2::Problem::TestCaseImplementationDescriptionBoard]
+        # @return [V2::TestCaseImplementationDescriptionBoard]
         def self.param_id(member:)
           new(member: member, discriminant: "paramId")
         end

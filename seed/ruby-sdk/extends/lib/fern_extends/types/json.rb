@@ -20,7 +20,7 @@ module SeedExtendsClient
     # @param raw [String]
     # @param docs [String]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [SeedExtendsClient::Json]
+    # @return [Json]
     def initialize(raw:, docs:, additional_properties: nil)
       @raw = raw
       @docs = docs
@@ -31,7 +31,7 @@ module SeedExtendsClient
     # Deserialize a JSON object to an instance of Json
     #
     # @param json_object [String]
-    # @return [SeedExtendsClient::Json]
+    # @return [Json]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       raw = struct["raw"]

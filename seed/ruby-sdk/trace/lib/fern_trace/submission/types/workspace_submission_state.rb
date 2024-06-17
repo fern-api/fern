@@ -7,7 +7,7 @@ require "json"
 module SeedTraceClient
   class Submission
     class WorkspaceSubmissionState
-      # @return [SeedTraceClient::Submission::WorkspaceSubmissionStatus]
+      # @return [WorkspaceSubmissionStatus]
       attr_reader :status
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -17,9 +17,9 @@ module SeedTraceClient
 
       OMIT = Object.new
 
-      # @param status [SeedTraceClient::Submission::WorkspaceSubmissionStatus]
+      # @param status [WorkspaceSubmissionStatus]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Submission::WorkspaceSubmissionState]
+      # @return [WorkspaceSubmissionState]
       def initialize(status:, additional_properties: nil)
         @status = status
         @additional_properties = additional_properties
@@ -29,7 +29,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of WorkspaceSubmissionState
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::WorkspaceSubmissionState]
+      # @return [WorkspaceSubmissionState]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -37,7 +37,7 @@ module SeedTraceClient
           status = nil
         else
           status = parsed_json["status"].to_json
-          status = SeedTraceClient::Submission::WorkspaceSubmissionStatus.from_json(json_object: status)
+          status = WorkspaceSubmissionStatus.from_json(json_object: status)
         end
         new(status: status, additional_properties: struct)
       end
@@ -56,7 +56,7 @@ module SeedTraceClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        SeedTraceClient::Submission::WorkspaceSubmissionStatus.validate_raw(obj: obj.status)
+        WorkspaceSubmissionStatus.validate_raw(obj: obj.status)
       end
     end
   end

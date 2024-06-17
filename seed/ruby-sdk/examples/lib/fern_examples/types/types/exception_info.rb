@@ -24,7 +24,7 @@ module SeedExamplesClient
       # @param exception_message [String]
       # @param exception_stacktrace [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedExamplesClient::Types::ExceptionInfo]
+      # @return [ExceptionInfo]
       def initialize(exception_type:, exception_message:, exception_stacktrace:, additional_properties: nil)
         @exception_type = exception_type
         @exception_message = exception_message
@@ -40,7 +40,7 @@ module SeedExamplesClient
       # Deserialize a JSON object to an instance of ExceptionInfo
       #
       # @param json_object [String]
-      # @return [SeedExamplesClient::Types::ExceptionInfo]
+      # @return [ExceptionInfo]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         exception_type = struct["exceptionType"]

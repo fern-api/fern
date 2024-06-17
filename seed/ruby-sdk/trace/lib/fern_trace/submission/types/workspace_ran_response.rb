@@ -9,7 +9,7 @@ module SeedTraceClient
     class WorkspaceRanResponse
       # @return [String]
       attr_reader :submission_id
-      # @return [SeedTraceClient::Submission::WorkspaceRunDetails]
+      # @return [WorkspaceRunDetails]
       attr_reader :run_details
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -20,9 +20,9 @@ module SeedTraceClient
       OMIT = Object.new
 
       # @param submission_id [String]
-      # @param run_details [SeedTraceClient::Submission::WorkspaceRunDetails]
+      # @param run_details [WorkspaceRunDetails]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Submission::WorkspaceRanResponse]
+      # @return [WorkspaceRanResponse]
       def initialize(submission_id:, run_details:, additional_properties: nil)
         @submission_id = submission_id
         @run_details = run_details
@@ -33,7 +33,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of WorkspaceRanResponse
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::WorkspaceRanResponse]
+      # @return [WorkspaceRanResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -42,7 +42,7 @@ module SeedTraceClient
           run_details = nil
         else
           run_details = parsed_json["runDetails"].to_json
-          run_details = SeedTraceClient::Submission::WorkspaceRunDetails.from_json(json_object: run_details)
+          run_details = WorkspaceRunDetails.from_json(json_object: run_details)
         end
         new(
           submission_id: submission_id,
@@ -66,7 +66,7 @@ module SeedTraceClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.submission_id.is_a?(String) != false || raise("Passed value for field obj.submission_id is not the expected type, validation failed.")
-        SeedTraceClient::Submission::WorkspaceRunDetails.validate_raw(obj: obj.run_details)
+        WorkspaceRunDetails.validate_raw(obj: obj.run_details)
       end
     end
   end

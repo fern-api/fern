@@ -25,7 +25,7 @@ module SeedOauthClientCredentialsEnvironmentVariablesClient
       # @param expires_in [Integer]
       # @param refresh_token [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedOauthClientCredentialsEnvironmentVariablesClient::Auth::TokenResponse]
+      # @return [TokenResponse]
       def initialize(access_token:, expires_in:, refresh_token: OMIT, additional_properties: nil)
         @access_token = access_token
         @expires_in = expires_in
@@ -43,7 +43,7 @@ module SeedOauthClientCredentialsEnvironmentVariablesClient
       # Deserialize a JSON object to an instance of TokenResponse
       #
       # @param json_object [String]
-      # @return [SeedOauthClientCredentialsEnvironmentVariablesClient::Auth::TokenResponse]
+      # @return [TokenResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         access_token = struct["access_token"]

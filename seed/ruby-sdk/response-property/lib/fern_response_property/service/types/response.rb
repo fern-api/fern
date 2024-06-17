@@ -7,7 +7,7 @@ require "json"
 module SeedResponsePropertyClient
   class Service
     class Response
-      # @return [SeedResponsePropertyClient::Service::Movie]
+      # @return [Movie]
       attr_reader :data
       # @return [Hash{String => String}]
       attr_reader :metadata
@@ -21,11 +21,11 @@ module SeedResponsePropertyClient
 
       OMIT = Object.new
 
-      # @param data [SeedResponsePropertyClient::Service::Movie]
+      # @param data [Movie]
       # @param metadata [Hash{String => String}]
       # @param docs [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedResponsePropertyClient::Service::Response]
+      # @return [Response]
       def initialize(data:, metadata:, docs:, additional_properties: nil)
         @data = data
         @metadata = metadata
@@ -37,7 +37,7 @@ module SeedResponsePropertyClient
       # Deserialize a JSON object to an instance of Response
       #
       # @param json_object [String]
-      # @return [SeedResponsePropertyClient::Service::Response]
+      # @return [Response]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -45,7 +45,7 @@ module SeedResponsePropertyClient
           data = nil
         else
           data = parsed_json["data"].to_json
-          data = SeedResponsePropertyClient::Service::Movie.from_json(json_object: data)
+          data = Movie.from_json(json_object: data)
         end
         metadata = struct["metadata"]
         docs = struct["docs"]
@@ -71,7 +71,7 @@ module SeedResponsePropertyClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        SeedResponsePropertyClient::Service::Movie.validate_raw(obj: obj.data)
+        Movie.validate_raw(obj: obj.data)
         obj.metadata.is_a?(Hash) != false || raise("Passed value for field obj.metadata is not the expected type, validation failed.")
         obj.docs.is_a?(String) != false || raise("Passed value for field obj.docs is not the expected type, validation failed.")
       end

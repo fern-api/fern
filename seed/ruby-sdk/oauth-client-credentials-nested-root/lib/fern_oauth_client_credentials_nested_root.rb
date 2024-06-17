@@ -30,7 +30,7 @@ module SeedOauthClientCredentialsClient
         base_url: base_url,
         max_retries: max_retries,
         timeout_in_seconds: timeout_in_seconds,
-        token: method(@oauth_provider.token)
+        token: @oauth_provider.method(:token)
       )
       @auth = SeedOauthClientCredentialsClient::Auth::AuthClient.new(request_client: @request_client)
     end

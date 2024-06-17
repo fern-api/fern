@@ -17,7 +17,7 @@ module SeedTraceClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [SeedTraceClient::Commons::VariableType]
+      # @return [VariableType]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -26,7 +26,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of VariableType
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Commons::VariableType]
+      # @return [VariableType]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
@@ -41,9 +41,9 @@ module SeedTraceClient
                  when "charType"
                    nil
                  when "listType"
-                   SeedTraceClient::Commons::ListType.from_json(json_object: json_object)
+                   ListType.from_json(json_object: json_object)
                  when "mapType"
-                   SeedTraceClient::Commons::MapType.from_json(json_object: json_object)
+                   MapType.from_json(json_object: json_object)
                  when "binaryTreeType"
                    nil
                  when "singlyLinkedListType"
@@ -106,9 +106,9 @@ module SeedTraceClient
         when "charType"
           # noop
         when "listType"
-          SeedTraceClient::Commons::ListType.validate_raw(obj: obj)
+          ListType.validate_raw(obj: obj)
         when "mapType"
-          SeedTraceClient::Commons::MapType.validate_raw(obj: obj)
+          MapType.validate_raw(obj: obj)
         when "binaryTreeType"
           # noop
         when "singlyLinkedListType"
@@ -128,54 +128,54 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @return [SeedTraceClient::Commons::VariableType]
+      # @return [VariableType]
       def self.integer_type
         new(member: nil, discriminant: "integerType")
       end
 
-      # @return [SeedTraceClient::Commons::VariableType]
+      # @return [VariableType]
       def self.double_type
         new(member: nil, discriminant: "doubleType")
       end
 
-      # @return [SeedTraceClient::Commons::VariableType]
+      # @return [VariableType]
       def self.boolean_type
         new(member: nil, discriminant: "booleanType")
       end
 
-      # @return [SeedTraceClient::Commons::VariableType]
+      # @return [VariableType]
       def self.string_type
         new(member: nil, discriminant: "stringType")
       end
 
-      # @return [SeedTraceClient::Commons::VariableType]
+      # @return [VariableType]
       def self.char_type
         new(member: nil, discriminant: "charType")
       end
 
-      # @param member [SeedTraceClient::Commons::ListType]
-      # @return [SeedTraceClient::Commons::VariableType]
+      # @param member [ListType]
+      # @return [VariableType]
       def self.list_type(member:)
         new(member: member, discriminant: "listType")
       end
 
-      # @param member [SeedTraceClient::Commons::MapType]
-      # @return [SeedTraceClient::Commons::VariableType]
+      # @param member [MapType]
+      # @return [VariableType]
       def self.map_type(member:)
         new(member: member, discriminant: "mapType")
       end
 
-      # @return [SeedTraceClient::Commons::VariableType]
+      # @return [VariableType]
       def self.binary_tree_type
         new(member: nil, discriminant: "binaryTreeType")
       end
 
-      # @return [SeedTraceClient::Commons::VariableType]
+      # @return [VariableType]
       def self.singly_linked_list_type
         new(member: nil, discriminant: "singlyLinkedListType")
       end
 
-      # @return [SeedTraceClient::Commons::VariableType]
+      # @return [VariableType]
       def self.doubly_linked_list_type
         new(member: nil, discriminant: "doublyLinkedListType")
       end

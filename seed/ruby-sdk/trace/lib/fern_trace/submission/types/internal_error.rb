@@ -7,7 +7,7 @@ require "json"
 module SeedTraceClient
   class Submission
     class InternalError
-      # @return [SeedTraceClient::Submission::ExceptionInfo]
+      # @return [ExceptionInfo]
       attr_reader :exception_info
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -17,9 +17,9 @@ module SeedTraceClient
 
       OMIT = Object.new
 
-      # @param exception_info [SeedTraceClient::Submission::ExceptionInfo]
+      # @param exception_info [ExceptionInfo]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Submission::InternalError]
+      # @return [InternalError]
       def initialize(exception_info:, additional_properties: nil)
         @exception_info = exception_info
         @additional_properties = additional_properties
@@ -29,7 +29,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of InternalError
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::InternalError]
+      # @return [InternalError]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -37,7 +37,7 @@ module SeedTraceClient
           exception_info = nil
         else
           exception_info = parsed_json["exceptionInfo"].to_json
-          exception_info = SeedTraceClient::Submission::ExceptionInfo.from_json(json_object: exception_info)
+          exception_info = ExceptionInfo.from_json(json_object: exception_info)
         end
         new(exception_info: exception_info, additional_properties: struct)
       end
@@ -56,7 +56,7 @@ module SeedTraceClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        SeedTraceClient::Submission::ExceptionInfo.validate_raw(obj: obj.exception_info)
+        ExceptionInfo.validate_raw(obj: obj.exception_info)
       end
     end
   end

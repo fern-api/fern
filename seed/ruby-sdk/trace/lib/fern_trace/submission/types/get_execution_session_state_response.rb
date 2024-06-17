@@ -6,7 +6,7 @@ require "json"
 module SeedTraceClient
   class Submission
     class GetExecutionSessionStateResponse
-      # @return [Hash{String => SeedTraceClient::Submission::ExecutionSessionState}]
+      # @return [Hash{String => ExecutionSessionState}]
       attr_reader :states
       # @return [Integer]
       attr_reader :num_warming_instances
@@ -20,11 +20,11 @@ module SeedTraceClient
 
       OMIT = Object.new
 
-      # @param states [Hash{String => SeedTraceClient::Submission::ExecutionSessionState}]
+      # @param states [Hash{String => ExecutionSessionState}]
       # @param num_warming_instances [Integer]
       # @param warming_session_ids [Array<String>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Submission::GetExecutionSessionStateResponse]
+      # @return [GetExecutionSessionStateResponse]
       def initialize(states:, warming_session_ids:, num_warming_instances: OMIT, additional_properties: nil)
         @states = states
         @num_warming_instances = num_warming_instances if num_warming_instances != OMIT
@@ -42,13 +42,13 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of GetExecutionSessionStateResponse
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::GetExecutionSessionStateResponse]
+      # @return [GetExecutionSessionStateResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         states = parsed_json["states"]&.transform_values do |v|
           v = v.to_json
-          SeedTraceClient::Submission::ExecutionSessionState.from_json(json_object: v)
+          ExecutionSessionState.from_json(json_object: v)
         end
         num_warming_instances = struct["numWarmingInstances"]
         warming_session_ids = struct["warmingSessionIds"]

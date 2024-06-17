@@ -8,9 +8,9 @@ require "json"
 module SeedTraceClient
   class Submission
     class InvalidRequestResponse
-      # @return [SeedTraceClient::Submission::SubmissionRequest]
+      # @return [SubmissionRequest]
       attr_reader :request
-      # @return [SeedTraceClient::Submission::InvalidRequestCause]
+      # @return [InvalidRequestCause]
       attr_reader :cause
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -20,10 +20,10 @@ module SeedTraceClient
 
       OMIT = Object.new
 
-      # @param request [SeedTraceClient::Submission::SubmissionRequest]
-      # @param cause [SeedTraceClient::Submission::InvalidRequestCause]
+      # @param request [SubmissionRequest]
+      # @param cause [InvalidRequestCause]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Submission::InvalidRequestResponse]
+      # @return [InvalidRequestResponse]
       def initialize(request:, cause:, additional_properties: nil)
         @request = request
         @cause = cause
@@ -34,7 +34,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of InvalidRequestResponse
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::InvalidRequestResponse]
+      # @return [InvalidRequestResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -42,13 +42,13 @@ module SeedTraceClient
           request = nil
         else
           request = parsed_json["request"].to_json
-          request = SeedTraceClient::Submission::SubmissionRequest.from_json(json_object: request)
+          request = SubmissionRequest.from_json(json_object: request)
         end
         if parsed_json["cause"].nil?
           cause = nil
         else
           cause = parsed_json["cause"].to_json
-          cause = SeedTraceClient::Submission::InvalidRequestCause.from_json(json_object: cause)
+          cause = InvalidRequestCause.from_json(json_object: cause)
         end
         new(
           request: request,
@@ -71,8 +71,8 @@ module SeedTraceClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        SeedTraceClient::Submission::SubmissionRequest.validate_raw(obj: obj.request)
-        SeedTraceClient::Submission::InvalidRequestCause.validate_raw(obj: obj.cause)
+        SubmissionRequest.validate_raw(obj: obj.request)
+        InvalidRequestCause.validate_raw(obj: obj.cause)
       end
     end
   end

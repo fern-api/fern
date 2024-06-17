@@ -21,7 +21,7 @@ module SeedResponsePropertyClient
 
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
-    # @return [SeedResponsePropertyClient::Service::Response]
+    # @return [Response]
     # @example
     #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
     #  response_property.service.get_movie(request: "string")
@@ -38,12 +38,12 @@ module SeedResponsePropertyClient
       end
       parsed_json = JSON.parse(response.body)
       nested_response_json = parsed_json["data"].to_json
-      SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
+      Response.from_json(json_object: nested_response_json)
     end
 
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
-    # @return [SeedResponsePropertyClient::Service::Response]
+    # @return [Response]
     # @example
     #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
     #  response_property.service.get_movie_docs(request: "string")
@@ -60,12 +60,12 @@ module SeedResponsePropertyClient
       end
       parsed_json = JSON.parse(response.body)
       nested_response_json = parsed_json["docs"].to_json
-      SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
+      Response.from_json(json_object: nested_response_json)
     end
 
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
-    # @return [SeedResponsePropertyClient::StringResponse]
+    # @return [StringResponse]
     # @example
     #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
     #  response_property.service.get_movie_name(request: "string")
@@ -82,12 +82,12 @@ module SeedResponsePropertyClient
       end
       parsed_json = JSON.parse(response.body)
       nested_response_json = parsed_json["data"].to_json
-      SeedResponsePropertyClient::StringResponse.from_json(json_object: nested_response_json)
+      StringResponse.from_json(json_object: nested_response_json)
     end
 
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
-    # @return [SeedResponsePropertyClient::Service::Response]
+    # @return [Response]
     # @example
     #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
     #  response_property.service.get_movie_metadata(request: "string")
@@ -104,12 +104,12 @@ module SeedResponsePropertyClient
       end
       parsed_json = JSON.parse(response.body)
       nested_response_json = parsed_json["metadata"].to_json
-      SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
+      Response.from_json(json_object: nested_response_json)
     end
 
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
-    # @return [SeedResponsePropertyClient::Service::Response]
+    # @return [Response]
     # @example
     #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
     #  response_property.service.get_optional_movie(request: "string")
@@ -126,12 +126,12 @@ module SeedResponsePropertyClient
       end
       parsed_json = JSON.parse(response.body)
       nested_response_json = parsed_json["data"].to_json
-      SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
+      Response.from_json(json_object: nested_response_json)
     end
 
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
-    # @return [SeedResponsePropertyClient::Service::OPTIONAL_WITH_DOCS]
+    # @return [OPTIONAL_WITH_DOCS]
     # @example
     #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
     #  response_property.service.get_optional_movie_docs(request: "string")
@@ -148,12 +148,12 @@ module SeedResponsePropertyClient
       end
       parsed_json = JSON.parse(response.body)
       nested_response_json = parsed_json["docs"].to_json
-      SeedResponsePropertyClient::Service::WithDocs.from_json(json_object: nested_response_json)
+      WithDocs.from_json(json_object: nested_response_json)
     end
 
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
-    # @return [SeedResponsePropertyClient::OPTIONAL_STRING_RESPONSE]
+    # @return [OPTIONAL_STRING_RESPONSE]
     # @example
     #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
     #  response_property.service.get_optional_movie_name(request: "string")
@@ -170,7 +170,7 @@ module SeedResponsePropertyClient
       end
       parsed_json = JSON.parse(response.body)
       nested_response_json = parsed_json["data"].to_json
-      SeedResponsePropertyClient::StringResponse.from_json(json_object: nested_response_json)
+      StringResponse.from_json(json_object: nested_response_json)
     end
   end
 
@@ -186,7 +186,7 @@ module SeedResponsePropertyClient
 
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
-    # @return [SeedResponsePropertyClient::Service::Response]
+    # @return [Response]
     # @example
     #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
     #  response_property.service.get_movie(request: "string")
@@ -204,13 +204,13 @@ module SeedResponsePropertyClient
         end
         parsed_json = JSON.parse(response.body)
         nested_response_json = parsed_json["data"].to_json
-        SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
+        Response.from_json(json_object: nested_response_json)
       end
     end
 
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
-    # @return [SeedResponsePropertyClient::Service::Response]
+    # @return [Response]
     # @example
     #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
     #  response_property.service.get_movie_docs(request: "string")
@@ -228,13 +228,13 @@ module SeedResponsePropertyClient
         end
         parsed_json = JSON.parse(response.body)
         nested_response_json = parsed_json["docs"].to_json
-        SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
+        Response.from_json(json_object: nested_response_json)
       end
     end
 
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
-    # @return [SeedResponsePropertyClient::StringResponse]
+    # @return [StringResponse]
     # @example
     #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
     #  response_property.service.get_movie_name(request: "string")
@@ -252,13 +252,13 @@ module SeedResponsePropertyClient
         end
         parsed_json = JSON.parse(response.body)
         nested_response_json = parsed_json["data"].to_json
-        SeedResponsePropertyClient::StringResponse.from_json(json_object: nested_response_json)
+        StringResponse.from_json(json_object: nested_response_json)
       end
     end
 
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
-    # @return [SeedResponsePropertyClient::Service::Response]
+    # @return [Response]
     # @example
     #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
     #  response_property.service.get_movie_metadata(request: "string")
@@ -276,13 +276,13 @@ module SeedResponsePropertyClient
         end
         parsed_json = JSON.parse(response.body)
         nested_response_json = parsed_json["metadata"].to_json
-        SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
+        Response.from_json(json_object: nested_response_json)
       end
     end
 
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
-    # @return [SeedResponsePropertyClient::Service::Response]
+    # @return [Response]
     # @example
     #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
     #  response_property.service.get_optional_movie(request: "string")
@@ -300,13 +300,13 @@ module SeedResponsePropertyClient
         end
         parsed_json = JSON.parse(response.body)
         nested_response_json = parsed_json["data"].to_json
-        SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
+        Response.from_json(json_object: nested_response_json)
       end
     end
 
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
-    # @return [SeedResponsePropertyClient::Service::OPTIONAL_WITH_DOCS]
+    # @return [OPTIONAL_WITH_DOCS]
     # @example
     #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
     #  response_property.service.get_optional_movie_docs(request: "string")
@@ -324,13 +324,13 @@ module SeedResponsePropertyClient
         end
         parsed_json = JSON.parse(response.body)
         nested_response_json = parsed_json["docs"].to_json
-        SeedResponsePropertyClient::Service::WithDocs.from_json(json_object: nested_response_json)
+        WithDocs.from_json(json_object: nested_response_json)
       end
     end
 
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
-    # @return [SeedResponsePropertyClient::OPTIONAL_STRING_RESPONSE]
+    # @return [OPTIONAL_STRING_RESPONSE]
     # @example
     #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
     #  response_property.service.get_optional_movie_name(request: "string")
@@ -348,7 +348,7 @@ module SeedResponsePropertyClient
         end
         parsed_json = JSON.parse(response.body)
         nested_response_json = parsed_json["data"].to_json
-        SeedResponsePropertyClient::StringResponse.from_json(json_object: nested_response_json)
+        StringResponse.from_json(json_object: nested_response_json)
       end
     end
   end

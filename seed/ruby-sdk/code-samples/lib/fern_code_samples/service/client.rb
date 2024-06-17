@@ -17,7 +17,7 @@ module SeedCodeSamplesClient
 
     # @param num_events [Integer]
     # @param request_options [SeedCodeSamplesClient::RequestOptions]
-    # @return [SeedCodeSamplesClient::Service::MyResponse]
+    # @return [MyResponse]
     # @example
     #  code_samples = SeedCodeSamplesClient::Client.new(base_url: "https://api.example.com")
     #  code_samples.service.hello(num_events: 5)
@@ -32,7 +32,7 @@ module SeedCodeSamplesClient
         req.body = { **(request_options&.additional_body_parameters || {}), num_events: num_events }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/hello"
       end
-      SeedCodeSamplesClient::Service::MyResponse.from_json(json_object: response.body)
+      MyResponse.from_json(json_object: response.body)
     end
   end
 
@@ -48,7 +48,7 @@ module SeedCodeSamplesClient
 
     # @param num_events [Integer]
     # @param request_options [SeedCodeSamplesClient::RequestOptions]
-    # @return [SeedCodeSamplesClient::Service::MyResponse]
+    # @return [MyResponse]
     # @example
     #  code_samples = SeedCodeSamplesClient::Client.new(base_url: "https://api.example.com")
     #  code_samples.service.hello(num_events: 5)
@@ -64,7 +64,7 @@ module SeedCodeSamplesClient
           req.body = { **(request_options&.additional_body_parameters || {}), num_events: num_events }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/hello"
         end
-        SeedCodeSamplesClient::Service::MyResponse.from_json(json_object: response.body)
+        MyResponse.from_json(json_object: response.body)
       end
     end
   end

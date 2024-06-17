@@ -7,9 +7,9 @@ require "json"
 module SeedTraceClient
   class Submission
     class UnexpectedLanguageError
-      # @return [SeedTraceClient::Commons::Language]
+      # @return [Language]
       attr_reader :expected_language
-      # @return [SeedTraceClient::Commons::Language]
+      # @return [Language]
       attr_reader :actual_language
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -19,10 +19,10 @@ module SeedTraceClient
 
       OMIT = Object.new
 
-      # @param expected_language [SeedTraceClient::Commons::Language]
-      # @param actual_language [SeedTraceClient::Commons::Language]
+      # @param expected_language [Language]
+      # @param actual_language [Language]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Submission::UnexpectedLanguageError]
+      # @return [UnexpectedLanguageError]
       def initialize(expected_language:, actual_language:, additional_properties: nil)
         @expected_language = expected_language
         @actual_language = actual_language
@@ -33,7 +33,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of UnexpectedLanguageError
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::UnexpectedLanguageError]
+      # @return [UnexpectedLanguageError]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         expected_language = struct["expectedLanguage"]
@@ -59,8 +59,8 @@ module SeedTraceClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        obj.expected_language.is_a?(SeedTraceClient::Commons::Language) != false || raise("Passed value for field obj.expected_language is not the expected type, validation failed.")
-        obj.actual_language.is_a?(SeedTraceClient::Commons::Language) != false || raise("Passed value for field obj.actual_language is not the expected type, validation failed.")
+        obj.expected_language.is_a?(Language) != false || raise("Passed value for field obj.expected_language is not the expected type, validation failed.")
+        obj.actual_language.is_a?(Language) != false || raise("Passed value for field obj.actual_language is not the expected type, validation failed.")
       end
     end
   end

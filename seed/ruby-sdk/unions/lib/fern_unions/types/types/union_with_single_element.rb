@@ -16,7 +16,7 @@ module SeedUnionsClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [SeedUnionsClient::Types::UnionWithSingleElement]
+      # @return [UnionWithSingleElement]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -25,13 +25,13 @@ module SeedUnionsClient
       # Deserialize a JSON object to an instance of UnionWithSingleElement
       #
       # @param json_object [String]
-      # @return [SeedUnionsClient::Types::UnionWithSingleElement]
+      # @return [UnionWithSingleElement]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "foo"
                  end
-        SeedUnionsClient::Types::Foo.from_json(json_object: json_object)
+        Foo.from_json(json_object: json_object)
         new(member: member, discriminant: struct.type)
       end
 
@@ -57,7 +57,7 @@ module SeedUnionsClient
       def self.validate_raw(obj:)
         case obj.type
         when "foo"
-          SeedUnionsClient::Types::Foo.validate_raw(obj: obj)
+          Foo.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -71,8 +71,8 @@ module SeedUnionsClient
         @member.is_a?(obj)
       end
 
-      # @param member [SeedUnionsClient::Types::Foo]
-      # @return [SeedUnionsClient::Types::UnionWithSingleElement]
+      # @param member [Foo]
+      # @return [UnionWithSingleElement]
       def self.foo(member:)
         new(member: member, discriminant: "foo")
       end

@@ -18,7 +18,7 @@ module SeedTraceClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [SeedTraceClient::Submission::SubmissionResponse]
+      # @return [SubmissionResponse]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -27,7 +27,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of SubmissionResponse
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::SubmissionResponse]
+      # @return [SubmissionResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
@@ -38,11 +38,11 @@ module SeedTraceClient
                  when "workspaceInitialized"
                    nil
                  when "serverErrored"
-                   SeedTraceClient::Submission::ExceptionInfo.from_json(json_object: json_object)
+                   ExceptionInfo.from_json(json_object: json_object)
                  when "codeExecutionUpdate"
-                   SeedTraceClient::Submission::CodeExecutionUpdate.from_json(json_object: json_object.value)
+                   CodeExecutionUpdate.from_json(json_object: json_object.value)
                  when "terminated"
-                   SeedTraceClient::Submission::TerminatedResponse.from_json(json_object: json_object)
+                   TerminatedResponse.from_json(json_object: json_object)
                  else
                    json_object
                  end
@@ -87,11 +87,11 @@ module SeedTraceClient
         when "workspaceInitialized"
           # noop
         when "serverErrored"
-          SeedTraceClient::Submission::ExceptionInfo.validate_raw(obj: obj)
+          ExceptionInfo.validate_raw(obj: obj)
         when "codeExecutionUpdate"
-          SeedTraceClient::Submission::CodeExecutionUpdate.validate_raw(obj: obj)
+          CodeExecutionUpdate.validate_raw(obj: obj)
         when "terminated"
-          SeedTraceClient::Submission::TerminatedResponse.validate_raw(obj: obj)
+          TerminatedResponse.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -105,36 +105,36 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @return [SeedTraceClient::Submission::SubmissionResponse]
+      # @return [SubmissionResponse]
       def self.server_initialized
         new(member: nil, discriminant: "serverInitialized")
       end
 
       # @param member [String]
-      # @return [SeedTraceClient::Submission::SubmissionResponse]
+      # @return [SubmissionResponse]
       def self.problem_initialized(member:)
         new(member: member, discriminant: "problemInitialized")
       end
 
-      # @return [SeedTraceClient::Submission::SubmissionResponse]
+      # @return [SubmissionResponse]
       def self.workspace_initialized
         new(member: nil, discriminant: "workspaceInitialized")
       end
 
-      # @param member [SeedTraceClient::Submission::ExceptionInfo]
-      # @return [SeedTraceClient::Submission::SubmissionResponse]
+      # @param member [ExceptionInfo]
+      # @return [SubmissionResponse]
       def self.server_errored(member:)
         new(member: member, discriminant: "serverErrored")
       end
 
-      # @param member [SeedTraceClient::Submission::CodeExecutionUpdate]
-      # @return [SeedTraceClient::Submission::SubmissionResponse]
+      # @param member [CodeExecutionUpdate]
+      # @return [SubmissionResponse]
       def self.code_execution_update(member:)
         new(member: member, discriminant: "codeExecutionUpdate")
       end
 
-      # @param member [SeedTraceClient::Submission::TerminatedResponse]
-      # @return [SeedTraceClient::Submission::SubmissionResponse]
+      # @param member [TerminatedResponse]
+      # @return [SubmissionResponse]
       def self.terminated(member:)
         new(member: member, discriminant: "terminated")
       end

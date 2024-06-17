@@ -14,9 +14,9 @@ module SeedTraceClient
       attr_reader :test_case_id
       # @return [Integer]
       attr_reader :line_number
-      # @return [SeedTraceClient::Submission::LightweightStackframeInformation]
+      # @return [LightweightStackframeInformation]
       attr_reader :lightweight_stack_info
-      # @return [SeedTraceClient::Submission::TracedFile]
+      # @return [TracedFile]
       attr_reader :traced_file
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -29,10 +29,10 @@ module SeedTraceClient
       # @param submission_id [String]
       # @param test_case_id [String]
       # @param line_number [Integer]
-      # @param lightweight_stack_info [SeedTraceClient::Submission::LightweightStackframeInformation]
-      # @param traced_file [SeedTraceClient::Submission::TracedFile]
+      # @param lightweight_stack_info [LightweightStackframeInformation]
+      # @param traced_file [TracedFile]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Submission::RecordingResponseNotification]
+      # @return [RecordingResponseNotification]
       def initialize(submission_id:, line_number:, lightweight_stack_info:, test_case_id: OMIT, traced_file: OMIT,
                      additional_properties: nil)
         @submission_id = submission_id
@@ -55,7 +55,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of RecordingResponseNotification
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::RecordingResponseNotification]
+      # @return [RecordingResponseNotification]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -66,13 +66,13 @@ module SeedTraceClient
           lightweight_stack_info = nil
         else
           lightweight_stack_info = parsed_json["lightweightStackInfo"].to_json
-          lightweight_stack_info = SeedTraceClient::Submission::LightweightStackframeInformation.from_json(json_object: lightweight_stack_info)
+          lightweight_stack_info = LightweightStackframeInformation.from_json(json_object: lightweight_stack_info)
         end
         if parsed_json["tracedFile"].nil?
           traced_file = nil
         else
           traced_file = parsed_json["tracedFile"].to_json
-          traced_file = SeedTraceClient::Submission::TracedFile.from_json(json_object: traced_file)
+          traced_file = TracedFile.from_json(json_object: traced_file)
         end
         new(
           submission_id: submission_id,
@@ -101,8 +101,8 @@ module SeedTraceClient
         obj.submission_id.is_a?(String) != false || raise("Passed value for field obj.submission_id is not the expected type, validation failed.")
         obj.test_case_id&.is_a?(String) != false || raise("Passed value for field obj.test_case_id is not the expected type, validation failed.")
         obj.line_number.is_a?(Integer) != false || raise("Passed value for field obj.line_number is not the expected type, validation failed.")
-        SeedTraceClient::Submission::LightweightStackframeInformation.validate_raw(obj: obj.lightweight_stack_info)
-        obj.traced_file.nil? || SeedTraceClient::Submission::TracedFile.validate_raw(obj: obj.traced_file)
+        LightweightStackframeInformation.validate_raw(obj: obj.lightweight_stack_info)
+        obj.traced_file.nil? || TracedFile.validate_raw(obj: obj.traced_file)
       end
     end
   end

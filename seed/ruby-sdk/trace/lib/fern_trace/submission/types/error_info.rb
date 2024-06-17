@@ -18,7 +18,7 @@ module SeedTraceClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [SeedTraceClient::Submission::ErrorInfo]
+      # @return [ErrorInfo]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -27,18 +27,18 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of ErrorInfo
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::ErrorInfo]
+      # @return [ErrorInfo]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "compileError"
-                   SeedTraceClient::Submission::CompileError.from_json(json_object: json_object)
+                   CompileError.from_json(json_object: json_object)
                  when "runtimeError"
-                   SeedTraceClient::Submission::RuntimeError.from_json(json_object: json_object)
+                   RuntimeError.from_json(json_object: json_object)
                  when "internalError"
-                   SeedTraceClient::Submission::InternalError.from_json(json_object: json_object)
+                   InternalError.from_json(json_object: json_object)
                  else
-                   SeedTraceClient::Submission::CompileError.from_json(json_object: json_object)
+                   CompileError.from_json(json_object: json_object)
                  end
         new(member: member, discriminant: struct.type)
       end
@@ -69,11 +69,11 @@ module SeedTraceClient
       def self.validate_raw(obj:)
         case obj.type
         when "compileError"
-          SeedTraceClient::Submission::CompileError.validate_raw(obj: obj)
+          CompileError.validate_raw(obj: obj)
         when "runtimeError"
-          SeedTraceClient::Submission::RuntimeError.validate_raw(obj: obj)
+          RuntimeError.validate_raw(obj: obj)
         when "internalError"
-          SeedTraceClient::Submission::InternalError.validate_raw(obj: obj)
+          InternalError.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -87,20 +87,20 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @param member [SeedTraceClient::Submission::CompileError]
-      # @return [SeedTraceClient::Submission::ErrorInfo]
+      # @param member [CompileError]
+      # @return [ErrorInfo]
       def self.compile_error(member:)
         new(member: member, discriminant: "compileError")
       end
 
-      # @param member [SeedTraceClient::Submission::RuntimeError]
-      # @return [SeedTraceClient::Submission::ErrorInfo]
+      # @param member [RuntimeError]
+      # @return [ErrorInfo]
       def self.runtime_error(member:)
         new(member: member, discriminant: "runtimeError")
       end
 
-      # @param member [SeedTraceClient::Submission::InternalError]
-      # @return [SeedTraceClient::Submission::ErrorInfo]
+      # @param member [InternalError]
+      # @return [ErrorInfo]
       def self.internal_error(member:)
         new(member: member, discriminant: "internalError")
       end

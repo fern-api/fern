@@ -7,9 +7,9 @@ require "json"
 module SeedTraceClient
   class Commons
     class MapType
-      # @return [SeedTraceClient::Commons::VariableType]
+      # @return [VariableType]
       attr_reader :key_type
-      # @return [SeedTraceClient::Commons::VariableType]
+      # @return [VariableType]
       attr_reader :value_type
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -19,10 +19,10 @@ module SeedTraceClient
 
       OMIT = Object.new
 
-      # @param key_type [SeedTraceClient::Commons::VariableType]
-      # @param value_type [SeedTraceClient::Commons::VariableType]
+      # @param key_type [VariableType]
+      # @param value_type [VariableType]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Commons::MapType]
+      # @return [MapType]
       def initialize(key_type:, value_type:, additional_properties: nil)
         @key_type = key_type
         @value_type = value_type
@@ -33,7 +33,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of MapType
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Commons::MapType]
+      # @return [MapType]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -41,13 +41,13 @@ module SeedTraceClient
           key_type = nil
         else
           key_type = parsed_json["keyType"].to_json
-          key_type = SeedTraceClient::Commons::VariableType.from_json(json_object: key_type)
+          key_type = VariableType.from_json(json_object: key_type)
         end
         if parsed_json["valueType"].nil?
           value_type = nil
         else
           value_type = parsed_json["valueType"].to_json
-          value_type = SeedTraceClient::Commons::VariableType.from_json(json_object: value_type)
+          value_type = VariableType.from_json(json_object: value_type)
         end
         new(
           key_type: key_type,
@@ -70,8 +70,8 @@ module SeedTraceClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        SeedTraceClient::Commons::VariableType.validate_raw(obj: obj.key_type)
-        SeedTraceClient::Commons::VariableType.validate_raw(obj: obj.value_type)
+        VariableType.validate_raw(obj: obj.key_type)
+        VariableType.validate_raw(obj: obj.value_type)
       end
     end
   end

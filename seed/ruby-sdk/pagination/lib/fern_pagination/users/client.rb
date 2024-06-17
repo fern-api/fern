@@ -21,11 +21,11 @@ module SeedPaginationClient
 
     # @param page [Integer] Defaults to first page
     # @param per_page [Integer] Defaults to per page
-    # @param order [SeedPaginationClient::Users::Order]
+    # @param order [Order]
     # @param starting_after [String] The cursor used for pagination in order to fetch
     #  the next page of results.
     # @param request_options [SeedPaginationClient::RequestOptions]
-    # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
+    # @return [ListUsersPaginationResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
     #  pagination.users.list_with_cursor_pagination(
@@ -52,16 +52,16 @@ module SeedPaginationClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/users"
       end
-      SeedPaginationClient::Users::ListUsersPaginationResponse.from_json(json_object: response.body)
+      ListUsersPaginationResponse.from_json(json_object: response.body)
     end
 
     # @param page [Integer] Defaults to first page
     # @param per_page [Integer] Defaults to per page
-    # @param order [SeedPaginationClient::Users::Order]
+    # @param order [Order]
     # @param starting_after [String] The cursor used for pagination in order to fetch
     #  the next page of results.
     # @param request_options [SeedPaginationClient::RequestOptions]
-    # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
+    # @return [ListUsersPaginationResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
     #  pagination.users.list_with_offset_pagination(
@@ -88,12 +88,12 @@ module SeedPaginationClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/users"
       end
-      SeedPaginationClient::Users::ListUsersPaginationResponse.from_json(json_object: response.body)
+      ListUsersPaginationResponse.from_json(json_object: response.body)
     end
 
     # @param cursor [String]
     # @param request_options [SeedPaginationClient::RequestOptions]
-    # @return [SeedPaginationClient::Users::ListUsersExtendedResponse]
+    # @return [ListUsersExtendedResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
     #  pagination.users.list_with_extended_results(cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
@@ -109,13 +109,13 @@ module SeedPaginationClient
         req.params = { **(request_options&.additional_query_parameters || {}), "cursor": cursor }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/users"
       end
-      SeedPaginationClient::Users::ListUsersExtendedResponse.from_json(json_object: response.body)
+      ListUsersExtendedResponse.from_json(json_object: response.body)
     end
 
     # @param starting_after [String] The cursor used for pagination in order to fetch
     #  the next page of results.
     # @param request_options [SeedPaginationClient::RequestOptions]
-    # @return [SeedPaginationClient::UsernameCursor]
+    # @return [UsernameCursor]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
     #  pagination.users.list_usernames(starting_after: "string")
@@ -134,12 +134,12 @@ module SeedPaginationClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/users"
       end
-      SeedPaginationClient::UsernameCursor.from_json(json_object: response.body)
+      UsernameCursor.from_json(json_object: response.body)
     end
 
     # @param offset [Integer]
     # @param request_options [SeedPaginationClient::RequestOptions]
-    # @return [SeedPaginationClient::Users::UsernameContainer]
+    # @return [UsernameContainer]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
     #  pagination.users.list_with_global_config(offset: 1)
@@ -155,7 +155,7 @@ module SeedPaginationClient
         req.params = { **(request_options&.additional_query_parameters || {}), "offset": offset }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/users"
       end
-      SeedPaginationClient::Users::UsernameContainer.from_json(json_object: response.body)
+      UsernameContainer.from_json(json_object: response.body)
     end
   end
 
@@ -171,11 +171,11 @@ module SeedPaginationClient
 
     # @param page [Integer] Defaults to first page
     # @param per_page [Integer] Defaults to per page
-    # @param order [SeedPaginationClient::Users::Order]
+    # @param order [Order]
     # @param starting_after [String] The cursor used for pagination in order to fetch
     #  the next page of results.
     # @param request_options [SeedPaginationClient::RequestOptions]
-    # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
+    # @return [ListUsersPaginationResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
     #  pagination.users.list_with_cursor_pagination(
@@ -203,17 +203,17 @@ module SeedPaginationClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/users"
         end
-        SeedPaginationClient::Users::ListUsersPaginationResponse.from_json(json_object: response.body)
+        ListUsersPaginationResponse.from_json(json_object: response.body)
       end
     end
 
     # @param page [Integer] Defaults to first page
     # @param per_page [Integer] Defaults to per page
-    # @param order [SeedPaginationClient::Users::Order]
+    # @param order [Order]
     # @param starting_after [String] The cursor used for pagination in order to fetch
     #  the next page of results.
     # @param request_options [SeedPaginationClient::RequestOptions]
-    # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
+    # @return [ListUsersPaginationResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
     #  pagination.users.list_with_offset_pagination(
@@ -241,13 +241,13 @@ module SeedPaginationClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/users"
         end
-        SeedPaginationClient::Users::ListUsersPaginationResponse.from_json(json_object: response.body)
+        ListUsersPaginationResponse.from_json(json_object: response.body)
       end
     end
 
     # @param cursor [String]
     # @param request_options [SeedPaginationClient::RequestOptions]
-    # @return [SeedPaginationClient::Users::ListUsersExtendedResponse]
+    # @return [ListUsersExtendedResponse]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
     #  pagination.users.list_with_extended_results(cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
@@ -264,14 +264,14 @@ module SeedPaginationClient
           req.params = { **(request_options&.additional_query_parameters || {}), "cursor": cursor }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/users"
         end
-        SeedPaginationClient::Users::ListUsersExtendedResponse.from_json(json_object: response.body)
+        ListUsersExtendedResponse.from_json(json_object: response.body)
       end
     end
 
     # @param starting_after [String] The cursor used for pagination in order to fetch
     #  the next page of results.
     # @param request_options [SeedPaginationClient::RequestOptions]
-    # @return [SeedPaginationClient::UsernameCursor]
+    # @return [UsernameCursor]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
     #  pagination.users.list_usernames(starting_after: "string")
@@ -291,13 +291,13 @@ module SeedPaginationClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/users"
         end
-        SeedPaginationClient::UsernameCursor.from_json(json_object: response.body)
+        UsernameCursor.from_json(json_object: response.body)
       end
     end
 
     # @param offset [Integer]
     # @param request_options [SeedPaginationClient::RequestOptions]
-    # @return [SeedPaginationClient::Users::UsernameContainer]
+    # @return [UsernameContainer]
     # @example
     #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
     #  pagination.users.list_with_global_config(offset: 1)
@@ -314,7 +314,7 @@ module SeedPaginationClient
           req.params = { **(request_options&.additional_query_parameters || {}), "offset": offset }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/users"
         end
-        SeedPaginationClient::Users::UsernameContainer.from_json(json_object: response.body)
+        UsernameContainer.from_json(json_object: response.body)
       end
     end
   end

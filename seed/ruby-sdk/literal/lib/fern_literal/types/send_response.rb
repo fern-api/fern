@@ -23,7 +23,7 @@ module SeedLiteralClient
     # @param status [Integer]
     # @param success [Boolean]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [SeedLiteralClient::SendResponse]
+    # @return [SendResponse]
     def initialize(message:, status:, success:, additional_properties: nil)
       @message = message
       @status = status
@@ -35,7 +35,7 @@ module SeedLiteralClient
     # Deserialize a JSON object to an instance of SendResponse
     #
     # @param json_object [String]
-    # @return [SeedLiteralClient::SendResponse]
+    # @return [SendResponse]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       message = struct["message"]

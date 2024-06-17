@@ -25,7 +25,7 @@ module SeedExamplesClient
         # @param data [Hash{String => String}]
         # @param json_string [String]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [SeedExamplesClient::Commons::Types::Metadata]
+        # @return [Commons::Metadata]
         def initialize(id:, data: OMIT, json_string: OMIT, additional_properties: nil)
           @id = id
           @data = data if data != OMIT
@@ -39,7 +39,7 @@ module SeedExamplesClient
         # Deserialize a JSON object to an instance of Metadata
         #
         # @param json_object [String]
-        # @return [SeedExamplesClient::Commons::Types::Metadata]
+        # @return [Commons::Metadata]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           id = struct["id"]

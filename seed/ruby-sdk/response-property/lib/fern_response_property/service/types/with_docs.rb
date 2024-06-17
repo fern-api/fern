@@ -18,7 +18,7 @@ module SeedResponsePropertyClient
 
       # @param docs [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedResponsePropertyClient::Service::WithDocs]
+      # @return [WithDocs]
       def initialize(docs:, additional_properties: nil)
         @docs = docs
         @additional_properties = additional_properties
@@ -28,7 +28,7 @@ module SeedResponsePropertyClient
       # Deserialize a JSON object to an instance of WithDocs
       #
       # @param json_object [String]
-      # @return [SeedResponsePropertyClient::Service::WithDocs]
+      # @return [WithDocs]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         docs = struct["docs"]

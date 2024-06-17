@@ -18,7 +18,7 @@ module SeedAudiencesClient
 
       # @param imported [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedAudiencesClient::Foo::ImportingType]
+      # @return [ImportingType]
       def initialize(imported:, additional_properties: nil)
         @imported = imported
         @additional_properties = additional_properties
@@ -28,7 +28,7 @@ module SeedAudiencesClient
       # Deserialize a JSON object to an instance of ImportingType
       #
       # @param json_object [String]
-      # @return [SeedAudiencesClient::Foo::ImportingType]
+      # @return [ImportingType]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         imported = struct["imported"]

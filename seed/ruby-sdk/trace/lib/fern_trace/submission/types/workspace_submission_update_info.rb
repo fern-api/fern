@@ -19,7 +19,7 @@ module SeedTraceClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [SeedTraceClient::Submission::WorkspaceSubmissionUpdateInfo]
+      # @return [WorkspaceSubmissionUpdateInfo]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -28,22 +28,22 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of WorkspaceSubmissionUpdateInfo
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::WorkspaceSubmissionUpdateInfo]
+      # @return [WorkspaceSubmissionUpdateInfo]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "running"
                    json_object.value
                  when "ran"
-                   SeedTraceClient::Submission::WorkspaceRunDetails.from_json(json_object: json_object)
+                   WorkspaceRunDetails.from_json(json_object: json_object)
                  when "stopped"
                    nil
                  when "traced"
                    nil
                  when "tracedV2"
-                   SeedTraceClient::Submission::WorkspaceTracedUpdate.from_json(json_object: json_object)
+                   WorkspaceTracedUpdate.from_json(json_object: json_object)
                  when "errored"
-                   SeedTraceClient::Submission::ErrorInfo.from_json(json_object: json_object.value)
+                   ErrorInfo.from_json(json_object: json_object.value)
                  when "finished"
                    nil
                  else
@@ -86,17 +86,17 @@ module SeedTraceClient
       def self.validate_raw(obj:)
         case obj.type
         when "running"
-          obj.is_a?(SeedTraceClient::Submission::RunningSubmissionState) != false || raise("Passed value for field obj is not the expected type, validation failed.")
+          obj.is_a?(RunningSubmissionState) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "ran"
-          SeedTraceClient::Submission::WorkspaceRunDetails.validate_raw(obj: obj)
+          WorkspaceRunDetails.validate_raw(obj: obj)
         when "stopped"
           # noop
         when "traced"
           # noop
         when "tracedV2"
-          SeedTraceClient::Submission::WorkspaceTracedUpdate.validate_raw(obj: obj)
+          WorkspaceTracedUpdate.validate_raw(obj: obj)
         when "errored"
-          SeedTraceClient::Submission::ErrorInfo.validate_raw(obj: obj)
+          ErrorInfo.validate_raw(obj: obj)
         when "finished"
           # noop
         else
@@ -112,41 +112,41 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @param member [SeedTraceClient::Submission::RunningSubmissionState]
-      # @return [SeedTraceClient::Submission::WorkspaceSubmissionUpdateInfo]
+      # @param member [RunningSubmissionState]
+      # @return [WorkspaceSubmissionUpdateInfo]
       def self.running(member:)
         new(member: member, discriminant: "running")
       end
 
-      # @param member [SeedTraceClient::Submission::WorkspaceRunDetails]
-      # @return [SeedTraceClient::Submission::WorkspaceSubmissionUpdateInfo]
+      # @param member [WorkspaceRunDetails]
+      # @return [WorkspaceSubmissionUpdateInfo]
       def self.ran(member:)
         new(member: member, discriminant: "ran")
       end
 
-      # @return [SeedTraceClient::Submission::WorkspaceSubmissionUpdateInfo]
+      # @return [WorkspaceSubmissionUpdateInfo]
       def self.stopped
         new(member: nil, discriminant: "stopped")
       end
 
-      # @return [SeedTraceClient::Submission::WorkspaceSubmissionUpdateInfo]
+      # @return [WorkspaceSubmissionUpdateInfo]
       def self.traced
         new(member: nil, discriminant: "traced")
       end
 
-      # @param member [SeedTraceClient::Submission::WorkspaceTracedUpdate]
-      # @return [SeedTraceClient::Submission::WorkspaceSubmissionUpdateInfo]
+      # @param member [WorkspaceTracedUpdate]
+      # @return [WorkspaceSubmissionUpdateInfo]
       def self.traced_v_2(member:)
         new(member: member, discriminant: "tracedV2")
       end
 
-      # @param member [SeedTraceClient::Submission::ErrorInfo]
-      # @return [SeedTraceClient::Submission::WorkspaceSubmissionUpdateInfo]
+      # @param member [ErrorInfo]
+      # @return [WorkspaceSubmissionUpdateInfo]
       def self.errored(member:)
         new(member: member, discriminant: "errored")
       end
 
-      # @return [SeedTraceClient::Submission::WorkspaceSubmissionUpdateInfo]
+      # @return [WorkspaceSubmissionUpdateInfo]
       def self.finished
         new(member: nil, discriminant: "finished")
       end

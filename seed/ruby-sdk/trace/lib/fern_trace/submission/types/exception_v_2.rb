@@ -16,7 +16,7 @@ module SeedTraceClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [SeedTraceClient::Submission::ExceptionV2]
+      # @return [ExceptionV2]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -25,16 +25,16 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of ExceptionV2
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::ExceptionV2]
+      # @return [ExceptionV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "generic"
-                   SeedTraceClient::Submission::ExceptionInfo.from_json(json_object: json_object)
+                   ExceptionInfo.from_json(json_object: json_object)
                  when "timeout"
                    nil
                  else
-                   SeedTraceClient::Submission::ExceptionInfo.from_json(json_object: json_object)
+                   ExceptionInfo.from_json(json_object: json_object)
                  end
         new(member: member, discriminant: struct.type)
       end
@@ -63,7 +63,7 @@ module SeedTraceClient
       def self.validate_raw(obj:)
         case obj.type
         when "generic"
-          SeedTraceClient::Submission::ExceptionInfo.validate_raw(obj: obj)
+          ExceptionInfo.validate_raw(obj: obj)
         when "timeout"
           # noop
         else
@@ -79,13 +79,13 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @param member [SeedTraceClient::Submission::ExceptionInfo]
-      # @return [SeedTraceClient::Submission::ExceptionV2]
+      # @param member [ExceptionInfo]
+      # @return [ExceptionV2]
       def self.generic(member:)
         new(member: member, discriminant: "generic")
       end
 
-      # @return [SeedTraceClient::Submission::ExceptionV2]
+      # @return [ExceptionV2]
       def self.timeout
         new(member: nil, discriminant: "timeout")
       end

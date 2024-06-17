@@ -9,7 +9,7 @@ module SeedPaginationClient
     class ListUsersExtendedResponse
       # @return [Integer] The totall number of /users
       attr_reader :total_count
-      # @return [SeedPaginationClient::Users::UserListContainer]
+      # @return [UserListContainer]
       attr_reader :data
       # @return [String]
       attr_reader :next_
@@ -22,10 +22,10 @@ module SeedPaginationClient
       OMIT = Object.new
 
       # @param total_count [Integer] The totall number of /users
-      # @param data [SeedPaginationClient::Users::UserListContainer]
+      # @param data [UserListContainer]
       # @param next_ [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedPaginationClient::Users::ListUsersExtendedResponse]
+      # @return [ListUsersExtendedResponse]
       def initialize(total_count:, data:, next_: OMIT, additional_properties: nil)
         @total_count = total_count
         @data = data
@@ -39,7 +39,7 @@ module SeedPaginationClient
       # Deserialize a JSON object to an instance of ListUsersExtendedResponse
       #
       # @param json_object [String]
-      # @return [SeedPaginationClient::Users::ListUsersExtendedResponse]
+      # @return [ListUsersExtendedResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -48,7 +48,7 @@ module SeedPaginationClient
           data = nil
         else
           data = parsed_json["data"].to_json
-          data = SeedPaginationClient::Users::UserListContainer.from_json(json_object: data)
+          data = UserListContainer.from_json(json_object: data)
         end
         next_ = struct["next"]
         new(
@@ -74,7 +74,7 @@ module SeedPaginationClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.total_count.is_a?(Integer) != false || raise("Passed value for field obj.total_count is not the expected type, validation failed.")
-        SeedPaginationClient::Users::UserListContainer.validate_raw(obj: obj.data)
+        UserListContainer.validate_raw(obj: obj.data)
         obj.next_&.is_a?(String) != false || raise("Passed value for field obj.next_ is not the expected type, validation failed.")
       end
     end

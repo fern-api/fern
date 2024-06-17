@@ -17,7 +17,7 @@ module SeedIdempotencyHeadersClient
     end
 
     # @param amount [Integer]
-    # @param currency [SeedIdempotencyHeadersClient::Payment::Currency]
+    # @param currency [Currency]
     # @param request_options [SeedIdempotencyHeadersClient::IdempotencyRequestOptions]
     # @return [String]
     # @example
@@ -73,7 +73,7 @@ module SeedIdempotencyHeadersClient
     end
 
     # @param amount [Integer]
-    # @param currency [SeedIdempotencyHeadersClient::Payment::Currency]
+    # @param currency [Currency]
     # @param request_options [SeedIdempotencyHeadersClient::IdempotencyRequestOptions]
     # @return [String]
     # @example

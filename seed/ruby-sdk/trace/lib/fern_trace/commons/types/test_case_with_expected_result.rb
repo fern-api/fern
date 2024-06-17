@@ -8,9 +8,9 @@ require "json"
 module SeedTraceClient
   class Commons
     class TestCaseWithExpectedResult
-      # @return [SeedTraceClient::Commons::TestCase]
+      # @return [TestCase]
       attr_reader :test_case
-      # @return [SeedTraceClient::Commons::VariableValue]
+      # @return [VariableValue]
       attr_reader :expected_result
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -20,10 +20,10 @@ module SeedTraceClient
 
       OMIT = Object.new
 
-      # @param test_case [SeedTraceClient::Commons::TestCase]
-      # @param expected_result [SeedTraceClient::Commons::VariableValue]
+      # @param test_case [TestCase]
+      # @param expected_result [VariableValue]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Commons::TestCaseWithExpectedResult]
+      # @return [TestCaseWithExpectedResult]
       def initialize(test_case:, expected_result:, additional_properties: nil)
         @test_case = test_case
         @expected_result = expected_result
@@ -34,7 +34,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of TestCaseWithExpectedResult
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Commons::TestCaseWithExpectedResult]
+      # @return [TestCaseWithExpectedResult]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -42,13 +42,13 @@ module SeedTraceClient
           test_case = nil
         else
           test_case = parsed_json["testCase"].to_json
-          test_case = SeedTraceClient::Commons::TestCase.from_json(json_object: test_case)
+          test_case = TestCase.from_json(json_object: test_case)
         end
         if parsed_json["expectedResult"].nil?
           expected_result = nil
         else
           expected_result = parsed_json["expectedResult"].to_json
-          expected_result = SeedTraceClient::Commons::VariableValue.from_json(json_object: expected_result)
+          expected_result = VariableValue.from_json(json_object: expected_result)
         end
         new(
           test_case: test_case,
@@ -71,8 +71,8 @@ module SeedTraceClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        SeedTraceClient::Commons::TestCase.validate_raw(obj: obj.test_case)
-        SeedTraceClient::Commons::VariableValue.validate_raw(obj: obj.expected_result)
+        TestCase.validate_raw(obj: obj.test_case)
+        VariableValue.validate_raw(obj: obj.expected_result)
       end
     end
   end

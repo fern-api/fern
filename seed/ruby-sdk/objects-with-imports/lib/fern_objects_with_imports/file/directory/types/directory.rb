@@ -10,9 +10,9 @@ module SeedObjectsWithImportsClient
       class Directory
         # @return [String]
         attr_reader :name
-        # @return [Array<SeedObjectsWithImportsClient::File::File>]
+        # @return [Array<File>]
         attr_reader :files
-        # @return [Array<SeedObjectsWithImportsClient::File::Directory::Directory>]
+        # @return [Array<File::Directory>]
         attr_reader :directories
         # @return [OpenStruct] Additional properties unmapped to the current class definition
         attr_reader :additional_properties
@@ -23,10 +23,10 @@ module SeedObjectsWithImportsClient
         OMIT = Object.new
 
         # @param name [String]
-        # @param files [Array<SeedObjectsWithImportsClient::File::File>]
-        # @param directories [Array<SeedObjectsWithImportsClient::File::Directory::Directory>]
+        # @param files [Array<File>]
+        # @param directories [Array<File::Directory>]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [SeedObjectsWithImportsClient::File::Directory::Directory]
+        # @return [File::Directory]
         def initialize(name:, files: OMIT, directories: OMIT, additional_properties: nil)
           @name = name
           @files = files if files != OMIT
@@ -40,18 +40,18 @@ module SeedObjectsWithImportsClient
         # Deserialize a JSON object to an instance of Directory
         #
         # @param json_object [String]
-        # @return [SeedObjectsWithImportsClient::File::Directory::Directory]
+        # @return [File::Directory]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
           name = struct["name"]
           files = parsed_json["files"]&.map do |v|
             v = v.to_json
-            SeedObjectsWithImportsClient::File::File.from_json(json_object: v)
+            File.from_json(json_object: v)
           end
           directories = parsed_json["directories"]&.map do |v|
             v = v.to_json
-            SeedObjectsWithImportsClient::File::Directory::Directory.from_json(json_object: v)
+            File::Directory.from_json(json_object: v)
           end
           new(
             name: name,

@@ -26,7 +26,7 @@ module SeedTraceClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [SeedTraceClient::Submission::CodeExecutionUpdate]
+      # @return [CodeExecutionUpdate]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -35,34 +35,34 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of CodeExecutionUpdate
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::CodeExecutionUpdate]
+      # @return [CodeExecutionUpdate]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "buildingExecutor"
-                   SeedTraceClient::Submission::BuildingExecutorResponse.from_json(json_object: json_object)
+                   BuildingExecutorResponse.from_json(json_object: json_object)
                  when "running"
-                   SeedTraceClient::Submission::RunningResponse.from_json(json_object: json_object)
+                   RunningResponse.from_json(json_object: json_object)
                  when "errored"
-                   SeedTraceClient::Submission::ErroredResponse.from_json(json_object: json_object)
+                   ErroredResponse.from_json(json_object: json_object)
                  when "stopped"
-                   SeedTraceClient::Submission::StoppedResponse.from_json(json_object: json_object)
+                   StoppedResponse.from_json(json_object: json_object)
                  when "graded"
-                   SeedTraceClient::Submission::GradedResponse.from_json(json_object: json_object)
+                   GradedResponse.from_json(json_object: json_object)
                  when "gradedV2"
-                   SeedTraceClient::Submission::GradedResponseV2.from_json(json_object: json_object)
+                   GradedResponseV2.from_json(json_object: json_object)
                  when "workspaceRan"
-                   SeedTraceClient::Submission::WorkspaceRanResponse.from_json(json_object: json_object)
+                   WorkspaceRanResponse.from_json(json_object: json_object)
                  when "recording"
-                   SeedTraceClient::Submission::RecordingResponseNotification.from_json(json_object: json_object)
+                   RecordingResponseNotification.from_json(json_object: json_object)
                  when "recorded"
-                   SeedTraceClient::Submission::RecordedResponseNotification.from_json(json_object: json_object)
+                   RecordedResponseNotification.from_json(json_object: json_object)
                  when "invalidRequest"
-                   SeedTraceClient::Submission::InvalidRequestResponse.from_json(json_object: json_object)
+                   InvalidRequestResponse.from_json(json_object: json_object)
                  when "finished"
-                   SeedTraceClient::Submission::FinishedResponse.from_json(json_object: json_object)
+                   FinishedResponse.from_json(json_object: json_object)
                  else
-                   SeedTraceClient::Submission::BuildingExecutorResponse.from_json(json_object: json_object)
+                   BuildingExecutorResponse.from_json(json_object: json_object)
                  end
         new(member: member, discriminant: struct.type)
       end
@@ -109,27 +109,27 @@ module SeedTraceClient
       def self.validate_raw(obj:)
         case obj.type
         when "buildingExecutor"
-          SeedTraceClient::Submission::BuildingExecutorResponse.validate_raw(obj: obj)
+          BuildingExecutorResponse.validate_raw(obj: obj)
         when "running"
-          SeedTraceClient::Submission::RunningResponse.validate_raw(obj: obj)
+          RunningResponse.validate_raw(obj: obj)
         when "errored"
-          SeedTraceClient::Submission::ErroredResponse.validate_raw(obj: obj)
+          ErroredResponse.validate_raw(obj: obj)
         when "stopped"
-          SeedTraceClient::Submission::StoppedResponse.validate_raw(obj: obj)
+          StoppedResponse.validate_raw(obj: obj)
         when "graded"
-          SeedTraceClient::Submission::GradedResponse.validate_raw(obj: obj)
+          GradedResponse.validate_raw(obj: obj)
         when "gradedV2"
-          SeedTraceClient::Submission::GradedResponseV2.validate_raw(obj: obj)
+          GradedResponseV2.validate_raw(obj: obj)
         when "workspaceRan"
-          SeedTraceClient::Submission::WorkspaceRanResponse.validate_raw(obj: obj)
+          WorkspaceRanResponse.validate_raw(obj: obj)
         when "recording"
-          SeedTraceClient::Submission::RecordingResponseNotification.validate_raw(obj: obj)
+          RecordingResponseNotification.validate_raw(obj: obj)
         when "recorded"
-          SeedTraceClient::Submission::RecordedResponseNotification.validate_raw(obj: obj)
+          RecordedResponseNotification.validate_raw(obj: obj)
         when "invalidRequest"
-          SeedTraceClient::Submission::InvalidRequestResponse.validate_raw(obj: obj)
+          InvalidRequestResponse.validate_raw(obj: obj)
         when "finished"
-          SeedTraceClient::Submission::FinishedResponse.validate_raw(obj: obj)
+          FinishedResponse.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -143,68 +143,68 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @param member [SeedTraceClient::Submission::BuildingExecutorResponse]
-      # @return [SeedTraceClient::Submission::CodeExecutionUpdate]
+      # @param member [BuildingExecutorResponse]
+      # @return [CodeExecutionUpdate]
       def self.building_executor(member:)
         new(member: member, discriminant: "buildingExecutor")
       end
 
-      # @param member [SeedTraceClient::Submission::RunningResponse]
-      # @return [SeedTraceClient::Submission::CodeExecutionUpdate]
+      # @param member [RunningResponse]
+      # @return [CodeExecutionUpdate]
       def self.running(member:)
         new(member: member, discriminant: "running")
       end
 
-      # @param member [SeedTraceClient::Submission::ErroredResponse]
-      # @return [SeedTraceClient::Submission::CodeExecutionUpdate]
+      # @param member [ErroredResponse]
+      # @return [CodeExecutionUpdate]
       def self.errored(member:)
         new(member: member, discriminant: "errored")
       end
 
-      # @param member [SeedTraceClient::Submission::StoppedResponse]
-      # @return [SeedTraceClient::Submission::CodeExecutionUpdate]
+      # @param member [StoppedResponse]
+      # @return [CodeExecutionUpdate]
       def self.stopped(member:)
         new(member: member, discriminant: "stopped")
       end
 
-      # @param member [SeedTraceClient::Submission::GradedResponse]
-      # @return [SeedTraceClient::Submission::CodeExecutionUpdate]
+      # @param member [GradedResponse]
+      # @return [CodeExecutionUpdate]
       def self.graded(member:)
         new(member: member, discriminant: "graded")
       end
 
-      # @param member [SeedTraceClient::Submission::GradedResponseV2]
-      # @return [SeedTraceClient::Submission::CodeExecutionUpdate]
+      # @param member [GradedResponseV2]
+      # @return [CodeExecutionUpdate]
       def self.graded_v_2(member:)
         new(member: member, discriminant: "gradedV2")
       end
 
-      # @param member [SeedTraceClient::Submission::WorkspaceRanResponse]
-      # @return [SeedTraceClient::Submission::CodeExecutionUpdate]
+      # @param member [WorkspaceRanResponse]
+      # @return [CodeExecutionUpdate]
       def self.workspace_ran(member:)
         new(member: member, discriminant: "workspaceRan")
       end
 
-      # @param member [SeedTraceClient::Submission::RecordingResponseNotification]
-      # @return [SeedTraceClient::Submission::CodeExecutionUpdate]
+      # @param member [RecordingResponseNotification]
+      # @return [CodeExecutionUpdate]
       def self.recording(member:)
         new(member: member, discriminant: "recording")
       end
 
-      # @param member [SeedTraceClient::Submission::RecordedResponseNotification]
-      # @return [SeedTraceClient::Submission::CodeExecutionUpdate]
+      # @param member [RecordedResponseNotification]
+      # @return [CodeExecutionUpdate]
       def self.recorded(member:)
         new(member: member, discriminant: "recorded")
       end
 
-      # @param member [SeedTraceClient::Submission::InvalidRequestResponse]
-      # @return [SeedTraceClient::Submission::CodeExecutionUpdate]
+      # @param member [InvalidRequestResponse]
+      # @return [CodeExecutionUpdate]
       def self.invalid_request(member:)
         new(member: member, discriminant: "invalidRequest")
       end
 
-      # @param member [SeedTraceClient::Submission::FinishedResponse]
-      # @return [SeedTraceClient::Submission::CodeExecutionUpdate]
+      # @param member [FinishedResponse]
+      # @return [CodeExecutionUpdate]
       def self.finished(member:)
         new(member: member, discriminant: "finished")
       end

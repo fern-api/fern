@@ -9,7 +9,7 @@ module SeedTraceClient
     class BuildingExecutorResponse
       # @return [String]
       attr_reader :submission_id
-      # @return [SeedTraceClient::Submission::ExecutionSessionStatus]
+      # @return [ExecutionSessionStatus]
       attr_reader :status
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -20,9 +20,9 @@ module SeedTraceClient
       OMIT = Object.new
 
       # @param submission_id [String]
-      # @param status [SeedTraceClient::Submission::ExecutionSessionStatus]
+      # @param status [ExecutionSessionStatus]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Submission::BuildingExecutorResponse]
+      # @return [BuildingExecutorResponse]
       def initialize(submission_id:, status:, additional_properties: nil)
         @submission_id = submission_id
         @status = status
@@ -33,7 +33,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of BuildingExecutorResponse
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::BuildingExecutorResponse]
+      # @return [BuildingExecutorResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         submission_id = struct["submissionId"]
@@ -60,7 +60,7 @@ module SeedTraceClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.submission_id.is_a?(String) != false || raise("Passed value for field obj.submission_id is not the expected type, validation failed.")
-        obj.status.is_a?(SeedTraceClient::Submission::ExecutionSessionStatus) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
+        obj.status.is_a?(ExecutionSessionStatus) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
       end
     end
   end

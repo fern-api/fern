@@ -16,7 +16,7 @@ module SeedUnionsClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [SeedUnionsClient::Types::UnionWithUnknown]
+      # @return [UnionWithUnknown]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -25,16 +25,16 @@ module SeedUnionsClient
       # Deserialize a JSON object to an instance of UnionWithUnknown
       #
       # @param json_object [String]
-      # @return [SeedUnionsClient::Types::UnionWithUnknown]
+      # @return [UnionWithUnknown]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "foo"
-                   SeedUnionsClient::Types::Foo.from_json(json_object: json_object)
+                   Foo.from_json(json_object: json_object)
                  when "unknown"
                    nil
                  else
-                   SeedUnionsClient::Types::Foo.from_json(json_object: json_object)
+                   Foo.from_json(json_object: json_object)
                  end
         new(member: member, discriminant: struct.type)
       end
@@ -63,7 +63,7 @@ module SeedUnionsClient
       def self.validate_raw(obj:)
         case obj.type
         when "foo"
-          SeedUnionsClient::Types::Foo.validate_raw(obj: obj)
+          Foo.validate_raw(obj: obj)
         when "unknown"
           # noop
         else
@@ -79,13 +79,13 @@ module SeedUnionsClient
         @member.is_a?(obj)
       end
 
-      # @param member [SeedUnionsClient::Types::Foo]
-      # @return [SeedUnionsClient::Types::UnionWithUnknown]
+      # @param member [Foo]
+      # @return [UnionWithUnknown]
       def self.foo(member:)
         new(member: member, discriminant: "foo")
       end
 
-      # @return [SeedUnionsClient::Types::UnionWithUnknown]
+      # @return [UnionWithUnknown]
       def self.unknown
         new(member: nil, discriminant: "unknown")
       end

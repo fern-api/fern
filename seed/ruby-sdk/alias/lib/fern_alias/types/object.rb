@@ -3,5 +3,5 @@
 require_relative "type"
 
 module SeedAliasClient
-  OBJECT = SeedAliasClient::Type
+  OBJECT = Type
 end

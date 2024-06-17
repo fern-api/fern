@@ -34,11 +34,11 @@ module SeedUndiscriminatedUnionsClient
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/"
       end
-      SeedUndiscriminatedUnionsClient::Union::MyUnion.from_json(json_object: response.body)
+      MyUnion.from_json(json_object: response.body)
     end
 
     # @param request_options [SeedUndiscriminatedUnionsClient::RequestOptions]
-    # @return [SeedUndiscriminatedUnionsClient::Union::METADATA]
+    # @return [METADATA]
     # @example
     #  undiscriminated_unions = SeedUndiscriminatedUnionsClient::Client.new(base_url: "https://api.example.com")
     #  undiscriminated_unions.union.get_metadata
@@ -84,12 +84,12 @@ module SeedUndiscriminatedUnionsClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/"
         end
-        SeedUndiscriminatedUnionsClient::Union::MyUnion.from_json(json_object: response.body)
+        MyUnion.from_json(json_object: response.body)
       end
     end
 
     # @param request_options [SeedUndiscriminatedUnionsClient::RequestOptions]
-    # @return [SeedUndiscriminatedUnionsClient::Union::METADATA]
+    # @return [METADATA]
     # @example
     #  undiscriminated_unions = SeedUndiscriminatedUnionsClient::Client.new(base_url: "https://api.example.com")
     #  undiscriminated_unions.union.get_metadata

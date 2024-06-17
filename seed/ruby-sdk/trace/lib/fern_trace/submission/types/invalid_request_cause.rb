@@ -18,7 +18,7 @@ module SeedTraceClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [SeedTraceClient::Submission::InvalidRequestCause]
+      # @return [InvalidRequestCause]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -27,18 +27,18 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of InvalidRequestCause
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::InvalidRequestCause]
+      # @return [InvalidRequestCause]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "submissionIdNotFound"
-                   SeedTraceClient::Submission::SubmissionIdNotFound.from_json(json_object: json_object)
+                   SubmissionIdNotFound.from_json(json_object: json_object)
                  when "customTestCasesUnsupported"
-                   SeedTraceClient::Submission::CustomTestCasesUnsupported.from_json(json_object: json_object)
+                   CustomTestCasesUnsupported.from_json(json_object: json_object)
                  when "unexpectedLanguage"
-                   SeedTraceClient::Submission::UnexpectedLanguageError.from_json(json_object: json_object)
+                   UnexpectedLanguageError.from_json(json_object: json_object)
                  else
-                   SeedTraceClient::Submission::SubmissionIdNotFound.from_json(json_object: json_object)
+                   SubmissionIdNotFound.from_json(json_object: json_object)
                  end
         new(member: member, discriminant: struct.type)
       end
@@ -69,11 +69,11 @@ module SeedTraceClient
       def self.validate_raw(obj:)
         case obj.type
         when "submissionIdNotFound"
-          SeedTraceClient::Submission::SubmissionIdNotFound.validate_raw(obj: obj)
+          SubmissionIdNotFound.validate_raw(obj: obj)
         when "customTestCasesUnsupported"
-          SeedTraceClient::Submission::CustomTestCasesUnsupported.validate_raw(obj: obj)
+          CustomTestCasesUnsupported.validate_raw(obj: obj)
         when "unexpectedLanguage"
-          SeedTraceClient::Submission::UnexpectedLanguageError.validate_raw(obj: obj)
+          UnexpectedLanguageError.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -87,20 +87,20 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @param member [SeedTraceClient::Submission::SubmissionIdNotFound]
-      # @return [SeedTraceClient::Submission::InvalidRequestCause]
+      # @param member [SubmissionIdNotFound]
+      # @return [InvalidRequestCause]
       def self.submission_id_not_found(member:)
         new(member: member, discriminant: "submissionIdNotFound")
       end
 
-      # @param member [SeedTraceClient::Submission::CustomTestCasesUnsupported]
-      # @return [SeedTraceClient::Submission::InvalidRequestCause]
+      # @param member [CustomTestCasesUnsupported]
+      # @return [InvalidRequestCause]
       def self.custom_test_cases_unsupported(member:)
         new(member: member, discriminant: "customTestCasesUnsupported")
       end
 
-      # @param member [SeedTraceClient::Submission::UnexpectedLanguageError]
-      # @return [SeedTraceClient::Submission::InvalidRequestCause]
+      # @param member [UnexpectedLanguageError]
+      # @return [InvalidRequestCause]
       def self.unexpected_language(member:)
         new(member: member, discriminant: "unexpectedLanguage")
       end

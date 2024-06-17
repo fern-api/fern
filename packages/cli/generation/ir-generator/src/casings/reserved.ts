@@ -262,7 +262,11 @@ export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<str
         "until",
         "when",
         "while",
-        "yield"
+        "yield",
+        "Object",
+        "JSON",
+        "Date",
+        "DateTime"
     ]),
     [generatorsYml.GenerationLanguage.CSHARP]: new Set([
         "abstract",

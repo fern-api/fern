@@ -9,9 +9,9 @@ module SeedTraceClient
   module V2
     class Problem
       class VoidFunctionDefinition
-        # @return [Array<SeedTraceClient::V2::Problem::Parameter>]
+        # @return [Array<V2::Parameter>]
         attr_reader :parameters
-        # @return [SeedTraceClient::V2::Problem::FunctionImplementationForMultipleLanguages]
+        # @return [V2::FunctionImplementationForMultipleLanguages]
         attr_reader :code
         # @return [OpenStruct] Additional properties unmapped to the current class definition
         attr_reader :additional_properties
@@ -21,10 +21,10 @@ module SeedTraceClient
 
         OMIT = Object.new
 
-        # @param parameters [Array<SeedTraceClient::V2::Problem::Parameter>]
-        # @param code [SeedTraceClient::V2::Problem::FunctionImplementationForMultipleLanguages]
+        # @param parameters [Array<V2::Parameter>]
+        # @param code [V2::FunctionImplementationForMultipleLanguages]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [SeedTraceClient::V2::Problem::VoidFunctionDefinition]
+        # @return [V2::VoidFunctionDefinition]
         def initialize(parameters:, code:, additional_properties: nil)
           @parameters = parameters
           @code = code
@@ -35,19 +35,19 @@ module SeedTraceClient
         # Deserialize a JSON object to an instance of VoidFunctionDefinition
         #
         # @param json_object [String]
-        # @return [SeedTraceClient::V2::Problem::VoidFunctionDefinition]
+        # @return [V2::VoidFunctionDefinition]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
           parameters = parsed_json["parameters"]&.map do |v|
             v = v.to_json
-            SeedTraceClient::V2::Problem::Parameter.from_json(json_object: v)
+            V2::Parameter.from_json(json_object: v)
           end
           if parsed_json["code"].nil?
             code = nil
           else
             code = parsed_json["code"].to_json
-            code = SeedTraceClient::V2::Problem::FunctionImplementationForMultipleLanguages.from_json(json_object: code)
+            code = V2::FunctionImplementationForMultipleLanguages.from_json(json_object: code)
           end
           new(
             parameters: parameters,
@@ -71,7 +71,7 @@ module SeedTraceClient
         # @return [Void]
         def self.validate_raw(obj:)
           obj.parameters.is_a?(Array) != false || raise("Passed value for field obj.parameters is not the expected type, validation failed.")
-          SeedTraceClient::V2::Problem::FunctionImplementationForMultipleLanguages.validate_raw(obj: obj.code)
+          V2::FunctionImplementationForMultipleLanguages.validate_raw(obj: obj.code)
         end
       end
     end

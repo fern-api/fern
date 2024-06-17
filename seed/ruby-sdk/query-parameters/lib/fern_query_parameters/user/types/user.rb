@@ -21,7 +21,7 @@ module SeedQueryParametersClient
       # @param name [String]
       # @param tags [Array<String>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedQueryParametersClient::User::User]
+      # @return [User]
       def initialize(name:, tags:, additional_properties: nil)
         @name = name
         @tags = tags
@@ -32,7 +32,7 @@ module SeedQueryParametersClient
       # Deserialize a JSON object to an instance of User
       #
       # @param json_object [String]
-      # @return [SeedQueryParametersClient::User::User]
+      # @return [User]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         name = struct["name"]

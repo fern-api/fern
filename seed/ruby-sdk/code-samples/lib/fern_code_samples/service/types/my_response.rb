@@ -21,7 +21,7 @@ module SeedCodeSamplesClient
       # @param id [String]
       # @param name [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedCodeSamplesClient::Service::MyResponse]
+      # @return [MyResponse]
       def initialize(id:, name: OMIT, additional_properties: nil)
         @id = id
         @name = name if name != OMIT
@@ -34,7 +34,7 @@ module SeedCodeSamplesClient
       # Deserialize a JSON object to an instance of MyResponse
       #
       # @param json_object [String]
-      # @return [SeedCodeSamplesClient::Service::MyResponse]
+      # @return [MyResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         id = struct["id"]

@@ -9,7 +9,7 @@ module SeedTraceClient
     class RunningResponse
       # @return [String]
       attr_reader :submission_id
-      # @return [SeedTraceClient::Submission::RunningSubmissionState]
+      # @return [RunningSubmissionState]
       attr_reader :state
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -20,9 +20,9 @@ module SeedTraceClient
       OMIT = Object.new
 
       # @param submission_id [String]
-      # @param state [SeedTraceClient::Submission::RunningSubmissionState]
+      # @param state [RunningSubmissionState]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Submission::RunningResponse]
+      # @return [RunningResponse]
       def initialize(submission_id:, state:, additional_properties: nil)
         @submission_id = submission_id
         @state = state
@@ -33,7 +33,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of RunningResponse
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::RunningResponse]
+      # @return [RunningResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         submission_id = struct["submissionId"]
@@ -60,7 +60,7 @@ module SeedTraceClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.submission_id.is_a?(String) != false || raise("Passed value for field obj.submission_id is not the expected type, validation failed.")
-        obj.state.is_a?(SeedTraceClient::Submission::RunningSubmissionState) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
+        obj.state.is_a?(RunningSubmissionState) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
       end
     end
   end

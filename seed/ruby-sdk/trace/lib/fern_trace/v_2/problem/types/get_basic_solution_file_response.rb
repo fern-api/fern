@@ -7,7 +7,7 @@ module SeedTraceClient
   module V2
     class Problem
       class GetBasicSolutionFileResponse
-        # @return [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::Problem::FileInfoV2}]
+        # @return [Hash{Language => V2::FileInfoV2}]
         attr_reader :solution_file_by_language
         # @return [OpenStruct] Additional properties unmapped to the current class definition
         attr_reader :additional_properties
@@ -17,9 +17,9 @@ module SeedTraceClient
 
         OMIT = Object.new
 
-        # @param solution_file_by_language [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::Problem::FileInfoV2}]
+        # @param solution_file_by_language [Hash{Language => V2::FileInfoV2}]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [SeedTraceClient::V2::Problem::GetBasicSolutionFileResponse]
+        # @return [V2::GetBasicSolutionFileResponse]
         def initialize(solution_file_by_language:, additional_properties: nil)
           @solution_file_by_language = solution_file_by_language
           @additional_properties = additional_properties
@@ -29,13 +29,13 @@ module SeedTraceClient
         # Deserialize a JSON object to an instance of GetBasicSolutionFileResponse
         #
         # @param json_object [String]
-        # @return [SeedTraceClient::V2::Problem::GetBasicSolutionFileResponse]
+        # @return [V2::GetBasicSolutionFileResponse]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
           solution_file_by_language = parsed_json["solutionFileByLanguage"]&.transform_values do |v|
             v = v.to_json
-            SeedTraceClient::V2::Problem::FileInfoV2.from_json(json_object: v)
+            V2::FileInfoV2.from_json(json_object: v)
           end
           new(solution_file_by_language: solution_file_by_language, additional_properties: struct)
         end

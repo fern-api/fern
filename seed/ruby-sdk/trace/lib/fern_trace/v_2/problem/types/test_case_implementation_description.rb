@@ -8,7 +8,7 @@ module SeedTraceClient
   module V2
     class Problem
       class TestCaseImplementationDescription
-        # @return [Array<SeedTraceClient::V2::Problem::TestCaseImplementationDescriptionBoard>]
+        # @return [Array<V2::TestCaseImplementationDescriptionBoard>]
         attr_reader :boards
         # @return [OpenStruct] Additional properties unmapped to the current class definition
         attr_reader :additional_properties
@@ -18,9 +18,9 @@ module SeedTraceClient
 
         OMIT = Object.new
 
-        # @param boards [Array<SeedTraceClient::V2::Problem::TestCaseImplementationDescriptionBoard>]
+        # @param boards [Array<V2::TestCaseImplementationDescriptionBoard>]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [SeedTraceClient::V2::Problem::TestCaseImplementationDescription]
+        # @return [V2::TestCaseImplementationDescription]
         def initialize(boards:, additional_properties: nil)
           @boards = boards
           @additional_properties = additional_properties
@@ -30,13 +30,13 @@ module SeedTraceClient
         # Deserialize a JSON object to an instance of TestCaseImplementationDescription
         #
         # @param json_object [String]
-        # @return [SeedTraceClient::V2::Problem::TestCaseImplementationDescription]
+        # @return [V2::TestCaseImplementationDescription]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
           boards = parsed_json["boards"]&.map do |v|
             v = v.to_json
-            SeedTraceClient::V2::Problem::TestCaseImplementationDescriptionBoard.from_json(json_object: v)
+            V2::TestCaseImplementationDescriptionBoard.from_json(json_object: v)
           end
           new(boards: boards, additional_properties: struct)
         end

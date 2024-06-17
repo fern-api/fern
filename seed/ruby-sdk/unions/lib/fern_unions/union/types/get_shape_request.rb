@@ -18,7 +18,7 @@ module SeedUnionsClient
 
       # @param id [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedUnionsClient::Union::GetShapeRequest]
+      # @return [GetShapeRequest]
       def initialize(id:, additional_properties: nil)
         @id = id
         @additional_properties = additional_properties
@@ -28,7 +28,7 @@ module SeedUnionsClient
       # Deserialize a JSON object to an instance of GetShapeRequest
       #
       # @param json_object [String]
-      # @return [SeedUnionsClient::Union::GetShapeRequest]
+      # @return [GetShapeRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         id = struct["id"]

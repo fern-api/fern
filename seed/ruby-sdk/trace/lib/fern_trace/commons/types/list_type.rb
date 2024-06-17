@@ -7,7 +7,7 @@ require "json"
 module SeedTraceClient
   class Commons
     class ListType
-      # @return [SeedTraceClient::Commons::VariableType]
+      # @return [VariableType]
       attr_reader :value_type
       # @return [Boolean] Whether this list is fixed-size (for languages that supports fixed-size lists).
       #  Defaults to false.
@@ -20,11 +20,11 @@ module SeedTraceClient
 
       OMIT = Object.new
 
-      # @param value_type [SeedTraceClient::Commons::VariableType]
+      # @param value_type [VariableType]
       # @param is_fixed_length [Boolean] Whether this list is fixed-size (for languages that supports fixed-size lists).
       #  Defaults to false.
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Commons::ListType]
+      # @return [ListType]
       def initialize(value_type:, is_fixed_length: OMIT, additional_properties: nil)
         @value_type = value_type
         @is_fixed_length = is_fixed_length if is_fixed_length != OMIT
@@ -37,7 +37,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of ListType
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Commons::ListType]
+      # @return [ListType]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -45,7 +45,7 @@ module SeedTraceClient
           value_type = nil
         else
           value_type = parsed_json["valueType"].to_json
-          value_type = SeedTraceClient::Commons::VariableType.from_json(json_object: value_type)
+          value_type = VariableType.from_json(json_object: value_type)
         end
         is_fixed_length = struct["isFixedLength"]
         new(
@@ -69,7 +69,7 @@ module SeedTraceClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        SeedTraceClient::Commons::VariableType.validate_raw(obj: obj.value_type)
+        VariableType.validate_raw(obj: obj.value_type)
         obj.is_fixed_length&.is_a?(Boolean) != false || raise("Passed value for field obj.is_fixed_length is not the expected type, validation failed.")
       end
     end

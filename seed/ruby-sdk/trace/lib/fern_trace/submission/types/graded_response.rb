@@ -8,7 +8,7 @@ module SeedTraceClient
     class GradedResponse
       # @return [String]
       attr_reader :submission_id
-      # @return [Hash{String => SeedTraceClient::Submission::TestCaseResultWithStdout}]
+      # @return [Hash{String => TestCaseResultWithStdout}]
       attr_reader :test_cases
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -19,9 +19,9 @@ module SeedTraceClient
       OMIT = Object.new
 
       # @param submission_id [String]
-      # @param test_cases [Hash{String => SeedTraceClient::Submission::TestCaseResultWithStdout}]
+      # @param test_cases [Hash{String => TestCaseResultWithStdout}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Submission::GradedResponse]
+      # @return [GradedResponse]
       def initialize(submission_id:, test_cases:, additional_properties: nil)
         @submission_id = submission_id
         @test_cases = test_cases
@@ -32,14 +32,14 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of GradedResponse
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::GradedResponse]
+      # @return [GradedResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         submission_id = struct["submissionId"]
         test_cases = parsed_json["testCases"]&.transform_values do |v|
           v = v.to_json
-          SeedTraceClient::Submission::TestCaseResultWithStdout.from_json(json_object: v)
+          TestCaseResultWithStdout.from_json(json_object: v)
         end
         new(
           submission_id: submission_id,

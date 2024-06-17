@@ -8,7 +8,7 @@ module SeedTraceClient
   module V2
     class Problem
       class GetGeneratedTestCaseTemplateFileRequest
-        # @return [SeedTraceClient::V2::Problem::TestCaseTemplate]
+        # @return [V2::TestCaseTemplate]
         attr_reader :template
         # @return [OpenStruct] Additional properties unmapped to the current class definition
         attr_reader :additional_properties
@@ -18,9 +18,9 @@ module SeedTraceClient
 
         OMIT = Object.new
 
-        # @param template [SeedTraceClient::V2::Problem::TestCaseTemplate]
+        # @param template [V2::TestCaseTemplate]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [SeedTraceClient::V2::Problem::GetGeneratedTestCaseTemplateFileRequest]
+        # @return [V2::GetGeneratedTestCaseTemplateFileRequest]
         def initialize(template:, additional_properties: nil)
           @template = template
           @additional_properties = additional_properties
@@ -31,7 +31,7 @@ module SeedTraceClient
         #  GetGeneratedTestCaseTemplateFileRequest
         #
         # @param json_object [String]
-        # @return [SeedTraceClient::V2::Problem::GetGeneratedTestCaseTemplateFileRequest]
+        # @return [V2::GetGeneratedTestCaseTemplateFileRequest]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
@@ -39,7 +39,7 @@ module SeedTraceClient
             template = nil
           else
             template = parsed_json["template"].to_json
-            template = SeedTraceClient::V2::Problem::TestCaseTemplate.from_json(json_object: template)
+            template = V2::TestCaseTemplate.from_json(json_object: template)
           end
           new(template: template, additional_properties: struct)
         end
@@ -59,7 +59,7 @@ module SeedTraceClient
         # @param obj [Object]
         # @return [Void]
         def self.validate_raw(obj:)
-          SeedTraceClient::V2::Problem::TestCaseTemplate.validate_raw(obj: obj.template)
+          V2::TestCaseTemplate.validate_raw(obj: obj.template)
         end
       end
     end

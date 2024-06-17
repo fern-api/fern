@@ -11,7 +11,7 @@ module SeedObjectsWithImportsClient
       attr_reader :name
       # @return [String]
       attr_reader :contents
-      # @return [SeedObjectsWithImportsClient::File::FileInfo]
+      # @return [FileInfo]
       attr_reader :info
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -23,9 +23,9 @@ module SeedObjectsWithImportsClient
 
       # @param name [String]
       # @param contents [String]
-      # @param info [SeedObjectsWithImportsClient::File::FileInfo]
+      # @param info [FileInfo]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedObjectsWithImportsClient::File::File]
+      # @return [File]
       def initialize(name:, contents:, info:, additional_properties: nil)
         @name = name
         @contents = contents
@@ -37,7 +37,7 @@ module SeedObjectsWithImportsClient
       # Deserialize a JSON object to an instance of File
       #
       # @param json_object [String]
-      # @return [SeedObjectsWithImportsClient::File::File]
+      # @return [File]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         name = struct["name"]
@@ -67,7 +67,7 @@ module SeedObjectsWithImportsClient
       def self.validate_raw(obj:)
         obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
         obj.contents.is_a?(String) != false || raise("Passed value for field obj.contents is not the expected type, validation failed.")
-        obj.info.is_a?(SeedObjectsWithImportsClient::File::FileInfo) != false || raise("Passed value for field obj.info is not the expected type, validation failed.")
+        obj.info.is_a?(FileInfo) != false || raise("Passed value for field obj.info is not the expected type, validation failed.")
       end
     end
   end

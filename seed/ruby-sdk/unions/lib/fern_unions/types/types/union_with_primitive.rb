@@ -15,7 +15,7 @@ module SeedUnionsClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [SeedUnionsClient::Types::UnionWithPrimitive]
+      # @return [UnionWithPrimitive]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -24,7 +24,7 @@ module SeedUnionsClient
       # Deserialize a JSON object to an instance of UnionWithPrimitive
       #
       # @param json_object [String]
-      # @return [SeedUnionsClient::Types::UnionWithPrimitive]
+      # @return [UnionWithPrimitive]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
@@ -76,13 +76,13 @@ module SeedUnionsClient
       end
 
       # @param member [Integer]
-      # @return [SeedUnionsClient::Types::UnionWithPrimitive]
+      # @return [UnionWithPrimitive]
       def self.integer(member:)
         new(member: member, discriminant: "integer")
       end
 
       # @param member [String]
-      # @return [SeedUnionsClient::Types::UnionWithPrimitive]
+      # @return [UnionWithPrimitive]
       def self.string(member:)
         new(member: member, discriminant: "string")
       end

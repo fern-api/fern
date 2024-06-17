@@ -16,10 +16,10 @@ module SeedEnumClient
       @request_client = request_client
     end
 
-    # @param operand [SeedEnumClient::Operand]
-    # @param maybe_operand [SeedEnumClient::Operand]
-    # @param operand_or_color [SeedEnumClient::Color, SeedEnumClient::Operand]
-    # @param maybe_operand_or_color [SeedEnumClient::Color, SeedEnumClient::Operand]
+    # @param operand [Operand]
+    # @param maybe_operand [Operand]
+    # @param operand_or_color [Color, Operand]
+    # @param maybe_operand_or_color [Color, Operand]
     # @param request_options [SeedEnumClient::RequestOptions]
     # @return [Void]
     # @example
@@ -44,10 +44,10 @@ module SeedEnumClient
       end
     end
 
-    # @param operand [SeedEnumClient::Operand]
-    # @param maybe_operand [SeedEnumClient::Operand]
-    # @param operand_or_color [SeedEnumClient::Color, SeedEnumClient::Operand]
-    # @param maybe_operand_or_color [SeedEnumClient::Color, SeedEnumClient::Operand]
+    # @param operand [Operand]
+    # @param maybe_operand [Operand]
+    # @param operand_or_color [Color, Operand]
+    # @param maybe_operand_or_color [Color, Operand]
     # @param request_options [SeedEnumClient::RequestOptions]
     # @return [Void]
     # @example
@@ -88,10 +88,10 @@ module SeedEnumClient
       @request_client = request_client
     end
 
-    # @param operand [SeedEnumClient::Operand]
-    # @param maybe_operand [SeedEnumClient::Operand]
-    # @param operand_or_color [SeedEnumClient::Color, SeedEnumClient::Operand]
-    # @param maybe_operand_or_color [SeedEnumClient::Color, SeedEnumClient::Operand]
+    # @param operand [Operand]
+    # @param maybe_operand [Operand]
+    # @param operand_or_color [Color, Operand]
+    # @param maybe_operand_or_color [Color, Operand]
     # @param request_options [SeedEnumClient::RequestOptions]
     # @return [Void]
     # @example
@@ -118,10 +118,10 @@ module SeedEnumClient
       end
     end
 
-    # @param operand [SeedEnumClient::Operand]
-    # @param maybe_operand [SeedEnumClient::Operand]
-    # @param operand_or_color [SeedEnumClient::Color, SeedEnumClient::Operand]
-    # @param maybe_operand_or_color [SeedEnumClient::Color, SeedEnumClient::Operand]
+    # @param operand [Operand]
+    # @param maybe_operand [Operand]
+    # @param operand_or_color [Color, Operand]
+    # @param maybe_operand_or_color [Color, Operand]
     # @param request_options [SeedEnumClient::RequestOptions]
     # @return [Void]
     # @example

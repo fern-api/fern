@@ -10,7 +10,7 @@ module SeedUndiscriminatedUnionsClient
       # Deserialize a JSON object to an instance of MyUnion
       #
       # @param json_object [String]
-      # @return [SeedUndiscriminatedUnionsClient::Union::MyUnion]
+      # @return [MyUnion]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         begin

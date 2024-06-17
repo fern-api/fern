@@ -11,7 +11,7 @@ module SeedTraceClient
       attr_reader :method_name
       # @return [Integer]
       attr_reader :line_number
-      # @return [Array<SeedTraceClient::Submission::Scope>]
+      # @return [Array<Scope>]
       attr_reader :scopes
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -23,9 +23,9 @@ module SeedTraceClient
 
       # @param method_name [String]
       # @param line_number [Integer]
-      # @param scopes [Array<SeedTraceClient::Submission::Scope>]
+      # @param scopes [Array<Scope>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Submission::StackFrame]
+      # @return [StackFrame]
       def initialize(method_name:, line_number:, scopes:, additional_properties: nil)
         @method_name = method_name
         @line_number = line_number
@@ -37,7 +37,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of StackFrame
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::StackFrame]
+      # @return [StackFrame]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -45,7 +45,7 @@ module SeedTraceClient
         line_number = struct["lineNumber"]
         scopes = parsed_json["scopes"]&.map do |v|
           v = v.to_json
-          SeedTraceClient::Submission::Scope.from_json(json_object: v)
+          Scope.from_json(json_object: v)
         end
         new(
           method_name: method_name,

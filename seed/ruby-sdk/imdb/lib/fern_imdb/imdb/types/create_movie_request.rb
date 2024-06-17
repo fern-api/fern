@@ -21,7 +21,7 @@ module SeedApiClient
       # @param title [String]
       # @param rating [Float]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedApiClient::Imdb::CreateMovieRequest]
+      # @return [CreateMovieRequest]
       def initialize(title:, rating:, additional_properties: nil)
         @title = title
         @rating = rating
@@ -32,7 +32,7 @@ module SeedApiClient
       # Deserialize a JSON object to an instance of CreateMovieRequest
       #
       # @param json_object [String]
-      # @return [SeedApiClient::Imdb::CreateMovieRequest]
+      # @return [CreateMovieRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         title = struct["title"]

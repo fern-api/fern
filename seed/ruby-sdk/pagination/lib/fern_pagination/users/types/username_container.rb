@@ -18,7 +18,7 @@ module SeedPaginationClient
 
       # @param results [Array<String>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedPaginationClient::Users::UsernameContainer]
+      # @return [UsernameContainer]
       def initialize(results:, additional_properties: nil)
         @results = results
         @additional_properties = additional_properties
@@ -28,7 +28,7 @@ module SeedPaginationClient
       # Deserialize a JSON object to an instance of UsernameContainer
       #
       # @param json_object [String]
-      # @return [SeedPaginationClient::Users::UsernameContainer]
+      # @return [UsernameContainer]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         results = struct["results"]

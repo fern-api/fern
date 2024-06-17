@@ -20,7 +20,7 @@ module SeedTraceClient
 
           # @param expected_value_parameter_id [String]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-          # @return [SeedTraceClient::V2::V3::Problem::DeepEqualityCorrectnessCheck]
+          # @return [V2::V3::DeepEqualityCorrectnessCheck]
           def initialize(expected_value_parameter_id:, additional_properties: nil)
             @expected_value_parameter_id = expected_value_parameter_id
             @additional_properties = additional_properties
@@ -30,7 +30,7 @@ module SeedTraceClient
           # Deserialize a JSON object to an instance of DeepEqualityCorrectnessCheck
           #
           # @param json_object [String]
-          # @return [SeedTraceClient::V2::V3::Problem::DeepEqualityCorrectnessCheck]
+          # @return [V2::V3::DeepEqualityCorrectnessCheck]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             expected_value_parameter_id = struct["expectedValueParameterId"]

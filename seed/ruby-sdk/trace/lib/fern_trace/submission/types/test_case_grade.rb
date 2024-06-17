@@ -17,7 +17,7 @@ module SeedTraceClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [SeedTraceClient::Submission::TestCaseGrade]
+      # @return [TestCaseGrade]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -26,16 +26,16 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of TestCaseGrade
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::TestCaseGrade]
+      # @return [TestCaseGrade]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "hidden"
-                   SeedTraceClient::Submission::TestCaseHiddenGrade.from_json(json_object: json_object)
+                   TestCaseHiddenGrade.from_json(json_object: json_object)
                  when "nonHidden"
-                   SeedTraceClient::Submission::TestCaseNonHiddenGrade.from_json(json_object: json_object)
+                   TestCaseNonHiddenGrade.from_json(json_object: json_object)
                  else
-                   SeedTraceClient::Submission::TestCaseHiddenGrade.from_json(json_object: json_object)
+                   TestCaseHiddenGrade.from_json(json_object: json_object)
                  end
         new(member: member, discriminant: struct.type)
       end
@@ -64,9 +64,9 @@ module SeedTraceClient
       def self.validate_raw(obj:)
         case obj.type
         when "hidden"
-          SeedTraceClient::Submission::TestCaseHiddenGrade.validate_raw(obj: obj)
+          TestCaseHiddenGrade.validate_raw(obj: obj)
         when "nonHidden"
-          SeedTraceClient::Submission::TestCaseNonHiddenGrade.validate_raw(obj: obj)
+          TestCaseNonHiddenGrade.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -80,14 +80,14 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @param member [SeedTraceClient::Submission::TestCaseHiddenGrade]
-      # @return [SeedTraceClient::Submission::TestCaseGrade]
+      # @param member [TestCaseHiddenGrade]
+      # @return [TestCaseGrade]
       def self.hidden(member:)
         new(member: member, discriminant: "hidden")
       end
 
-      # @param member [SeedTraceClient::Submission::TestCaseNonHiddenGrade]
-      # @return [SeedTraceClient::Submission::TestCaseGrade]
+      # @param member [TestCaseNonHiddenGrade]
+      # @return [TestCaseGrade]
       def self.non_hidden(member:)
         new(member: member, discriminant: "nonHidden")
       end

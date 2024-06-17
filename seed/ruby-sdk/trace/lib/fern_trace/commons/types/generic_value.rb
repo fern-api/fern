@@ -21,7 +21,7 @@ module SeedTraceClient
       # @param stringified_type [String]
       # @param stringified_value [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Commons::GenericValue]
+      # @return [GenericValue]
       def initialize(stringified_value:, stringified_type: OMIT, additional_properties: nil)
         @stringified_type = stringified_type if stringified_type != OMIT
         @stringified_value = stringified_value
@@ -34,7 +34,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of GenericValue
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Commons::GenericValue]
+      # @return [GenericValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         stringified_type = struct["stringifiedType"]

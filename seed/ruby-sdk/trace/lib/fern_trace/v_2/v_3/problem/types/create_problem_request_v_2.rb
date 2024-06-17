@@ -15,15 +15,15 @@ module SeedTraceClient
         class CreateProblemRequestV2
           # @return [String]
           attr_reader :problem_name
-          # @return [SeedTraceClient::Problem::ProblemDescription]
+          # @return [ProblemDescription]
           attr_reader :problem_description
-          # @return [SeedTraceClient::V2::V3::Problem::CustomFiles]
+          # @return [V2::V3::CustomFiles]
           attr_reader :custom_files
-          # @return [Array<SeedTraceClient::V2::V3::Problem::TestCaseTemplate>]
+          # @return [Array<V2::V3::TestCaseTemplate>]
           attr_reader :custom_test_case_templates
-          # @return [Array<SeedTraceClient::V2::V3::Problem::TestCaseV2>]
+          # @return [Array<V2::V3::TestCaseV2>]
           attr_reader :testcases
-          # @return [Set<SeedTraceClient::Commons::Language>]
+          # @return [Set<Language>]
           attr_reader :supported_languages
           # @return [Boolean]
           attr_reader :is_public
@@ -36,14 +36,14 @@ module SeedTraceClient
           OMIT = Object.new
 
           # @param problem_name [String]
-          # @param problem_description [SeedTraceClient::Problem::ProblemDescription]
-          # @param custom_files [SeedTraceClient::V2::V3::Problem::CustomFiles]
-          # @param custom_test_case_templates [Array<SeedTraceClient::V2::V3::Problem::TestCaseTemplate>]
-          # @param testcases [Array<SeedTraceClient::V2::V3::Problem::TestCaseV2>]
-          # @param supported_languages [Set<SeedTraceClient::Commons::Language>]
+          # @param problem_description [ProblemDescription]
+          # @param custom_files [V2::V3::CustomFiles]
+          # @param custom_test_case_templates [Array<V2::V3::TestCaseTemplate>]
+          # @param testcases [Array<V2::V3::TestCaseV2>]
+          # @param supported_languages [Set<Language>]
           # @param is_public [Boolean]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-          # @return [SeedTraceClient::V2::V3::Problem::CreateProblemRequestV2]
+          # @return [V2::V3::CreateProblemRequestV2]
           def initialize(problem_name:, problem_description:, custom_files:, custom_test_case_templates:, testcases:,
                          supported_languages:, is_public:, additional_properties: nil)
             @problem_name = problem_name
@@ -68,7 +68,7 @@ module SeedTraceClient
           # Deserialize a JSON object to an instance of CreateProblemRequestV2
           #
           # @param json_object [String]
-          # @return [SeedTraceClient::V2::V3::Problem::CreateProblemRequestV2]
+          # @return [V2::V3::CreateProblemRequestV2]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             parsed_json = JSON.parse(json_object)
@@ -77,21 +77,21 @@ module SeedTraceClient
               problem_description = nil
             else
               problem_description = parsed_json["problemDescription"].to_json
-              problem_description = SeedTraceClient::Problem::ProblemDescription.from_json(json_object: problem_description)
+              problem_description = ProblemDescription.from_json(json_object: problem_description)
             end
             if parsed_json["customFiles"].nil?
               custom_files = nil
             else
               custom_files = parsed_json["customFiles"].to_json
-              custom_files = SeedTraceClient::V2::V3::Problem::CustomFiles.from_json(json_object: custom_files)
+              custom_files = V2::V3::CustomFiles.from_json(json_object: custom_files)
             end
             custom_test_case_templates = parsed_json["customTestCaseTemplates"]&.map do |v|
               v = v.to_json
-              SeedTraceClient::V2::V3::Problem::TestCaseTemplate.from_json(json_object: v)
+              V2::V3::TestCaseTemplate.from_json(json_object: v)
             end
             testcases = parsed_json["testcases"]&.map do |v|
               v = v.to_json
-              SeedTraceClient::V2::V3::Problem::TestCaseV2.from_json(json_object: v)
+              V2::V3::TestCaseV2.from_json(json_object: v)
             end
             if parsed_json["supportedLanguages"].nil?
               supported_languages = nil
@@ -127,8 +127,8 @@ module SeedTraceClient
           # @return [Void]
           def self.validate_raw(obj:)
             obj.problem_name.is_a?(String) != false || raise("Passed value for field obj.problem_name is not the expected type, validation failed.")
-            SeedTraceClient::Problem::ProblemDescription.validate_raw(obj: obj.problem_description)
-            SeedTraceClient::V2::V3::Problem::CustomFiles.validate_raw(obj: obj.custom_files)
+            ProblemDescription.validate_raw(obj: obj.problem_description)
+            V2::V3::CustomFiles.validate_raw(obj: obj.custom_files)
             obj.custom_test_case_templates.is_a?(Array) != false || raise("Passed value for field obj.custom_test_case_templates is not the expected type, validation failed.")
             obj.testcases.is_a?(Array) != false || raise("Passed value for field obj.testcases is not the expected type, validation failed.")
             obj.supported_languages.is_a?(Set) != false || raise("Passed value for field obj.supported_languages is not the expected type, validation failed.")

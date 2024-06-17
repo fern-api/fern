@@ -22,7 +22,7 @@ module SeedExamplesClient
       # @param discriminant [String]
       # @param extra [Hash{String => String}]
       # @param tags [Set<String>]
-      # @return [SeedExamplesClient::Types::Metadata]
+      # @return [Metadata]
       def initialize(member:, discriminant:, extra:, tags:)
         @member = member
         @discriminant = discriminant
@@ -33,7 +33,7 @@ module SeedExamplesClient
       # Deserialize a JSON object to an instance of Metadata
       #
       # @param json_object [String]
-      # @return [SeedExamplesClient::Types::Metadata]
+      # @return [Metadata]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
@@ -85,13 +85,13 @@ module SeedExamplesClient
       end
 
       # @param member [String]
-      # @return [SeedExamplesClient::Types::Metadata]
+      # @return [Metadata]
       def self.html(member:)
         new(member: member, discriminant: "html")
       end
 
       # @param member [String]
-      # @return [SeedExamplesClient::Types::Metadata]
+      # @return [Metadata]
       def self.markdown(member:)
         new(member: member, discriminant: "markdown")
       end

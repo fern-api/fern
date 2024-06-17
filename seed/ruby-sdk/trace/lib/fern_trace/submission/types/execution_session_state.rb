@@ -16,9 +16,9 @@ module SeedTraceClient
       attr_reader :is_warm_instance
       # @return [String]
       attr_reader :aws_task_id
-      # @return [SeedTraceClient::Commons::Language]
+      # @return [Language]
       attr_reader :language
-      # @return [SeedTraceClient::Submission::ExecutionSessionStatus]
+      # @return [ExecutionSessionStatus]
       attr_reader :status
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -32,10 +32,10 @@ module SeedTraceClient
       # @param session_id [String] The auto-generated session id. Formatted as a uuid.
       # @param is_warm_instance [Boolean]
       # @param aws_task_id [String]
-      # @param language [SeedTraceClient::Commons::Language]
-      # @param status [SeedTraceClient::Submission::ExecutionSessionStatus]
+      # @param language [Language]
+      # @param status [ExecutionSessionStatus]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Submission::ExecutionSessionState]
+      # @return [ExecutionSessionState]
       def initialize(session_id:, is_warm_instance:, language:, status:, last_time_contacted: OMIT, aws_task_id: OMIT,
                      additional_properties: nil)
         @last_time_contacted = last_time_contacted if last_time_contacted != OMIT
@@ -60,7 +60,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of ExecutionSessionState
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::ExecutionSessionState]
+      # @return [ExecutionSessionState]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         last_time_contacted = struct["lastTimeContacted"]
@@ -98,8 +98,8 @@ module SeedTraceClient
         obj.session_id.is_a?(String) != false || raise("Passed value for field obj.session_id is not the expected type, validation failed.")
         obj.is_warm_instance.is_a?(Boolean) != false || raise("Passed value for field obj.is_warm_instance is not the expected type, validation failed.")
         obj.aws_task_id&.is_a?(String) != false || raise("Passed value for field obj.aws_task_id is not the expected type, validation failed.")
-        obj.language.is_a?(SeedTraceClient::Commons::Language) != false || raise("Passed value for field obj.language is not the expected type, validation failed.")
-        obj.status.is_a?(SeedTraceClient::Submission::ExecutionSessionStatus) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
+        obj.language.is_a?(Language) != false || raise("Passed value for field obj.language is not the expected type, validation failed.")
+        obj.status.is_a?(ExecutionSessionStatus) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
       end
     end
   end

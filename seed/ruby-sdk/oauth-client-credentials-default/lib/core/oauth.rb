@@ -54,7 +54,7 @@ module SeedOauthClientCredentialsDefaultClient
 
     # @return [SeedOauthClientCredentialsDefaultClient::AccessToken]
     def refresh_token
-      token_response = @auth_client.auth.get_token(client_id: @client_id, client_secret: @client_secret)
+      token_response = @auth_client.get_token(client_id: @client_id, client_secret: @client_secret)
       SeedOauthClientCredentialsDefaultClient::AccessToken.new(access_token: token_response.access_token)
     end
   end

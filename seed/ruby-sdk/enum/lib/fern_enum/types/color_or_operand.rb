@@ -7,11 +7,11 @@ module SeedEnumClient
     # Deserialize a JSON object to an instance of ColorOrOperand
     #
     # @param json_object [String]
-    # @return [SeedEnumClient::ColorOrOperand]
+    # @return [ColorOrOperand]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       begin
-        struct.is_a?(SeedEnumClient::Color) != false || raise("Passed value for field struct is not the expected type, validation failed.")
+        struct.is_a?(Color) != false || raise("Passed value for field struct is not the expected type, validation failed.")
         return json_object unless json_object.nil?
 
         return nil
@@ -19,7 +19,7 @@ module SeedEnumClient
         # noop
       end
       begin
-        struct.is_a?(SeedEnumClient::Operand) != false || raise("Passed value for field struct is not the expected type, validation failed.")
+        struct.is_a?(Operand) != false || raise("Passed value for field struct is not the expected type, validation failed.")
         return json_object unless json_object.nil?
 
         return nil
@@ -37,12 +37,12 @@ module SeedEnumClient
     # @return [Void]
     def self.validate_raw(obj:)
       begin
-        return obj.is_a?(SeedEnumClient::Color) != false || raise("Passed value for field obj is not the expected type, validation failed.")
+        return obj.is_a?(Color) != false || raise("Passed value for field obj is not the expected type, validation failed.")
       rescue StandardError
         # noop
       end
       begin
-        return obj.is_a?(SeedEnumClient::Operand) != false || raise("Passed value for field obj is not the expected type, validation failed.")
+        return obj.is_a?(Operand) != false || raise("Passed value for field obj is not the expected type, validation failed.")
       rescue StandardError
         # noop
       end

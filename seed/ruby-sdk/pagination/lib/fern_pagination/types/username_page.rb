@@ -20,7 +20,7 @@ module SeedPaginationClient
     # @param after [String]
     # @param data [Array<String>]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [SeedPaginationClient::UsernamePage]
+    # @return [UsernamePage]
     def initialize(data:, after: OMIT, additional_properties: nil)
       @after = after if after != OMIT
       @data = data
@@ -33,7 +33,7 @@ module SeedPaginationClient
     # Deserialize a JSON object to an instance of UsernamePage
     #
     # @param json_object [String]
-    # @return [SeedPaginationClient::UsernamePage]
+    # @return [UsernamePage]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       after = struct["after"]

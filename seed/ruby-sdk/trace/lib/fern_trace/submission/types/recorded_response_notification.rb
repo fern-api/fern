@@ -24,7 +24,7 @@ module SeedTraceClient
       # @param trace_responses_size [Integer]
       # @param test_case_id [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedTraceClient::Submission::RecordedResponseNotification]
+      # @return [RecordedResponseNotification]
       def initialize(submission_id:, trace_responses_size:, test_case_id: OMIT, additional_properties: nil)
         @submission_id = submission_id
         @trace_responses_size = trace_responses_size
@@ -42,7 +42,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of RecordedResponseNotification
       #
       # @param json_object [String]
-      # @return [SeedTraceClient::Submission::RecordedResponseNotification]
+      # @return [RecordedResponseNotification]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         submission_id = struct["submissionId"]
