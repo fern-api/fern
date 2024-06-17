@@ -17,7 +17,7 @@
     "clean": "yarn workspaces foreach --verbose --parallel --topological-dev run clean",
     "compile": "yarn workspaces foreach --verbose --parallel --topological-dev run compile",
     "test": "yarn workspaces foreach --exclude @fern-api/ete-tests --verbose --parallel --topological-dev run test",
-    "test:ete": "yarn workspace @fern-api/cli dist:cli:dev && yarn workspace @fern-api/seed-cli dist:cli && yarn workspace @fern-api/ete-tests test:ete",
+    "test:ete": "yarn workspace @fern-api/cli dist:cli:dev && yarn workspace @fern-api/seed-cli dist:cli && yarn workspace @fern-api/ete-tests test",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path .eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "lint:monorepo": "mrlint lint",
