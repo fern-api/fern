@@ -18,7 +18,7 @@ module SeedExamplesClient
 
       # @param request [Object]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Request]
+      # @return [SeedExamplesClient::Types::Request]
       def initialize(request:, additional_properties: nil)
         @request = request
         @additional_properties = additional_properties
@@ -28,7 +28,7 @@ module SeedExamplesClient
       # Deserialize a JSON object to an instance of Request
       #
       # @param json_object [String]
-      # @return [Request]
+      # @return [SeedExamplesClient::Types::Request]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         request = struct["request"]

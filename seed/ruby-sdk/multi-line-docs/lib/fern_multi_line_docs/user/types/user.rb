@@ -35,7 +35,7 @@ module SeedMultiLineDocsClient
       #  - Charlie
       # @param age [Integer] The user's age.
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [User]
+      # @return [SeedMultiLineDocsClient::User::User]
       def initialize(id:, name:, age: OMIT, additional_properties: nil)
         @id = id
         @name = name
@@ -49,7 +49,7 @@ module SeedMultiLineDocsClient
       # Deserialize a JSON object to an instance of User
       #
       # @param json_object [String]
-      # @return [User]
+      # @return [SeedMultiLineDocsClient::User::User]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         id = struct["id"]

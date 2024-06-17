@@ -24,7 +24,7 @@ module SeedLiteralClient
       # @param query [String]
       # @param stream [Boolean]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SendRequest]
+      # @return [SeedLiteralClient::Reference::SendRequest]
       def initialize(prompt:, query:, stream:, additional_properties: nil)
         @prompt = prompt
         @query = query
@@ -36,7 +36,7 @@ module SeedLiteralClient
       # Deserialize a JSON object to an instance of SendRequest
       #
       # @param json_object [String]
-      # @return [SendRequest]
+      # @return [SeedLiteralClient::Reference::SendRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         prompt = struct["prompt"]

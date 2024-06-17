@@ -24,7 +24,7 @@ module SeedValidationClient
     # @param even [Integer]
     # @param name [String]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Type]
+    # @return [SeedValidationClient::Type]
     def initialize(decimal:, even:, name:, additional_properties: nil)
       @decimal = decimal
       @even = even
@@ -36,7 +36,7 @@ module SeedValidationClient
     # Deserialize a JSON object to an instance of Type
     #
     # @param json_object [String]
-    # @return [Type]
+    # @return [SeedValidationClient::Type]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       decimal = struct["decimal"]

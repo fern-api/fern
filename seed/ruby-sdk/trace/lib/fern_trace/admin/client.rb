@@ -23,7 +23,7 @@ module SeedTraceClient
     end
 
     # @param submission_id [String]
-    # @param request [TestSubmissionStatus]
+    # @param request [SeedTraceClient::Submission::TestSubmissionStatus]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     # @example
@@ -49,7 +49,7 @@ module SeedTraceClient
     end
 
     # @param submission_id [String]
-    # @param request [Hash] Request of type TestSubmissionUpdate, as a Hash
+    # @param request [Hash] Request of type SeedTraceClient::Submission::TestSubmissionUpdate, as a Hash
     #   * :update_time (DateTime)
     #   * :update_info (Hash)
     # @param request_options [SeedTraceClient::RequestOptions]
@@ -77,7 +77,7 @@ module SeedTraceClient
     end
 
     # @param submission_id [String]
-    # @param request [WorkspaceSubmissionStatus]
+    # @param request [SeedTraceClient::Submission::WorkspaceSubmissionStatus]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     # @example
@@ -103,7 +103,7 @@ module SeedTraceClient
     end
 
     # @param submission_id [String]
-    # @param request [Hash] Request of type WorkspaceSubmissionUpdate, as a Hash
+    # @param request [Hash] Request of type SeedTraceClient::Submission::WorkspaceSubmissionUpdate, as a Hash
     #   * :update_time (DateTime)
     #   * :update_info (Hash)
     # @param request_options [SeedTraceClient::RequestOptions]
@@ -132,13 +132,13 @@ module SeedTraceClient
 
     # @param submission_id [String]
     # @param test_case_id [String]
-    # @param result [Hash] Request of type TestCaseResultWithStdout, as a Hash
+    # @param result [Hash] Request of type SeedTraceClient::Submission::TestCaseResultWithStdout, as a Hash
     #   * :result (Hash)
     #     * :expected_result (Hash)
     #     * :actual_result (Hash)
     #     * :passed (Boolean)
     #   * :stdout (String)
-    # @param trace_responses [Array<Hash>] Request of type Array<TraceResponse>, as a Hash
+    # @param trace_responses [Array<Hash>] Request of type Array<SeedTraceClient::Submission::TraceResponse>, as a Hash
     #   * :submission_id (String)
     #   * :line_number (Integer)
     #   * :return_value (Hash)
@@ -150,7 +150,7 @@ module SeedTraceClient
     #     * :top_stack_frame (Hash)
     #       * :method_name (String)
     #       * :line_number (Integer)
-    #       * :scopes (Array<Scope>)
+    #       * :scopes (Array<SeedTraceClient::Submission::Scope>)
     #   * :stdout (String)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
@@ -187,7 +187,7 @@ module SeedTraceClient
 
     # @param submission_id [String]
     # @param test_case_id [String]
-    # @param request [Array<Hash>] Request of type Array<TraceResponseV2>, as a Hash
+    # @param request [Array<Hash>] Request of type Array<SeedTraceClient::Submission::TraceResponseV2>, as a Hash
     #   * :submission_id (String)
     #   * :line_number (Integer)
     #   * :file (Hash)
@@ -202,7 +202,7 @@ module SeedTraceClient
     #     * :top_stack_frame (Hash)
     #       * :method_name (String)
     #       * :line_number (Integer)
-    #       * :scopes (Array<Scope>)
+    #       * :scopes (Array<SeedTraceClient::Submission::Scope>)
     #   * :stdout (String)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
@@ -233,14 +233,14 @@ module SeedTraceClient
     end
 
     # @param submission_id [String]
-    # @param workspace_run_details [Hash] Request of type WorkspaceRunDetails, as a Hash
+    # @param workspace_run_details [Hash] Request of type SeedTraceClient::Submission::WorkspaceRunDetails, as a Hash
     #   * :exception_v_2 (Hash)
     #   * :exception (Hash)
     #     * :exception_type (String)
     #     * :exception_message (String)
     #     * :exception_stacktrace (String)
     #   * :stdout (String)
-    # @param trace_responses [Array<Hash>] Request of type Array<TraceResponse>, as a Hash
+    # @param trace_responses [Array<Hash>] Request of type Array<SeedTraceClient::Submission::TraceResponse>, as a Hash
     #   * :submission_id (String)
     #   * :line_number (Integer)
     #   * :return_value (Hash)
@@ -252,7 +252,7 @@ module SeedTraceClient
     #     * :top_stack_frame (Hash)
     #       * :method_name (String)
     #       * :line_number (Integer)
-    #       * :scopes (Array<Scope>)
+    #       * :scopes (Array<SeedTraceClient::Submission::Scope>)
     #   * :stdout (String)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
@@ -287,7 +287,7 @@ module SeedTraceClient
     end
 
     # @param submission_id [String]
-    # @param request [Array<Hash>] Request of type Array<TraceResponseV2>, as a Hash
+    # @param request [Array<Hash>] Request of type Array<SeedTraceClient::Submission::TraceResponseV2>, as a Hash
     #   * :submission_id (String)
     #   * :line_number (Integer)
     #   * :file (Hash)
@@ -302,7 +302,7 @@ module SeedTraceClient
     #     * :top_stack_frame (Hash)
     #       * :method_name (String)
     #       * :line_number (Integer)
-    #       * :scopes (Array<Scope>)
+    #       * :scopes (Array<SeedTraceClient::Submission::Scope>)
     #   * :stdout (String)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
@@ -340,7 +340,7 @@ module SeedTraceClient
     end
 
     # @param submission_id [String]
-    # @param request [TestSubmissionStatus]
+    # @param request [SeedTraceClient::Submission::TestSubmissionStatus]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     # @example
@@ -368,7 +368,7 @@ module SeedTraceClient
     end
 
     # @param submission_id [String]
-    # @param request [Hash] Request of type TestSubmissionUpdate, as a Hash
+    # @param request [Hash] Request of type SeedTraceClient::Submission::TestSubmissionUpdate, as a Hash
     #   * :update_time (DateTime)
     #   * :update_info (Hash)
     # @param request_options [SeedTraceClient::RequestOptions]
@@ -398,7 +398,7 @@ module SeedTraceClient
     end
 
     # @param submission_id [String]
-    # @param request [WorkspaceSubmissionStatus]
+    # @param request [SeedTraceClient::Submission::WorkspaceSubmissionStatus]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     # @example
@@ -426,7 +426,7 @@ module SeedTraceClient
     end
 
     # @param submission_id [String]
-    # @param request [Hash] Request of type WorkspaceSubmissionUpdate, as a Hash
+    # @param request [Hash] Request of type SeedTraceClient::Submission::WorkspaceSubmissionUpdate, as a Hash
     #   * :update_time (DateTime)
     #   * :update_info (Hash)
     # @param request_options [SeedTraceClient::RequestOptions]
@@ -457,13 +457,13 @@ module SeedTraceClient
 
     # @param submission_id [String]
     # @param test_case_id [String]
-    # @param result [Hash] Request of type TestCaseResultWithStdout, as a Hash
+    # @param result [Hash] Request of type SeedTraceClient::Submission::TestCaseResultWithStdout, as a Hash
     #   * :result (Hash)
     #     * :expected_result (Hash)
     #     * :actual_result (Hash)
     #     * :passed (Boolean)
     #   * :stdout (String)
-    # @param trace_responses [Array<Hash>] Request of type Array<TraceResponse>, as a Hash
+    # @param trace_responses [Array<Hash>] Request of type Array<SeedTraceClient::Submission::TraceResponse>, as a Hash
     #   * :submission_id (String)
     #   * :line_number (Integer)
     #   * :return_value (Hash)
@@ -475,7 +475,7 @@ module SeedTraceClient
     #     * :top_stack_frame (Hash)
     #       * :method_name (String)
     #       * :line_number (Integer)
-    #       * :scopes (Array<Scope>)
+    #       * :scopes (Array<SeedTraceClient::Submission::Scope>)
     #   * :stdout (String)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
@@ -514,7 +514,7 @@ module SeedTraceClient
 
     # @param submission_id [String]
     # @param test_case_id [String]
-    # @param request [Array<Hash>] Request of type Array<TraceResponseV2>, as a Hash
+    # @param request [Array<Hash>] Request of type Array<SeedTraceClient::Submission::TraceResponseV2>, as a Hash
     #   * :submission_id (String)
     #   * :line_number (Integer)
     #   * :file (Hash)
@@ -529,7 +529,7 @@ module SeedTraceClient
     #     * :top_stack_frame (Hash)
     #       * :method_name (String)
     #       * :line_number (Integer)
-    #       * :scopes (Array<Scope>)
+    #       * :scopes (Array<SeedTraceClient::Submission::Scope>)
     #   * :stdout (String)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
@@ -562,14 +562,14 @@ module SeedTraceClient
     end
 
     # @param submission_id [String]
-    # @param workspace_run_details [Hash] Request of type WorkspaceRunDetails, as a Hash
+    # @param workspace_run_details [Hash] Request of type SeedTraceClient::Submission::WorkspaceRunDetails, as a Hash
     #   * :exception_v_2 (Hash)
     #   * :exception (Hash)
     #     * :exception_type (String)
     #     * :exception_message (String)
     #     * :exception_stacktrace (String)
     #   * :stdout (String)
-    # @param trace_responses [Array<Hash>] Request of type Array<TraceResponse>, as a Hash
+    # @param trace_responses [Array<Hash>] Request of type Array<SeedTraceClient::Submission::TraceResponse>, as a Hash
     #   * :submission_id (String)
     #   * :line_number (Integer)
     #   * :return_value (Hash)
@@ -581,7 +581,7 @@ module SeedTraceClient
     #     * :top_stack_frame (Hash)
     #       * :method_name (String)
     #       * :line_number (Integer)
-    #       * :scopes (Array<Scope>)
+    #       * :scopes (Array<SeedTraceClient::Submission::Scope>)
     #   * :stdout (String)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
@@ -618,7 +618,7 @@ module SeedTraceClient
     end
 
     # @param submission_id [String]
-    # @param request [Array<Hash>] Request of type Array<TraceResponseV2>, as a Hash
+    # @param request [Array<Hash>] Request of type Array<SeedTraceClient::Submission::TraceResponseV2>, as a Hash
     #   * :submission_id (String)
     #   * :line_number (Integer)
     #   * :file (Hash)
@@ -633,7 +633,7 @@ module SeedTraceClient
     #     * :top_stack_frame (Hash)
     #       * :method_name (String)
     #       * :line_number (Integer)
-    #       * :scopes (Array<Scope>)
+    #       * :scopes (Array<SeedTraceClient::Submission::Scope>)
     #   * :stdout (String)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]

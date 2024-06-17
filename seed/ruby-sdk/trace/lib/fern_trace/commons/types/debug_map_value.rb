@@ -7,7 +7,7 @@ require "json"
 module SeedTraceClient
   class Commons
     class DebugMapValue
-      # @return [Array<DebugKeyValuePairs>]
+      # @return [Array<SeedTraceClient::Commons::DebugKeyValuePairs>]
       attr_reader :key_value_pairs
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -17,9 +17,9 @@ module SeedTraceClient
 
       OMIT = Object.new
 
-      # @param key_value_pairs [Array<DebugKeyValuePairs>]
+      # @param key_value_pairs [Array<SeedTraceClient::Commons::DebugKeyValuePairs>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [DebugMapValue]
+      # @return [SeedTraceClient::Commons::DebugMapValue]
       def initialize(key_value_pairs:, additional_properties: nil)
         @key_value_pairs = key_value_pairs
         @additional_properties = additional_properties
@@ -29,13 +29,13 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of DebugMapValue
       #
       # @param json_object [String]
-      # @return [DebugMapValue]
+      # @return [SeedTraceClient::Commons::DebugMapValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         key_value_pairs = parsed_json["keyValuePairs"]&.map do |v|
           v = v.to_json
-          DebugKeyValuePairs.from_json(json_object: v)
+          SeedTraceClient::Commons::DebugKeyValuePairs.from_json(json_object: v)
         end
         new(key_value_pairs: key_value_pairs, additional_properties: struct)
       end

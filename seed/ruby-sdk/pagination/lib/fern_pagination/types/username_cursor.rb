@@ -6,7 +6,7 @@ require "json"
 
 module SeedPaginationClient
   class UsernameCursor
-    # @return [UsernamePage]
+    # @return [SeedPaginationClient::UsernamePage]
     attr_reader :cursor
     # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
@@ -16,9 +16,9 @@ module SeedPaginationClient
 
     OMIT = Object.new
 
-    # @param cursor [UsernamePage]
+    # @param cursor [SeedPaginationClient::UsernamePage]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [UsernameCursor]
+    # @return [SeedPaginationClient::UsernameCursor]
     def initialize(cursor:, additional_properties: nil)
       @cursor = cursor
       @additional_properties = additional_properties
@@ -28,7 +28,7 @@ module SeedPaginationClient
     # Deserialize a JSON object to an instance of UsernameCursor
     #
     # @param json_object [String]
-    # @return [UsernameCursor]
+    # @return [SeedPaginationClient::UsernameCursor]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
@@ -36,7 +36,7 @@ module SeedPaginationClient
         cursor = nil
       else
         cursor = parsed_json["cursor"].to_json
-        cursor = UsernamePage.from_json(json_object: cursor)
+        cursor = SeedPaginationClient::UsernamePage.from_json(json_object: cursor)
       end
       new(cursor: cursor, additional_properties: struct)
     end
@@ -55,7 +55,7 @@ module SeedPaginationClient
     # @param obj [Object]
     # @return [Void]
     def self.validate_raw(obj:)
-      UsernamePage.validate_raw(obj: obj.cursor)
+      SeedPaginationClient::UsernamePage.validate_raw(obj: obj.cursor)
     end
   end
 end

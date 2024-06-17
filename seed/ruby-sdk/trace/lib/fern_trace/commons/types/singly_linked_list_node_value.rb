@@ -24,7 +24,7 @@ module SeedTraceClient
       # @param val [Float]
       # @param next_ [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SinglyLinkedListNodeValue]
+      # @return [SeedTraceClient::Commons::SinglyLinkedListNodeValue]
       def initialize(node_id:, val:, next_: OMIT, additional_properties: nil)
         @node_id = node_id
         @val = val
@@ -38,7 +38,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of SinglyLinkedListNodeValue
       #
       # @param json_object [String]
-      # @return [SinglyLinkedListNodeValue]
+      # @return [SeedTraceClient::Commons::SinglyLinkedListNodeValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         node_id = struct["nodeId"]

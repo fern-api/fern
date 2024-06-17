@@ -19,9 +19,9 @@ module SeedTraceClient
 
     # Returns sessionId and execution server URL for session. Spins up server.
     #
-    # @param language [Language]
+    # @param language [SeedTraceClient::Commons::Language]
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [ExecutionSessionResponse]
+    # @return [SeedTraceClient::Submission::ExecutionSessionResponse]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -41,7 +41,7 @@ module SeedTraceClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/sessions/create-session/#{language}"
       end
-      ExecutionSessionResponse.from_json(json_object: response.body)
+      SeedTraceClient::Submission::ExecutionSessionResponse.from_json(json_object: response.body)
     end
 
     # Returns execution server URL for session. Returns empty if session isn't
@@ -49,7 +49,7 @@ module SeedTraceClient
     #
     # @param session_id [String]
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [ExecutionSessionResponse]
+    # @return [SeedTraceClient::Submission::ExecutionSessionResponse]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -69,7 +69,7 @@ module SeedTraceClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/sessions/#{session_id}"
       end
-      ExecutionSessionResponse.from_json(json_object: response.body)
+      SeedTraceClient::Submission::ExecutionSessionResponse.from_json(json_object: response.body)
     end
 
     # Stops execution session.
@@ -99,7 +99,7 @@ module SeedTraceClient
     end
 
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [GetExecutionSessionStateResponse]
+    # @return [SeedTraceClient::Submission::GetExecutionSessionStateResponse]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -119,7 +119,7 @@ module SeedTraceClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/sessions/execution-sessions-state"
       end
-      GetExecutionSessionStateResponse.from_json(json_object: response.body)
+      SeedTraceClient::Submission::GetExecutionSessionStateResponse.from_json(json_object: response.body)
     end
   end
 
@@ -135,9 +135,9 @@ module SeedTraceClient
 
     # Returns sessionId and execution server URL for session. Spins up server.
     #
-    # @param language [Language]
+    # @param language [SeedTraceClient::Commons::Language]
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [ExecutionSessionResponse]
+    # @return [SeedTraceClient::Submission::ExecutionSessionResponse]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -158,7 +158,7 @@ module SeedTraceClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/sessions/create-session/#{language}"
         end
-        ExecutionSessionResponse.from_json(json_object: response.body)
+        SeedTraceClient::Submission::ExecutionSessionResponse.from_json(json_object: response.body)
       end
     end
 
@@ -167,7 +167,7 @@ module SeedTraceClient
     #
     # @param session_id [String]
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [ExecutionSessionResponse]
+    # @return [SeedTraceClient::Submission::ExecutionSessionResponse]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -188,7 +188,7 @@ module SeedTraceClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/sessions/#{session_id}"
         end
-        ExecutionSessionResponse.from_json(json_object: response.body)
+        SeedTraceClient::Submission::ExecutionSessionResponse.from_json(json_object: response.body)
       end
     end
 
@@ -221,7 +221,7 @@ module SeedTraceClient
     end
 
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [GetExecutionSessionStateResponse]
+    # @return [SeedTraceClient::Submission::GetExecutionSessionStateResponse]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -242,7 +242,7 @@ module SeedTraceClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/sessions/execution-sessions-state"
         end
-        GetExecutionSessionStateResponse.from_json(json_object: response.body)
+        SeedTraceClient::Submission::GetExecutionSessionStateResponse.from_json(json_object: response.body)
       end
     end
   end

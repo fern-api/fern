@@ -17,7 +17,7 @@ module SeedTraceClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [SubmissionStatusV2]
+      # @return [SeedTraceClient::Submission::SubmissionStatusV2]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -26,16 +26,16 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of SubmissionStatusV2
       #
       # @param json_object [String]
-      # @return [SubmissionStatusV2]
+      # @return [SeedTraceClient::Submission::SubmissionStatusV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "test"
-                   TestSubmissionStatusV2.from_json(json_object: json_object)
+                   SeedTraceClient::Submission::TestSubmissionStatusV2.from_json(json_object: json_object)
                  when "workspace"
-                   WorkspaceSubmissionStatusV2.from_json(json_object: json_object)
+                   SeedTraceClient::Submission::WorkspaceSubmissionStatusV2.from_json(json_object: json_object)
                  else
-                   TestSubmissionStatusV2.from_json(json_object: json_object)
+                   SeedTraceClient::Submission::TestSubmissionStatusV2.from_json(json_object: json_object)
                  end
         new(member: member, discriminant: struct.type)
       end
@@ -64,9 +64,9 @@ module SeedTraceClient
       def self.validate_raw(obj:)
         case obj.type
         when "test"
-          TestSubmissionStatusV2.validate_raw(obj: obj)
+          SeedTraceClient::Submission::TestSubmissionStatusV2.validate_raw(obj: obj)
         when "workspace"
-          WorkspaceSubmissionStatusV2.validate_raw(obj: obj)
+          SeedTraceClient::Submission::WorkspaceSubmissionStatusV2.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -80,14 +80,14 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @param member [TestSubmissionStatusV2]
-      # @return [SubmissionStatusV2]
+      # @param member [SeedTraceClient::Submission::TestSubmissionStatusV2]
+      # @return [SeedTraceClient::Submission::SubmissionStatusV2]
       def self.test(member:)
         new(member: member, discriminant: "test")
       end
 
-      # @param member [WorkspaceSubmissionStatusV2]
-      # @return [SubmissionStatusV2]
+      # @param member [SeedTraceClient::Submission::WorkspaceSubmissionStatusV2]
+      # @return [SeedTraceClient::Submission::SubmissionStatusV2]
       def self.workspace(member:)
         new(member: member, discriminant: "workspace")
       end

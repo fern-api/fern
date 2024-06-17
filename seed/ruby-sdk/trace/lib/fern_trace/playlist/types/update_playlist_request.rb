@@ -21,7 +21,7 @@ module SeedTraceClient
       # @param name [String]
       # @param problems [Array<String>] The problems that make up the playlist.
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [UpdatePlaylistRequest]
+      # @return [SeedTraceClient::Playlist::UpdatePlaylistRequest]
       def initialize(name:, problems:, additional_properties: nil)
         @name = name
         @problems = problems
@@ -32,7 +32,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of UpdatePlaylistRequest
       #
       # @param json_object [String]
-      # @return [UpdatePlaylistRequest]
+      # @return [SeedTraceClient::Playlist::UpdatePlaylistRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         name = struct["name"]

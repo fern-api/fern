@@ -8,7 +8,7 @@ module SeedTraceClient
     class BinaryTreeValue
       # @return [String]
       attr_reader :root
-      # @return [Hash{String => BinaryTreeNodeValue}]
+      # @return [Hash{String => SeedTraceClient::Commons::BinaryTreeNodeValue}]
       attr_reader :nodes
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -19,9 +19,9 @@ module SeedTraceClient
       OMIT = Object.new
 
       # @param root [String]
-      # @param nodes [Hash{String => BinaryTreeNodeValue}]
+      # @param nodes [Hash{String => SeedTraceClient::Commons::BinaryTreeNodeValue}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [BinaryTreeValue]
+      # @return [SeedTraceClient::Commons::BinaryTreeValue]
       def initialize(nodes:, root: OMIT, additional_properties: nil)
         @root = root if root != OMIT
         @nodes = nodes
@@ -34,14 +34,14 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of BinaryTreeValue
       #
       # @param json_object [String]
-      # @return [BinaryTreeValue]
+      # @return [SeedTraceClient::Commons::BinaryTreeValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         root = struct["root"]
         nodes = parsed_json["nodes"]&.transform_values do |v|
           v = v.to_json
-          BinaryTreeNodeValue.from_json(json_object: v)
+          SeedTraceClient::Commons::BinaryTreeNodeValue.from_json(json_object: v)
         end
         new(
           root: root,

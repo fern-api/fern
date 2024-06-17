@@ -16,7 +16,7 @@ module SeedTraceClient
       @request_client = request_client
     end
 
-    # @param language [Language]
+    # @param language [SeedTraceClient::Commons::Language]
     # @param num_warm_instances [Integer]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
@@ -42,7 +42,7 @@ module SeedTraceClient
     end
 
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [Hash{Language => Integer}]
+    # @return [Hash{SeedTraceClient::Commons::Language => Integer}]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -76,7 +76,7 @@ module SeedTraceClient
       @request_client = request_client
     end
 
-    # @param language [Language]
+    # @param language [SeedTraceClient::Commons::Language]
     # @param num_warm_instances [Integer]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
@@ -104,7 +104,7 @@ module SeedTraceClient
     end
 
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [Hash{Language => Integer}]
+    # @return [Hash{SeedTraceClient::Commons::Language => Integer}]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",

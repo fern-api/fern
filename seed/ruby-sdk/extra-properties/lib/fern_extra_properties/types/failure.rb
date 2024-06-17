@@ -17,7 +17,7 @@ module SeedExtraPropertiesClient
 
     # @param status [String]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Failure]
+    # @return [SeedExtraPropertiesClient::Failure]
     def initialize(status:, additional_properties: nil)
       @status = status
       @additional_properties = additional_properties
@@ -27,7 +27,7 @@ module SeedExtraPropertiesClient
     # Deserialize a JSON object to an instance of Failure
     #
     # @param json_object [String]
-    # @return [Failure]
+    # @return [SeedExtraPropertiesClient::Failure]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       status = struct["status"]

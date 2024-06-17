@@ -6,7 +6,7 @@ require "json"
 
 module SeedExamplesClient
   class Identifier
-    # @return [Type]
+    # @return [SeedExamplesClient::Type]
     attr_reader :type
     # @return [String]
     attr_reader :value
@@ -20,11 +20,11 @@ module SeedExamplesClient
 
     OMIT = Object.new
 
-    # @param type [Type]
+    # @param type [SeedExamplesClient::Type]
     # @param value [String]
     # @param label [String]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Identifier]
+    # @return [SeedExamplesClient::Identifier]
     def initialize(type:, value:, label:, additional_properties: nil)
       @type = type
       @value = value
@@ -36,7 +36,7 @@ module SeedExamplesClient
     # Deserialize a JSON object to an instance of Identifier
     #
     # @param json_object [String]
-    # @return [Identifier]
+    # @return [SeedExamplesClient::Identifier]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
@@ -44,7 +44,7 @@ module SeedExamplesClient
         type = nil
       else
         type = parsed_json["type"].to_json
-        type = Type.from_json(json_object: type)
+        type = SeedExamplesClient::Type.from_json(json_object: type)
       end
       value = struct["value"]
       label = struct["label"]
@@ -70,7 +70,7 @@ module SeedExamplesClient
     # @param obj [Object]
     # @return [Void]
     def self.validate_raw(obj:)
-      Type.validate_raw(obj: obj.type)
+      SeedExamplesClient::Type.validate_raw(obj: obj.type)
       obj.value.is_a?(String) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
       obj.label.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
     end

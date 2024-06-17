@@ -10,9 +10,9 @@ module SeedTraceClient
     class SubmitRequestV2
       # @return [String]
       attr_reader :submission_id
-      # @return [Language]
+      # @return [SeedTraceClient::Commons::Language]
       attr_reader :language
-      # @return [Array<SubmissionFileInfo>]
+      # @return [Array<SeedTraceClient::Submission::SubmissionFileInfo>]
       attr_reader :submission_files
       # @return [String]
       attr_reader :problem_id
@@ -29,13 +29,13 @@ module SeedTraceClient
       OMIT = Object.new
 
       # @param submission_id [String]
-      # @param language [Language]
-      # @param submission_files [Array<SubmissionFileInfo>]
+      # @param language [SeedTraceClient::Commons::Language]
+      # @param submission_files [Array<SeedTraceClient::Submission::SubmissionFileInfo>]
       # @param problem_id [String]
       # @param problem_version [Integer]
       # @param user_id [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SubmitRequestV2]
+      # @return [SeedTraceClient::Submission::SubmitRequestV2]
       def initialize(submission_id:, language:, submission_files:, problem_id:, problem_version: OMIT, user_id: OMIT,
                      additional_properties: nil)
         @submission_id = submission_id
@@ -60,7 +60,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of SubmitRequestV2
       #
       # @param json_object [String]
-      # @return [SubmitRequestV2]
+      # @return [SeedTraceClient::Submission::SubmitRequestV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -68,7 +68,7 @@ module SeedTraceClient
         language = struct["language"]
         submission_files = parsed_json["submissionFiles"]&.map do |v|
           v = v.to_json
-          SubmissionFileInfo.from_json(json_object: v)
+          SeedTraceClient::Submission::SubmissionFileInfo.from_json(json_object: v)
         end
         problem_id = struct["problemId"]
         problem_version = struct["problemVersion"]
@@ -99,7 +99,7 @@ module SeedTraceClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.submission_id.is_a?(String) != false || raise("Passed value for field obj.submission_id is not the expected type, validation failed.")
-        obj.language.is_a?(Language) != false || raise("Passed value for field obj.language is not the expected type, validation failed.")
+        obj.language.is_a?(SeedTraceClient::Commons::Language) != false || raise("Passed value for field obj.language is not the expected type, validation failed.")
         obj.submission_files.is_a?(Array) != false || raise("Passed value for field obj.submission_files is not the expected type, validation failed.")
         obj.problem_id.is_a?(String) != false || raise("Passed value for field obj.problem_id is not the expected type, validation failed.")
         obj.problem_version&.is_a?(Integer) != false || raise("Passed value for field obj.problem_version is not the expected type, validation failed.")

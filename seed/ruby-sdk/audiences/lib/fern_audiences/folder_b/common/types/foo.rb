@@ -8,7 +8,7 @@ module SeedAudiencesClient
   module FolderB
     class Common
       class Foo
-        # @return [FolderC::Foo]
+        # @return [SeedAudiencesClient::FolderC::Common::Foo]
         attr_reader :foo
         # @return [OpenStruct] Additional properties unmapped to the current class definition
         attr_reader :additional_properties
@@ -18,9 +18,9 @@ module SeedAudiencesClient
 
         OMIT = Object.new
 
-        # @param foo [FolderC::Foo]
+        # @param foo [SeedAudiencesClient::FolderC::Common::Foo]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [FolderB::Foo]
+        # @return [SeedAudiencesClient::FolderB::Common::Foo]
         def initialize(foo: OMIT, additional_properties: nil)
           @foo = foo if foo != OMIT
           @additional_properties = additional_properties
@@ -32,7 +32,7 @@ module SeedAudiencesClient
         # Deserialize a JSON object to an instance of Foo
         #
         # @param json_object [String]
-        # @return [FolderB::Foo]
+        # @return [SeedAudiencesClient::FolderB::Common::Foo]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
@@ -40,7 +40,7 @@ module SeedAudiencesClient
             foo = nil
           else
             foo = parsed_json["foo"].to_json
-            foo = FolderC::Foo.from_json(json_object: foo)
+            foo = SeedAudiencesClient::FolderC::Common::Foo.from_json(json_object: foo)
           end
           new(foo: foo, additional_properties: struct)
         end
@@ -59,7 +59,7 @@ module SeedAudiencesClient
         # @param obj [Object]
         # @return [Void]
         def self.validate_raw(obj:)
-          obj.foo.nil? || FolderC::Foo.validate_raw(obj: obj.foo)
+          obj.foo.nil? || SeedAudiencesClient::FolderC::Common::Foo.validate_raw(obj: obj.foo)
         end
       end
     end

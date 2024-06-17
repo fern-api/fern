@@ -18,7 +18,7 @@ module SeedTraceClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [SubmissionStatusForTestCase]
+      # @return [SeedTraceClient::Submission::SubmissionStatusForTestCase]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -27,18 +27,18 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of SubmissionStatusForTestCase
       #
       # @param json_object [String]
-      # @return [SubmissionStatusForTestCase]
+      # @return [SeedTraceClient::Submission::SubmissionStatusForTestCase]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "graded"
-                   TestCaseResultWithStdout.from_json(json_object: json_object)
+                   SeedTraceClient::Submission::TestCaseResultWithStdout.from_json(json_object: json_object)
                  when "gradedV2"
-                   TestCaseGrade.from_json(json_object: json_object.value)
+                   SeedTraceClient::Submission::TestCaseGrade.from_json(json_object: json_object.value)
                  when "traced"
-                   TracedTestCase.from_json(json_object: json_object)
+                   SeedTraceClient::Submission::TracedTestCase.from_json(json_object: json_object)
                  else
-                   TestCaseResultWithStdout.from_json(json_object: json_object)
+                   SeedTraceClient::Submission::TestCaseResultWithStdout.from_json(json_object: json_object)
                  end
         new(member: member, discriminant: struct.type)
       end
@@ -69,11 +69,11 @@ module SeedTraceClient
       def self.validate_raw(obj:)
         case obj.type
         when "graded"
-          TestCaseResultWithStdout.validate_raw(obj: obj)
+          SeedTraceClient::Submission::TestCaseResultWithStdout.validate_raw(obj: obj)
         when "gradedV2"
-          TestCaseGrade.validate_raw(obj: obj)
+          SeedTraceClient::Submission::TestCaseGrade.validate_raw(obj: obj)
         when "traced"
-          TracedTestCase.validate_raw(obj: obj)
+          SeedTraceClient::Submission::TracedTestCase.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -87,20 +87,20 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @param member [TestCaseResultWithStdout]
-      # @return [SubmissionStatusForTestCase]
+      # @param member [SeedTraceClient::Submission::TestCaseResultWithStdout]
+      # @return [SeedTraceClient::Submission::SubmissionStatusForTestCase]
       def self.graded(member:)
         new(member: member, discriminant: "graded")
       end
 
-      # @param member [TestCaseGrade]
-      # @return [SubmissionStatusForTestCase]
+      # @param member [SeedTraceClient::Submission::TestCaseGrade]
+      # @return [SeedTraceClient::Submission::SubmissionStatusForTestCase]
       def self.graded_v_2(member:)
         new(member: member, discriminant: "gradedV2")
       end
 
-      # @param member [TracedTestCase]
-      # @return [SubmissionStatusForTestCase]
+      # @param member [SeedTraceClient::Submission::TracedTestCase]
+      # @return [SeedTraceClient::Submission::SubmissionStatusForTestCase]
       def self.traced(member:)
         new(member: member, discriminant: "traced")
       end

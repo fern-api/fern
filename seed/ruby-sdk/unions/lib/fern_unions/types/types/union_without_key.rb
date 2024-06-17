@@ -17,7 +17,7 @@ module SeedUnionsClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [UnionWithoutKey]
+      # @return [SeedUnionsClient::Types::UnionWithoutKey]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -26,16 +26,16 @@ module SeedUnionsClient
       # Deserialize a JSON object to an instance of UnionWithoutKey
       #
       # @param json_object [String]
-      # @return [UnionWithoutKey]
+      # @return [SeedUnionsClient::Types::UnionWithoutKey]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "foo"
-                   Foo.from_json(json_object: json_object)
+                   SeedUnionsClient::Types::Foo.from_json(json_object: json_object)
                  when "bar"
-                   Bar.from_json(json_object: json_object)
+                   SeedUnionsClient::Types::Bar.from_json(json_object: json_object)
                  else
-                   Foo.from_json(json_object: json_object)
+                   SeedUnionsClient::Types::Foo.from_json(json_object: json_object)
                  end
         new(member: member, discriminant: struct.type)
       end
@@ -64,9 +64,9 @@ module SeedUnionsClient
       def self.validate_raw(obj:)
         case obj.type
         when "foo"
-          Foo.validate_raw(obj: obj)
+          SeedUnionsClient::Types::Foo.validate_raw(obj: obj)
         when "bar"
-          Bar.validate_raw(obj: obj)
+          SeedUnionsClient::Types::Bar.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -80,14 +80,14 @@ module SeedUnionsClient
         @member.is_a?(obj)
       end
 
-      # @param member [Foo]
-      # @return [UnionWithoutKey]
+      # @param member [SeedUnionsClient::Types::Foo]
+      # @return [SeedUnionsClient::Types::UnionWithoutKey]
       def self.foo(member:)
         new(member: member, discriminant: "foo")
       end
 
-      # @param member [Bar]
-      # @return [UnionWithoutKey]
+      # @param member [SeedUnionsClient::Types::Bar]
+      # @return [SeedUnionsClient::Types::UnionWithoutKey]
       def self.bar(member:)
         new(member: member, discriminant: "bar")
       end

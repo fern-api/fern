@@ -18,7 +18,7 @@ module SeedFileUploadClient
 
       # @param foo [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [MyObject]
+      # @return [SeedFileUploadClient::Service::MyObject]
       def initialize(foo:, additional_properties: nil)
         @foo = foo
         @additional_properties = additional_properties
@@ -28,7 +28,7 @@ module SeedFileUploadClient
       # Deserialize a JSON object to an instance of MyObject
       #
       # @param json_object [String]
-      # @return [MyObject]
+      # @return [SeedFileUploadClient::Service::MyObject]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         foo = struct["foo"]

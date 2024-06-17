@@ -7,7 +7,7 @@ require "json"
 module SeedTraceClient
   class Submission
     class TracedTestCase
-      # @return [TestCaseResultWithStdout]
+      # @return [SeedTraceClient::Submission::TestCaseResultWithStdout]
       attr_reader :result
       # @return [Integer]
       attr_reader :trace_responses_size
@@ -19,10 +19,10 @@ module SeedTraceClient
 
       OMIT = Object.new
 
-      # @param result [TestCaseResultWithStdout]
+      # @param result [SeedTraceClient::Submission::TestCaseResultWithStdout]
       # @param trace_responses_size [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [TracedTestCase]
+      # @return [SeedTraceClient::Submission::TracedTestCase]
       def initialize(result:, trace_responses_size:, additional_properties: nil)
         @result = result
         @trace_responses_size = trace_responses_size
@@ -33,7 +33,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of TracedTestCase
       #
       # @param json_object [String]
-      # @return [TracedTestCase]
+      # @return [SeedTraceClient::Submission::TracedTestCase]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -41,7 +41,7 @@ module SeedTraceClient
           result = nil
         else
           result = parsed_json["result"].to_json
-          result = TestCaseResultWithStdout.from_json(json_object: result)
+          result = SeedTraceClient::Submission::TestCaseResultWithStdout.from_json(json_object: result)
         end
         trace_responses_size = struct["traceResponsesSize"]
         new(
@@ -65,7 +65,7 @@ module SeedTraceClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        TestCaseResultWithStdout.validate_raw(obj: obj.result)
+        SeedTraceClient::Submission::TestCaseResultWithStdout.validate_raw(obj: obj.result)
         obj.trace_responses_size.is_a?(Integer) != false || raise("Passed value for field obj.trace_responses_size is not the expected type, validation failed.")
       end
     end

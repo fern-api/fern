@@ -21,7 +21,7 @@ module SeedAudiencesClient
       # @param public_property [String]
       # @param private_property [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [FilteredType]
+      # @return [SeedAudiencesClient::Foo::FilteredType]
       def initialize(private_property:, public_property: OMIT, additional_properties: nil)
         @public_property = public_property if public_property != OMIT
         @private_property = private_property
@@ -34,7 +34,7 @@ module SeedAudiencesClient
       # Deserialize a JSON object to an instance of FilteredType
       #
       # @param json_object [String]
-      # @return [FilteredType]
+      # @return [SeedAudiencesClient::Foo::FilteredType]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         public_property = struct["public_property"]

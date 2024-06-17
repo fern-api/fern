@@ -17,7 +17,7 @@ module SeedAudiencesClient
       end
 
       # @param request_options [SeedAudiencesClient::RequestOptions]
-      # @return [FolderA::Response]
+      # @return [SeedAudiencesClient::FolderA::Service::Response]
       # @example
       #  audiences = SeedAudiencesClient::Client.new(base_url: "https://api.example.com")
       #  audiences.folder_a.service.get_direct_thread
@@ -31,7 +31,7 @@ module SeedAudiencesClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/"
         end
-        FolderA::Response.from_json(json_object: response.body)
+        SeedAudiencesClient::FolderA::Service::Response.from_json(json_object: response.body)
       end
     end
 
@@ -46,7 +46,7 @@ module SeedAudiencesClient
       end
 
       # @param request_options [SeedAudiencesClient::RequestOptions]
-      # @return [FolderA::Response]
+      # @return [SeedAudiencesClient::FolderA::Service::Response]
       # @example
       #  audiences = SeedAudiencesClient::Client.new(base_url: "https://api.example.com")
       #  audiences.folder_a.service.get_direct_thread
@@ -61,7 +61,7 @@ module SeedAudiencesClient
             }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/"
           end
-          FolderA::Response.from_json(json_object: response.body)
+          SeedAudiencesClient::FolderA::Service::Response.from_json(json_object: response.body)
         end
       end
     end

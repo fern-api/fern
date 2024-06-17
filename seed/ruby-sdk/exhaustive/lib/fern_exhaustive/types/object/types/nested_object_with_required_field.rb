@@ -10,7 +10,7 @@ module SeedExhaustiveClient
       class NestedObjectWithRequiredField
         # @return [String]
         attr_reader :string
-        # @return [Types::ObjectWithOptionalField]
+        # @return [SeedExhaustiveClient::Types::Object_::ObjectWithOptionalField]
         attr_reader :nested_object
         # @return [OpenStruct] Additional properties unmapped to the current class definition
         attr_reader :additional_properties
@@ -21,9 +21,9 @@ module SeedExhaustiveClient
         OMIT = Object.new
 
         # @param string [String]
-        # @param nested_object [Types::ObjectWithOptionalField]
+        # @param nested_object [SeedExhaustiveClient::Types::Object_::ObjectWithOptionalField]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [Types::NestedObjectWithRequiredField]
+        # @return [SeedExhaustiveClient::Types::Object_::NestedObjectWithRequiredField]
         def initialize(string:, nested_object:, additional_properties: nil)
           @string = string
           @nested_object = nested_object
@@ -34,7 +34,7 @@ module SeedExhaustiveClient
         # Deserialize a JSON object to an instance of NestedObjectWithRequiredField
         #
         # @param json_object [String]
-        # @return [Types::NestedObjectWithRequiredField]
+        # @return [SeedExhaustiveClient::Types::Object_::NestedObjectWithRequiredField]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
@@ -43,7 +43,7 @@ module SeedExhaustiveClient
             nested_object = nil
           else
             nested_object = parsed_json["NestedObject"].to_json
-            nested_object = Types::ObjectWithOptionalField.from_json(json_object: nested_object)
+            nested_object = SeedExhaustiveClient::Types::Object_::ObjectWithOptionalField.from_json(json_object: nested_object)
           end
           new(
             string: string,
@@ -67,7 +67,7 @@ module SeedExhaustiveClient
         # @return [Void]
         def self.validate_raw(obj:)
           obj.string.is_a?(String) != false || raise("Passed value for field obj.string is not the expected type, validation failed.")
-          Types::ObjectWithOptionalField.validate_raw(obj: obj.nested_object)
+          SeedExhaustiveClient::Types::Object_::ObjectWithOptionalField.validate_raw(obj: obj.nested_object)
         end
       end
     end

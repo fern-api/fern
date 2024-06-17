@@ -7,9 +7,9 @@ require "json"
 module SeedTraceClient
   class Commons
     class KeyValuePair
-      # @return [VariableValue]
+      # @return [SeedTraceClient::Commons::VariableValue]
       attr_reader :key
-      # @return [VariableValue]
+      # @return [SeedTraceClient::Commons::VariableValue]
       attr_reader :value
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -19,10 +19,10 @@ module SeedTraceClient
 
       OMIT = Object.new
 
-      # @param key [VariableValue]
-      # @param value [VariableValue]
+      # @param key [SeedTraceClient::Commons::VariableValue]
+      # @param value [SeedTraceClient::Commons::VariableValue]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [KeyValuePair]
+      # @return [SeedTraceClient::Commons::KeyValuePair]
       def initialize(key:, value:, additional_properties: nil)
         @key = key
         @value = value
@@ -33,7 +33,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of KeyValuePair
       #
       # @param json_object [String]
-      # @return [KeyValuePair]
+      # @return [SeedTraceClient::Commons::KeyValuePair]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -41,13 +41,13 @@ module SeedTraceClient
           key = nil
         else
           key = parsed_json["key"].to_json
-          key = VariableValue.from_json(json_object: key)
+          key = SeedTraceClient::Commons::VariableValue.from_json(json_object: key)
         end
         if parsed_json["value"].nil?
           value = nil
         else
           value = parsed_json["value"].to_json
-          value = VariableValue.from_json(json_object: value)
+          value = SeedTraceClient::Commons::VariableValue.from_json(json_object: value)
         end
         new(
           key: key,
@@ -70,8 +70,8 @@ module SeedTraceClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        VariableValue.validate_raw(obj: obj.key)
-        VariableValue.validate_raw(obj: obj.value)
+        SeedTraceClient::Commons::VariableValue.validate_raw(obj: obj.key)
+        SeedTraceClient::Commons::VariableValue.validate_raw(obj: obj.value)
       end
     end
   end

@@ -9,7 +9,7 @@ module SeedTraceClient
     class ErroredResponse
       # @return [String]
       attr_reader :submission_id
-      # @return [ErrorInfo]
+      # @return [SeedTraceClient::Submission::ErrorInfo]
       attr_reader :error_info
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -20,9 +20,9 @@ module SeedTraceClient
       OMIT = Object.new
 
       # @param submission_id [String]
-      # @param error_info [ErrorInfo]
+      # @param error_info [SeedTraceClient::Submission::ErrorInfo]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [ErroredResponse]
+      # @return [SeedTraceClient::Submission::ErroredResponse]
       def initialize(submission_id:, error_info:, additional_properties: nil)
         @submission_id = submission_id
         @error_info = error_info
@@ -33,7 +33,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of ErroredResponse
       #
       # @param json_object [String]
-      # @return [ErroredResponse]
+      # @return [SeedTraceClient::Submission::ErroredResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -42,7 +42,7 @@ module SeedTraceClient
           error_info = nil
         else
           error_info = parsed_json["errorInfo"].to_json
-          error_info = ErrorInfo.from_json(json_object: error_info)
+          error_info = SeedTraceClient::Submission::ErrorInfo.from_json(json_object: error_info)
         end
         new(
           submission_id: submission_id,
@@ -66,7 +66,7 @@ module SeedTraceClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.submission_id.is_a?(String) != false || raise("Passed value for field obj.submission_id is not the expected type, validation failed.")
-        ErrorInfo.validate_raw(obj: obj.error_info)
+        SeedTraceClient::Submission::ErrorInfo.validate_raw(obj: obj.error_info)
       end
     end
   end

@@ -15,7 +15,7 @@ module SeedTraceClient
       OMIT = Object.new
 
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [TerminatedResponse]
+      # @return [SeedTraceClient::Submission::TerminatedResponse]
       def initialize(additional_properties: nil)
         @additional_properties = additional_properties
         @_field_set = {}
@@ -24,7 +24,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of TerminatedResponse
       #
       # @param json_object [String]
-      # @return [TerminatedResponse]
+      # @return [SeedTraceClient::Submission::TerminatedResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         new(additional_properties: struct)

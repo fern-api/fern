@@ -24,7 +24,7 @@ module SeedTraceClient
       # @param filename [String]
       # @param contents [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SubmissionFileInfo]
+      # @return [SeedTraceClient::Submission::SubmissionFileInfo]
       def initialize(directory:, filename:, contents:, additional_properties: nil)
         @directory = directory
         @filename = filename
@@ -36,7 +36,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of SubmissionFileInfo
       #
       # @param json_object [String]
-      # @return [SubmissionFileInfo]
+      # @return [SeedTraceClient::Submission::SubmissionFileInfo]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         directory = struct["directory"]

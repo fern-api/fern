@@ -15,7 +15,7 @@ module SeedTraceClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [Test]
+      # @return [SeedTraceClient::Admin::Test]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -24,7 +24,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of Test
       #
       # @param json_object [String]
-      # @return [Test]
+      # @return [SeedTraceClient::Admin::Test]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
@@ -76,13 +76,13 @@ module SeedTraceClient
       end
 
       # @param member [Boolean]
-      # @return [Test]
+      # @return [SeedTraceClient::Admin::Test]
       def self.and_(member:)
         new(member: member, discriminant: "and")
       end
 
       # @param member [Boolean]
-      # @return [Test]
+      # @return [SeedTraceClient::Admin::Test]
       def self.or_(member:)
         new(member: member, discriminant: "or")
       end

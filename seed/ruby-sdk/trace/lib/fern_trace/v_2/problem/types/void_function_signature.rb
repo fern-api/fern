@@ -8,7 +8,7 @@ module SeedTraceClient
   module V2
     class Problem
       class VoidFunctionSignature
-        # @return [Array<V2::Parameter>]
+        # @return [Array<SeedTraceClient::V2::Problem::Parameter>]
         attr_reader :parameters
         # @return [OpenStruct] Additional properties unmapped to the current class definition
         attr_reader :additional_properties
@@ -18,9 +18,9 @@ module SeedTraceClient
 
         OMIT = Object.new
 
-        # @param parameters [Array<V2::Parameter>]
+        # @param parameters [Array<SeedTraceClient::V2::Problem::Parameter>]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [V2::VoidFunctionSignature]
+        # @return [SeedTraceClient::V2::Problem::VoidFunctionSignature]
         def initialize(parameters:, additional_properties: nil)
           @parameters = parameters
           @additional_properties = additional_properties
@@ -30,13 +30,13 @@ module SeedTraceClient
         # Deserialize a JSON object to an instance of VoidFunctionSignature
         #
         # @param json_object [String]
-        # @return [V2::VoidFunctionSignature]
+        # @return [SeedTraceClient::V2::Problem::VoidFunctionSignature]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
           parameters = parsed_json["parameters"]&.map do |v|
             v = v.to_json
-            V2::Parameter.from_json(json_object: v)
+            SeedTraceClient::V2::Problem::Parameter.from_json(json_object: v)
           end
           new(parameters: parameters, additional_properties: struct)
         end

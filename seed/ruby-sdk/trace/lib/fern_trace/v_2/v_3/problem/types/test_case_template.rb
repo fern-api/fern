@@ -13,7 +13,7 @@ module SeedTraceClient
           attr_reader :template_id
           # @return [String]
           attr_reader :name
-          # @return [V2::V3::TestCaseImplementation]
+          # @return [SeedTraceClient::V2::V3::Problem::TestCaseImplementation]
           attr_reader :implementation
           # @return [OpenStruct] Additional properties unmapped to the current class definition
           attr_reader :additional_properties
@@ -25,9 +25,9 @@ module SeedTraceClient
 
           # @param template_id [String]
           # @param name [String]
-          # @param implementation [V2::V3::TestCaseImplementation]
+          # @param implementation [SeedTraceClient::V2::V3::Problem::TestCaseImplementation]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-          # @return [V2::V3::TestCaseTemplate]
+          # @return [SeedTraceClient::V2::V3::Problem::TestCaseTemplate]
           def initialize(template_id:, name:, implementation:, additional_properties: nil)
             @template_id = template_id
             @name = name
@@ -39,7 +39,7 @@ module SeedTraceClient
           # Deserialize a JSON object to an instance of TestCaseTemplate
           #
           # @param json_object [String]
-          # @return [V2::V3::TestCaseTemplate]
+          # @return [SeedTraceClient::V2::V3::Problem::TestCaseTemplate]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             parsed_json = JSON.parse(json_object)
@@ -49,7 +49,7 @@ module SeedTraceClient
               implementation = nil
             else
               implementation = parsed_json["implementation"].to_json
-              implementation = V2::V3::TestCaseImplementation.from_json(json_object: implementation)
+              implementation = SeedTraceClient::V2::V3::Problem::TestCaseImplementation.from_json(json_object: implementation)
             end
             new(
               template_id: template_id,
@@ -75,7 +75,7 @@ module SeedTraceClient
           def self.validate_raw(obj:)
             obj.template_id.is_a?(String) != false || raise("Passed value for field obj.template_id is not the expected type, validation failed.")
             obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
-            V2::V3::TestCaseImplementation.validate_raw(obj: obj.implementation)
+            SeedTraceClient::V2::V3::Problem::TestCaseImplementation.validate_raw(obj: obj.implementation)
           end
         end
       end

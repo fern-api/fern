@@ -18,7 +18,7 @@ module SeedUnionsClient
 
     # @param id [String]
     # @param request_options [SeedUnionsClient::RequestOptions]
-    # @return [Shape]
+    # @return [SeedUnionsClient::Union::Shape]
     # @example
     #  unions = SeedUnionsClient::Client.new(base_url: "https://api.example.com")
     #  unions.union.get(id: "string")
@@ -32,10 +32,10 @@ module SeedUnionsClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/#{id}"
       end
-      Shape.from_json(json_object: response.body)
+      SeedUnionsClient::Union::Shape.from_json(json_object: response.body)
     end
 
-    # @param request [Shape]
+    # @param request [SeedUnionsClient::Union::Shape]
     # @param request_options [SeedUnionsClient::RequestOptions]
     # @return [Boolean]
     # @example
@@ -68,7 +68,7 @@ module SeedUnionsClient
 
     # @param id [String]
     # @param request_options [SeedUnionsClient::RequestOptions]
-    # @return [Shape]
+    # @return [SeedUnionsClient::Union::Shape]
     # @example
     #  unions = SeedUnionsClient::Client.new(base_url: "https://api.example.com")
     #  unions.union.get(id: "string")
@@ -83,11 +83,11 @@ module SeedUnionsClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/#{id}"
         end
-        Shape.from_json(json_object: response.body)
+        SeedUnionsClient::Union::Shape.from_json(json_object: response.body)
       end
     end
 
-    # @param request [Shape]
+    # @param request [SeedUnionsClient::Union::Shape]
     # @param request_options [SeedUnionsClient::RequestOptions]
     # @return [Boolean]
     # @example

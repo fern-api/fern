@@ -9,7 +9,7 @@ module SeedExamplesClient
     class Response
       # @return [Object]
       attr_reader :response
-      # @return [Array<Identifier>]
+      # @return [Array<SeedExamplesClient::Identifier>]
       attr_reader :identifiers
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -20,9 +20,9 @@ module SeedExamplesClient
       OMIT = Object.new
 
       # @param response [Object]
-      # @param identifiers [Array<Identifier>]
+      # @param identifiers [Array<SeedExamplesClient::Identifier>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Response]
+      # @return [SeedExamplesClient::Types::Response]
       def initialize(response:, identifiers:, additional_properties: nil)
         @response = response
         @identifiers = identifiers
@@ -33,14 +33,14 @@ module SeedExamplesClient
       # Deserialize a JSON object to an instance of Response
       #
       # @param json_object [String]
-      # @return [Response]
+      # @return [SeedExamplesClient::Types::Response]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         response = struct["response"]
         identifiers = parsed_json["identifiers"]&.map do |v|
           v = v.to_json
-          Identifier.from_json(json_object: v)
+          SeedExamplesClient::Identifier.from_json(json_object: v)
         end
         new(
           response: response,

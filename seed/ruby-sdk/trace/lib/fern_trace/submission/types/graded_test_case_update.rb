@@ -9,7 +9,7 @@ module SeedTraceClient
     class GradedTestCaseUpdate
       # @return [String]
       attr_reader :test_case_id
-      # @return [TestCaseGrade]
+      # @return [SeedTraceClient::Submission::TestCaseGrade]
       attr_reader :grade
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -20,9 +20,9 @@ module SeedTraceClient
       OMIT = Object.new
 
       # @param test_case_id [String]
-      # @param grade [TestCaseGrade]
+      # @param grade [SeedTraceClient::Submission::TestCaseGrade]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [GradedTestCaseUpdate]
+      # @return [SeedTraceClient::Submission::GradedTestCaseUpdate]
       def initialize(test_case_id:, grade:, additional_properties: nil)
         @test_case_id = test_case_id
         @grade = grade
@@ -33,7 +33,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of GradedTestCaseUpdate
       #
       # @param json_object [String]
-      # @return [GradedTestCaseUpdate]
+      # @return [SeedTraceClient::Submission::GradedTestCaseUpdate]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -42,7 +42,7 @@ module SeedTraceClient
           grade = nil
         else
           grade = parsed_json["grade"].to_json
-          grade = TestCaseGrade.from_json(json_object: grade)
+          grade = SeedTraceClient::Submission::TestCaseGrade.from_json(json_object: grade)
         end
         new(
           test_case_id: test_case_id,
@@ -66,7 +66,7 @@ module SeedTraceClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.test_case_id.is_a?(String) != false || raise("Passed value for field obj.test_case_id is not the expected type, validation failed.")
-        TestCaseGrade.validate_raw(obj: obj.grade)
+        SeedTraceClient::Submission::TestCaseGrade.validate_raw(obj: obj.grade)
       end
     end
   end

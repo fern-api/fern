@@ -21,7 +21,7 @@ module SeedServerSentEventsClient
       # @param delta [String]
       # @param tokens [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [StreamedCompletion]
+      # @return [SeedServerSentEventsClient::Completions::StreamedCompletion]
       def initialize(delta:, tokens: OMIT, additional_properties: nil)
         @delta = delta
         @tokens = tokens if tokens != OMIT
@@ -34,7 +34,7 @@ module SeedServerSentEventsClient
       # Deserialize a JSON object to an instance of StreamedCompletion
       #
       # @param json_object [String]
-      # @return [StreamedCompletion]
+      # @return [SeedServerSentEventsClient::Completions::StreamedCompletion]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         delta = struct["delta"]

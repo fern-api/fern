@@ -16,7 +16,7 @@ module SeedExamplesClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [Exception]
+      # @return [SeedExamplesClient::Types::Exception]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -25,16 +25,16 @@ module SeedExamplesClient
       # Deserialize a JSON object to an instance of Exception
       #
       # @param json_object [String]
-      # @return [Exception]
+      # @return [SeedExamplesClient::Types::Exception]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "generic"
-                   ExceptionInfo.from_json(json_object: json_object)
+                   SeedExamplesClient::Types::ExceptionInfo.from_json(json_object: json_object)
                  when "timeout"
                    nil
                  else
-                   ExceptionInfo.from_json(json_object: json_object)
+                   SeedExamplesClient::Types::ExceptionInfo.from_json(json_object: json_object)
                  end
         new(member: member, discriminant: struct.type)
       end
@@ -63,7 +63,7 @@ module SeedExamplesClient
       def self.validate_raw(obj:)
         case obj.type
         when "generic"
-          ExceptionInfo.validate_raw(obj: obj)
+          SeedExamplesClient::Types::ExceptionInfo.validate_raw(obj: obj)
         when "timeout"
           # noop
         else
@@ -79,13 +79,13 @@ module SeedExamplesClient
         @member.is_a?(obj)
       end
 
-      # @param member [ExceptionInfo]
-      # @return [Exception]
+      # @param member [SeedExamplesClient::Types::ExceptionInfo]
+      # @return [SeedExamplesClient::Types::Exception]
       def self.generic(member:)
         new(member: member, discriminant: "generic")
       end
 
-      # @return [Exception]
+      # @return [SeedExamplesClient::Types::Exception]
       def self.timeout
         new(member: nil, discriminant: "timeout")
       end

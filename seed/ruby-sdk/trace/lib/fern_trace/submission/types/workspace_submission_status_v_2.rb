@@ -7,7 +7,7 @@ require "json"
 module SeedTraceClient
   class Submission
     class WorkspaceSubmissionStatusV2
-      # @return [Array<WorkspaceSubmissionUpdate>]
+      # @return [Array<SeedTraceClient::Submission::WorkspaceSubmissionUpdate>]
       attr_reader :updates
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -17,9 +17,9 @@ module SeedTraceClient
 
       OMIT = Object.new
 
-      # @param updates [Array<WorkspaceSubmissionUpdate>]
+      # @param updates [Array<SeedTraceClient::Submission::WorkspaceSubmissionUpdate>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [WorkspaceSubmissionStatusV2]
+      # @return [SeedTraceClient::Submission::WorkspaceSubmissionStatusV2]
       def initialize(updates:, additional_properties: nil)
         @updates = updates
         @additional_properties = additional_properties
@@ -29,13 +29,13 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of WorkspaceSubmissionStatusV2
       #
       # @param json_object [String]
-      # @return [WorkspaceSubmissionStatusV2]
+      # @return [SeedTraceClient::Submission::WorkspaceSubmissionStatusV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         updates = parsed_json["updates"]&.map do |v|
           v = v.to_json
-          WorkspaceSubmissionUpdate.from_json(json_object: v)
+          SeedTraceClient::Submission::WorkspaceSubmissionUpdate.from_json(json_object: v)
         end
         new(updates: updates, additional_properties: struct)
       end

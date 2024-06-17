@@ -18,7 +18,7 @@ module SeedTraceClient
 
     # @param admin_key_header [String]
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [Array<Migration>]
+    # @return [Array<SeedTraceClient::Migration::Migration>]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -42,7 +42,7 @@ module SeedTraceClient
       parsed_json = JSON.parse(response.body)
       parsed_json&.map do |v|
         v = v.to_json
-        Migration.from_json(json_object: v)
+        SeedTraceClient::Migration::Migration.from_json(json_object: v)
       end
     end
   end
@@ -59,7 +59,7 @@ module SeedTraceClient
 
     # @param admin_key_header [String]
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [Array<Migration>]
+    # @return [Array<SeedTraceClient::Migration::Migration>]
     # @example
     #  trace = SeedTraceClient::Client.new(
     #    base_url: "https://api.example.com",
@@ -84,7 +84,7 @@ module SeedTraceClient
         parsed_json = JSON.parse(response.body)
         parsed_json&.map do |v|
           v = v.to_json
-          Migration.from_json(json_object: v)
+          SeedTraceClient::Migration::Migration.from_json(json_object: v)
         end
       end
     end

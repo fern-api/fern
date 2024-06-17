@@ -19,7 +19,7 @@ module SeedExhaustiveClient
 
         # @param map [Hash{String => Hash}]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [Types::ObjectWithMapOfMap]
+        # @return [SeedExhaustiveClient::Types::Object_::ObjectWithMapOfMap]
         def initialize(map:, additional_properties: nil)
           @map = map
           @additional_properties = additional_properties
@@ -29,7 +29,7 @@ module SeedExhaustiveClient
         # Deserialize a JSON object to an instance of ObjectWithMapOfMap
         #
         # @param json_object [String]
-        # @return [Types::ObjectWithMapOfMap]
+        # @return [SeedExhaustiveClient::Types::Object_::ObjectWithMapOfMap]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           map = struct["map"]

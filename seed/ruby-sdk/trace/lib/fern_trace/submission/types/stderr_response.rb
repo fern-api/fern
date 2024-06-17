@@ -21,7 +21,7 @@ module SeedTraceClient
       # @param submission_id [String]
       # @param stderr [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [StderrResponse]
+      # @return [SeedTraceClient::Submission::StderrResponse]
       def initialize(submission_id:, stderr:, additional_properties: nil)
         @submission_id = submission_id
         @stderr = stderr
@@ -32,7 +32,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of StderrResponse
       #
       # @param json_object [String]
-      # @return [StderrResponse]
+      # @return [SeedTraceClient::Submission::StderrResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         submission_id = struct["submissionId"]

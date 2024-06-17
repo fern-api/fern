@@ -6,7 +6,7 @@ require "json"
 module SeedTraceClient
   class Submission
     class WorkspaceStarterFilesResponseV2
-      # @return [Hash{Language => V2::Files}]
+      # @return [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::Problem::Files}]
       attr_reader :files_by_language
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -16,9 +16,9 @@ module SeedTraceClient
 
       OMIT = Object.new
 
-      # @param files_by_language [Hash{Language => V2::Files}]
+      # @param files_by_language [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::Problem::Files}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [WorkspaceStarterFilesResponseV2]
+      # @return [SeedTraceClient::Submission::WorkspaceStarterFilesResponseV2]
       def initialize(files_by_language:, additional_properties: nil)
         @files_by_language = files_by_language
         @additional_properties = additional_properties
@@ -28,13 +28,13 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of WorkspaceStarterFilesResponseV2
       #
       # @param json_object [String]
-      # @return [WorkspaceStarterFilesResponseV2]
+      # @return [SeedTraceClient::Submission::WorkspaceStarterFilesResponseV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         files_by_language = parsed_json["filesByLanguage"]&.transform_values do |v|
           v = v.to_json
-          V2::Files.from_json(json_object: v)
+          SeedTraceClient::V2::Problem::Files.from_json(json_object: v)
         end
         new(files_by_language: files_by_language, additional_properties: struct)
       end

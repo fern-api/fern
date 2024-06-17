@@ -130,8 +130,10 @@ export class HeadersGenerator {
                                                 isOptional: cc.clientSecretEnvVar !== undefined || !this.isAuthRequired,
                                                 example: '"YOUR_CLIENT_SECRET"',
                                                 defaultValue:
-                                                    cc.clientIdEnvVar != null
-                                                        ? new EnvironmentVariable({ variableName: cc.clientIdEnvVar })
+                                                    cc.clientSecretEnvVar != null
+                                                        ? new EnvironmentVariable({
+                                                              variableName: cc.clientSecretEnvVar
+                                                          })
                                                         : undefined
                                             })
                                         ]

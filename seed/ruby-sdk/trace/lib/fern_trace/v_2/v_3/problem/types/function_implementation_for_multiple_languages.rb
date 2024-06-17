@@ -8,7 +8,7 @@ module SeedTraceClient
     module V3
       class Problem
         class FunctionImplementationForMultipleLanguages
-          # @return [Hash{Language => V2::V3::FunctionImplementation}]
+          # @return [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::V3::Problem::FunctionImplementation}]
           attr_reader :code_by_language
           # @return [OpenStruct] Additional properties unmapped to the current class definition
           attr_reader :additional_properties
@@ -18,9 +18,9 @@ module SeedTraceClient
 
           OMIT = Object.new
 
-          # @param code_by_language [Hash{Language => V2::V3::FunctionImplementation}]
+          # @param code_by_language [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::V3::Problem::FunctionImplementation}]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-          # @return [V2::V3::FunctionImplementationForMultipleLanguages]
+          # @return [SeedTraceClient::V2::V3::Problem::FunctionImplementationForMultipleLanguages]
           def initialize(code_by_language:, additional_properties: nil)
             @code_by_language = code_by_language
             @additional_properties = additional_properties
@@ -31,13 +31,13 @@ module SeedTraceClient
           #  FunctionImplementationForMultipleLanguages
           #
           # @param json_object [String]
-          # @return [V2::V3::FunctionImplementationForMultipleLanguages]
+          # @return [SeedTraceClient::V2::V3::Problem::FunctionImplementationForMultipleLanguages]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             parsed_json = JSON.parse(json_object)
             code_by_language = parsed_json["codeByLanguage"]&.transform_values do |v|
               v = v.to_json
-              V2::V3::FunctionImplementation.from_json(json_object: v)
+              SeedTraceClient::V2::V3::Problem::FunctionImplementation.from_json(json_object: v)
             end
             new(code_by_language: code_by_language, additional_properties: struct)
           end

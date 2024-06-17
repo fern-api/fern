@@ -7,7 +7,7 @@ module SeedTraceClient
   module V2
     class Problem
       class GetFunctionSignatureResponse
-        # @return [Hash{Language => String}]
+        # @return [Hash{SeedTraceClient::Commons::Language => String}]
         attr_reader :function_by_language
         # @return [OpenStruct] Additional properties unmapped to the current class definition
         attr_reader :additional_properties
@@ -17,9 +17,9 @@ module SeedTraceClient
 
         OMIT = Object.new
 
-        # @param function_by_language [Hash{Language => String}]
+        # @param function_by_language [Hash{SeedTraceClient::Commons::Language => String}]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [V2::GetFunctionSignatureResponse]
+        # @return [SeedTraceClient::V2::Problem::GetFunctionSignatureResponse]
         def initialize(function_by_language:, additional_properties: nil)
           @function_by_language = function_by_language
           @additional_properties = additional_properties
@@ -29,7 +29,7 @@ module SeedTraceClient
         # Deserialize a JSON object to an instance of GetFunctionSignatureResponse
         #
         # @param json_object [String]
-        # @return [V2::GetFunctionSignatureResponse]
+        # @return [SeedTraceClient::V2::Problem::GetFunctionSignatureResponse]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           function_by_language = struct["functionByLanguage"]

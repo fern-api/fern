@@ -21,7 +21,7 @@ module SeedTraceClient
       # @param filename [String]
       # @param contents [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [FileInfo]
+      # @return [SeedTraceClient::Commons::FileInfo]
       def initialize(filename:, contents:, additional_properties: nil)
         @filename = filename
         @contents = contents
@@ -32,7 +32,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of FileInfo
       #
       # @param json_object [String]
-      # @return [FileInfo]
+      # @return [SeedTraceClient::Commons::FileInfo]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         filename = struct["filename"]

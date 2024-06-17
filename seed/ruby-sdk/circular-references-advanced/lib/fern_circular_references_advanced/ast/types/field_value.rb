@@ -18,7 +18,7 @@ module SeedApiClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [FieldValue]
+      # @return [SeedApiClient::Ast::FieldValue]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -27,16 +27,16 @@ module SeedApiClient
       # Deserialize a JSON object to an instance of FieldValue
       #
       # @param json_object [String]
-      # @return [FieldValue]
+      # @return [SeedApiClient::Ast::FieldValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "primitive_value"
                    json_object.value
                  when "object_value"
-                   ObjectValue.from_json(json_object: json_object)
+                   SeedApiClient::Ast::ObjectValue.from_json(json_object: json_object)
                  when "container_value"
-                   ContainerValue.from_json(json_object: json_object.value)
+                   SeedApiClient::Ast::ContainerValue.from_json(json_object: json_object.value)
                  else
                    json_object
                  end
@@ -69,11 +69,11 @@ module SeedApiClient
       def self.validate_raw(obj:)
         case obj.type
         when "primitive_value"
-          obj.is_a?(PrimitiveValue) != false || raise("Passed value for field obj is not the expected type, validation failed.")
+          obj.is_a?(SeedApiClient::Ast::PrimitiveValue) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "object_value"
-          ObjectValue.validate_raw(obj: obj)
+          SeedApiClient::Ast::ObjectValue.validate_raw(obj: obj)
         when "container_value"
-          ContainerValue.validate_raw(obj: obj)
+          SeedApiClient::Ast::ContainerValue.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -87,20 +87,20 @@ module SeedApiClient
         @member.is_a?(obj)
       end
 
-      # @param member [PrimitiveValue]
-      # @return [FieldValue]
+      # @param member [SeedApiClient::Ast::PrimitiveValue]
+      # @return [SeedApiClient::Ast::FieldValue]
       def self.primitive_value(member:)
         new(member: member, discriminant: "primitive_value")
       end
 
-      # @param member [ObjectValue]
-      # @return [FieldValue]
+      # @param member [SeedApiClient::Ast::ObjectValue]
+      # @return [SeedApiClient::Ast::FieldValue]
       def self.object_value(member:)
         new(member: member, discriminant: "object_value")
       end
 
-      # @param member [ContainerValue]
-      # @return [FieldValue]
+      # @param member [SeedApiClient::Ast::ContainerValue]
+      # @return [SeedApiClient::Ast::FieldValue]
       def self.container_value(member:)
         new(member: member, discriminant: "container_value")
       end

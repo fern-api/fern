@@ -24,7 +24,7 @@ module SeedMixedCaseClient
       # @param metadata_tags [Array<String>]
       # @param extra_properties [Hash{String => String}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [User]
+      # @return [SeedMixedCaseClient::Service::User]
       def initialize(user_name:, metadata_tags:, extra_properties:, additional_properties: nil)
         @user_name = user_name
         @metadata_tags = metadata_tags
@@ -36,7 +36,7 @@ module SeedMixedCaseClient
       # Deserialize a JSON object to an instance of User
       #
       # @param json_object [String]
-      # @return [User]
+      # @return [SeedMixedCaseClient::Service::User]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         user_name = struct["userName"]

@@ -19,7 +19,7 @@ module SeedExhaustiveClient
 
         # @param string [String]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [Types::ObjectWithRequiredField]
+        # @return [SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField]
         def initialize(string:, additional_properties: nil)
           @string = string
           @additional_properties = additional_properties
@@ -29,7 +29,7 @@ module SeedExhaustiveClient
         # Deserialize a JSON object to an instance of ObjectWithRequiredField
         #
         # @param json_object [String]
-        # @return [Types::ObjectWithRequiredField]
+        # @return [SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           string = struct["string"]

@@ -15,7 +15,7 @@ module SeedTraceClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [PlaylistIdNotFoundErrorBody]
+      # @return [SeedTraceClient::Playlist::PlaylistIdNotFoundErrorBody]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -24,7 +24,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of PlaylistIdNotFoundErrorBody
       #
       # @param json_object [String]
-      # @return [PlaylistIdNotFoundErrorBody]
+      # @return [SeedTraceClient::Playlist::PlaylistIdNotFoundErrorBody]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
@@ -71,7 +71,7 @@ module SeedTraceClient
       end
 
       # @param member [String]
-      # @return [PlaylistIdNotFoundErrorBody]
+      # @return [SeedTraceClient::Playlist::PlaylistIdNotFoundErrorBody]
       def self.playlist_id(member:)
         new(member: member, discriminant: "playlistId")
       end

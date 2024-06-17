@@ -20,7 +20,7 @@ module SeedExhaustiveClient
         @request_client = request_client
       end
 
-      # @param request [Hash] Request of type Types::ObjectWithOptionalField, as a Hash
+      # @param request [Hash] Request of type SeedExhaustiveClient::Types::Object_::ObjectWithOptionalField, as a Hash
       #   * :string (String)
       #   * :integer (Integer)
       #   * :long (Long)
@@ -35,7 +35,7 @@ module SeedExhaustiveClient
       #   * :map (Hash{Integer => String})
       #   * :bigint (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Types::ObjectWithOptionalField]
+      # @return [SeedExhaustiveClient::Types::Object_::ObjectWithOptionalField]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.object.get_and_return_with_optional_field(request: { string: "string", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(2024-01-15T09:30:00.000Z), date: DateTime.parse(2023-01-15), uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", base_64: "SGVsbG8gd29ybGQh", list: ["string"], set: Set["string"], map: { 1: "string" }, bigint: "123456789123456789" })
@@ -51,13 +51,13 @@ module SeedExhaustiveClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-with-optional-field"
         end
-        Types::ObjectWithOptionalField.from_json(json_object: response.body)
+        SeedExhaustiveClient::Types::Object_::ObjectWithOptionalField.from_json(json_object: response.body)
       end
 
-      # @param request [Hash] Request of type Types::ObjectWithRequiredField, as a Hash
+      # @param request [Hash] Request of type SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField, as a Hash
       #   * :string (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Types::ObjectWithRequiredField]
+      # @return [SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.object.get_and_return_with_required_field(request: { string: "string" })
@@ -73,13 +73,13 @@ module SeedExhaustiveClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-with-required-field"
         end
-        Types::ObjectWithRequiredField.from_json(json_object: response.body)
+        SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField.from_json(json_object: response.body)
       end
 
-      # @param request [Hash] Request of type Types::ObjectWithMapOfMap, as a Hash
+      # @param request [Hash] Request of type SeedExhaustiveClient::Types::Object_::ObjectWithMapOfMap, as a Hash
       #   * :map (Hash{String => Hash})
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Types::ObjectWithMapOfMap]
+      # @return [SeedExhaustiveClient::Types::Object_::ObjectWithMapOfMap]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.object.get_and_return_with_map_of_map(request: { map: { "string": { "string": "string" } } })
@@ -95,10 +95,10 @@ module SeedExhaustiveClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-with-map-of-map"
         end
-        Types::ObjectWithMapOfMap.from_json(json_object: response.body)
+        SeedExhaustiveClient::Types::Object_::ObjectWithMapOfMap.from_json(json_object: response.body)
       end
 
-      # @param request [Hash] Request of type Types::NestedObjectWithOptionalField, as a Hash
+      # @param request [Hash] Request of type SeedExhaustiveClient::Types::Object_::NestedObjectWithOptionalField, as a Hash
       #   * :string (String)
       #   * :nested_object (Hash)
       #     * :string (String)
@@ -115,7 +115,7 @@ module SeedExhaustiveClient
       #     * :map (Hash{Integer => String})
       #     * :bigint (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Types::NestedObjectWithOptionalField]
+      # @return [SeedExhaustiveClient::Types::Object_::NestedObjectWithOptionalField]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.object.get_and_return_nested_with_optional_field(request: { string: "string", nested_object: { string: "string", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(2024-01-15T09:30:00.000Z), date: DateTime.parse(2023-01-15), uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", base_64: "SGVsbG8gd29ybGQh", list: ["string"], set: Set["string"], map: { 1: "string" }, bigint: "123456789123456789" } })
@@ -131,11 +131,11 @@ module SeedExhaustiveClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-nested-with-optional-field"
         end
-        Types::NestedObjectWithOptionalField.from_json(json_object: response.body)
+        SeedExhaustiveClient::Types::Object_::NestedObjectWithOptionalField.from_json(json_object: response.body)
       end
 
       # @param string [String]
-      # @param request [Hash] Request of type Types::NestedObjectWithRequiredField, as a Hash
+      # @param request [Hash] Request of type SeedExhaustiveClient::Types::Object_::NestedObjectWithRequiredField, as a Hash
       #   * :string (String)
       #   * :nested_object (Hash)
       #     * :string (String)
@@ -152,7 +152,7 @@ module SeedExhaustiveClient
       #     * :map (Hash{Integer => String})
       #     * :bigint (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Types::NestedObjectWithRequiredField]
+      # @return [SeedExhaustiveClient::Types::Object_::NestedObjectWithRequiredField]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.object.get_and_return_nested_with_required_field(string: "string", request: { string: "string", nested_object: { string: "string", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(2024-01-15T09:30:00.000Z), date: DateTime.parse(2023-01-15), uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", base_64: "SGVsbG8gd29ybGQh", list: ["string"], set: Set["string"], map: { 1: "string" }, bigint: "123456789123456789" } })
@@ -168,10 +168,10 @@ module SeedExhaustiveClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-nested-with-required-field/#{string}"
         end
-        Types::NestedObjectWithRequiredField.from_json(json_object: response.body)
+        SeedExhaustiveClient::Types::Object_::NestedObjectWithRequiredField.from_json(json_object: response.body)
       end
 
-      # @param request [Array<Hash>] Request of type Array<Types::NestedObjectWithRequiredField>, as a Hash
+      # @param request [Array<Hash>] Request of type Array<SeedExhaustiveClient::Types::Object_::NestedObjectWithRequiredField>, as a Hash
       #   * :string (String)
       #   * :nested_object (Hash)
       #     * :string (String)
@@ -188,7 +188,7 @@ module SeedExhaustiveClient
       #     * :map (Hash{Integer => String})
       #     * :bigint (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Types::NestedObjectWithRequiredField]
+      # @return [SeedExhaustiveClient::Types::Object_::NestedObjectWithRequiredField]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{ string: "string", nested_object: { string: "string", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(2024-01-15T09:30:00.000Z), date: DateTime.parse(2023-01-15), uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", base_64: "SGVsbG8gd29ybGQh", list: ["string"], set: Set["string"], map: { 1: "string" }, bigint: "123456789123456789" } }])
@@ -204,7 +204,7 @@ module SeedExhaustiveClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-nested-with-required-field-list"
         end
-        Types::NestedObjectWithRequiredField.from_json(json_object: response.body)
+        SeedExhaustiveClient::Types::Object_::NestedObjectWithRequiredField.from_json(json_object: response.body)
       end
     end
 
@@ -218,7 +218,7 @@ module SeedExhaustiveClient
         @request_client = request_client
       end
 
-      # @param request [Hash] Request of type Types::ObjectWithOptionalField, as a Hash
+      # @param request [Hash] Request of type SeedExhaustiveClient::Types::Object_::ObjectWithOptionalField, as a Hash
       #   * :string (String)
       #   * :integer (Integer)
       #   * :long (Long)
@@ -233,7 +233,7 @@ module SeedExhaustiveClient
       #   * :map (Hash{Integer => String})
       #   * :bigint (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Types::ObjectWithOptionalField]
+      # @return [SeedExhaustiveClient::Types::Object_::ObjectWithOptionalField]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.object.get_and_return_with_optional_field(request: { string: "string", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(2024-01-15T09:30:00.000Z), date: DateTime.parse(2023-01-15), uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", base_64: "SGVsbG8gd29ybGQh", list: ["string"], set: Set["string"], map: { 1: "string" }, bigint: "123456789123456789" })
@@ -250,14 +250,14 @@ module SeedExhaustiveClient
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-with-optional-field"
           end
-          Types::ObjectWithOptionalField.from_json(json_object: response.body)
+          SeedExhaustiveClient::Types::Object_::ObjectWithOptionalField.from_json(json_object: response.body)
         end
       end
 
-      # @param request [Hash] Request of type Types::ObjectWithRequiredField, as a Hash
+      # @param request [Hash] Request of type SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField, as a Hash
       #   * :string (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Types::ObjectWithRequiredField]
+      # @return [SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.object.get_and_return_with_required_field(request: { string: "string" })
@@ -274,14 +274,14 @@ module SeedExhaustiveClient
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-with-required-field"
           end
-          Types::ObjectWithRequiredField.from_json(json_object: response.body)
+          SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField.from_json(json_object: response.body)
         end
       end
 
-      # @param request [Hash] Request of type Types::ObjectWithMapOfMap, as a Hash
+      # @param request [Hash] Request of type SeedExhaustiveClient::Types::Object_::ObjectWithMapOfMap, as a Hash
       #   * :map (Hash{String => Hash})
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Types::ObjectWithMapOfMap]
+      # @return [SeedExhaustiveClient::Types::Object_::ObjectWithMapOfMap]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.object.get_and_return_with_map_of_map(request: { map: { "string": { "string": "string" } } })
@@ -298,11 +298,11 @@ module SeedExhaustiveClient
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-with-map-of-map"
           end
-          Types::ObjectWithMapOfMap.from_json(json_object: response.body)
+          SeedExhaustiveClient::Types::Object_::ObjectWithMapOfMap.from_json(json_object: response.body)
         end
       end
 
-      # @param request [Hash] Request of type Types::NestedObjectWithOptionalField, as a Hash
+      # @param request [Hash] Request of type SeedExhaustiveClient::Types::Object_::NestedObjectWithOptionalField, as a Hash
       #   * :string (String)
       #   * :nested_object (Hash)
       #     * :string (String)
@@ -319,7 +319,7 @@ module SeedExhaustiveClient
       #     * :map (Hash{Integer => String})
       #     * :bigint (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Types::NestedObjectWithOptionalField]
+      # @return [SeedExhaustiveClient::Types::Object_::NestedObjectWithOptionalField]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.object.get_and_return_nested_with_optional_field(request: { string: "string", nested_object: { string: "string", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(2024-01-15T09:30:00.000Z), date: DateTime.parse(2023-01-15), uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", base_64: "SGVsbG8gd29ybGQh", list: ["string"], set: Set["string"], map: { 1: "string" }, bigint: "123456789123456789" } })
@@ -336,12 +336,12 @@ module SeedExhaustiveClient
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-nested-with-optional-field"
           end
-          Types::NestedObjectWithOptionalField.from_json(json_object: response.body)
+          SeedExhaustiveClient::Types::Object_::NestedObjectWithOptionalField.from_json(json_object: response.body)
         end
       end
 
       # @param string [String]
-      # @param request [Hash] Request of type Types::NestedObjectWithRequiredField, as a Hash
+      # @param request [Hash] Request of type SeedExhaustiveClient::Types::Object_::NestedObjectWithRequiredField, as a Hash
       #   * :string (String)
       #   * :nested_object (Hash)
       #     * :string (String)
@@ -358,7 +358,7 @@ module SeedExhaustiveClient
       #     * :map (Hash{Integer => String})
       #     * :bigint (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Types::NestedObjectWithRequiredField]
+      # @return [SeedExhaustiveClient::Types::Object_::NestedObjectWithRequiredField]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.object.get_and_return_nested_with_required_field(string: "string", request: { string: "string", nested_object: { string: "string", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(2024-01-15T09:30:00.000Z), date: DateTime.parse(2023-01-15), uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", base_64: "SGVsbG8gd29ybGQh", list: ["string"], set: Set["string"], map: { 1: "string" }, bigint: "123456789123456789" } })
@@ -375,11 +375,11 @@ module SeedExhaustiveClient
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-nested-with-required-field/#{string}"
           end
-          Types::NestedObjectWithRequiredField.from_json(json_object: response.body)
+          SeedExhaustiveClient::Types::Object_::NestedObjectWithRequiredField.from_json(json_object: response.body)
         end
       end
 
-      # @param request [Array<Hash>] Request of type Array<Types::NestedObjectWithRequiredField>, as a Hash
+      # @param request [Array<Hash>] Request of type Array<SeedExhaustiveClient::Types::Object_::NestedObjectWithRequiredField>, as a Hash
       #   * :string (String)
       #   * :nested_object (Hash)
       #     * :string (String)
@@ -396,7 +396,7 @@ module SeedExhaustiveClient
       #     * :map (Hash{Integer => String})
       #     * :bigint (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Types::NestedObjectWithRequiredField]
+      # @return [SeedExhaustiveClient::Types::Object_::NestedObjectWithRequiredField]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{ string: "string", nested_object: { string: "string", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(2024-01-15T09:30:00.000Z), date: DateTime.parse(2023-01-15), uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", base_64: "SGVsbG8gd29ybGQh", list: ["string"], set: Set["string"], map: { 1: "string" }, bigint: "123456789123456789" } }])
@@ -413,7 +413,7 @@ module SeedExhaustiveClient
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-nested-with-required-field-list"
           end
-          Types::NestedObjectWithRequiredField.from_json(json_object: response.body)
+          SeedExhaustiveClient::Types::Object_::NestedObjectWithRequiredField.from_json(json_object: response.body)
         end
       end
     end

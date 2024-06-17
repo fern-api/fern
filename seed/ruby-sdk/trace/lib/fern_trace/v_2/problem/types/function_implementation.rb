@@ -22,7 +22,7 @@ module SeedTraceClient
         # @param impl [String]
         # @param imports [String]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [V2::FunctionImplementation]
+        # @return [SeedTraceClient::V2::Problem::FunctionImplementation]
         def initialize(impl:, imports: OMIT, additional_properties: nil)
           @impl = impl
           @imports = imports if imports != OMIT
@@ -35,7 +35,7 @@ module SeedTraceClient
         # Deserialize a JSON object to an instance of FunctionImplementation
         #
         # @param json_object [String]
-        # @return [V2::FunctionImplementation]
+        # @return [SeedTraceClient::V2::Problem::FunctionImplementation]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           impl = struct["impl"]

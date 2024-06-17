@@ -6,7 +6,7 @@ require "json"
 module SeedTraceClient
   class Submission
     class Scope
-      # @return [Hash{String => DebugVariableValue}]
+      # @return [Hash{String => SeedTraceClient::Commons::DebugVariableValue}]
       attr_reader :variables
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -16,9 +16,9 @@ module SeedTraceClient
 
       OMIT = Object.new
 
-      # @param variables [Hash{String => DebugVariableValue}]
+      # @param variables [Hash{String => SeedTraceClient::Commons::DebugVariableValue}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Scope]
+      # @return [SeedTraceClient::Submission::Scope]
       def initialize(variables:, additional_properties: nil)
         @variables = variables
         @additional_properties = additional_properties
@@ -28,13 +28,13 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of Scope
       #
       # @param json_object [String]
-      # @return [Scope]
+      # @return [SeedTraceClient::Submission::Scope]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         variables = parsed_json["variables"]&.transform_values do |v|
           v = v.to_json
-          DebugVariableValue.from_json(json_object: v)
+          SeedTraceClient::Commons::DebugVariableValue.from_json(json_object: v)
         end
         new(variables: variables, additional_properties: struct)
       end

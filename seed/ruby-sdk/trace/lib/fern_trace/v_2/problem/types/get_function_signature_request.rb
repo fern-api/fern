@@ -8,7 +8,7 @@ module SeedTraceClient
   module V2
     class Problem
       class GetFunctionSignatureRequest
-        # @return [V2::FunctionSignature]
+        # @return [SeedTraceClient::V2::Problem::FunctionSignature]
         attr_reader :function_signature
         # @return [OpenStruct] Additional properties unmapped to the current class definition
         attr_reader :additional_properties
@@ -18,9 +18,9 @@ module SeedTraceClient
 
         OMIT = Object.new
 
-        # @param function_signature [V2::FunctionSignature]
+        # @param function_signature [SeedTraceClient::V2::Problem::FunctionSignature]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [V2::GetFunctionSignatureRequest]
+        # @return [SeedTraceClient::V2::Problem::GetFunctionSignatureRequest]
         def initialize(function_signature:, additional_properties: nil)
           @function_signature = function_signature
           @additional_properties = additional_properties
@@ -30,7 +30,7 @@ module SeedTraceClient
         # Deserialize a JSON object to an instance of GetFunctionSignatureRequest
         #
         # @param json_object [String]
-        # @return [V2::GetFunctionSignatureRequest]
+        # @return [SeedTraceClient::V2::Problem::GetFunctionSignatureRequest]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
@@ -38,7 +38,7 @@ module SeedTraceClient
             function_signature = nil
           else
             function_signature = parsed_json["functionSignature"].to_json
-            function_signature = V2::FunctionSignature.from_json(json_object: function_signature)
+            function_signature = SeedTraceClient::V2::Problem::FunctionSignature.from_json(json_object: function_signature)
           end
           new(function_signature: function_signature, additional_properties: struct)
         end
@@ -57,7 +57,7 @@ module SeedTraceClient
         # @param obj [Object]
         # @return [Void]
         def self.validate_raw(obj:)
-          V2::FunctionSignature.validate_raw(obj: obj.function_signature)
+          SeedTraceClient::V2::Problem::FunctionSignature.validate_raw(obj: obj.function_signature)
         end
       end
     end

@@ -18,7 +18,7 @@ module SeedTraceClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [WorkspaceSubmissionStatus]
+      # @return [SeedTraceClient::Submission::WorkspaceSubmissionStatus]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -27,20 +27,20 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of WorkspaceSubmissionStatus
       #
       # @param json_object [String]
-      # @return [WorkspaceSubmissionStatus]
+      # @return [SeedTraceClient::Submission::WorkspaceSubmissionStatus]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "stopped"
                    nil
                  when "errored"
-                   ErrorInfo.from_json(json_object: json_object.value)
+                   SeedTraceClient::Submission::ErrorInfo.from_json(json_object: json_object.value)
                  when "running"
                    json_object.value
                  when "ran"
-                   WorkspaceRunDetails.from_json(json_object: json_object)
+                   SeedTraceClient::Submission::WorkspaceRunDetails.from_json(json_object: json_object)
                  when "traced"
-                   WorkspaceRunDetails.from_json(json_object: json_object)
+                   SeedTraceClient::Submission::WorkspaceRunDetails.from_json(json_object: json_object)
                  else
                    json_object
                  end
@@ -79,13 +79,13 @@ module SeedTraceClient
         when "stopped"
           # noop
         when "errored"
-          ErrorInfo.validate_raw(obj: obj)
+          SeedTraceClient::Submission::ErrorInfo.validate_raw(obj: obj)
         when "running"
-          obj.is_a?(RunningSubmissionState) != false || raise("Passed value for field obj is not the expected type, validation failed.")
+          obj.is_a?(SeedTraceClient::Submission::RunningSubmissionState) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "ran"
-          WorkspaceRunDetails.validate_raw(obj: obj)
+          SeedTraceClient::Submission::WorkspaceRunDetails.validate_raw(obj: obj)
         when "traced"
-          WorkspaceRunDetails.validate_raw(obj: obj)
+          SeedTraceClient::Submission::WorkspaceRunDetails.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -99,31 +99,31 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @return [WorkspaceSubmissionStatus]
+      # @return [SeedTraceClient::Submission::WorkspaceSubmissionStatus]
       def self.stopped
         new(member: nil, discriminant: "stopped")
       end
 
-      # @param member [ErrorInfo]
-      # @return [WorkspaceSubmissionStatus]
+      # @param member [SeedTraceClient::Submission::ErrorInfo]
+      # @return [SeedTraceClient::Submission::WorkspaceSubmissionStatus]
       def self.errored(member:)
         new(member: member, discriminant: "errored")
       end
 
-      # @param member [RunningSubmissionState]
-      # @return [WorkspaceSubmissionStatus]
+      # @param member [SeedTraceClient::Submission::RunningSubmissionState]
+      # @return [SeedTraceClient::Submission::WorkspaceSubmissionStatus]
       def self.running(member:)
         new(member: member, discriminant: "running")
       end
 
-      # @param member [WorkspaceRunDetails]
-      # @return [WorkspaceSubmissionStatus]
+      # @param member [SeedTraceClient::Submission::WorkspaceRunDetails]
+      # @return [SeedTraceClient::Submission::WorkspaceSubmissionStatus]
       def self.ran(member:)
         new(member: member, discriminant: "ran")
       end
 
-      # @param member [WorkspaceRunDetails]
-      # @return [WorkspaceSubmissionStatus]
+      # @param member [SeedTraceClient::Submission::WorkspaceRunDetails]
+      # @return [SeedTraceClient::Submission::WorkspaceSubmissionStatus]
       def self.traced(member:)
         new(member: member, discriminant: "traced")
       end

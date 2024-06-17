@@ -21,7 +21,7 @@ module SeedPaginationClient
       # @param page [Integer]
       # @param starting_after [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [NextPage]
+      # @return [SeedPaginationClient::Users::NextPage]
       def initialize(page:, starting_after:, additional_properties: nil)
         @page = page
         @starting_after = starting_after
@@ -32,7 +32,7 @@ module SeedPaginationClient
       # Deserialize a JSON object to an instance of NextPage
       #
       # @param json_object [String]
-      # @return [NextPage]
+      # @return [SeedPaginationClient::Users::NextPage]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         page = struct["page"]

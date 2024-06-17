@@ -18,7 +18,7 @@ module SeedTraceClient
 
       # @param missing_submission_id [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SubmissionIdNotFound]
+      # @return [SeedTraceClient::Submission::SubmissionIdNotFound]
       def initialize(missing_submission_id:, additional_properties: nil)
         @missing_submission_id = missing_submission_id
         @additional_properties = additional_properties
@@ -28,7 +28,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of SubmissionIdNotFound
       #
       # @param json_object [String]
-      # @return [SubmissionIdNotFound]
+      # @return [SeedTraceClient::Submission::SubmissionIdNotFound]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         missing_submission_id = struct["missingSubmissionId"]

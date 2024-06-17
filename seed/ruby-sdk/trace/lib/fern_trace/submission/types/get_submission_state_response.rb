@@ -13,9 +13,9 @@ module SeedTraceClient
       attr_reader :time_submitted
       # @return [String]
       attr_reader :submission
-      # @return [Language]
+      # @return [SeedTraceClient::Commons::Language]
       attr_reader :language
-      # @return [SubmissionTypeState]
+      # @return [SeedTraceClient::Submission::SubmissionTypeState]
       attr_reader :submission_type_state
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -27,10 +27,10 @@ module SeedTraceClient
 
       # @param time_submitted [DateTime]
       # @param submission [String]
-      # @param language [Language]
-      # @param submission_type_state [SubmissionTypeState]
+      # @param language [SeedTraceClient::Commons::Language]
+      # @param submission_type_state [SeedTraceClient::Submission::SubmissionTypeState]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [GetSubmissionStateResponse]
+      # @return [SeedTraceClient::Submission::GetSubmissionStateResponse]
       def initialize(submission:, language:, submission_type_state:, time_submitted: OMIT, additional_properties: nil)
         @time_submitted = time_submitted if time_submitted != OMIT
         @submission = submission
@@ -50,7 +50,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of GetSubmissionStateResponse
       #
       # @param json_object [String]
-      # @return [GetSubmissionStateResponse]
+      # @return [SeedTraceClient::Submission::GetSubmissionStateResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -61,7 +61,7 @@ module SeedTraceClient
           submission_type_state = nil
         else
           submission_type_state = parsed_json["submissionTypeState"].to_json
-          submission_type_state = SubmissionTypeState.from_json(json_object: submission_type_state)
+          submission_type_state = SeedTraceClient::Submission::SubmissionTypeState.from_json(json_object: submission_type_state)
         end
         new(
           time_submitted: time_submitted,
@@ -88,8 +88,8 @@ module SeedTraceClient
       def self.validate_raw(obj:)
         obj.time_submitted&.is_a?(DateTime) != false || raise("Passed value for field obj.time_submitted is not the expected type, validation failed.")
         obj.submission.is_a?(String) != false || raise("Passed value for field obj.submission is not the expected type, validation failed.")
-        obj.language.is_a?(Language) != false || raise("Passed value for field obj.language is not the expected type, validation failed.")
-        SubmissionTypeState.validate_raw(obj: obj.submission_type_state)
+        obj.language.is_a?(SeedTraceClient::Commons::Language) != false || raise("Passed value for field obj.language is not the expected type, validation failed.")
+        SeedTraceClient::Submission::SubmissionTypeState.validate_raw(obj: obj.submission_type_state)
       end
     end
   end

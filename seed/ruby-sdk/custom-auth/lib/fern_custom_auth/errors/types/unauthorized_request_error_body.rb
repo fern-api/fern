@@ -18,7 +18,7 @@ module SeedCustomAuthClient
 
       # @param message [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [UnauthorizedRequestErrorBody]
+      # @return [SeedCustomAuthClient::Errors::UnauthorizedRequestErrorBody]
       def initialize(message:, additional_properties: nil)
         @message = message
         @additional_properties = additional_properties
@@ -28,7 +28,7 @@ module SeedCustomAuthClient
       # Deserialize a JSON object to an instance of UnauthorizedRequestErrorBody
       #
       # @param json_object [String]
-      # @return [UnauthorizedRequestErrorBody]
+      # @return [SeedCustomAuthClient::Errors::UnauthorizedRequestErrorBody]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         message = struct["message"]

@@ -9,7 +9,7 @@ module SeedMixedCaseClient
     class NestedUser
       # @return [String]
       attr_reader :name
-      # @return [User]
+      # @return [SeedMixedCaseClient::Service::User]
       attr_reader :nested_user
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -20,9 +20,9 @@ module SeedMixedCaseClient
       OMIT = Object.new
 
       # @param name [String]
-      # @param nested_user [User]
+      # @param nested_user [SeedMixedCaseClient::Service::User]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [NestedUser]
+      # @return [SeedMixedCaseClient::Service::NestedUser]
       def initialize(name:, nested_user:, additional_properties: nil)
         @name = name
         @nested_user = nested_user
@@ -33,7 +33,7 @@ module SeedMixedCaseClient
       # Deserialize a JSON object to an instance of NestedUser
       #
       # @param json_object [String]
-      # @return [NestedUser]
+      # @return [SeedMixedCaseClient::Service::NestedUser]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -42,7 +42,7 @@ module SeedMixedCaseClient
           nested_user = nil
         else
           nested_user = parsed_json["NestedUser"].to_json
-          nested_user = User.from_json(json_object: nested_user)
+          nested_user = SeedMixedCaseClient::Service::User.from_json(json_object: nested_user)
         end
         new(
           name: name,
@@ -66,7 +66,7 @@ module SeedMixedCaseClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
-        User.validate_raw(obj: obj.nested_user)
+        SeedMixedCaseClient::Service::User.validate_raw(obj: obj.nested_user)
       end
     end
   end

@@ -10,7 +10,7 @@ module SeedTraceClient
       # @return [Integer] If present, use this to load subseqent pages.
       #  The offset is the id of the next trace response to load.
       attr_reader :offset
-      # @return [Array<TraceResponse>]
+      # @return [Array<SeedTraceClient::Submission::TraceResponse>]
       attr_reader :trace_responses
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -22,9 +22,9 @@ module SeedTraceClient
 
       # @param offset [Integer] If present, use this to load subseqent pages.
       #  The offset is the id of the next trace response to load.
-      # @param trace_responses [Array<TraceResponse>]
+      # @param trace_responses [Array<SeedTraceClient::Submission::TraceResponse>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [TraceResponsesPage]
+      # @return [SeedTraceClient::Submission::TraceResponsesPage]
       def initialize(trace_responses:, offset: OMIT, additional_properties: nil)
         @offset = offset if offset != OMIT
         @trace_responses = trace_responses
@@ -37,14 +37,14 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of TraceResponsesPage
       #
       # @param json_object [String]
-      # @return [TraceResponsesPage]
+      # @return [SeedTraceClient::Submission::TraceResponsesPage]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         offset = struct["offset"]
         trace_responses = parsed_json["traceResponses"]&.map do |v|
           v = v.to_json
-          TraceResponse.from_json(json_object: v)
+          SeedTraceClient::Submission::TraceResponse.from_json(json_object: v)
         end
         new(
           offset: offset,

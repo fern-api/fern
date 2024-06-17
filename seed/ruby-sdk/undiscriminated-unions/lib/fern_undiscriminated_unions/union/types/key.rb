@@ -8,11 +8,11 @@ module SeedUndiscriminatedUnionsClient
       # Deserialize a JSON object to an instance of Key
       #
       # @param json_object [String]
-      # @return [Key]
+      # @return [SeedUndiscriminatedUnionsClient::Union::Key]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         begin
-          struct.is_a?(KeyType) != false || raise("Passed value for field struct is not the expected type, validation failed.")
+          struct.is_a?(SeedUndiscriminatedUnionsClient::Union::KeyType) != false || raise("Passed value for field struct is not the expected type, validation failed.")
           return json_object unless json_object.nil?
 
           return nil
@@ -38,7 +38,7 @@ module SeedUndiscriminatedUnionsClient
       # @return [Void]
       def self.validate_raw(obj:)
         begin
-          return obj.is_a?(KeyType) != false || raise("Passed value for field obj is not the expected type, validation failed.")
+          return obj.is_a?(SeedUndiscriminatedUnionsClient::Union::KeyType) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         rescue StandardError
           # noop
         end

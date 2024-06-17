@@ -15,7 +15,7 @@ module SeedExamplesClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [Test]
+      # @return [SeedExamplesClient::Types::Test]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -24,7 +24,7 @@ module SeedExamplesClient
       # Deserialize a JSON object to an instance of Test
       #
       # @param json_object [String]
-      # @return [Test]
+      # @return [SeedExamplesClient::Types::Test]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
@@ -76,13 +76,13 @@ module SeedExamplesClient
       end
 
       # @param member [Boolean]
-      # @return [Test]
+      # @return [SeedExamplesClient::Types::Test]
       def self.and_(member:)
         new(member: member, discriminant: "and")
       end
 
       # @param member [Boolean]
-      # @return [Test]
+      # @return [SeedExamplesClient::Types::Test]
       def self.or_(member:)
         new(member: member, discriminant: "or")
       end

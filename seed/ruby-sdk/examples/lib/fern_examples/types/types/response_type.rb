@@ -7,7 +7,7 @@ require "json"
 module SeedExamplesClient
   class Types
     class ResponseType
-      # @return [Type]
+      # @return [SeedExamplesClient::Type]
       attr_reader :type
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -17,9 +17,9 @@ module SeedExamplesClient
 
       OMIT = Object.new
 
-      # @param type [Type]
+      # @param type [SeedExamplesClient::Type]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [ResponseType]
+      # @return [SeedExamplesClient::Types::ResponseType]
       def initialize(type:, additional_properties: nil)
         @type = type
         @additional_properties = additional_properties
@@ -29,7 +29,7 @@ module SeedExamplesClient
       # Deserialize a JSON object to an instance of ResponseType
       #
       # @param json_object [String]
-      # @return [ResponseType]
+      # @return [SeedExamplesClient::Types::ResponseType]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -37,7 +37,7 @@ module SeedExamplesClient
           type = nil
         else
           type = parsed_json["type"].to_json
-          type = Type.from_json(json_object: type)
+          type = SeedExamplesClient::Type.from_json(json_object: type)
         end
         new(type: type, additional_properties: struct)
       end
@@ -56,7 +56,7 @@ module SeedExamplesClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        Type.validate_raw(obj: obj.type)
+        SeedExamplesClient::Type.validate_raw(obj: obj.type)
       end
     end
   end

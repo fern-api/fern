@@ -24,7 +24,7 @@ module SeedTraceClient
       # @param type [String]
       # @param stacktrace [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [GenericCreateProblemError]
+      # @return [SeedTraceClient::Problem::GenericCreateProblemError]
       def initialize(message:, type:, stacktrace:, additional_properties: nil)
         @message = message
         @type = type
@@ -36,7 +36,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of GenericCreateProblemError
       #
       # @param json_object [String]
-      # @return [GenericCreateProblemError]
+      # @return [SeedTraceClient::Problem::GenericCreateProblemError]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         message = struct["message"]

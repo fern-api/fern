@@ -8,9 +8,9 @@ require "json"
 module SeedTraceClient
   class Submission
     class WorkspaceRunDetails
-      # @return [ExceptionV2]
+      # @return [SeedTraceClient::Submission::ExceptionV2]
       attr_reader :exception_v_2
-      # @return [ExceptionInfo]
+      # @return [SeedTraceClient::Submission::ExceptionInfo]
       attr_reader :exception
       # @return [String]
       attr_reader :stdout
@@ -22,11 +22,11 @@ module SeedTraceClient
 
       OMIT = Object.new
 
-      # @param exception_v_2 [ExceptionV2]
-      # @param exception [ExceptionInfo]
+      # @param exception_v_2 [SeedTraceClient::Submission::ExceptionV2]
+      # @param exception [SeedTraceClient::Submission::ExceptionInfo]
       # @param stdout [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [WorkspaceRunDetails]
+      # @return [SeedTraceClient::Submission::WorkspaceRunDetails]
       def initialize(stdout:, exception_v_2: OMIT, exception: OMIT, additional_properties: nil)
         @exception_v_2 = exception_v_2 if exception_v_2 != OMIT
         @exception = exception if exception != OMIT
@@ -40,7 +40,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of WorkspaceRunDetails
       #
       # @param json_object [String]
-      # @return [WorkspaceRunDetails]
+      # @return [SeedTraceClient::Submission::WorkspaceRunDetails]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -48,13 +48,13 @@ module SeedTraceClient
           exception_v_2 = nil
         else
           exception_v_2 = parsed_json["exceptionV2"].to_json
-          exception_v_2 = ExceptionV2.from_json(json_object: exception_v_2)
+          exception_v_2 = SeedTraceClient::Submission::ExceptionV2.from_json(json_object: exception_v_2)
         end
         if parsed_json["exception"].nil?
           exception = nil
         else
           exception = parsed_json["exception"].to_json
-          exception = ExceptionInfo.from_json(json_object: exception)
+          exception = SeedTraceClient::Submission::ExceptionInfo.from_json(json_object: exception)
         end
         stdout = struct["stdout"]
         new(
@@ -79,8 +79,8 @@ module SeedTraceClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        obj.exception_v_2.nil? || ExceptionV2.validate_raw(obj: obj.exception_v_2)
-        obj.exception.nil? || ExceptionInfo.validate_raw(obj: obj.exception)
+        obj.exception_v_2.nil? || SeedTraceClient::Submission::ExceptionV2.validate_raw(obj: obj.exception_v_2)
+        obj.exception.nil? || SeedTraceClient::Submission::ExceptionInfo.validate_raw(obj: obj.exception)
         obj.stdout.is_a?(String) != false || raise("Passed value for field obj.stdout is not the expected type, validation failed.")
       end
     end

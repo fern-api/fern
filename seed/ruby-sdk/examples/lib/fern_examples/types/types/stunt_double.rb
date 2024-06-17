@@ -21,7 +21,7 @@ module SeedExamplesClient
       # @param name [String]
       # @param actor_or_actress_id [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [StuntDouble]
+      # @return [SeedExamplesClient::Types::StuntDouble]
       def initialize(name:, actor_or_actress_id:, additional_properties: nil)
         @name = name
         @actor_or_actress_id = actor_or_actress_id
@@ -32,7 +32,7 @@ module SeedExamplesClient
       # Deserialize a JSON object to an instance of StuntDouble
       #
       # @param json_object [String]
-      # @return [StuntDouble]
+      # @return [SeedExamplesClient::Types::StuntDouble]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         name = struct["name"]

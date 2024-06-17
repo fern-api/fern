@@ -7,7 +7,7 @@ require "json"
 module SeedPaginationClient
   class Users
     class UserPage
-      # @return [UserListContainer]
+      # @return [SeedPaginationClient::Users::UserListContainer]
       attr_reader :data
       # @return [String]
       attr_reader :next_
@@ -19,10 +19,10 @@ module SeedPaginationClient
 
       OMIT = Object.new
 
-      # @param data [UserListContainer]
+      # @param data [SeedPaginationClient::Users::UserListContainer]
       # @param next_ [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [UserPage]
+      # @return [SeedPaginationClient::Users::UserPage]
       def initialize(data:, next_: OMIT, additional_properties: nil)
         @data = data
         @next_ = next_ if next_ != OMIT
@@ -35,7 +35,7 @@ module SeedPaginationClient
       # Deserialize a JSON object to an instance of UserPage
       #
       # @param json_object [String]
-      # @return [UserPage]
+      # @return [SeedPaginationClient::Users::UserPage]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -43,7 +43,7 @@ module SeedPaginationClient
           data = nil
         else
           data = parsed_json["data"].to_json
-          data = UserListContainer.from_json(json_object: data)
+          data = SeedPaginationClient::Users::UserListContainer.from_json(json_object: data)
         end
         next_ = struct["next"]
         new(
@@ -67,7 +67,7 @@ module SeedPaginationClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        UserListContainer.validate_raw(obj: obj.data)
+        SeedPaginationClient::Users::UserListContainer.validate_raw(obj: obj.data)
         obj.next_&.is_a?(String) != false || raise("Passed value for field obj.next_ is not the expected type, validation failed.")
       end
     end

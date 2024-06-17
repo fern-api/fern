@@ -19,7 +19,7 @@ module SeedTraceClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [TestSubmissionUpdateInfo]
+      # @return [SeedTraceClient::Submission::TestSubmissionUpdateInfo]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -28,7 +28,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of TestSubmissionUpdateInfo
       #
       # @param json_object [String]
-      # @return [TestSubmissionUpdateInfo]
+      # @return [SeedTraceClient::Submission::TestSubmissionUpdateInfo]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
@@ -37,11 +37,11 @@ module SeedTraceClient
                  when "stopped"
                    nil
                  when "errored"
-                   ErrorInfo.from_json(json_object: json_object.value)
+                   SeedTraceClient::Submission::ErrorInfo.from_json(json_object: json_object.value)
                  when "gradedTestCase"
-                   GradedTestCaseUpdate.from_json(json_object: json_object)
+                   SeedTraceClient::Submission::GradedTestCaseUpdate.from_json(json_object: json_object)
                  when "recordedTestCase"
-                   RecordedTestCaseUpdate.from_json(json_object: json_object)
+                   SeedTraceClient::Submission::RecordedTestCaseUpdate.from_json(json_object: json_object)
                  when "finished"
                    nil
                  else
@@ -82,15 +82,15 @@ module SeedTraceClient
       def self.validate_raw(obj:)
         case obj.type
         when "running"
-          obj.is_a?(RunningSubmissionState) != false || raise("Passed value for field obj is not the expected type, validation failed.")
+          obj.is_a?(SeedTraceClient::Submission::RunningSubmissionState) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "stopped"
           # noop
         when "errored"
-          ErrorInfo.validate_raw(obj: obj)
+          SeedTraceClient::Submission::ErrorInfo.validate_raw(obj: obj)
         when "gradedTestCase"
-          GradedTestCaseUpdate.validate_raw(obj: obj)
+          SeedTraceClient::Submission::GradedTestCaseUpdate.validate_raw(obj: obj)
         when "recordedTestCase"
-          RecordedTestCaseUpdate.validate_raw(obj: obj)
+          SeedTraceClient::Submission::RecordedTestCaseUpdate.validate_raw(obj: obj)
         when "finished"
           # noop
         else
@@ -106,36 +106,36 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @param member [RunningSubmissionState]
-      # @return [TestSubmissionUpdateInfo]
+      # @param member [SeedTraceClient::Submission::RunningSubmissionState]
+      # @return [SeedTraceClient::Submission::TestSubmissionUpdateInfo]
       def self.running(member:)
         new(member: member, discriminant: "running")
       end
 
-      # @return [TestSubmissionUpdateInfo]
+      # @return [SeedTraceClient::Submission::TestSubmissionUpdateInfo]
       def self.stopped
         new(member: nil, discriminant: "stopped")
       end
 
-      # @param member [ErrorInfo]
-      # @return [TestSubmissionUpdateInfo]
+      # @param member [SeedTraceClient::Submission::ErrorInfo]
+      # @return [SeedTraceClient::Submission::TestSubmissionUpdateInfo]
       def self.errored(member:)
         new(member: member, discriminant: "errored")
       end
 
-      # @param member [GradedTestCaseUpdate]
-      # @return [TestSubmissionUpdateInfo]
+      # @param member [SeedTraceClient::Submission::GradedTestCaseUpdate]
+      # @return [SeedTraceClient::Submission::TestSubmissionUpdateInfo]
       def self.graded_test_case(member:)
         new(member: member, discriminant: "gradedTestCase")
       end
 
-      # @param member [RecordedTestCaseUpdate]
-      # @return [TestSubmissionUpdateInfo]
+      # @param member [SeedTraceClient::Submission::RecordedTestCaseUpdate]
+      # @return [SeedTraceClient::Submission::TestSubmissionUpdateInfo]
       def self.recorded_test_case(member:)
         new(member: member, discriminant: "recordedTestCase")
       end
 
-      # @return [TestSubmissionUpdateInfo]
+      # @return [SeedTraceClient::Submission::TestSubmissionUpdateInfo]
       def self.finished
         new(member: nil, discriminant: "finished")
       end

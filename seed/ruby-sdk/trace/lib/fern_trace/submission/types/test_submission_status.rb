@@ -17,7 +17,7 @@ module SeedTraceClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [TestSubmissionStatus]
+      # @return [SeedTraceClient::Submission::TestSubmissionStatus]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -26,20 +26,20 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of TestSubmissionStatus
       #
       # @param json_object [String]
-      # @return [TestSubmissionStatus]
+      # @return [SeedTraceClient::Submission::TestSubmissionStatus]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "stopped"
                    nil
                  when "errored"
-                   ErrorInfo.from_json(json_object: json_object.value)
+                   SeedTraceClient::Submission::ErrorInfo.from_json(json_object: json_object.value)
                  when "running"
                    json_object.value
                  when "testCaseIdToState"
                    json_object.value&.transform_values do |v|
                      v = v.to_json
-                     SubmissionStatusForTestCase.from_json(json_object: v)
+                     SeedTraceClient::Submission::SubmissionStatusForTestCase.from_json(json_object: v)
                    end
                  else
                    json_object
@@ -77,9 +77,9 @@ module SeedTraceClient
         when "stopped"
           # noop
         when "errored"
-          ErrorInfo.validate_raw(obj: obj)
+          SeedTraceClient::Submission::ErrorInfo.validate_raw(obj: obj)
         when "running"
-          obj.is_a?(RunningSubmissionState) != false || raise("Passed value for field obj is not the expected type, validation failed.")
+          obj.is_a?(SeedTraceClient::Submission::RunningSubmissionState) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "testCaseIdToState"
           obj.is_a?(Hash) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         else
@@ -95,25 +95,25 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @return [TestSubmissionStatus]
+      # @return [SeedTraceClient::Submission::TestSubmissionStatus]
       def self.stopped
         new(member: nil, discriminant: "stopped")
       end
 
-      # @param member [ErrorInfo]
-      # @return [TestSubmissionStatus]
+      # @param member [SeedTraceClient::Submission::ErrorInfo]
+      # @return [SeedTraceClient::Submission::TestSubmissionStatus]
       def self.errored(member:)
         new(member: member, discriminant: "errored")
       end
 
-      # @param member [RunningSubmissionState]
-      # @return [TestSubmissionStatus]
+      # @param member [SeedTraceClient::Submission::RunningSubmissionState]
+      # @return [SeedTraceClient::Submission::TestSubmissionStatus]
       def self.running(member:)
         new(member: member, discriminant: "running")
       end
 
-      # @param member [Hash{String => SubmissionStatusForTestCase}]
-      # @return [TestSubmissionStatus]
+      # @param member [Hash{String => SeedTraceClient::Submission::SubmissionStatusForTestCase}]
+      # @return [SeedTraceClient::Submission::TestSubmissionStatus]
       def self.test_case_id_to_state(member:)
         new(member: member, discriminant: "testCaseIdToState")
       end

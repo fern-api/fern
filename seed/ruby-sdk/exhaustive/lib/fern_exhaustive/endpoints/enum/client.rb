@@ -17,9 +17,9 @@ module SeedExhaustiveClient
         @request_client = request_client
       end
 
-      # @param request [Types::WeatherReport]
+      # @param request [SeedExhaustiveClient::Types::Enum::WeatherReport]
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Types::WeatherReport]
+      # @return [SeedExhaustiveClient::Types::Enum::WeatherReport]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.enum.get_and_return_enum(request: SUNNY)
@@ -49,9 +49,9 @@ module SeedExhaustiveClient
         @request_client = request_client
       end
 
-      # @param request [Types::WeatherReport]
+      # @param request [SeedExhaustiveClient::Types::Enum::WeatherReport]
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Types::WeatherReport]
+      # @return [SeedExhaustiveClient::Types::Enum::WeatherReport]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.enum.get_and_return_enum(request: SUNNY)

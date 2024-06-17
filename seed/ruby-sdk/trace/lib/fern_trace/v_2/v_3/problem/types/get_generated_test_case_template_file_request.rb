@@ -9,7 +9,7 @@ module SeedTraceClient
     module V3
       class Problem
         class GetGeneratedTestCaseTemplateFileRequest
-          # @return [V2::V3::TestCaseTemplate]
+          # @return [SeedTraceClient::V2::V3::Problem::TestCaseTemplate]
           attr_reader :template
           # @return [OpenStruct] Additional properties unmapped to the current class definition
           attr_reader :additional_properties
@@ -19,9 +19,9 @@ module SeedTraceClient
 
           OMIT = Object.new
 
-          # @param template [V2::V3::TestCaseTemplate]
+          # @param template [SeedTraceClient::V2::V3::Problem::TestCaseTemplate]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-          # @return [V2::V3::GetGeneratedTestCaseTemplateFileRequest]
+          # @return [SeedTraceClient::V2::V3::Problem::GetGeneratedTestCaseTemplateFileRequest]
           def initialize(template:, additional_properties: nil)
             @template = template
             @additional_properties = additional_properties
@@ -32,7 +32,7 @@ module SeedTraceClient
           #  GetGeneratedTestCaseTemplateFileRequest
           #
           # @param json_object [String]
-          # @return [V2::V3::GetGeneratedTestCaseTemplateFileRequest]
+          # @return [SeedTraceClient::V2::V3::Problem::GetGeneratedTestCaseTemplateFileRequest]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             parsed_json = JSON.parse(json_object)
@@ -40,7 +40,7 @@ module SeedTraceClient
               template = nil
             else
               template = parsed_json["template"].to_json
-              template = V2::V3::TestCaseTemplate.from_json(json_object: template)
+              template = SeedTraceClient::V2::V3::Problem::TestCaseTemplate.from_json(json_object: template)
             end
             new(template: template, additional_properties: struct)
           end
@@ -60,7 +60,7 @@ module SeedTraceClient
           # @param obj [Object]
           # @return [Void]
           def self.validate_raw(obj:)
-            V2::V3::TestCaseTemplate.validate_raw(obj: obj.template)
+            SeedTraceClient::V2::V3::Problem::TestCaseTemplate.validate_raw(obj: obj.template)
           end
         end
       end

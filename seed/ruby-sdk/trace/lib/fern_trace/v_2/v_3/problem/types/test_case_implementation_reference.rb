@@ -18,7 +18,7 @@ module SeedTraceClient
 
           # @param member [Object]
           # @param discriminant [String]
-          # @return [V2::V3::TestCaseImplementationReference]
+          # @return [SeedTraceClient::V2::V3::Problem::TestCaseImplementationReference]
           def initialize(member:, discriminant:)
             @member = member
             @discriminant = discriminant
@@ -27,14 +27,14 @@ module SeedTraceClient
           # Deserialize a JSON object to an instance of TestCaseImplementationReference
           #
           # @param json_object [String]
-          # @return [V2::V3::TestCaseImplementationReference]
+          # @return [SeedTraceClient::V2::V3::Problem::TestCaseImplementationReference]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             member = case struct.type
                      when "templateId"
                        json_object.value
                      when "implementation"
-                       V2::V3::TestCaseImplementation.from_json(json_object: json_object)
+                       SeedTraceClient::V2::V3::Problem::TestCaseImplementation.from_json(json_object: json_object)
                      else
                        json_object
                      end
@@ -67,7 +67,7 @@ module SeedTraceClient
             when "templateId"
               obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
             when "implementation"
-              V2::V3::TestCaseImplementation.validate_raw(obj: obj)
+              SeedTraceClient::V2::V3::Problem::TestCaseImplementation.validate_raw(obj: obj)
             else
               raise("Passed value matched no type within the union, validation failed.")
             end
@@ -82,13 +82,13 @@ module SeedTraceClient
           end
 
           # @param member [String]
-          # @return [V2::V3::TestCaseImplementationReference]
+          # @return [SeedTraceClient::V2::V3::Problem::TestCaseImplementationReference]
           def self.template_id(member:)
             new(member: member, discriminant: "templateId")
           end
 
-          # @param member [V2::V3::TestCaseImplementation]
-          # @return [V2::V3::TestCaseImplementationReference]
+          # @param member [SeedTraceClient::V2::V3::Problem::TestCaseImplementation]
+          # @return [SeedTraceClient::V2::V3::Problem::TestCaseImplementationReference]
           def self.implementation(member:)
             new(member: member, discriminant: "implementation")
           end

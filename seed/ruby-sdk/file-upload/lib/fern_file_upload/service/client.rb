@@ -24,7 +24,7 @@ module SeedFileUploadClient
     # @param maybe_file_list [String, IO]
     # @param maybe_integer [Integer]
     # @param optional_list_of_strings [Array<String>]
-    # @param list_of_objects [Array<Hash>] Request of type Array<MyObject>, as a Hash
+    # @param list_of_objects [Array<Hash>] Request of type Array<SeedFileUploadClient::Service::MyObject>, as a Hash
     #   * :foo (String)
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]
@@ -149,7 +149,7 @@ module SeedFileUploadClient
     # @param maybe_file_list [String, IO]
     # @param maybe_integer [Integer]
     # @param optional_list_of_strings [Array<String>]
-    # @param list_of_objects [Array<Hash>] Request of type Array<MyObject>, as a Hash
+    # @param list_of_objects [Array<Hash>] Request of type Array<SeedFileUploadClient::Service::MyObject>, as a Hash
     #   * :foo (String)
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]

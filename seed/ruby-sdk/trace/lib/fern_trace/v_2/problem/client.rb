@@ -21,7 +21,7 @@ module SeedTraceClient
       # Returns lightweight versions of all problems
       #
       # @param request_options [SeedTraceClient::RequestOptions]
-      # @return [Array<V2::LightweightProblemInfoV2>]
+      # @return [Array<SeedTraceClient::V2::Problem::LightweightProblemInfoV2>]
       # @example
       #  trace = SeedTraceClient::Client.new(
       #    base_url: "https://api.example.com",
@@ -44,14 +44,14 @@ module SeedTraceClient
         parsed_json = JSON.parse(response.body)
         parsed_json&.map do |v|
           v = v.to_json
-          V2::LightweightProblemInfoV2.from_json(json_object: v)
+          SeedTraceClient::V2::Problem::LightweightProblemInfoV2.from_json(json_object: v)
         end
       end
 
       # Returns latest versions of all problems
       #
       # @param request_options [SeedTraceClient::RequestOptions]
-      # @return [Array<V2::ProblemInfoV2>]
+      # @return [Array<SeedTraceClient::V2::Problem::ProblemInfoV2>]
       # @example
       #  trace = SeedTraceClient::Client.new(
       #    base_url: "https://api.example.com",
@@ -74,7 +74,7 @@ module SeedTraceClient
         parsed_json = JSON.parse(response.body)
         parsed_json&.map do |v|
           v = v.to_json
-          V2::ProblemInfoV2.from_json(json_object: v)
+          SeedTraceClient::V2::Problem::ProblemInfoV2.from_json(json_object: v)
         end
       end
 
@@ -82,7 +82,7 @@ module SeedTraceClient
       #
       # @param problem_id [String]
       # @param request_options [SeedTraceClient::RequestOptions]
-      # @return [V2::ProblemInfoV2]
+      # @return [SeedTraceClient::V2::Problem::ProblemInfoV2]
       # @example
       #  trace = SeedTraceClient::Client.new(
       #    base_url: "https://api.example.com",
@@ -102,7 +102,7 @@ module SeedTraceClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info/#{problem_id}"
         end
-        V2::ProblemInfoV2.from_json(json_object: response.body)
+        SeedTraceClient::V2::Problem::ProblemInfoV2.from_json(json_object: response.body)
       end
 
       # Returns requested version of a problem
@@ -110,7 +110,7 @@ module SeedTraceClient
       # @param problem_id [String]
       # @param problem_version [Integer]
       # @param request_options [SeedTraceClient::RequestOptions]
-      # @return [V2::ProblemInfoV2]
+      # @return [SeedTraceClient::V2::Problem::ProblemInfoV2]
       # @example
       #  trace = SeedTraceClient::Client.new(
       #    base_url: "https://api.example.com",
@@ -130,7 +130,7 @@ module SeedTraceClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info/#{problem_id}/version/#{problem_version}"
         end
-        V2::ProblemInfoV2.from_json(json_object: response.body)
+        SeedTraceClient::V2::Problem::ProblemInfoV2.from_json(json_object: response.body)
       end
     end
 
@@ -147,7 +147,7 @@ module SeedTraceClient
       # Returns lightweight versions of all problems
       #
       # @param request_options [SeedTraceClient::RequestOptions]
-      # @return [Array<V2::LightweightProblemInfoV2>]
+      # @return [Array<SeedTraceClient::V2::Problem::LightweightProblemInfoV2>]
       # @example
       #  trace = SeedTraceClient::Client.new(
       #    base_url: "https://api.example.com",
@@ -174,7 +174,7 @@ module SeedTraceClient
           parsed_json = JSON.parse(response.body)
           parsed_json&.map do |v|
             v = v.to_json
-            V2::LightweightProblemInfoV2.from_json(json_object: v)
+            SeedTraceClient::V2::Problem::LightweightProblemInfoV2.from_json(json_object: v)
           end
         end
       end
@@ -182,7 +182,7 @@ module SeedTraceClient
       # Returns latest versions of all problems
       #
       # @param request_options [SeedTraceClient::RequestOptions]
-      # @return [Array<V2::ProblemInfoV2>]
+      # @return [Array<SeedTraceClient::V2::Problem::ProblemInfoV2>]
       # @example
       #  trace = SeedTraceClient::Client.new(
       #    base_url: "https://api.example.com",
@@ -209,7 +209,7 @@ module SeedTraceClient
           parsed_json = JSON.parse(response.body)
           parsed_json&.map do |v|
             v = v.to_json
-            V2::ProblemInfoV2.from_json(json_object: v)
+            SeedTraceClient::V2::Problem::ProblemInfoV2.from_json(json_object: v)
           end
         end
       end
@@ -218,7 +218,7 @@ module SeedTraceClient
       #
       # @param problem_id [String]
       # @param request_options [SeedTraceClient::RequestOptions]
-      # @return [V2::ProblemInfoV2]
+      # @return [SeedTraceClient::V2::Problem::ProblemInfoV2]
       # @example
       #  trace = SeedTraceClient::Client.new(
       #    base_url: "https://api.example.com",
@@ -242,7 +242,7 @@ module SeedTraceClient
             }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info/#{problem_id}"
           end
-          V2::ProblemInfoV2.from_json(json_object: response.body)
+          SeedTraceClient::V2::Problem::ProblemInfoV2.from_json(json_object: response.body)
         end
       end
 
@@ -251,7 +251,7 @@ module SeedTraceClient
       # @param problem_id [String]
       # @param problem_version [Integer]
       # @param request_options [SeedTraceClient::RequestOptions]
-      # @return [V2::ProblemInfoV2]
+      # @return [SeedTraceClient::V2::Problem::ProblemInfoV2]
       # @example
       #  trace = SeedTraceClient::Client.new(
       #    base_url: "https://api.example.com",
@@ -275,7 +275,7 @@ module SeedTraceClient
             }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info/#{problem_id}/version/#{problem_version}"
           end
-          V2::ProblemInfoV2.from_json(json_object: response.body)
+          SeedTraceClient::V2::Problem::ProblemInfoV2.from_json(json_object: response.body)
         end
       end
     end

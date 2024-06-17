@@ -8,7 +8,7 @@ module SeedTraceClient
   module V2
     class Problem
       class Files
-        # @return [Array<V2::FileInfoV2>]
+        # @return [Array<SeedTraceClient::V2::Problem::FileInfoV2>]
         attr_reader :files
         # @return [OpenStruct] Additional properties unmapped to the current class definition
         attr_reader :additional_properties
@@ -18,9 +18,9 @@ module SeedTraceClient
 
         OMIT = Object.new
 
-        # @param files [Array<V2::FileInfoV2>]
+        # @param files [Array<SeedTraceClient::V2::Problem::FileInfoV2>]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [V2::Files]
+        # @return [SeedTraceClient::V2::Problem::Files]
         def initialize(files:, additional_properties: nil)
           @files = files
           @additional_properties = additional_properties
@@ -30,13 +30,13 @@ module SeedTraceClient
         # Deserialize a JSON object to an instance of Files
         #
         # @param json_object [String]
-        # @return [V2::Files]
+        # @return [SeedTraceClient::V2::Problem::Files]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
           files = parsed_json["files"]&.map do |v|
             v = v.to_json
-            V2::FileInfoV2.from_json(json_object: v)
+            SeedTraceClient::V2::Problem::FileInfoV2.from_json(json_object: v)
           end
           new(files: files, additional_properties: struct)
         end

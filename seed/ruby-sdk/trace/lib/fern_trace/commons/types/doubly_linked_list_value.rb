@@ -8,7 +8,7 @@ module SeedTraceClient
     class DoublyLinkedListValue
       # @return [String]
       attr_reader :head
-      # @return [Hash{String => DoublyLinkedListNodeValue}]
+      # @return [Hash{String => SeedTraceClient::Commons::DoublyLinkedListNodeValue}]
       attr_reader :nodes
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -19,9 +19,9 @@ module SeedTraceClient
       OMIT = Object.new
 
       # @param head [String]
-      # @param nodes [Hash{String => DoublyLinkedListNodeValue}]
+      # @param nodes [Hash{String => SeedTraceClient::Commons::DoublyLinkedListNodeValue}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [DoublyLinkedListValue]
+      # @return [SeedTraceClient::Commons::DoublyLinkedListValue]
       def initialize(nodes:, head: OMIT, additional_properties: nil)
         @head = head if head != OMIT
         @nodes = nodes
@@ -34,14 +34,14 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of DoublyLinkedListValue
       #
       # @param json_object [String]
-      # @return [DoublyLinkedListValue]
+      # @return [SeedTraceClient::Commons::DoublyLinkedListValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         head = struct["head"]
         nodes = parsed_json["nodes"]&.transform_values do |v|
           v = v.to_json
-          DoublyLinkedListNodeValue.from_json(json_object: v)
+          SeedTraceClient::Commons::DoublyLinkedListNodeValue.from_json(json_object: v)
         end
         new(
           head: head,

@@ -21,7 +21,7 @@ module SeedTraceClient
       # @param problem_id [String]
       # @param problem_version [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [InitializeProblemRequest]
+      # @return [SeedTraceClient::Submission::InitializeProblemRequest]
       def initialize(problem_id:, problem_version: OMIT, additional_properties: nil)
         @problem_id = problem_id
         @problem_version = problem_version if problem_version != OMIT
@@ -34,7 +34,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of InitializeProblemRequest
       #
       # @param json_object [String]
-      # @return [InitializeProblemRequest]
+      # @return [SeedTraceClient::Submission::InitializeProblemRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         problem_id = struct["problemId"]

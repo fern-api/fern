@@ -19,7 +19,7 @@ module SeedOauthClientCredentialsClient
     # @param client_secret [String]
     # @param scope [String]
     # @param request_options [SeedOauthClientCredentialsClient::RequestOptions]
-    # @return [TokenResponse]
+    # @return [SeedOauthClientCredentialsClient::Auth::TokenResponse]
     # @example
     #  oauth_client_credentials = SeedOauthClientCredentialsClient::Client.new(base_url: "https://api.example.com")
     #  oauth_client_credentials.auth.get_token_with_client_credentials(
@@ -46,7 +46,7 @@ module SeedOauthClientCredentialsClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/token"
       end
-      TokenResponse.from_json(json_object: response.body)
+      SeedOauthClientCredentialsClient::Auth::TokenResponse.from_json(json_object: response.body)
     end
 
     # @param client_id [String]
@@ -54,7 +54,7 @@ module SeedOauthClientCredentialsClient
     # @param refresh_token [String]
     # @param scope [String]
     # @param request_options [SeedOauthClientCredentialsClient::RequestOptions]
-    # @return [TokenResponse]
+    # @return [SeedOauthClientCredentialsClient::Auth::TokenResponse]
     # @example
     #  oauth_client_credentials = SeedOauthClientCredentialsClient::Client.new(base_url: "https://api.example.com")
     #  oauth_client_credentials.auth.refresh_token(
@@ -83,7 +83,7 @@ module SeedOauthClientCredentialsClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/token"
       end
-      TokenResponse.from_json(json_object: response.body)
+      SeedOauthClientCredentialsClient::Auth::TokenResponse.from_json(json_object: response.body)
     end
   end
 
@@ -101,7 +101,7 @@ module SeedOauthClientCredentialsClient
     # @param client_secret [String]
     # @param scope [String]
     # @param request_options [SeedOauthClientCredentialsClient::RequestOptions]
-    # @return [TokenResponse]
+    # @return [SeedOauthClientCredentialsClient::Auth::TokenResponse]
     # @example
     #  oauth_client_credentials = SeedOauthClientCredentialsClient::Client.new(base_url: "https://api.example.com")
     #  oauth_client_credentials.auth.get_token_with_client_credentials(
@@ -129,7 +129,7 @@ module SeedOauthClientCredentialsClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/token"
         end
-        TokenResponse.from_json(json_object: response.body)
+        SeedOauthClientCredentialsClient::Auth::TokenResponse.from_json(json_object: response.body)
       end
     end
 
@@ -138,7 +138,7 @@ module SeedOauthClientCredentialsClient
     # @param refresh_token [String]
     # @param scope [String]
     # @param request_options [SeedOauthClientCredentialsClient::RequestOptions]
-    # @return [TokenResponse]
+    # @return [SeedOauthClientCredentialsClient::Auth::TokenResponse]
     # @example
     #  oauth_client_credentials = SeedOauthClientCredentialsClient::Client.new(base_url: "https://api.example.com")
     #  oauth_client_credentials.auth.refresh_token(
@@ -168,7 +168,7 @@ module SeedOauthClientCredentialsClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/token"
         end
-        TokenResponse.from_json(json_object: response.body)
+        SeedOauthClientCredentialsClient::Auth::TokenResponse.from_json(json_object: response.body)
       end
     end
   end

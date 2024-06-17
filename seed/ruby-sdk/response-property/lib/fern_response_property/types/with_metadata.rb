@@ -17,7 +17,7 @@ module SeedResponsePropertyClient
 
     # @param metadata [Hash{String => String}]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [WithMetadata]
+    # @return [SeedResponsePropertyClient::WithMetadata]
     def initialize(metadata:, additional_properties: nil)
       @metadata = metadata
       @additional_properties = additional_properties
@@ -27,7 +27,7 @@ module SeedResponsePropertyClient
     # Deserialize a JSON object to an instance of WithMetadata
     #
     # @param json_object [String]
-    # @return [WithMetadata]
+    # @return [SeedResponsePropertyClient::WithMetadata]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       metadata = struct["metadata"]

@@ -20,7 +20,7 @@ module SeedUnionsClient
       # @param member [Object]
       # @param discriminant [String]
       # @param id [String]
-      # @return [Shape]
+      # @return [SeedUnionsClient::Union::Shape]
       def initialize(member:, discriminant:, id:)
         @member = member
         @discriminant = discriminant
@@ -30,16 +30,16 @@ module SeedUnionsClient
       # Deserialize a JSON object to an instance of Shape
       #
       # @param json_object [String]
-      # @return [Shape]
+      # @return [SeedUnionsClient::Union::Shape]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "circle"
-                   Circle.from_json(json_object: json_object)
+                   SeedUnionsClient::Union::Circle.from_json(json_object: json_object)
                  when "square"
-                   Square.from_json(json_object: json_object)
+                   SeedUnionsClient::Union::Square.from_json(json_object: json_object)
                  else
-                   Circle.from_json(json_object: json_object)
+                   SeedUnionsClient::Union::Circle.from_json(json_object: json_object)
                  end
         new(member: member, discriminant: struct.type)
       end
@@ -68,9 +68,9 @@ module SeedUnionsClient
       def self.validate_raw(obj:)
         case obj.type
         when "circle"
-          Circle.validate_raw(obj: obj)
+          SeedUnionsClient::Union::Circle.validate_raw(obj: obj)
         when "square"
-          Square.validate_raw(obj: obj)
+          SeedUnionsClient::Union::Square.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -84,14 +84,14 @@ module SeedUnionsClient
         @member.is_a?(obj)
       end
 
-      # @param member [Circle]
-      # @return [Shape]
+      # @param member [SeedUnionsClient::Union::Circle]
+      # @return [SeedUnionsClient::Union::Shape]
       def self.circle(member:)
         new(member: member, discriminant: "circle")
       end
 
-      # @param member [Square]
-      # @return [Shape]
+      # @param member [SeedUnionsClient::Union::Square]
+      # @return [SeedUnionsClient::Union::Shape]
       def self.square(member:)
         new(member: member, discriminant: "square")
       end

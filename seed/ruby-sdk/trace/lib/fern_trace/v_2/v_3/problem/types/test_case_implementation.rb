@@ -10,9 +10,9 @@ module SeedTraceClient
     module V3
       class Problem
         class TestCaseImplementation
-          # @return [V2::V3::TestCaseImplementationDescription]
+          # @return [SeedTraceClient::V2::V3::Problem::TestCaseImplementationDescription]
           attr_reader :description
-          # @return [V2::V3::TestCaseFunction]
+          # @return [SeedTraceClient::V2::V3::Problem::TestCaseFunction]
           attr_reader :function
           # @return [OpenStruct] Additional properties unmapped to the current class definition
           attr_reader :additional_properties
@@ -22,10 +22,10 @@ module SeedTraceClient
 
           OMIT = Object.new
 
-          # @param description [V2::V3::TestCaseImplementationDescription]
-          # @param function [V2::V3::TestCaseFunction]
+          # @param description [SeedTraceClient::V2::V3::Problem::TestCaseImplementationDescription]
+          # @param function [SeedTraceClient::V2::V3::Problem::TestCaseFunction]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-          # @return [V2::V3::TestCaseImplementation]
+          # @return [SeedTraceClient::V2::V3::Problem::TestCaseImplementation]
           def initialize(description:, function:, additional_properties: nil)
             @description = description
             @function = function
@@ -36,7 +36,7 @@ module SeedTraceClient
           # Deserialize a JSON object to an instance of TestCaseImplementation
           #
           # @param json_object [String]
-          # @return [V2::V3::TestCaseImplementation]
+          # @return [SeedTraceClient::V2::V3::Problem::TestCaseImplementation]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             parsed_json = JSON.parse(json_object)
@@ -44,13 +44,13 @@ module SeedTraceClient
               description = nil
             else
               description = parsed_json["description"].to_json
-              description = V2::V3::TestCaseImplementationDescription.from_json(json_object: description)
+              description = SeedTraceClient::V2::V3::Problem::TestCaseImplementationDescription.from_json(json_object: description)
             end
             if parsed_json["function"].nil?
               function = nil
             else
               function = parsed_json["function"].to_json
-              function = V2::V3::TestCaseFunction.from_json(json_object: function)
+              function = SeedTraceClient::V2::V3::Problem::TestCaseFunction.from_json(json_object: function)
             end
             new(
               description: description,
@@ -73,8 +73,8 @@ module SeedTraceClient
           # @param obj [Object]
           # @return [Void]
           def self.validate_raw(obj:)
-            V2::V3::TestCaseImplementationDescription.validate_raw(obj: obj.description)
-            V2::V3::TestCaseFunction.validate_raw(obj: obj.function)
+            SeedTraceClient::V2::V3::Problem::TestCaseImplementationDescription.validate_raw(obj: obj.description)
+            SeedTraceClient::V2::V3::Problem::TestCaseFunction.validate_raw(obj: obj.function)
           end
         end
       end

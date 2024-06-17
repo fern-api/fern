@@ -21,7 +21,7 @@ module SeedAliasClient
     # @param id [String]
     # @param name [String]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Type]
+    # @return [SeedAliasClient::Type]
     def initialize(id:, name:, additional_properties: nil)
       @id = id
       @name = name
@@ -32,7 +32,7 @@ module SeedAliasClient
     # Deserialize a JSON object to an instance of Type
     #
     # @param json_object [String]
-    # @return [Type]
+    # @return [SeedAliasClient::Type]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       id = struct["id"]

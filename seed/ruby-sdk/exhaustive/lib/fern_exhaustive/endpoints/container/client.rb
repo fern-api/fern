@@ -39,10 +39,10 @@ module SeedExhaustiveClient
         JSON.parse(response.body)
       end
 
-      # @param request [Array<Hash>] Request of type Array<Types::ObjectWithRequiredField>, as a Hash
+      # @param request [Array<Hash>] Request of type Array<SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField>, as a Hash
       #   * :string (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Array<Types::ObjectWithRequiredField>]
+      # @return [Array<SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField>]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.container.get_and_return_list_of_objects(request: [{ string: "string" }])
@@ -61,7 +61,7 @@ module SeedExhaustiveClient
         parsed_json = JSON.parse(response.body)
         parsed_json&.map do |v|
           v = v.to_json
-          Types::ObjectWithRequiredField.from_json(json_object: v)
+          SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField.from_json(json_object: v)
         end
       end
 
@@ -86,9 +86,9 @@ module SeedExhaustiveClient
         Set.new(response.body)
       end
 
-      # @param request [Set<Types::ObjectWithRequiredField>]
+      # @param request [Set<SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField>]
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Set<Types::ObjectWithRequiredField>]
+      # @return [Set<SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField>]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.container.get_and_return_set_of_objects(request: Set[{ string: "string" }])
@@ -128,9 +128,9 @@ module SeedExhaustiveClient
         JSON.parse(response.body)
       end
 
-      # @param request [Hash{String => Types::ObjectWithRequiredField}]
+      # @param request [Hash{String => SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField}]
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Hash{String => Types::ObjectWithRequiredField}]
+      # @return [Hash{String => SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField}]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.container.get_and_return_map_of_prim_to_object(request: { "string": { string: "string" } })
@@ -149,14 +149,14 @@ module SeedExhaustiveClient
         parsed_json = JSON.parse(response.body)
         parsed_json&.transform_values do |v|
           v = v.to_json
-          Types::ObjectWithRequiredField.from_json(json_object: v)
+          SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField.from_json(json_object: v)
         end
       end
 
-      # @param request [Hash] Request of type Types::ObjectWithRequiredField, as a Hash
+      # @param request [Hash] Request of type SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField, as a Hash
       #   * :string (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Types::ObjectWithRequiredField]
+      # @return [SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.container.get_and_return_optional(request: { string: "string" })
@@ -172,7 +172,7 @@ module SeedExhaustiveClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/container/opt-objects"
         end
-        Types::ObjectWithRequiredField.from_json(json_object: response.body)
+        SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField.from_json(json_object: response.body)
       end
     end
 
@@ -210,10 +210,10 @@ module SeedExhaustiveClient
         end
       end
 
-      # @param request [Array<Hash>] Request of type Array<Types::ObjectWithRequiredField>, as a Hash
+      # @param request [Array<Hash>] Request of type Array<SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField>, as a Hash
       #   * :string (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Array<Types::ObjectWithRequiredField>]
+      # @return [Array<SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField>]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.container.get_and_return_list_of_objects(request: [{ string: "string" }])
@@ -233,7 +233,7 @@ module SeedExhaustiveClient
           parsed_json = JSON.parse(response.body)
           parsed_json&.map do |v|
             v = v.to_json
-            Types::ObjectWithRequiredField.from_json(json_object: v)
+            SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField.from_json(json_object: v)
           end
         end
       end
@@ -261,9 +261,9 @@ module SeedExhaustiveClient
         end
       end
 
-      # @param request [Set<Types::ObjectWithRequiredField>]
+      # @param request [Set<SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField>]
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Set<Types::ObjectWithRequiredField>]
+      # @return [Set<SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField>]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.container.get_and_return_set_of_objects(request: Set[{ string: "string" }])
@@ -308,9 +308,9 @@ module SeedExhaustiveClient
         end
       end
 
-      # @param request [Hash{String => Types::ObjectWithRequiredField}]
+      # @param request [Hash{String => SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField}]
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Hash{String => Types::ObjectWithRequiredField}]
+      # @return [Hash{String => SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField}]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.container.get_and_return_map_of_prim_to_object(request: { "string": { string: "string" } })
@@ -330,15 +330,15 @@ module SeedExhaustiveClient
           parsed_json = JSON.parse(response.body)
           parsed_json&.transform_values do |v|
             v = v.to_json
-            Types::ObjectWithRequiredField.from_json(json_object: v)
+            SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField.from_json(json_object: v)
           end
         end
       end
 
-      # @param request [Hash] Request of type Types::ObjectWithRequiredField, as a Hash
+      # @param request [Hash] Request of type SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField, as a Hash
       #   * :string (String)
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Types::ObjectWithRequiredField]
+      # @return [SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.container.get_and_return_optional(request: { string: "string" })
@@ -355,7 +355,7 @@ module SeedExhaustiveClient
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/container/opt-objects"
           end
-          Types::ObjectWithRequiredField.from_json(json_object: response.body)
+          SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField.from_json(json_object: response.body)
         end
       end
     end

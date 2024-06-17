@@ -12,7 +12,7 @@ module SeedTraceClient
         attr_reader :parameter_id
         # @return [String]
         attr_reader :name
-        # @return [VariableType]
+        # @return [SeedTraceClient::Commons::VariableType]
         attr_reader :variable_type
         # @return [OpenStruct] Additional properties unmapped to the current class definition
         attr_reader :additional_properties
@@ -24,9 +24,9 @@ module SeedTraceClient
 
         # @param parameter_id [String]
         # @param name [String]
-        # @param variable_type [VariableType]
+        # @param variable_type [SeedTraceClient::Commons::VariableType]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [V2::Parameter]
+        # @return [SeedTraceClient::V2::Problem::Parameter]
         def initialize(parameter_id:, name:, variable_type:, additional_properties: nil)
           @parameter_id = parameter_id
           @name = name
@@ -38,7 +38,7 @@ module SeedTraceClient
         # Deserialize a JSON object to an instance of Parameter
         #
         # @param json_object [String]
-        # @return [V2::Parameter]
+        # @return [SeedTraceClient::V2::Problem::Parameter]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
@@ -48,7 +48,7 @@ module SeedTraceClient
             variable_type = nil
           else
             variable_type = parsed_json["variableType"].to_json
-            variable_type = VariableType.from_json(json_object: variable_type)
+            variable_type = SeedTraceClient::Commons::VariableType.from_json(json_object: variable_type)
           end
           new(
             parameter_id: parameter_id,
@@ -74,7 +74,7 @@ module SeedTraceClient
         def self.validate_raw(obj:)
           obj.parameter_id.is_a?(String) != false || raise("Passed value for field obj.parameter_id is not the expected type, validation failed.")
           obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
-          VariableType.validate_raw(obj: obj.variable_type)
+          SeedTraceClient::Commons::VariableType.validate_raw(obj: obj.variable_type)
         end
       end
     end

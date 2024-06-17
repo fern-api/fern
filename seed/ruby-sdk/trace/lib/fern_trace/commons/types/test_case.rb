@@ -9,7 +9,7 @@ module SeedTraceClient
     class TestCase
       # @return [String]
       attr_reader :id
-      # @return [Array<VariableValue>]
+      # @return [Array<SeedTraceClient::Commons::VariableValue>]
       attr_reader :params
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -20,9 +20,9 @@ module SeedTraceClient
       OMIT = Object.new
 
       # @param id [String]
-      # @param params [Array<VariableValue>]
+      # @param params [Array<SeedTraceClient::Commons::VariableValue>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [TestCase]
+      # @return [SeedTraceClient::Commons::TestCase]
       def initialize(id:, params:, additional_properties: nil)
         @id = id
         @params = params
@@ -33,14 +33,14 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of TestCase
       #
       # @param json_object [String]
-      # @return [TestCase]
+      # @return [SeedTraceClient::Commons::TestCase]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         id = struct["id"]
         params = parsed_json["params"]&.map do |v|
           v = v.to_json
-          VariableValue.from_json(json_object: v)
+          SeedTraceClient::Commons::VariableValue.from_json(json_object: v)
         end
         new(
           id: id,

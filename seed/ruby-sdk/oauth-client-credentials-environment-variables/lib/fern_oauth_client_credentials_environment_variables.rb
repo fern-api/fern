@@ -17,7 +17,7 @@ module SeedOauthClientCredentialsEnvironmentVariablesClient
     # @param client_secret [String]
     # @return [SeedOauthClientCredentialsEnvironmentVariablesClient::Client]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, client_id: ENV["CLIENT_ID"],
-                   client_secret: ENV["CLIENT_ID"])
+                   client_secret: ENV["CLIENT_SECRET"])
       @oauth_provider = SeedOauthClientCredentialsEnvironmentVariablesClient::OauthTokenProvider.new(
         client_id: client_id,
         client_secret: client_secret,
@@ -48,7 +48,7 @@ module SeedOauthClientCredentialsEnvironmentVariablesClient
     # @param client_secret [String]
     # @return [SeedOauthClientCredentialsEnvironmentVariablesClient::AsyncClient]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, client_id: ENV["CLIENT_ID"],
-                   client_secret: ENV["CLIENT_ID"])
+                   client_secret: ENV["CLIENT_SECRET"])
       @oauth_provider = SeedOauthClientCredentialsEnvironmentVariablesClient::OauthTokenProvider.new(
         client_id: client_id,
         client_secret: client_secret,

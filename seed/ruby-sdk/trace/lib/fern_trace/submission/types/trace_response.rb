@@ -13,11 +13,11 @@ module SeedTraceClient
       attr_reader :submission_id
       # @return [Integer]
       attr_reader :line_number
-      # @return [DebugVariableValue]
+      # @return [SeedTraceClient::Commons::DebugVariableValue]
       attr_reader :return_value
-      # @return [ExpressionLocation]
+      # @return [SeedTraceClient::Submission::ExpressionLocation]
       attr_reader :expression_location
-      # @return [StackInformation]
+      # @return [SeedTraceClient::Submission::StackInformation]
       attr_reader :stack
       # @return [String]
       attr_reader :stdout
@@ -31,12 +31,12 @@ module SeedTraceClient
 
       # @param submission_id [String]
       # @param line_number [Integer]
-      # @param return_value [DebugVariableValue]
-      # @param expression_location [ExpressionLocation]
-      # @param stack [StackInformation]
+      # @param return_value [SeedTraceClient::Commons::DebugVariableValue]
+      # @param expression_location [SeedTraceClient::Submission::ExpressionLocation]
+      # @param stack [SeedTraceClient::Submission::StackInformation]
       # @param stdout [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [TraceResponse]
+      # @return [SeedTraceClient::Submission::TraceResponse]
       def initialize(submission_id:, line_number:, stack:, return_value: OMIT, expression_location: OMIT, stdout: OMIT,
                      additional_properties: nil)
         @submission_id = submission_id
@@ -61,7 +61,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of TraceResponse
       #
       # @param json_object [String]
-      # @return [TraceResponse]
+      # @return [SeedTraceClient::Submission::TraceResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -71,19 +71,19 @@ module SeedTraceClient
           return_value = nil
         else
           return_value = parsed_json["returnValue"].to_json
-          return_value = DebugVariableValue.from_json(json_object: return_value)
+          return_value = SeedTraceClient::Commons::DebugVariableValue.from_json(json_object: return_value)
         end
         if parsed_json["expressionLocation"].nil?
           expression_location = nil
         else
           expression_location = parsed_json["expressionLocation"].to_json
-          expression_location = ExpressionLocation.from_json(json_object: expression_location)
+          expression_location = SeedTraceClient::Submission::ExpressionLocation.from_json(json_object: expression_location)
         end
         if parsed_json["stack"].nil?
           stack = nil
         else
           stack = parsed_json["stack"].to_json
-          stack = StackInformation.from_json(json_object: stack)
+          stack = SeedTraceClient::Submission::StackInformation.from_json(json_object: stack)
         end
         stdout = struct["stdout"]
         new(
@@ -113,9 +113,9 @@ module SeedTraceClient
       def self.validate_raw(obj:)
         obj.submission_id.is_a?(String) != false || raise("Passed value for field obj.submission_id is not the expected type, validation failed.")
         obj.line_number.is_a?(Integer) != false || raise("Passed value for field obj.line_number is not the expected type, validation failed.")
-        obj.return_value.nil? || DebugVariableValue.validate_raw(obj: obj.return_value)
-        obj.expression_location.nil? || ExpressionLocation.validate_raw(obj: obj.expression_location)
-        StackInformation.validate_raw(obj: obj.stack)
+        obj.return_value.nil? || SeedTraceClient::Commons::DebugVariableValue.validate_raw(obj: obj.return_value)
+        obj.expression_location.nil? || SeedTraceClient::Submission::ExpressionLocation.validate_raw(obj: obj.expression_location)
+        SeedTraceClient::Submission::StackInformation.validate_raw(obj: obj.stack)
         obj.stdout&.is_a?(String) != false || raise("Passed value for field obj.stdout is not the expected type, validation failed.")
       end
     end

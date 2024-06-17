@@ -11,7 +11,7 @@ module SeedApiClient
     class ObjectFieldValue
       # @return [String]
       attr_reader :name
-      # @return [FieldValue]
+      # @return [SeedApiClient::Ast::FieldValue]
       attr_reader :value
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -22,9 +22,9 @@ module SeedApiClient
       OMIT = Object.new
 
       # @param name [String]
-      # @param value [FieldValue]
+      # @param value [SeedApiClient::Ast::FieldValue]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [ObjectFieldValue]
+      # @return [SeedApiClient::Ast::ObjectFieldValue]
       def initialize(name:, value:, additional_properties: nil)
         @name = name
         @value = value
@@ -35,7 +35,7 @@ module SeedApiClient
       # Deserialize a JSON object to an instance of ObjectFieldValue
       #
       # @param json_object [String]
-      # @return [ObjectFieldValue]
+      # @return [SeedApiClient::Ast::ObjectFieldValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -44,7 +44,7 @@ module SeedApiClient
           value = nil
         else
           value = parsed_json["value"].to_json
-          value = FieldValue.from_json(json_object: value)
+          value = SeedApiClient::Ast::FieldValue.from_json(json_object: value)
         end
         new(
           name: name,
@@ -68,7 +68,7 @@ module SeedApiClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
-        FieldValue.validate_raw(obj: obj.value)
+        SeedApiClient::Ast::FieldValue.validate_raw(obj: obj.value)
       end
     end
   end

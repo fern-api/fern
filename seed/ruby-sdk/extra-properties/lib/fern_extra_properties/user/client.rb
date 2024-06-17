@@ -17,7 +17,7 @@ module SeedExtraPropertiesClient
 
     # @param name [String]
     # @param request_options [SeedExtraPropertiesClient::RequestOptions]
-    # @return [User]
+    # @return [SeedExtraPropertiesClient::User::User]
     # @example
     #  extra_properties = SeedExtraPropertiesClient::Client.new(base_url: "https://api.example.com")
     #  extra_properties.user.create_user(name: "string")
@@ -37,7 +37,7 @@ module SeedExtraPropertiesClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/user"
       end
-      User.from_json(json_object: response.body)
+      SeedExtraPropertiesClient::User::User.from_json(json_object: response.body)
     end
   end
 
@@ -53,7 +53,7 @@ module SeedExtraPropertiesClient
 
     # @param name [String]
     # @param request_options [SeedExtraPropertiesClient::RequestOptions]
-    # @return [User]
+    # @return [SeedExtraPropertiesClient::User::User]
     # @example
     #  extra_properties = SeedExtraPropertiesClient::Client.new(base_url: "https://api.example.com")
     #  extra_properties.user.create_user(name: "string")
@@ -74,7 +74,7 @@ module SeedExtraPropertiesClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/user"
         end
-        User.from_json(json_object: response.body)
+        SeedExtraPropertiesClient::User::User.from_json(json_object: response.body)
       end
     end
   end

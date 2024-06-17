@@ -18,7 +18,7 @@ module SeedMixedCaseClient
 
       # @param name [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Organization]
+      # @return [SeedMixedCaseClient::Service::Organization]
       def initialize(name:, additional_properties: nil)
         @name = name
         @additional_properties = additional_properties
@@ -28,7 +28,7 @@ module SeedMixedCaseClient
       # Deserialize a JSON object to an instance of Organization
       #
       # @param json_object [String]
-      # @return [Organization]
+      # @return [SeedMixedCaseClient::Service::Organization]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         name = struct["name"]

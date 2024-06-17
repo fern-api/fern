@@ -20,7 +20,7 @@ module SeedExamplesClient
 
     # @param movie_id [String]
     # @param request_options [SeedExamplesClient::RequestOptions]
-    # @return [Movie]
+    # @return [SeedExamplesClient::Types::Movie]
     # @example
     #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
     #  examples.service.get_movie(movie_id: "movie-c06a4ad7")
@@ -35,10 +35,10 @@ module SeedExamplesClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie/#{movie_id}"
       end
-      Movie.from_json(json_object: response.body)
+      SeedExamplesClient::Types::Movie.from_json(json_object: response.body)
     end
 
-    # @param request [Hash] Request of type Movie, as a Hash
+    # @param request [Hash] Request of type SeedExamplesClient::Types::Movie, as a Hash
     #   * :id (String)
     #   * :prequel (String)
     #   * :title (String)
@@ -72,7 +72,7 @@ module SeedExamplesClient
     # @param shallow [Boolean]
     # @param tag [String]
     # @param request_options [SeedExamplesClient::RequestOptions]
-    # @return [Metadata]
+    # @return [SeedExamplesClient::Types::Metadata]
     # @example
     #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
     #  examples.service.get_metadata(
@@ -93,11 +93,11 @@ module SeedExamplesClient
         req.params = { **(request_options&.additional_query_parameters || {}), "shallow": shallow, "tag": tag }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/metadata"
       end
-      Metadata.from_json(json_object: response.body)
+      SeedExamplesClient::Types::Metadata.from_json(json_object: response.body)
     end
 
     # @param request_options [SeedExamplesClient::RequestOptions]
-    # @return [Response]
+    # @return [SeedExamplesClient::Types::Response]
     # @example
     #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
     #  examples.service.get_response
@@ -112,7 +112,7 @@ module SeedExamplesClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/response"
       end
-      Response.from_json(json_object: response.body)
+      SeedExamplesClient::Types::Response.from_json(json_object: response.body)
     end
   end
 
@@ -128,7 +128,7 @@ module SeedExamplesClient
 
     # @param movie_id [String]
     # @param request_options [SeedExamplesClient::RequestOptions]
-    # @return [Movie]
+    # @return [SeedExamplesClient::Types::Movie]
     # @example
     #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
     #  examples.service.get_movie(movie_id: "movie-c06a4ad7")
@@ -144,11 +144,11 @@ module SeedExamplesClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie/#{movie_id}"
         end
-        Movie.from_json(json_object: response.body)
+        SeedExamplesClient::Types::Movie.from_json(json_object: response.body)
       end
     end
 
-    # @param request [Hash] Request of type Movie, as a Hash
+    # @param request [Hash] Request of type SeedExamplesClient::Types::Movie, as a Hash
     #   * :id (String)
     #   * :prequel (String)
     #   * :title (String)
@@ -185,7 +185,7 @@ module SeedExamplesClient
     # @param shallow [Boolean]
     # @param tag [String]
     # @param request_options [SeedExamplesClient::RequestOptions]
-    # @return [Metadata]
+    # @return [SeedExamplesClient::Types::Metadata]
     # @example
     #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
     #  examples.service.get_metadata(
@@ -211,12 +211,12 @@ module SeedExamplesClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/metadata"
         end
-        Metadata.from_json(json_object: response.body)
+        SeedExamplesClient::Types::Metadata.from_json(json_object: response.body)
       end
     end
 
     # @param request_options [SeedExamplesClient::RequestOptions]
-    # @return [Response]
+    # @return [SeedExamplesClient::Types::Response]
     # @example
     #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
     #  examples.service.get_response
@@ -232,7 +232,7 @@ module SeedExamplesClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/response"
         end
-        Response.from_json(json_object: response.body)
+        SeedExamplesClient::Types::Response.from_json(json_object: response.body)
       end
     end
   end

@@ -20,7 +20,7 @@ module SeedTraceClient
 
           # @param expected_stdout [String]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-          # @return [V2::V3::TestCaseExpects]
+          # @return [SeedTraceClient::V2::V3::Problem::TestCaseExpects]
           def initialize(expected_stdout: OMIT, additional_properties: nil)
             @expected_stdout = expected_stdout if expected_stdout != OMIT
             @additional_properties = additional_properties
@@ -32,7 +32,7 @@ module SeedTraceClient
           # Deserialize a JSON object to an instance of TestCaseExpects
           #
           # @param json_object [String]
-          # @return [V2::V3::TestCaseExpects]
+          # @return [SeedTraceClient::V2::V3::Problem::TestCaseExpects]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             expected_stdout = struct["expectedStdout"]

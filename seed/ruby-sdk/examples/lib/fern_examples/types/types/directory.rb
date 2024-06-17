@@ -9,9 +9,9 @@ module SeedExamplesClient
     class Directory
       # @return [String]
       attr_reader :name
-      # @return [Array<File>]
+      # @return [Array<SeedExamplesClient::Types::File>]
       attr_reader :files
-      # @return [Array<Directory>]
+      # @return [Array<SeedExamplesClient::Types::Directory>]
       attr_reader :directories
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -22,10 +22,10 @@ module SeedExamplesClient
       OMIT = Object.new
 
       # @param name [String]
-      # @param files [Array<File>]
-      # @param directories [Array<Directory>]
+      # @param files [Array<SeedExamplesClient::Types::File>]
+      # @param directories [Array<SeedExamplesClient::Types::Directory>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Directory]
+      # @return [SeedExamplesClient::Types::Directory]
       def initialize(name:, files: OMIT, directories: OMIT, additional_properties: nil)
         @name = name
         @files = files if files != OMIT
@@ -39,18 +39,18 @@ module SeedExamplesClient
       # Deserialize a JSON object to an instance of Directory
       #
       # @param json_object [String]
-      # @return [Directory]
+      # @return [SeedExamplesClient::Types::Directory]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         name = struct["name"]
         files = parsed_json["files"]&.map do |v|
           v = v.to_json
-          File.from_json(json_object: v)
+          SeedExamplesClient::Types::File.from_json(json_object: v)
         end
         directories = parsed_json["directories"]&.map do |v|
           v = v.to_json
-          Directory.from_json(json_object: v)
+          SeedExamplesClient::Types::Directory.from_json(json_object: v)
         end
         new(
           name: name,

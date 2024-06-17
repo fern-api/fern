@@ -20,7 +20,7 @@ module SeedObjectClient
     # @param id [String]
     # @param value [String]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Name]
+    # @return [SeedObjectClient::Name]
     def initialize(id:, value:, additional_properties: nil)
       @id = id
       @value = value
@@ -31,7 +31,7 @@ module SeedObjectClient
     # Deserialize a JSON object to an instance of Name
     #
     # @param json_object [String]
-    # @return [Name]
+    # @return [SeedObjectClient::Name]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       id = struct["id"]

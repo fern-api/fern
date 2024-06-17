@@ -9,9 +9,9 @@ module SeedTraceClient
   module V2
     class Problem
       class VoidFunctionSignatureThatTakesActualResult
-        # @return [Array<V2::Parameter>]
+        # @return [Array<SeedTraceClient::V2::Problem::Parameter>]
         attr_reader :parameters
-        # @return [VariableType]
+        # @return [SeedTraceClient::Commons::VariableType]
         attr_reader :actual_result_type
         # @return [OpenStruct] Additional properties unmapped to the current class definition
         attr_reader :additional_properties
@@ -21,10 +21,10 @@ module SeedTraceClient
 
         OMIT = Object.new
 
-        # @param parameters [Array<V2::Parameter>]
-        # @param actual_result_type [VariableType]
+        # @param parameters [Array<SeedTraceClient::V2::Problem::Parameter>]
+        # @param actual_result_type [SeedTraceClient::Commons::VariableType]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [V2::VoidFunctionSignatureThatTakesActualResult]
+        # @return [SeedTraceClient::V2::Problem::VoidFunctionSignatureThatTakesActualResult]
         def initialize(parameters:, actual_result_type:, additional_properties: nil)
           @parameters = parameters
           @actual_result_type = actual_result_type
@@ -36,19 +36,19 @@ module SeedTraceClient
         #  VoidFunctionSignatureThatTakesActualResult
         #
         # @param json_object [String]
-        # @return [V2::VoidFunctionSignatureThatTakesActualResult]
+        # @return [SeedTraceClient::V2::Problem::VoidFunctionSignatureThatTakesActualResult]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
           parameters = parsed_json["parameters"]&.map do |v|
             v = v.to_json
-            V2::Parameter.from_json(json_object: v)
+            SeedTraceClient::V2::Problem::Parameter.from_json(json_object: v)
           end
           if parsed_json["actualResultType"].nil?
             actual_result_type = nil
           else
             actual_result_type = parsed_json["actualResultType"].to_json
-            actual_result_type = VariableType.from_json(json_object: actual_result_type)
+            actual_result_type = SeedTraceClient::Commons::VariableType.from_json(json_object: actual_result_type)
           end
           new(
             parameters: parameters,
@@ -73,7 +73,7 @@ module SeedTraceClient
         # @return [Void]
         def self.validate_raw(obj:)
           obj.parameters.is_a?(Array) != false || raise("Passed value for field obj.parameters is not the expected type, validation failed.")
-          VariableType.validate_raw(obj: obj.actual_result_type)
+          SeedTraceClient::Commons::VariableType.validate_raw(obj: obj.actual_result_type)
         end
       end
     end

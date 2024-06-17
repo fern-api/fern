@@ -18,7 +18,7 @@ module SeedTraceClient
 
       # @param response [Object]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [LangServerResponse]
+      # @return [SeedTraceClient::LangServer::LangServerResponse]
       def initialize(response:, additional_properties: nil)
         @response = response
         @additional_properties = additional_properties
@@ -28,7 +28,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of LangServerResponse
       #
       # @param json_object [String]
-      # @return [LangServerResponse]
+      # @return [SeedTraceClient::LangServer::LangServerResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         response = struct["response"]

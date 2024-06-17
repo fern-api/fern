@@ -16,7 +16,7 @@ module SeedTraceClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @return [CreateProblemError]
+      # @return [SeedTraceClient::Problem::CreateProblemError]
       def initialize(member:, discriminant:)
         @member = member
         @discriminant = discriminant
@@ -25,13 +25,13 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of CreateProblemError
       #
       # @param json_object [String]
-      # @return [CreateProblemError]
+      # @return [SeedTraceClient::Problem::CreateProblemError]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct._type
                  when "generic"
                  end
-        GenericCreateProblemError.from_json(json_object: json_object)
+        SeedTraceClient::Problem::GenericCreateProblemError.from_json(json_object: json_object)
         new(member: member, discriminant: struct._type)
       end
 
@@ -57,7 +57,7 @@ module SeedTraceClient
       def self.validate_raw(obj:)
         case obj._type
         when "generic"
-          GenericCreateProblemError.validate_raw(obj: obj)
+          SeedTraceClient::Problem::GenericCreateProblemError.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -71,8 +71,8 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @param member [GenericCreateProblemError]
-      # @return [CreateProblemError]
+      # @param member [SeedTraceClient::Problem::GenericCreateProblemError]
+      # @return [SeedTraceClient::Problem::CreateProblemError]
       def self.generic(member:)
         new(member: member, discriminant: "generic")
       end

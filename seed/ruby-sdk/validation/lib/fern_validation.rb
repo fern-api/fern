@@ -22,7 +22,7 @@ module SeedValidationClient
     # @param even [Integer]
     # @param name [String]
     # @param request_options [SeedValidationClient::RequestOptions]
-    # @return [Type]
+    # @return [SeedValidationClient::Type]
     # @example
     #  validation = SeedValidationClient::Client.new(base_url: "https://api.example.com")
     #  validation.create(
@@ -46,14 +46,14 @@ module SeedValidationClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/create"
       end
-      Type.from_json(json_object: response.body)
+      SeedValidationClient::Type.from_json(json_object: response.body)
     end
 
     # @param decimal [Float]
     # @param even [Integer]
     # @param name [String]
     # @param request_options [SeedValidationClient::RequestOptions]
-    # @return [Type]
+    # @return [SeedValidationClient::Type]
     # @example
     #  validation = SeedValidationClient::Client.new(base_url: "https://api.example.com")
     #  validation.get(
@@ -77,7 +77,7 @@ module SeedValidationClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/"
       end
-      Type.from_json(json_object: response.body)
+      SeedValidationClient::Type.from_json(json_object: response.body)
     end
   end
 
@@ -98,7 +98,7 @@ module SeedValidationClient
     # @param even [Integer]
     # @param name [String]
     # @param request_options [SeedValidationClient::RequestOptions]
-    # @return [Type]
+    # @return [SeedValidationClient::Type]
     # @example
     #  validation = SeedValidationClient::Client.new(base_url: "https://api.example.com")
     #  validation.create(
@@ -122,14 +122,14 @@ module SeedValidationClient
         }.compact
         req.url "#{@async_request_client.get_url(request_options: request_options)}/create"
       end
-      Type.from_json(json_object: response.body)
+      SeedValidationClient::Type.from_json(json_object: response.body)
     end
 
     # @param decimal [Float]
     # @param even [Integer]
     # @param name [String]
     # @param request_options [SeedValidationClient::RequestOptions]
-    # @return [Type]
+    # @return [SeedValidationClient::Type]
     # @example
     #  validation = SeedValidationClient::Client.new(base_url: "https://api.example.com")
     #  validation.get(
@@ -153,7 +153,7 @@ module SeedValidationClient
         }.compact
         req.url "#{@async_request_client.get_url(request_options: request_options)}/"
       end
-      Type.from_json(json_object: response.body)
+      SeedValidationClient::Type.from_json(json_object: response.body)
     end
   end
 end

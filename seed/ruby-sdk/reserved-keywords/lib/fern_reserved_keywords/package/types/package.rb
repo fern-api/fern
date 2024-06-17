@@ -18,7 +18,7 @@ module SeedNurseryApiClient
 
       # @param name [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Package]
+      # @return [SeedNurseryApiClient::Package::Package]
       def initialize(name:, additional_properties: nil)
         @name = name
         @additional_properties = additional_properties
@@ -28,7 +28,7 @@ module SeedNurseryApiClient
       # Deserialize a JSON object to an instance of Package
       #
       # @param json_object [String]
-      # @return [Package]
+      # @return [SeedNurseryApiClient::Package::Package]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         name = struct["name"]

@@ -7,7 +7,7 @@ require "json"
 module SeedTraceClient
   class Problem
     class ProblemDescription
-      # @return [Array<ProblemDescriptionBoard>]
+      # @return [Array<SeedTraceClient::Problem::ProblemDescriptionBoard>]
       attr_reader :boards
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -17,9 +17,9 @@ module SeedTraceClient
 
       OMIT = Object.new
 
-      # @param boards [Array<ProblemDescriptionBoard>]
+      # @param boards [Array<SeedTraceClient::Problem::ProblemDescriptionBoard>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [ProblemDescription]
+      # @return [SeedTraceClient::Problem::ProblemDescription]
       def initialize(boards:, additional_properties: nil)
         @boards = boards
         @additional_properties = additional_properties
@@ -29,13 +29,13 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of ProblemDescription
       #
       # @param json_object [String]
-      # @return [ProblemDescription]
+      # @return [SeedTraceClient::Problem::ProblemDescription]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         boards = parsed_json["boards"]&.map do |v|
           v = v.to_json
-          ProblemDescriptionBoard.from_json(json_object: v)
+          SeedTraceClient::Problem::ProblemDescriptionBoard.from_json(json_object: v)
         end
         new(boards: boards, additional_properties: struct)
       end

@@ -16,9 +16,9 @@ module SeedExhaustiveClient
         @request_client = request_client
       end
 
-      # @param request [Types::Animal]
+      # @param request [SeedExhaustiveClient::Types::Union::Animal]
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Types::Animal]
+      # @return [SeedExhaustiveClient::Types::Union::Animal]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.union.get_and_return_union
@@ -34,7 +34,7 @@ module SeedExhaustiveClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/union"
         end
-        Types::Animal.from_json(json_object: response.body)
+        SeedExhaustiveClient::Types::Union::Animal.from_json(json_object: response.body)
       end
     end
 
@@ -48,9 +48,9 @@ module SeedExhaustiveClient
         @request_client = request_client
       end
 
-      # @param request [Types::Animal]
+      # @param request [SeedExhaustiveClient::Types::Union::Animal]
       # @param request_options [SeedExhaustiveClient::RequestOptions]
-      # @return [Types::Animal]
+      # @return [SeedExhaustiveClient::Types::Union::Animal]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
       #  exhaustive.endpoints.union.get_and_return_union
@@ -67,7 +67,7 @@ module SeedExhaustiveClient
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/union"
           end
-          Types::Animal.from_json(json_object: response.body)
+          SeedExhaustiveClient::Types::Union::Animal.from_json(json_object: response.body)
         end
       end
     end

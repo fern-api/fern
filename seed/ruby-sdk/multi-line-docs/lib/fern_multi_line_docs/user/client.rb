@@ -45,7 +45,7 @@ module SeedMultiLineDocsClient
     # @param age [Integer] The age of the user.
     #  This propery is not required.
     # @param request_options [SeedMultiLineDocsClient::RequestOptions]
-    # @return [User]
+    # @return [SeedMultiLineDocsClient::User::User]
     # @example
     #  multi_line_docs = SeedMultiLineDocsClient::Client.new(base_url: "https://api.example.com")
     #  multi_line_docs.user.create_user(name: "string", age: 1)
@@ -60,7 +60,7 @@ module SeedMultiLineDocsClient
         req.body = { **(request_options&.additional_body_parameters || {}), name: name, age: age }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/users"
       end
-      User.from_json(json_object: response.body)
+      SeedMultiLineDocsClient::User::User.from_json(json_object: response.body)
     end
   end
 
@@ -106,7 +106,7 @@ module SeedMultiLineDocsClient
     # @param age [Integer] The age of the user.
     #  This propery is not required.
     # @param request_options [SeedMultiLineDocsClient::RequestOptions]
-    # @return [User]
+    # @return [SeedMultiLineDocsClient::User::User]
     # @example
     #  multi_line_docs = SeedMultiLineDocsClient::Client.new(base_url: "https://api.example.com")
     #  multi_line_docs.user.create_user(name: "string", age: 1)
@@ -122,7 +122,7 @@ module SeedMultiLineDocsClient
           req.body = { **(request_options&.additional_body_parameters || {}), name: name, age: age }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/users"
         end
-        User.from_json(json_object: response.body)
+        SeedMultiLineDocsClient::User::User.from_json(json_object: response.body)
       end
     end
   end

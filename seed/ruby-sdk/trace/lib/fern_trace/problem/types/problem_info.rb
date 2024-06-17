@@ -12,19 +12,19 @@ module SeedTraceClient
     class ProblemInfo
       # @return [String]
       attr_reader :problem_id
-      # @return [ProblemDescription]
+      # @return [SeedTraceClient::Problem::ProblemDescription]
       attr_reader :problem_description
       # @return [String]
       attr_reader :problem_name
       # @return [Integer]
       attr_reader :problem_version
-      # @return [Hash{Language => ProblemFiles}]
+      # @return [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::Problem::ProblemFiles}]
       attr_reader :files
-      # @return [Array<VariableTypeAndName>]
+      # @return [Array<SeedTraceClient::Problem::VariableTypeAndName>]
       attr_reader :input_params
-      # @return [VariableType]
+      # @return [SeedTraceClient::Commons::VariableType]
       attr_reader :output_type
-      # @return [Array<TestCaseWithExpectedResult>]
+      # @return [Array<SeedTraceClient::Commons::TestCaseWithExpectedResult>]
       attr_reader :testcases
       # @return [String]
       attr_reader :method_name
@@ -39,17 +39,17 @@ module SeedTraceClient
       OMIT = Object.new
 
       # @param problem_id [String]
-      # @param problem_description [ProblemDescription]
+      # @param problem_description [SeedTraceClient::Problem::ProblemDescription]
       # @param problem_name [String]
       # @param problem_version [Integer]
-      # @param files [Hash{Language => ProblemFiles}]
-      # @param input_params [Array<VariableTypeAndName>]
-      # @param output_type [VariableType]
-      # @param testcases [Array<TestCaseWithExpectedResult>]
+      # @param files [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::Problem::ProblemFiles}]
+      # @param input_params [Array<SeedTraceClient::Problem::VariableTypeAndName>]
+      # @param output_type [SeedTraceClient::Commons::VariableType]
+      # @param testcases [Array<SeedTraceClient::Commons::TestCaseWithExpectedResult>]
       # @param method_name [String]
       # @param supports_custom_test_cases [Boolean]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [ProblemInfo]
+      # @return [SeedTraceClient::Problem::ProblemInfo]
       def initialize(problem_id:, problem_description:, problem_name:, problem_version:, files:, input_params:,
                      output_type:, testcases:, method_name:, supports_custom_test_cases:, additional_properties: nil)
         @problem_id = problem_id
@@ -80,7 +80,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of ProblemInfo
       #
       # @param json_object [String]
-      # @return [ProblemInfo]
+      # @return [SeedTraceClient::Problem::ProblemInfo]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -89,27 +89,27 @@ module SeedTraceClient
           problem_description = nil
         else
           problem_description = parsed_json["problemDescription"].to_json
-          problem_description = ProblemDescription.from_json(json_object: problem_description)
+          problem_description = SeedTraceClient::Problem::ProblemDescription.from_json(json_object: problem_description)
         end
         problem_name = struct["problemName"]
         problem_version = struct["problemVersion"]
         files = parsed_json["files"]&.transform_values do |v|
           v = v.to_json
-          ProblemFiles.from_json(json_object: v)
+          SeedTraceClient::Problem::ProblemFiles.from_json(json_object: v)
         end
         input_params = parsed_json["inputParams"]&.map do |v|
           v = v.to_json
-          VariableTypeAndName.from_json(json_object: v)
+          SeedTraceClient::Problem::VariableTypeAndName.from_json(json_object: v)
         end
         if parsed_json["outputType"].nil?
           output_type = nil
         else
           output_type = parsed_json["outputType"].to_json
-          output_type = VariableType.from_json(json_object: output_type)
+          output_type = SeedTraceClient::Commons::VariableType.from_json(json_object: output_type)
         end
         testcases = parsed_json["testcases"]&.map do |v|
           v = v.to_json
-          TestCaseWithExpectedResult.from_json(json_object: v)
+          SeedTraceClient::Commons::TestCaseWithExpectedResult.from_json(json_object: v)
         end
         method_name = struct["methodName"]
         supports_custom_test_cases = struct["supportsCustomTestCases"]
@@ -143,12 +143,12 @@ module SeedTraceClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.problem_id.is_a?(String) != false || raise("Passed value for field obj.problem_id is not the expected type, validation failed.")
-        ProblemDescription.validate_raw(obj: obj.problem_description)
+        SeedTraceClient::Problem::ProblemDescription.validate_raw(obj: obj.problem_description)
         obj.problem_name.is_a?(String) != false || raise("Passed value for field obj.problem_name is not the expected type, validation failed.")
         obj.problem_version.is_a?(Integer) != false || raise("Passed value for field obj.problem_version is not the expected type, validation failed.")
         obj.files.is_a?(Hash) != false || raise("Passed value for field obj.files is not the expected type, validation failed.")
         obj.input_params.is_a?(Array) != false || raise("Passed value for field obj.input_params is not the expected type, validation failed.")
-        VariableType.validate_raw(obj: obj.output_type)
+        SeedTraceClient::Commons::VariableType.validate_raw(obj: obj.output_type)
         obj.testcases.is_a?(Array) != false || raise("Passed value for field obj.testcases is not the expected type, validation failed.")
         obj.method_name.is_a?(String) != false || raise("Passed value for field obj.method_name is not the expected type, validation failed.")
         obj.supports_custom_test_cases.is_a?(Boolean) != false || raise("Passed value for field obj.supports_custom_test_cases is not the expected type, validation failed.")

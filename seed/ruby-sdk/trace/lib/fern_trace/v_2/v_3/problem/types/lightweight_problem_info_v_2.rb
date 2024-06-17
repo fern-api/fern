@@ -15,7 +15,7 @@ module SeedTraceClient
           attr_reader :problem_name
           # @return [Integer]
           attr_reader :problem_version
-          # @return [Set<VariableType>]
+          # @return [Set<SeedTraceClient::Commons::VariableType>]
           attr_reader :variable_types
           # @return [OpenStruct] Additional properties unmapped to the current class definition
           attr_reader :additional_properties
@@ -28,9 +28,9 @@ module SeedTraceClient
           # @param problem_id [String]
           # @param problem_name [String]
           # @param problem_version [Integer]
-          # @param variable_types [Set<VariableType>]
+          # @param variable_types [Set<SeedTraceClient::Commons::VariableType>]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-          # @return [V2::V3::LightweightProblemInfoV2]
+          # @return [SeedTraceClient::V2::V3::Problem::LightweightProblemInfoV2]
           def initialize(problem_id:, problem_name:, problem_version:, variable_types:, additional_properties: nil)
             @problem_id = problem_id
             @problem_name = problem_name
@@ -48,7 +48,7 @@ module SeedTraceClient
           # Deserialize a JSON object to an instance of LightweightProblemInfoV2
           #
           # @param json_object [String]
-          # @return [V2::V3::LightweightProblemInfoV2]
+          # @return [SeedTraceClient::V2::V3::Problem::LightweightProblemInfoV2]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             parsed_json = JSON.parse(json_object)

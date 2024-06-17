@@ -10,7 +10,7 @@ module SeedTraceClient
     class WorkspaceSubmissionUpdate
       # @return [DateTime]
       attr_reader :update_time
-      # @return [WorkspaceSubmissionUpdateInfo]
+      # @return [SeedTraceClient::Submission::WorkspaceSubmissionUpdateInfo]
       attr_reader :update_info
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -21,9 +21,9 @@ module SeedTraceClient
       OMIT = Object.new
 
       # @param update_time [DateTime]
-      # @param update_info [WorkspaceSubmissionUpdateInfo]
+      # @param update_info [SeedTraceClient::Submission::WorkspaceSubmissionUpdateInfo]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [WorkspaceSubmissionUpdate]
+      # @return [SeedTraceClient::Submission::WorkspaceSubmissionUpdate]
       def initialize(update_time:, update_info:, additional_properties: nil)
         @update_time = update_time
         @update_info = update_info
@@ -34,7 +34,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of WorkspaceSubmissionUpdate
       #
       # @param json_object [String]
-      # @return [WorkspaceSubmissionUpdate]
+      # @return [SeedTraceClient::Submission::WorkspaceSubmissionUpdate]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -43,7 +43,7 @@ module SeedTraceClient
           update_info = nil
         else
           update_info = parsed_json["updateInfo"].to_json
-          update_info = WorkspaceSubmissionUpdateInfo.from_json(json_object: update_info)
+          update_info = SeedTraceClient::Submission::WorkspaceSubmissionUpdateInfo.from_json(json_object: update_info)
         end
         new(
           update_time: update_time,
@@ -67,7 +67,7 @@ module SeedTraceClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.update_time.is_a?(DateTime) != false || raise("Passed value for field obj.update_time is not the expected type, validation failed.")
-        WorkspaceSubmissionUpdateInfo.validate_raw(obj: obj.update_info)
+        SeedTraceClient::Submission::WorkspaceSubmissionUpdateInfo.validate_raw(obj: obj.update_info)
       end
     end
   end

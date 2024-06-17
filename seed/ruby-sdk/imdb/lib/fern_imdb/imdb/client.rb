@@ -19,7 +19,7 @@ module SeedApiClient
 
     # Add a movie to the database
     #
-    # @param request [Hash] Request of type CreateMovieRequest, as a Hash
+    # @param request [Hash] Request of type SeedApiClient::Imdb::CreateMovieRequest, as a Hash
     #   * :title (String)
     #   * :rating (Float)
     # @param request_options [SeedApiClient::RequestOptions]
@@ -44,7 +44,7 @@ module SeedApiClient
 
     # @param movie_id [String]
     # @param request_options [SeedApiClient::RequestOptions]
-    # @return [Movie]
+    # @return [SeedApiClient::Imdb::Movie]
     # @example
     #  api = SeedApiClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
     #  api.imdb.get_movie(movie_id: "string")
@@ -59,7 +59,7 @@ module SeedApiClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movies/#{movie_id}"
       end
-      Movie.from_json(json_object: response.body)
+      SeedApiClient::Imdb::Movie.from_json(json_object: response.body)
     end
   end
 
@@ -75,7 +75,7 @@ module SeedApiClient
 
     # Add a movie to the database
     #
-    # @param request [Hash] Request of type CreateMovieRequest, as a Hash
+    # @param request [Hash] Request of type SeedApiClient::Imdb::CreateMovieRequest, as a Hash
     #   * :title (String)
     #   * :rating (Float)
     # @param request_options [SeedApiClient::RequestOptions]
@@ -103,7 +103,7 @@ module SeedApiClient
 
     # @param movie_id [String]
     # @param request_options [SeedApiClient::RequestOptions]
-    # @return [Movie]
+    # @return [SeedApiClient::Imdb::Movie]
     # @example
     #  api = SeedApiClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
     #  api.imdb.get_movie(movie_id: "string")
@@ -119,7 +119,7 @@ module SeedApiClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movies/#{movie_id}"
         end
-        Movie.from_json(json_object: response.body)
+        SeedApiClient::Imdb::Movie.from_json(json_object: response.body)
       end
     end
   end

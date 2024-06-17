@@ -9,9 +9,9 @@ module SeedTraceClient
   module V2
     class Problem
       class GetGeneratedTestCaseFileRequest
-        # @return [V2::TestCaseTemplate]
+        # @return [SeedTraceClient::V2::Problem::TestCaseTemplate]
         attr_reader :template
-        # @return [V2::TestCaseV2]
+        # @return [SeedTraceClient::V2::Problem::TestCaseV2]
         attr_reader :test_case
         # @return [OpenStruct] Additional properties unmapped to the current class definition
         attr_reader :additional_properties
@@ -21,10 +21,10 @@ module SeedTraceClient
 
         OMIT = Object.new
 
-        # @param template [V2::TestCaseTemplate]
-        # @param test_case [V2::TestCaseV2]
+        # @param template [SeedTraceClient::V2::Problem::TestCaseTemplate]
+        # @param test_case [SeedTraceClient::V2::Problem::TestCaseV2]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [V2::GetGeneratedTestCaseFileRequest]
+        # @return [SeedTraceClient::V2::Problem::GetGeneratedTestCaseFileRequest]
         def initialize(test_case:, template: OMIT, additional_properties: nil)
           @template = template if template != OMIT
           @test_case = test_case
@@ -37,7 +37,7 @@ module SeedTraceClient
         # Deserialize a JSON object to an instance of GetGeneratedTestCaseFileRequest
         #
         # @param json_object [String]
-        # @return [V2::GetGeneratedTestCaseFileRequest]
+        # @return [SeedTraceClient::V2::Problem::GetGeneratedTestCaseFileRequest]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
@@ -45,13 +45,13 @@ module SeedTraceClient
             template = nil
           else
             template = parsed_json["template"].to_json
-            template = V2::TestCaseTemplate.from_json(json_object: template)
+            template = SeedTraceClient::V2::Problem::TestCaseTemplate.from_json(json_object: template)
           end
           if parsed_json["testCase"].nil?
             test_case = nil
           else
             test_case = parsed_json["testCase"].to_json
-            test_case = V2::TestCaseV2.from_json(json_object: test_case)
+            test_case = SeedTraceClient::V2::Problem::TestCaseV2.from_json(json_object: test_case)
           end
           new(
             template: template,
@@ -74,8 +74,8 @@ module SeedTraceClient
         # @param obj [Object]
         # @return [Void]
         def self.validate_raw(obj:)
-          obj.template.nil? || V2::TestCaseTemplate.validate_raw(obj: obj.template)
-          V2::TestCaseV2.validate_raw(obj: obj.test_case)
+          obj.template.nil? || SeedTraceClient::V2::Problem::TestCaseTemplate.validate_raw(obj: obj.template)
+          SeedTraceClient::V2::Problem::TestCaseV2.validate_raw(obj: obj.test_case)
         end
       end
     end

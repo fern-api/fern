@@ -23,7 +23,7 @@ module SeedExtendsClient
     # @param raw [String]
     # @param docs [String]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [NestedType]
+    # @return [SeedExtendsClient::NestedType]
     def initialize(name:, raw:, docs:, additional_properties: nil)
       @name = name
       @raw = raw
@@ -35,7 +35,7 @@ module SeedExtendsClient
     # Deserialize a JSON object to an instance of NestedType
     #
     # @param json_object [String]
-    # @return [NestedType]
+    # @return [SeedExtendsClient::NestedType]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       name = struct["name"]

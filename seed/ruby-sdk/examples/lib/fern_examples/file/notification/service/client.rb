@@ -19,7 +19,7 @@ module SeedExamplesClient
 
         # @param notification_id [String]
         # @param request_options [SeedExamplesClient::RequestOptions]
-        # @return [Exception]
+        # @return [SeedExamplesClient::Types::Exception]
         # @example
         #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
         #  examples.file.notification.service.get_exception(notification_id: "notification-hsy129x")
@@ -34,7 +34,7 @@ module SeedExamplesClient
             }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/file/notification/#{notification_id}"
           end
-          Exception.from_json(json_object: response.body)
+          SeedExamplesClient::Types::Exception.from_json(json_object: response.body)
         end
       end
 
@@ -50,7 +50,7 @@ module SeedExamplesClient
 
         # @param notification_id [String]
         # @param request_options [SeedExamplesClient::RequestOptions]
-        # @return [Exception]
+        # @return [SeedExamplesClient::Types::Exception]
         # @example
         #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
         #  examples.file.notification.service.get_exception(notification_id: "notification-hsy129x")
@@ -66,7 +66,7 @@ module SeedExamplesClient
               }.compact
               req.url "#{@request_client.get_url(request_options: request_options)}/file/notification/#{notification_id}"
             end
-            Exception.from_json(json_object: response.body)
+            SeedExamplesClient::Types::Exception.from_json(json_object: response.body)
           end
         end
       end

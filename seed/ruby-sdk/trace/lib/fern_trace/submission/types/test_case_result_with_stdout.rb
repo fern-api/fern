@@ -7,7 +7,7 @@ require "json"
 module SeedTraceClient
   class Submission
     class TestCaseResultWithStdout
-      # @return [TestCaseResult]
+      # @return [SeedTraceClient::Submission::TestCaseResult]
       attr_reader :result
       # @return [String]
       attr_reader :stdout
@@ -19,10 +19,10 @@ module SeedTraceClient
 
       OMIT = Object.new
 
-      # @param result [TestCaseResult]
+      # @param result [SeedTraceClient::Submission::TestCaseResult]
       # @param stdout [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [TestCaseResultWithStdout]
+      # @return [SeedTraceClient::Submission::TestCaseResultWithStdout]
       def initialize(result:, stdout:, additional_properties: nil)
         @result = result
         @stdout = stdout
@@ -33,7 +33,7 @@ module SeedTraceClient
       # Deserialize a JSON object to an instance of TestCaseResultWithStdout
       #
       # @param json_object [String]
-      # @return [TestCaseResultWithStdout]
+      # @return [SeedTraceClient::Submission::TestCaseResultWithStdout]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -41,7 +41,7 @@ module SeedTraceClient
           result = nil
         else
           result = parsed_json["result"].to_json
-          result = TestCaseResult.from_json(json_object: result)
+          result = SeedTraceClient::Submission::TestCaseResult.from_json(json_object: result)
         end
         stdout = struct["stdout"]
         new(
@@ -65,7 +65,7 @@ module SeedTraceClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        TestCaseResult.validate_raw(obj: obj.result)
+        SeedTraceClient::Submission::TestCaseResult.validate_raw(obj: obj.result)
         obj.stdout.is_a?(String) != false || raise("Passed value for field obj.stdout is not the expected type, validation failed.")
       end
     end

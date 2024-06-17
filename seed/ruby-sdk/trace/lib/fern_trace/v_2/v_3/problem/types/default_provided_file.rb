@@ -10,9 +10,9 @@ module SeedTraceClient
     module V3
       class Problem
         class DefaultProvidedFile
-          # @return [V2::V3::FileInfoV2]
+          # @return [SeedTraceClient::V2::V3::Problem::FileInfoV2]
           attr_reader :file
-          # @return [Array<VariableType>]
+          # @return [Array<SeedTraceClient::Commons::VariableType>]
           attr_reader :related_types
           # @return [OpenStruct] Additional properties unmapped to the current class definition
           attr_reader :additional_properties
@@ -22,10 +22,10 @@ module SeedTraceClient
 
           OMIT = Object.new
 
-          # @param file [V2::V3::FileInfoV2]
-          # @param related_types [Array<VariableType>]
+          # @param file [SeedTraceClient::V2::V3::Problem::FileInfoV2]
+          # @param related_types [Array<SeedTraceClient::Commons::VariableType>]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-          # @return [V2::V3::DefaultProvidedFile]
+          # @return [SeedTraceClient::V2::V3::Problem::DefaultProvidedFile]
           def initialize(file:, related_types:, additional_properties: nil)
             @file = file
             @related_types = related_types
@@ -36,7 +36,7 @@ module SeedTraceClient
           # Deserialize a JSON object to an instance of DefaultProvidedFile
           #
           # @param json_object [String]
-          # @return [V2::V3::DefaultProvidedFile]
+          # @return [SeedTraceClient::V2::V3::Problem::DefaultProvidedFile]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             parsed_json = JSON.parse(json_object)
@@ -44,11 +44,11 @@ module SeedTraceClient
               file = nil
             else
               file = parsed_json["file"].to_json
-              file = V2::V3::FileInfoV2.from_json(json_object: file)
+              file = SeedTraceClient::V2::V3::Problem::FileInfoV2.from_json(json_object: file)
             end
             related_types = parsed_json["relatedTypes"]&.map do |v|
               v = v.to_json
-              VariableType.from_json(json_object: v)
+              SeedTraceClient::Commons::VariableType.from_json(json_object: v)
             end
             new(
               file: file,
@@ -71,7 +71,7 @@ module SeedTraceClient
           # @param obj [Object]
           # @return [Void]
           def self.validate_raw(obj:)
-            V2::V3::FileInfoV2.validate_raw(obj: obj.file)
+            SeedTraceClient::V2::V3::Problem::FileInfoV2.validate_raw(obj: obj.file)
             obj.related_types.is_a?(Array) != false || raise("Passed value for field obj.related_types is not the expected type, validation failed.")
           end
         end

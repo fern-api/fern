@@ -7,7 +7,7 @@ require "json"
 module SeedExamplesClient
   class Types
     class Tree
-      # @return [Array<Node>]
+      # @return [Array<SeedExamplesClient::Types::Node>]
       attr_reader :nodes
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -17,9 +17,9 @@ module SeedExamplesClient
 
       OMIT = Object.new
 
-      # @param nodes [Array<Node>]
+      # @param nodes [Array<SeedExamplesClient::Types::Node>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Tree]
+      # @return [SeedExamplesClient::Types::Tree]
       def initialize(nodes: OMIT, additional_properties: nil)
         @nodes = nodes if nodes != OMIT
         @additional_properties = additional_properties
@@ -31,13 +31,13 @@ module SeedExamplesClient
       # Deserialize a JSON object to an instance of Tree
       #
       # @param json_object [String]
-      # @return [Tree]
+      # @return [SeedExamplesClient::Types::Tree]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         nodes = parsed_json["nodes"]&.map do |v|
           v = v.to_json
-          Node.from_json(json_object: v)
+          SeedExamplesClient::Types::Node.from_json(json_object: v)
         end
         new(nodes: nodes, additional_properties: struct)
       end

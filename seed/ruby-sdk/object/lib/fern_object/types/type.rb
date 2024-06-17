@@ -45,7 +45,7 @@ module SeedObjectClient
     attr_reader :seventeen
     # @return [String]
     attr_reader :eighteen
-    # @return [Name]
+    # @return [SeedObjectClient::Name]
     attr_reader :nineteen
     # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
@@ -73,9 +73,9 @@ module SeedObjectClient
     # @param sixteen [Array<Hash{String => Integer}>]
     # @param seventeen [Array<String>]
     # @param eighteen [String]
-    # @param nineteen [Name]
+    # @param nineteen [SeedObjectClient::Name]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Type]
+    # @return [SeedObjectClient::Type]
     def initialize(one:, two:, three:, four:, five:, six:, seven:, eight:, nine:, ten:, eleven:, twelve:, fourteen:, fifteen:, sixteen:, seventeen:, eighteen:, nineteen:,
                    thirteen: OMIT, additional_properties: nil)
       @one = one
@@ -126,7 +126,7 @@ module SeedObjectClient
     # Deserialize a JSON object to an instance of Type
     #
     # @param json_object [String]
-    # @return [Type]
+    # @return [SeedObjectClient::Type]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
@@ -157,7 +157,7 @@ module SeedObjectClient
         nineteen = nil
       else
         nineteen = parsed_json["nineteen"].to_json
-        nineteen = Name.from_json(json_object: nineteen)
+        nineteen = SeedObjectClient::Name.from_json(json_object: nineteen)
       end
       new(
         one: one,
@@ -215,7 +215,7 @@ module SeedObjectClient
       obj.sixteen.is_a?(Array) != false || raise("Passed value for field obj.sixteen is not the expected type, validation failed.")
       obj.seventeen.is_a?(Array) != false || raise("Passed value for field obj.seventeen is not the expected type, validation failed.")
       obj.eighteen.is_a?(String) != false || raise("Passed value for field obj.eighteen is not the expected type, validation failed.")
-      Name.validate_raw(obj: obj.nineteen)
+      SeedObjectClient::Name.validate_raw(obj: obj.nineteen)
     end
   end
 end

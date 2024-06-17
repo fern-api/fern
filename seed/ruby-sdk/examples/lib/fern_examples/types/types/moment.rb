@@ -25,7 +25,7 @@ module SeedExamplesClient
       # @param date [Date]
       # @param datetime [DateTime]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Moment]
+      # @return [SeedExamplesClient::Types::Moment]
       def initialize(id:, date:, datetime:, additional_properties: nil)
         @id = id
         @date = date
@@ -37,7 +37,7 @@ module SeedExamplesClient
       # Deserialize a JSON object to an instance of Moment
       #
       # @param json_object [String]
-      # @return [Moment]
+      # @return [SeedExamplesClient::Types::Moment]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)

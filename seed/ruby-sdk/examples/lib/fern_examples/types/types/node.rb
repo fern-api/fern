@@ -9,9 +9,9 @@ module SeedExamplesClient
     class Node
       # @return [String]
       attr_reader :name
-      # @return [Array<Node>]
+      # @return [Array<SeedExamplesClient::Types::Node>]
       attr_reader :nodes
-      # @return [Array<Tree>]
+      # @return [Array<SeedExamplesClient::Types::Tree>]
       attr_reader :trees
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -22,10 +22,10 @@ module SeedExamplesClient
       OMIT = Object.new
 
       # @param name [String]
-      # @param nodes [Array<Node>]
-      # @param trees [Array<Tree>]
+      # @param nodes [Array<SeedExamplesClient::Types::Node>]
+      # @param trees [Array<SeedExamplesClient::Types::Tree>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Node]
+      # @return [SeedExamplesClient::Types::Node]
       def initialize(name:, nodes: OMIT, trees: OMIT, additional_properties: nil)
         @name = name
         @nodes = nodes if nodes != OMIT
@@ -39,18 +39,18 @@ module SeedExamplesClient
       # Deserialize a JSON object to an instance of Node
       #
       # @param json_object [String]
-      # @return [Node]
+      # @return [SeedExamplesClient::Types::Node]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         name = struct["name"]
         nodes = parsed_json["nodes"]&.map do |v|
           v = v.to_json
-          Node.from_json(json_object: v)
+          SeedExamplesClient::Types::Node.from_json(json_object: v)
         end
         trees = parsed_json["trees"]&.map do |v|
           v = v.to_json
-          Tree.from_json(json_object: v)
+          SeedExamplesClient::Types::Tree.from_json(json_object: v)
         end
         new(
           name: name,

@@ -10,9 +10,9 @@ module SeedTraceClient
     module V3
       class Problem
         class NonVoidFunctionSignature
-          # @return [Array<V2::V3::Parameter>]
+          # @return [Array<SeedTraceClient::V2::V3::Problem::Parameter>]
           attr_reader :parameters
-          # @return [VariableType]
+          # @return [SeedTraceClient::Commons::VariableType]
           attr_reader :return_type
           # @return [OpenStruct] Additional properties unmapped to the current class definition
           attr_reader :additional_properties
@@ -22,10 +22,10 @@ module SeedTraceClient
 
           OMIT = Object.new
 
-          # @param parameters [Array<V2::V3::Parameter>]
-          # @param return_type [VariableType]
+          # @param parameters [Array<SeedTraceClient::V2::V3::Problem::Parameter>]
+          # @param return_type [SeedTraceClient::Commons::VariableType]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-          # @return [V2::V3::NonVoidFunctionSignature]
+          # @return [SeedTraceClient::V2::V3::Problem::NonVoidFunctionSignature]
           def initialize(parameters:, return_type:, additional_properties: nil)
             @parameters = parameters
             @return_type = return_type
@@ -36,19 +36,19 @@ module SeedTraceClient
           # Deserialize a JSON object to an instance of NonVoidFunctionSignature
           #
           # @param json_object [String]
-          # @return [V2::V3::NonVoidFunctionSignature]
+          # @return [SeedTraceClient::V2::V3::Problem::NonVoidFunctionSignature]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             parsed_json = JSON.parse(json_object)
             parameters = parsed_json["parameters"]&.map do |v|
               v = v.to_json
-              V2::V3::Parameter.from_json(json_object: v)
+              SeedTraceClient::V2::V3::Problem::Parameter.from_json(json_object: v)
             end
             if parsed_json["returnType"].nil?
               return_type = nil
             else
               return_type = parsed_json["returnType"].to_json
-              return_type = VariableType.from_json(json_object: return_type)
+              return_type = SeedTraceClient::Commons::VariableType.from_json(json_object: return_type)
             end
             new(
               parameters: parameters,
@@ -72,7 +72,7 @@ module SeedTraceClient
           # @return [Void]
           def self.validate_raw(obj:)
             obj.parameters.is_a?(Array) != false || raise("Passed value for field obj.parameters is not the expected type, validation failed.")
-            VariableType.validate_raw(obj: obj.return_type)
+            SeedTraceClient::Commons::VariableType.validate_raw(obj: obj.return_type)
           end
         end
       end
