@@ -28,7 +28,7 @@ export class Inlined {
      * @param {Inlined.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedLiteral.inlined.send({
+     *     await client.inlined.send({
      *         temperature: 10.1,
      *         prompt: "You are a helpful assistant",
      *         stream: false,

@@ -30,7 +30,7 @@ export class InlinedRequests {
      * @param {InlinedRequests.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.inlinedRequests.postWithObjectBodyandResponse({
+     *     await client.inlinedRequests.postWithObjectBodyandResponse({
      *         string: "string",
      *         integer: 1,
      *         nestedObject: {

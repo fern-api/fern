@@ -31,7 +31,7 @@ export class SeedExamplesClient {
      * @param {SeedExamplesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExamples.echo("Hello world!\\n\\nwith\\n\\tnewlines")
+     *     await client.echo("Hello world!\\n\\nwith\\n\\tnewlines")
      */
     public async echo(request: string, requestOptions?: SeedExamplesClient.RequestOptions): Promise<string> {
         const _response = await core.fetcher({

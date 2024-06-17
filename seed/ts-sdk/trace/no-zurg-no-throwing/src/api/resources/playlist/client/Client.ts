@@ -32,7 +32,7 @@ export class Playlist {
      * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.playlist.createPlaylist(1, {
+     *     await client.playlist.createPlaylist(1, {
      *         datetime: new Date("2024-01-15T09:30:00.000Z"),
      *         optionalDatetime: new Date("2024-01-15T09:30:00.000Z"),
      *         body: {
@@ -99,7 +99,7 @@ export class Playlist {
      * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.playlist.getPlaylists(1, {
+     *     await client.playlist.getPlaylists(1, {
      *         limit: 1,
      *         otherField: "string",
      *         multiLineDocs: "string",
@@ -179,7 +179,7 @@ export class Playlist {
      * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.playlist.getPlaylist(1, "string")
+     *     await client.playlist.getPlaylist(1, "string")
      */
     public async getPlaylist(
         serviceParam: number,
@@ -242,7 +242,7 @@ export class Playlist {
      * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.playlist.updatePlaylist(1, "string", {
+     *     await client.playlist.updatePlaylist(1, "string", {
      *         name: "string",
      *         problems: ["string"]
      *     })
@@ -308,7 +308,7 @@ export class Playlist {
      * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.playlist.deletePlaylist(1, "string")
+     *     await client.playlist.deletePlaylist(1, "string")
      */
     public async deletePlaylist(
         serviceParam: number,

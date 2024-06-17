@@ -28,7 +28,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedCodeSamples.service.hello({
+     *     await client.service.hello({
      *         numEvents: 5
      *     })
      */

@@ -35,7 +35,7 @@ export class Service {
      * @throws {@link SeedExamples.NotFoundError}
      *
      * @example
-     *     await seedExamples.file.service.getFile("file.txt", {
+     *     await client.file.service.getFile("file.txt", {
      *         "X-File-API-Version": "0.0.2"
      *     })
      */

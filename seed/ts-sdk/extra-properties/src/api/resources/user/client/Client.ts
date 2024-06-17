@@ -28,7 +28,7 @@ export class User {
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExtraProperties.user.createUser({
+     *     await client.user.createUser({
      *         type: "CreateUserRequest",
      *         version: "v1",
      *         name: "string"

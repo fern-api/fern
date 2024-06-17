@@ -29,7 +29,7 @@ export class Migration {
      * @param {Migration.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.migration.getAttemptedMigrations({
+     *     await client.migration.getAttemptedMigrations({
      *         "admin-key-header": "string"
      *     })
      */

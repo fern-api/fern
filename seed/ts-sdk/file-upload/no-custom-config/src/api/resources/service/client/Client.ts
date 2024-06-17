@@ -32,7 +32,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedFileUpload.service.post(fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], {})
+     *     await client.service.post(fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], {})
      */
     public async post(
         file: File | fs.ReadStream,
@@ -125,7 +125,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedFileUpload.service.justFile(fs.createReadStream("/path/to/your/file"))
+     *     await client.service.justFile(fs.createReadStream("/path/to/your/file"))
      */
     public async justFile(file: File | fs.ReadStream, requestOptions?: Service.RequestOptions): Promise<void> {
         const _request = new core.FormDataWrapper();
@@ -179,7 +179,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedFileUpload.service.justFileWithQueryParams(fs.createReadStream("/path/to/your/file"), {
+     *     await client.service.justFileWithQueryParams(fs.createReadStream("/path/to/your/file"), {
      *         maybeString: "string",
      *         integer: 1,
      *         maybeInteger: 1,

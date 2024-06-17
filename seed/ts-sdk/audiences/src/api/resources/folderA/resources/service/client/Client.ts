@@ -26,7 +26,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedAudiences.folderA.service.getDirectThread()
+     *     await client.folderA.service.getDirectThread()
      */
     public async getDirectThread(requestOptions?: Service.RequestOptions): Promise<SeedAudiences.folderA.Response> {
         const _response = await core.fetcher({

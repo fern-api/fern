@@ -11,10 +11,10 @@
             "identifierOverride": "endpoint_user.getUsername"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedQueryParameters = new SeedQueryParametersClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedQueryParametersClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedQueryParameters.user.getUsername(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.user.getUsername(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

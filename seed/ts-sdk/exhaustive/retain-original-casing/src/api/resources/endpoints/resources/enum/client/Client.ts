@@ -29,7 +29,7 @@ export class Enum {
      * @param {Enum.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.enum.getAndReturnEnum(SeedExhaustive.types.WeatherReport.Sunny)
+     *     await client.endpoints.enum.getAndReturnEnum(SeedExhaustive.types.WeatherReport.Sunny)
      */
     public async getAndReturnEnum(
         request: SeedExhaustive.types.WeatherReport,

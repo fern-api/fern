@@ -18,8 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedValidationClient } from "@fern/validation";
 
-const seedValidation = new SeedValidationClient({ environment: "YOUR_BASE_URL" });
-await seedValidation.create({
+const client = new SeedValidationClient({ environment: "YOUR_BASE_URL" });
+await client.create({
     decimal: 1.1,
     even: 1,
     name: "string",
@@ -37,7 +37,7 @@ import { SeedValidation } from "@fern/validation";
 const request: SeedValidation.CreateRequest = {
     ...
 };
-const response = await seedValidation.create(request);
+const response = await client.create(request);
 ```
 
 ## Exception Handling
@@ -49,7 +49,7 @@ will be thrown.
 import { SeedValidationError } from "@fern/validation";
 
 try {
-    await seedValidation.create(...);
+    await client.create(...);
 } catch (err) {
     if (err instanceof SeedValidationError) {
         console.log(err.statusCode);
@@ -74,7 +74,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedValidation.create(..., {
+const response = await client.create(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -84,7 +84,7 @@ const response = await seedValidation.create(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedValidation.create(..., {
+const response = await client.create(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -95,7 +95,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedValidation.create(..., {
+const response = await client.create(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -121,7 +121,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedValidationClient } from "@fern/validation";
 
-const seedValidation = new SeedValidationClient({
+const client = new SeedValidationClient({
     ...
     fetcher: // provide your implementation here
 });

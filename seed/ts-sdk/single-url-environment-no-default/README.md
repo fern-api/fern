@@ -19,11 +19,11 @@ Instantiate and use the client with the following:
 import * as environments from "../src/environments";
 import { SeedSingleUrlEnvironmentNoDefaultClient } from "@fern/single-url-environment-no-default";
 
-const seedSingleUrlEnvironmentNoDefault = new SeedSingleUrlEnvironmentNoDefaultClient({
+const client = new SeedSingleUrlEnvironmentNoDefaultClient({
     environment: environments.SeedSingleUrlEnvironmentNoDefaultEnvironment.Production,
     token: "YOUR_TOKEN",
 });
-await seedSingleUrlEnvironmentNoDefault.dummy.getDummy();
+await client.dummy.getDummy();
 ```
 
 ## Exception Handling
@@ -35,7 +35,7 @@ will be thrown.
 import { SeedSingleUrlEnvironmentNoDefaultError } from "@fern/single-url-environment-no-default";
 
 try {
-    await seedSingleUrlEnvironmentNoDefault.getDummy(...);
+    await client.getDummy(...);
 } catch (err) {
     if (err instanceof SeedSingleUrlEnvironmentNoDefaultError) {
         console.log(err.statusCode);
@@ -60,7 +60,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedSingleUrlEnvironmentNoDefault.getDummy(..., {
+const response = await client.getDummy(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -70,7 +70,7 @@ const response = await seedSingleUrlEnvironmentNoDefault.getDummy(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedSingleUrlEnvironmentNoDefault.getDummy(..., {
+const response = await client.getDummy(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -81,7 +81,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedSingleUrlEnvironmentNoDefault.getDummy(..., {
+const response = await client.getDummy(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -107,7 +107,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedSingleUrlEnvironmentNoDefaultClient } from "@fern/single-url-environment-no-default";
 
-const seedSingleUrlEnvironmentNoDefault = new SeedSingleUrlEnvironmentNoDefaultClient({
+const client = new SeedSingleUrlEnvironmentNoDefaultClient({
     ...
     fetcher: // provide your implementation here
 });

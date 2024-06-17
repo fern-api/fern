@@ -11,10 +11,10 @@
             "identifierOverride": "endpoint_.create"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedValidation = new SeedValidationClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedValidationClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedValidation.create(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.create(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -96,10 +96,10 @@
             "identifierOverride": "endpoint_.get"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedValidation = new SeedValidationClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedValidationClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedValidation.get(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.get(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

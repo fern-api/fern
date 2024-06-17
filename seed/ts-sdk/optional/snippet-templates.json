@@ -11,10 +11,10 @@
             "identifierOverride": "endpoint_optional.sendOptionalBody"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedObjectsWithImports = new SeedObjectsWithImportsClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedObjectsWithImportsClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedObjectsWithImports.optional.sendOptionalBody(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.optional.sendOptionalBody(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

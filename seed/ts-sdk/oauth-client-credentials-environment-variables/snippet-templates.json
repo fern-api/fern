@@ -11,10 +11,10 @@
             "identifierOverride": "endpoint_auth.getTokenWithClientCredentials"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedOauthClientCredentialsEnvironmentVariables = new SeedOauthClientCredentialsEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\n",
+            "clientInstantiation": "const client = new SeedOauthClientCredentialsEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedOauthClientCredentialsEnvironmentVariables.auth.getTokenWithClientCredentials(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.auth.getTokenWithClientCredentials(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -96,10 +96,10 @@
             "identifierOverride": "endpoint_auth.refreshToken"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedOauthClientCredentialsEnvironmentVariables = new SeedOauthClientCredentialsEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\n",
+            "clientInstantiation": "const client = new SeedOauthClientCredentialsEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedOauthClientCredentialsEnvironmentVariables.auth.refreshToken(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.auth.refreshToken(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

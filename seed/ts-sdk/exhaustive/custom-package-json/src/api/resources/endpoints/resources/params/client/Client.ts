@@ -30,7 +30,7 @@ export class Params {
      * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.params.getWithPath("string")
+     *     await client.endpoints.params.getWithPath("string")
      */
     public async getWithPath(
         param: string,
@@ -80,7 +80,7 @@ export class Params {
      * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.params.getWithQuery({
+     *     await client.endpoints.params.getWithQuery({
      *         query: "string",
      *         number: 1
      *     })
@@ -130,7 +130,7 @@ export class Params {
      * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.params.getWithAllowMultipleQuery({
+     *     await client.endpoints.params.getWithAllowMultipleQuery({
      *         query: "string",
      *         numer: 1
      *     })
@@ -191,7 +191,7 @@ export class Params {
      * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.params.getWithPathAndQuery("string", {
+     *     await client.endpoints.params.getWithPathAndQuery("string", {
      *         query: "string"
      *     })
      */
@@ -244,7 +244,7 @@ export class Params {
      * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.params.modifyWithPath("string", "string")
+     *     await client.endpoints.params.modifyWithPath("string", "string")
      */
     public async modifyWithPath(
         param: string,

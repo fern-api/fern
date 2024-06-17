@@ -11,10 +11,10 @@
             "identifierOverride": "endpoint_completions.stream"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedServerSentEvents = new SeedServerSentEventsClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedServerSentEventsClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedServerSentEvents.completions.stream(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.completions.stream(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

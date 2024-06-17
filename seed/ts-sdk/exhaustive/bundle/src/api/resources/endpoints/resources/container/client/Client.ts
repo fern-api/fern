@@ -28,7 +28,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.container.getAndReturnListOfPrimitives(["string"])
+     *     await client.endpoints.container.getAndReturnListOfPrimitives(["string"])
      */
     public async getAndReturnListOfPrimitives(
         request: string[],
@@ -79,7 +79,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.container.getAndReturnListOfObjects([{
+     *     await client.endpoints.container.getAndReturnListOfObjects([{
      *             string: "string"
      *         }])
      */
@@ -137,7 +137,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]))
+     *     await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]))
      */
     public async getAndReturnSetOfPrimitives(
         request: Set<string>,
@@ -188,7 +188,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.container.getAndReturnSetOfObjects(new Set([{
+     *     await client.endpoints.container.getAndReturnSetOfObjects(new Set([{
      *             string: "string"
      *         }]))
      */
@@ -246,7 +246,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.container.getAndReturnMapPrimToPrim({
+     *     await client.endpoints.container.getAndReturnMapPrimToPrim({
      *         "string": "string"
      *     })
      */
@@ -299,7 +299,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.container.getAndReturnMapOfPrimToObject({
+     *     await client.endpoints.container.getAndReturnMapOfPrimToObject({
      *         "string": {
      *             string: "string"
      *         }
@@ -359,7 +359,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.container.getAndReturnOptional({
+     *     await client.endpoints.container.getAndReturnOptional({
      *         string: "string"
      *     })
      */

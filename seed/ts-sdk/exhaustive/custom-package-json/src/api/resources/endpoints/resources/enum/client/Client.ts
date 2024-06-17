@@ -28,7 +28,7 @@ export class Enum {
      * @param {Enum.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.enum.getAndReturnEnum(Fiddle.types.WeatherReport.Sunny)
+     *     await client.endpoints.enum.getAndReturnEnum(Fiddle.types.WeatherReport.Sunny)
      */
     public async getAndReturnEnum(
         request: Fiddle.types.WeatherReport,

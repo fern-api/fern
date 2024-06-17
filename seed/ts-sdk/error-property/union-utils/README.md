@@ -18,8 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedErrorPropertyClient } from "@fern/error-property";
 
-const seedErrorProperty = new SeedErrorPropertyClient({ environment: "YOUR_BASE_URL" });
-await seedErrorProperty.propertyBasedError.throwError();
+const client = new SeedErrorPropertyClient({ environment: "YOUR_BASE_URL" });
+await client.propertyBasedError.throwError();
 ```
 
 ## Exception Handling
@@ -31,7 +31,7 @@ will be thrown.
 import { SeedErrorPropertyError } from "@fern/error-property";
 
 try {
-    await seedErrorProperty.throwError(...);
+    await client.throwError(...);
 } catch (err) {
     if (err instanceof SeedErrorPropertyError) {
         console.log(err.statusCode);
@@ -56,7 +56,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedErrorProperty.throwError(..., {
+const response = await client.throwError(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -66,7 +66,7 @@ const response = await seedErrorProperty.throwError(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedErrorProperty.throwError(..., {
+const response = await client.throwError(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -77,7 +77,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedErrorProperty.throwError(..., {
+const response = await client.throwError(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -103,7 +103,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedErrorPropertyClient } from "@fern/error-property";
 
-const seedErrorProperty = new SeedErrorPropertyClient({
+const client = new SeedErrorPropertyClient({
     ...
     fetcher: // provide your implementation here
 });

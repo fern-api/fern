@@ -11,10 +11,10 @@
             "identifierOverride": "endpoint_dummy.generate-stream"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedStreaming = new SeedStreamingClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedStreamingClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedStreaming.dummy.generateStream(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.dummy.generateStream(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

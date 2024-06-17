@@ -27,7 +27,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedApi.folder.service.endpoint()
+     *     await client.folder.service.endpoint()
      */
     public async endpoint(requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
@@ -78,7 +78,7 @@ export class Service {
      * @throws {@link SeedApi.folder.NotFoundError}
      *
      * @example
-     *     await seedApi.folder.service.unknownRequest({
+     *     await client.folder.service.unknownRequest({
      *         "key": "value"
      *     })
      */

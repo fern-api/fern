@@ -18,8 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedPackageYmlClient } from "@fern/package-yml";
 
-const seedPackageYml = new SeedPackageYmlClient({ environment: "YOUR_BASE_URL" });
-await seedPackageYml.echo("Hello world!");
+const client = new SeedPackageYmlClient({ environment: "YOUR_BASE_URL" });
+await client.echo("Hello world!");
 ```
 
 ## Exception Handling
@@ -31,7 +31,7 @@ will be thrown.
 import { SeedPackageYmlError } from "@fern/package-yml";
 
 try {
-    await seedPackageYml.echo(...);
+    await client.echo(...);
 } catch (err) {
     if (err instanceof SeedPackageYmlError) {
         console.log(err.statusCode);
@@ -56,7 +56,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedPackageYml.echo(..., {
+const response = await client.echo(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -66,7 +66,7 @@ const response = await seedPackageYml.echo(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedPackageYml.echo(..., {
+const response = await client.echo(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -77,7 +77,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedPackageYml.echo(..., {
+const response = await client.echo(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -103,7 +103,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedPackageYmlClient } from "@fern/package-yml";
 
-const seedPackageYml = new SeedPackageYmlClient({
+const client = new SeedPackageYmlClient({
     ...
     fetcher: // provide your implementation here
 });

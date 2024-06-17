@@ -18,12 +18,12 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedOauthClientCredentialsClient } from "@fern/oauth-client-credentials";
 
-const seedOauthClientCredentials = new SeedOauthClientCredentialsClient({
+const client = new SeedOauthClientCredentialsClient({
     environment: "YOUR_BASE_URL",
     clientId: "YOUR_CLIENT_ID",
     clientSecret: "YOUR_CLIENT_SECRET",
 });
-await seedOauthClientCredentials.auth.getTokenWithClientCredentials({
+await client.auth.getTokenWithClientCredentials({
     clientId: "string",
     clientSecret: "string",
     audience: "https://api.example.com",
@@ -43,7 +43,7 @@ import { SeedOauthClientCredentials } from "@fern/oauth-client-credentials";
 const request: SeedOauthClientCredentials.GetTokenRequest = {
     ...
 };
-const response = await seedOauthClientCredentials.getTokenWithClientCredentials(request);
+const response = await client.getTokenWithClientCredentials(request);
 ```
 
 ## Exception Handling
@@ -55,7 +55,7 @@ will be thrown.
 import { SeedOauthClientCredentialsError } from "@fern/oauth-client-credentials";
 
 try {
-    await seedOauthClientCredentials.getTokenWithClientCredentials(...);
+    await client.getTokenWithClientCredentials(...);
 } catch (err) {
     if (err instanceof SeedOauthClientCredentialsError) {
         console.log(err.statusCode);
@@ -80,7 +80,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedOauthClientCredentials.getTokenWithClientCredentials(..., {
+const response = await client.getTokenWithClientCredentials(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -90,7 +90,7 @@ const response = await seedOauthClientCredentials.getTokenWithClientCredentials(
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedOauthClientCredentials.getTokenWithClientCredentials(..., {
+const response = await client.getTokenWithClientCredentials(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -101,7 +101,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedOauthClientCredentials.getTokenWithClientCredentials(..., {
+const response = await client.getTokenWithClientCredentials(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -127,7 +127,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedOauthClientCredentialsClient } from "@fern/oauth-client-credentials";
 
-const seedOauthClientCredentials = new SeedOauthClientCredentialsClient({
+const client = new SeedOauthClientCredentialsClient({
     ...
     fetcher: // provide your implementation here
 });

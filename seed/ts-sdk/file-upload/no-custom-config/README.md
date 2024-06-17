@@ -19,8 +19,8 @@ Instantiate and use the client with the following:
 import { SeedFileUploadClient } from "@fern/file-upload";
 import * as fs from "fs";
 
-const seedFileUpload = new SeedFileUploadClient({ environment: "YOUR_BASE_URL" });
-await seedFileUpload.service.post(
+const client = new SeedFileUploadClient({ environment: "YOUR_BASE_URL" });
+await client.service.post(
     fs.createReadStream("/path/to/your/file"),
     [fs.createReadStream("/path/to/your/file")],
     fs.createReadStream("/path/to/your/file"),
@@ -40,7 +40,7 @@ import { SeedFileUpload } from "@fern/file-upload";
 const request: SeedFileUpload.MyRequest = {
     ...
 };
-const response = await seedFileUpload.post(request);
+const response = await client.post(request);
 ```
 
 ## Exception Handling
@@ -52,7 +52,7 @@ will be thrown.
 import { SeedFileUploadError } from "@fern/file-upload";
 
 try {
-    await seedFileUpload.post(...);
+    await client.post(...);
 } catch (err) {
     if (err instanceof SeedFileUploadError) {
         console.log(err.statusCode);
@@ -77,7 +77,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedFileUpload.post(..., {
+const response = await client.post(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -87,7 +87,7 @@ const response = await seedFileUpload.post(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedFileUpload.post(..., {
+const response = await client.post(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -98,7 +98,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedFileUpload.post(..., {
+const response = await client.post(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -124,7 +124,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedFileUploadClient } from "@fern/file-upload";
 
-const seedFileUpload = new SeedFileUploadClient({
+const client = new SeedFileUploadClient({
     ...
     fetcher: // provide your implementation here
 });

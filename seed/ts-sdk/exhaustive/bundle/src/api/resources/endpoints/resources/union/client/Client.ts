@@ -28,7 +28,7 @@ export class Union {
      * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.union.getAndReturnUnion(Fiddle.types.Animal.dog({
+     *     await client.endpoints.union.getAndReturnUnion(Fiddle.types.Animal.dog({
      *         name: "string",
      *         likesToWoof: true
      *     }))

@@ -28,7 +28,7 @@ export class InlinedRequest {
      * @param {InlinedRequest.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedEnum.inlinedRequest.send({
+     *     await client.inlinedRequest.send({
      *         operand: SeedEnum.Operand.GreaterThan,
      *         operandOrColor: SeedEnum.Color.Red
      *     })

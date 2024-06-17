@@ -1,5 +1,4 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import {
@@ -131,7 +130,6 @@ export class SdkGenerator {
     private extraFiles: Record<string, string> = {};
     private extraScripts: Record<string, string> = {};
 
-    private readmeSnippets: Record<FernGeneratorCli.FeatureId, string[]> = {};
     private endpointSnippets: FernGeneratorExec.Endpoint[] = [];
     private endpointSnippetTemplates: FdrSnippetTemplate.SnippetRegistryEntry[] = [];
 

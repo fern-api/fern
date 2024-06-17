@@ -28,7 +28,7 @@ export class Dummy {
      * @param {Dummy.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedSingleUrlEnvironmentDefault.dummy.getDummy()
+     *     await client.dummy.getDummy()
      */
     public async getDummy(requestOptions?: Dummy.RequestOptions): Promise<string> {
         const _response = await core.fetcher({

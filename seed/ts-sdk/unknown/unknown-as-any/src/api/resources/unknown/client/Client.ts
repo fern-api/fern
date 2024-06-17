@@ -26,7 +26,7 @@ export class Unknown {
      * @param {Unknown.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedUnknownAsAny.unknown.post({
+     *     await client.unknown.post({
      *         "key": "value"
      *     })
      */
