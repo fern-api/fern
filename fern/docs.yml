@@ -106,6 +106,31 @@ navigation:
           - page: Publish a public-facing SDK
             path: ./pages/sdks/publish-sdk/publish-your-sdk.mdx
             hidden: true
+      - section: Supported Languages
+        contents:
+          - page: Overview
+            path: ./pages/sdks/supported-languages/overview.mdx
+          - section: Generally Available
+            slug: available
+            contents:
+              - page: TypeScript
+                path: ./pages/sdks/supported-languages/available/typescript.mdx
+                slug: typescript
+              - page: Python
+                path: ./pages/sdks/supported-languages/available/python.mdx
+                slug: python
+              - page: Go
+                path: ./pages/sdks/supported-languages/available/go.mdx
+                slug: go
+              - page: .Net
+                path: ./pages/sdks/supported-languages/available/.net.mdx
+                slug: .net
+              - page: Java
+                path: ./pages/sdks/supported-languages/available/java.mdx
+                slug: java
+              - page: Ruby
+                path: ./pages/sdks/supported-languages/available/ruby.mdx
+                slug: ruby
       - section: Features
         contents:
           - page: Strongly typed

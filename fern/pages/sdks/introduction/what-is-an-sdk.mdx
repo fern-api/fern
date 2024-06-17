@@ -5,9 +5,9 @@ description: Generate robust, flexible, and automated SDKs in multiple programmi
 
 SDKs (Software Development Kits) are code libraries that provide functionality for interacting with your API. 
 By simplifying the process of making API calls, developers have a faster time-to-integration
-and run into fewer errors. 
+and run into fewer errors.
 
-### Developer-friendly
+### Concise and developer-friendly
 
 Calling an API without an SDK can be tedious and error-prone. An SDK simplifies the headache-inducing parts of 
 calling APIs in code: configuring headers, extracting response data, error-handling, pagination, and rate limits. 
@@ -16,8 +16,8 @@ As an example, consider converting text to speech via the [ElevenLabs API](https
 Compare plain TypeScript (using `fetch` to make an HTTP call) with a TypeScript SDK built with Fern:
 
 <CodeBlocks>
-<CodeBlock title="Plain TypeScript">
-```TypeScript
+<CodeBlock title="Plain TypeScript" >
+```TypeScript maxLines=13
 const url = 'https://api.elevenlabs.io/v1/text-to-speech/pMsXgVXv3BLzUgSXRplE?optimize_streaming_latency=0&output_format=mp3_22050_32';
 const requestBody = {
     text: "It sure does, Jackie… My mama always said: \"In Carolina, the air's so thick you can wear it!\"",
@@ -49,7 +49,7 @@ try {
 ```
 </CodeBlock>
 <CodeBlock title="Using SDK built with Fern">
-```TypeScript
+```TypeScript maxLines=13
 import { ElevenLabsClient, ElevenLabs } from "elevenlabs";
 
 const elevenLabs = new ElevenLabsClient({ apiKey: "YOUR_API_KEY" });
@@ -71,9 +71,9 @@ await elevenLabs.textToSpeech.convert("pMsXgVXv3BLzUgSXRplE", {
 
 In a robust SDK, header configuration, type-checking, and error-handling are built-in. See the relevant parts of the text-to-speech SDK below. 
 
-<CodeBlocks maxLines={15}>
-<CodeBlock title="ElevenLabs.textToSpeech.convert()">
-```TypeScript {22, 44}
+<CodeBlocks>
+<CodeBlock title="ElevenLabs.textToSpeech.convert()" >
+```TypeScript {22, 44} maxLines=14
 public async convert(
     voiceId: string,
     request: ElevenLabs.TextToSpeechRequest,
@@ -130,14 +130,11 @@ public async convert(
                 });
         }
     }
-
-    /** ...more error handling... */
-
 }
 ```
 </CodeBlock>
 <CodeBlock title="ElevenLabs.TextToSpeechRequest">
-```TypeScript
+```TypeScript maxLines=14
 export interface TextToSpeechRequest {
     /** You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. */
     optimize_streaming_latency?: ElevenLabs.OptimizeStreamingLatency;
@@ -161,9 +158,9 @@ export interface TextToSpeechRequest {
 
 SDKs are platform-specific, so each language requires its own. Here's the same ElevenLabs API endpoint called via SDKs in multiple languages:
 
-<CodeBlocks maxLines={10}>
+<CodeBlocks>
 <CodeBlock title="TypeScript">
-```TypeScript
+```TypeScript maxLines=10
 import { ElevenLabsClient, ElevenLabs } from "elevenlabs";
 
 const elevenLabs = new ElevenLabsClient({ apiKey: "YOUR_API_KEY" });
@@ -180,7 +177,7 @@ await elevenLabs.textToSpeech.convert("pMsXgVXv3BLzUgSXRplE", {
 ```
 </CodeBlock>
 <CodeBlock title="Python">
-```Python
+```Python maxLines=10
 from elevenlabs import VoiceSettings
 from elevenlabs.client import ElevenLabs
 
@@ -201,19 +198,19 @@ client.text_to_speech.convert(
 ```
 </CodeBlock>
 <CodeBlock title="Go">
-```Go
+```Go maxLines=10
 ```
 </CodeBlock>
 <CodeBlock title="Java">
-```Java
+```Java maxLines=10
 ```
 </CodeBlock>
 <CodeBlock title="Ruby">
-```Ruby
+```Ruby maxLines=10
 ```
 </CodeBlock>
 <CodeBlock title="C#">
-```C#
+```C# maxLines=10
 ```
 </CodeBlock>
 </CodeBlocks>
