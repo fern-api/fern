@@ -3930,7 +3930,7 @@ __metadata:
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/ir-v1-model": 0.0.1
+    "@fern-fern/ir-v1-model": 0.0.2
     "@fern-fern/ir-v10-model": 0.0.1
     "@fern-fern/ir-v11-model": 0.0.2
     "@fern-fern/ir-v12-model": 0.0.1
@@ -4804,10 +4804,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-v1-model@npm:0.0.1":
-  version: 0.0.1
-  resolution: "@fern-fern/ir-v1-model@npm:0.0.1"
-  checksum: d69b4dd3f290a77d5acbe84f2ee24e6c63ff4c78f86d886d71522d853f479f853daefe73ac8b47a520743440d5faa3ffe8828e956d808f9f9cf26e9da670d50c
+"@fern-fern/ir-v1-model@npm:0.0.2":
+  version: 0.0.2
+  resolution: "@fern-fern/ir-v1-model@npm:0.0.2"
+  checksum: 09b55de62ecaaff8a8fc274c009a31f5b65bc1d4ae68510a7a976478692b0b9f2754acacb3e06cc2f251935cd959e52d0b1084970c21bd74ca1819c27bf1eee3
   languageName: node
   linkType: hard
 

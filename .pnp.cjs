@@ -6991,7 +6991,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/semver-utils", "workspace:packages/cli/semver-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-            ["@fern-fern/ir-v1-model", "npm:0.0.1"],\
+            ["@fern-fern/ir-v1-model", "npm:0.0.2"],\
             ["@fern-fern/ir-v10-model", "npm:0.0.1"],\
             ["@fern-fern/ir-v11-model", "npm:0.0.2"],\
             ["@fern-fern/ir-v12-model", "npm:0.0.1"],\
@@ -7924,10 +7924,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/ir-v1-model", [\
-        ["npm:0.0.1", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-ir-v1-model-npm-0.0.1-ff812eb97d-d69b4dd3f2.zip/node_modules/@fern-fern/ir-v1-model/",\
+        ["npm:0.0.2", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-ir-v1-model-npm-0.0.2-2740d23405-09b55de62e.zip/node_modules/@fern-fern/ir-v1-model/",\
           "packageDependencies": [\
-            ["@fern-fern/ir-v1-model", "npm:0.0.1"]\
+            ["@fern-fern/ir-v1-model", "npm:0.0.2"]\
           ],\
           "linkType": "HARD"\
         }]\
