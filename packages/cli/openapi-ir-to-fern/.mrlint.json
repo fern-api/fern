@@ -1,9 +1,12 @@
 {
   "type": "library",
   "private": true,
+  "testRunner": "jest",
   "rules": {
     "ts-config": {
-      "exclude": ["./src/**/__test__/**/generated"]
+      "exclude": [
+        "./src/**/__test__/**/generated"
+      ]
     }
   }
 }
