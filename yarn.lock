@@ -4785,6 +4785,7 @@ __metadata:
     "@fern-fern/docs-config": 0.0.80
     "@fern-fern/legacy-docs-config": 0.0.58
     "@types/inquirer": ^9.0.7
+    "@types/jest": ^29.5.12
     "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
     chalk: ^5.0.1
@@ -4794,6 +4795,7 @@ __metadata:
     glob: ^8.0.3
     glob-promise: ^5.0.0
     inquirer: ^9.2.23
+    jest: ^29.7.0
     js-yaml: ^4.1.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1

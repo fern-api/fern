@@ -1,4 +1,5 @@
 {
   "type": "library",
-  "private": true
+  "private": true,
+  "testRunner": "jest"
 }
