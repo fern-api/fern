@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
     path = "/"
 )
 public interface ServiceService {
-  @PostMapping("/{endpointParam}")
+  @PostMapping(
+      value = "/{endpointParam}",
+      produces = "application/json"
+  )
   void post(@PathVariable("endpointParam") String endpointParam);
 }

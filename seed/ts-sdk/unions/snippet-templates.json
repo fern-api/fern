@@ -11,7 +11,7 @@
             "identifierOverride": "endpoint_union.get"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedUnions = new SeedUnionsClient;\n",
+            "clientInstantiation": "const seedUnions = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedUnions.union.get(\n\t$FERN_INPUT\n)",
@@ -64,7 +64,7 @@
             "identifierOverride": "endpoint_union.update"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedUnions = new SeedUnionsClient;\n",
+            "clientInstantiation": "const seedUnions = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedUnions.union.update(\n\t$FERN_INPUT\n)",
@@ -82,7 +82,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "'$FERN_INPUT'",
+                                        "templateString": "$FERN_INPUT",
                                         "discriminantField": "type",
                                         "members": {
                                             "circle": {
@@ -93,9 +93,9 @@
                                                     {
                                                         "value": {
                                                             "imports": [],
-                                                            "templateString": "{\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                                            "templateString": "$FERN_INPUT",
                                                             "isOptional": true,
-                                                            "inputDelimiter": ",\n\t\t\t\t",
+                                                            "inputDelimiter": ",\n\t\t\t",
                                                             "templateInputs": [
                                                                 {
                                                                     "value": {
@@ -129,9 +129,9 @@
                                                     {
                                                         "value": {
                                                             "imports": [],
-                                                            "templateString": "{\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                                            "templateString": "$FERN_INPUT",
                                                             "isOptional": true,
-                                                            "inputDelimiter": ",\n\t\t\t\t",
+                                                            "inputDelimiter": ",\n\t\t\t",
                                                             "templateInputs": [
                                                                 {
                                                                     "value": {

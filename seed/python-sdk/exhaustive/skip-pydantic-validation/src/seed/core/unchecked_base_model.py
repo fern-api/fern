@@ -8,7 +8,7 @@ import uuid
 import typing_extensions
 
 from .datetime_utils import serialize_datetime
-from .pydantic_utilities import IS_PYDANTIC_V2, pydantic_v1
+from .pydantic_utilities import pydantic_v1
 
 
 class UnionMetadata:
@@ -46,22 +46,20 @@ class UncheckedBaseModel(pydantic_v1.BaseModel):
             _fields_set = set(values.keys())
 
         for name, field in cls.__fields__.items():
+            # Key here is only used to pull data from the values dict
+            # you should always use the NAME of the field to for field_values, etc.
+            # because that's how the object is constructed from a pydantic perspective
             key = field.alias
-            if (
+            if key is None or (
                 key not in values and config.allow_population_by_field_name
             ):  # Added this to allow population by field name
                 key = name
 
             if key in values:
-                if (
-                    values[key] is None and not field.required
-                ):  # Moved this check since None value can be passed for Optional nested field
-                    fields_values[name] = field.get_default()
-                else:
-                    type_ = typing.cast(typing.Type, field.outer_type_)  # type: ignore
-                    fields_values[name] = construct_type(object_=values[key], type_=type_)
+                type_ = typing.cast(typing.Type, field.outer_type_)  # type: ignore
+                fields_values[name] = construct_type(object_=values[key], type_=type_)
                 _fields_set.add(name)
-            elif not field.required:
+            else:
                 default = field.get_default()
                 fields_values[name] = default
 
@@ -69,26 +67,18 @@ class UncheckedBaseModel(pydantic_v1.BaseModel):
                 # This effectively allows exclude_unset to work like exclude_none where
                 # the latter passes through intentionally set none values.
                 if default != None:
-                    _fields_set.add(key)
+                    _fields_set.add(name)
 
         # Add extras back in
-        _extra = {}
+        alias_fields = [field.alias for field in cls.__fields__.values()]
         for key, value in values.items():
-            if key not in _fields_set:
-                _extra[key] = value
-                # In v2 we'll need to exclude extra fields from fields_values
-                if not IS_PYDANTIC_V2:
-                    _fields_set.add(key)
-                    fields_values[key] = value
-
-        if IS_PYDANTIC_V2:
-            object.__setattr__(m, "__pydantic_private__", None)
-            object.__setattr__(m, "__pydantic_extra__", _extra)
-            object.__setattr__(m, "__pydantic_fields_set__", _fields_set)
+            if key not in alias_fields and key not in cls.__fields__:
+                _fields_set.add(key)
+                fields_values[key] = value
 
         object.__setattr__(m, "__dict__", fields_values)
-        object.__setattr__(m, "__fields_set__", _fields_set)
         m._init_private_attributes()
+        object.__setattr__(m, "__fields_set__", _fields_set)
         return m
 
 

@@ -11,7 +11,7 @@
             "identifierOverride": "endpoint_auth.getTokenWithClientCredentials"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedOauthClientCredentials = new SeedOauthClientCredentialsClient({ clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\n",
+            "clientInstantiation": "const seedOauthClientCredentials = new SeedOauthClientCredentialsClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedOauthClientCredentials.auth.getTokenWithClientCredentials(\n\t$FERN_INPUT\n)",
@@ -96,7 +96,7 @@
             "identifierOverride": "endpoint_auth.refreshToken"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedOauthClientCredentials = new SeedOauthClientCredentialsClient({ clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\n",
+            "clientInstantiation": "const seedOauthClientCredentials = new SeedOauthClientCredentialsClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedOauthClientCredentials.auth.refreshToken(\n\t$FERN_INPUT\n)",

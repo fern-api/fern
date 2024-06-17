@@ -183,17 +183,20 @@ export declare namespace DocsNavigationItem {
         showErrors: boolean;
         snippetsConfiguration: SnippetsConfiguration | undefined;
         summaryAbsolutePath: AbsoluteFilePath | undefined;
-        navigation: ParsedApiNavigationItem[];
+        navigation: ParsedApiReferenceLayoutItem[];
         hidden: boolean | undefined;
         slug: string | undefined;
         skipUrlSlug: boolean | undefined;
-        flattened: boolean | undefined;
+        alphabetized: boolean;
+        flattened: boolean;
+        paginated: boolean;
     }
 
     export interface Link {
         type: "link";
         text: string;
         url: string;
+        icon: string | undefined;
     }
 
     export interface VersionedSnippetLanguageConfiguration {
@@ -209,12 +212,37 @@ export declare namespace DocsNavigationItem {
     }
 }
 
-export declare namespace ParsedApiNavigationItem {
-    export interface Subpackage {
-        type: "subpackage";
-        subpackageId: string;
+export declare namespace ParsedApiReferenceLayoutItem {
+    export interface Section {
+        type: "section";
+        title: string; // title
+        referencedSubpackages: string[]; // subpackage IDs
         summaryAbsolutePath: AbsoluteFilePath | undefined;
-        items: ParsedApiNavigationItem[];
+        contents: ParsedApiReferenceLayoutItem[];
+        slug: string | undefined;
+        hidden: boolean | undefined;
+        icon: string | undefined;
+        skipUrlSlug: boolean | undefined;
+    }
+    export interface Package {
+        type: "package";
+        title: string | undefined; // defaults to subpackage title
+        package: string; // subpackage ID
+        summaryAbsolutePath: AbsoluteFilePath | undefined;
+        contents: ParsedApiReferenceLayoutItem[];
+        slug: string | undefined;
+        hidden: boolean | undefined;
+        icon: string | undefined;
+        skipUrlSlug: boolean | undefined;
+    }
+
+    export interface Endpoint {
+        type: "endpoint";
+        endpoint: string; // endpoint locator
+        title: string | undefined;
+        icon: string | undefined;
+        slug: string | undefined;
+        hidden: boolean | undefined;
     }
 
     export interface Item {
@@ -223,7 +251,10 @@ export declare namespace ParsedApiNavigationItem {
     }
 }
 
-export type ParsedApiNavigationItem =
-    | ParsedApiNavigationItem.Item
-    | ParsedApiNavigationItem.Subpackage
-    | DocsNavigationItem.Page;
+export type ParsedApiReferenceLayoutItem =
+    | ParsedApiReferenceLayoutItem.Item
+    | ParsedApiReferenceLayoutItem.Section
+    | ParsedApiReferenceLayoutItem.Package
+    | ParsedApiReferenceLayoutItem.Endpoint
+    | DocsNavigationItem.Page
+    | DocsNavigationItem.Link;

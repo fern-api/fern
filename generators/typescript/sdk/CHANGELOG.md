@@ -5,11 +5,50 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.23.2] - 2024-06-14
+
+- Fix: Client constructor snippets now include an `environment` property whenever it's required.
+- Fix: The import paths included in the `README.md` exclusively use double quotes.
+- Fix: When an NPM package name is not specified, the generated `README.md` will default to using
+  the namespace export.
+
+## [0.23.1] - 2024-06-13
+
+- Fix: Undiscriminated unions used as map keys examples no longer return an error.
+
+## [0.23.0] - 2024-06-12
+
+- Fix: The latest version of the `generator-cli` (used to generate `README.md` files) is
+  always installed.
+
+## [0.23.0-rc1] - 2024-06-11
+
+- Feature: Introduce a custom configuration for arbitrary package json field. Now you can specify
+  arbitrary key, value pairs that you want to be merged in the generated `package.json`.
+
+  ```yml
+  config:
+    packageJson:
+      dependencies:
+        my-dep: "2.0.0"
+      bin: "./index.js"
+  ```
+
+## [0.23.0-rc0] - 2024-06-07
+
+- Fix: Union snippet templates are fixed in 2 ways:
+  1. The templates do not have a leading single quote (a typo from before)
+  2. The templates now inline union properties (in certain cases)
+
+## [0.22.0] - 2024-06-07
+
+- Feature: Add support for higher quality `README.md` generation.
+
 ## [0.21.1] - 2024-06-05
 
-- Improvement: Detect `workerd` (Cloudflare) environments in `Runtime.ts`. The `Stream` class which is 
-  used for Server-Sent Events now prefers `TextDecoder` if it is present in the environment, to 
-  work in Cloudflare environments. 
+- Improvement: Detect `workerd` (Cloudflare) environments in `Runtime.ts`. The `Stream` class which is
+  used for Server-Sent Events now prefers `TextDecoder` if it is present in the environment, to
+  work in Cloudflare environments.
 
 ## [0.21.0] - 2024-06-05
 

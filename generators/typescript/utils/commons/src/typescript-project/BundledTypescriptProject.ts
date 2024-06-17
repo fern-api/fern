@@ -5,12 +5,14 @@ import { IPackageJson } from "package-json-type";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph";
 import { DependencyType, PackageDependencies } from "../dependency-manager/DependencyManager";
 import { NpmPackage } from "../NpmPackage";
+import { mergeExtraConfigs } from "./mergeExtraConfigs";
 import { TypescriptProject } from "./TypescriptProject";
 
 export declare namespace BundledTypescriptProject {
     export interface Init extends TypescriptProject.Init {
         npmPackage: NpmPackage | undefined;
         dependencies: PackageDependencies;
+        extraConfigs: Record<string, unknown> | undefined;
     }
 }
 
@@ -31,11 +33,13 @@ export class BundledTypescriptProject extends TypescriptProject {
 
     private npmPackage: NpmPackage | undefined;
     private dependencies: PackageDependencies;
+    private extraConfigs: Record<string, unknown> | undefined;
 
-    constructor({ npmPackage, dependencies, ...superInit }: BundledTypescriptProject.Init) {
+    constructor({ npmPackage, dependencies, extraConfigs, ...superInit }: BundledTypescriptProject.Init) {
         super(superInit);
         this.npmPackage = npmPackage;
         this.dependencies = dependencies;
+        this.extraConfigs = extraConfigs;
     }
 
     protected async addFilesToVolume(): Promise<void> {
@@ -296,6 +300,8 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
                 ...this.extraDevDependencies
             };
         });
+
+        packageJson = mergeExtraConfigs(packageJson, this.extraConfigs);
 
         await this.writeFileToVolume(RelativeFilePath.of("package.json"), JSON.stringify(packageJson, undefined, 4));
     }

@@ -11,7 +11,7 @@
             "identifierOverride": "endpoint_dummy.generate-stream"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedStreaming = new SeedStreamingClient;\n",
+            "clientInstantiation": "const seedStreaming = new SeedStreamingClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedStreaming.dummy.generateStream(\n\t$FERN_INPUT\n)",

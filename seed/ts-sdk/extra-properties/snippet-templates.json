@@ -11,7 +11,7 @@
             "identifierOverride": "endpoint_user.createUser"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedExtraProperties = new SeedExtraPropertiesClient;\n",
+            "clientInstantiation": "const seedExtraProperties = new SeedExtraPropertiesClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedExtraProperties.user.createUser(\n\t$FERN_INPUT\n)",

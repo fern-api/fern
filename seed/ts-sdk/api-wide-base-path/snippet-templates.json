@@ -11,7 +11,7 @@
             "identifierOverride": "endpoint_service.post"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedApiWideBasePath = new SeedApiWideBasePathClient;\n",
+            "clientInstantiation": "const seedApiWideBasePath = new SeedApiWideBasePathClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedApiWideBasePath.service.post(\n\t$FERN_INPUT\n)",

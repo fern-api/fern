@@ -118,10 +118,14 @@ auth-schemes:
   OAuthScheme:
     scheme: oauth
     type: client-credentials
-    clientIdEnvVar: YOUR_CLIENT_ID
-    clientSecretEnvVar: YOUR_CLIENT_SECRET
+    client-id-env: YOUR_CLIENT_ID
+    client-secret-env: YOUR_CLIENT_SECRET
     get-token:
-      endpoint: auth.getToken  # The getToken endpoint defined in the auth.yml must retrieve an access token.
+      endpoint: auth.getToken                # The getToken endpoint defined in the auth.yml must retrieve an access token
+      response-properties:
+        access-token: $response.access_token # The response property containing the access token. Must start with '$response.'
+        expires-in: $response.expires_in     # The response property containing the expiration time. Must start with '$response.'
+
 ```
 </CodeBlock>
 

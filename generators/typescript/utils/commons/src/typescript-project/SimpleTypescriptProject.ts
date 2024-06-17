@@ -5,6 +5,7 @@ import { IPackageJson } from "package-json-type";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph";
 import { DependencyType, PackageDependencies } from "../dependency-manager/DependencyManager";
 import { NpmPackage } from "../NpmPackage";
+import { mergeExtraConfigs } from "./mergeExtraConfigs";
 import { TypescriptProject } from "./TypescriptProject";
 
 const FERN_IGNORE_FILENAME = ".fernignore";
@@ -15,6 +16,7 @@ export declare namespace SimpleTypescriptProject {
         dependencies: PackageDependencies;
         outputEsm: boolean;
         resolutions: Record<string, string>;
+        extraConfigs: Record<string, unknown> | undefined;
     }
 }
 
@@ -27,13 +29,22 @@ export class SimpleTypescriptProject extends TypescriptProject {
     private dependencies: PackageDependencies;
     private outputEsm: boolean;
     private resolutions: Record<string, string>;
+    private extraConfigs: Record<string, unknown> | undefined;
 
-    constructor({ npmPackage, dependencies, outputEsm, resolutions, ...superInit }: SimpleTypescriptProject.Init) {
+    constructor({
+        npmPackage,
+        dependencies,
+        outputEsm,
+        resolutions,
+        extraConfigs,
+        ...superInit
+    }: SimpleTypescriptProject.Init) {
         super(superInit);
         this.npmPackage = npmPackage;
         this.dependencies = dependencies;
         this.outputEsm = outputEsm;
         this.resolutions = resolutions;
+        this.extraConfigs = extraConfigs;
     }
 
     protected async addFilesToVolume(): Promise<void> {
@@ -190,6 +201,8 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 ...this.extraDevDependencies
             };
         });
+
+        packageJson = mergeExtraConfigs(packageJson, this.extraConfigs);
 
         await this.writeFileToVolume(RelativeFilePath.of("package.json"), JSON.stringify(packageJson, undefined, 4));
     }

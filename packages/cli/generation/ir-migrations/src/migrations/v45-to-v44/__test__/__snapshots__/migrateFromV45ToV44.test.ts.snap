@@ -2,8 +2,8 @@
 
 exports[`migrateFromV45ToV44 snapshot 1`] = `
 {
-  "apiDisplayName": undefined,
-  "apiDocs": undefined,
+  "apiDisplayName": null,
+  "apiDocs": null,
   "apiName": {
     "camelCase": {
       "safeName": "simpleAPI",
@@ -24,12 +24,12 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
     },
   },
   "auth": {
-    "docs": undefined,
+    "docs": null,
     "requirement": "ALL",
     "schemes": [
       {
-        "_visit": [Function],
-        "docs": undefined,
+        "_type": "bearer",
+        "docs": null,
         "token": {
           "camelCase": {
             "safeName": "token",
@@ -49,12 +49,11 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
             "unsafeName": "token",
           },
         },
-        "tokenEnvVar": undefined,
-        "type": "bearer",
+        "tokenEnvVar": null,
       },
     ],
   },
-  "basePath": undefined,
+  "basePath": null,
   "constants": {
     "errorInstanceIdKey": {
       "name": {
@@ -79,33 +78,31 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
       "wireValue": "errorInstanceId",
     },
   },
-  "environments": undefined,
+  "environments": null,
   "errorDiscriminationStrategy": {
-    "_visit": [Function],
     "type": "statusCode",
   },
   "errors": {},
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
-  "readmeConfig": undefined,
   "rootPackage": {
-    "docs": undefined,
+    "docs": null,
     "errors": [],
     "fernFilepath": {
       "allParts": [],
-      "file": undefined,
+      "file": null,
       "packagePath": [],
     },
     "hasEndpointsInTree": true,
-    "navigationConfig": undefined,
-    "service": undefined,
+    "navigationConfig": null,
+    "service": null,
     "subpackages": [
       "subpackage_service",
     ],
     "types": [],
-    "webhooks": undefined,
-    "websocket": undefined,
+    "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
@@ -129,38 +126,34 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
   },
   "services": {
     "service_service": {
-      "availability": undefined,
+      "availability": null,
       "basePath": {
         "head": "/",
         "parts": [],
       },
-      "displayName": undefined,
+      "displayName": null,
       "endpoints": [
         {
           "allPathParameters": [],
           "auth": false,
-          "availability": undefined,
-          "baseUrl": undefined,
-          "displayName": undefined,
-          "docs": undefined,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
           "errors": [],
           "examples": [
             {
-              "_visit": [Function],
-              "codeSamples": undefined,
-              "docs": undefined,
+              "codeSamples": null,
+              "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "userProvided",
-              "id": undefined,
-              "name": undefined,
+              "name": null,
               "queryParameters": [],
-              "request": undefined,
+              "request": null,
               "response": {
-                "_visit": [Function],
                 "type": "ok",
                 "value": {
-                  "_visit": [Function],
                   "type": "body",
                   "value": {
                     "jsonExample": {
@@ -174,9 +167,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                       ],
                     },
                     "shape": {
-                      "_visit": [Function],
                       "shape": {
-                        "_visit": [Function],
                         "properties": [
                           {
                             "name": {
@@ -276,18 +267,14 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                                 },
                               ],
                               "shape": {
-                                "_visit": [Function],
                                 "container": {
-                                  "_visit": [Function],
                                   "list": [
                                     {
                                       "jsonExample": {
                                         "name": "Alice",
                                       },
                                       "shape": {
-                                        "_visit": [Function],
                                         "shape": {
-                                          "_visit": [Function],
                                           "properties": [
                                             {
                                               "name": {
@@ -380,9 +367,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                                               "value": {
                                                 "jsonExample": "Alice",
                                                 "shape": {
-                                                  "_visit": [Function],
                                                   "primitive": {
-                                                    "_visit": [Function],
                                                     "string": {
                                                       "original": "Alice",
                                                     },
@@ -468,9 +453,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                                         "name": "Bob",
                                       },
                                       "shape": {
-                                        "_visit": [Function],
                                         "shape": {
-                                          "_visit": [Function],
                                           "properties": [
                                             {
                                               "name": {
@@ -563,9 +546,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                                               "value": {
                                                 "jsonExample": "Bob",
                                                 "shape": {
-                                                  "_visit": [Function],
                                                   "primitive": {
-                                                    "_visit": [Function],
                                                     "string": {
                                                       "original": "Bob",
                                                     },
@@ -732,14 +713,12 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
               "url": "//list",
             },
             {
-              "_visit": [Function],
-              "codeSamples": undefined,
-              "docs": undefined,
+              "codeSamples": null,
+              "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "5ea18706d8407d1d9cff794639f382038625a14b",
-              "name": undefined,
+              "name": null,
               "queryParameters": [
                 {
                   "name": {
@@ -767,9 +746,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                   "value": {
                     "jsonExample": "123456789123456789",
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "string": {
                           "original": "123456789123456789",
                         },
@@ -805,9 +782,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                   "value": {
                     "jsonExample": 1,
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "integer": 1,
                         "type": "integer",
                       },
@@ -816,12 +791,10 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                   },
                 },
               ],
-              "request": undefined,
+              "request": null,
               "response": {
-                "_visit": [Function],
                 "type": "ok",
                 "value": {
-                  "_visit": [Function],
                   "type": "body",
                   "value": {
                     "jsonExample": {
@@ -835,9 +808,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                       ],
                     },
                     "shape": {
-                      "_visit": [Function],
                       "shape": {
-                        "_visit": [Function],
                         "properties": [
                           {
                             "name": {
@@ -937,18 +908,14 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                                 },
                               ],
                               "shape": {
-                                "_visit": [Function],
                                 "container": {
-                                  "_visit": [Function],
                                   "list": [
                                     {
                                       "jsonExample": {
                                         "name": "Alice",
                                       },
                                       "shape": {
-                                        "_visit": [Function],
                                         "shape": {
-                                          "_visit": [Function],
                                           "properties": [
                                             {
                                               "name": {
@@ -1041,9 +1008,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                                               "value": {
                                                 "jsonExample": "Alice",
                                                 "shape": {
-                                                  "_visit": [Function],
                                                   "primitive": {
-                                                    "_visit": [Function],
                                                     "string": {
                                                       "original": "Alice",
                                                     },
@@ -1129,9 +1094,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                                         "name": "Bob",
                                       },
                                       "shape": {
-                                        "_visit": [Function],
                                         "shape": {
-                                          "_visit": [Function],
                                           "properties": [
                                             {
                                               "name": {
@@ -1224,9 +1187,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                                               "value": {
                                                 "jsonExample": "Bob",
                                                 "shape": {
-                                                  "_visit": [Function],
                                                   "primitive": {
-                                                    "_visit": [Function],
                                                     "string": {
                                                       "original": "Bob",
                                                     },
@@ -1420,7 +1381,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
               "unsafeName": "list",
             },
           },
-          "pagination": undefined,
+          "pagination": null,
           "path": {
             "head": "/list",
             "parts": [],
@@ -1429,8 +1390,8 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
           "queryParameters": [
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -1454,15 +1415,14 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                 "wireValue": "big",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "STRING",
-                "type": "primitive",
               },
             },
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -1486,22 +1446,19 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                 "wireValue": "pageNum",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "INTEGER",
-                "type": "primitive",
               },
             },
           ],
-          "requestBody": undefined,
+          "requestBody": null,
           "response": {
             "body": {
-              "_visit": [Function],
               "type": "json",
               "value": {
-                "_visit": [Function],
-                "docs": undefined,
+                "docs": null,
                 "responseBodyType": {
-                  "_visit": [Function],
+                  "_type": "named",
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -1564,13 +1521,12 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                       "unsafeName": "list_users_response",
                     },
                   },
-                  "type": "named",
                   "typeId": "type_service:ListUsersResponse",
                 },
                 "type": "response",
               },
             },
-            "statusCode": 201,
+            "status-code": 201,
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -1593,7 +1549,6 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
               },
             },
             "shape": {
-              "_visit": [Function],
               "bodyKey": {
                 "camelCase": {
                   "safeName": "body",
@@ -1639,28 +1594,24 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
         {
           "allPathParameters": [],
           "auth": false,
-          "availability": undefined,
-          "baseUrl": undefined,
-          "displayName": undefined,
-          "docs": undefined,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
           "errors": [],
           "examples": [
             {
-              "_visit": [Function],
-              "codeSamples": undefined,
-              "docs": undefined,
+              "codeSamples": null,
+              "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "userProvided",
-              "id": undefined,
-              "name": undefined,
+              "name": null,
               "queryParameters": [],
-              "request": undefined,
+              "request": null,
               "response": {
-                "_visit": [Function],
                 "type": "ok",
                 "value": {
-                  "_visit": [Function],
                   "type": "stream",
                   "value": [
                     {
@@ -1668,9 +1619,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                         "name": "Alice",
                       },
                       "shape": {
-                        "_visit": [Function],
                         "shape": {
-                          "_visit": [Function],
                           "properties": [
                             {
                               "name": {
@@ -1763,9 +1712,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                               "value": {
                                 "jsonExample": "Alice",
                                 "shape": {
-                                  "_visit": [Function],
                                   "primitive": {
-                                    "_visit": [Function],
                                     "string": {
                                       "original": "Alice",
                                     },
@@ -1851,9 +1798,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                         "name": "Bob",
                       },
                       "shape": {
-                        "_visit": [Function],
                         "shape": {
-                          "_visit": [Function],
                           "properties": [
                             {
                               "name": {
@@ -1946,9 +1891,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                               "value": {
                                 "jsonExample": "Bob",
                                 "shape": {
-                                  "_visit": [Function],
                                   "primitive": {
-                                    "_visit": [Function],
                                     "string": {
                                       "original": "Bob",
                                     },
@@ -2038,14 +1981,12 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
               "url": "//list/stream",
             },
             {
-              "_visit": [Function],
-              "codeSamples": undefined,
-              "docs": undefined,
+              "codeSamples": null,
+              "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "39a4de353f79a5c53b6c9b966bad1cb032e64e78",
-              "name": undefined,
+              "name": null,
               "queryParameters": [
                 {
                   "name": {
@@ -2073,9 +2014,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                   "value": {
                     "jsonExample": 1,
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "integer": 1,
                         "type": "integer",
                       },
@@ -2084,12 +2023,10 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                   },
                 },
               ],
-              "request": undefined,
+              "request": null,
               "response": {
-                "_visit": [Function],
                 "type": "ok",
                 "value": {
-                  "_visit": [Function],
                   "type": "stream",
                   "value": [
                     {
@@ -2097,9 +2034,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                         "name": "Alice",
                       },
                       "shape": {
-                        "_visit": [Function],
                         "shape": {
-                          "_visit": [Function],
                           "properties": [
                             {
                               "name": {
@@ -2192,9 +2127,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                               "value": {
                                 "jsonExample": "Alice",
                                 "shape": {
-                                  "_visit": [Function],
                                   "primitive": {
-                                    "_visit": [Function],
                                     "string": {
                                       "original": "Alice",
                                     },
@@ -2280,9 +2213,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                         "name": "Bob",
                       },
                       "shape": {
-                        "_visit": [Function],
                         "shape": {
-                          "_visit": [Function],
                           "properties": [
                             {
                               "name": {
@@ -2375,9 +2306,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                               "value": {
                                 "jsonExample": "Bob",
                                 "shape": {
-                                  "_visit": [Function],
                                   "primitive": {
-                                    "_visit": [Function],
                                     "string": {
                                       "original": "Bob",
                                     },
@@ -2494,7 +2423,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
               "unsafeName": "list_stream",
             },
           },
-          "pagination": undefined,
+          "pagination": null,
           "path": {
             "head": "/list/stream",
             "parts": [],
@@ -2503,8 +2432,8 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
           "queryParameters": [
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -2528,22 +2457,19 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                 "wireValue": "pageNum",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "INTEGER",
-                "type": "primitive",
               },
             },
           ],
-          "requestBody": undefined,
+          "requestBody": null,
           "response": {
             "body": {
-              "_visit": [Function],
               "type": "streaming",
               "value": {
-                "_visit": [Function],
-                "docs": undefined,
+                "docs": null,
                 "payload": {
-                  "_visit": [Function],
+                  "_type": "named",
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -2606,14 +2532,13 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                       "unsafeName": "user",
                     },
                   },
-                  "type": "named",
                   "typeId": "type_service:User",
                 },
-                "terminator": undefined,
+                "terminator": null,
                 "type": "json",
               },
             },
-            "statusCode": undefined,
+            "status-code": null,
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -2636,7 +2561,6 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
               },
             },
             "shape": {
-              "_visit": [Function],
               "bodyKey": {
                 "camelCase": {
                   "safeName": "body",
@@ -2682,28 +2606,24 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
         {
           "allPathParameters": [],
           "auth": false,
-          "availability": undefined,
-          "baseUrl": undefined,
-          "displayName": undefined,
-          "docs": undefined,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
           "errors": [],
           "examples": [
             {
-              "_visit": [Function],
-              "codeSamples": undefined,
-              "docs": undefined,
+              "codeSamples": null,
+              "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "userProvided",
-              "id": undefined,
-              "name": undefined,
+              "name": null,
               "queryParameters": [],
-              "request": undefined,
+              "request": null,
               "response": {
-                "_visit": [Function],
                 "type": "ok",
                 "value": {
-                  "_visit": [Function],
                   "type": "sse",
                   "value": [
                     {
@@ -2712,9 +2632,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                           "name": "Alice",
                         },
                         "shape": {
-                          "_visit": [Function],
                           "shape": {
-                            "_visit": [Function],
                             "properties": [
                               {
                                 "name": {
@@ -2807,9 +2725,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                                 "value": {
                                   "jsonExample": "Alice",
                                   "shape": {
-                                    "_visit": [Function],
                                     "primitive": {
-                                      "_visit": [Function],
                                       "string": {
                                         "original": "Alice",
                                       },
@@ -2898,9 +2814,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                           "name": "Bob",
                         },
                         "shape": {
-                          "_visit": [Function],
                           "shape": {
-                            "_visit": [Function],
                             "properties": [
                               {
                                 "name": {
@@ -2993,9 +2907,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                                 "value": {
                                   "jsonExample": "Bob",
                                   "shape": {
-                                    "_visit": [Function],
                                     "primitive": {
-                                      "_visit": [Function],
                                       "string": {
                                         "original": "Bob",
                                       },
@@ -3087,14 +2999,12 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
               "url": "//list/sse",
             },
             {
-              "_visit": [Function],
-              "codeSamples": undefined,
-              "docs": undefined,
+              "codeSamples": null,
+              "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "a92495e5fe0dd0c8be990ba7958b2cf012f0d99b",
-              "name": undefined,
+              "name": null,
               "queryParameters": [
                 {
                   "name": {
@@ -3122,9 +3032,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                   "value": {
                     "jsonExample": 1,
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "integer": 1,
                         "type": "integer",
                       },
@@ -3133,12 +3041,10 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                   },
                 },
               ],
-              "request": undefined,
+              "request": null,
               "response": {
-                "_visit": [Function],
                 "type": "ok",
                 "value": {
-                  "_visit": [Function],
                   "type": "sse",
                   "value": [
                     {
@@ -3147,9 +3053,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                           "name": "Alice",
                         },
                         "shape": {
-                          "_visit": [Function],
                           "shape": {
-                            "_visit": [Function],
                             "properties": [
                               {
                                 "name": {
@@ -3242,9 +3146,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                                 "value": {
                                   "jsonExample": "Alice",
                                   "shape": {
-                                    "_visit": [Function],
                                     "primitive": {
-                                      "_visit": [Function],
                                       "string": {
                                         "original": "Alice",
                                       },
@@ -3333,9 +3235,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                           "name": "Bob",
                         },
                         "shape": {
-                          "_visit": [Function],
                           "shape": {
-                            "_visit": [Function],
                             "properties": [
                               {
                                 "name": {
@@ -3428,9 +3328,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                                 "value": {
                                   "jsonExample": "Bob",
                                   "shape": {
-                                    "_visit": [Function],
                                     "primitive": {
-                                      "_visit": [Function],
                                       "string": {
                                         "original": "Bob",
                                       },
@@ -3549,7 +3447,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
               "unsafeName": "list_stream_sse",
             },
           },
-          "pagination": undefined,
+          "pagination": null,
           "path": {
             "head": "/list/sse",
             "parts": [],
@@ -3558,8 +3456,8 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
           "queryParameters": [
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -3583,22 +3481,19 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                 "wireValue": "pageNum",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "INTEGER",
-                "type": "primitive",
               },
             },
           ],
-          "requestBody": undefined,
+          "requestBody": null,
           "response": {
             "body": {
-              "_visit": [Function],
               "type": "streaming",
               "value": {
-                "_visit": [Function],
-                "docs": undefined,
+                "docs": null,
                 "payload": {
-                  "_visit": [Function],
+                  "_type": "named",
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -3661,14 +3556,13 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                       "unsafeName": "user",
                     },
                   },
-                  "type": "named",
                   "typeId": "type_service:User",
                 },
-                "terminator": undefined,
+                "terminator": null,
                 "type": "sse",
               },
             },
-            "statusCode": undefined,
+            "status-code": null,
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -3691,7 +3585,6 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
               },
             },
             "shape": {
-              "_visit": [Function],
               "bodyKey": {
                 "camelCase": {
                   "safeName": "body",
@@ -3786,7 +3679,7 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
   },
   "subpackages": {
     "subpackage_service": {
-      "docs": undefined,
+      "docs": null,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -3851,21 +3744,21 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
           "unsafeName": "service",
         },
       },
-      "navigationConfig": undefined,
+      "navigationConfig": null,
       "service": "service_service",
       "subpackages": [],
       "types": [
         "type_service:User",
         "type_service:ListUsersResponse",
       ],
-      "webhooks": undefined,
-      "websocket": undefined,
+      "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
     "type_service:ListUsersResponse": {
-      "availability": undefined,
-      "docs": undefined,
+      "availability": null,
+      "docs": null,
       "examples": [],
       "name": {
         "fernFilepath": {
@@ -3932,17 +3825,17 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
         },
         "typeId": "type_service:ListUsersResponse",
       },
-      "referencedTypes": Set {
+      "referencedTypes": [
         "type_service:User",
-      },
+      ],
       "shape": {
-        "_visit": [Function],
+        "_type": "object",
         "extends": [],
-        "extraProperties": false,
+        "extra-properties": false,
         "properties": [
           {
-            "availability": undefined,
-            "docs": undefined,
+            "availability": null,
+            "docs": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -3966,11 +3859,11 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
               "wireValue": "users",
             },
             "valueType": {
-              "_visit": [Function],
+              "_type": "container",
               "container": {
-                "_visit": [Function],
+                "_type": "list",
                 "list": {
-                  "_visit": [Function],
+                  "_type": "named",
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -4033,21 +3926,17 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                       "unsafeName": "user",
                     },
                   },
-                  "type": "named",
                   "typeId": "type_service:User",
                 },
-                "type": "list",
               },
-              "type": "container",
             },
           },
         ],
-        "type": "object",
       },
     },
     "type_service:User": {
-      "availability": undefined,
-      "docs": undefined,
+      "availability": null,
+      "docs": null,
       "examples": [],
       "name": {
         "fernFilepath": {
@@ -4114,15 +4003,15 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
         },
         "typeId": "type_service:User",
       },
-      "referencedTypes": Set {},
+      "referencedTypes": [],
       "shape": {
-        "_visit": [Function],
+        "_type": "object",
         "extends": [],
-        "extraProperties": false,
+        "extra-properties": false,
         "properties": [
           {
-            "availability": undefined,
-            "docs": undefined,
+            "availability": null,
+            "docs": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -4146,13 +4035,11 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
               "wireValue": "name",
             },
             "valueType": {
-              "_visit": [Function],
+              "_type": "primitive",
               "primitive": "STRING",
-              "type": "primitive",
             },
           },
         ],
-        "type": "object",
       },
     },
   },

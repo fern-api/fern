@@ -1,4 +1,4 @@
-import { EnvironmentsConfig } from "@fern-fern/ir-sdk/api";
+import { EnvironmentsConfig, MultipleBaseUrlsEnvironments, SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api";
 import {
     ExportedFilePath,
     getReferenceToExportViaNamespaceImport,
@@ -51,6 +51,17 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
         return `${this.namespaceExport}EnvironmentUrls`;
     }
 
+    public getExportedNameOfFirstEnvironmentEnum(): string | undefined {
+        if (this.environmentsConfig == null) {
+            return undefined;
+        }
+        const maybeFirstEnvironmentName = this.getFirstEnvironmentName(this.environmentsConfig);
+        if (maybeFirstEnvironmentName == null) {
+            return undefined;
+        }
+        return `${this.getExportedNameOfEnvironmentsEnum()}.${maybeFirstEnvironmentName}`;
+    }
+
     public getReferenceToEnvironmentsEnum({
         importsManager,
         sourceFile
@@ -62,6 +73,24 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
             importsManager,
             sourceFile,
             exportedName: this.getExportedNameOfEnvironmentsEnum()
+        });
+    }
+
+    public getReferenceToFirstEnvironmentEnum({
+        importsManager,
+        sourceFile
+    }: {
+        importsManager: ImportsManager;
+        sourceFile: SourceFile;
+    }): Reference | undefined {
+        const exportedName = this.getExportedNameOfFirstEnvironmentEnum();
+        if (exportedName == null) {
+            return undefined;
+        }
+        return this.getReferenceToExport({
+            importsManager,
+            sourceFile,
+            exportedName
         });
     }
 
@@ -96,5 +125,32 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
             importsManager,
             referencedIn: sourceFile
         });
+    }
+
+    private getFirstEnvironmentName(environmentsConfig: EnvironmentsConfig): string | undefined {
+        switch (environmentsConfig.environments.type) {
+            case "singleBaseUrl":
+                return this.getFirstEnvironmentNameFromSingleEnvironment(environmentsConfig.environments);
+            case "multipleBaseUrls":
+                return this.getFirstEnvironmentNameFromMultiEnvironment(environmentsConfig.environments);
+        }
+    }
+
+    private getFirstEnvironmentNameFromSingleEnvironment(
+        singleBaseUrlEnvironments: SingleBaseUrlEnvironments
+    ): string | undefined {
+        for (const environment of singleBaseUrlEnvironments.environments) {
+            return environment.name.pascalCase.unsafeName;
+        }
+        return undefined;
+    }
+
+    private getFirstEnvironmentNameFromMultiEnvironment(
+        multiBaseUrlsEnvironments: MultipleBaseUrlsEnvironments
+    ): string | undefined {
+        for (const environment of multiBaseUrlsEnvironments.environments) {
+            return environment.name.pascalCase.unsafeName;
+        }
+        return undefined;
     }
 }

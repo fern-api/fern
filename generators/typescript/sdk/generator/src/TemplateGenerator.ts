@@ -182,7 +182,8 @@ export class TemplateGenerator {
                         location,
                         wireOrOriginalName,
                         nameBreadcrumbs,
-                        indentationLevel: childIndentationLevel
+                        indentationLevel: childIndentationLevel,
+                        isObjectInlined: true
                     });
 
                     return FdrSnippetTemplate.Template.generic({
@@ -205,7 +206,8 @@ export class TemplateGenerator {
                         location,
                         wireOrOriginalName: utdsp.name.wireValue,
                         nameBreadcrumbs: childBreadcrumbs,
-                        indentationLevel: childIndentationLevel
+                        indentationLevel: childIndentationLevel,
+                        isObjectInlined: true
                     });
                     return FdrSnippetTemplate.Template.generic({
                         imports: [],
@@ -242,7 +244,7 @@ export class TemplateGenerator {
         return FdrSnippetTemplate.Template.discriminatedUnion({
             imports: [],
             isOptional: true,
-            templateString: this.getAsNamedParameterTemplate(name, `'${TEMPLATE_SENTINEL}'`),
+            templateString: this.getAsNamedParameterTemplate(name, `${TEMPLATE_SENTINEL}`),
             discriminantField: utd.discriminant.wireValue,
             members: memberTemplates,
             templateInput: FdrSnippetTemplate.TemplateInput.payload({
@@ -258,7 +260,8 @@ export class TemplateGenerator {
         location,
         wireOrOriginalName,
         nameBreadcrumbs,
-        indentationLevel
+        indentationLevel,
+        isObjectInlined
     }: {
         otd: ObjectTypeDeclaration;
         name: string | undefined;
@@ -266,9 +269,10 @@ export class TemplateGenerator {
         wireOrOriginalName: string | undefined;
         nameBreadcrumbs: string[] | undefined;
         indentationLevel: number;
+        isObjectInlined: boolean;
     }): FdrSnippetTemplate.Template | undefined {
         const childIndentationLevel = indentationLevel + 1;
-        const childTabs = "\t".repeat(childIndentationLevel);
+        const childTabs = "\t".repeat(isObjectInlined ? childIndentationLevel - 1 : childIndentationLevel);
         const selfTabs = "\t".repeat(indentationLevel);
         const templateInputs: FdrSnippetTemplate.TemplateInput[] = [];
         for (const prop of otd.properties) {
@@ -282,7 +286,8 @@ export class TemplateGenerator {
                 location,
                 wireOrOriginalName: prop.name.wireValue,
                 nameBreadcrumbs: childBreadcrumbs,
-                indentationLevel: childIndentationLevel
+                indentationLevel: childIndentationLevel,
+                isObjectInlined
             });
 
             if (propInput != null) {
@@ -291,7 +296,11 @@ export class TemplateGenerator {
         }
         return FdrSnippetTemplate.Template.generic({
             imports: [],
-            templateString: this.getAsNamedParameterTemplate(name, `{\n${childTabs}${TEMPLATE_SENTINEL}\n${selfTabs}}`),
+            // If the object is inlined, we don't need to wrap it in JSON object notation.
+            // Mostly useful for discriminated union types which otherwise would be wrapped in an object [FER-1986]
+            templateString: isObjectInlined
+                ? this.getAsNamedParameterTemplate(name, `${TEMPLATE_SENTINEL}`)
+                : this.getAsNamedParameterTemplate(name, `{\n${childTabs}${TEMPLATE_SENTINEL}\n${selfTabs}}`),
             isOptional: true,
             inputDelimiter: `,\n${childTabs}`,
             templateInputs
@@ -304,7 +313,8 @@ export class TemplateGenerator {
         location,
         wireOrOriginalName,
         nameBreadcrumbs,
-        indentationLevel
+        indentationLevel,
+        isObjectInlined
     }: {
         typeName: DeclaredTypeName;
         name: string | undefined;
@@ -312,9 +322,11 @@ export class TemplateGenerator {
         wireOrOriginalName: string | undefined;
         nameBreadcrumbs: string[] | undefined;
         indentationLevel: number;
+        isObjectInlined: boolean;
     }): FdrSnippetTemplate.Template | undefined {
         const td = this.endpointContext.type.getTypeDeclaration(typeName);
         const generatedType = this.endpointContext.type.getGeneratedType(typeName);
+
         return td.shape._visit<FdrSnippetTemplate.Template | undefined>({
             enum: (etd) =>
                 this.getEnumTemplate({
@@ -332,7 +344,8 @@ export class TemplateGenerator {
                     location,
                     wireOrOriginalName,
                     nameBreadcrumbs,
-                    indentationLevel
+                    indentationLevel,
+                    isObjectInlined
                 }),
             object: (otd) =>
                 this.getObjectTemplate({
@@ -341,7 +354,8 @@ export class TemplateGenerator {
                     location,
                     wireOrOriginalName,
                     nameBreadcrumbs,
-                    indentationLevel
+                    indentationLevel,
+                    isObjectInlined
                 }),
             // This is likely just calling get object template on every member
             union: (utd) =>
@@ -364,7 +378,8 @@ export class TemplateGenerator {
         location,
         wireOrOriginalName,
         nameBreadcrumbs,
-        indentationLevel
+        indentationLevel,
+        isObjectInlined
     }: {
         containerType: ContainerType;
         name: string | undefined;
@@ -372,6 +387,7 @@ export class TemplateGenerator {
         wireOrOriginalName: string | undefined;
         nameBreadcrumbs: string[] | undefined;
         indentationLevel: number;
+        isObjectInlined: boolean;
     }): FdrSnippetTemplate.Template | undefined {
         const childIndentationLevel = indentationLevel + 1;
         const selfTabs = "\t".repeat(indentationLevel);
@@ -385,7 +401,8 @@ export class TemplateGenerator {
                     location: FdrSnippetTemplate.PayloadLocation.Relative,
                     wireOrOriginalName: undefined,
                     nameBreadcrumbs: undefined,
-                    indentationLevel: childIndentationLevel
+                    indentationLevel: childIndentationLevel,
+                    isObjectInlined
                 });
                 return innerTemplate != null
                     ? FdrSnippetTemplate.Template.iterable({
@@ -411,7 +428,8 @@ export class TemplateGenerator {
                     location: FdrSnippetTemplate.PayloadLocation.Relative,
                     wireOrOriginalName: undefined,
                     nameBreadcrumbs: undefined,
-                    indentationLevel: childIndentationLevel
+                    indentationLevel: childIndentationLevel,
+                    isObjectInlined
                 });
 
                 return innerTemplate != null
@@ -438,7 +456,8 @@ export class TemplateGenerator {
                     location: FdrSnippetTemplate.PayloadLocation.Relative,
                     wireOrOriginalName: undefined,
                     nameBreadcrumbs: undefined,
-                    indentationLevel: childIndentationLevel
+                    indentationLevel: childIndentationLevel,
+                    isObjectInlined
                 });
                 const valueTemplate = this.getTemplateFromTypeReference({
                     typeReference: kvType.valueType,
@@ -446,7 +465,8 @@ export class TemplateGenerator {
                     location: FdrSnippetTemplate.PayloadLocation.Relative,
                     wireOrOriginalName: undefined,
                     nameBreadcrumbs: undefined,
-                    indentationLevel: childIndentationLevel
+                    indentationLevel: childIndentationLevel,
+                    isObjectInlined
                 });
 
                 return keyTemplate != null && valueTemplate != null
@@ -475,7 +495,8 @@ export class TemplateGenerator {
                     location,
                     wireOrOriginalName,
                     nameBreadcrumbs,
-                    indentationLevel
+                    indentationLevel,
+                    isObjectInlined
                 }),
             literal: () => undefined,
             _other: () => undefined
@@ -488,7 +509,8 @@ export class TemplateGenerator {
         location,
         wireOrOriginalName,
         nameBreadcrumbs,
-        indentationLevel
+        indentationLevel,
+        isObjectInlined
     }: {
         typeReference: TypeReference;
         name: string | undefined;
@@ -496,6 +518,7 @@ export class TemplateGenerator {
         wireOrOriginalName: string | undefined;
         nameBreadcrumbs: string[] | undefined;
         indentationLevel: number;
+        isObjectInlined: boolean;
     }): FdrSnippetTemplate.Template | undefined {
         // Do not insert literals into templates
         if (typeReference.type === "container" && typeReference.container.type === "literal") {
@@ -517,7 +540,8 @@ export class TemplateGenerator {
                     location,
                     wireOrOriginalName,
                     nameBreadcrumbs,
-                    indentationLevel
+                    indentationLevel,
+                    isObjectInlined
                 }),
             named: (typeName) =>
                 this.getNamedTypeTemplate({
@@ -526,7 +550,8 @@ export class TemplateGenerator {
                     location,
                     wireOrOriginalName,
                     nameBreadcrumbs,
-                    indentationLevel
+                    indentationLevel,
+                    isObjectInlined
                 }),
             _other: () => undefined
         });
@@ -543,6 +568,7 @@ export class TemplateGenerator {
         wireOrOriginalName: string | undefined;
         nameBreadcrumbs: string[] | undefined;
         indentationLevel: number;
+        isObjectInlined: boolean;
     }): FdrSnippetTemplate.TemplateInput | undefined {
         const template = this.getTemplateFromTypeReference(args);
         return template != null ? this.getTemplateInputFromTemplate(template) : template;
@@ -568,7 +594,8 @@ export class TemplateGenerator {
                                 location: FdrSnippetTemplate.PayloadLocation.Body,
                                 wireOrOriginalName: bp.name.wireValue,
                                 nameBreadcrumbs: undefined,
-                                indentationLevel: 2
+                                indentationLevel: 2,
+                                isObjectInlined: false
                             }),
                         _other: () => undefined
                     })
@@ -599,7 +626,8 @@ export class TemplateGenerator {
                 location: FdrSnippetTemplate.PayloadLocation.Path,
                 wireOrOriginalName: pathParameter.name.originalName,
                 nameBreadcrumbs: undefined,
-                indentationLevel: 1
+                indentationLevel: 1,
+                isObjectInlined: false
             });
             if (pt != null) {
                 nrp.push(pt);
@@ -610,6 +638,7 @@ export class TemplateGenerator {
     }
 
     private getRequestParametersFromEndpoint(): FdrSnippetTemplate.TemplateInput[] {
+        const isObjectInlined = false;
         const rp: FdrSnippetTemplate.TemplateInput[] = [];
         this.endpoint.queryParameters.forEach((pathParameter) => {
             const pt = this.getTemplateInputFromTypeReference({
@@ -618,7 +647,8 @@ export class TemplateGenerator {
                 location: FdrSnippetTemplate.PayloadLocation.Query,
                 wireOrOriginalName: pathParameter.name.wireValue,
                 nameBreadcrumbs: undefined,
-                indentationLevel: 2
+                indentationLevel: 2,
+                isObjectInlined
             });
             if (pt != null) {
                 rp.push(pt);
@@ -632,7 +662,8 @@ export class TemplateGenerator {
                 location: FdrSnippetTemplate.PayloadLocation.Headers,
                 wireOrOriginalName: header.name.wireValue,
                 nameBreadcrumbs: undefined,
-                indentationLevel: 2
+                indentationLevel: 2,
+                isObjectInlined
             });
             if (pt != null) {
                 rp.push(pt);
@@ -649,7 +680,8 @@ export class TemplateGenerator {
                         location: FdrSnippetTemplate.PayloadLocation.Body,
                         wireOrOriginalName: prop.name.wireValue,
                         nameBreadcrumbs: undefined,
-                        indentationLevel: 2
+                        indentationLevel: 2,
+                        isObjectInlined
                     })
                 ),
             reference: (ref) => [
@@ -659,7 +691,8 @@ export class TemplateGenerator {
                     name: undefined,
                     wireOrOriginalName: undefined,
                     nameBreadcrumbs: undefined,
-                    indentationLevel: 2
+                    indentationLevel: 2,
+                    isObjectInlined
                 })
             ],
             // File properties are handled separately
@@ -827,6 +860,7 @@ export class TemplateGenerator {
                       this.endpoint
                   )}(\n\t${TEMPLATE_SENTINEL}\n)`
                 : `await ${endpointClientAccessString}.${this.getEndpointFunctionName(this.endpoint)}()`;
+
         return FdrSnippetTemplate.VersionedSnippetTemplate.v1({
             clientInstantiation: clientInstantiationString,
             functionInvocation: FdrSnippetTemplate.Template.generic({

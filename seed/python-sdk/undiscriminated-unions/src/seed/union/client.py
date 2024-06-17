@@ -7,6 +7,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pydantic_utilities import pydantic_v1
 from ..core.request_options import RequestOptions
+from .types.metadata import Metadata
 from .types.my_union import MyUnion
 
 # this is used as the default value for optional parameters
@@ -52,6 +53,35 @@ class UnionClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get_metadata(self, *, request_options: typing.Optional[RequestOptions] = None) -> Metadata:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Metadata
+
+        Examples
+        --------
+        from seed.client import SeedUndiscriminatedUnions
+
+        client = SeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.union.get_metadata()
+        """
+        _response = self._client_wrapper.httpx_client.request("metadata", method="GET", request_options=request_options)
+        if 200 <= _response.status_code < 300:
+            return pydantic_v1.parse_obj_as(Metadata, _response.json())  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncUnionClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -86,6 +116,37 @@ class AsyncUnionClient:
         )
         if 200 <= _response.status_code < 300:
             return pydantic_v1.parse_obj_as(MyUnion, _response.json())  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_metadata(self, *, request_options: typing.Optional[RequestOptions] = None) -> Metadata:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Metadata
+
+        Examples
+        --------
+        from seed.client import AsyncSeedUndiscriminatedUnions
+
+        client = AsyncSeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.union.get_metadata()
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "metadata", method="GET", request_options=request_options
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic_v1.parse_obj_as(Metadata, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:

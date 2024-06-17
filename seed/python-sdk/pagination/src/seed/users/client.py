@@ -142,6 +142,7 @@ class UsersClient:
             starting_after="string",
         )
         """
+        page = page or 1
         _response = self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
@@ -152,7 +153,7 @@ class UsersClient:
             _parsed_response = pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
             _has_next = True
             _get_next = lambda: self.list_with_offset_pagination(
-                page=page + 1 if page is not None else 1,
+                page=page + 1,
                 per_page=per_page,
                 order=order,
                 starting_after=starting_after,
@@ -292,15 +293,14 @@ class UsersClient:
             offset=1,
         )
         """
+        offset = offset or 1
         _response = self._client_wrapper.httpx_client.request(
             "users", method="GET", params={"offset": offset}, request_options=request_options
         )
         if 200 <= _response.status_code < 300:
             _parsed_response = pydantic_v1.parse_obj_as(UsernameContainer, _response.json())  # type: ignore
             _has_next = True
-            _get_next = lambda: self.list_with_global_config(
-                offset=offset + 1 if offset is not None else 1, request_options=request_options
-            )
+            _get_next = lambda: self.list_with_global_config(offset=offset + 1, request_options=request_options)
             _items = _parsed_response.results
             return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
@@ -434,6 +434,7 @@ class AsyncUsersClient:
             starting_after="string",
         )
         """
+        page = page or 1
         _response = await self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
@@ -444,7 +445,7 @@ class AsyncUsersClient:
             _parsed_response = pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
             _has_next = True
             _get_next = lambda: self.list_with_offset_pagination(
-                page=page + 1 if page is not None else 1,
+                page=page + 1,
                 per_page=per_page,
                 order=order,
                 starting_after=starting_after,
@@ -584,15 +585,14 @@ class AsyncUsersClient:
             offset=1,
         )
         """
+        offset = offset or 1
         _response = await self._client_wrapper.httpx_client.request(
             "users", method="GET", params={"offset": offset}, request_options=request_options
         )
         if 200 <= _response.status_code < 300:
             _parsed_response = pydantic_v1.parse_obj_as(UsernameContainer, _response.json())  # type: ignore
             _has_next = True
-            _get_next = lambda: self.list_with_global_config(
-                offset=offset + 1 if offset is not None else 1, request_options=request_options
-            )
+            _get_next = lambda: self.list_with_global_config(offset=offset + 1, request_options=request_options)
             _items = _parsed_response.results
             return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:

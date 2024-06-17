@@ -11,7 +11,7 @@
             "identifierOverride": "endpoint_folder-a/service.getDirectThread"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedAudiences = new SeedAudiencesClient;\n",
+            "clientInstantiation": "const seedAudiences = new SeedAudiencesClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedAudiences.folderA.service.getDirectThread()",
@@ -35,7 +35,7 @@
             "identifierOverride": "endpoint_foo.find"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedAudiences = new SeedAudiencesClient;\n",
+            "clientInstantiation": "const seedAudiences = new SeedAudiencesClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedAudiences.foo.find(\n\t$FERN_INPUT\n)",

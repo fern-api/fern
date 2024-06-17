@@ -16,6 +16,10 @@ import * as SeedQueryParameters from "../../../../index";
  *             name: "string",
  *             tags: ["string"]
  *         },
+ *         userList: [{
+ *                 name: "string",
+ *                 tags: ["string"]
+ *             }],
  *         keyValue: {
  *             "string": "string"
  *         },
@@ -45,6 +49,7 @@ export interface GetUsersRequest {
     deadline: string;
     bytes: string;
     user: SeedQueryParameters.User;
+    userList: SeedQueryParameters.User[];
     keyValue: Record<string, string>;
     optionalString?: string;
     nestedUser: SeedQueryParameters.NestedUser;

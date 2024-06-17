@@ -1,7 +1,7 @@
 package com.fern.java;
 
-import com.fern.irV42.model.ir.IntermediateRepresentation;
-import com.fern.irV42.model.types.DeclaredTypeName;
+import com.fern.ir.model.ir.IntermediateRepresentation;
+import com.fern.ir.model.types.DeclaredTypeName;
 import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +39,10 @@ public abstract class AbstractPoetClassNameFactory {
         return String.join(".", tokens);
     }
 
+    public final String getPaginationPackage() {
+        return getCorePackage() + ".pagination";
+    }
+
     public final String getRootPackage() {
         List<String> tokens = new ArrayList<>(packagePrefixTokens);
         return String.join(".", tokens);
@@ -50,6 +54,10 @@ public abstract class AbstractPoetClassNameFactory {
 
     public final ClassName getStreamClassName() {
         return ClassName.get(getCorePackage(), "Stream");
+    }
+
+    public final ClassName getPaginationClassName(String simpleName) {
+        return ClassName.get(getPaginationPackage(), simpleName);
     }
 
     public final List<String> getPackagePrefixTokens() {

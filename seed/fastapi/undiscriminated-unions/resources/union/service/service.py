@@ -11,6 +11,7 @@ import fastapi
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
+from ..types.metadata import Metadata
 from ..types.my_union import MyUnion
 
 
@@ -27,6 +28,10 @@ class AbstractUnionService(AbstractFernService):
     def get(self, *, body: MyUnion) -> MyUnion:
         ...
 
+    @abc.abstractmethod
+    def get_metadata(self) -> Metadata:
+        ...
+
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -35,6 +40,7 @@ class AbstractUnionService(AbstractFernService):
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_get(router=router)
+        cls.__init_get_metadata(router=router)
 
     @classmethod
     def __init_get(cls, router: fastapi.APIRouter) -> None:
@@ -70,4 +76,38 @@ class AbstractUnionService(AbstractFernService):
             response_model=MyUnion,
             description=AbstractUnionService.get.__doc__,
             **get_route_args(cls.get, default_tag="union"),
+        )(wrapper)
+
+    @classmethod
+    def __init_get_metadata(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.get_metadata)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.get_metadata, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.get_metadata)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> Metadata:
+            try:
+                return cls.get_metadata(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'get_metadata' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.get_metadata.__globals__)
+
+        router.get(
+            path="/metadata",
+            response_model=Metadata,
+            description=AbstractUnionService.get_metadata.__doc__,
+            **get_route_args(cls.get_metadata, default_tag="union"),
         )(wrapper)

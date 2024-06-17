@@ -17,14 +17,14 @@
 package com.fern.java.client.generators.endpoint;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fern.irV42.model.commons.ErrorId;
-import com.fern.irV42.model.http.BytesRequest;
-import com.fern.irV42.model.http.HttpEndpoint;
-import com.fern.irV42.model.http.HttpRequestBodyReference;
-import com.fern.irV42.model.http.HttpService;
-import com.fern.irV42.model.http.SdkRequest;
-import com.fern.irV42.model.http.SdkRequestBodyType;
-import com.fern.irV42.model.types.TypeReference;
+import com.fern.ir.model.commons.ErrorId;
+import com.fern.ir.model.http.BytesRequest;
+import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.HttpRequestBodyReference;
+import com.fern.ir.model.http.HttpService;
+import com.fern.ir.model.http.SdkRequest;
+import com.fern.ir.model.http.SdkRequestBodyType;
+import com.fern.ir.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
@@ -122,14 +122,18 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
 
     @Override
     public List<ParameterSpec> additionalParameters() {
+        return List.of(requestParameterSpec().get());
+    }
+
+    @Override
+    public Optional<ParameterSpec> requestParameterSpec() {
         if (generatedWrappedRequest != null) {
-            return Collections.singletonList(ParameterSpec.builder(
+            return Optional.of(ParameterSpec.builder(
                             generatedWrappedRequest.getClassName(),
                             sdkRequest.getRequestParameterName().getCamelCase().getSafeName())
                     .build());
         } else if (sdkRequestBodyType != null) {
-            ParameterSpec parameterSpec = sdkRequestBodyType.visit(new SdkRequestBodyType.Visitor<ParameterSpec>() {
-
+            ParameterSpec parameterSpec = sdkRequestBodyType.visit(new SdkRequestBodyType.Visitor<>() {
                 @Override
                 public ParameterSpec visitTypeReference(HttpRequestBodyReference typeReference) {
                     return ParameterSpec.builder(
@@ -163,7 +167,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     throw new RuntimeException("Encountered unknown sdk request body type: " + unknownType);
                 }
             });
-            return Collections.singletonList(parameterSpec);
+            return Optional.of(parameterSpec);
         } else {
             throw new RuntimeException("Unexpected, both generatedWrappedRequest and sdkRequestBodyType are null");
         }

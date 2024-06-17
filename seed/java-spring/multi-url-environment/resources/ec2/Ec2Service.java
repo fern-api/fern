@@ -18,6 +18,7 @@ import resources.ec2.requests.BootInstanceRequest;
 public interface Ec2Service {
   @PostMapping(
       value = "/boot",
+      produces = "application/json",
       consumes = "application/json"
   )
   void bootInstance(@RequestHeader("Authorization") BearerAuth auth, Principal principal,

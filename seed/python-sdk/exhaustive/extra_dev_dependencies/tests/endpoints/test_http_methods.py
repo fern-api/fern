@@ -33,6 +33,7 @@ async def test_test_post(client: SeedExhaustive, async_client: AsyncSeedExhausti
         "list": ["string"],
         "set": ["string"],
         "map": {"1": "string"},
+        "bigint": "123456789123456789",
     }
     expected_types: typing.Any = {
         "string": None,
@@ -47,6 +48,7 @@ async def test_test_post(client: SeedExhaustive, async_client: AsyncSeedExhausti
         "list": ("list", {0: None}),
         "set": ("set", {0: None}),
         "map": ("dict", {0: ("integer", None)}),
+        "bigint": None,
     }
     response = client.endpoints.http_methods.test_post(string="string")
     validate_response(response, expected_response, expected_types)
@@ -69,6 +71,7 @@ async def test_test_put(client: SeedExhaustive, async_client: AsyncSeedExhaustiv
         "list": ["string"],
         "set": ["string"],
         "map": {"1": "string"},
+        "bigint": "123456789123456789",
     }
     expected_types: typing.Any = {
         "string": None,
@@ -83,6 +86,7 @@ async def test_test_put(client: SeedExhaustive, async_client: AsyncSeedExhaustiv
         "list": ("list", {0: None}),
         "set": ("set", {0: None}),
         "map": ("dict", {0: ("integer", None)}),
+        "bigint": None,
     }
     response = client.endpoints.http_methods.test_put(id="string", string="string")
     validate_response(response, expected_response, expected_types)
@@ -105,6 +109,7 @@ async def test_test_patch(client: SeedExhaustive, async_client: AsyncSeedExhaust
         "list": ["string"],
         "set": ["string"],
         "map": {"1": "string"},
+        "bigint": "123456789123456789",
     }
     expected_types: typing.Any = {
         "string": None,
@@ -119,6 +124,7 @@ async def test_test_patch(client: SeedExhaustive, async_client: AsyncSeedExhaust
         "list": ("list", {0: None}),
         "set": ("set", {0: None}),
         "map": ("dict", {0: ("integer", None)}),
+        "bigint": None,
     }
     response = client.endpoints.http_methods.test_patch(
         id="string",
@@ -134,6 +140,7 @@ async def test_test_patch(client: SeedExhaustive, async_client: AsyncSeedExhaust
         list_=["string"],
         set_={"string"},
         map_={1: "string"},
+        bigint="123456789123456789",
     )
     validate_response(response, expected_response, expected_types)
 
@@ -151,6 +158,7 @@ async def test_test_patch(client: SeedExhaustive, async_client: AsyncSeedExhaust
         list_=["string"],
         set_={"string"},
         map_={1: "string"},
+        bigint="123456789123456789",
     )
     validate_response(async_response, expected_response, expected_types)
 

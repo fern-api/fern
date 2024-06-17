@@ -34,4 +34,4 @@ class CreateProblemError_Generic(pydantic_v1.BaseModel):
         json_encoders = {dt.datetime: serialize_datetime}
 
 
-CreateProblemError = typing.Union[CreateProblemError_Generic]
+CreateProblemError = CreateProblemError_Generic

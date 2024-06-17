@@ -17,6 +17,7 @@ type GetUsersRequest struct {
 	Deadline       time.Time         `query:"deadline"`
 	Bytes          []byte            `query:"bytes"`
 	User           *User             `query:"user"`
+	UserList       []*User           `query:"userList"`
 	KeyValue       map[string]string `query:"keyValue"`
 	OptionalString *string           `query:"optionalString"`
 	NestedUser     *NestedUser       `query:"nestedUser"`
