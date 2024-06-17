@@ -21,6 +21,7 @@ export async function visitWebhooks({
     await visitObject(webhook, {
         "display-name": noop,
         method: noop,
+        examples: noop,
         headers: async (headers) => {
             await visitHeaders({
                 headers,

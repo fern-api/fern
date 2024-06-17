@@ -1,21 +1,40 @@
-import { InlinedWebhookPayloadProperty, Webhook, WebhookGroup, WebhookPayload } from "@fern-api/ir-sdk";
+import { isPlainObject } from "@fern-api/core-utils";
+import {
+    ExampleWebhookCall,
+    InlinedWebhookPayloadProperty,
+    Webhook,
+    WebhookGroup,
+    WebhookPayload
+} from "@fern-api/ir-sdk";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../FernFileContext";
+import { IdGenerator } from "../IdGenerator";
+import { ExampleResolver } from "../resolvers/ExampleResolver";
+import { TypeResolver } from "../resolvers/TypeResolver";
 import { parseTypeName } from "../utils/parseTypeName";
 import { convertAvailability } from "./convertDeclaration";
 import { convertHttpHeader } from "./services/convertHttpService";
+import { convertTypeReferenceExample } from "./type-declarations/convertExampleType";
 import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration";
 
 export async function convertWebhookGroup({
     webhooks,
-    file
+    file,
+    typeResolver,
+    exampleResolver,
+    workspace
 }: {
     webhooks: Record<string, RawSchemas.WebhookSchema>;
     file: FernFileContext;
+    typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
+    workspace: FernWorkspace;
 }): Promise<WebhookGroup> {
     const webhookGroup: Webhook[] = [];
     for (const [webhookId, webhook] of Object.entries(webhooks)) {
         webhookGroup.push({
+            id: IdGenerator.generateWebhookId(file.fernFilepath, webhookId),
             availability: convertAvailability(webhook.availability),
             displayName: webhook["display-name"],
             docs: webhook.docs,
@@ -29,7 +48,18 @@ export async function convertWebhookGroup({
                           )
                       )
                     : [],
-            payload: convertWebhookPayloadSchema({ payload: webhook.payload, file })
+            payload: convertWebhookPayloadSchema({ payload: webhook.payload, file }),
+            examples:
+                webhook.examples != null
+                    ? convertWebhookExamples({
+                          webhook,
+                          examples: webhook.examples,
+                          file,
+                          typeResolver,
+                          exampleResolver,
+                          workspace
+                      })
+                    : undefined
         });
     }
     return webhookGroup;
@@ -92,6 +122,63 @@ function convertInlinedRequestProperty({
         }),
         valueType: file.parseTypeReference(propertyDefinition)
     };
+}
+
+function convertWebhookExamples({
+    webhook,
+    examples,
+    file,
+    typeResolver,
+    exampleResolver,
+    workspace
+}: {
+    webhook: RawSchemas.WebhookSchema;
+    examples: RawSchemas.ExampleWebhookCallSchema[];
+    file: FernFileContext;
+    typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
+    workspace: FernWorkspace;
+}): ExampleWebhookCall[] {
+    const typeName =
+        typeof webhook.payload === "string"
+            ? webhook.payload
+            : isReferencedWebhookPayloadSchema(webhook.payload)
+            ? webhook.payload.type
+            : undefined;
+    if (typeName != null) {
+        return examples.map((example) => ({
+            docs: webhook.docs,
+            name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
+            payload: convertTypeReferenceExample({
+                example: example.payload,
+                rawTypeBeingExemplified: typeName,
+                fileContainingRawTypeReference: file,
+                fileContainingExample: file,
+                typeResolver,
+                exampleResolver,
+                workspace
+            })
+        }));
+    }
+    if (!isPlainObject(webhook.payload)) {
+        throw new Error(`Example webhook payload is not an object. Got: ${JSON.stringify(webhook.payload)}`);
+    }
+    // The payload example is a simple object of key, value pairs, so we format the example as
+    // a map<string, unknown> for simplicity. If we ever add support for webhooks in the generated
+    // SDKs, we'll need to revisit this.
+    return examples.map((example) => ({
+        docs: webhook.docs,
+        name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
+        payload: convertTypeReferenceExample({
+            example: example.payload,
+            rawTypeBeingExemplified: "map<string, unknown>",
+            fileContainingRawTypeReference: file,
+            fileContainingExample: file,
+            typeResolver,
+            exampleResolver,
+            workspace
+        })
+    }));
 }
 
 export function isReferencedWebhookPayloadSchema(

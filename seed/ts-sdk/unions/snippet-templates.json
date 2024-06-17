@@ -11,7 +11,7 @@
             "identifierOverride": "endpoint_union.get"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedUnions = new SeedUnionsClient;\n",
+            "clientInstantiation": "const seedUnions = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedUnions.union.get(\n\t$FERN_INPUT\n)",
@@ -64,7 +64,7 @@
             "identifierOverride": "endpoint_union.update"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedUnions = new SeedUnionsClient;\n",
+            "clientInstantiation": "const seedUnions = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedUnions.union.update(\n\t$FERN_INPUT\n)",

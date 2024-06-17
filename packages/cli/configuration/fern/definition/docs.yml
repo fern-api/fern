@@ -168,7 +168,7 @@ types:
     union:
       - PageConfiguration
       - SectionConfiguration
-      - ApiSectionConfiguration
+      - ApiReferenceConfiguration
       - LinkConfiguration
 
   LogoConfiguration:
@@ -391,7 +391,7 @@ types:
       hidden: optional<boolean>
       skip-slug: optional<boolean>
 
-  ApiSectionConfiguration:
+  ApiReferenceConfiguration:
     properties:
       api: string
       "api-name":
@@ -404,75 +404,95 @@ types:
       snippets: optional<SnippetsConfiguration>
       summary:
         type: optional<string>
-        docs: |
-          Relative path to the markdown file. This summary is displayed at the top of the API section.
+        docs: Relative path to the markdown file
       layout:
-        type: optional<ApiNavigationItems>
+        type: optional<list<ApiReferenceLayoutItem>>
         docs: |
           Advanced usage: when specified, this object will be used to customize the order that your API endpoints are displayed in the docs site, including subpackages, and additional markdown pages (to be rendered in between API endpoints). If not specified, the order will be inferred from the OpenAPI Spec or Fern Definition.
       icon: optional<string>
       slug: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
+      alphabetized:
+        type: optional<boolean>
+        docs: |
+          If `alphabetized` is set to true, packages and endpoints will be sorted alphabetically, unless explicitly ordered in the `layout` object.
       flattened:
         type: optional<boolean>
         docs: |
           If `flattened` is set to true, the title specified in `api` will be hidden, and its endpoints and subpackages won't be grouped under it.
 
           This setting is useful if the API reference is short and you want to display all endpoints at the top level.
+      paginated:
+        availability: in-development
+        type: optional<boolean>
+        docs: If true, the API reference will be paginated rather than displayed in a single page (long-scrolling).
 
-  ApiNavigationItem:
+  ApiReferenceLayoutItem:
     docs: |
       Use the `layout` object to customize the order that your API endpoints
       are displayed in the docs site.
     discriminated: false
     union:
       - type: string
-        docs: |
-          This should be either an endpoint, websocket, webhook, or subpackage ID
-      - type: map<string, ApiNavigationItems>
-        docs: |
-          Keyed by subpackage ID, this object allows you to group endpoints and pages together.
-      - type: PageConfiguration
-        docs: |
-          This should be a markdown file that will be displayed in the API section.
+        docs: This should be either an endpoint, websocket, webhook, or subpackage ID
+      - type: map<string, ApiReferencePackageConfiguration>
+        docs: Keyed by subpackage name, this object allows you to group endpoints and pages together.
+      - ApiReferenceSectionConfiguration
+      - ApiReferenceEndpointConfiguration
+      - PageConfiguration
+      - LinkConfiguration
 
-  ApiNavigationItems:
-    type: list<ApiNavigationItem>
-    examples:
-      - name: Ordering Groups
-        value:
-          - users # users endpoints will be displayed first
-          - roles
-          - permissions
-      - name: Ordering Endpoints
-        value:
-          - roles:
-              - get
-              - create
-              - update
-          - users:
-              - get
-              - create
-              - update
-          - permissions:
-              - get
-              - create
-              - update
-      - name: Ordering Groups and Pages
-        value:
-          - users
-          - roles:
-              - get
-              - create
-              - ./pages/inner-page.mdx
-              - update
-          - permissions
+  ApiReferenceSectionConfiguration:
+    properties:
+      section:
+        type: string
+        docs: |
+          The title of the api package that will be displayed in the sidebar.
+      referenced-packages:
+        type: optional<list<string>>
+        docs: This section will inherit the endpoints from the specified subpackage(s). If multiple packages are specified, they will be merged.
+      summary:
+        type: optional<string>
+        docs: Relative path to the markdown file.
+      contents: optional<list<ApiReferenceLayoutItem>>
+      slug: optional<string>
+      icon: optional<string>
+      hidden: optional<boolean>
+      skip-slug: optional<boolean>
+
+  ApiReferencePackageConfiguration:
+    discriminated: false
+    union:
+      - list<ApiReferenceLayoutItem>
+      - ApiReferencePackageConfigurationWithOptions
+
+  ApiReferencePackageConfigurationWithOptions:
+    properties:
+      title: optional<string>
+      summary:
+        type: optional<string>
+        docs: |
+          Relative path to the markdown file. This summary is displayed at the top of the API section.
+      contents: optional<list<ApiReferenceLayoutItem>>
+      slug: optional<string>
+      icon: optional<string>
+      hidden: optional<boolean>
+      skip-slug: optional<boolean>
+
+  ApiReferenceEndpointConfiguration:
+    properties:
+      endpoint: string
+      title: optional<string>
+      slug: optional<string>
+      icon: optional<string>
+      hidden: optional<boolean>
 
   LinkConfiguration:
     properties:
       link: string
       href: string
+      icon: optional<string>
 
   VersionedSnippetLanguageConfiguration:
     properties:

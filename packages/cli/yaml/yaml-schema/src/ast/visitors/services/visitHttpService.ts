@@ -299,6 +299,19 @@ async function visitExampleEndpointCall({
     endpoint: RawSchemas.HttpEndpointSchema;
     example: RawSchemas.ExampleEndpointCallSchema;
 }): Promise<void> {
+    // if an example is entirely empty and has code samples, dont validate against the
+    // request or response schemas
+    if (
+        example.headers == null &&
+        example["path-parameters"] == null &&
+        example["query-parameters"] == null &&
+        example.request == null &&
+        example.response == null &&
+        example["code-samples"] != null
+    ) {
+        return;
+    }
+
     await visitor.exampleHttpEndpointCall?.(
         {
             service,

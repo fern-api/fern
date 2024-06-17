@@ -11,7 +11,7 @@
             "identifierOverride": "endpoint_user.getUser"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedMultiLineDocs = new SeedMultiLineDocsClient;\n",
+            "clientInstantiation": "const seedMultiLineDocs = new SeedMultiLineDocsClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedMultiLineDocs.user.getUser(\n\t$FERN_INPUT\n)",
@@ -64,7 +64,7 @@
             "identifierOverride": "endpoint_user.createUser"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedMultiLineDocs = new SeedMultiLineDocsClient;\n",
+            "clientInstantiation": "const seedMultiLineDocs = new SeedMultiLineDocsClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedMultiLineDocs.user.createUser(\n\t$FERN_INPUT\n)",

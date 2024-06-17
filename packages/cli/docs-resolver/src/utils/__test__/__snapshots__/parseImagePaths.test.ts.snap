@@ -1,0 +1,981 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`bland should replace all images with full path 1`] = `
+[
+  "/Volume/git/fern/tutorials/node.png",
+  "/Volume/git/fern/tutorials/new_pathway.png",
+  "/Volume/git/fern/tutorials/final_pathway.png",
+  "/Volume/git/fern/tutorials/pathway_label.png",
+  "/Volume/git/fern/tutorials/condition_eg.png",
+  "/Volume/git/fern/tutorials/global_node.png",
+  "/Volume/git/fern/tutorials/global_eg.png",
+  "/Volume/git/fern/tutorials/default_node.png",
+  "/Volume/git/fern/tutorials/transfer_node.png",
+  "/Volume/git/fern/tutorials/end_node.png",
+  "/Volume/git/fern/tutorials/kb_node.png",
+  "/Volume/git/fern/tutorials/webhook_node.png",
+  "/Volume/git/fern/tutorials/add_global_prompt.png",
+  "/Volume/git/fern/tutorials/live_call_logs.png",
+  "/Volume/git/fern/tutorials/pathway_chat.png",
+  "/Volume/git/fern/tutorials/extract_variables.png",
+  "/Volume/git/fern/tutorials/pathwaylog_finetune.png",
+  "/Volume/git/fern/tutorials/finetuned.png",
+  "/Volume/git/fern/tutorials/finetune.png",
+]
+`;
+
+exports[`bland should replace all images with full path 2`] = `
+[
+  {
+    "added": undefined,
+    "count": 2,
+    "removed": true,
+    "value": "title: "Conversational Pathways"
+description: "Gain greater control over your AI agent and the conversational flow. [Create a Pathway Now!](https://app.bland.ai/dashboard?page=convo-pathways)"
+",
+  },
+  {
+    "added": true,
+    "count": 4,
+    "removed": undefined,
+    "value": "title: Conversational Pathways
+description: >-
+  Gain greater control over your AI agent and the conversational flow. [Create a
+  Pathway Now!](https://app.bland.ai/dashboard?page=convo-pathways)
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/node.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/node.png" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/new_pathway.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/new_pathway.png" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/final_pathway.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/final_pathway.png" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/pathway_label.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/pathway_label.png" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/condition_eg.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/condition_eg.png" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/global_node.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/global_node.png" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/global_eg.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/global_eg.png" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/default_node.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/default_node.png" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/global_node.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/global_node.png" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/transfer_node.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/transfer_node.png" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/end_node.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/end_node.png" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/kb_node.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/kb_node.png" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/webhook_node.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/webhook_node.png" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/add_global_prompt.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/add_global_prompt.png" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/live_call_logs.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/live_call_logs.png" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/pathway_chat.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/pathway_chat.png" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/extract_variables.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/extract_variables.png" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/pathwaylog_finetune.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/pathwaylog_finetune.png" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/finetuned.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/finetuned.png" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/finetune.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/Volume/git/fern/tutorials/finetune.png" />
+",
+  },
+]
+`;
+
+exports[`bland should replace all images with full path 3`] = `
+[
+  {
+    "added": undefined,
+    "count": 2,
+    "removed": true,
+    "value": "title: "Conversational Pathways"
+description: "Gain greater control over your AI agent and the conversational flow. [Create a Pathway Now!](https://app.bland.ai/dashboard?page=convo-pathways)"
+",
+  },
+  {
+    "added": true,
+    "count": 4,
+    "removed": undefined,
+    "value": "title: Conversational Pathways
+description: >-
+  Gain greater control over your AI agent and the conversational flow. [Create a
+  Pathway Now!](https://app.bland.ai/dashboard?page=convo-pathways)
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/node.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/new_pathway.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/final_pathway.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/pathway_label.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/condition_eg.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/global_node.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/global_eg.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/default_node.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/global_node.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/transfer_node.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/end_node.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/kb_node.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/webhook_node.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/add_global_prompt.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/live_call_logs.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/pathway_chat.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/extract_variables.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/pathwaylog_finetune.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/finetuned.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="/tutorials/finetune.png" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img style={{ borderRadius: "0.5rem" }} src="file:123e4567-e89b-12d3-a456-426655440000" />
+",
+  },
+]
+`;
+
+exports[`hume should replace all images with full path 1`] = `
+[
+  "/Volume/git/fern/my/docs/folder/img/add-tool-view.png",
+  "/Volume/git/fern/my/docs/folder/img/evi-tools-view.png",
+  "/Volume/git/fern/my/docs/folder/img/create-function-interface.png",
+]
+`;
+
+exports[`hume should replace all images with full path 2`] = `
+[
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "            ![image](./img/add-tool-view.png)
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "            ![image](/Volume/git/fern/my/docs/folder/img/add-tool-view.png)
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "      ![test](./img/add-tool-view.png)
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "      ![test](/Volume/git/fern/my/docs/folder/img/add-tool-view.png)
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "      <img src="./img/evi-tools-view.png" alt="EVI Tools page" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "      <img src="/Volume/git/fern/my/docs/folder/img/evi-tools-view.png" alt="EVI Tools page" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "      <img src="./img/create-function-interface.png" alt="EVI Create function interface" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "      <img src="/Volume/git/fern/my/docs/folder/img/create-function-interface.png" alt="EVI Create function interface" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "      <img src="./img/add-tool-view.png" alt="Add tool to configuration within the Hume portal"/>
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "      <img src="/Volume/git/fern/my/docs/folder/img/add-tool-view.png" alt="Add tool to configuration within the Hume portal"/>
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "---",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "---
+",
+  },
+]
+`;
+
+exports[`hume should replace all images with full path 3`] = `
+[
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "            ![image](./img/add-tool-view.png)
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "            ![image](file:123e4567-e89b-12d3-a456-426655440000)
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "      ![test](./img/add-tool-view.png)
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "      ![test](file:123e4567-e89b-12d3-a456-426655440000)
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "      <img src="./img/evi-tools-view.png" alt="EVI Tools page" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "      <img src="file:123e4567-e89b-12d3-a456-426655440000" alt="EVI Tools page" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "      <img src="./img/create-function-interface.png" alt="EVI Create function interface" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "      <img src="file:123e4567-e89b-12d3-a456-426655440000" alt="EVI Create function interface" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "      <img src="./img/add-tool-view.png" alt="Add tool to configuration within the Hume portal"/>
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "      <img src="file:123e4567-e89b-12d3-a456-426655440000" alt="Add tool to configuration within the Hume portal"/>
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "---",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "---
+",
+  },
+]
+`;
+
+exports[`multimedia-file should replace all images with full path 1`] = `
+[
+  "/Volume/git/fern/my/docs/folder/image.png",
+  "/Volume/git/fern/my/docs/folder/video.mp4",
+  "/Volume/git/something/image.png",
+  "/Volume/git/fern/my/another/Image.jpeg",
+  "/Volume/git/fern/my/docs/folder/file.pdf",
+]
+`;
+
+exports[`multimedia-file should replace all images with full path 2`] = `
+[
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "![Image](./image.png)
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "![Image](/Volume/git/fern/my/docs/folder/image.png)
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "  <source src="./video.mp4" type="video/mp4" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "  <source src="/Volume/git/fern/my/docs/folder/video.mp4" type="video/mp4" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "![Image](../../../../something/image.png)
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "![Image](/Volume/git/something/image.png)
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img src="../../another/Image.jpeg" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img src="/Volume/git/fern/my/another/Image.jpeg" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<embed src="./file.pdf" width="800px" height="2100px" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<embed src="/Volume/git/fern/my/docs/folder/file.pdf" width="800px" height="2100px" />
+",
+  },
+]
+`;
+
+exports[`multimedia-file should replace all images with full path 3`] = `
+[
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "![Image](./image.png)
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "![Image](file:123e4567-e89b-12d3-a456-426655440000)
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "  <source src="./video.mp4" type="video/mp4" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "  <source src="file:123e4567-e89b-12d3-a456-426655440000" type="video/mp4" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "![Image](../../../../something/image.png)
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "![Image](file:123e4567-e89b-12d3-a456-426655440000)
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img src="../../another/Image.jpeg" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img src="file:123e4567-e89b-12d3-a456-426655440000" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<embed src="./file.pdf" width="800px" height="2100px" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<embed src="file:123e4567-e89b-12d3-a456-426655440000" width="800px" height="2100px" />
+",
+  },
+]
+`;
+
+exports[`zep should replace all images with full path 1`] = `[]`;
+
+exports[`zep should replace all images with full path 2`] = `[]`;
+
+exports[`zep should replace all images with full path 3`] = `[]`;

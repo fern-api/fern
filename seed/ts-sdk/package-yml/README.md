@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedPackageYmlClient } from "@fern/package-yml";
 
-const seedPackageYml = new SeedPackageYmlClient();
+const seedPackageYml = new SeedPackageYmlClient({ environment: "YOUR_BASE_URL" });
 await seedPackageYml.echo("Hello world!");
 ```
 
@@ -28,7 +28,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedPackageYmlError } from '@fern/package-yml';
+import { SeedPackageYmlError } from "@fern/package-yml";
 
 try {
     await seedPackageYml.echo(...);
@@ -101,7 +101,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedPackageYmlClient } from '@fern/package-yml';
+import { SeedPackageYmlClient } from "@fern/package-yml";
 
 const seedPackageYml = new SeedPackageYmlClient({
     ...

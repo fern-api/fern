@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedCodeSamplesClient } from "@fern/code-samples";
 
-const seedCodeSamples = new SeedCodeSamplesClient();
+const seedCodeSamples = new SeedCodeSamplesClient({ environment: "YOUR_BASE_URL" });
 await seedCodeSamples.service.hello({
     numEvents: 5,
 });
@@ -44,7 +44,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedCodeSamplesError } from '@fern/code-samples';
+import { SeedCodeSamplesError } from "@fern/code-samples";
 
 try {
     await seedCodeSamples.hello(...);
@@ -117,7 +117,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedCodeSamplesClient } from '@fern/code-samples';
+import { SeedCodeSamplesClient } from "@fern/code-samples";
 
 const seedCodeSamples = new SeedCodeSamplesClient({
     ...

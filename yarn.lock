@@ -3450,7 +3450,7 @@ __metadata:
   resolution: "@fern-api/configuration@workspace:packages/cli/configuration"
   dependencies:
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/fdr-sdk": 0.97.0-bec92c652
+    "@fern-api/fdr-sdk": 0.98.0-rc1
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.552
@@ -3497,7 +3497,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/core@workspace:packages/core"
   dependencies:
-    "@fern-api/fdr-sdk": 0.97.0-bec92c652
+    "@fern-api/fdr-sdk": 0.98.0-rc1
     "@fern-api/venus-api-sdk": 0.0.38
     "@fern-fern/fdr-test-sdk": ^0.0.5297
     "@fern-fern/fiddle-sdk": ^0.0.552
@@ -3559,7 +3559,7 @@ __metadata:
   resolution: "@fern-api/docs-preview@workspace:packages/cli/docs-preview"
   dependencies:
     "@fern-api/docs-resolver": "workspace:*"
-    "@fern-api/fdr-sdk": 0.97.0-bec92c652
+    "@fern-api/fdr-sdk": 0.98.0-rc1
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-sdk": "workspace:*"
     "@fern-api/logger": "workspace:*"
@@ -3599,16 +3599,18 @@ __metadata:
   dependencies:
     "@fern-api/configuration": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/fdr-sdk": 0.97.0-bec92c652
+    "@fern-api/fdr-sdk": 0.98.0-rc1
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-sdk": "workspace:*"
+    "@fern-api/register": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@types/diff": ^5.2.1
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
+    dayjs: ^1.11.11
     depcheck: ^1.4.6
     diff: ^5.2.0
     eslint: ^8.56.0
@@ -3679,19 +3681,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/fdr-sdk@npm:0.97.0-bec92c652":
-  version: 0.97.0-bec92c652
-  resolution: "@fern-api/fdr-sdk@npm:0.97.0-bec92c652"
+"@fern-api/fdr-sdk@npm:0.98.0-rc1":
+  version: 0.98.0-rc1
+  resolution: "@fern-api/fdr-sdk@npm:0.98.0-rc1"
   dependencies:
     dayjs: ^1.11.11
     fast-deep-equal: ^3.1.3
     form-data: 4.0.0
+    formdata-node: ^6.0.3
     js-base64: 3.7.7
+    node-fetch: 2.7.0
     qs: 6.12.0
     tinycolor2: ^1.6.0
     title: ^3.5.3
     url-join: 4.0.1
-  checksum: 32a938be2d9fb770dbd9498b06b5598822ce4275ad36d40efec58ac27ad1b15f12fca332169ab18745365d055102c679df484972432f905fac9c1406484202a0
+  checksum: 5178c9e2454f19640580e49b22eccb7b95e1333935155e6d0eea4c9ee7c59174a44e7aed71ac262667d8e6ab7989582ba0ea5617665d737bb69a63d156e9a94e
   languageName: node
   linkType: hard
 
@@ -3966,6 +3970,7 @@ __metadata:
     "@fern-fern/ir-v43-sdk": 0.0.1
     "@fern-fern/ir-v44-sdk": 0.0.1
     "@fern-fern/ir-v45-sdk": 0.0.3
+    "@fern-fern/ir-v46-sdk": 0.0.1
     "@fern-fern/ir-v5-model": 0.0.3
     "@fern-fern/ir-v6-model": 0.0.33
     "@fern-fern/ir-v7-model": 0.0.2
@@ -4334,7 +4339,7 @@ __metadata:
     "@fern-api/configuration": "workspace:*"
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/fdr-sdk": 0.97.0-bec92c652
+    "@fern-api/fdr-sdk": 0.98.0-rc1
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-sdk": "workspace:*"
     "@fern-api/task-context": "workspace:*"
@@ -4361,7 +4366,7 @@ __metadata:
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/docs-resolver": "workspace:*"
-    "@fern-api/fdr-sdk": 0.97.0-bec92c652
+    "@fern-api/fdr-sdk": 0.98.0-rc1
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-migrations": "workspace:*"
@@ -5083,6 +5088,13 @@ __metadata:
   version: 0.0.3
   resolution: "@fern-fern/ir-v45-sdk@npm:0.0.3"
   checksum: 44a07b00c46d8630812ffd4a0337e9cf284541ca58bcf84b7420f8371496c1312c4b688090ab0191dc14e17f345a94f0bac093a75e758287966bb777e3742cd4
+  languageName: node
+  linkType: hard
+
+"@fern-fern/ir-v46-sdk@npm:0.0.1":
+  version: 0.0.1
+  resolution: "@fern-fern/ir-v46-sdk@npm:0.0.1"
+  checksum: c1dc3deecb49fb5c864ff109619648ca1e186fa6504c2f2b2e5f5a7d8188d9590576aded55abba4a346a8d9d4fb86e7f246131d49399dc3dbe5221fd30ef4591
   languageName: node
   linkType: hard
 

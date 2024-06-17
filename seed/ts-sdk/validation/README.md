@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedValidationClient } from "@fern/validation";
 
-const seedValidation = new SeedValidationClient();
+const seedValidation = new SeedValidationClient({ environment: "YOUR_BASE_URL" });
 await seedValidation.create({
     decimal: 1.1,
     even: 1,
@@ -46,7 +46,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedValidationError } from '@fern/validation';
+import { SeedValidationError } from "@fern/validation";
 
 try {
     await seedValidation.create(...);
@@ -119,7 +119,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedValidationClient } from '@fern/validation';
+import { SeedValidationClient } from "@fern/validation";
 
 const seedValidation = new SeedValidationClient({
     ...

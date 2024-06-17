@@ -1,21 +1,25 @@
 import { docsYml, WithoutQuestionMarks } from "@fern-api/configuration";
 import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
-import { APIV1Write, DocsV1Write } from "@fern-api/fdr-sdk";
+import { APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, relative, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import matter from "gray-matter";
-import { last, orderBy } from "lodash-es";
+import { kebabCase } from "lodash-es";
 import urlJoin from "url-join";
-import { convertDocsSnippetsConfigToFdr } from "./convertDocsSnippetsConfigToFdr";
-import { convertIrToNavigation } from "./convertIrToNavigation";
-import { extractDatetimeFromChangelogTitle } from "./extractDatetimeFromChangelogTitle";
-import { collectFilesFromDocsConfig } from "./getImageFilepathsToUpload";
-import { parseImagePaths, replaceImagePathsAndUrls } from "./parseImagePaths";
-import { replaceReferencedMarkdown } from "./replaceReferencedMarkdown";
+import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
+import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr";
+import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
+import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
+import { parseImagePaths, replaceImagePathsAndUrls } from "./utils/parseImagePaths";
+import { replaceReferencedMarkdown } from "./utils/replaceReferencedMarkdown";
 import { wrapWithHttps } from "./wrapWithHttps";
+
+dayjs.extend(utc);
 
 export interface FilePathPair {
     absoluteFilePath: AbsoluteFilePath;
@@ -112,7 +116,7 @@ export class DocsDefinitionResolver {
         });
 
         // postprocess markdown files after uploading all images to replace the image paths in the markdown files with the fileIDs
-        const basePath = this.getDocsBasePath() ?? "/";
+        const basePath = this.getDocsBasePath();
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = replaceImagePathsAndUrls(
                 markdown,
@@ -154,7 +158,12 @@ export class DocsDefinitionResolver {
         return resolve(this.docsWorkspace.absoluteFilepath, unresolvedFilepath);
     }
 
-    private toRelativeFilepath(filepath: AbsoluteFilePath): RelativeFilePath {
+    private toRelativeFilepath(filepath: AbsoluteFilePath): RelativeFilePath;
+    private toRelativeFilepath(filepath: AbsoluteFilePath | undefined): RelativeFilePath | undefined;
+    private toRelativeFilepath(filepath: AbsoluteFilePath | undefined): RelativeFilePath | undefined {
+        if (filepath == null) {
+            return undefined;
+        }
         return relative(this.docsWorkspace.absoluteFilepath, filepath);
     }
 
@@ -172,7 +181,7 @@ export class DocsDefinitionResolver {
         return mdxFilePathToSlug;
     }
 
-    private getDocsBasePath(): string | undefined {
+    private getDocsBasePath(): string {
         const url = new URL(wrapWithHttps(this.domain));
         return url.pathname;
     }
@@ -222,10 +231,11 @@ export class DocsDefinitionResolver {
     }
 
     private async convertNavigationConfig(): Promise<DocsV1Write.NavigationConfig> {
+        const slug = FernNavigation.SlugGenerator.init(FernNavigation.utils.slugjoin(this.getDocsBasePath()));
         switch (this.parsedDocsConfig.navigation.type) {
             case "untabbed": {
                 const items = await Promise.all(
-                    this.parsedDocsConfig.navigation.items.map((item) => this.convertNavigationItem(item))
+                    this.parsedDocsConfig.navigation.items.map((item) => this.convertNavigationItem(item, slug))
                 );
                 return { items };
             }
@@ -233,7 +243,8 @@ export class DocsDefinitionResolver {
                 return {
                     tabsV2: await this.convertTabbedNavigation(
                         this.parsedDocsConfig.navigation.items,
-                        this.parsedDocsConfig.tabs
+                        this.parsedDocsConfig.tabs,
+                        slug
                     )
                 };
             }
@@ -241,9 +252,11 @@ export class DocsDefinitionResolver {
                 const versions = await Promise.all(
                     this.parsedDocsConfig.navigation.versions.map(
                         async (version): Promise<DocsV1Write.VersionedNavigationConfigData> => {
+                            const versionSlug = slug.setVersionSlug(version.slug ?? kebabCase(version.version));
                             const convertedNavigation = await this.convertUnversionedNavigationConfig({
                                 navigationConfig: version.navigation,
-                                tabs: version.tabs
+                                tabs: version.tabs,
+                                parentSlug: versionSlug
                             });
                             return {
                                 version: version.version,
@@ -264,7 +277,10 @@ export class DocsDefinitionResolver {
         }
     }
 
-    private async convertNavigationItem(item: docsYml.DocsNavigationItem): Promise<DocsV1Write.NavigationItem> {
+    private async convertNavigationItem(
+        item: docsYml.DocsNavigationItem,
+        parentSlug: FernNavigation.SlugGenerator
+    ): Promise<DocsV1Write.NavigationItem> {
         switch (item.type) {
             case "page": {
                 return {
@@ -278,8 +294,13 @@ export class DocsDefinitionResolver {
                 };
             }
             case "section": {
+                const slug = parentSlug.apply({
+                    fullSlug: undefined, // TODO: implement fullSlug for sections when summary pages are supported
+                    skipUrlSlug: item.skipUrlSlug,
+                    urlSlug: item.slug ?? kebabCase(item.title)
+                });
                 const sectionItems = await Promise.all(
-                    item.contents.map((nestedItem) => this.convertNavigationItem(nestedItem))
+                    item.contents.map((nestedItem) => this.convertNavigationItem(nestedItem, slug))
                 );
                 return {
                     type: "section",
@@ -305,55 +326,18 @@ export class DocsDefinitionResolver {
                     readme: undefined
                 });
                 const apiDefinitionId = await this.registerApi({ ir, snippetsConfig });
-                const unsortedChangelogItems: { date: Date; pageId: RelativeFilePath }[] = [];
-                if (workspace.changelog != null) {
-                    for (const file of workspace.changelog.files) {
-                        const filename = last(file.absoluteFilepath.split("/"));
-                        if (filename == null) {
-                            continue;
-                        }
-                        const changelogDate = extractDatetimeFromChangelogTitle(filename);
-                        if (changelogDate == null) {
-                            continue;
-                        }
-                        const relativePath = this.toRelativeFilepath(file.absoluteFilepath);
-                        unsortedChangelogItems.push({ date: changelogDate, pageId: relativePath });
-                    }
-                }
-
-                // sort changelog items by date, in descending order
-                const changelogItems = orderBy(unsortedChangelogItems, (item) => item.date, "desc").map(
-                    (item): DocsV1Write.ChangelogItem => ({
-                        date: item.date.toISOString(),
-                        pageId: item.pageId
-                    })
+                const api = convertIrToApiDefinition(ir, apiDefinitionId);
+                const node = new ApiReferenceNodeConverter(
+                    item,
+                    api,
+                    parentSlug,
+                    workspace,
+                    this.docsWorkspace,
+                    this.taskContext,
+                    this.markdownFilesToFullSlugs
                 );
 
-                return {
-                    type: "api",
-                    title: item.title,
-                    icon: item.icon,
-                    api: apiDefinitionId,
-                    urlSlugOverride: item.slug,
-                    skipUrlSlug: item.skipUrlSlug,
-                    showErrors: item.showErrors,
-                    changelog:
-                        changelogItems.length > 0
-                            ? {
-                                  urlSlug: "changelog",
-                                  items: changelogItems
-                              }
-                            : undefined,
-                    hidden: item.hidden,
-                    navigation: convertIrToNavigation(
-                        ir,
-                        item.summaryAbsolutePath,
-                        item.navigation,
-                        this.docsWorkspace.absoluteFilepathToDocsConfig,
-                        this.markdownFilesToFullSlugs
-                    ),
-                    flattened: item.flattened
-                };
+                return { type: "apiV2", node: node.get() };
             }
             case "link": {
                 return {
@@ -369,15 +353,17 @@ export class DocsDefinitionResolver {
 
     private async convertUnversionedNavigationConfig({
         navigationConfig,
-        tabs
+        tabs,
+        parentSlug
     }: {
         navigationConfig: docsYml.UnversionedNavigationConfiguration;
         tabs: Record<string, docsYml.RawSchemas.TabConfig> | undefined;
+        parentSlug: FernNavigation.SlugGenerator;
     }): Promise<DocsV1Write.UnversionedNavigationConfig> {
         switch (navigationConfig.type) {
             case "untabbed": {
                 const untabbedItems = await Promise.all(
-                    navigationConfig.items.map((item) => this.convertNavigationItem(item))
+                    navigationConfig.items.map((item) => this.convertNavigationItem(item, parentSlug))
                 );
                 return {
                     items: untabbedItems
@@ -385,7 +371,7 @@ export class DocsDefinitionResolver {
             }
             case "tabbed": {
                 return {
-                    tabsV2: await this.convertTabbedNavigation(navigationConfig.items, tabs)
+                    tabsV2: await this.convertTabbedNavigation(navigationConfig.items, tabs, parentSlug)
                 };
             }
             default:
@@ -395,7 +381,8 @@ export class DocsDefinitionResolver {
 
     private async convertTabbedNavigation(
         items: docsYml.TabbedNavigation[],
-        tabs: Record<string, docsYml.RawSchemas.TabConfig> | undefined
+        tabs: Record<string, docsYml.RawSchemas.TabConfig> | undefined,
+        parentSlug: FernNavigation.SlugGenerator
     ): Promise<DocsV1Write.NavigationTabV2[]> {
         return Promise.all(
             items.map(async (tabbedItem): Promise<WithoutQuestionMarks<DocsV1Write.NavigationTabV2>> => {
@@ -425,8 +412,13 @@ export class DocsDefinitionResolver {
                     );
                 }
 
+                const slug = parentSlug.apply({
+                    skipUrlSlug: tabConfig.skipSlug,
+                    urlSlug: tabConfig.slug ?? kebabCase(tabConfig.displayName)
+                });
+
                 const tabbedItems = await Promise.all(
-                    tabbedItem.layout.map((item) => this.convertNavigationItem(item))
+                    tabbedItem.layout.map((item) => this.convertNavigationItem(item, slug))
                 );
 
                 return {

@@ -14121,19 +14121,13 @@ Note that there is an invisible character at the end of the path, this was to av
                     "value": {
                       "type": "unknown",
                       "value": {
-                        "type": "map",
+                        "type": "array",
                         "value": [
                           {
-                            "key": {
-                              "type": "string",
-                              "value": "0",
-                            },
+                            "type": "primitive",
                             "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string",
-                                "value": "example",
-                              },
+                              "type": "string",
+                              "value": "example",
                             },
                           },
                         ],
@@ -14492,19 +14486,13 @@ e.g.:
                     "value": {
                       "type": "unknown",
                       "value": {
-                        "type": "map",
+                        "type": "array",
                         "value": [
                           {
-                            "key": {
-                              "type": "string",
-                              "value": "0",
-                            },
+                            "type": "primitive",
                             "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string",
-                                "value": "example",
-                              },
+                              "type": "string",
+                              "value": "example",
                             },
                           },
                         ],

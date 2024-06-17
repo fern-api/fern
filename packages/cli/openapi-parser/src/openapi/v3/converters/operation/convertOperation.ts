@@ -44,11 +44,13 @@ export interface ConvertedStreamingOperation {
 export function convertOperation({
     context,
     pathItemContext,
-    operation
+    operation,
+    convertToWebhook
 }: {
     context: AbstractOpenAPIV3ParserContext;
     pathItemContext: PathItemContext;
     operation: OpenAPIV3.OperationObject;
+    convertToWebhook: boolean;
 }): ConvertedOperation | undefined {
     const shouldIgnore = getExtension<boolean>(operation, FernOpenAPIExtension.IGNORE);
     if (shouldIgnore != null && shouldIgnore) {
@@ -75,7 +77,7 @@ export function convertOperation({
         pagination
     };
 
-    if (isWebhook({ operation })) {
+    if (convertToWebhook) {
         const webhook = convertWebhookOperation({
             context,
             operationContext
@@ -119,10 +121,6 @@ export function convertOperation({
         streamFormat: undefined
     });
     return { type: "http", value: convertedHttpOperation };
-}
-
-function isWebhook({ operation }: { operation: OpenAPIV3.OperationObject }): boolean {
-    return getExtension<boolean>(operation, [FernOpenAPIExtension.WEBHOOK]) ?? false;
 }
 
 function getSdkGroupAndMethod(operation: OpenAPIV3.OperationObject): EndpointSdkName | undefined {

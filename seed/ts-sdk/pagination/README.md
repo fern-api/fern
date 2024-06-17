@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedPaginationClient, SeedPagination } from "@fern/pagination";
 
-const seedPagination = new SeedPaginationClient({ token: "YOUR_TOKEN" });
+const seedPagination = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await seedPagination.users.listWithCursorPagination({
     page: 1,
     perPage: 1,
@@ -47,7 +47,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedPaginationError } from '@fern/pagination';
+import { SeedPaginationError } from "@fern/pagination";
 
 try {
     await seedPagination.listWithCursorPagination(...);
@@ -120,7 +120,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedPaginationClient } from '@fern/pagination';
+import { SeedPaginationClient } from "@fern/pagination";
 
 const seedPagination = new SeedPaginationClient({
     ...

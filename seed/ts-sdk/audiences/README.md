@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedAudiencesClient } from "@fern/audiences";
 
-const seedAudiences = new SeedAudiencesClient();
+const seedAudiences = new SeedAudiencesClient({ environment: "YOUR_BASE_URL" });
 await seedAudiences.foo.find({
     optionalString: "string",
     publicProperty: "string",
@@ -46,7 +46,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedAudiencesError } from '@fern/audiences';
+import { SeedAudiencesError } from "@fern/audiences";
 
 try {
     await seedAudiences.find(...);
@@ -119,7 +119,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedAudiencesClient } from '@fern/audiences';
+import { SeedAudiencesClient } from "@fern/audiences";
 
 const seedAudiences = new SeedAudiencesClient({
     ...

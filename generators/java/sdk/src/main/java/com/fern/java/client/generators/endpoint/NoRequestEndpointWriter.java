@@ -77,6 +77,11 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
     }
 
     @Override
+    public Optional<ParameterSpec> requestParameterSpec() {
+        return Optional.empty();
+    }
+
+    @Override
     public CodeBlock getInitializeRequestCodeBlock(
             FieldSpec clientOptionsMember,
             GeneratedClientOptions clientOptions,

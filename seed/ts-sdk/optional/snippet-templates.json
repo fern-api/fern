@@ -11,7 +11,7 @@
             "identifierOverride": "endpoint_optional.sendOptionalBody"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedObjectsWithImports = new SeedObjectsWithImportsClient;\n",
+            "clientInstantiation": "const seedObjectsWithImports = new SeedObjectsWithImportsClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedObjectsWithImports.optional.sendOptionalBody(\n\t$FERN_INPUT\n)",

@@ -2020,107 +2020,95 @@ This error response may have one of the following \`type\` values:
               "items": {
                 "type": "unknown",
                 "value": {
-                  "type": "map",
+                  "type": "array",
                   "value": [
                     {
-                      "key": {
-                        "type": "string",
-                        "value": "0",
-                      },
-                      "value": {
-                        "type": "map",
-                        "value": [
-                          {
-                            "key": {
-                              "type": "string",
-                              "value": "id",
-                            },
+                      "type": "map",
+                      "value": [
+                        {
+                          "key": {
+                            "type": "string",
+                            "value": "id",
+                          },
+                          "value": {
+                            "type": "primitive",
                             "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string",
-                                "value": "da1331a9e9168ea91346",
-                              },
+                              "type": "string",
+                              "value": "da1331a9e9168ea91346",
                             },
                           },
-                          {
-                            "key": {
-                              "type": "string",
-                              "value": "label",
-                            },
+                        },
+                        {
+                          "key": {
+                            "type": "string",
+                            "value": "label",
+                          },
+                          "value": {
+                            "type": "primitive",
                             "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string",
-                                "value": "Checking *3456",
-                              },
+                              "type": "string",
+                              "value": "Checking *3456",
                             },
                           },
-                          {
-                            "key": {
-                              "type": "string",
-                              "value": "maskedNumber",
-                            },
+                        },
+                        {
+                          "key": {
+                            "type": "string",
+                            "value": "maskedNumber",
+                          },
+                          "value": {
+                            "type": "primitive",
                             "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string",
-                                "value": "*3456",
-                              },
+                              "type": "string",
+                              "value": "*3456",
                             },
                           },
-                        ],
-                      },
+                        },
+                      ],
                     },
                     {
-                      "key": {
-                        "type": "string",
-                        "value": "1",
-                      },
-                      "value": {
-                        "type": "map",
-                        "value": [
-                          {
-                            "key": {
-                              "type": "string",
-                              "value": "id",
-                            },
+                      "type": "map",
+                      "value": [
+                        {
+                          "key": {
+                            "type": "string",
+                            "value": "id",
+                          },
+                          "value": {
+                            "type": "primitive",
                             "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string",
-                                "value": "5c9b4e50a0401ef4eb2e",
-                              },
+                              "type": "string",
+                              "value": "5c9b4e50a0401ef4eb2e",
                             },
                           },
-                          {
-                            "key": {
-                              "type": "string",
-                              "value": "label",
-                            },
+                        },
+                        {
+                          "key": {
+                            "type": "string",
+                            "value": "label",
+                          },
+                          "value": {
+                            "type": "primitive",
                             "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string",
-                                "value": "Premiere Savings *1234",
-                              },
+                              "type": "string",
+                              "value": "Premiere Savings *1234",
                             },
                           },
-                          {
-                            "key": {
-                              "type": "string",
-                              "value": "maskedNumber",
-                            },
+                        },
+                        {
+                          "key": {
+                            "type": "string",
+                            "value": "maskedNumber",
+                          },
+                          "value": {
+                            "type": "primitive",
                             "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string",
-                                "value": "*1234",
-                              },
+                              "type": "string",
+                              "value": "*1234",
                             },
                           },
-                        ],
-                      },
+                        },
+                      ],
                     },
                   ],
                 },

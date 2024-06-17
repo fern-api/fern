@@ -14438,94 +14438,94 @@ client.tax_returns.list(params: {
                       "saldo_credito_fiscal_autorizado_anteriores_investigacion_desarrollo": 0,
                     },
                     "deducciones_personales": {
-                      "aportaciones_voluntarias_complementarias_al_sar": {
-                        "0": {
+                      "aportaciones_voluntarias_complementarias_al_sar": [
+                        {
                           "monto_deducible": 12.03,
                           "rfc_emisor": "ABC666666A99",
                         },
-                        "1": {
+                        {
                           "monto_deducible": 87.22,
                           "rfc_emisor": "ABC777777A99",
                         },
-                      },
-                      "donativos": {
-                        "0": {
+                      ],
+                      "donativos": [
+                        {
                           "monto_deducible": 10.03,
                           "rfc_emisor": "ABC555555A99",
                         },
-                      },
-                      "honorarios_medicos_dentales_hospitalarios": {
-                        "0": {
+                      ],
+                      "honorarios_medicos_dentales_hospitalarios": [
+                        {
                           "monto_deducible": 258.83,
                           "rfc_emisor": "ABC333333A33",
                         },
-                        "1": {
+                        {
                           "monto_deducible": 258.83,
                           "rfc_emisor": "ABC333333A33",
                         },
-                        "10": {
-                          "monto_deducible": 258.83,
-                          "rfc_emisor": "ABC333333A33",
-                        },
-                        "11": {
-                          "monto_deducible": 14183.1,
-                          "rfc_emisor": "ABC444444A55",
-                        },
-                        "12": {
-                          "monto_deducible": 1658,
-                          "rfc_emisor": "ABC444444A66",
-                        },
-                        "13": {
-                          "monto_deducible": 1600,
-                          "rfc_emisor": "ABC444444A77",
-                        },
-                        "14": {
-                          "monto_deducible": 1064,
-                          "rfc_emisor": "ABC444444A88",
-                        },
-                        "15": {
-                          "monto_deducible": 927.57,
-                          "rfc_emisor": "ABC444444A99",
-                        },
-                        "2": {
+                        {
                           "monto_deducible": 1000,
                           "rfc_emisor": "ABC444444A44",
                         },
-                        "3": {
+                        {
                           "monto_deducible": 258.83,
                           "rfc_emisor": "ABC333333A33",
                         },
-                        "4": {
+                        {
                           "monto_deducible": 258.83,
                           "rfc_emisor": "ABC333333A33",
                         },
-                        "5": {
+                        {
                           "monto_deducible": 258.83,
                           "rfc_emisor": "ABC333333A33",
                         },
-                        "6": {
+                        {
                           "monto_deducible": 258.83,
                           "rfc_emisor": "ABC333333A33",
                         },
-                        "7": {
+                        {
                           "monto_deducible": 502.34,
                           "rfc_emisor": "ABC444444A44",
                         },
-                        "8": {
+                        {
                           "monto_deducible": 258.83,
                           "rfc_emisor": "ABC333333A33",
                         },
-                        "9": {
+                        {
                           "monto_deducible": 258.83,
                           "rfc_emisor": "ABC333333A33",
                         },
-                      },
-                      "primas_por_seguros_de_gasto_medico": {
-                        "0": {
+                        {
+                          "monto_deducible": 258.83,
+                          "rfc_emisor": "ABC333333A33",
+                        },
+                        {
+                          "monto_deducible": 14183.1,
+                          "rfc_emisor": "ABC444444A55",
+                        },
+                        {
+                          "monto_deducible": 1658,
+                          "rfc_emisor": "ABC444444A66",
+                        },
+                        {
+                          "monto_deducible": 1600,
+                          "rfc_emisor": "ABC444444A77",
+                        },
+                        {
+                          "monto_deducible": 1064,
+                          "rfc_emisor": "ABC444444A88",
+                        },
+                        {
+                          "monto_deducible": 927.57,
+                          "rfc_emisor": "ABC444444A99",
+                        },
+                      ],
+                      "primas_por_seguros_de_gasto_medico": [
+                        {
                           "monto_deducible": 20.03,
                           "rfc_emisor": "ABC777777A99",
                         },
-                      },
+                      ],
                     },
                     "determinacion_impuesto": {
                       "accion_saldo_a_favor": "DEVOLUCIÓN",
@@ -14562,37 +14562,39 @@ client.tax_returns.list(params: {
                     "pdf": "=PDF-STRING=",
                     "receipt_pdf": "=PDF-STRING=",
                     "retenciones": {
-                      "dividendos": {},
-                      "servicios_profesionales": {
-                        "0": {
+                      "dividendos": {
+                        "key": "value",
+                      },
+                      "servicios_profesionales": [
+                        {
                           "monto_retenciones": 46000,
                           "retenciones_isr": 4600,
                           "rfc_retenedor": "ABC444444A00",
                         },
-                      },
-                      "sueldos_salarios": {
-                        "0": {
+                      ],
+                      "sueldos_salarios": [
+                        {
                           "monto_retenciones": 118263,
                           "retenciones_isr": 19497,
                           "rfc_retenedor": "ABC444444A99",
                         },
-                      },
+                      ],
                     },
                     "servicios_profesionales": {
                       "deducciones_autorizadas": {
                         "deducciones_autorizadas": 11870,
-                        "detalle_deducciones": {
-                          "0": {
+                        "detalle_deducciones": [
+                          {
                             "concepto": "GASOLINA Y MANTENIMIENTO DE TRANSPORTE",
                             "monto_detallado": 9682,
                             "tipo_deduccion": "GASTOS",
                           },
-                          "1": {
+                          {
                             "concepto": "COMPRAS Y GASTOS GENERALES",
                             "monto_detallado": 2188,
                             "tipo_deduccion": "GASTOS",
                           },
-                        },
+                        ],
                         "total_deducciones_autorizadas": 11870,
                       },
                       "ingresos": {
@@ -14617,15 +14619,15 @@ client.tax_returns.list(params: {
                       "ingreso_anual": 118263,
                       "ingresos_acumulables": 115998,
                       "ingresos_exentos": 2265,
-                      "retenedores": {
-                        "0": {
+                      "retenedores": [
+                        {
                           "ingreso_anual": 2265,
                           "ingresos_exentos": 118263,
                           "nombre_denominacion_razon_social": "ACME CORP",
                           "rfc_retenedor": "ABCD222222A22",
                           "subsidio_empleo": 0,
                         },
-                      },
+                      ],
                       "subsidio_empleo": 0,
                     },
                   },
@@ -15507,94 +15509,94 @@ client.tax_returns.list(params: {
                           "saldo_credito_fiscal_autorizado_anteriores_investigacion_desarrollo": 0,
                         },
                         "deducciones_personales": {
-                          "aportaciones_voluntarias_complementarias_al_sar": {
-                            "0": {
+                          "aportaciones_voluntarias_complementarias_al_sar": [
+                            {
                               "monto_deducible": 12.03,
                               "rfc_emisor": "ABC666666A99",
                             },
-                            "1": {
+                            {
                               "monto_deducible": 87.22,
                               "rfc_emisor": "ABC777777A99",
                             },
-                          },
-                          "donativos": {
-                            "0": {
+                          ],
+                          "donativos": [
+                            {
                               "monto_deducible": 10.03,
                               "rfc_emisor": "ABC555555A99",
                             },
-                          },
-                          "honorarios_medicos_dentales_hospitalarios": {
-                            "0": {
+                          ],
+                          "honorarios_medicos_dentales_hospitalarios": [
+                            {
                               "monto_deducible": 258.83,
                               "rfc_emisor": "ABC333333A33",
                             },
-                            "1": {
+                            {
                               "monto_deducible": 258.83,
                               "rfc_emisor": "ABC333333A33",
                             },
-                            "10": {
-                              "monto_deducible": 258.83,
-                              "rfc_emisor": "ABC333333A33",
-                            },
-                            "11": {
-                              "monto_deducible": 14183.1,
-                              "rfc_emisor": "ABC444444A55",
-                            },
-                            "12": {
-                              "monto_deducible": 1658,
-                              "rfc_emisor": "ABC444444A66",
-                            },
-                            "13": {
-                              "monto_deducible": 1600,
-                              "rfc_emisor": "ABC444444A77",
-                            },
-                            "14": {
-                              "monto_deducible": 1064,
-                              "rfc_emisor": "ABC444444A88",
-                            },
-                            "15": {
-                              "monto_deducible": 927.57,
-                              "rfc_emisor": "ABC444444A99",
-                            },
-                            "2": {
+                            {
                               "monto_deducible": 1000,
                               "rfc_emisor": "ABC444444A44",
                             },
-                            "3": {
+                            {
                               "monto_deducible": 258.83,
                               "rfc_emisor": "ABC333333A33",
                             },
-                            "4": {
+                            {
                               "monto_deducible": 258.83,
                               "rfc_emisor": "ABC333333A33",
                             },
-                            "5": {
+                            {
                               "monto_deducible": 258.83,
                               "rfc_emisor": "ABC333333A33",
                             },
-                            "6": {
+                            {
                               "monto_deducible": 258.83,
                               "rfc_emisor": "ABC333333A33",
                             },
-                            "7": {
+                            {
                               "monto_deducible": 502.34,
                               "rfc_emisor": "ABC444444A44",
                             },
-                            "8": {
+                            {
                               "monto_deducible": 258.83,
                               "rfc_emisor": "ABC333333A33",
                             },
-                            "9": {
+                            {
                               "monto_deducible": 258.83,
                               "rfc_emisor": "ABC333333A33",
                             },
-                          },
-                          "primas_por_seguros_de_gasto_medico": {
-                            "0": {
+                            {
+                              "monto_deducible": 258.83,
+                              "rfc_emisor": "ABC333333A33",
+                            },
+                            {
+                              "monto_deducible": 14183.1,
+                              "rfc_emisor": "ABC444444A55",
+                            },
+                            {
+                              "monto_deducible": 1658,
+                              "rfc_emisor": "ABC444444A66",
+                            },
+                            {
+                              "monto_deducible": 1600,
+                              "rfc_emisor": "ABC444444A77",
+                            },
+                            {
+                              "monto_deducible": 1064,
+                              "rfc_emisor": "ABC444444A88",
+                            },
+                            {
+                              "monto_deducible": 927.57,
+                              "rfc_emisor": "ABC444444A99",
+                            },
+                          ],
+                          "primas_por_seguros_de_gasto_medico": [
+                            {
                               "monto_deducible": 20.03,
                               "rfc_emisor": "ABC777777A99",
                             },
-                          },
+                          ],
                         },
                         "determinacion_impuesto": {
                           "accion_saldo_a_favor": "DEVOLUCIÓN",
@@ -15623,37 +15625,36 @@ client.tax_returns.list(params: {
                         "pdf": "=PDF-STRING=",
                         "receipt_pdf": "=PDF-STRING=",
                         "retenciones": {
-                          "dividendos": {},
-                          "servicios_profesionales": {
-                            "0": {
+                          "servicios_profesionales": [
+                            {
                               "monto_retenciones": 46000,
                               "retenciones_isr": 4600,
                               "rfc_retenedor": "ABC444444A00",
                             },
-                          },
-                          "sueldos_salarios": {
-                            "0": {
+                          ],
+                          "sueldos_salarios": [
+                            {
                               "monto_retenciones": 118263,
                               "retenciones_isr": 19497,
                               "rfc_retenedor": "ABC444444A99",
                             },
-                          },
+                          ],
                         },
                         "servicios_profesionales": {
                           "deducciones_autorizadas": {
                             "deducciones_autorizadas": 11870,
-                            "detalle_deducciones": {
-                              "0": {
+                            "detalle_deducciones": [
+                              {
                                 "concepto": "GASOLINA Y MANTENIMIENTO DE TRANSPORTE",
                                 "monto_detallado": 9682,
                                 "tipo_deduccion": "GASTOS",
                               },
-                              "1": {
+                              {
                                 "concepto": "COMPRAS Y GASTOS GENERALES",
                                 "monto_detallado": 2188,
                                 "tipo_deduccion": "GASTOS",
                               },
-                            },
+                            ],
                             "total_deducciones_autorizadas": 11870,
                           },
                           "ingresos": {
@@ -15678,15 +15679,15 @@ client.tax_returns.list(params: {
                           "ingreso_anual": 118263,
                           "ingresos_acumulables": 115998,
                           "ingresos_exentos": 2265,
-                          "retenedores": {
-                            "0": {
+                          "retenedores": [
+                            {
                               "ingreso_anual": 2265,
                               "ingresos_exentos": 118263,
                               "nombre_denominacion_razon_social": "ACME CORP",
                               "rfc_retenedor": "ABCD222222A22",
                               "subsidio_empleo": 0,
                             },
-                          },
+                          ],
                           "subsidio_empleo": 0,
                         },
                       },
@@ -16382,94 +16383,94 @@ client.tax_returns.list(params: {
                         "saldo_credito_fiscal_autorizado_anteriores_investigacion_desarrollo": 0,
                       },
                       "deducciones_personales": {
-                        "aportaciones_voluntarias_complementarias_al_sar": {
-                          "0": {
+                        "aportaciones_voluntarias_complementarias_al_sar": [
+                          {
                             "monto_deducible": 12.03,
                             "rfc_emisor": "ABC666666A99",
                           },
-                          "1": {
+                          {
                             "monto_deducible": 87.22,
                             "rfc_emisor": "ABC777777A99",
                           },
-                        },
-                        "donativos": {
-                          "0": {
+                        ],
+                        "donativos": [
+                          {
                             "monto_deducible": 10.03,
                             "rfc_emisor": "ABC555555A99",
                           },
-                        },
-                        "honorarios_medicos_dentales_hospitalarios": {
-                          "0": {
+                        ],
+                        "honorarios_medicos_dentales_hospitalarios": [
+                          {
                             "monto_deducible": 258.83,
                             "rfc_emisor": "ABC333333A33",
                           },
-                          "1": {
+                          {
                             "monto_deducible": 258.83,
                             "rfc_emisor": "ABC333333A33",
                           },
-                          "10": {
-                            "monto_deducible": 258.83,
-                            "rfc_emisor": "ABC333333A33",
-                          },
-                          "11": {
-                            "monto_deducible": 14183.1,
-                            "rfc_emisor": "ABC444444A55",
-                          },
-                          "12": {
-                            "monto_deducible": 1658,
-                            "rfc_emisor": "ABC444444A66",
-                          },
-                          "13": {
-                            "monto_deducible": 1600,
-                            "rfc_emisor": "ABC444444A77",
-                          },
-                          "14": {
-                            "monto_deducible": 1064,
-                            "rfc_emisor": "ABC444444A88",
-                          },
-                          "15": {
-                            "monto_deducible": 927.57,
-                            "rfc_emisor": "ABC444444A99",
-                          },
-                          "2": {
+                          {
                             "monto_deducible": 1000,
                             "rfc_emisor": "ABC444444A44",
                           },
-                          "3": {
+                          {
                             "monto_deducible": 258.83,
                             "rfc_emisor": "ABC333333A33",
                           },
-                          "4": {
+                          {
                             "monto_deducible": 258.83,
                             "rfc_emisor": "ABC333333A33",
                           },
-                          "5": {
+                          {
                             "monto_deducible": 258.83,
                             "rfc_emisor": "ABC333333A33",
                           },
-                          "6": {
+                          {
                             "monto_deducible": 258.83,
                             "rfc_emisor": "ABC333333A33",
                           },
-                          "7": {
+                          {
                             "monto_deducible": 502.34,
                             "rfc_emisor": "ABC444444A44",
                           },
-                          "8": {
+                          {
                             "monto_deducible": 258.83,
                             "rfc_emisor": "ABC333333A33",
                           },
-                          "9": {
+                          {
                             "monto_deducible": 258.83,
                             "rfc_emisor": "ABC333333A33",
                           },
-                        },
-                        "primas_por_seguros_de_gasto_medico": {
-                          "0": {
+                          {
+                            "monto_deducible": 258.83,
+                            "rfc_emisor": "ABC333333A33",
+                          },
+                          {
+                            "monto_deducible": 14183.1,
+                            "rfc_emisor": "ABC444444A55",
+                          },
+                          {
+                            "monto_deducible": 1658,
+                            "rfc_emisor": "ABC444444A66",
+                          },
+                          {
+                            "monto_deducible": 1600,
+                            "rfc_emisor": "ABC444444A77",
+                          },
+                          {
+                            "monto_deducible": 1064,
+                            "rfc_emisor": "ABC444444A88",
+                          },
+                          {
+                            "monto_deducible": 927.57,
+                            "rfc_emisor": "ABC444444A99",
+                          },
+                        ],
+                        "primas_por_seguros_de_gasto_medico": [
+                          {
                             "monto_deducible": 20.03,
                             "rfc_emisor": "ABC777777A99",
                           },
-                        },
+                        ],
                       },
                       "determinacion_impuesto": {
                         "accion_saldo_a_favor": "DEVOLUCIÓN",
@@ -16506,37 +16507,39 @@ client.tax_returns.list(params: {
                       "pdf": "=PDF-STRING=",
                       "receipt_pdf": "=PDF-STRING=",
                       "retenciones": {
-                        "dividendos": {},
-                        "servicios_profesionales": {
-                          "0": {
+                        "dividendos": {
+                          "key": "value",
+                        },
+                        "servicios_profesionales": [
+                          {
                             "monto_retenciones": 46000,
                             "retenciones_isr": 4600,
                             "rfc_retenedor": "ABC444444A00",
                           },
-                        },
-                        "sueldos_salarios": {
-                          "0": {
+                        ],
+                        "sueldos_salarios": [
+                          {
                             "monto_retenciones": 118263,
                             "retenciones_isr": 19497,
                             "rfc_retenedor": "ABC444444A99",
                           },
-                        },
+                        ],
                       },
                       "servicios_profesionales": {
                         "deducciones_autorizadas": {
                           "deducciones_autorizadas": 11870,
-                          "detalle_deducciones": {
-                            "0": {
+                          "detalle_deducciones": [
+                            {
                               "concepto": "GASOLINA Y MANTENIMIENTO DE TRANSPORTE",
                               "monto_detallado": 9682,
                               "tipo_deduccion": "GASTOS",
                             },
-                            "1": {
+                            {
                               "concepto": "COMPRAS Y GASTOS GENERALES",
                               "monto_detallado": 2188,
                               "tipo_deduccion": "GASTOS",
                             },
-                          },
+                          ],
                           "total_deducciones_autorizadas": 11870,
                         },
                         "ingresos": {
@@ -16561,15 +16564,15 @@ client.tax_returns.list(params: {
                         "ingreso_anual": 118263,
                         "ingresos_acumulables": 115998,
                         "ingresos_exentos": 2265,
-                        "retenedores": {
-                          "0": {
+                        "retenedores": [
+                          {
                             "ingreso_anual": 2265,
                             "ingresos_exentos": 118263,
                             "nombre_denominacion_razon_social": "ACME CORP",
                             "rfc_retenedor": "ABCD222222A22",
                             "subsidio_empleo": 0,
                           },
-                        },
+                        ],
                         "subsidio_empleo": 0,
                       },
                     },
@@ -47825,94 +47828,94 @@ client.tax_returns.list(params: {
                       "saldo_credito_fiscal_autorizado_anteriores_investigacion_desarrollo": 0,
                     },
                     "deducciones_personales": {
-                      "aportaciones_voluntarias_complementarias_al_sar": {
-                        "0": {
+                      "aportaciones_voluntarias_complementarias_al_sar": [
+                        {
                           "monto_deducible": 12.03,
                           "rfc_emisor": "ABC666666A99",
                         },
-                        "1": {
+                        {
                           "monto_deducible": 87.22,
                           "rfc_emisor": "ABC777777A99",
                         },
-                      },
-                      "donativos": {
-                        "0": {
+                      ],
+                      "donativos": [
+                        {
                           "monto_deducible": 10.03,
                           "rfc_emisor": "ABC555555A99",
                         },
-                      },
-                      "honorarios_medicos_dentales_hospitalarios": {
-                        "0": {
+                      ],
+                      "honorarios_medicos_dentales_hospitalarios": [
+                        {
                           "monto_deducible": 258.83,
                           "rfc_emisor": "ABC333333A33",
                         },
-                        "1": {
+                        {
                           "monto_deducible": 258.83,
                           "rfc_emisor": "ABC333333A33",
                         },
-                        "10": {
-                          "monto_deducible": 258.83,
-                          "rfc_emisor": "ABC333333A33",
-                        },
-                        "11": {
-                          "monto_deducible": 14183.1,
-                          "rfc_emisor": "ABC444444A55",
-                        },
-                        "12": {
-                          "monto_deducible": 1658,
-                          "rfc_emisor": "ABC444444A66",
-                        },
-                        "13": {
-                          "monto_deducible": 1600,
-                          "rfc_emisor": "ABC444444A77",
-                        },
-                        "14": {
-                          "monto_deducible": 1064,
-                          "rfc_emisor": "ABC444444A88",
-                        },
-                        "15": {
-                          "monto_deducible": 927.57,
-                          "rfc_emisor": "ABC444444A99",
-                        },
-                        "2": {
+                        {
                           "monto_deducible": 1000,
                           "rfc_emisor": "ABC444444A44",
                         },
-                        "3": {
+                        {
                           "monto_deducible": 258.83,
                           "rfc_emisor": "ABC333333A33",
                         },
-                        "4": {
+                        {
                           "monto_deducible": 258.83,
                           "rfc_emisor": "ABC333333A33",
                         },
-                        "5": {
+                        {
                           "monto_deducible": 258.83,
                           "rfc_emisor": "ABC333333A33",
                         },
-                        "6": {
+                        {
                           "monto_deducible": 258.83,
                           "rfc_emisor": "ABC333333A33",
                         },
-                        "7": {
+                        {
                           "monto_deducible": 502.34,
                           "rfc_emisor": "ABC444444A44",
                         },
-                        "8": {
+                        {
                           "monto_deducible": 258.83,
                           "rfc_emisor": "ABC333333A33",
                         },
-                        "9": {
+                        {
                           "monto_deducible": 258.83,
                           "rfc_emisor": "ABC333333A33",
                         },
-                      },
-                      "primas_por_seguros_de_gasto_medico": {
-                        "0": {
+                        {
+                          "monto_deducible": 258.83,
+                          "rfc_emisor": "ABC333333A33",
+                        },
+                        {
+                          "monto_deducible": 14183.1,
+                          "rfc_emisor": "ABC444444A55",
+                        },
+                        {
+                          "monto_deducible": 1658,
+                          "rfc_emisor": "ABC444444A66",
+                        },
+                        {
+                          "monto_deducible": 1600,
+                          "rfc_emisor": "ABC444444A77",
+                        },
+                        {
+                          "monto_deducible": 1064,
+                          "rfc_emisor": "ABC444444A88",
+                        },
+                        {
+                          "monto_deducible": 927.57,
+                          "rfc_emisor": "ABC444444A99",
+                        },
+                      ],
+                      "primas_por_seguros_de_gasto_medico": [
+                        {
                           "monto_deducible": 20.03,
                           "rfc_emisor": "ABC777777A99",
                         },
-                      },
+                      ],
                     },
                     "determinacion_impuesto": {
                       "accion_saldo_a_favor": "DEVOLUCIÓN",
@@ -47949,37 +47952,39 @@ client.tax_returns.list(params: {
                     "pdf": "=PDF-STRING=",
                     "receipt_pdf": "=PDF-STRING=",
                     "retenciones": {
-                      "dividendos": {},
-                      "servicios_profesionales": {
-                        "0": {
+                      "dividendos": {
+                        "key": "value",
+                      },
+                      "servicios_profesionales": [
+                        {
                           "monto_retenciones": 46000,
                           "retenciones_isr": 4600,
                           "rfc_retenedor": "ABC444444A00",
                         },
-                      },
-                      "sueldos_salarios": {
-                        "0": {
+                      ],
+                      "sueldos_salarios": [
+                        {
                           "monto_retenciones": 118263,
                           "retenciones_isr": 19497,
                           "rfc_retenedor": "ABC444444A99",
                         },
-                      },
+                      ],
                     },
                     "servicios_profesionales": {
                       "deducciones_autorizadas": {
                         "deducciones_autorizadas": 11870,
-                        "detalle_deducciones": {
-                          "0": {
+                        "detalle_deducciones": [
+                          {
                             "concepto": "GASOLINA Y MANTENIMIENTO DE TRANSPORTE",
                             "monto_detallado": 9682,
                             "tipo_deduccion": "GASTOS",
                           },
-                          "1": {
+                          {
                             "concepto": "COMPRAS Y GASTOS GENERALES",
                             "monto_detallado": 2188,
                             "tipo_deduccion": "GASTOS",
                           },
-                        },
+                        ],
                         "total_deducciones_autorizadas": 11870,
                       },
                       "ingresos": {
@@ -48004,15 +48009,15 @@ client.tax_returns.list(params: {
                       "ingreso_anual": 118263,
                       "ingresos_acumulables": 115998,
                       "ingresos_exentos": 2265,
-                      "retenedores": {
-                        "0": {
+                      "retenedores": [
+                        {
                           "ingreso_anual": 2265,
                           "ingresos_exentos": 118263,
                           "nombre_denominacion_razon_social": "ACME CORP",
                           "rfc_retenedor": "ABCD222222A22",
                           "subsidio_empleo": 0,
                         },
-                      },
+                      ],
                       "subsidio_empleo": 0,
                     },
                   },
@@ -48894,94 +48899,94 @@ client.tax_returns.list(params: {
                           "saldo_credito_fiscal_autorizado_anteriores_investigacion_desarrollo": 0,
                         },
                         "deducciones_personales": {
-                          "aportaciones_voluntarias_complementarias_al_sar": {
-                            "0": {
+                          "aportaciones_voluntarias_complementarias_al_sar": [
+                            {
                               "monto_deducible": 12.03,
                               "rfc_emisor": "ABC666666A99",
                             },
-                            "1": {
+                            {
                               "monto_deducible": 87.22,
                               "rfc_emisor": "ABC777777A99",
                             },
-                          },
-                          "donativos": {
-                            "0": {
+                          ],
+                          "donativos": [
+                            {
                               "monto_deducible": 10.03,
                               "rfc_emisor": "ABC555555A99",
                             },
-                          },
-                          "honorarios_medicos_dentales_hospitalarios": {
-                            "0": {
+                          ],
+                          "honorarios_medicos_dentales_hospitalarios": [
+                            {
                               "monto_deducible": 258.83,
                               "rfc_emisor": "ABC333333A33",
                             },
-                            "1": {
+                            {
                               "monto_deducible": 258.83,
                               "rfc_emisor": "ABC333333A33",
                             },
-                            "10": {
-                              "monto_deducible": 258.83,
-                              "rfc_emisor": "ABC333333A33",
-                            },
-                            "11": {
-                              "monto_deducible": 14183.1,
-                              "rfc_emisor": "ABC444444A55",
-                            },
-                            "12": {
-                              "monto_deducible": 1658,
-                              "rfc_emisor": "ABC444444A66",
-                            },
-                            "13": {
-                              "monto_deducible": 1600,
-                              "rfc_emisor": "ABC444444A77",
-                            },
-                            "14": {
-                              "monto_deducible": 1064,
-                              "rfc_emisor": "ABC444444A88",
-                            },
-                            "15": {
-                              "monto_deducible": 927.57,
-                              "rfc_emisor": "ABC444444A99",
-                            },
-                            "2": {
+                            {
                               "monto_deducible": 1000,
                               "rfc_emisor": "ABC444444A44",
                             },
-                            "3": {
+                            {
                               "monto_deducible": 258.83,
                               "rfc_emisor": "ABC333333A33",
                             },
-                            "4": {
+                            {
                               "monto_deducible": 258.83,
                               "rfc_emisor": "ABC333333A33",
                             },
-                            "5": {
+                            {
                               "monto_deducible": 258.83,
                               "rfc_emisor": "ABC333333A33",
                             },
-                            "6": {
+                            {
                               "monto_deducible": 258.83,
                               "rfc_emisor": "ABC333333A33",
                             },
-                            "7": {
+                            {
                               "monto_deducible": 502.34,
                               "rfc_emisor": "ABC444444A44",
                             },
-                            "8": {
+                            {
                               "monto_deducible": 258.83,
                               "rfc_emisor": "ABC333333A33",
                             },
-                            "9": {
+                            {
                               "monto_deducible": 258.83,
                               "rfc_emisor": "ABC333333A33",
                             },
-                          },
-                          "primas_por_seguros_de_gasto_medico": {
-                            "0": {
+                            {
+                              "monto_deducible": 258.83,
+                              "rfc_emisor": "ABC333333A33",
+                            },
+                            {
+                              "monto_deducible": 14183.1,
+                              "rfc_emisor": "ABC444444A55",
+                            },
+                            {
+                              "monto_deducible": 1658,
+                              "rfc_emisor": "ABC444444A66",
+                            },
+                            {
+                              "monto_deducible": 1600,
+                              "rfc_emisor": "ABC444444A77",
+                            },
+                            {
+                              "monto_deducible": 1064,
+                              "rfc_emisor": "ABC444444A88",
+                            },
+                            {
+                              "monto_deducible": 927.57,
+                              "rfc_emisor": "ABC444444A99",
+                            },
+                          ],
+                          "primas_por_seguros_de_gasto_medico": [
+                            {
                               "monto_deducible": 20.03,
                               "rfc_emisor": "ABC777777A99",
                             },
-                          },
+                          ],
                         },
                         "determinacion_impuesto": {
                           "accion_saldo_a_favor": "DEVOLUCIÓN",
@@ -49010,37 +49015,36 @@ client.tax_returns.list(params: {
                         "pdf": "=PDF-STRING=",
                         "receipt_pdf": "=PDF-STRING=",
                         "retenciones": {
-                          "dividendos": {},
-                          "servicios_profesionales": {
-                            "0": {
+                          "servicios_profesionales": [
+                            {
                               "monto_retenciones": 46000,
                               "retenciones_isr": 4600,
                               "rfc_retenedor": "ABC444444A00",
                             },
-                          },
-                          "sueldos_salarios": {
-                            "0": {
+                          ],
+                          "sueldos_salarios": [
+                            {
                               "monto_retenciones": 118263,
                               "retenciones_isr": 19497,
                               "rfc_retenedor": "ABC444444A99",
                             },
-                          },
+                          ],
                         },
                         "servicios_profesionales": {
                           "deducciones_autorizadas": {
                             "deducciones_autorizadas": 11870,
-                            "detalle_deducciones": {
-                              "0": {
+                            "detalle_deducciones": [
+                              {
                                 "concepto": "GASOLINA Y MANTENIMIENTO DE TRANSPORTE",
                                 "monto_detallado": 9682,
                                 "tipo_deduccion": "GASTOS",
                               },
-                              "1": {
+                              {
                                 "concepto": "COMPRAS Y GASTOS GENERALES",
                                 "monto_detallado": 2188,
                                 "tipo_deduccion": "GASTOS",
                               },
-                            },
+                            ],
                             "total_deducciones_autorizadas": 11870,
                           },
                           "ingresos": {
@@ -49065,15 +49069,15 @@ client.tax_returns.list(params: {
                           "ingreso_anual": 118263,
                           "ingresos_acumulables": 115998,
                           "ingresos_exentos": 2265,
-                          "retenedores": {
-                            "0": {
+                          "retenedores": [
+                            {
                               "ingreso_anual": 2265,
                               "ingresos_exentos": 118263,
                               "nombre_denominacion_razon_social": "ACME CORP",
                               "rfc_retenedor": "ABCD222222A22",
                               "subsidio_empleo": 0,
                             },
-                          },
+                          ],
                           "subsidio_empleo": 0,
                         },
                       },
@@ -49769,94 +49773,94 @@ client.tax_returns.list(params: {
                         "saldo_credito_fiscal_autorizado_anteriores_investigacion_desarrollo": 0,
                       },
                       "deducciones_personales": {
-                        "aportaciones_voluntarias_complementarias_al_sar": {
-                          "0": {
+                        "aportaciones_voluntarias_complementarias_al_sar": [
+                          {
                             "monto_deducible": 12.03,
                             "rfc_emisor": "ABC666666A99",
                           },
-                          "1": {
+                          {
                             "monto_deducible": 87.22,
                             "rfc_emisor": "ABC777777A99",
                           },
-                        },
-                        "donativos": {
-                          "0": {
+                        ],
+                        "donativos": [
+                          {
                             "monto_deducible": 10.03,
                             "rfc_emisor": "ABC555555A99",
                           },
-                        },
-                        "honorarios_medicos_dentales_hospitalarios": {
-                          "0": {
+                        ],
+                        "honorarios_medicos_dentales_hospitalarios": [
+                          {
                             "monto_deducible": 258.83,
                             "rfc_emisor": "ABC333333A33",
                           },
-                          "1": {
+                          {
                             "monto_deducible": 258.83,
                             "rfc_emisor": "ABC333333A33",
                           },
-                          "10": {
-                            "monto_deducible": 258.83,
-                            "rfc_emisor": "ABC333333A33",
-                          },
-                          "11": {
-                            "monto_deducible": 14183.1,
-                            "rfc_emisor": "ABC444444A55",
-                          },
-                          "12": {
-                            "monto_deducible": 1658,
-                            "rfc_emisor": "ABC444444A66",
-                          },
-                          "13": {
-                            "monto_deducible": 1600,
-                            "rfc_emisor": "ABC444444A77",
-                          },
-                          "14": {
-                            "monto_deducible": 1064,
-                            "rfc_emisor": "ABC444444A88",
-                          },
-                          "15": {
-                            "monto_deducible": 927.57,
-                            "rfc_emisor": "ABC444444A99",
-                          },
-                          "2": {
+                          {
                             "monto_deducible": 1000,
                             "rfc_emisor": "ABC444444A44",
                           },
-                          "3": {
+                          {
                             "monto_deducible": 258.83,
                             "rfc_emisor": "ABC333333A33",
                           },
-                          "4": {
+                          {
                             "monto_deducible": 258.83,
                             "rfc_emisor": "ABC333333A33",
                           },
-                          "5": {
+                          {
                             "monto_deducible": 258.83,
                             "rfc_emisor": "ABC333333A33",
                           },
-                          "6": {
+                          {
                             "monto_deducible": 258.83,
                             "rfc_emisor": "ABC333333A33",
                           },
-                          "7": {
+                          {
                             "monto_deducible": 502.34,
                             "rfc_emisor": "ABC444444A44",
                           },
-                          "8": {
+                          {
                             "monto_deducible": 258.83,
                             "rfc_emisor": "ABC333333A33",
                           },
-                          "9": {
+                          {
                             "monto_deducible": 258.83,
                             "rfc_emisor": "ABC333333A33",
                           },
-                        },
-                        "primas_por_seguros_de_gasto_medico": {
-                          "0": {
+                          {
+                            "monto_deducible": 258.83,
+                            "rfc_emisor": "ABC333333A33",
+                          },
+                          {
+                            "monto_deducible": 14183.1,
+                            "rfc_emisor": "ABC444444A55",
+                          },
+                          {
+                            "monto_deducible": 1658,
+                            "rfc_emisor": "ABC444444A66",
+                          },
+                          {
+                            "monto_deducible": 1600,
+                            "rfc_emisor": "ABC444444A77",
+                          },
+                          {
+                            "monto_deducible": 1064,
+                            "rfc_emisor": "ABC444444A88",
+                          },
+                          {
+                            "monto_deducible": 927.57,
+                            "rfc_emisor": "ABC444444A99",
+                          },
+                        ],
+                        "primas_por_seguros_de_gasto_medico": [
+                          {
                             "monto_deducible": 20.03,
                             "rfc_emisor": "ABC777777A99",
                           },
-                        },
+                        ],
                       },
                       "determinacion_impuesto": {
                         "accion_saldo_a_favor": "DEVOLUCIÓN",
@@ -49893,37 +49897,39 @@ client.tax_returns.list(params: {
                       "pdf": "=PDF-STRING=",
                       "receipt_pdf": "=PDF-STRING=",
                       "retenciones": {
-                        "dividendos": {},
-                        "servicios_profesionales": {
-                          "0": {
+                        "dividendos": {
+                          "key": "value",
+                        },
+                        "servicios_profesionales": [
+                          {
                             "monto_retenciones": 46000,
                             "retenciones_isr": 4600,
                             "rfc_retenedor": "ABC444444A00",
                           },
-                        },
-                        "sueldos_salarios": {
-                          "0": {
+                        ],
+                        "sueldos_salarios": [
+                          {
                             "monto_retenciones": 118263,
                             "retenciones_isr": 19497,
                             "rfc_retenedor": "ABC444444A99",
                           },
-                        },
+                        ],
                       },
                       "servicios_profesionales": {
                         "deducciones_autorizadas": {
                           "deducciones_autorizadas": 11870,
-                          "detalle_deducciones": {
-                            "0": {
+                          "detalle_deducciones": [
+                            {
                               "concepto": "GASOLINA Y MANTENIMIENTO DE TRANSPORTE",
                               "monto_detallado": 9682,
                               "tipo_deduccion": "GASTOS",
                             },
-                            "1": {
+                            {
                               "concepto": "COMPRAS Y GASTOS GENERALES",
                               "monto_detallado": 2188,
                               "tipo_deduccion": "GASTOS",
                             },
-                          },
+                          ],
                           "total_deducciones_autorizadas": 11870,
                         },
                         "ingresos": {
@@ -49948,15 +49954,15 @@ client.tax_returns.list(params: {
                         "ingreso_anual": 118263,
                         "ingresos_acumulables": 115998,
                         "ingresos_exentos": 2265,
-                        "retenedores": {
-                          "0": {
+                        "retenedores": [
+                          {
                             "ingreso_anual": 2265,
                             "ingresos_exentos": 118263,
                             "nombre_denominacion_razon_social": "ACME CORP",
                             "rfc_retenedor": "ABCD222222A22",
                             "subsidio_empleo": 0,
                           },
-                        },
+                        ],
                         "subsidio_empleo": 0,
                       },
                     },

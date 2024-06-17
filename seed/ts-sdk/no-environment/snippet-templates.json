@@ -11,7 +11,7 @@
             "identifierOverride": "endpoint_dummy.getDummy"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedNoEnvironment = new SeedNoEnvironmentClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": "const seedNoEnvironment = new SeedNoEnvironmentClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedNoEnvironment.dummy.getDummy()",

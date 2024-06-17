@@ -14,7 +14,7 @@ import {
     FilepathOrUrl,
     FontConfig,
     JavascriptConfig,
-    ParsedApiNavigationItem,
+    ParsedApiReferenceLayoutItem,
     ParsedDocsConfiguration,
     ParsedMetadataConfig,
     TabbedDocsNavigation,
@@ -537,28 +537,32 @@ async function convertNavigationItem({
                 rawConfig.snippets != null
                     ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets })
                     : undefined,
-            navigation: rawConfig.layout?.flatMap((item) => parseApiNavigationItem(item, absolutePathToConfig)) ?? [],
+            navigation:
+                rawConfig.layout?.flatMap((item) => parseApiReferenceLayoutItem(item, absolutePathToConfig)) ?? [],
             summaryAbsolutePath: resolveFilepath(rawConfig.summary, absolutePathToConfig),
             hidden: rawConfig.hidden ?? undefined,
             slug: rawConfig.slug,
             skipUrlSlug: rawConfig.skipSlug ?? false,
-            flattened: rawConfig.flattened ?? false
+            flattened: rawConfig.flattened ?? false,
+            alphabetized: rawConfig.alphabetized ?? false,
+            paginated: rawConfig.paginated ?? false
         };
     }
     if (isRawLinkConfig(rawConfig)) {
         return {
             type: "link",
             text: rawConfig.link,
-            url: rawConfig.href
+            url: rawConfig.href,
+            icon: rawConfig.icon
         };
     }
     assertNever(rawConfig);
 }
 
-function parseApiNavigationItem(
-    item: RawDocs.ApiNavigationItem,
+function parseApiReferenceLayoutItem(
+    item: RawDocs.ApiReferenceLayoutItem,
     absolutePathToConfig: AbsoluteFilePath
-): ParsedApiNavigationItem[] {
+): ParsedApiReferenceLayoutItem[] {
     if (typeof item === "string") {
         return [{ type: "item", value: item }];
     }
@@ -575,14 +579,67 @@ function parseApiNavigationItem(
                 hidden: item.hidden
             }
         ];
+    } else if (isRawLinkConfig(item)) {
+        return [
+            {
+                type: "link",
+                text: item.link,
+                url: item.href,
+                icon: item.icon
+            }
+        ];
+    } else if (isRawApiRefSectionConfiguration(item)) {
+        return [
+            {
+                type: "section",
+                title: item.section,
+                referencedSubpackages: item.referencedPackages ?? [],
+                summaryAbsolutePath: resolveFilepath(item.summary, absolutePathToConfig),
+                contents:
+                    item.contents?.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig)) ?? [],
+                slug: item.slug,
+                hidden: item.hidden,
+                skipUrlSlug: item.skipSlug,
+                icon: item.icon
+            }
+        ];
+    } else if (isRawApiRefEndpointConfiguration(item)) {
+        return [
+            {
+                type: "endpoint",
+                endpoint: item.endpoint,
+                title: item.title,
+                icon: item.icon,
+                slug: item.slug,
+                hidden: item.hidden
+            }
+        ];
     }
-
-    return Object.entries(item).map(([key, values]): ParsedApiNavigationItem.Subpackage => {
+    return Object.entries(item).map(([key, value]): ParsedApiReferenceLayoutItem.Package => {
+        if (isRawApiRefPackageConfiguration(value)) {
+            return {
+                type: "package",
+                title: value.title,
+                package: key,
+                summaryAbsolutePath: resolveFilepath(value.summary, absolutePathToConfig),
+                contents:
+                    value.contents?.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig)) ?? [],
+                slug: value.slug,
+                hidden: value.hidden,
+                skipUrlSlug: value.skipSlug,
+                icon: value.icon
+            };
+        }
         return {
-            type: "subpackage",
-            subpackageId: key,
-            summaryAbsolutePath: undefined, // TODO: implement subpackage summary page
-            items: values.flatMap((value) => parseApiNavigationItem(value, absolutePathToConfig))
+            type: "package",
+            title: undefined,
+            package: key,
+            summaryAbsolutePath: undefined,
+            contents: value.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig)),
+            hidden: false,
+            slug: undefined,
+            skipUrlSlug: false,
+            icon: undefined
         };
     });
 }
@@ -609,14 +666,29 @@ function isRawSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.Secti
     return (item as RawDocs.SectionConfiguration).section != null;
 }
 
-function isRawApiSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.ApiSectionConfiguration {
+function isRawApiSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.ApiReferenceConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as RawDocs.ApiSectionConfiguration).api != null;
+    return (item as RawDocs.ApiReferenceConfiguration).api != null;
 }
 
-function isRawLinkConfig(item: RawDocs.NavigationItem): item is RawDocs.LinkConfiguration {
+function isRawLinkConfig(item: unknown): item is RawDocs.LinkConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as RawDocs.LinkConfiguration).link != null;
+    RawDocs;
+    return isPlainObject(item) && typeof item.link === "string" && typeof item.href === "string";
+}
+
+function isRawApiRefSectionConfiguration(item: unknown): item is RawDocs.ApiReferenceSectionConfiguration {
+    return isPlainObject(item) && typeof item.section === "string" && Array.isArray(item.contents);
+}
+
+function isRawApiRefEndpointConfiguration(item: unknown): item is RawDocs.ApiReferenceEndpointConfiguration {
+    return isPlainObject(item) && typeof item.endpoint === "string";
+}
+
+function isRawApiRefPackageConfiguration(
+    item: RawDocs.ApiReferencePackageConfiguration
+): item is RawDocs.ApiReferencePackageConfigurationWithOptions {
+    return !Array.isArray(item);
 }
 
 export function resolveFilepath(unresolvedFilepath: string, absolutePath: AbsoluteFilePath): AbsoluteFilePath;
