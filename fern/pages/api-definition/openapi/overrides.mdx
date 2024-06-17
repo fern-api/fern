@@ -7,7 +7,7 @@ When you generate your OpenAPI from server code, you may want to further customi
 
 ## How to use OpenAPI Overrides
 
-To use OpenAPI Overrides, create a file named `openapi-overrides.yml`. You can put the file anywhere in your project. This file contains the overrides you want to apply to your OpenAPI spec.
+To use OpenAPI Overrides, create a file named `openapi-overrides.yml`. You can put the file anywhere in your project. This file contains the overrides you want to apply to your OpenAPI spec. For more on the extensions available, visit our page on [OpenAPI Extensions](https://buildwithfern.com/learn/api-definition/openapi/extensions).
 
 ### Example
 
@@ -49,16 +49,6 @@ paths:
                   {
                     history_item_id: "ja9xsmfGhxYcymxGcOGB",
                     request_id: "BF0BZg4IwLGBlaVjv9Im",
-                    voice_id: "21m00Tcm4TlvDq8ikWAM",
-                    model_id: "eleven_multilingual_v2",
-                    voice_name: "Rachel",
-                    voice_category: "premade",
-                    text: "This is an example sentence with streaming",
-                    date_unix: 1714650306,
-                    character_count_change_from: 17189,
-                    character_count_change_to: 17231,
-                    content_type: "audio/mpeg",
-                    state: "created",
                     settings:
                       {
                         similarity_boost: 0.5,
@@ -66,8 +56,6 @@ paths:
                         style: 0,
                         use_speaker_boost: true,
                       },
-                    feedback: null,
-                    share_link_id: null,
                     source: "TTS",
                   },
                 ]
@@ -78,33 +66,6 @@ paths:
       x-fern-sdk-group-name:
         - history
       x-fern-sdk-method-name: get
-      x-fern-examples:
-        - path-parameters:
-            history_item_id: "ja9xsmfGhxYcymxGcOGB"
-          response:
-            body:
-              history_item_id: "ja9xsmfGhxYcymxGcOGB"
-              request_id: "BF0BZg4IwLGBlaVjv9Im"
-              voice_id: "21m00Tcm4TlvDq8ikWAM"
-              model_id: "eleven_multilingual_v2"
-              voice_name: "Rachel"
-              voice_category: "premade"
-              text: "This is an example sentence with streaming"
-              date_unix: 1714650306
-              character_count_change_from: 17189
-              character_count_change_to: 17231
-              content_type: "audio/mpeg"
-              state: "created"
-              settings:
-                {
-                  "stability": 0.71,
-                  "similarity_boost": 0.5,
-                  "style": 0,
-                  "use_speaker_boost": true,
-                }
-              feedback: null
-              share_link_id: null
-              source: "TTS"
 ```
 </CodeBlock>
 
