@@ -232,6 +232,12 @@ navigation:
             path: ./pages/docs/developer-tools/gitlab.mdx
           - page: Vale
             path: ./pages/docs/developer-tools/vale.mdx
+      
+      - section: Support
+        contents: 
+          - page: Fern Experts
+            slug: fern-experts
+            path: ./pages/docs/support/fern-experts.mdx
 
       - section: Components
         slug: components
