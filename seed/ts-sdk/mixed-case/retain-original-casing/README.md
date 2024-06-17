@@ -18,8 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedMixedCaseClient } from "@fern/mixed-case";
 
-const seedMixedCase = new SeedMixedCaseClient({ environment: "YOUR_BASE_URL" });
-await seedMixedCase.service.getResource("rsc-xyz");
+const client = new SeedMixedCaseClient({ environment: "YOUR_BASE_URL" });
+await client.service.getResource("rsc-xyz");
 ```
 
 ## Request And Response Types
@@ -33,7 +33,7 @@ import { SeedMixedCase } from "@fern/mixed-case";
 const request: SeedMixedCase.ListResourcesRequest = {
     ...
 };
-const response = await seedMixedCase.listResources(request);
+const response = await client.listResources(request);
 ```
 
 ## Exception Handling
@@ -45,7 +45,7 @@ will be thrown.
 import { SeedMixedCaseError } from "@fern/mixed-case";
 
 try {
-    await seedMixedCase.getResource(...);
+    await client.getResource(...);
 } catch (err) {
     if (err instanceof SeedMixedCaseError) {
         console.log(err.statusCode);
@@ -70,7 +70,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedMixedCase.getResource(..., {
+const response = await client.getResource(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -80,7 +80,7 @@ const response = await seedMixedCase.getResource(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedMixedCase.getResource(..., {
+const response = await client.getResource(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -91,7 +91,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedMixedCase.getResource(..., {
+const response = await client.getResource(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -117,7 +117,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedMixedCaseClient } from "@fern/mixed-case";
 
-const seedMixedCase = new SeedMixedCaseClient({
+const client = new SeedMixedCaseClient({
     ...
     fetcher: // provide your implementation here
 });

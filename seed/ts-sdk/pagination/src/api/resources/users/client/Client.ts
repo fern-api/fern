@@ -193,7 +193,7 @@ export class Users {
      * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedPagination.users.listWithOffsetStepPagination({
+     *     await client.users.listWithOffsetStepPagination({
      *         page: 1,
      *         limit: 1,
      *         order: SeedPagination.Order.Asc

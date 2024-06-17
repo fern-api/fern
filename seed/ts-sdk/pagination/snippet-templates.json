@@ -217,10 +217,10 @@
             "identifierOverride": "endpoint_users.listWithOffsetStepPagination"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedPagination = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": "const client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedPagination.users.listWithOffsetStepPagination(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.users.listWithOffsetStepPagination(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
