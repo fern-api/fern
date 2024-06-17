@@ -3817,6 +3817,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
     "@fern-typescript/fetcher": "workspace:*"
+    "@types/jest": ^29.5.12
     "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
     "@types/node-fetch": 2.6.9
@@ -3824,6 +3825,7 @@ __metadata:
     eslint: ^8.56.0
     execa: ^5.1.1
     form-data: 4.0.0
+    jest: ^29.7.0
     jest-environment-jsdom: ^29.7.0
     js-yaml: ^4.1.0
     node-fetch: 2.7.0

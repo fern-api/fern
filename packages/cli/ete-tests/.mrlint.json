@@ -1,6 +1,7 @@
 {
   "type": "library",
   "private": true,
+  "testRunner": "jest",
   "rules": {
     "ts-config": {
       "exclude": [
