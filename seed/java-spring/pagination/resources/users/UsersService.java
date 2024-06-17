@@ -43,6 +43,14 @@ public interface UsersService {
       value = "",
       produces = "application/json"
   )
+  ListUsersPaginationResponse listWithOffsetStepPagination(
+      @RequestParam("page") Optional<Integer> page, @RequestParam("limit") Optional<Integer> limit,
+      @RequestParam("order") Optional<Order> order);
+
+  @GetMapping(
+      value = "",
+      produces = "application/json"
+  )
   ListUsersExtendedResponse listWithExtendedResults(@RequestParam("cursor") Optional<UUID> cursor);
 
   @GetMapping(

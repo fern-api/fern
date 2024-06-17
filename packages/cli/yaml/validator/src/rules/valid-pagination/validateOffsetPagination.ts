@@ -2,13 +2,8 @@ import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-genera
 import { RawSchemas } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { RuleViolation } from "../../Rule";
-import {
-    maybeFileFromResolvedType,
-    maybePrimitiveType,
-    resolvedTypeHasProperty,
-    resolveResponseType
-} from "../../utils/propertyValidatorUtils";
-import { validateQueryParameterProperty, validateResultsProperty } from "./validateUtils";
+import { maybeFileFromResolvedType, maybePrimitiveType, resolveResponseType } from "../../utils/propertyValidatorUtils";
+import { validateRequestProperty, validateResultsProperty } from "./validateUtils";
 
 export function validateOffsetPagination({
     endpointId,
@@ -27,6 +22,16 @@ export function validateOffsetPagination({
 
     violations.push(
         ...validateOffsetProperty({
+            endpointId,
+            endpoint,
+            typeResolver,
+            file,
+            offsetPagination
+        })
+    );
+
+    violations.push(
+        ...validateStepProperty({
             endpointId,
             endpoint,
             typeResolver,
@@ -70,36 +75,45 @@ function validateOffsetProperty({
     file: FernFileContext;
     offsetPagination: RawSchemas.OffsetPaginationSchema;
 }): RuleViolation[] {
-    return validateQueryParameterProperty({
+    return validateRequestProperty({
         endpointId,
         endpoint,
         typeResolver,
         file,
-        queryParameterProperty: offsetPagination.offset,
+        requestProperty: offsetPagination.offset,
         propertyValidator: {
             propertyID: "offset",
-            validate: isValidOffsetProperty
+            validate: isValidOffsetType
         }
     });
 }
 
-function isValidOffsetProperty({
+function validateStepProperty({
+    endpointId,
+    endpoint,
     typeResolver,
     file,
-    resolvedType,
-    propertyComponents
+    offsetPagination
 }: {
+    endpointId: string;
+    endpoint: RawSchemas.HttpEndpointSchema;
     typeResolver: TypeResolver;
     file: FernFileContext;
-    resolvedType: ResolvedType | undefined;
-    propertyComponents: string[];
-}): boolean {
-    return resolvedTypeHasProperty({
+    offsetPagination: RawSchemas.OffsetPaginationSchema;
+}): RuleViolation[] {
+    if (offsetPagination.step == null) {
+        return [];
+    }
+    return validateRequestProperty({
+        endpointId,
+        endpoint,
         typeResolver,
         file,
-        resolvedType,
-        propertyComponents,
-        validate: isValidOffsetType
+        requestProperty: offsetPagination.step,
+        propertyValidator: {
+            propertyID: "step",
+            validate: isValidOffsetType
+        }
     });
 }
 

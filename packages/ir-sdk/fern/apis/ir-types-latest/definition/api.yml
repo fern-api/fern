@@ -1,3 +1,5 @@
 name: ir
 docs: |
- Add a literal type to the example type definition, and add an ID field for examples.
+ - The unique webhook id is now required.
+ - Pagination endpoints not support request body properties.
+ - Offset pagination now supports a configurable `step` size request property.

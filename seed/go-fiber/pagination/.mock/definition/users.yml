@@ -108,6 +108,29 @@ service:
               the next page of results.
       response: ListUsersPaginationResponse
 
+    listWithOffsetStepPagination:
+      pagination:
+        offset: $request.page
+        results: $response.data
+        step: $request.limit
+      method: GET
+      path: ""
+      request:
+        name: ListUsersOffsetStepPaginationRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: Defaults to first page
+          limit:
+            type: optional<integer>
+            docs: |
+              The maxiumum number of elements to return.
+              This is also used as the step size in this
+              paginated endpoint.
+          order:
+            type: optional<Order>
+      response: ListUsersPaginationResponse
+
     listWithExtendedResults:
       pagination: 
         cursor: $request.cursor

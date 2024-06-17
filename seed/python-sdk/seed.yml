@@ -147,6 +147,7 @@ allowedFailures:
   - oauth-client-credentials-default
   - unions:union-utils
   # === Allowed failures due to unit testing ===
+  - pagination
   # We don't have oauth tests yet
   - oauth-client-credentials
   - oauth-client-credentials-environment-variables

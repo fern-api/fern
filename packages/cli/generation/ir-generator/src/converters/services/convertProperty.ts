@@ -192,10 +192,6 @@ function maybeObjectSchema(resolvedType: ResolvedType | undefined): RawSchemas.O
     return undefined;
 }
 
-export function getRequestProperty(value: string): string {
-    return value.substring("$request.".length);
-}
-
 export function getRequestPropertyComponents(value: string): string[] {
     const trimmed = value.substring("$request.".length);
     return trimmed?.split(".") ?? [];

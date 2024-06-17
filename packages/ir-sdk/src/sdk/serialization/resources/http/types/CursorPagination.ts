@@ -10,14 +10,14 @@ export const CursorPagination: core.serialization.ObjectSchema<
     serializers.CursorPagination.Raw,
     FernIr.CursorPagination
 > = core.serialization.objectWithoutOptionalProperties({
-    page: core.serialization.lazyObject(async () => (await import("../../..")).QueryParameter),
+    page: core.serialization.lazyObject(async () => (await import("../../..")).RequestProperty),
     next: core.serialization.lazyObject(async () => (await import("../../..")).ResponseProperty),
     results: core.serialization.lazyObject(async () => (await import("../../..")).ResponseProperty),
 });
 
 export declare namespace CursorPagination {
     interface Raw {
-        page: serializers.QueryParameter.Raw;
+        page: serializers.RequestProperty.Raw;
         next: serializers.ResponseProperty.Raw;
         results: serializers.ResponseProperty.Raw;
     }
