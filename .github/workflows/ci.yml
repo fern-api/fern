@@ -115,7 +115,7 @@ jobs:
         run: yarn install
 
       - name: Run tests
-        run: yarn test --maxWorkers 15 --ci --silent
+        run: yarn test --silent
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
