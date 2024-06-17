@@ -97,7 +97,7 @@ navigation:
         contents:
           - page: What is an SDK?
             path: ./pages/sdks/introduction/what-is-an-sdk.mdx
-          - page: Fern SDKs
+          - page: SDKs built with Fern
             path: ./pages/sdks/introduction/fern-sdks.mdx
       - section: Getting Started
         contents:
