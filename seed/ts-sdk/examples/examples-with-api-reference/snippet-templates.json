@@ -11,10 +11,10 @@
             "identifierOverride": "endpoint_.echo"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedExamples = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": "const client = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedExamples.echo(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.echo(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -63,10 +63,10 @@
             "identifierOverride": "endpoint_file/notification/service.getException"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedExamples = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": "const client = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedExamples.file.notification.service.getException(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.file.notification.service.getException(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -116,10 +116,10 @@
             "identifierOverride": "endpoint_file/service.getFile"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedExamples = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": "const client = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedExamples.file.service.getFile(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.file.service.getFile(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -169,10 +169,10 @@
             "identifierOverride": "endpoint_health/service.check"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedExamples = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": "const client = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedExamples.health.service.check(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.health.service.check(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -222,10 +222,10 @@
             "identifierOverride": "endpoint_health/service.ping"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedExamples = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": "const client = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedExamples.health.service.ping()",
+                "templateString": "await client.health.service.ping()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [],
@@ -246,10 +246,10 @@
             "identifierOverride": "endpoint_service.getMovie"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedExamples = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": "const client = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedExamples.service.getMovie(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.getMovie(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -299,10 +299,10 @@
             "identifierOverride": "endpoint_service.createMovie"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedExamples = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": "const client = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedExamples.service.createMovie(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.createMovie(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -500,10 +500,10 @@
             "identifierOverride": "endpoint_service.getMetadata"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedExamples = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": "const client = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedExamples.service.getMetadata(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.getMetadata(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -585,10 +585,10 @@
             "identifierOverride": "endpoint_service.getResponse"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedExamples = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": "const client = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedExamples.service.getResponse()",
+                "templateString": "await client.service.getResponse()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [],

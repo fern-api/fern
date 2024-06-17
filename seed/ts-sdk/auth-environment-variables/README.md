@@ -18,12 +18,12 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedAuthEnvironmentVariablesClient } from "@fern/auth-environment-variables";
 
-const seedAuthEnvironmentVariables = new SeedAuthEnvironmentVariablesClient({
+const client = new SeedAuthEnvironmentVariablesClient({
     environment: "YOUR_BASE_URL",
     apiKey: "YOUR_API_KEY",
     xAnotherHeader: "YOUR_X_ANOTHER_HEADER",
 });
-await seedAuthEnvironmentVariables.service.getWithApiKey();
+await client.service.getWithApiKey();
 ```
 
 ## Request And Response Types
@@ -37,7 +37,7 @@ import { SeedAuthEnvironmentVariables } from "@fern/auth-environment-variables";
 const request: SeedAuthEnvironmentVariables.HeaderAuthRequest = {
     ...
 };
-const response = await seedAuthEnvironmentVariables.getWithHeader(request);
+const response = await client.getWithHeader(request);
 ```
 
 ## Exception Handling
@@ -49,7 +49,7 @@ will be thrown.
 import { SeedAuthEnvironmentVariablesError } from "@fern/auth-environment-variables";
 
 try {
-    await seedAuthEnvironmentVariables.getWithApiKey(...);
+    await client.getWithApiKey(...);
 } catch (err) {
     if (err instanceof SeedAuthEnvironmentVariablesError) {
         console.log(err.statusCode);
@@ -74,7 +74,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedAuthEnvironmentVariables.getWithApiKey(..., {
+const response = await client.getWithApiKey(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -84,7 +84,7 @@ const response = await seedAuthEnvironmentVariables.getWithApiKey(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedAuthEnvironmentVariables.getWithApiKey(..., {
+const response = await client.getWithApiKey(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -95,7 +95,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedAuthEnvironmentVariables.getWithApiKey(..., {
+const response = await client.getWithApiKey(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -121,7 +121,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedAuthEnvironmentVariablesClient } from "@fern/auth-environment-variables";
 
-const seedAuthEnvironmentVariables = new SeedAuthEnvironmentVariablesClient({
+const client = new SeedAuthEnvironmentVariablesClient({
     ...
     fetcher: // provide your implementation here
 });

@@ -11,10 +11,10 @@
             "identifierOverride": "endpoint_package.test"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedNurseryApi = new SeedNurseryApiClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedNurseryApiClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedNurseryApi.package.test(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.package.test(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

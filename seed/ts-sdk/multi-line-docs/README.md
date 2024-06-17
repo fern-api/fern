@@ -18,8 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedMultiLineDocsClient } from "@fern/multi-line-docs";
 
-const seedMultiLineDocs = new SeedMultiLineDocsClient({ environment: "YOUR_BASE_URL" });
-await seedMultiLineDocs.user.createUser({
+const client = new SeedMultiLineDocsClient({ environment: "YOUR_BASE_URL" });
+await client.user.createUser({
     name: "string",
     age: 1,
 });
@@ -36,7 +36,7 @@ import { SeedMultiLineDocs } from "@fern/multi-line-docs";
 const request: SeedMultiLineDocs.CreateUserRequest = {
     ...
 };
-const response = await seedMultiLineDocs.createUser(request);
+const response = await client.createUser(request);
 ```
 
 ## Exception Handling
@@ -48,7 +48,7 @@ will be thrown.
 import { SeedMultiLineDocsError } from "@fern/multi-line-docs";
 
 try {
-    await seedMultiLineDocs.createUser(...);
+    await client.createUser(...);
 } catch (err) {
     if (err instanceof SeedMultiLineDocsError) {
         console.log(err.statusCode);
@@ -73,7 +73,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedMultiLineDocs.createUser(..., {
+const response = await client.createUser(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -83,7 +83,7 @@ const response = await seedMultiLineDocs.createUser(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedMultiLineDocs.createUser(..., {
+const response = await client.createUser(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -94,7 +94,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedMultiLineDocs.createUser(..., {
+const response = await client.createUser(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -120,7 +120,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedMultiLineDocsClient } from "@fern/multi-line-docs";
 
-const seedMultiLineDocs = new SeedMultiLineDocsClient({
+const client = new SeedMultiLineDocsClient({
     ...
     fetcher: // provide your implementation here
 });

@@ -19,8 +19,8 @@ Instantiate and use the client with the following:
 import * as environments from "../src/environments";
 import { SeedSingleUrlEnvironmentDefaultClient } from "@fern/single-url-environment-default";
 
-const seedSingleUrlEnvironmentDefault = new SeedSingleUrlEnvironmentDefaultClient({ token: "YOUR_TOKEN" });
-await seedSingleUrlEnvironmentDefault.dummy.getDummy();
+const client = new SeedSingleUrlEnvironmentDefaultClient({ token: "YOUR_TOKEN" });
+await client.dummy.getDummy();
 ```
 
 ## Exception Handling
@@ -32,7 +32,7 @@ will be thrown.
 import { SeedSingleUrlEnvironmentDefaultError } from "@fern/single-url-environment-default";
 
 try {
-    await seedSingleUrlEnvironmentDefault.getDummy(...);
+    await client.getDummy(...);
 } catch (err) {
     if (err instanceof SeedSingleUrlEnvironmentDefaultError) {
         console.log(err.statusCode);
@@ -57,7 +57,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedSingleUrlEnvironmentDefault.getDummy(..., {
+const response = await client.getDummy(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -67,7 +67,7 @@ const response = await seedSingleUrlEnvironmentDefault.getDummy(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedSingleUrlEnvironmentDefault.getDummy(..., {
+const response = await client.getDummy(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -78,7 +78,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedSingleUrlEnvironmentDefault.getDummy(..., {
+const response = await client.getDummy(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -104,7 +104,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedSingleUrlEnvironmentDefaultClient } from "@fern/single-url-environment-default";
 
-const seedSingleUrlEnvironmentDefault = new SeedSingleUrlEnvironmentDefaultClient({
+const client = new SeedSingleUrlEnvironmentDefaultClient({
     ...
     fetcher: // provide your implementation here
 });

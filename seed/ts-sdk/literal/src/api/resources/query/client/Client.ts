@@ -28,7 +28,7 @@ export class Query {
      * @param {Query.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedLiteral.query.send({
+     *     await client.query.send({
      *         prompt: "You are a helpful assistant",
      *         stream: false,
      *         query: "What is the weather today"

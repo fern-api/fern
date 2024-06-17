@@ -30,7 +30,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExamples.service.getMovie("movie-c06a4ad7")
+     *     await client.service.getMovie("movie-c06a4ad7")
      */
     public async getMovie(
         movieId: SeedExamples.MovieId,
@@ -91,7 +91,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExamples.service.createMovie({
+     *     await client.service.createMovie({
      *         id: "movie-c06a4ad7",
      *         prequel: "movie-cv9b914f",
      *         title: "The Boy and the Heron",
@@ -170,7 +170,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExamples.service.getMetadata({
+     *     await client.service.getMetadata({
      *         "X-API-Version": "0.0.1",
      *         shallow: false,
      *         tag: "development"
@@ -247,7 +247,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExamples.service.getResponse()
+     *     await client.service.getResponse()
      */
     public async getResponse(requestOptions?: Service.RequestOptions): Promise<SeedExamples.Response> {
         const _response = await core.fetcher({

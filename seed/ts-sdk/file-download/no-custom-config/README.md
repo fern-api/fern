@@ -18,8 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedFileDownloadClient } from "@fern/file-download";
 
-const seedFileDownload = new SeedFileDownloadClient({ environment: "YOUR_BASE_URL" });
-await seedFileDownload.service.downloadFile();
+const client = new SeedFileDownloadClient({ environment: "YOUR_BASE_URL" });
+await client.service.downloadFile();
 ```
 
 ## Exception Handling
@@ -31,7 +31,7 @@ will be thrown.
 import { SeedFileDownloadError } from "@fern/file-download";
 
 try {
-    await seedFileDownload.downloadFile(...);
+    await client.downloadFile(...);
 } catch (err) {
     if (err instanceof SeedFileDownloadError) {
         console.log(err.statusCode);
@@ -56,7 +56,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedFileDownload.downloadFile(..., {
+const response = await client.downloadFile(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -66,7 +66,7 @@ const response = await seedFileDownload.downloadFile(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedFileDownload.downloadFile(..., {
+const response = await client.downloadFile(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -77,7 +77,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedFileDownload.downloadFile(..., {
+const response = await client.downloadFile(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -103,7 +103,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedFileDownloadClient } from "@fern/file-download";
 
-const seedFileDownload = new SeedFileDownloadClient({
+const client = new SeedFileDownloadClient({
     ...
     fetcher: // provide your implementation here
 });

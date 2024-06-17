@@ -18,8 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedLiteralClient } from "@fern/literal";
 
-const seedLiteral = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
-await seedLiteral.headers.send({
+const client = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
+await client.headers.send({
     endpointVersion: "02-12-2024",
     async: true,
     query: "What is the weather today",
@@ -37,7 +37,7 @@ import { SeedLiteral } from "@fern/literal";
 const request: SeedLiteral.SendLiteralsInHeadersRequest = {
     ...
 };
-const response = await seedLiteral.send(request);
+const response = await client.send(request);
 ```
 
 ## Exception Handling
@@ -49,7 +49,7 @@ will be thrown.
 import { SeedLiteralError } from "@fern/literal";
 
 try {
-    await seedLiteral.send(...);
+    await client.send(...);
 } catch (err) {
     if (err instanceof SeedLiteralError) {
         console.log(err.statusCode);
@@ -74,7 +74,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedLiteral.send(..., {
+const response = await client.send(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -84,7 +84,7 @@ const response = await seedLiteral.send(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedLiteral.send(..., {
+const response = await client.send(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -95,7 +95,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedLiteral.send(..., {
+const response = await client.send(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -121,7 +121,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedLiteralClient } from "@fern/literal";
 
-const seedLiteral = new SeedLiteralClient({
+const client = new SeedLiteralClient({
     ...
     fetcher: // provide your implementation here
 });

@@ -18,8 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedIdempotencyHeadersClient, SeedIdempotencyHeaders } from "@fern/idempotency-headers";
 
-const seedIdempotencyHeaders = new SeedIdempotencyHeadersClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-await seedIdempotencyHeaders.payment.create({
+const client = new SeedIdempotencyHeadersClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+await client.payment.create({
     amount: 1,
     currency: SeedIdempotencyHeaders.Currency.Usd,
 });
@@ -36,7 +36,7 @@ import { SeedIdempotencyHeaders } from "@fern/idempotency-headers";
 const request: SeedIdempotencyHeaders.CreatePaymentRequest = {
     ...
 };
-const response = await seedIdempotencyHeaders.create(request);
+const response = await client.create(request);
 ```
 
 ## Exception Handling
@@ -48,7 +48,7 @@ will be thrown.
 import { SeedIdempotencyHeadersError } from "@fern/idempotency-headers";
 
 try {
-    await seedIdempotencyHeaders.create(...);
+    await client.create(...);
 } catch (err) {
     if (err instanceof SeedIdempotencyHeadersError) {
         console.log(err.statusCode);
@@ -73,7 +73,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedIdempotencyHeaders.create(..., {
+const response = await client.create(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -83,7 +83,7 @@ const response = await seedIdempotencyHeaders.create(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedIdempotencyHeaders.create(..., {
+const response = await client.create(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -94,7 +94,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedIdempotencyHeaders.create(..., {
+const response = await client.create(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -120,7 +120,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedIdempotencyHeadersClient } from "@fern/idempotency-headers";
 
-const seedIdempotencyHeaders = new SeedIdempotencyHeadersClient({
+const client = new SeedIdempotencyHeadersClient({
     ...
     fetcher: // provide your implementation here
 });

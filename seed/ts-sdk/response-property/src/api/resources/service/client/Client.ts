@@ -28,7 +28,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedResponseProperty.service.getMovie("string")
+     *     await client.service.getMovie("string")
      */
     public async getMovie(
         request: string,
@@ -86,7 +86,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedResponseProperty.service.getMovieDocs("string")
+     *     await client.service.getMovieDocs("string")
      */
     public async getMovieDocs(
         request: string,
@@ -146,7 +146,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedResponseProperty.service.getMovieName("string")
+     *     await client.service.getMovieName("string")
      */
     public async getMovieName(
         request: string,
@@ -206,7 +206,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedResponseProperty.service.getMovieMetadata("string")
+     *     await client.service.getMovieMetadata("string")
      */
     public async getMovieMetadata(
         request: string,
@@ -266,7 +266,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedResponseProperty.service.getOptionalMovie("string")
+     *     await client.service.getOptionalMovie("string")
      */
     public async getOptionalMovie(
         request: string,
@@ -326,7 +326,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedResponseProperty.service.getOptionalMovieDocs("string")
+     *     await client.service.getOptionalMovieDocs("string")
      */
     public async getOptionalMovieDocs(
         request: string,
@@ -386,7 +386,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedResponseProperty.service.getOptionalMovieName("string")
+     *     await client.service.getOptionalMovieName("string")
      */
     public async getOptionalMovieName(
         request: string,

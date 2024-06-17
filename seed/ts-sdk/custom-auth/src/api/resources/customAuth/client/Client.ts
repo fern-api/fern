@@ -32,7 +32,7 @@ export class CustomAuth {
      * @throws {@link SeedCustomAuth.UnauthorizedRequest}
      *
      * @example
-     *     await seedCustomAuth.customAuth.getWithCustomAuth()
+     *     await client.customAuth.getWithCustomAuth()
      */
     public async getWithCustomAuth(requestOptions?: CustomAuth.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
@@ -104,7 +104,7 @@ export class CustomAuth {
      * @throws {@link SeedCustomAuth.BadRequest}
      *
      * @example
-     *     await seedCustomAuth.customAuth.postWithCustomAuth({
+     *     await client.customAuth.postWithCustomAuth({
      *         "key": "value"
      *     })
      */

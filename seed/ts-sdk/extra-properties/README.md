@@ -18,8 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedExtraPropertiesClient } from "@fern/extra-properties";
 
-const seedExtraProperties = new SeedExtraPropertiesClient({ environment: "YOUR_BASE_URL" });
-await seedExtraProperties.user.createUser({
+const client = new SeedExtraPropertiesClient({ environment: "YOUR_BASE_URL" });
+await client.user.createUser({
     type: "CreateUserRequest",
     version: "v1",
     name: "string",
@@ -37,7 +37,7 @@ import { SeedExtraProperties } from "@fern/extra-properties";
 const request: SeedExtraProperties.CreateUserRequest = {
     ...
 };
-const response = await seedExtraProperties.createUser(request);
+const response = await client.createUser(request);
 ```
 
 ## Exception Handling
@@ -49,7 +49,7 @@ will be thrown.
 import { SeedExtraPropertiesError } from "@fern/extra-properties";
 
 try {
-    await seedExtraProperties.createUser(...);
+    await client.createUser(...);
 } catch (err) {
     if (err instanceof SeedExtraPropertiesError) {
         console.log(err.statusCode);
@@ -74,7 +74,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedExtraProperties.createUser(..., {
+const response = await client.createUser(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -84,7 +84,7 @@ const response = await seedExtraProperties.createUser(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedExtraProperties.createUser(..., {
+const response = await client.createUser(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -95,7 +95,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedExtraProperties.createUser(..., {
+const response = await client.createUser(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -121,7 +121,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedExtraPropertiesClient } from "@fern/extra-properties";
 
-const seedExtraProperties = new SeedExtraPropertiesClient({
+const client = new SeedExtraPropertiesClient({
     ...
     fetcher: // provide your implementation here
 });

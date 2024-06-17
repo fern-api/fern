@@ -11,10 +11,10 @@
             "identifierOverride": "endpoint_property-based-error.ThrowError"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedErrorProperty = new SeedErrorPropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedErrorPropertyClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedErrorProperty.propertyBasedError.throwError()",
+                "templateString": "await client.propertyBasedError.throwError()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [],

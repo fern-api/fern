@@ -11,10 +11,10 @@
             "identifierOverride": "endpoint_service.getWithBearerToken"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedBearerTokenEnvironmentVariable = new SeedBearerTokenEnvironmentVariableClient({ environment: \"YOUR_BASE_URL\", apiKey: \"YOUR_API_KEY\" });\n",
+            "clientInstantiation": "const client = new SeedBearerTokenEnvironmentVariableClient({ environment: \"YOUR_BASE_URL\", apiKey: \"YOUR_API_KEY\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedBearerTokenEnvironmentVariable.service.getWithBearerToken()",
+                "templateString": "await client.service.getWithBearerToken()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [],

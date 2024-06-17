@@ -28,7 +28,7 @@ export class Union {
      * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedUnions.union.get("string")
+     *     await client.union.get("string")
      */
     public async get(id: string, requestOptions?: Union.RequestOptions): Promise<SeedUnions.Shape> {
         const _response = await core.fetcher({
@@ -82,7 +82,7 @@ export class Union {
      * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedUnions.union.update({
+     *     await client.union.update({
      *         type: "circle",
      *         id: "string",
      *         radius: 1.1

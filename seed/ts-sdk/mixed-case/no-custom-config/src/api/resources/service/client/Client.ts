@@ -28,7 +28,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedMixedCase.service.getResource("rsc-xyz")
+     *     await client.service.getResource("rsc-xyz")
      */
     public async getResource(
         resourceId: string,
@@ -88,7 +88,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedMixedCase.service.listResources({
+     *     await client.service.listResources({
      *         pageLimit: 10,
      *         beforeDate: "2023-01-01"
      *     })

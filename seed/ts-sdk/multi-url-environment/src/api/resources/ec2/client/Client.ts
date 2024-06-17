@@ -32,7 +32,7 @@ export class Ec2 {
      * @param {Ec2.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedMultiUrlEnvironment.ec2.bootInstance({
+     *     await client.ec2.bootInstance({
      *         size: "string"
      *     })
      */

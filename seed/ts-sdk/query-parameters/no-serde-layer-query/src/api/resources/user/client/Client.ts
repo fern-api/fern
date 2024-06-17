@@ -27,7 +27,7 @@ export class User {
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedQueryParameters.user.getUsername({
+     *     await client.user.getUsername({
      *         limit: 1,
      *         id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *         date: "2023-01-15",

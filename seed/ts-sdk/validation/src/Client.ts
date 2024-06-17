@@ -28,7 +28,7 @@ export class SeedValidationClient {
      * @param {SeedValidationClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedValidation.create({
+     *     await client.create({
      *         decimal: 1.1,
      *         even: 1,
      *         name: "string"
@@ -90,7 +90,7 @@ export class SeedValidationClient {
      * @param {SeedValidationClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedValidation.get({
+     *     await client.get({
      *         decimal: 1.1,
      *         even: 1,
      *         name: "string"

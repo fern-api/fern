@@ -25,7 +25,7 @@ export class Folder {
      * @param {Folder.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedApi.folder.foo()
+     *     await client.folder.foo()
      */
     public async foo(requestOptions?: Folder.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
