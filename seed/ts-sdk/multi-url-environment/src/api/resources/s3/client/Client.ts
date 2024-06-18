@@ -32,7 +32,7 @@ export class S3 {
      * @param {S3.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedMultiUrlEnvironment.s3.getPresignedUrl({
+     *     await client.s3.getPresignedUrl({
      *         s3Key: "string"
      *     })
      */

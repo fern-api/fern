@@ -30,7 +30,7 @@ export class Homepage {
      * @param {Homepage.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.homepage.getHomepageProblems()
+     *     await client.homepage.getHomepageProblems()
      */
     public async getHomepageProblems(requestOptions?: Homepage.RequestOptions): Promise<SeedTrace.ProblemId[]> {
         const _response = await core.fetcher({
@@ -92,7 +92,7 @@ export class Homepage {
      * @param {Homepage.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.homepage.setHomepageProblems(["string"])
+     *     await client.homepage.setHomepageProblems(["string"])
      */
     public async setHomepageProblems(
         request: SeedTrace.ProblemId[],

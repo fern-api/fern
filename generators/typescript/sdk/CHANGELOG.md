@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.23.3] - 2024-06-17
+
+- Fix: The NPM publish job is _not_ generated if the token environment variable is not specified.
+- Improvement: The snippets now use the `client` variable name like so:
+
+  ```ts
+  import { AcmeClient } from "acme";
+
+  const client = new AcmeClient({ apiKey: "YOUR_API_KEY" });
+  await client.users.create({
+    firstName: "john",
+    lastName: "doe"
+  });
+  ```
+
 ## [0.23.2] - 2024-06-14
 
 - Fix: Client constructor snippets now include an `environment` property whenever it's required.

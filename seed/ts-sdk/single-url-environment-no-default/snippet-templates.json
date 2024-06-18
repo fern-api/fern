@@ -11,10 +11,10 @@
             "identifierOverride": "endpoint_dummy.getDummy"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedSingleUrlEnvironmentNoDefault = new SeedSingleUrlEnvironmentNoDefaultClient({ environment: environments.SeedSingleUrlEnvironmentNoDefaultEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": "const client = new SeedSingleUrlEnvironmentNoDefaultClient({ environment: environments.SeedSingleUrlEnvironmentNoDefaultEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedSingleUrlEnvironmentNoDefault.dummy.getDummy()",
+                "templateString": "await client.dummy.getDummy()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [],

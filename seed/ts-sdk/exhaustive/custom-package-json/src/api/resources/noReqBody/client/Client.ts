@@ -27,7 +27,7 @@ export class NoReqBody {
      * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.noReqBody.getWithNoRequestBody()
+     *     await client.noReqBody.getWithNoRequestBody()
      */
     public async getWithNoRequestBody(
         requestOptions?: NoReqBody.RequestOptions
@@ -70,7 +70,7 @@ export class NoReqBody {
      * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.noReqBody.postWithNoRequestBody()
+     *     await client.noReqBody.postWithNoRequestBody()
      */
     public async postWithNoRequestBody(
         requestOptions?: NoReqBody.RequestOptions

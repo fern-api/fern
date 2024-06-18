@@ -31,7 +31,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedAuthEnvironmentVariables.service.getWithApiKey()
+     *     await client.service.getWithApiKey()
      */
     public async getWithApiKey(requestOptions?: Service.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
@@ -89,7 +89,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedAuthEnvironmentVariables.service.getWithHeader({
+     *     await client.service.getWithHeader({
      *         xEndpointHeader: "string"
      *     })
      */

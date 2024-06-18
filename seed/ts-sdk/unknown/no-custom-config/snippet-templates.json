@@ -11,10 +11,10 @@
             "identifierOverride": "endpoint_unknown.post"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedUnknownAsAny = new SeedUnknownAsAnyClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedUnknownAsAnyClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedUnknownAsAny.unknown.post(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.unknown.post(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

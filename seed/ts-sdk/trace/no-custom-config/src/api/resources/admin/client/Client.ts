@@ -32,7 +32,7 @@ export class Admin {
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.admin.updateTestSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+     *     await client.admin.updateTestSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
      *         type: "stopped"
      *     })
      */
@@ -99,7 +99,7 @@ export class Admin {
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.admin.sendTestSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+     *     await client.admin.sendTestSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
      *         updateTime: new Date("2024-01-15T09:30:00.000Z"),
      *         updateInfo: {
      *             type: "running",
@@ -170,7 +170,7 @@ export class Admin {
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.admin.updateWorkspaceSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+     *     await client.admin.updateWorkspaceSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
      *         type: "stopped"
      *     })
      */
@@ -237,7 +237,7 @@ export class Admin {
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.admin.sendWorkspaceSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+     *     await client.admin.sendWorkspaceSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
      *         updateTime: new Date("2024-01-15T09:30:00.000Z"),
      *         updateInfo: {
      *             type: "running",
@@ -309,7 +309,7 @@ export class Admin {
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.admin.storeTracedTestCase("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "string", {
+     *     await client.admin.storeTracedTestCase("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "string", {
      *         result: {
      *             result: {},
      *             stdout: "string"
@@ -394,7 +394,7 @@ export class Admin {
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.admin.storeTracedTestCaseV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "string", [{
+     *     await client.admin.storeTracedTestCaseV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "string", [{
      *             submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *             lineNumber: 1,
      *             file: {},
@@ -473,7 +473,7 @@ export class Admin {
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.admin.storeTracedWorkspace("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+     *     await client.admin.storeTracedWorkspace("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
      *         workspaceRunDetails: {
      *             exceptionV2: {
      *                 type: "generic"
@@ -559,7 +559,7 @@ export class Admin {
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.admin.storeTracedWorkspaceV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", [{
+     *     await client.admin.storeTracedWorkspaceV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", [{
      *             submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *             lineNumber: 1,
      *             file: {},

@@ -29,7 +29,7 @@ export class SeedPackageYmlClient {
      * @param {SeedPackageYmlClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedPackageYml.echo("Hello world!")
+     *     await client.echo("Hello world!")
      */
     public async echo(request: string, requestOptions?: SeedPackageYmlClient.RequestOptions): Promise<string> {
         const _response = await core.fetcher({

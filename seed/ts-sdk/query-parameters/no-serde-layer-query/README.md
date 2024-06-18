@@ -18,8 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedQueryParametersClient } from "@fern/query-parameters";
 
-const seedQueryParameters = new SeedQueryParametersClient({ environment: "YOUR_BASE_URL" });
-await seedQueryParameters.user.getUsername({
+const client = new SeedQueryParametersClient({ environment: "YOUR_BASE_URL" });
+await client.user.getUsername({
     limit: 1,
     id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     date: "2023-01-15",
@@ -69,7 +69,7 @@ import { SeedQueryParameters } from "@fern/query-parameters";
 const request: SeedQueryParameters.GetUsersRequest = {
     ...
 };
-const response = await seedQueryParameters.getUsername(request);
+const response = await client.getUsername(request);
 ```
 
 ## Exception Handling
@@ -81,7 +81,7 @@ will be thrown.
 import { SeedQueryParametersError } from "@fern/query-parameters";
 
 try {
-    await seedQueryParameters.getUsername(...);
+    await client.getUsername(...);
 } catch (err) {
     if (err instanceof SeedQueryParametersError) {
         console.log(err.statusCode);
@@ -106,7 +106,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedQueryParameters.getUsername(..., {
+const response = await client.getUsername(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -116,7 +116,7 @@ const response = await seedQueryParameters.getUsername(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedQueryParameters.getUsername(..., {
+const response = await client.getUsername(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -127,7 +127,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedQueryParameters.getUsername(..., {
+const response = await client.getUsername(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -153,7 +153,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedQueryParametersClient } from "@fern/query-parameters";
 
-const seedQueryParameters = new SeedQueryParametersClient({
+const client = new SeedQueryParametersClient({
     ...
     fetcher: // provide your implementation here
 });

@@ -11,10 +11,10 @@
             "identifierOverride": "endpoint_service.downloadFile"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedFileDownload = new SeedFileDownloadClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedFileDownloadClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedFileDownload.service.downloadFile()",
+                "templateString": "await client.service.downloadFile()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [],

@@ -18,8 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedUnionsClient } from "@fern/unions";
 
-const seedUnions = new SeedUnionsClient({ environment: "YOUR_BASE_URL" });
-await seedUnions.union.get("string");
+const client = new SeedUnionsClient({ environment: "YOUR_BASE_URL" });
+await client.union.get("string");
 ```
 
 ## Exception Handling
@@ -31,7 +31,7 @@ will be thrown.
 import { SeedUnionsError } from "@fern/unions";
 
 try {
-    await seedUnions.get(...);
+    await client.get(...);
 } catch (err) {
     if (err instanceof SeedUnionsError) {
         console.log(err.statusCode);
@@ -56,7 +56,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedUnions.get(..., {
+const response = await client.get(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -66,7 +66,7 @@ const response = await seedUnions.get(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedUnions.get(..., {
+const response = await client.get(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -77,7 +77,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedUnions.get(..., {
+const response = await client.get(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -103,7 +103,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedUnionsClient } from "@fern/unions";
 
-const seedUnions = new SeedUnionsClient({
+const client = new SeedUnionsClient({
     ...
     fetcher: // provide your implementation here
 });

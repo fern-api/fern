@@ -30,7 +30,7 @@ export class NoAuth {
      * @param {NoAuth.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.noAuth.postWithNoAuth({
+     *     await client.noAuth.postWithNoAuth({
      *         "key": "value"
      *     })
      */

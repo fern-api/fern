@@ -11,10 +11,10 @@
             "identifierOverride": "endpoint_service.post"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedFileUpload = new SeedFileUploadClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedFileUploadClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedFileUpload.service.post(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.post(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -245,10 +245,10 @@
             "identifierOverride": "endpoint_service.justFile"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedFileUpload = new SeedFileUploadClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedFileUploadClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedFileUpload.service.justFile(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.justFile(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -300,10 +300,10 @@
             "identifierOverride": "endpoint_service.justFileWithQueryParams"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedFileUpload = new SeedFileUploadClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedFileUploadClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedFileUpload.service.justFileWithQueryParams(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.justFileWithQueryParams(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

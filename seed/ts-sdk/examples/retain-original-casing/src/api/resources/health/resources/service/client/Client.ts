@@ -31,10 +31,10 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExamples.health.service.check("id-2sdx82h")
+     *     await client.health.service.check("id-2sdx82h")
      *
      * @example
-     *     await seedExamples.health.service.check("id-3tey93i")
+     *     await client.health.service.check("id-3tey93i")
      */
     public async check(id: string, requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
@@ -85,7 +85,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExamples.health.service.ping()
+     *     await client.health.service.ping()
      */
     public async ping(requestOptions?: Service.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({

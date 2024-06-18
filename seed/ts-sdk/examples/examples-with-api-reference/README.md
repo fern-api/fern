@@ -25,11 +25,11 @@ Instantiate and use the client with the following:
 import * as environments from "../src/environments";
 import { SeedExamplesClient } from "@fern/examples";
 
-const seedExamples = new SeedExamplesClient({
+const client = new SeedExamplesClient({
     environment: environments.SeedExamplesEnvironment.Production,
     token: "YOUR_TOKEN",
 });
-await seedExamples.service.createMovie({
+await client.service.createMovie({
     id: "movie-c06a4ad7",
     prequel: "movie-cv9b914f",
     title: "The Boy and the Heron",
@@ -59,7 +59,7 @@ import { SeedExamples } from "@fern/examples";
 const request: SeedExamples.GetFileRequest = {
     ...
 };
-const response = await seedExamples.getFile(..., request);
+const response = await client.getFile(..., request);
 ```
 
 ## Exception Handling
@@ -71,7 +71,7 @@ will be thrown.
 import { SeedExamplesError } from "@fern/examples";
 
 try {
-    await seedExamples.createMovie(...);
+    await client.createMovie(...);
 } catch (err) {
     if (err instanceof SeedExamplesError) {
         console.log(err.statusCode);
@@ -96,7 +96,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedExamples.createMovie(..., {
+const response = await client.createMovie(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -106,13 +106,13 @@ const response = await seedExamples.createMovie(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedExamples.getMovie(..., {
+const response = await client.getMovie(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
 
 ```typescript
-const response = await seedExamples.createMovie(..., {
+const response = await client.createMovie(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -123,7 +123,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedExamples.createMovie(..., {
+const response = await client.createMovie(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -149,7 +149,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedExamplesClient } from "@fern/examples";
 
-const seedExamples = new SeedExamplesClient({
+const client = new SeedExamplesClient({
     ...
     fetcher: // provide your implementation here
 });

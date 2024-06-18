@@ -34,7 +34,7 @@ export class Payment {
      * @param {Payment.IdempotentRequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedIdempotencyHeaders.payment.create({
+     *     await client.payment.create({
      *         amount: 1,
      *         currency: SeedIdempotencyHeaders.Currency.Usd
      *     })
@@ -98,7 +98,7 @@ export class Payment {
      * @param {Payment.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedIdempotencyHeaders.payment.delete("string")
+     *     await client.payment.delete("string")
      */
     public async delete(paymentId: string, requestOptions?: Payment.RequestOptions): Promise<void> {
         const _response = await core.fetcher({

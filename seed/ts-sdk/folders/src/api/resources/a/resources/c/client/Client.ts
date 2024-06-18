@@ -24,7 +24,7 @@ export class C {
      * @param {C.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedApi.a.c.foo()
+     *     await client.a.c.foo()
      */
     public async foo(requestOptions?: C.RequestOptions): Promise<void> {
         const _response = await core.fetcher({

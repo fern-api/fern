@@ -29,7 +29,7 @@ export class Auth {
      * @param {Auth.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedOauthClientCredentials.auth.getToken({
+     *     await client.auth.getToken({
      *         clientId: "string",
      *         clientSecret: "string",
      *         audience: "https://api.example.com",

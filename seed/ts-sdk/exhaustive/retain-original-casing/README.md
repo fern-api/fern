@@ -18,8 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedExhaustiveClient } from "@fern/exhaustive";
 
-const seedExhaustive = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-await seedExhaustive.endpoints.container.getAndReturnListOfPrimitives(["string"]);
+const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+await client.endpoints.container.getAndReturnListOfPrimitives(["string"]);
 ```
 
 ## Request And Response Types
@@ -33,7 +33,7 @@ import { SeedExhaustive } from "@fern/exhaustive";
 const request: SeedExhaustive.GetWithQuery = {
     ...
 };
-const response = await seedExhaustive.getWithQuery(request);
+const response = await client.getWithQuery(request);
 ```
 
 ## Exception Handling
@@ -45,7 +45,7 @@ will be thrown.
 import { SeedExhaustiveError } from "@fern/exhaustive";
 
 try {
-    await seedExhaustive.getAndReturnListOfPrimitives(...);
+    await client.getAndReturnListOfPrimitives(...);
 } catch (err) {
     if (err instanceof SeedExhaustiveError) {
         console.log(err.statusCode);
@@ -70,7 +70,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedExhaustive.getAndReturnListOfPrimitives(..., {
+const response = await client.getAndReturnListOfPrimitives(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -80,7 +80,7 @@ const response = await seedExhaustive.getAndReturnListOfPrimitives(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedExhaustive.getAndReturnListOfPrimitives(..., {
+const response = await client.getAndReturnListOfPrimitives(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -91,7 +91,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedExhaustive.getAndReturnListOfPrimitives(..., {
+const response = await client.getAndReturnListOfPrimitives(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -117,7 +117,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedExhaustiveClient } from "@fern/exhaustive";
 
-const seedExhaustive = new SeedExhaustiveClient({
+const client = new SeedExhaustiveClient({
     ...
     fetcher: // provide your implementation here
 });

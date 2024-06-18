@@ -31,7 +31,7 @@ export class PropertyBasedError {
      * @throws {@link SeedErrorProperty.PropertyBasedErrorTest}
      *
      * @example
-     *     await seedErrorProperty.propertyBasedError.throwError()
+     *     await client.propertyBasedError.throwError()
      */
     public async throwError(requestOptions?: PropertyBasedError.RequestOptions): Promise<string> {
         const _response = await core.fetcher({

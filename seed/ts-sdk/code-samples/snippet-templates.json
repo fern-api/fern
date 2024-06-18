@@ -11,10 +11,10 @@
             "identifierOverride": "endpoint_service.hello"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedCodeSamples = new SeedCodeSamplesClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedCodeSamplesClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedCodeSamples.service.hello(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.hello(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

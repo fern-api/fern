@@ -33,7 +33,7 @@ export class InlinedRequests {
      * @throws {@link SeedExhaustive.BadRequestBody}
      *
      * @example
-     *     await seedExhaustive.inlinedRequests.postWithObjectBodyandResponse({
+     *     await client.inlinedRequests.postWithObjectBodyandResponse({
      *         string: "string",
      *         integer: 1,
      *         nestedObject: {

@@ -48,8 +48,6 @@ it("converts to api reference node", async () => {
     });
 
     if (!result.didSucceed) {
-        // eslint-disable-next-line no-console
-        console.error(result.failures);
         throw new Error("API workspace failed to load");
     }
 

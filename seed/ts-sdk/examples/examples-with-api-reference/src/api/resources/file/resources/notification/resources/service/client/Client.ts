@@ -30,7 +30,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExamples.file.notification.service.getException("notification-hsy129x")
+     *     await client.file.notification.service.getException("notification-hsy129x")
      */
     public async getException(
         notificationId: string,

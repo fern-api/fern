@@ -18,8 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedNurseryApiClient } from "@fern/reserved-keywords";
 
-const seedNurseryApi = new SeedNurseryApiClient({ environment: "YOUR_BASE_URL" });
-await seedNurseryApi.package.test({
+const client = new SeedNurseryApiClient({ environment: "YOUR_BASE_URL" });
+await client.package.test({
     for: "string",
 });
 ```
@@ -35,7 +35,7 @@ import { SeedNurseryApi } from "@fern/reserved-keywords";
 const request: SeedNurseryApi.TestRequest = {
     ...
 };
-const response = await seedNurseryApi.test(request);
+const response = await client.test(request);
 ```
 
 ## Exception Handling
@@ -47,7 +47,7 @@ will be thrown.
 import { SeedNurseryApiError } from "@fern/reserved-keywords";
 
 try {
-    await seedNurseryApi.test(...);
+    await client.test(...);
 } catch (err) {
     if (err instanceof SeedNurseryApiError) {
         console.log(err.statusCode);
@@ -72,7 +72,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await seedNurseryApi.test(..., {
+const response = await client.test(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -82,7 +82,7 @@ const response = await seedNurseryApi.test(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await seedNurseryApi.test(..., {
+const response = await client.test(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -93,7 +93,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await seedNurseryApi.test(..., {
+const response = await client.test(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -119,7 +119,7 @@ unsupported environment, this provides a way for you to break glass and ensure t
 ```typescript
 import { SeedNurseryApiClient } from "@fern/reserved-keywords";
 
-const seedNurseryApi = new SeedNurseryApiClient({
+const client = new SeedNurseryApiClient({
     ...
     fetcher: // provide your implementation here
 });

@@ -26,7 +26,7 @@ export class Package {
      * @param {Package.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedNurseryApi.package.test({
+     *     await client.package.test({
      *         for: "string"
      *     })
      */

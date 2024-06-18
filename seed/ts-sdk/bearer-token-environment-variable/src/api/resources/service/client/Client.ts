@@ -29,7 +29,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedBearerTokenEnvironmentVariable.service.getWithBearerToken()
+     *     await client.service.getWithBearerToken()
      */
     public async getWithBearerToken(requestOptions?: Service.RequestOptions): Promise<string> {
         const _response = await core.fetcher({

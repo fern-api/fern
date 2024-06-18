@@ -26,7 +26,7 @@ export class SeedApiClient {
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedApi.foo()
+     *     await client.foo()
      */
     public async foo(requestOptions?: SeedApiClient.RequestOptions): Promise<void> {
         const _response = await core.fetcher({

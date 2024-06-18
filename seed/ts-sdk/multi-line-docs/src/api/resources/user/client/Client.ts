@@ -32,7 +32,7 @@ export class User {
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedMultiLineDocs.user.getUser("string")
+     *     await client.user.getUser("string")
      */
     public async getUser(userId: string, requestOptions?: User.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
@@ -84,7 +84,7 @@ export class User {
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedMultiLineDocs.user.createUser({
+     *     await client.user.createUser({
      *         name: "string",
      *         age: 1
      *     })

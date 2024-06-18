@@ -28,7 +28,7 @@ export class Primitive {
      * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.primitive.getAndReturnString("string")
+     *     await client.endpoints.primitive.getAndReturnString("string")
      */
     public async getAndReturnString(
         request: string,
@@ -76,7 +76,7 @@ export class Primitive {
      * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.primitive.getAndReturnInt(1)
+     *     await client.endpoints.primitive.getAndReturnInt(1)
      */
     public async getAndReturnInt(
         request: number,
@@ -124,7 +124,7 @@ export class Primitive {
      * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.primitive.getAndReturnLong(1000000)
+     *     await client.endpoints.primitive.getAndReturnLong(1000000)
      */
     public async getAndReturnLong(
         request: number,
@@ -172,7 +172,7 @@ export class Primitive {
      * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.primitive.getAndReturnDouble(1.1)
+     *     await client.endpoints.primitive.getAndReturnDouble(1.1)
      */
     public async getAndReturnDouble(
         request: number,
@@ -220,7 +220,7 @@ export class Primitive {
      * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.primitive.getAndReturnBool(true)
+     *     await client.endpoints.primitive.getAndReturnBool(true)
      */
     public async getAndReturnBool(
         request: boolean,
@@ -268,7 +268,7 @@ export class Primitive {
      * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.primitive.getAndReturnDatetime(new Date("2024-01-15T09:30:00.000Z"))
+     *     await client.endpoints.primitive.getAndReturnDatetime(new Date("2024-01-15T09:30:00.000Z"))
      */
     public async getAndReturnDatetime(
         request: Date,
@@ -316,7 +316,7 @@ export class Primitive {
      * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.primitive.getAndReturnDate("2023-01-15")
+     *     await client.endpoints.primitive.getAndReturnDate("2023-01-15")
      */
     public async getAndReturnDate(
         request: string,
@@ -364,7 +364,7 @@ export class Primitive {
      * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+     *     await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
      */
     public async getAndReturnUuid(
         request: string,
@@ -412,7 +412,7 @@ export class Primitive {
      * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh")
+     *     await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh")
      */
     public async getAndReturnBase64(
         request: string,

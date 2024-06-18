@@ -33,7 +33,7 @@ export class BasicAuth {
      * @throws {@link SeedBasicAuthEnvironmentVariables.UnauthorizedRequest}
      *
      * @example
-     *     await seedBasicAuthEnvironmentVariables.basicAuth.getWithBasicAuth()
+     *     await client.basicAuth.getWithBasicAuth()
      */
     public async getWithBasicAuth(requestOptions?: BasicAuth.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
@@ -105,7 +105,7 @@ export class BasicAuth {
      * @throws {@link SeedBasicAuthEnvironmentVariables.BadRequest}
      *
      * @example
-     *     await seedBasicAuthEnvironmentVariables.basicAuth.postWithBasicAuth({
+     *     await client.basicAuth.postWithBasicAuth({
      *         "key": "value"
      *     })
      */

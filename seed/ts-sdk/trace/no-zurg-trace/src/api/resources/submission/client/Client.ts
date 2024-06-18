@@ -35,7 +35,7 @@ export class Submission {
      * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.submission.createExecutionSession(SeedTrace.Language.Java)
+     *     await client.submission.createExecutionSession(SeedTrace.Language.Java)
      */
     public async createExecutionSession(
         language: SeedTrace.Language,
@@ -97,7 +97,7 @@ export class Submission {
      * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.submission.getExecutionSession("string")
+     *     await client.submission.getExecutionSession("string")
      */
     public async getExecutionSession(
         sessionId: string,
@@ -159,7 +159,7 @@ export class Submission {
      * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.submission.stopExecutionSession("string")
+     *     await client.submission.stopExecutionSession("string")
      */
     public async stopExecutionSession(sessionId: string, requestOptions?: Submission.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
@@ -215,7 +215,7 @@ export class Submission {
      * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.submission.getExecutionSessionsState()
+     *     await client.submission.getExecutionSessionsState()
      */
     public async getExecutionSessionsState(
         requestOptions?: Submission.RequestOptions
