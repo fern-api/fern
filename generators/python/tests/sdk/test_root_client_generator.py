@@ -66,6 +66,7 @@ client = Acme(
 
     async_snippet = SourceFileFactory.create_snippet()
     async_snippet.add_expression(generated_root_client.async_instantiation)
+    print("DEBUG PIYUSH RUNNING TEST")
     assert (
         async_snippet.to_str()
         == """from acme.client import AcmeAsync

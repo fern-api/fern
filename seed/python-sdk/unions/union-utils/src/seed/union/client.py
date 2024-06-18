@@ -36,6 +36,8 @@ class UnionClient:
         from seed.client import SeedUnions
 
         client = SeedUnions(
+            client_name="YOUR_CLIENT_NAME",
+            token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
         client.union.get(
@@ -72,6 +74,8 @@ class UnionClient:
         from seed.client import SeedUnions
 
         client = SeedUnions(
+            client_name="YOUR_CLIENT_NAME",
+            token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
         client.union.update(
@@ -115,6 +119,8 @@ class AsyncUnionClient:
         from seed.client import AsyncSeedUnions
 
         client = AsyncSeedUnions(
+            client_name="YOUR_CLIENT_NAME",
+            token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
         await client.union.get(
@@ -151,6 +157,8 @@ class AsyncUnionClient:
         from seed.client import AsyncSeedUnions
 
         client = AsyncSeedUnions(
+            client_name="YOUR_CLIENT_NAME",
+            token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
         await client.union.update(

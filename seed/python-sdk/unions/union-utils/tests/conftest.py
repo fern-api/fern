@@ -8,9 +8,17 @@ from seed.client import AsyncSeedUnions, SeedUnions
 
 @pytest.fixture
 def client() -> SeedUnions:
-    return SeedUnions(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+    return SeedUnions(
+        client_name=os.getenv("ENV_CLIENT_NAME", "client_name"),
+        token=os.getenv("ENV_TOKEN", "token"),
+        base_url=os.getenv("TESTS_BASE_URL", "base_url"),
+    )
 
 
 @pytest.fixture
 def async_client() -> AsyncSeedUnions:
-    return AsyncSeedUnions(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+    return AsyncSeedUnions(
+        client_name=os.getenv("ENV_CLIENT_NAME", "client_name"),
+        token=os.getenv("ENV_TOKEN", "token"),
+        base_url=os.getenv("TESTS_BASE_URL", "base_url"),
+    )

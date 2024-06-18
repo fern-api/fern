@@ -2,11 +2,6 @@ import json
 from typing import Literal, Optional, Sequence, Tuple, Union, cast
 from uuid import uuid4
 
-import fern.ir.resources as ir_types
-from fern.generator_exec.resources import GeneratorUpdate, LogLevel, LogUpdate
-from fern.generator_exec.resources.config import GeneratorConfig
-from fern.generator_exec.resources.readme import BadgeType, GenerateReadmeRequest
-
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import AST, Project
 from fern_python.codegen.filepath import Filepath
@@ -24,6 +19,11 @@ from fern_python.snippet.snippet_template_factory import SnippetTemplateFactory
 from fern_python.snippet.snippet_test_factory import SnippetTestFactory
 from fern_python.source_file_factory import SourceFileFactory
 from fern_python.utils import build_snippet_writer
+
+import fern.ir.resources as ir_types
+from fern.generator_exec.resources import GeneratorUpdate, LogLevel, LogUpdate
+from fern.generator_exec.resources.config import GeneratorConfig
+from fern.generator_exec.resources.readme import BadgeType, GenerateReadmeRequest
 
 from .client_generator.client_generator import ClientGenerator
 from .client_generator.generated_root_client import GeneratedRootClient
@@ -78,7 +78,10 @@ class SdkGenerator(AbstractGenerator):
     ) -> None:
         custom_config = SDKCustomConfig.parse_obj(generator_config.custom_config or {})
 
-        if custom_config.client_filename is not None and not custom_config.client_filename.endswith(".py"):
+        if (
+            custom_config.client_filename is not None
+            and not custom_config.client_filename.endswith(".py")
+        ):
             raise RuntimeError("client_filename must end in .py")
 
         if not custom_config.client.filename.endswith(".py"):
@@ -89,20 +92,28 @@ class SdkGenerator(AbstractGenerator):
 
         for dep, value in custom_config.extra_dependencies.items():
             if type(value) is str:
-                project.add_dependency(dependency=AST.Dependency(name=dep, version=value))
+                project.add_dependency(
+                    dependency=AST.Dependency(name=dep, version=value)
+                )
             elif isinstance(value, DependencyCusomConfig):
                 project.add_dependency(
-                    dependency=AST.Dependency(name=dep, version=value.version, optional=value.optional)
+                    dependency=AST.Dependency(
+                        name=dep, version=value.version, optional=value.optional
+                    )
                 )
 
         project.add_extra(custom_config.extras)
 
         for dep, version in custom_config.extra_dev_dependencies.items():
-            project.add_dev_dependency(dependency=AST.Dependency(name=dep, version=version))
+            project.add_dev_dependency(
+                dependency=AST.Dependency(name=dep, version=version)
+            )
 
         # Export from root init
         if custom_config.additional_init_exports is not None:
-            project.add_init_exports(path=(), exports=custom_config.additional_init_exports)
+            project.add_init_exports(
+                path=(), exports=custom_config.additional_init_exports
+            )
 
         self._pydantic_model_custom_config = custom_config.pydantic_config
 
@@ -133,7 +144,9 @@ class SdkGenerator(AbstractGenerator):
 
         generated_environment: Optional[GeneratedEnvironment] = None
         base_environment: Optional[
-            Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]
+            Union[
+                SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator
+            ]
         ] = None
         if ir.environments is not None:
             base_environment = self._generate_environments_base(
@@ -147,7 +160,12 @@ class SdkGenerator(AbstractGenerator):
             )
 
         maybe_oauth_scheme = next(
-            (scheme for scheme in context.ir.auth.schemes if scheme.get_as_union().type == "oauth"), None
+            (
+                scheme
+                for scheme in context.ir.auth.schemes
+                if scheme.get_as_union().type == "oauth"
+            ),
+            None,
         )
         oauth_scheme = (
             maybe_oauth_scheme.visit(
@@ -156,7 +174,8 @@ class SdkGenerator(AbstractGenerator):
                 header=lambda _: None,
                 oauth=lambda oauth: oauth,
             )
-            if maybe_oauth_scheme is not None and generator_config.generate_oauth_clients
+            if maybe_oauth_scheme is not None
+            and generator_config.generate_oauth_clients
             else None
         )
         if oauth_scheme is not None:
@@ -269,7 +288,9 @@ class SdkGenerator(AbstractGenerator):
         environments: ir_types.Environments,
     ) -> Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]:
         return cast(
-            Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator],
+            Union[
+                SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator
+            ],
             environments.visit(
                 single_base_url=lambda single_base_url_environments: SingleBaseUrlEnvironmentGenerator(
                     context=context, environments=single_base_url_environments
@@ -283,13 +304,17 @@ class SdkGenerator(AbstractGenerator):
     def _generate_environments(
         self,
         context: SdkGeneratorContext,
-        environments: Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator],
+        environments: Union[
+            SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator
+        ],
         generator_exec_wrapper: GeneratorExecWrapper,
         project: Project,
     ) -> GeneratedEnvironment:
         filepath = context.get_filepath_for_environments_enum()
         source_file = SourceFileFactory.create(
-            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+            project=project,
+            filepath=filepath,
+            generator_exec_wrapper=generator_exec_wrapper,
         )
         generated_environment = environments.generate(source_file=source_file)
         project.write_source_file(source_file=source_file, filepath=filepath)
@@ -307,7 +332,9 @@ class SdkGenerator(AbstractGenerator):
             file=Filepath.FilepathPart(module_name="client_wrapper"),
         )
         source_file = SourceFileFactory.create(
-            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+            project=project,
+            filepath=filepath,
+            generator_exec_wrapper=generator_exec_wrapper,
         )
         ClientWrapperGenerator(
             context=context,
@@ -325,7 +352,9 @@ class SdkGenerator(AbstractGenerator):
     ) -> None:
         filepath = context.get_filepath_for_generated_oauth_token_provider()
         source_file = SourceFileFactory.create(
-            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+            project=project,
+            filepath=filepath,
+            generator_exec_wrapper=generator_exec_wrapper,
         )
         OAuthTokenProviderGenerator(
             context=context,
@@ -346,14 +375,19 @@ class SdkGenerator(AbstractGenerator):
     ) -> GeneratedRootClient:
         filepath = context.get_filepath_for_generated_root_client()
         source_file = SourceFileFactory.create(
-            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+            project=project,
+            filepath=filepath,
+            generator_exec_wrapper=generator_exec_wrapper,
         )
         generated_root_client = RootClientGenerator(
             context=context,
             package=ir.root_package,
             generated_environment=generated_environment,
             class_name=context.get_class_name_for_generated_root_client(),
-            async_class_name="Async" + context.get_class_name_for_generated_root_client(),
+            async_class_name="Async"
+            + context.get_class_name_for_generated_root_client(),
+            auth=ir.auth,
+            headers=ir.headers,
             snippet_registry=snippet_registry,
             snippet_writer=snippet_writer,
             oauth_scheme=oauth_scheme,
@@ -374,13 +408,17 @@ class SdkGenerator(AbstractGenerator):
     ) -> None:
         filepath = context.get_filepath_for_subpackage_service(subpackage_id)
         source_file = SourceFileFactory.create(
-            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+            project=project,
+            filepath=filepath,
+            generator_exec_wrapper=generator_exec_wrapper,
         )
         ClientGenerator(
             context=context,
             package=subpackage,
             class_name=context.get_class_name_of_subpackage_service(subpackage_id),
-            async_class_name=context.get_class_name_of_async_subpackage_service(subpackage_id),
+            async_class_name=context.get_class_name_of_async_subpackage_service(
+                subpackage_id
+            ),
             generated_root_client=generated_root_client,
             snippet_registry=snippet_registry,
             snippet_writer=snippet_writer,
@@ -396,7 +434,9 @@ class SdkGenerator(AbstractGenerator):
     ) -> None:
         filepath = context.get_filepath_for_error(error.name)
         source_file = SourceFileFactory.create(
-            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+            project=project,
+            filepath=filepath,
+            generator_exec_wrapper=generator_exec_wrapper,
         )
         ErrorGenerator(context=context, error=error).generate(source_file=source_file)
         project.write_source_file(source_file=source_file, filepath=filepath)
@@ -410,7 +450,9 @@ class SdkGenerator(AbstractGenerator):
                 directories=(),
                 file=Filepath.FilepathPart(module_name="version"),
             )
-            filepath_nested = project.get_source_file_filepath(filepath, include_src_root=True)
+            filepath_nested = project.get_source_file_filepath(
+                filepath, include_src_root=True
+            )
             contents = f"""
 from importlib import metadata
 
@@ -498,11 +540,17 @@ pip install --upgrade {project._project_config.package_name}
                 # API Definition ID doesn't matter right now
                 try:
                     fdr_client.templates.register_batch(
-                        org_id=org_id, api_id=api_name, api_definition_id=uuid4(), snippets=snippets
+                        org_id=org_id,
+                        api_id=api_name,
+                        api_definition_id=uuid4(),
+                        snippets=snippets,
                     )
                     generator_exec_wrapper.send_update(
                         GeneratorUpdate.factory.log(
-                            LogUpdate(level=LogLevel.DEBUG, message=f"Uploaded snippet templates to FDR.")
+                            LogUpdate(
+                                level=LogLevel.DEBUG,
+                                message="Uploaded snippet templates to FDR.",
+                            )
                         )
                     )
                 except Exception as e:
@@ -519,11 +567,19 @@ pip install --upgrade {project._project_config.package_name}
                 # Otherwise write them for local
                 project.add_file(
                     context.generator_config.output.snippet_template_filepath,
-                    json.dumps(list(map(lambda template: template.dict(by_alias=True), snippets)), indent=4),
+                    json.dumps(
+                        list(
+                            map(lambda template: template.dict(by_alias=True), snippets)
+                        ),
+                        indent=4,
+                    ),
                 )
                 generator_exec_wrapper.send_update(
                     GeneratorUpdate.factory.log(
-                        LogUpdate(level=LogLevel.DEBUG, message=f"Wrote snippet templates to disk.")
+                        LogUpdate(
+                            level=LogLevel.DEBUG,
+                            message="Wrote snippet templates to disk.",
+                        )
                     )
                 )
 
@@ -537,7 +593,10 @@ pip install --upgrade {project._project_config.package_name}
             snippets = snippet_registry.snippets()
             if snippets is None:
                 return
-            project.add_file(context.generator_config.output.snippet_filepath, snippets.json(indent=4))
+            project.add_file(
+                context.generator_config.output.snippet_filepath,
+                snippets.json(indent=4),
+            )
 
     def _write_snippet_tests(
         self,

@@ -2,14 +2,14 @@ import typing
 from dataclasses import dataclass
 from typing import List, Optional
 
-import fern.ir.resources as ir_types
-
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.generators.sdk.client_generator.endpoint_response_code_writer import (
     EndpointResponseCodeWriter,
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
+
+import fern.ir.resources as ir_types
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from .constants import DEFAULT_BODY_PARAMETER_VALUE
@@ -93,7 +93,9 @@ class ClientGenerator:
                 signature=AST.FunctionSignature(
                     named_parameters=named_parameters,
                 ),
-                body=AST.CodeWriter(self._get_write_constructor_body(is_async=is_async)),
+                body=AST.CodeWriter(
+                    self._get_write_constructor_body(is_async=is_async)
+                ),
             ),
         )
 
@@ -122,23 +124,33 @@ class ClientGenerator:
                 for snippet in generated_endpoint_function.snippets or []:
                     if is_async:
                         self._snippet_registry.register_async_client_endpoint_snippet(
-                            endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
+                            endpoint=endpoint,
+                            expr=snippet.snippet,
+                            example_id=snippet.example_id,
                         )
                     else:
                         self._snippet_registry.register_sync_client_endpoint_snippet(
-                            endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
+                            endpoint=endpoint,
+                            expr=snippet.snippet,
+                            example_id=snippet.example_id,
                         )
 
         return class_declaration
 
-    def _get_constructor_parameters(self, *, is_async: bool) -> List[ConstructorParameter]:
+    def _get_constructor_parameters(
+        self, *, is_async: bool
+    ) -> List[ConstructorParameter]:
         parameters: List[ConstructorParameter] = []
 
         parameters.append(
             ConstructorParameter(
                 constructor_parameter_name=self._get_client_wrapper_constructor_parameter_name(),
                 private_member_name=self._get_client_wrapper_member_name(),
-                type_hint=AST.TypeHint(self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async)),
+                type_hint=AST.TypeHint(
+                    self._context.core_utilities.get_reference_to_client_wrapper(
+                        is_async=is_async
+                    )
+                ),
             )
         )
 
@@ -152,20 +164,33 @@ class ClientGenerator:
             constructor_parameters = self._get_constructor_parameters(is_async=is_async)
             for param in constructor_parameters:
                 if param.private_member_name is not None:
-                    writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
+                    writer.write_line(
+                        f"self.{param.private_member_name} = {param.constructor_parameter_name}"
+                    )
             for subpackage_id in self._package.subpackages:
                 subpackage = self._context.ir.subpackages[subpackage_id]
                 if subpackage.has_endpoints_in_tree:
-                    writer.write_node(AST.Expression(f"self.{subpackage.name.snake_case.safe_name} = "))
+                    writer.write_node(
+                        AST.Expression(
+                            f"self.{subpackage.name.snake_case.safe_name} = "
+                        )
+                    )
                     kwargs = [
-                        (param.constructor_parameter_name, AST.Expression(f"self.{param.private_member_name}"))
+                        (
+                            param.constructor_parameter_name,
+                            AST.Expression(f"self.{param.private_member_name}"),
+                        )
                         for param in self._get_constructor_parameters(is_async=is_async)
                     ]
                     writer.write_node(
                         AST.ClassInstantiation(
-                            class_=self._context.get_reference_to_async_subpackage_service(subpackage_id)
+                            class_=self._context.get_reference_to_async_subpackage_service(
+                                subpackage_id
+                            )
                             if is_async
-                            else self._context.get_reference_to_subpackage_service(subpackage_id),
+                            else self._context.get_reference_to_subpackage_service(
+                                subpackage_id
+                            ),
                             kwargs=kwargs,
                         )
                     )
