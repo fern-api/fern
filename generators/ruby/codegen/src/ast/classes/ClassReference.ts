@@ -325,25 +325,34 @@ export class ArrayReference extends ClassReference {
 
     public fromJson(variable: string | Variable): AstNode | undefined {
         const valueFromJsonFunction =
-            this.innerType instanceof ClassReference ? this.innerType.fromJson("v") : undefined;
+            this.innerType instanceof ClassReference ? this.innerType.fromJson("item") : undefined;
+
+        // If the nested value is iterable, then you should not cast the item back to JSON, but rather allow it to
+        // remain iterable and the nested value will be responsible for casting itself back to JSON
+        const valueIsIterable = this.innerType instanceof ArrayReference || this.innerType instanceof HashReference;
+        const expressions = [];
+        if (!valueIsIterable) {
+            expressions.push(
+                new Expression({
+                    leftSide: "item",
+                    rightSide: new FunctionInvocation({
+                        onObject: "item",
+                        baseFunction: new Function_({ name: "to_json", functionBody: [] })
+                    }),
+                    isAssignment: true
+                })
+            );
+        }
+        expressions.push(new Expression({ rightSide: valueFromJsonFunction, isAssignment: false }));
+
         return valueFromJsonFunction !== undefined
             ? new FunctionInvocation({
                   baseFunction: new Function_({ name: "map", functionBody: [] }),
                   onObject: variable,
                   optionalSafeCall: true,
                   block: {
-                      arguments: "v",
-                      expressions: [
-                          new Expression({
-                              leftSide: "v",
-                              rightSide: new FunctionInvocation({
-                                  onObject: "v",
-                                  baseFunction: new Function_({ name: "to_json", functionBody: [] })
-                              }),
-                              isAssignment: true
-                          }),
-                          new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
-                      ]
+                      arguments: "item",
+                      expressions
                   }
               })
             : undefined;
@@ -397,25 +406,34 @@ export class HashReference extends ClassReference {
     }
     public fromJson(variable: string | Variable): AstNode | undefined {
         const valueFromJsonFunction =
-            this.valueType instanceof ClassReference ? this.valueType.fromJson("v") : undefined;
+            this.valueType instanceof ClassReference ? this.valueType.fromJson("value") : undefined;
+
+        // If the nested value is iterable, then you should not cast the item back to JSON, but rather allow it to
+        // remain iterable and the nested value will be responsible for casting itself back to JSON
+        const valueIsIterable = this.valueType instanceof ArrayReference || this.valueType instanceof HashReference;
+        const expressions = [];
+        if (!valueIsIterable) {
+            expressions.push(
+                new Expression({
+                    leftSide: "value",
+                    rightSide: new FunctionInvocation({
+                        onObject: "value",
+                        baseFunction: new Function_({ name: "to_json", functionBody: [] })
+                    }),
+                    isAssignment: true
+                })
+            );
+        }
+        expressions.push(new Expression({ rightSide: valueFromJsonFunction, isAssignment: false }));
+
         return valueFromJsonFunction !== undefined
             ? new FunctionInvocation({
                   baseFunction: new Function_({ name: "transform_values", functionBody: [] }),
                   onObject: variable,
                   optionalSafeCall: true,
                   block: {
-                      arguments: "v",
-                      expressions: [
-                          new Expression({
-                              leftSide: "v",
-                              rightSide: new FunctionInvocation({
-                                  onObject: "v",
-                                  baseFunction: new Function_({ name: "to_json", functionBody: [] })
-                              }),
-                              isAssignment: true
-                          }),
-                          new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
-                      ]
+                      arguments: "value",
+                      expressions
                   }
               })
             : undefined;
