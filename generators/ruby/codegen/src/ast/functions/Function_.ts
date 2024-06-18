@@ -118,7 +118,7 @@ export class Function_ extends AstNode {
         return imports;
     }
 
-    public getInvocationName(fullPath: boolean = true): string {
+    public getInvocationName(fullPath = true): string {
         return this.invocationName != null
             ? this.invocationName
             : fullPath
