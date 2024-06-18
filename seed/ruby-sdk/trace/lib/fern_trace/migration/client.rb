@@ -40,9 +40,9 @@ module SeedTraceClient
         req.url "#{@request_client.get_url(request_options: request_options)}/migration-info/all"
       end
       parsed_json = JSON.parse(response.body)
-      parsed_json&.map do |v|
-        v = v.to_json
-        SeedTraceClient::Migration::Migration.from_json(json_object: v)
+      parsed_json&.map do |item|
+        item = item.to_json
+        SeedTraceClient::Migration::Migration.from_json(json_object: item)
       end
     end
   end
@@ -82,9 +82,9 @@ module SeedTraceClient
           req.url "#{@request_client.get_url(request_options: request_options)}/migration-info/all"
         end
         parsed_json = JSON.parse(response.body)
-        parsed_json&.map do |v|
-          v = v.to_json
-          SeedTraceClient::Migration::Migration.from_json(json_object: v)
+        parsed_json&.map do |item|
+          item = item.to_json
+          SeedTraceClient::Migration::Migration.from_json(json_object: item)
         end
       end
     end

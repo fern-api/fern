@@ -52,13 +52,13 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         problem_id = struct["problemId"]
-        default_test_cases = parsed_json["defaultTestCases"]&.map do |v|
-          v = v.to_json
-          SeedTraceClient::Commons::TestCase.from_json(json_object: v)
+        default_test_cases = parsed_json["defaultTestCases"]&.map do |item|
+          item = item.to_json
+          SeedTraceClient::Commons::TestCase.from_json(json_object: item)
         end
-        custom_test_cases = parsed_json["customTestCases"]&.map do |v|
-          v = v.to_json
-          SeedTraceClient::Commons::TestCase.from_json(json_object: v)
+        custom_test_cases = parsed_json["customTestCases"]&.map do |item|
+          item = item.to_json
+          SeedTraceClient::Commons::TestCase.from_json(json_object: item)
         end
         if parsed_json["status"].nil?
           status = nil

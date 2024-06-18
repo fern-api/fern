@@ -43,9 +43,9 @@ module SeedTraceClient
           solution_file = parsed_json["solutionFile"].to_json
           solution_file = SeedTraceClient::Commons::FileInfo.from_json(json_object: solution_file)
         end
-        read_only_files = parsed_json["readOnlyFiles"]&.map do |v|
-          v = v.to_json
-          SeedTraceClient::Commons::FileInfo.from_json(json_object: v)
+        read_only_files = parsed_json["readOnlyFiles"]&.map do |item|
+          item = item.to_json
+          SeedTraceClient::Commons::FileInfo.from_json(json_object: item)
         end
         new(
           solution_file: solution_file,

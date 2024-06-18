@@ -44,13 +44,13 @@ module SeedExamplesClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         name = struct["name"]
-        nodes = parsed_json["nodes"]&.map do |v|
-          v = v.to_json
-          SeedExamplesClient::Types::Node.from_json(json_object: v)
+        nodes = parsed_json["nodes"]&.map do |item|
+          item = item.to_json
+          SeedExamplesClient::Types::Node.from_json(json_object: item)
         end
-        trees = parsed_json["trees"]&.map do |v|
-          v = v.to_json
-          SeedExamplesClient::Types::Tree.from_json(json_object: v)
+        trees = parsed_json["trees"]&.map do |item|
+          item = item.to_json
+          SeedExamplesClient::Types::Tree.from_json(json_object: item)
         end
         new(
           name: name,

@@ -85,13 +85,13 @@ module SeedTraceClient
               custom_files = parsed_json["customFiles"].to_json
               custom_files = SeedTraceClient::V2::V3::Problem::CustomFiles.from_json(json_object: custom_files)
             end
-            custom_test_case_templates = parsed_json["customTestCaseTemplates"]&.map do |v|
-              v = v.to_json
-              SeedTraceClient::V2::V3::Problem::TestCaseTemplate.from_json(json_object: v)
+            custom_test_case_templates = parsed_json["customTestCaseTemplates"]&.map do |item|
+              item = item.to_json
+              SeedTraceClient::V2::V3::Problem::TestCaseTemplate.from_json(json_object: item)
             end
-            testcases = parsed_json["testcases"]&.map do |v|
-              v = v.to_json
-              SeedTraceClient::V2::V3::Problem::TestCaseV2.from_json(json_object: v)
+            testcases = parsed_json["testcases"]&.map do |item|
+              item = item.to_json
+              SeedTraceClient::V2::V3::Problem::TestCaseV2.from_json(json_object: item)
             end
             if parsed_json["supportedLanguages"].nil?
               supported_languages = nil

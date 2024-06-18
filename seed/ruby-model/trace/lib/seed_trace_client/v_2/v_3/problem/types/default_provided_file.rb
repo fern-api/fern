@@ -46,9 +46,9 @@ module SeedTraceClient
               file = parsed_json["file"].to_json
               file = SeedTraceClient::V2::V3::Problem::FileInfoV2.from_json(json_object: file)
             end
-            related_types = parsed_json["relatedTypes"]&.map do |v|
-              v = v.to_json
-              SeedTraceClient::Commons::VariableType.from_json(json_object: v)
+            related_types = parsed_json["relatedTypes"]&.map do |item|
+              item = item.to_json
+              SeedTraceClient::Commons::VariableType.from_json(json_object: item)
             end
             new(
               file: file,

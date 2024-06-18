@@ -45,17 +45,17 @@ module SeedTraceClient
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
-          generated_test_case_files = parsed_json["generatedTestCaseFiles"]&.transform_values do |v|
-            v = v.to_json
-            SeedTraceClient::V2::Problem::Files.from_json(json_object: v)
+          generated_test_case_files = parsed_json["generatedTestCaseFiles"]&.transform_values do |value|
+            value = value.to_json
+            SeedTraceClient::V2::Problem::Files.from_json(json_object: value)
           end
-          generated_template_files = parsed_json["generatedTemplateFiles"]&.transform_values do |v|
-            v = v.to_json
-            SeedTraceClient::V2::Problem::Files.from_json(json_object: v)
+          generated_template_files = parsed_json["generatedTemplateFiles"]&.transform_values do |value|
+            value = value.to_json
+            SeedTraceClient::V2::Problem::Files.from_json(json_object: value)
           end
-          other = parsed_json["other"]&.transform_values do |v|
-            v = v.to_json
-            SeedTraceClient::V2::Problem::Files.from_json(json_object: v)
+          other = parsed_json["other"]&.transform_values do |value|
+            value = value.to_json
+            SeedTraceClient::V2::Problem::Files.from_json(json_object: value)
           end
           new(
             generated_test_case_files: generated_test_case_files,

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.7.0-rc1] - 2024-06-13
+
+- Fix: nested loops leverage different variable names to deconflict
+- Fix: nested loops do not call to_json prior to the subsequent loop
+
 ## [0.7.0-rc0] - 2024-06-13
 
 - Feature: The Ruby SDK now generates an OAuth client to automate token refresh.

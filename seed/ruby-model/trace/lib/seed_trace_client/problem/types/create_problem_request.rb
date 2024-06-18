@@ -76,13 +76,13 @@ module SeedTraceClient
           problem_description = parsed_json["problemDescription"].to_json
           problem_description = SeedTraceClient::Problem::ProblemDescription.from_json(json_object: problem_description)
         end
-        files = parsed_json["files"]&.transform_values do |v|
-          v = v.to_json
-          SeedTraceClient::Problem::ProblemFiles.from_json(json_object: v)
+        files = parsed_json["files"]&.transform_values do |value|
+          value = value.to_json
+          SeedTraceClient::Problem::ProblemFiles.from_json(json_object: value)
         end
-        input_params = parsed_json["inputParams"]&.map do |v|
-          v = v.to_json
-          SeedTraceClient::Problem::VariableTypeAndName.from_json(json_object: v)
+        input_params = parsed_json["inputParams"]&.map do |item|
+          item = item.to_json
+          SeedTraceClient::Problem::VariableTypeAndName.from_json(json_object: item)
         end
         if parsed_json["outputType"].nil?
           output_type = nil
@@ -90,9 +90,9 @@ module SeedTraceClient
           output_type = parsed_json["outputType"].to_json
           output_type = SeedTraceClient::Commons::VariableType.from_json(json_object: output_type)
         end
-        testcases = parsed_json["testcases"]&.map do |v|
-          v = v.to_json
-          SeedTraceClient::Commons::TestCaseWithExpectedResult.from_json(json_object: v)
+        testcases = parsed_json["testcases"]&.map do |item|
+          item = item.to_json
+          SeedTraceClient::Commons::TestCaseWithExpectedResult.from_json(json_object: item)
         end
         method_name = struct["methodName"]
         new(
