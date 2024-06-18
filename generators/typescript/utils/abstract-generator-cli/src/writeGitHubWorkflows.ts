@@ -74,7 +74,7 @@ ${getTestJob({ config })}
       - name: Build
         run: yarn build`;
 
-    if (publishInfo?.tokenEnvironmentVariable != null) {
+    if (publishInfo?.shouldGeneratePublishWorkflow === true) {
         workflowYaml += `
 
       - name: Publish to npm
