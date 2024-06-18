@@ -8,7 +8,10 @@ import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import { fileTypeFromBuffer } from "file-type";
+import { readFile } from "fs/promises";
 import matter from "gray-matter";
+import isSvg from "is-svg";
 import { kebabCase } from "lodash-es";
 import urlJoin from "url-join";
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
@@ -96,9 +99,41 @@ export class DocsDefinitionResolver {
             // store the updated markdown in pages
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = newMarkdown;
 
+            const ALLOWED_FILE_TYPES = [
+                // image files
+                "image/jpeg",
+                "image/png",
+                "image/gif",
+                "image/webp",
+                "image/tiff",
+                // video files
+                "video/quicktime",
+                "video/mp4",
+                "video/webm",
+                // audio files
+                "audio/mpeg",
+                "audio/ogg",
+                "audio/wav",
+                // document files
+                "application/pdf"
+            ];
+
             // store the image filepaths to upload
             for (const filepath of filepaths) {
-                filesToUploadSet.add(filepath);
+                const file = await readFile(filepath);
+                const fileType = await fileTypeFromBuffer(file);
+
+                if (!fileType) {
+                    // SVGs are not detected by file-type so we need to check manually
+                    if (isSvg(file.toString("utf-8"))) {
+                        filesToUploadSet.add(filepath);
+                    }
+                    continue;
+                }
+
+                if (ALLOWED_FILE_TYPES.includes(fileType.mime)) {
+                    filesToUploadSet.add(filepath);
+                }
             }
         }
 
