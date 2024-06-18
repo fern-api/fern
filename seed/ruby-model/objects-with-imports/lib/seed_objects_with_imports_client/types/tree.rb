@@ -34,9 +34,9 @@ module SeedObjectsWithImportsClient
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      nodes = parsed_json["nodes"]&.map do |v|
-        v = v.to_json
-        SeedObjectsWithImportsClient::Node.from_json(json_object: v)
+      nodes = parsed_json["nodes"]&.map do |item|
+        item = item.to_json
+        SeedObjectsWithImportsClient::Node.from_json(json_object: item)
       end
       new(nodes: nodes, additional_properties: struct)
     end

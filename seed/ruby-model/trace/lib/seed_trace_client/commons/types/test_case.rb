@@ -38,9 +38,9 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         id = struct["id"]
-        params = parsed_json["params"]&.map do |v|
-          v = v.to_json
-          SeedTraceClient::Commons::VariableValue.from_json(json_object: v)
+        params = parsed_json["params"]&.map do |item|
+          item = item.to_json
+          SeedTraceClient::Commons::VariableValue.from_json(json_object: item)
         end
         new(
           id: id,

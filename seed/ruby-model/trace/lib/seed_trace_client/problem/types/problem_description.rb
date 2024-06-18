@@ -33,9 +33,9 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        boards = parsed_json["boards"]&.map do |v|
-          v = v.to_json
-          SeedTraceClient::Problem::ProblemDescriptionBoard.from_json(json_object: v)
+        boards = parsed_json["boards"]&.map do |item|
+          item = item.to_json
+          SeedTraceClient::Problem::ProblemDescriptionBoard.from_json(json_object: item)
         end
         new(boards: boards, additional_properties: struct)
       end

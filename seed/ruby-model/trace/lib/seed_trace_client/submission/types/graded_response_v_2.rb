@@ -37,9 +37,9 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         submission_id = struct["submissionId"]
-        test_cases = parsed_json["testCases"]&.transform_values do |v|
-          v = v.to_json
-          SeedTraceClient::Submission::TestCaseGrade.from_json(json_object: v)
+        test_cases = parsed_json["testCases"]&.transform_values do |value|
+          value = value.to_json
+          SeedTraceClient::Submission::TestCaseGrade.from_json(json_object: value)
         end
         new(
           submission_id: submission_id,
