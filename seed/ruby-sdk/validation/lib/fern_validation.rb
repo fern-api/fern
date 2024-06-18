@@ -23,10 +23,21 @@ module SeedValidationClient
     # @param name [String]
     # @param request_options [SeedValidationClient::RequestOptions]
     # @return [SeedValidationClient::Type]
+    # @example
+    #  validation = SeedValidationClient::Client.new(base_url: "https://api.example.com")
+    #  validation.create(
+    #    decimal: 1.1,
+    #    even: 1,
+    #    name: "string"
+    #  )
     def create(decimal:, even:, name:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.body = {
           **(request_options&.additional_body_parameters || {}),
           decimal: decimal,
@@ -43,10 +54,21 @@ module SeedValidationClient
     # @param name [String]
     # @param request_options [SeedValidationClient::RequestOptions]
     # @return [SeedValidationClient::Type]
+    # @example
+    #  validation = SeedValidationClient::Client.new(base_url: "https://api.example.com")
+    #  validation.get(
+    #    decimal: 1.1,
+    #    even: 1,
+    #    name: "string"
+    #  )
     def get(decimal:, even:, name:, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.params = {
           **(request_options&.additional_query_parameters || {}),
           "decimal": decimal,
@@ -77,10 +99,21 @@ module SeedValidationClient
     # @param name [String]
     # @param request_options [SeedValidationClient::RequestOptions]
     # @return [SeedValidationClient::Type]
+    # @example
+    #  validation = SeedValidationClient::Client.new(base_url: "https://api.example.com")
+    #  validation.create(
+    #    decimal: 1.1,
+    #    even: 1,
+    #    name: "string"
+    #  )
     def create(decimal:, even:, name:, request_options: nil)
       response = @async_request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@async_request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.body = {
           **(request_options&.additional_body_parameters || {}),
           decimal: decimal,
@@ -97,10 +130,21 @@ module SeedValidationClient
     # @param name [String]
     # @param request_options [SeedValidationClient::RequestOptions]
     # @return [SeedValidationClient::Type]
+    # @example
+    #  validation = SeedValidationClient::Client.new(base_url: "https://api.example.com")
+    #  validation.get(
+    #    decimal: 1.1,
+    #    even: 1,
+    #    name: "string"
+    #  )
     def get(decimal:, even:, name:, request_options: nil)
       response = @async_request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@async_request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.params = {
           **(request_options&.additional_query_parameters || {}),
           "decimal": decimal,

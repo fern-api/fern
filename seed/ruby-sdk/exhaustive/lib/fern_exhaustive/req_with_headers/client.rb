@@ -18,12 +18,16 @@ module SeedExhaustiveClient
     # @param request [String]
     # @param request_options [SeedExhaustiveClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  exhaustive.req_with_headers.get_with_custom_header(x_test_endpoint_header: "string", request: "string")
     def get_with_custom_header(x_test_endpoint_header:, request:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = {
-          **req.headers,
+          **(req.headers || {}),
+          **@request_client.get_headers,
           **(request_options&.additional_headers || {}),
           "X-TEST-ENDPOINT-HEADER": x_test_endpoint_header
         }.compact
@@ -47,13 +51,17 @@ module SeedExhaustiveClient
     # @param request [String]
     # @param request_options [SeedExhaustiveClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  exhaustive.req_with_headers.get_with_custom_header(x_test_endpoint_header: "string", request: "string")
     def get_with_custom_header(x_test_endpoint_header:, request:, request_options: nil)
       Async do
         @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = {
-            **req.headers,
+            **(req.headers || {}),
+            **@request_client.get_headers,
             **(request_options&.additional_headers || {}),
             "X-TEST-ENDPOINT-HEADER": x_test_endpoint_header
           }.compact

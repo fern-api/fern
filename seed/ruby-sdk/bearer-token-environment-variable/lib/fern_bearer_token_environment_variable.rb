@@ -14,7 +14,7 @@ module SeedBearerTokenEnvironmentVariableClient
     # @param timeout_in_seconds [Long]
     # @param api_key [String]
     # @return [SeedBearerTokenEnvironmentVariableClient::Client]
-    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: nil)
+    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: ENV["COURIER_API_KEY"])
       @request_client = SeedBearerTokenEnvironmentVariableClient::RequestClient.new(
         base_url: base_url,
         max_retries: max_retries,
@@ -34,7 +34,7 @@ module SeedBearerTokenEnvironmentVariableClient
     # @param timeout_in_seconds [Long]
     # @param api_key [String]
     # @return [SeedBearerTokenEnvironmentVariableClient::AsyncClient]
-    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: nil)
+    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: ENV["COURIER_API_KEY"])
       @async_request_client = SeedBearerTokenEnvironmentVariableClient::AsyncRequestClient.new(
         base_url: base_url,
         max_retries: max_retries,

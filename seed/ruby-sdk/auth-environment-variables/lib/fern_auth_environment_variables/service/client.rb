@@ -19,12 +19,23 @@ module SeedAuthEnvironmentVariablesClient
     #
     # @param request_options [SeedAuthEnvironmentVariablesClient::RequestOptions]
     # @return [String]
+    # @example
+    #  auth_environment_variables = SeedAuthEnvironmentVariablesClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    api_key: "YOUR_API_KEY",
+    #    x_another_header: "XAnotherHeader"
+    #  )
+    #  auth_environment_variables.service.get_with_api_key
     def get_with_api_key(request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["X-FERN-API-KEY"] = request_options.api_key unless request_options&.api_key.nil?
         req.headers["X-Another-Header"] = request_options.x_another_header unless request_options&.x_another_header.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/apiKey"
       end
       JSON.parse(response.body)
@@ -35,13 +46,21 @@ module SeedAuthEnvironmentVariablesClient
     # @param x_endpoint_header [String]
     # @param request_options [SeedAuthEnvironmentVariablesClient::RequestOptions]
     # @return [String]
+    # @example
+    #  auth_environment_variables = SeedAuthEnvironmentVariablesClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    api_key: "YOUR_API_KEY",
+    #    x_another_header: "XAnotherHeader"
+    #  )
+    #  auth_environment_variables.service.get_with_header(x_endpoint_header: "string")
     def get_with_header(x_endpoint_header:, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["X-FERN-API-KEY"] = request_options.api_key unless request_options&.api_key.nil?
         req.headers["X-Another-Header"] = request_options.x_another_header unless request_options&.x_another_header.nil?
         req.headers = {
-          **req.headers,
+          **(req.headers || {}),
+          **@request_client.get_headers,
           **(request_options&.additional_headers || {}),
           "X-Endpoint-Header": x_endpoint_header
         }.compact
@@ -65,6 +84,13 @@ module SeedAuthEnvironmentVariablesClient
     #
     # @param request_options [SeedAuthEnvironmentVariablesClient::RequestOptions]
     # @return [String]
+    # @example
+    #  auth_environment_variables = SeedAuthEnvironmentVariablesClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    api_key: "YOUR_API_KEY",
+    #    x_another_header: "XAnotherHeader"
+    #  )
+    #  auth_environment_variables.service.get_with_api_key
     def get_with_api_key(request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
@@ -74,7 +100,11 @@ module SeedAuthEnvironmentVariablesClient
             req.headers["X-Another-Header"] =
               request_options.x_another_header
           end
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/apiKey"
         end
         parsed_json = JSON.parse(response.body)
@@ -87,6 +117,13 @@ module SeedAuthEnvironmentVariablesClient
     # @param x_endpoint_header [String]
     # @param request_options [SeedAuthEnvironmentVariablesClient::RequestOptions]
     # @return [String]
+    # @example
+    #  auth_environment_variables = SeedAuthEnvironmentVariablesClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    api_key: "YOUR_API_KEY",
+    #    x_another_header: "XAnotherHeader"
+    #  )
+    #  auth_environment_variables.service.get_with_header(x_endpoint_header: "string")
     def get_with_header(x_endpoint_header:, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
@@ -97,7 +134,8 @@ module SeedAuthEnvironmentVariablesClient
               request_options.x_another_header
           end
           req.headers = {
-            **req.headers,
+            **(req.headers || {}),
+            **@request_client.get_headers,
             **(request_options&.additional_headers || {}),
             "X-Endpoint-Header": x_endpoint_header
           }.compact

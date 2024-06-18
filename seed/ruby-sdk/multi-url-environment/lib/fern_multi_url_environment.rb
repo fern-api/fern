@@ -13,17 +13,17 @@ module SeedMultiUrlEnvironmentClient
     # @return [SeedMultiUrlEnvironmentClient::S3Client]
     attr_reader :s_3
 
-    # @param environment [SeedMultiUrlEnvironmentClient::Environment]
     # @param base_url [String]
+    # @param environment [SeedMultiUrlEnvironmentClient::Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @return [SeedMultiUrlEnvironmentClient::Client]
-    def initialize(token:, environment: SeedMultiUrlEnvironmentClient::Environment::PRODUCTION, base_url: nil,
+    def initialize(token:, base_url: nil, environment: SeedMultiUrlEnvironmentClient::Environment::PRODUCTION,
                    max_retries: nil, timeout_in_seconds: nil)
       @request_client = SeedMultiUrlEnvironmentClient::RequestClient.new(
-        environment: environment,
         base_url: base_url,
+        environment: environment,
         max_retries: max_retries,
         timeout_in_seconds: timeout_in_seconds,
         token: token
@@ -39,17 +39,17 @@ module SeedMultiUrlEnvironmentClient
     # @return [SeedMultiUrlEnvironmentClient::AsyncS3Client]
     attr_reader :s_3
 
-    # @param environment [SeedMultiUrlEnvironmentClient::Environment]
     # @param base_url [String]
+    # @param environment [SeedMultiUrlEnvironmentClient::Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @return [SeedMultiUrlEnvironmentClient::AsyncClient]
-    def initialize(token:, environment: SeedMultiUrlEnvironmentClient::Environment::PRODUCTION, base_url: nil,
+    def initialize(token:, base_url: nil, environment: SeedMultiUrlEnvironmentClient::Environment::PRODUCTION,
                    max_retries: nil, timeout_in_seconds: nil)
       @async_request_client = SeedMultiUrlEnvironmentClient::AsyncRequestClient.new(
-        environment: environment,
         base_url: base_url,
+        environment: environment,
         max_retries: max_retries,
         timeout_in_seconds: timeout_in_seconds,
         token: token

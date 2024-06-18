@@ -22,12 +22,23 @@ module SeedTraceClient
       #
       # @param request_options [SeedTraceClient::RequestOptions]
       # @return [Array<SeedTraceClient::V2::Problem::LightweightProblemInfoV2>]
+      # @example
+      #  trace = SeedTraceClient::Client.new(
+      #    base_url: "https://api.example.com",
+      #    environment: SeedTraceClient::Environment::PROD,
+      #    token: "YOUR_AUTH_TOKEN"
+      #  )
+      #  trace.v_2.problem.get_lightweight_problems
       def get_lightweight_problems(request_options: nil)
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/lightweight-problem-info"
         end
         parsed_json = JSON.parse(response.body)
@@ -41,12 +52,23 @@ module SeedTraceClient
       #
       # @param request_options [SeedTraceClient::RequestOptions]
       # @return [Array<SeedTraceClient::V2::Problem::ProblemInfoV2>]
+      # @example
+      #  trace = SeedTraceClient::Client.new(
+      #    base_url: "https://api.example.com",
+      #    environment: SeedTraceClient::Environment::PROD,
+      #    token: "YOUR_AUTH_TOKEN"
+      #  )
+      #  trace.v_2.problem.get_problems
       def get_problems(request_options: nil)
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info"
         end
         parsed_json = JSON.parse(response.body)
@@ -61,12 +83,23 @@ module SeedTraceClient
       # @param problem_id [String]
       # @param request_options [SeedTraceClient::RequestOptions]
       # @return [SeedTraceClient::V2::Problem::ProblemInfoV2]
+      # @example
+      #  trace = SeedTraceClient::Client.new(
+      #    base_url: "https://api.example.com",
+      #    environment: SeedTraceClient::Environment::PROD,
+      #    token: "YOUR_AUTH_TOKEN"
+      #  )
+      #  trace.v_2.problem.get_latest_problem(problem_id: "string")
       def get_latest_problem(problem_id:, request_options: nil)
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info/#{problem_id}"
         end
         SeedTraceClient::V2::Problem::ProblemInfoV2.from_json(json_object: response.body)
@@ -78,12 +111,23 @@ module SeedTraceClient
       # @param problem_version [Integer]
       # @param request_options [SeedTraceClient::RequestOptions]
       # @return [SeedTraceClient::V2::Problem::ProblemInfoV2]
+      # @example
+      #  trace = SeedTraceClient::Client.new(
+      #    base_url: "https://api.example.com",
+      #    environment: SeedTraceClient::Environment::PROD,
+      #    token: "YOUR_AUTH_TOKEN"
+      #  )
+      #  trace.v_2.problem.get_problem_version(problem_id: "string", problem_version: 1)
       def get_problem_version(problem_id:, problem_version:, request_options: nil)
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info/#{problem_id}/version/#{problem_version}"
         end
         SeedTraceClient::V2::Problem::ProblemInfoV2.from_json(json_object: response.body)
@@ -104,6 +148,13 @@ module SeedTraceClient
       #
       # @param request_options [SeedTraceClient::RequestOptions]
       # @return [Array<SeedTraceClient::V2::Problem::LightweightProblemInfoV2>]
+      # @example
+      #  trace = SeedTraceClient::Client.new(
+      #    base_url: "https://api.example.com",
+      #    environment: SeedTraceClient::Environment::PROD,
+      #    token: "YOUR_AUTH_TOKEN"
+      #  )
+      #  trace.v_2.problem.get_lightweight_problems
       def get_lightweight_problems(request_options: nil)
         Async do
           response = @request_client.conn.get do |req|
@@ -113,7 +164,11 @@ module SeedTraceClient
               req.headers["X-Random-Header"] =
                 request_options.x_random_header
             end
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/lightweight-problem-info"
           end
           parsed_json = JSON.parse(response.body)
@@ -128,6 +183,13 @@ module SeedTraceClient
       #
       # @param request_options [SeedTraceClient::RequestOptions]
       # @return [Array<SeedTraceClient::V2::Problem::ProblemInfoV2>]
+      # @example
+      #  trace = SeedTraceClient::Client.new(
+      #    base_url: "https://api.example.com",
+      #    environment: SeedTraceClient::Environment::PROD,
+      #    token: "YOUR_AUTH_TOKEN"
+      #  )
+      #  trace.v_2.problem.get_problems
       def get_problems(request_options: nil)
         Async do
           response = @request_client.conn.get do |req|
@@ -137,7 +199,11 @@ module SeedTraceClient
               req.headers["X-Random-Header"] =
                 request_options.x_random_header
             end
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info"
           end
           parsed_json = JSON.parse(response.body)
@@ -153,6 +219,13 @@ module SeedTraceClient
       # @param problem_id [String]
       # @param request_options [SeedTraceClient::RequestOptions]
       # @return [SeedTraceClient::V2::Problem::ProblemInfoV2]
+      # @example
+      #  trace = SeedTraceClient::Client.new(
+      #    base_url: "https://api.example.com",
+      #    environment: SeedTraceClient::Environment::PROD,
+      #    token: "YOUR_AUTH_TOKEN"
+      #  )
+      #  trace.v_2.problem.get_latest_problem(problem_id: "string")
       def get_latest_problem(problem_id:, request_options: nil)
         Async do
           response = @request_client.conn.get do |req|
@@ -162,7 +235,11 @@ module SeedTraceClient
               req.headers["X-Random-Header"] =
                 request_options.x_random_header
             end
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info/#{problem_id}"
           end
           SeedTraceClient::V2::Problem::ProblemInfoV2.from_json(json_object: response.body)
@@ -175,6 +252,13 @@ module SeedTraceClient
       # @param problem_version [Integer]
       # @param request_options [SeedTraceClient::RequestOptions]
       # @return [SeedTraceClient::V2::Problem::ProblemInfoV2]
+      # @example
+      #  trace = SeedTraceClient::Client.new(
+      #    base_url: "https://api.example.com",
+      #    environment: SeedTraceClient::Environment::PROD,
+      #    token: "YOUR_AUTH_TOKEN"
+      #  )
+      #  trace.v_2.problem.get_problem_version(problem_id: "string", problem_version: 1)
       def get_problem_version(problem_id:, problem_version:, request_options: nil)
         Async do
           response = @request_client.conn.get do |req|
@@ -184,7 +268,11 @@ module SeedTraceClient
               req.headers["X-Random-Header"] =
                 request_options.x_random_header
             end
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info/#{problem_id}/version/#{problem_version}"
           end
           SeedTraceClient::V2::Problem::ProblemInfoV2.from_json(json_object: response.body)

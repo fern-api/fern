@@ -17,24 +17,38 @@ module SeedExhaustiveClient
     end
 
     # @param request_options [SeedExhaustiveClient::RequestOptions]
-    # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
+    # @return [SeedExhaustiveClient::Types::Object_::ObjectWithOptionalField]
+    # @example
+    #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  exhaustive.no_req_body.get_with_no_request_body
     def get_with_no_request_body(request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/no-req-body"
       end
-      SeedExhaustiveClient::Types::Object::ObjectWithOptionalField.from_json(json_object: response.body)
+      SeedExhaustiveClient::Types::Object_::ObjectWithOptionalField.from_json(json_object: response.body)
     end
 
     # @param request_options [SeedExhaustiveClient::RequestOptions]
     # @return [String]
+    # @example
+    #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  exhaustive.no_req_body.post_with_no_request_body
     def post_with_no_request_body(request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/no-req-body"
       end
       JSON.parse(response.body)
@@ -52,27 +66,41 @@ module SeedExhaustiveClient
     end
 
     # @param request_options [SeedExhaustiveClient::RequestOptions]
-    # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
+    # @return [SeedExhaustiveClient::Types::Object_::ObjectWithOptionalField]
+    # @example
+    #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  exhaustive.no_req_body.get_with_no_request_body
     def get_with_no_request_body(request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/no-req-body"
         end
-        SeedExhaustiveClient::Types::Object::ObjectWithOptionalField.from_json(json_object: response.body)
+        SeedExhaustiveClient::Types::Object_::ObjectWithOptionalField.from_json(json_object: response.body)
       end
     end
 
     # @param request_options [SeedExhaustiveClient::RequestOptions]
     # @return [String]
+    # @example
+    #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  exhaustive.no_req_body.post_with_no_request_body
     def post_with_no_request_body(request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/no-req-body"
         end
         parsed_json = JSON.parse(response.body)

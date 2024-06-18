@@ -24,7 +24,11 @@ module SeedCodeSamplesClient
     def hello(num_events:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.body = { **(request_options&.additional_body_parameters || {}), num_events: num_events }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/hello"
       end
@@ -52,7 +56,11 @@ module SeedCodeSamplesClient
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = { **(request_options&.additional_body_parameters || {}), num_events: num_events }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/hello"
         end

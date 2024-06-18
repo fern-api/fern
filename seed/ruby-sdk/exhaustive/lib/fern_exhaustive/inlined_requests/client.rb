@@ -19,7 +19,7 @@ module SeedExhaustiveClient
     #
     # @param string [String]
     # @param integer [Integer]
-    # @param nested_object [Hash] Request of type SeedExhaustiveClient::Types::Object::ObjectWithOptionalField, as a Hash
+    # @param nested_object [Hash] Request of type SeedExhaustiveClient::Types::Object_::ObjectWithOptionalField, as a Hash
     #   * :string (String)
     #   * :integer (Integer)
     #   * :long (Long)
@@ -34,12 +34,23 @@ module SeedExhaustiveClient
     #   * :map (Hash{Integer => String})
     #   * :bigint (String)
     # @param request_options [SeedExhaustiveClient::RequestOptions]
-    # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
+    # @return [SeedExhaustiveClient::Types::Object_::ObjectWithOptionalField]
+    # @example
+    #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  exhaustive.inlined_requests.post_with_object_bodyand_response(
+    #    string: "string",
+    #    integer: 1,
+    #    nested_object: { string: "string", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(2024-01-15T09:30:00.000Z), date: DateTime.parse(2023-01-15), uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", base_64: "SGVsbG8gd29ybGQh", list: ["string"], set: Set["string"], map: { 1: "string" }, bigint: "123456789123456789" }
+    #  )
     def post_with_object_bodyand_response(string:, integer:, nested_object:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.body = {
           **(request_options&.additional_body_parameters || {}),
           string: string,
@@ -48,7 +59,7 @@ module SeedExhaustiveClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/req-bodies/object"
       end
-      SeedExhaustiveClient::Types::Object::ObjectWithOptionalField.from_json(json_object: response.body)
+      SeedExhaustiveClient::Types::Object_::ObjectWithOptionalField.from_json(json_object: response.body)
     end
   end
 
@@ -66,7 +77,7 @@ module SeedExhaustiveClient
     #
     # @param string [String]
     # @param integer [Integer]
-    # @param nested_object [Hash] Request of type SeedExhaustiveClient::Types::Object::ObjectWithOptionalField, as a Hash
+    # @param nested_object [Hash] Request of type SeedExhaustiveClient::Types::Object_::ObjectWithOptionalField, as a Hash
     #   * :string (String)
     #   * :integer (Integer)
     #   * :long (Long)
@@ -81,13 +92,24 @@ module SeedExhaustiveClient
     #   * :map (Hash{Integer => String})
     #   * :bigint (String)
     # @param request_options [SeedExhaustiveClient::RequestOptions]
-    # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
+    # @return [SeedExhaustiveClient::Types::Object_::ObjectWithOptionalField]
+    # @example
+    #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  exhaustive.inlined_requests.post_with_object_bodyand_response(
+    #    string: "string",
+    #    integer: 1,
+    #    nested_object: { string: "string", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(2024-01-15T09:30:00.000Z), date: DateTime.parse(2023-01-15), uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", base_64: "SGVsbG8gd29ybGQh", list: ["string"], set: Set["string"], map: { 1: "string" }, bigint: "123456789123456789" }
+    #  )
     def post_with_object_bodyand_response(string:, integer:, nested_object:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = {
             **(request_options&.additional_body_parameters || {}),
             string: string,
@@ -96,7 +118,7 @@ module SeedExhaustiveClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/req-bodies/object"
         end
-        SeedExhaustiveClient::Types::Object::ObjectWithOptionalField.from_json(json_object: response.body)
+        SeedExhaustiveClient::Types::Object_::ObjectWithOptionalField.from_json(json_object: response.body)
       end
     end
   end

@@ -15,8 +15,6 @@ module SeedLiteralClient
       @request_client = request_client
     end
 
-    # @param endpoint_version [String]
-    # @param async [Boolean]
     # @param query [String]
     # @param request_options [SeedLiteralClient::RequestOptions]
     # @return [SeedLiteralClient::SendResponse]
@@ -26,12 +24,8 @@ module SeedLiteralClient
     #    version: "Version",
     #    audit_logging: "AuditLogging"
     #  )
-    #  literal.headers.send(
-    #    endpoint_version: "02-12-2024",
-    #    async: true,
-    #    query: "What is the weather today"
-    #  )
-    def send(endpoint_version:, async:, query:, request_options: nil)
+    #  literal.headers.send(query: "What is the weather today")
+    def send(query:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["X-API-Version"] = request_options.version unless request_options&.version.nil?
@@ -40,10 +34,11 @@ module SeedLiteralClient
             request_options.audit_logging
         end
         req.headers = {
-          **req.headers,
+          **(req.headers || {}),
+          **@request_client.get_headers,
           **(request_options&.additional_headers || {}),
-          "X-Endpoint-Version": endpoint_version,
-          "X-Async": async
+          "X-Endpoint-Version": "02-12-2024",
+          "X-Async": true
         }.compact
         req.body = { **(request_options&.additional_body_parameters || {}), query: query }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/headers"
@@ -62,8 +57,6 @@ module SeedLiteralClient
       @request_client = request_client
     end
 
-    # @param endpoint_version [String]
-    # @param async [Boolean]
     # @param query [String]
     # @param request_options [SeedLiteralClient::RequestOptions]
     # @return [SeedLiteralClient::SendResponse]
@@ -73,12 +66,8 @@ module SeedLiteralClient
     #    version: "Version",
     #    audit_logging: "AuditLogging"
     #  )
-    #  literal.headers.send(
-    #    endpoint_version: "02-12-2024",
-    #    async: true,
-    #    query: "What is the weather today"
-    #  )
-    def send(endpoint_version:, async:, query:, request_options: nil)
+    #  literal.headers.send(query: "What is the weather today")
+    def send(query:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -88,10 +77,11 @@ module SeedLiteralClient
               request_options.audit_logging
           end
           req.headers = {
-            **req.headers,
+            **(req.headers || {}),
+            **@request_client.get_headers,
             **(request_options&.additional_headers || {}),
-            "X-Endpoint-Version": endpoint_version,
-            "X-Async": async
+            "X-Endpoint-Version": "02-12-2024",
+            "X-Async": true
           }.compact
           req.body = { **(request_options&.additional_body_parameters || {}), query: query }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/headers"

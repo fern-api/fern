@@ -18,11 +18,22 @@ module SeedMultiUrlEnvironmentClient
     # @param s_3_key [String]
     # @param request_options [SeedMultiUrlEnvironmentClient::RequestOptions]
     # @return [String]
+    # @example
+    #  multi_url_environment = SeedMultiUrlEnvironmentClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedMultiUrlEnvironmentClient::Environment::PRODUCTION,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  multi_url_environment.s_3.get_presigned_url(s_3_key: "string")
     def get_presigned_url(s_3_key:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.body = { **(request_options&.additional_body_parameters || {}), s3Key: s_3_key }.compact
         req.url "#{@request_client.get_url(environment: s3, request_options: request_options)}/s3/presigned-url"
       end
@@ -43,12 +54,23 @@ module SeedMultiUrlEnvironmentClient
     # @param s_3_key [String]
     # @param request_options [SeedMultiUrlEnvironmentClient::RequestOptions]
     # @return [String]
+    # @example
+    #  multi_url_environment = SeedMultiUrlEnvironmentClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedMultiUrlEnvironmentClient::Environment::PRODUCTION,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  multi_url_environment.s_3.get_presigned_url(s_3_key: "string")
     def get_presigned_url(s_3_key:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = { **(request_options&.additional_body_parameters || {}), s3Key: s_3_key }.compact
           req.url "#{@request_client.get_url(environment: s3, request_options: request_options)}/s3/presigned-url"
         end

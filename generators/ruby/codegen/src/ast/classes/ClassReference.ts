@@ -35,6 +35,7 @@ enum RubyClass {
     STRING = "String",
     BOOLEAN = "Boolean",
     LONG = "Long",
+    TIME = "Time",
     DATETIME = "DateTime",
     DATE = "Date",
     // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
@@ -45,7 +46,8 @@ enum RubyClass {
     JSON = "JSON",
     OPENSTRUCT = "OpenStruct",
     VOID = "Void",
-    FILE = "IO"
+    FILE = "IO",
+    METHOD = "Method"
 }
 
 export declare namespace ClassReference {
@@ -133,11 +135,34 @@ export const JsonClassReference = new ClassReference({
 export const VoidClassReference = new ClassReference({ name: RubyClass.VOID });
 export const BooleanClassReference = new ClassReference({ name: RubyClass.BOOLEAN });
 export const StringClassReference = new ClassReference({ name: RubyClass.STRING });
+export const MethodClassReference = new ClassReference({ name: RubyClass.METHOD });
 export const LongClassReference = new ClassReference({ name: RubyClass.LONG });
 export const FileClassReference = new ClassReference({ name: RubyClass.FILE });
 export const B64StringClassReference = new ClassReference({ name: RubyClass.BASE64 });
+export const TimeClassReference = new ClassReference({ name: RubyClass.TIME });
 export const NilValue = "nil";
 export const OmittedValue = "OMIT";
+
+export class LiteralClassReference extends ClassReference {
+    innerType: ClassReference;
+    value: string;
+
+    constructor(innerType: ClassReference, lit: Literal) {
+        super({ ...innerType });
+        this.innerType = innerType;
+        this.value = lit._visit<string>({
+            string: (s) => `"${s}"`,
+            boolean: (b) => (b ? "true" : "false"),
+            _other: () => {
+                throw new Error("Unexpected literal type");
+            }
+        });
+    }
+
+    public getLiteralValue(): string {
+        return this.value;
+    }
+}
 
 // Extended class references
 export declare namespace SerializableObjectReference {
@@ -740,11 +765,14 @@ export class ClassReferenceFactory {
             optional: (tr: TypeReference) => this.fromTypeReference(tr),
             set: (tr: TypeReference) => new SetReference({ innerType: this.fromTypeReference(tr) }),
             literal: (lit: Literal) =>
-                Literal._visit<ClassReference>(lit, {
-                    string: () => StringClassReference,
-                    boolean: () => BooleanClassReference,
-                    _other: (value: { type: string }) => new ClassReference({ name: value.type })
-                }),
+                new LiteralClassReference(
+                    Literal._visit<ClassReference>(lit, {
+                        string: () => StringClassReference,
+                        boolean: () => BooleanClassReference,
+                        _other: (value: { type: string }) => new ClassReference({ name: value.type })
+                    }),
+                    lit
+                ),
             _other: () => {
                 throw new Error("Unexpected primitive type: " + containerType.type);
             }

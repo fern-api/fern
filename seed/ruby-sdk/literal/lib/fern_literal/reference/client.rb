@@ -37,7 +37,11 @@ module SeedLiteralClient
           req.headers["X-API-Enable-Audit-Logging"] =
             request_options.audit_logging
         end
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/reference"
       end
@@ -77,7 +81,11 @@ module SeedLiteralClient
             req.headers["X-API-Enable-Audit-Logging"] =
               request_options.audit_logging
           end
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/reference"
         end

@@ -118,8 +118,12 @@ export class Function_ extends AstNode {
         return imports;
     }
 
-    public getInvocationName(): string {
-        return this.invocationName != null ? this.invocationName : [...this.packagePath, this.name].join(".");
+    public getInvocationName(fullPath = true): string {
+        return this.invocationName != null
+            ? this.invocationName
+            : fullPath
+            ? [...this.packagePath, this.name].join(".")
+            : this.name;
     }
 
     public generateSnippet(clientName: string): AstNode | string | undefined {

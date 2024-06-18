@@ -1,4 +1,4 @@
-irVersion: v32
+irVersion: v39
 docker: fernapi/fern-ruby-model:latest
 dockerCommand: yarn workspace @fern-api/fern-ruby-model dockerTagLatest
 language: ruby

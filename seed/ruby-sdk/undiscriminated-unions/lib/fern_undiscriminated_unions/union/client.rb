@@ -20,10 +20,17 @@ module SeedUndiscriminatedUnionsClient
     # @param request [String, Array<String>, Integer, Array<Integer>, Array<Array<Integer>>, Set<String>]
     # @param request_options [SeedUndiscriminatedUnionsClient::RequestOptions]
     # @return [String, Array<String>, Integer, Array<Integer>, Array<Array<Integer>>, Set<String>]
+    # @example
+    #  undiscriminated_unions = SeedUndiscriminatedUnionsClient::Client.new(base_url: "https://api.example.com")
+    #  undiscriminated_unions.union.get(request: "string")
     def get(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/"
       end
@@ -38,7 +45,11 @@ module SeedUndiscriminatedUnionsClient
     def get_metadata(request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/metadata"
       end
       JSON.parse(response.body)
@@ -58,11 +69,18 @@ module SeedUndiscriminatedUnionsClient
     # @param request [String, Array<String>, Integer, Array<Integer>, Array<Array<Integer>>, Set<String>]
     # @param request_options [SeedUndiscriminatedUnionsClient::RequestOptions]
     # @return [String, Array<String>, Integer, Array<Integer>, Array<Array<Integer>>, Set<String>]
+    # @example
+    #  undiscriminated_unions = SeedUndiscriminatedUnionsClient::Client.new(base_url: "https://api.example.com")
+    #  undiscriminated_unions.union.get(request: "string")
     def get(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/"
         end
@@ -79,7 +97,11 @@ module SeedUndiscriminatedUnionsClient
       Async do
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/metadata"
         end
         parsed_json = JSON.parse(response.body)

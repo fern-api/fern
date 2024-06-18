@@ -7,7 +7,7 @@ require "json"
 
 module SeedExhaustiveClient
   module Types
-    class Object
+    class Object_
       class ObjectWithOptionalField
         # @return [String]
         attr_reader :string
@@ -57,7 +57,7 @@ module SeedExhaustiveClient
         # @param map [Hash{Integer => String}]
         # @param bigint [String]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
+        # @return [SeedExhaustiveClient::Types::Object_::ObjectWithOptionalField]
         def initialize(string: OMIT, integer: OMIT, long: OMIT, double: OMIT, bool: OMIT, datetime: OMIT, date: OMIT,
                        uuid: OMIT, base_64: OMIT, list: OMIT, set: OMIT, map: OMIT, bigint: OMIT, additional_properties: nil)
           @string = string if string != OMIT
@@ -96,7 +96,7 @@ module SeedExhaustiveClient
         # Deserialize a JSON object to an instance of ObjectWithOptionalField
         #
         # @param json_object [String]
-        # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
+        # @return [SeedExhaustiveClient::Types::Object_::ObjectWithOptionalField]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
