@@ -759,6 +759,10 @@
                               "results": {
                                 "type": "string",
                                 "description": "The path to the response property for the page elements."
+                              },
+                              "step": {
+                                "type": "string",
+                                "description": "The path to the request property for the page step."
                               }
                             },
                             "required": ["offset", "results"],

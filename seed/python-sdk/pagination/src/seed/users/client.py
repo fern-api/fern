@@ -167,6 +167,62 @@ class UsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def list_with_offset_step_pagination(
+        self,
+        *,
+        page: typing.Optional[int] = None,
+        limit: typing.Optional[int] = None,
+        order: typing.Optional[Order] = None,
+        request_options: typing.Optional[RequestOptions] = None
+    ) -> ListUsersPaginationResponse:
+        """
+        Parameters
+        ----------
+        page : typing.Optional[int]
+            Defaults to first page
+
+        limit : typing.Optional[int]
+            The maxiumum number of elements to return.
+            This is also used as the step size in this
+            paginated endpoint.
+
+        order : typing.Optional[Order]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListUsersPaginationResponse
+
+        Examples
+        --------
+        from seed.client import SeedPagination
+
+        client = SeedPagination(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.users.list_with_offset_step_pagination(
+            page=1,
+            limit=1,
+            order="asc",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "users",
+            method="GET",
+            params={"page": page, "limit": limit, "order": order},
+            request_options=request_options,
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def list_with_extended_results(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> SyncPager[User]:
@@ -453,6 +509,62 @@ class AsyncUsersClient:
             )
             _items = _parsed_response.data
             return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def list_with_offset_step_pagination(
+        self,
+        *,
+        page: typing.Optional[int] = None,
+        limit: typing.Optional[int] = None,
+        order: typing.Optional[Order] = None,
+        request_options: typing.Optional[RequestOptions] = None
+    ) -> ListUsersPaginationResponse:
+        """
+        Parameters
+        ----------
+        page : typing.Optional[int]
+            Defaults to first page
+
+        limit : typing.Optional[int]
+            The maxiumum number of elements to return.
+            This is also used as the step size in this
+            paginated endpoint.
+
+        order : typing.Optional[Order]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListUsersPaginationResponse
+
+        Examples
+        --------
+        from seed.client import AsyncSeedPagination
+
+        client = AsyncSeedPagination(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.users.list_with_offset_step_pagination(
+            page=1,
+            limit=1,
+            order="asc",
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "users",
+            method="GET",
+            params={"page": page, "limit": limit, "order": order},
+            request_options=request_options,
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:

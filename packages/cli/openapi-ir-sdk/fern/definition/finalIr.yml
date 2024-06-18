@@ -181,6 +181,7 @@ types:
     properties:
       offset: string
       results: string
+      step: optional<string>
 
   CustomCodeSample:
     availability: in-development

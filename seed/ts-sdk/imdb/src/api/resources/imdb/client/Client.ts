@@ -31,7 +31,7 @@ export class Imdb {
      * @param {Imdb.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedApi.imdb.createMovie({
+     *     await client.imdb.createMovie({
      *         title: "string",
      *         rating: 1.1
      *     })
@@ -95,7 +95,7 @@ export class Imdb {
      * @throws {@link SeedApi.MovieDoesNotExistError}
      *
      * @example
-     *     await seedApi.imdb.getMovie("string")
+     *     await client.imdb.getMovie("string")
      */
     public async getMovie(movieId: SeedApi.MovieId, requestOptions?: Imdb.RequestOptions): Promise<SeedApi.Movie> {
         const _response = await core.fetcher({

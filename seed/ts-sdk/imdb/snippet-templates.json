@@ -11,10 +11,10 @@
             "identifierOverride": "endpoint_imdb.createMovie"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": "const client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedApi.imdb.createMovie(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.imdb.createMovie(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -92,10 +92,10 @@
             "identifierOverride": "endpoint_imdb.getMovie"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": "const client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedApi.imdb.getMovie(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.imdb.getMovie(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

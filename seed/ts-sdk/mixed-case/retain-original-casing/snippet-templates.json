@@ -11,10 +11,10 @@
             "identifierOverride": "endpoint_service.getResource"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedMixedCase = new SeedMixedCaseClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedMixedCaseClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedMixedCase.service.getResource(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.getResource(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -64,10 +64,10 @@
             "identifierOverride": "endpoint_service.listResources"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedMixedCase = new SeedMixedCaseClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": "const client = new SeedMixedCaseClient({ environment: \"YOUR_BASE_URL\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedMixedCase.service.listResources(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.listResources(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

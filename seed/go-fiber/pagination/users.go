@@ -45,6 +45,16 @@ type ListUsersOffsetPaginationRequest struct {
 	StartingAfter *string `query:"starting_after"`
 }
 
+type ListUsersOffsetStepPaginationRequest struct {
+	// Defaults to first page
+	Page *int `query:"page"`
+	// The maxiumum number of elements to return.
+	// This is also used as the step size in this
+	// paginated endpoint.
+	Limit *int   `query:"limit"`
+	Order *Order `query:"order"`
+}
+
 type UsernameCursor struct {
 	Cursor *UsernamePage `json:"cursor,omitempty" url:"cursor,omitempty"`
 

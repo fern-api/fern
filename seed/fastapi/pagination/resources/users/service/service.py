@@ -34,6 +34,9 @@ class AbstractUsersService(AbstractFernService):
     def list_with_offset_pagination(self, *, page: typing.Optional[int] = None, per_page: typing.Optional[int] = None, order: typing.Optional[Order] = None, starting_after: typing.Optional[str] = None) -> ListUsersPaginationResponse:
         ...
     @abc.abstractmethod
+    def list_with_offset_step_pagination(self, *, page: typing.Optional[int] = None, limit: typing.Optional[int] = None, order: typing.Optional[Order] = None) -> ListUsersPaginationResponse:
+        ...
+    @abc.abstractmethod
     def list_with_extended_results(self, *, cursor: typing.Optional[uuid.UUID] = None) -> ListUsersExtendedResponse:
         ...
     @abc.abstractmethod
@@ -50,6 +53,7 @@ class AbstractUsersService(AbstractFernService):
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_list_with_cursor_pagination(router=router)
         cls.__init_list_with_offset_pagination(router=router)
+        cls.__init_list_with_offset_step_pagination(router=router)
         cls.__init_list_with_extended_results(router=router)
         cls.__init_list_usernames(router=router)
         cls.__init_list_with_global_config(router=router)
@@ -136,6 +140,47 @@ class AbstractUsersService(AbstractFernService):
             response_model=ListUsersPaginationResponse,
             description=AbstractUsersService.list_with_offset_pagination.__doc__,
             **get_route_args(cls.list_with_offset_pagination, default_tag="users"),
+        )(wrapper)
+    @classmethod
+    def __init_list_with_offset_step_pagination(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.list_with_offset_step_pagination)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "page":
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=None, description="Defaults to first pageDefaults to first page")))
+            elif parameter_name == "limit":
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=None, description="The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.The maxiumum number of elements to return.
+                This is also used as the step size in this
+                paginated endpoint.")))
+            elif parameter_name == "order":
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.list_with_offset_step_pagination, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        
+        @functools.wraps(cls.list_with_offset_step_pagination)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ListUsersPaginationResponse:
+            try:
+                return cls.list_with_offset_step_pagination(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'list_with_offset_step_pagination' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+        
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.list_with_offset_step_pagination.__globals__)
+        
+        router.get(
+            path="/users",
+            response_model=ListUsersPaginationResponse,
+            description=AbstractUsersService.list_with_offset_step_pagination.__doc__,
+            **get_route_args(cls.list_with_offset_step_pagination, default_tag="users"),
         )(wrapper)
     @classmethod
     def __init_list_with_extended_results(cls, router: fastapi.APIRouter) -> None:

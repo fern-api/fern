@@ -5,11 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v47.1.0] - 2024-06-09 - Required**
+## [v48.0.0] - 2024-06-17
+
+- Fix: The unique webhook id is now required.
+- Improvement: Pagination endpoints not support request body properties.
+- Improvement: Offset pagination now supports a configurable `step` size request property, which
+  is useful for offset values that represent the element's global index (e.g. the 500th element),
+  rather than the page number (e.g the 5th page).
+
+## [v47.1.0] - 2024-06-09
 
 - Fix: Introduce a unique id for all generated webhooks. This is being added as optional but should 
   be made required in v48. 
-
 
 ## [v47.0.0] - 2024-06-09
 

@@ -12,11 +12,13 @@ export const OffsetPagination: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     offset: core.serialization.string(),
     results: core.serialization.string(),
+    step: core.serialization.string().optional(),
 });
 
 export declare namespace OffsetPagination {
     interface Raw {
         offset: string;
         results: string;
+        step?: string | null;
     }
 }
