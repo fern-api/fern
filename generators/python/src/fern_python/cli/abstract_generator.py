@@ -206,32 +206,35 @@ jobs:
             if publish_info_union.type != "pypi":
                 raise RuntimeError("Publish info is for " + publish_info_union.type)
             # First condition is for resilience in the event that Fiddle isn't upgraded to include the new flag
-            if publish_info_union.should_generate_publish_workflow is None or publish_info_union.should_generate_publish_workflow:
+            if (
+                publish_info_union.should_generate_publish_workflow is None
+                or publish_info_union.should_generate_publish_workflow
+            ):
                 workflow_yaml += f"""
-    publish:
-        needs: [compile, test]
-        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-        runs-on: ubuntu-20.04
-        steps:
-        - name: Checkout repo
-            uses: actions/checkout@v3
-        - name: Set up python
-            uses: actions/setup-python@v4
-            with:
-            python-version: 3.8
-        - name: Bootstrap poetry
-            run: |
-            curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
-        - name: Install dependencies
-            run: poetry install
-        - name: Publish to pypi
-            run: |
-            poetry config repositories.{AbstractGenerator._REMOTE_PYPI_REPO_NAME} {publish_info_union.registry_url}
-            poetry --no-interaction -v publish --build --repository {AbstractGenerator._REMOTE_PYPI_REPO_NAME} --username "${publish_info_union.username_environment_variable}" --password "${publish_info_union.password_environment_variable}"
-            env:
-            {publish_info_union.username_environment_variable}: ${{{{ secrets.{publish_info_union.username_environment_variable} }}}}
-            {publish_info_union.password_environment_variable}: ${{{{ secrets.{publish_info_union.password_environment_variable} }}}}
-    """
+  publish:
+    needs: [compile, test]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+      - name: Bootstrap poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
+      - name: Install dependencies
+        run: poetry install
+      - name: Publish to pypi
+        run: |
+          poetry config repositories.{AbstractGenerator._REMOTE_PYPI_REPO_NAME} {publish_info_union.registry_url}
+          poetry --no-interaction -v publish --build --repository {AbstractGenerator._REMOTE_PYPI_REPO_NAME} --username "${publish_info_union.username_environment_variable}" --password "${publish_info_union.password_environment_variable}"
+        env:
+          {publish_info_union.username_environment_variable}: ${{{{ secrets.{publish_info_union.username_environment_variable} }}}}
+          {publish_info_union.password_environment_variable}: ${{{{ secrets.{publish_info_union.password_environment_variable} }}}}
+"""
         return workflow_yaml
 
     def _get_client_test(self) -> str:
