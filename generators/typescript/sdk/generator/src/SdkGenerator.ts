@@ -352,7 +352,7 @@ export class SdkGenerator {
                 ? new FdrSnippetTemplateClient({
                       environment:
                           this.config.executionEnvironment === "dev"
-                              ? FdrSnippetTemplateEnvironment.Dev
+                              ? "https://registry-dev2.buildwithfern.com"
                               : FdrSnippetTemplateEnvironment.Prod
                   })
                 : undefined;
@@ -801,11 +801,14 @@ export class SdkGenerator {
                         endpointContext,
                         clientContext,
                         npmPackage: this.npmPackage,
+                        auth: this.intermediateRepresentation.auth,
+                        headers: this.intermediateRepresentation.headers,
                         endpoint,
                         packageId,
                         rootPackageId: rootPackage,
                         retainOriginalCasing: this.config.retainOriginalCasing,
-                        inlineFileProperties: this.config.inlineFileProperties
+                        inlineFileProperties: this.config.inlineFileProperties,
+                        requireDefaultEnvironment: this.config.requireDefaultEnvironment
                     }).generateSnippetTemplate();
 
                     if (snippetTemplate != null) {

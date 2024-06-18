@@ -5159,16 +5159,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/snippet-sdk@npm:^0.0.5434":
-  version: 0.0.5434
-  resolution: "@fern-fern/snippet-sdk@npm:0.0.5434"
+"@fern-fern/snippet-sdk@npm:^0.0.5492":
+  version: 0.0.5492
+  resolution: "@fern-fern/snippet-sdk@npm:0.0.5492"
   dependencies:
     form-data: 4.0.0
     js-base64: 3.7.2
     node-fetch: 2.7.0
     qs: 6.11.2
     url-join: 4.0.1
-  checksum: dbc9addde93c22fc959e23461e2f544bc90c5384589df23dbe7010b6b521400bb58194bd4a6ecae949a7c4c5ed6b92383ac5345cb4b41e0f88a052a293ff67cb
+  checksum: dccf0d1e185e1d1d08ddca901cd6343ae7145f6d24a1893075ecdc3ec58269ab96f0e72f149eaf66a767cd128664acd1ae2c3095f86fd46d418565ff220d4420
   languageName: node
   linkType: hard
 
@@ -5804,7 +5804,7 @@ __metadata:
     "@fern-fern/generator-cli-sdk": ^0.0.25
     "@fern-fern/generator-exec-sdk": ^0.0.879
     "@fern-fern/ir-sdk": ^0.0.3515
-    "@fern-fern/snippet-sdk": ^0.0.5434
+    "@fern-fern/snippet-sdk": ^0.0.5492
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/endpoint-error-union-generator": "workspace:*"

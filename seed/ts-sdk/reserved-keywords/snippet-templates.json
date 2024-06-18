@@ -11,7 +11,36 @@
             "identifierOverride": "endpoint_package.test"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const client = new SeedNurseryApiClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const client = new SeedNurseryApiClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.package.test(\n\t$FERN_INPUT\n)",
