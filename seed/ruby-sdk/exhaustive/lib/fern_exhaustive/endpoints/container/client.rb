@@ -59,9 +59,9 @@ module SeedExhaustiveClient
           req.url "#{@request_client.get_url(request_options: request_options)}/container/list-of-objects"
         end
         parsed_json = JSON.parse(response.body)
-        parsed_json&.map do |v|
-          v = v.to_json
-          SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField.from_json(json_object: v)
+        parsed_json&.map do |item|
+          item = item.to_json
+          SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField.from_json(json_object: item)
         end
       end
 
@@ -147,9 +147,9 @@ module SeedExhaustiveClient
           req.url "#{@request_client.get_url(request_options: request_options)}/container/map-prim-to-object"
         end
         parsed_json = JSON.parse(response.body)
-        parsed_json&.transform_values do |v|
-          v = v.to_json
-          SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField.from_json(json_object: v)
+        parsed_json&.transform_values do |value|
+          value = value.to_json
+          SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField.from_json(json_object: value)
         end
       end
 
@@ -231,9 +231,9 @@ module SeedExhaustiveClient
             req.url "#{@request_client.get_url(request_options: request_options)}/container/list-of-objects"
           end
           parsed_json = JSON.parse(response.body)
-          parsed_json&.map do |v|
-            v = v.to_json
-            SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField.from_json(json_object: v)
+          parsed_json&.map do |item|
+            item = item.to_json
+            SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField.from_json(json_object: item)
           end
         end
       end
@@ -328,9 +328,9 @@ module SeedExhaustiveClient
             req.url "#{@request_client.get_url(request_options: request_options)}/container/map-prim-to-object"
           end
           parsed_json = JSON.parse(response.body)
-          parsed_json&.transform_values do |v|
-            v = v.to_json
-            SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField.from_json(json_object: v)
+          parsed_json&.transform_values do |value|
+            value = value.to_json
+            SeedExhaustiveClient::Types::Object_::ObjectWithRequiredField.from_json(json_object: value)
           end
         end
       end

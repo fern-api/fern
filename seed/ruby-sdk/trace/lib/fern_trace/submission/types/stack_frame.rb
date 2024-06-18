@@ -43,9 +43,9 @@ module SeedTraceClient
         parsed_json = JSON.parse(json_object)
         method_name = struct["methodName"]
         line_number = struct["lineNumber"]
-        scopes = parsed_json["scopes"]&.map do |v|
-          v = v.to_json
-          SeedTraceClient::Submission::Scope.from_json(json_object: v)
+        scopes = parsed_json["scopes"]&.map do |item|
+          item = item.to_json
+          SeedTraceClient::Submission::Scope.from_json(json_object: item)
         end
         new(
           method_name: method_name,

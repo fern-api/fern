@@ -59,9 +59,9 @@ module SeedMixedCaseClient
         req.url "#{@request_client.get_url(request_options: request_options)}/resource"
       end
       parsed_json = JSON.parse(response.body)
-      parsed_json&.map do |v|
-        v = v.to_json
-        SeedMixedCaseClient::Service::Resource.from_json(json_object: v)
+      parsed_json&.map do |item|
+        item = item.to_json
+        SeedMixedCaseClient::Service::Resource.from_json(json_object: item)
       end
     end
   end
@@ -121,9 +121,9 @@ module SeedMixedCaseClient
           req.url "#{@request_client.get_url(request_options: request_options)}/resource"
         end
         parsed_json = JSON.parse(response.body)
-        parsed_json&.map do |v|
-          v = v.to_json
-          SeedMixedCaseClient::Service::Resource.from_json(json_object: v)
+        parsed_json&.map do |item|
+          item = item.to_json
+          SeedMixedCaseClient::Service::Resource.from_json(json_object: item)
         end
       end
     end

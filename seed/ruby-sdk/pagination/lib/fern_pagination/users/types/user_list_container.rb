@@ -33,9 +33,9 @@ module SeedPaginationClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        users = parsed_json["users"]&.map do |v|
-          v = v.to_json
-          SeedPaginationClient::Users::User.from_json(json_object: v)
+        users = parsed_json["users"]&.map do |item|
+          item = item.to_json
+          SeedPaginationClient::Users::User.from_json(json_object: item)
         end
         new(users: users, additional_properties: struct)
       end

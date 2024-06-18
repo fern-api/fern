@@ -33,9 +33,9 @@ module SeedTraceClient
                    when "basic"
                      SeedTraceClient::V2::Problem::BasicCustomFiles.from_json(json_object: json_object)
                    when "custom"
-                     json_object.value&.transform_values do |v|
-                       v = v.to_json
-                       SeedTraceClient::V2::Problem::Files.from_json(json_object: v)
+                     json_object.value&.transform_values do |value|
+                       value = value.to_json
+                       SeedTraceClient::V2::Problem::Files.from_json(json_object: value)
                      end
                    else
                      SeedTraceClient::V2::Problem::BasicCustomFiles.from_json(json_object: json_object)

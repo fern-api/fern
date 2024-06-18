@@ -42,9 +42,9 @@ module SeedTraceClient
           req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/lightweight-problem-info"
         end
         parsed_json = JSON.parse(response.body)
-        parsed_json&.map do |v|
-          v = v.to_json
-          SeedTraceClient::V2::Problem::LightweightProblemInfoV2.from_json(json_object: v)
+        parsed_json&.map do |item|
+          item = item.to_json
+          SeedTraceClient::V2::Problem::LightweightProblemInfoV2.from_json(json_object: item)
         end
       end
 
@@ -72,9 +72,9 @@ module SeedTraceClient
           req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info"
         end
         parsed_json = JSON.parse(response.body)
-        parsed_json&.map do |v|
-          v = v.to_json
-          SeedTraceClient::V2::Problem::ProblemInfoV2.from_json(json_object: v)
+        parsed_json&.map do |item|
+          item = item.to_json
+          SeedTraceClient::V2::Problem::ProblemInfoV2.from_json(json_object: item)
         end
       end
 
@@ -172,9 +172,9 @@ module SeedTraceClient
             req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/lightweight-problem-info"
           end
           parsed_json = JSON.parse(response.body)
-          parsed_json&.map do |v|
-            v = v.to_json
-            SeedTraceClient::V2::Problem::LightweightProblemInfoV2.from_json(json_object: v)
+          parsed_json&.map do |item|
+            item = item.to_json
+            SeedTraceClient::V2::Problem::LightweightProblemInfoV2.from_json(json_object: item)
           end
         end
       end
@@ -207,9 +207,9 @@ module SeedTraceClient
             req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info"
           end
           parsed_json = JSON.parse(response.body)
-          parsed_json&.map do |v|
-            v = v.to_json
-            SeedTraceClient::V2::Problem::ProblemInfoV2.from_json(json_object: v)
+          parsed_json&.map do |item|
+            item = item.to_json
+            SeedTraceClient::V2::Problem::ProblemInfoV2.from_json(json_object: item)
           end
         end
       end
