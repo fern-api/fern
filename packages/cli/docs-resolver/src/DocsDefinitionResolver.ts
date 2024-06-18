@@ -121,19 +121,18 @@ export class DocsDefinitionResolver {
             // store the image filepaths to upload
             for (const filepath of filepaths) {
                 const file = await readFile(filepath);
-                const fileType = await fileTypeFromBuffer(file);
 
-                if (!fileType) {
-                    // SVGs are not detected by file-type so we need to check manually
-                    if (isSvg(file.toString("utf-8"))) {
-                        filesToUploadSet.add(filepath);
+                if (!isSvg(file.toString("utf-8"))) {
+                    // if the file is not an SVG, check the file type
+                    const fileType = await fileTypeFromBuffer(file);
+                    // if the file can't be parsed or is not an allowed file type, skip it
+                    if (!fileType || !ALLOWED_FILE_TYPES.includes(fileType.mime)) {
+                        continue;
                     }
-                    continue;
                 }
 
-                if (ALLOWED_FILE_TYPES.includes(fileType.mime)) {
-                    filesToUploadSet.add(filepath);
-                }
+                // if the above checks pass, add the file to the set of files to upload
+                filesToUploadSet.add(filepath);
             }
         }
 
