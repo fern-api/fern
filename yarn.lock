@@ -3937,7 +3937,7 @@ __metadata:
     "@fern-fern/ir-v13-model": 0.0.1
     "@fern-fern/ir-v14-model": 0.0.1
     "@fern-fern/ir-v15-model": 0.0.1
-    "@fern-fern/ir-v16-model": 0.0.1
+    "@fern-fern/ir-v16-model": 0.0.4
     "@fern-fern/ir-v17-model": 0.0.1
     "@fern-fern/ir-v18-model": 0.0.1
     "@fern-fern/ir-v19-model": 0.0.5
@@ -4853,10 +4853,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-v16-model@npm:0.0.1":
-  version: 0.0.1
-  resolution: "@fern-fern/ir-v16-model@npm:0.0.1"
-  checksum: 2394662f4213384d0f5fde69847fa3ce430a333d799be1aa31cea42d4ea478c52f02381496b342f1e054d7f1017c4724c61bb6d093d570d190f387f436759ac3
+"@fern-fern/ir-v16-model@npm:0.0.4":
+  version: 0.0.4
+  resolution: "@fern-fern/ir-v16-model@npm:0.0.4"
+  checksum: 5e04dafa06c99698c0b67a7d83095dc9f54b5b0eb34f17c2983b53afa6eb780a52425f050b616d1fb3893a2473f39d09e4342cd1c45e06290680f160778102ea
   languageName: node
   linkType: hard
 
