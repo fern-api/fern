@@ -11,7 +11,36 @@
             "identifierOverride": "endpoint_optional.sendOptionalBody"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const client = new SeedObjectsWithImportsClient({ environment: \"YOUR_BASE_URL\" });\n",
+            "clientInstantiation": {
+                "imports": [],
+                "templateString": "const client = new SeedObjectsWithImportsClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.optional.sendOptionalBody(\n\t$FERN_INPUT\n)",
