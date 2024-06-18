@@ -205,7 +205,8 @@ jobs:
             publish_info_union = output_mode.publish_info.get_as_union()
             if publish_info_union.type != "pypi":
                 raise RuntimeError("Publish info is for " + publish_info_union.type)
-            if publish_info_union.should_generate_publish_workflow is not None and publish_info_union.should_generate_publish_workflow:
+            # First condition is for resilience in the event that Fiddle isn't upgraded to include the new flag
+            if publish_info_union.should_generate_publish_workflow is None or publish_info_union.should_generate_publish_workflow:
                 workflow_yaml += f"""
     publish:
         needs: [compile, test]
