@@ -3588,7 +3588,7 @@ __metadata:
     typescript: 4.6.4
     uuid: ^9.0.1
     watcher: ^2.3.1
-    ws: ^8.17.0
+    ws: ^8.17.1
     xml2js: ^0.6.2
   languageName: unknown
   linkType: soft
@@ -24806,7 +24806,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"ws@npm:^8.11.0, ws@npm:^8.17.0":
+"ws@npm:^8.11.0":
   version: 8.17.0
   resolution: "ws@npm:8.17.0"
   peerDependencies:
@@ -24818,6 +24818,21 @@ env-cmd@toddbluhm/env-cmd:
     utf-8-validate:
       optional: true
   checksum: 147ef9eab0251364e1d2c55338ad0efb15e6913923ccbfdf20f7a8a6cb8f88432bcd7f4d8f66977135bfad35575644f9983201c1a361019594a4e53977bf6d4e
+  languageName: node
+  linkType: hard
+
+"ws@npm:^8.17.1":
+  version: 8.17.1
+  resolution: "ws@npm:8.17.1"
+  peerDependencies:
+    bufferutil: ^4.0.1
+    utf-8-validate: ">=5.0.2"
+  peerDependenciesMeta:
+    bufferutil:
+      optional: true
+    utf-8-validate:
+      optional: true
+  checksum: 442badcce1f1178ec87a0b5372ae2e9771e07c4929a3180321901f226127f252441e8689d765aa5cfba5f50ac60dd830954afc5aeae81609aefa11d3ddf5cecf
   languageName: node
   linkType: hard
 

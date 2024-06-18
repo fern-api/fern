@@ -43,7 +43,7 @@
     "tmp-promise": "^3.0.3",
     "uuid": "^9.0.1",
     "watcher": "^2.3.1",
-    "ws": "^8.17.0",
+    "ws": "^8.17.1",
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
