@@ -350,7 +350,10 @@ export class SdkGenerator {
         this.FdrClient =
             this.config.executionEnvironment !== "local"
                 ? new FdrSnippetTemplateClient({
-                      environment: FdrSnippetTemplateEnvironment.Prod
+                      environment:
+                          this.config.executionEnvironment === "dev"
+                              ? "https://registry-dev2.buildwithfern.com"
+                              : FdrSnippetTemplateEnvironment.Prod
                   })
                 : undefined;
     }
