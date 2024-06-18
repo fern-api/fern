@@ -67,7 +67,7 @@ export class ApiReferenceNodeConverter {
 
         // Step 2. Fill in the any missing navigation items from the API definition
         this.#children = this.#mergeAndFilterChildren(
-            this.#children.map((child) => this.#convertApiPackageChild(child, this.#slug)),
+            this.#children.map((child) => this.#enrichApiPackageChild(child)),
             this.#convertApiDefinitionPackage(this.#holder.api.rootPackage, this.#slug)
         );
     }
@@ -363,6 +363,8 @@ export class ApiReferenceNodeConverter {
                 this.taskContext.logger.error(`Duplicate endpoint found in the API Reference layout: ${endpointId}`);
             }
             this.#visitedEndpoints.add(endpointId);
+            const endpointSlug =
+                endpointItem.slug != null ? parentSlug.append(endpointItem.slug) : parentSlug.apply(endpoint);
             return {
                 id: idgen.append(endpoint.id).get(),
                 type: "endpoint",
@@ -372,10 +374,7 @@ export class ApiReferenceNodeConverter {
                 availability: FernNavigation.utils.convertAvailability(endpoint.availability),
                 isResponseStream: endpoint.response?.type.type === "stream",
                 title: endpointItem.title ?? endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
-                slug: (endpointItem.slug != null
-                    ? parentSlug.append(endpointItem.slug)
-                    : parentSlug.apply(endpoint)
-                ).get(),
+                slug: endpointSlug.get(),
                 icon: endpointItem.icon,
                 hidden: endpointItem.hidden
             };
@@ -458,18 +457,20 @@ export class ApiReferenceNodeConverter {
         );
     }
 
-    #convertApiPackageChild(
-        child: FernNavigation.ApiPackageChild,
-        parentSlug: FernNavigation.SlugGenerator
-    ): FernNavigation.ApiPackageChild {
+    #enrichApiPackageChild(child: FernNavigation.ApiPackageChild): FernNavigation.ApiPackageChild {
         if (child.type === "apiPackage") {
-            const slug = parentSlug.set(child.slug);
+            // expand the subpackage to include children that haven't been visited yet
+            const slug = FernNavigation.SlugGenerator.init(child.slug);
             const subpackageIds = this.#nodeIdToSubpackageId.get(child.id) ?? [];
             const subpackageChildren = subpackageIds.flatMap((subpackageId) =>
                 this.#convertApiDefinitionPackageId(subpackageId, slug)
             );
 
-            const children = this.#mergeAndFilterChildren(child.children, subpackageChildren);
+            // recursively apply enrichment to children
+            const enrichedChildren = child.children.map((innerChild) => this.#enrichApiPackageChild(innerChild));
+
+            // combine children with subpackage (tacked on at the end to preserve order)
+            const children = this.#mergeAndFilterChildren(enrichedChildren, subpackageChildren);
 
             return {
                 ...child,
@@ -495,6 +496,8 @@ export class ApiReferenceNodeConverter {
             if (this.#visitedEndpoints.has(endpointId)) {
                 return;
             }
+
+            const endpointSlug = parentSlug.apply(endpoint);
             additionalChildren.push({
                 id: FernNavigation.NodeId(`${this.apiDefinitionId}:${endpointId}`),
                 type: "endpoint",
@@ -504,7 +507,7 @@ export class ApiReferenceNodeConverter {
                 availability: FernNavigation.utils.convertAvailability(endpoint.availability),
                 isResponseStream: endpoint.response?.type.type === "stream",
                 title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
-                slug: parentSlug.apply(endpoint).get(),
+                slug: endpointSlug.get(),
                 icon: undefined,
                 hidden: undefined
             });
