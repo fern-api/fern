@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## [0.7.0] - 2024-06-13
+## [0.7.0-rc0] - 2024-06-13
 
 - Feature: The Ruby SDK now generates an OAuth client to automate token refresh.
 - Fix: The Ruby SDK now no longer requires users specify literals in method signatures
