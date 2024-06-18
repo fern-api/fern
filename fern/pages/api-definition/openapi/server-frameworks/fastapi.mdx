@@ -39,7 +39,7 @@ from fastapi import FastAPI
 
 ...
 
-app = FastAPI(servers=[{'url': 'http://prod.test.com', 'description': 'Production server'}])
+app = FastAPI(servers=[{"url": "http://prod.test.com", "description": "Production server"}])
 # This creates the following server object in your OpenAPI spec:
 # "servers":[{"url":"http://prod.test.com","description":"Production server"}],
 ```
