@@ -18,24 +18,12 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedOauthClientCredentialsClient } from "@fern/oauth-client-credentials-nested-root";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 const client = new SeedOauthClientCredentialsClient({
-=======
-const seedOauthClientCredentials = new SeedOauthClientCredentialsClient({
->>>>>>> 817067be3d (fix readme snippets to include env params)
     environment: "YOUR_BASE_URL",
     clientId: "YOUR_CLIENT_ID",
     clientSecret: "YOUR_CLIENT_SECRET",
 });
-<<<<<<< HEAD
 await client.auth.getToken({
-=======
-const seedOauthClientCredentials = new SeedOauthClientCredentialsClient();
-=======
->>>>>>> 817067be3d (fix readme snippets to include env params)
-await seedOauthClientCredentials.auth.getToken({
->>>>>>> 52b1822299 (merge env variable changes)
     clientId: "string",
     clientSecret: "string",
     audience: "https://api.example.com",

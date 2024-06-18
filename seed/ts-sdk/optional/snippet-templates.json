@@ -11,12 +11,9 @@
             "identifierOverride": "endpoint_optional.sendOptionalBody"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedObjectsWithImportsClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedObjectsWithImports = new SeedObjectsWithImportsClient($FERN_INPUT);",
+                "templateString": "const client = new SeedObjectsWithImportsClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -44,7 +41,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.optional.sendOptionalBody(\n\t$FERN_INPUT\n)",

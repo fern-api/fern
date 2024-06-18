@@ -18,17 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedExtraPropertiesClient } from "@fern/extra-properties";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 const client = new SeedExtraPropertiesClient({ environment: "YOUR_BASE_URL" });
 await client.user.createUser({
-=======
-const seedExtraProperties = new SeedExtraPropertiesClient();
-=======
-const seedExtraProperties = new SeedExtraPropertiesClient({ environment: "YOUR_BASE_URL" });
->>>>>>> 817067be3d (fix readme snippets to include env params)
-await seedExtraProperties.user.createUser({
->>>>>>> 52b1822299 (merge env variable changes)
     type: "CreateUserRequest",
     version: "v1",
     name: "string",

@@ -8,15 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
-<<<<<<< HEAD
                 "client": "import { SeedApiClient } from \"@fern/imdb\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.imdb.createMovie({\n    title: \"string\",\n    rating: 1.1\n});\n"
-=======
-                "client": "import { SeedApiClient } from \"@fern/imdb\";\n\nconst seedApi = new SeedApiClient();\nawait seedApi.imdb.createMovie({\n    title: \"string\",\n    rating: 1.1\n});\n"
->>>>>>> 52b1822299 (merge env variable changes)
-=======
-                "client": "import { SeedApiClient } from \"@fern/imdb\";\n\nconst seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait seedApi.imdb.createMovie({\n    title: \"string\",\n    rating: 1.1\n});\n"
->>>>>>> 817067be3d (fix readme snippets to include env params)
             }
         },
         {
@@ -27,15 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
-<<<<<<< HEAD
                 "client": "import { SeedApiClient } from \"@fern/imdb\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.imdb.getMovie(\"string\");\n"
-=======
-                "client": "import { SeedApiClient } from \"@fern/imdb\";\n\nconst seedApi = new SeedApiClient();\nawait seedApi.imdb.getMovie(\"string\");\n"
->>>>>>> 52b1822299 (merge env variable changes)
-=======
-                "client": "import { SeedApiClient } from \"@fern/imdb\";\n\nconst seedApi = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait seedApi.imdb.getMovie(\"string\");\n"
->>>>>>> 817067be3d (fix readme snippets to include env params)
             }
         }
     ],

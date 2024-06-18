@@ -11,12 +11,9 @@
             "identifierOverride": "endpoint_completions.stream"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedServerSentEventsClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedServerSentEvents = new SeedServerSentEventsClient($FERN_INPUT);",
+                "templateString": "const client = new SeedServerSentEventsClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -44,7 +41,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.completions.stream(\n\t$FERN_INPUT\n)",

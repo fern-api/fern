@@ -18,17 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedResponsePropertyClient } from "@fern/response-property";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 const client = new SeedResponsePropertyClient({ environment: "YOUR_BASE_URL" });
 await client.service.getMovie("string");
-=======
-const seedResponseProperty = new SeedResponsePropertyClient();
-=======
-const seedResponseProperty = new SeedResponsePropertyClient({ environment: "YOUR_BASE_URL" });
->>>>>>> 817067be3d (fix readme snippets to include env params)
-await seedResponseProperty.service.getMovie("string");
->>>>>>> 52b1822299 (merge env variable changes)
 ```
 
 ## Exception Handling

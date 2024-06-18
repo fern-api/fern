@@ -11,12 +11,9 @@
             "identifierOverride": "endpoint_union.get"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedUnions = new SeedUnionsClient($FERN_INPUT);",
+                "templateString": "const client = new SeedUnionsClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -44,7 +41,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.union.get(\n\t$FERN_INPUT\n)",
@@ -97,12 +93,9 @@
             "identifierOverride": "endpoint_union.update"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedUnions = new SeedUnionsClient($FERN_INPUT);",
+                "templateString": "const client = new SeedUnionsClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -130,7 +123,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.union.update(\n\t$FERN_INPUT\n)",

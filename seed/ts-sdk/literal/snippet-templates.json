@@ -11,12 +11,9 @@
             "identifierOverride": "endpoint_headers.send"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedLiteral = new SeedLiteralClient($FERN_INPUT);",
+                "templateString": "const client = new SeedLiteralClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -76,7 +73,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.headers.send(\n\t$FERN_INPUT\n)",
@@ -129,12 +125,9 @@
             "identifierOverride": "endpoint_inlined.send"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedLiteral = new SeedLiteralClient($FERN_INPUT);",
+                "templateString": "const client = new SeedLiteralClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -194,7 +187,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.inlined.send(\n\t$FERN_INPUT\n)",
@@ -263,12 +255,9 @@
             "identifierOverride": "endpoint_path.send"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedLiteral = new SeedLiteralClient($FERN_INPUT);",
+                "templateString": "const client = new SeedLiteralClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -328,7 +317,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.path.send()",
@@ -352,12 +340,9 @@
             "identifierOverride": "endpoint_query.send"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedLiteral = new SeedLiteralClient($FERN_INPUT);",
+                "templateString": "const client = new SeedLiteralClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -417,7 +402,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.query.send(\n\t$FERN_INPUT\n)",
@@ -470,12 +454,9 @@
             "identifierOverride": "endpoint_reference.send"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedLiteral = new SeedLiteralClient($FERN_INPUT);",
+                "templateString": "const client = new SeedLiteralClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -535,7 +516,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.reference.send(\n\t$FERN_INPUT\n)",

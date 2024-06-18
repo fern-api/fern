@@ -18,17 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedCodeSamplesClient } from "@fern/code-samples";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 const client = new SeedCodeSamplesClient({ environment: "YOUR_BASE_URL" });
 await client.service.hello({
-=======
-const seedCodeSamples = new SeedCodeSamplesClient();
-=======
-const seedCodeSamples = new SeedCodeSamplesClient({ environment: "YOUR_BASE_URL" });
->>>>>>> 817067be3d (fix readme snippets to include env params)
-await seedCodeSamples.service.hello({
->>>>>>> 52b1822299 (merge env variable changes)
     numEvents: 5,
 });
 ```

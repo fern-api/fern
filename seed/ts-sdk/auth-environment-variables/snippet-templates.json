@@ -11,12 +11,9 @@
             "identifierOverride": "endpoint_service.getWithApiKey"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedAuthEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", apiKey: \"YOUR_API_KEY\", xAnotherHeader: \"YOUR_X_ANOTHER_HEADER\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedAuthEnvironmentVariables = new SeedAuthEnvironmentVariablesClient($FERN_INPUT);",
+                "templateString": "const client = new SeedAuthEnvironmentVariablesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -76,7 +73,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.service.getWithApiKey()",
@@ -100,12 +96,9 @@
             "identifierOverride": "endpoint_service.getWithHeader"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedAuthEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", apiKey: \"YOUR_API_KEY\", xAnotherHeader: \"YOUR_X_ANOTHER_HEADER\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedAuthEnvironmentVariables = new SeedAuthEnvironmentVariablesClient($FERN_INPUT);",
+                "templateString": "const client = new SeedAuthEnvironmentVariablesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -165,7 +158,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.service.getWithHeader(\n\t$FERN_INPUT\n)",

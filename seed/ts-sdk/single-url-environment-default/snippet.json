@@ -8,15 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
-<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedSingleUrlEnvironmentDefaultClient } from \"@fern/single-url-environment-default\";\n\nconst client = new SeedSingleUrlEnvironmentDefaultClient({ token: \"YOUR_TOKEN\" });\nawait client.dummy.getDummy();\n"
-=======
-                "client": "import { SeedSingleUrlEnvironmentDefaultClient } from \"@fern/single-url-environment-default\";\n\nconst seedSingleUrlEnvironmentDefault = new SeedSingleUrlEnvironmentDefaultClient();\nawait seedSingleUrlEnvironmentDefault.dummy.getDummy();\n"
->>>>>>> 52b1822299 (merge env variable changes)
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedSingleUrlEnvironmentDefaultClient } from \"@fern/single-url-environment-default\";\n\nconst seedSingleUrlEnvironmentDefault = new SeedSingleUrlEnvironmentDefaultClient({ token: \"YOUR_TOKEN\" });\nawait seedSingleUrlEnvironmentDefault.dummy.getDummy();\n"
->>>>>>> 817067be3d (fix readme snippets to include env params)
             }
         }
     ],

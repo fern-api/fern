@@ -11,12 +11,9 @@
             "identifierOverride": "endpoint_dummy.generate-stream"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedStreamingClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedStreaming = new SeedStreamingClient($FERN_INPUT);",
+                "templateString": "const client = new SeedStreamingClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -44,7 +41,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.dummy.generateStream(\n\t$FERN_INPUT\n)",

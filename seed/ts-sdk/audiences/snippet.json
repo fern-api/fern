@@ -8,15 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
-<<<<<<< HEAD
                 "client": "import { SeedAudiencesClient } from \"@fern/audiences\";\n\nconst client = new SeedAudiencesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.folderA.service.getDirectThread();\n"
-=======
-                "client": "import { SeedAudiencesClient } from \"@fern/audiences\";\n\nconst seedAudiences = new SeedAudiencesClient();\nawait seedAudiences.folderA.service.getDirectThread();\n"
->>>>>>> 52b1822299 (merge env variable changes)
-=======
-                "client": "import { SeedAudiencesClient } from \"@fern/audiences\";\n\nconst seedAudiences = new SeedAudiencesClient({ environment: \"YOUR_BASE_URL\" });\nawait seedAudiences.folderA.service.getDirectThread();\n"
->>>>>>> 817067be3d (fix readme snippets to include env params)
             }
         },
         {
@@ -27,15 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
-<<<<<<< HEAD
                 "client": "import { SeedAudiencesClient } from \"@fern/audiences\";\n\nconst client = new SeedAudiencesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.foo.find({\n    optionalString: \"string\",\n    publicProperty: \"string\",\n    privateProperty: 1\n});\n"
-=======
-                "client": "import { SeedAudiencesClient } from \"@fern/audiences\";\n\nconst seedAudiences = new SeedAudiencesClient();\nawait seedAudiences.foo.find({\n    optionalString: \"string\",\n    publicProperty: \"string\",\n    privateProperty: 1\n});\n"
->>>>>>> 52b1822299 (merge env variable changes)
-=======
-                "client": "import { SeedAudiencesClient } from \"@fern/audiences\";\n\nconst seedAudiences = new SeedAudiencesClient({ environment: \"YOUR_BASE_URL\" });\nawait seedAudiences.foo.find({\n    optionalString: \"string\",\n    publicProperty: \"string\",\n    privateProperty: 1\n});\n"
->>>>>>> 817067be3d (fix readme snippets to include env params)
             }
         }
     ],

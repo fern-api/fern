@@ -11,12 +11,9 @@
             "identifierOverride": "endpoint_service.getResource"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedMixedCaseClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedMixedCase = new SeedMixedCaseClient($FERN_INPUT);",
+                "templateString": "const client = new SeedMixedCaseClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -44,7 +41,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.service.getResource(\n\t$FERN_INPUT\n)",
@@ -97,12 +93,9 @@
             "identifierOverride": "endpoint_service.listResources"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedMixedCaseClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedMixedCase = new SeedMixedCaseClient($FERN_INPUT);",
+                "templateString": "const client = new SeedMixedCaseClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -130,7 +123,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.service.listResources(\n\t$FERN_INPUT\n)",

@@ -11,12 +11,9 @@
             "identifierOverride": "endpoint_user.createUser"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedExtraPropertiesClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedExtraProperties = new SeedExtraPropertiesClient($FERN_INPUT);",
+                "templateString": "const client = new SeedExtraPropertiesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -44,7 +41,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.user.createUser(\n\t$FERN_INPUT\n)",

@@ -11,12 +11,9 @@
             "identifierOverride": "endpoint_inlined-request.send"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedEnum = new SeedEnumClient($FERN_INPUT);",
+                "templateString": "const client = new SeedEnumClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -44,7 +41,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.inlinedRequest.send(\n\t$FERN_INPUT\n)",
@@ -119,12 +115,9 @@
             "identifierOverride": "endpoint_path-param.send"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedEnum = new SeedEnumClient($FERN_INPUT);",
+                "templateString": "const client = new SeedEnumClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -152,7 +145,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.pathParam.send(\n\t$FERN_INPUT\n)",
@@ -227,12 +219,9 @@
             "identifierOverride": "endpoint_query-param.send"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedEnum = new SeedEnumClient($FERN_INPUT);",
+                "templateString": "const client = new SeedEnumClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -260,7 +249,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.queryParam.send(\n\t$FERN_INPUT\n)",
@@ -335,12 +323,9 @@
             "identifierOverride": "endpoint_query-param.sendList"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedEnum = new SeedEnumClient($FERN_INPUT);",
+                "templateString": "const client = new SeedEnumClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -368,7 +353,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.queryParam.sendList(\n\t$FERN_INPUT\n)",

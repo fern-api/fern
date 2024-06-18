@@ -18,17 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedIdempotencyHeadersClient, SeedIdempotencyHeaders } from "@fern/idempotency-headers";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 const client = new SeedIdempotencyHeadersClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.payment.create({
-=======
-const seedIdempotencyHeaders = new SeedIdempotencyHeadersClient();
-=======
-const seedIdempotencyHeaders = new SeedIdempotencyHeadersClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
->>>>>>> 817067be3d (fix readme snippets to include env params)
-await seedIdempotencyHeaders.payment.create({
->>>>>>> 52b1822299 (merge env variable changes)
     amount: 1,
     currency: SeedIdempotencyHeaders.Currency.Usd,
 });

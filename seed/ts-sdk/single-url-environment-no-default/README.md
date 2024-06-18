@@ -19,23 +19,11 @@ Instantiate and use the client with the following:
 import * as environments from "../src/environments";
 import { SeedSingleUrlEnvironmentNoDefaultClient } from "@fern/single-url-environment-no-default";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 const client = new SeedSingleUrlEnvironmentNoDefaultClient({
     environment: environments.SeedSingleUrlEnvironmentNoDefaultEnvironment.Production,
     token: "YOUR_TOKEN",
 });
 await client.dummy.getDummy();
-=======
-const seedSingleUrlEnvironmentNoDefault = new SeedSingleUrlEnvironmentNoDefaultClient();
-=======
-const seedSingleUrlEnvironmentNoDefault = new SeedSingleUrlEnvironmentNoDefaultClient({
-    environment: environments.SeedSingleUrlEnvironmentNoDefaultEnvironment.Production,
-    token: "YOUR_TOKEN",
-});
->>>>>>> 817067be3d (fix readme snippets to include env params)
-await seedSingleUrlEnvironmentNoDefault.dummy.getDummy();
->>>>>>> 52b1822299 (merge env variable changes)
 ```
 
 ## Exception Handling

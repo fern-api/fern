@@ -11,12 +11,9 @@
             "identifierOverride": "endpoint_package.test"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedNurseryApiClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedNurseryApi = new SeedNurseryApiClient($FERN_INPUT);",
+                "templateString": "const client = new SeedNurseryApiClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -44,7 +41,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.package.test(\n\t$FERN_INPUT\n)",

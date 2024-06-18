@@ -8,15 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
-<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedSingleUrlEnvironmentNoDefaultClient } from \"@fern/single-url-environment-no-default\";\n\nconst client = new SeedSingleUrlEnvironmentNoDefaultClient({ environment: environments.SeedSingleUrlEnvironmentNoDefaultEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.dummy.getDummy();\n"
-=======
-                "client": "import { SeedSingleUrlEnvironmentNoDefaultClient } from \"@fern/single-url-environment-no-default\";\n\nconst seedSingleUrlEnvironmentNoDefault = new SeedSingleUrlEnvironmentNoDefaultClient();\nawait seedSingleUrlEnvironmentNoDefault.dummy.getDummy();\n"
->>>>>>> 52b1822299 (merge env variable changes)
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedSingleUrlEnvironmentNoDefaultClient } from \"@fern/single-url-environment-no-default\";\n\nconst seedSingleUrlEnvironmentNoDefault = new SeedSingleUrlEnvironmentNoDefaultClient({ environment: environments.SeedSingleUrlEnvironmentNoDefaultEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait seedSingleUrlEnvironmentNoDefault.dummy.getDummy();\n"
->>>>>>> 817067be3d (fix readme snippets to include env params)
             }
         }
     ],

@@ -11,12 +11,9 @@
             "identifierOverride": "endpoint_.echo"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedExamples = new SeedExamplesClient($FERN_INPUT);",
+                "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -60,7 +57,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.echo(\n\t$FERN_INPUT\n)",
@@ -112,12 +108,9 @@
             "identifierOverride": "endpoint_file/notification/service.getException"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedExamples = new SeedExamplesClient($FERN_INPUT);",
+                "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -161,7 +154,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.file.notification.service.getException(\n\t$FERN_INPUT\n)",
@@ -214,12 +206,9 @@
             "identifierOverride": "endpoint_file/service.getFile"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedExamples = new SeedExamplesClient($FERN_INPUT);",
+                "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -263,7 +252,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.file.service.getFile(\n\t$FERN_INPUT\n)",
@@ -316,12 +304,9 @@
             "identifierOverride": "endpoint_health/service.check"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedExamples = new SeedExamplesClient($FERN_INPUT);",
+                "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -365,7 +350,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.health.service.check(\n\t$FERN_INPUT\n)",
@@ -418,12 +402,9 @@
             "identifierOverride": "endpoint_health/service.ping"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedExamples = new SeedExamplesClient($FERN_INPUT);",
+                "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -467,7 +448,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.health.service.ping()",
@@ -491,12 +471,9 @@
             "identifierOverride": "endpoint_service.getMovie"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedExamples = new SeedExamplesClient($FERN_INPUT);",
+                "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -540,7 +517,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.service.getMovie(\n\t$FERN_INPUT\n)",
@@ -593,12 +569,9 @@
             "identifierOverride": "endpoint_service.createMovie"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedExamples = new SeedExamplesClient($FERN_INPUT);",
+                "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -642,7 +615,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.service.createMovie(\n\t$FERN_INPUT\n)",
@@ -843,12 +815,9 @@
             "identifierOverride": "endpoint_service.getMetadata"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedExamples = new SeedExamplesClient($FERN_INPUT);",
+                "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -892,7 +861,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.service.getMetadata(\n\t$FERN_INPUT\n)",
@@ -977,12 +945,9 @@
             "identifierOverride": "endpoint_service.getResponse"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedExamplesClient({ environment: environments.SeedExamplesEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedExamples = new SeedExamplesClient($FERN_INPUT);",
+                "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -1026,7 +991,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.service.getResponse()",

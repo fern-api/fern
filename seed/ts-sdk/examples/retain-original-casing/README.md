@@ -19,23 +19,11 @@ Instantiate and use the client with the following:
 import * as environments from "../src/environments";
 import { SeedExamplesClient } from "@fern/examples";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 const client = new SeedExamplesClient({
     environment: environments.SeedExamplesEnvironment.Production,
     token: "YOUR_TOKEN",
 });
 await client.echo("Hello world!\\n\\nwith\\n\\tnewlines");
-=======
-const seedExamples = new SeedExamplesClient();
-=======
-const seedExamples = new SeedExamplesClient({
-    environment: environments.SeedExamplesEnvironment.Production,
-    token: "YOUR_TOKEN",
-});
->>>>>>> 817067be3d (fix readme snippets to include env params)
-await seedExamples.echo("Hello world!\\n\\nwith\\n\\tnewlines");
->>>>>>> 52b1822299 (merge env variable changes)
 ```
 
 ## Request And Response Types

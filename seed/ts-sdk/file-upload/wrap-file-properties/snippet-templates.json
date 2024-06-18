@@ -11,12 +11,9 @@
             "identifierOverride": "endpoint_service.post"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedFileUploadClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedFileUpload = new SeedFileUploadClient($FERN_INPUT);",
+                "templateString": "const client = new SeedFileUploadClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -44,7 +41,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.service.post(\n\t$FERN_INPUT\n)",
@@ -278,12 +274,9 @@
             "identifierOverride": "endpoint_service.justFile"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedFileUploadClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedFileUpload = new SeedFileUploadClient($FERN_INPUT);",
+                "templateString": "const client = new SeedFileUploadClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -311,7 +304,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.service.justFile(\n\t$FERN_INPUT\n)",
@@ -366,12 +358,9 @@
             "identifierOverride": "endpoint_service.justFileWithQueryParams"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedFileUploadClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedFileUpload = new SeedFileUploadClient($FERN_INPUT);",
+                "templateString": "const client = new SeedFileUploadClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -399,7 +388,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.service.justFileWithQueryParams(\n\t$FERN_INPUT\n)",

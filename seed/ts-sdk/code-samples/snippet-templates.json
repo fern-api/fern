@@ -11,12 +11,9 @@
             "identifierOverride": "endpoint_service.hello"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedCodeSamplesClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedCodeSamples = new SeedCodeSamplesClient($FERN_INPUT);",
+                "templateString": "const client = new SeedCodeSamplesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -44,7 +41,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.service.hello(\n\t$FERN_INPUT\n)",

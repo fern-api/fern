@@ -11,12 +11,9 @@
             "identifierOverride": "endpoint_service.getWithBearerToken"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedBearerTokenEnvironmentVariableClient({ environment: \"YOUR_BASE_URL\", apiKey: \"YOUR_API_KEY\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedBearerTokenEnvironmentVariable = new SeedBearerTokenEnvironmentVariableClient($FERN_INPUT);",
+                "templateString": "const client = new SeedBearerTokenEnvironmentVariableClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -60,7 +57,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.service.getWithBearerToken()",

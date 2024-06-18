@@ -11,12 +11,9 @@
             "identifierOverride": "endpoint_dummy.getDummy"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedSingleUrlEnvironmentNoDefaultClient({ environment: environments.SeedSingleUrlEnvironmentNoDefaultEnvironment.Production, token: \"YOUR_TOKEN\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedSingleUrlEnvironmentNoDefault = new SeedSingleUrlEnvironmentNoDefaultClient($FERN_INPUT);",
+                "templateString": "const client = new SeedSingleUrlEnvironmentNoDefaultClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -60,7 +57,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.dummy.getDummy()",

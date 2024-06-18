@@ -18,20 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedCustomAuthClient } from "@fern/custom-auth";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 const client = new SeedCustomAuthClient({ environment: "YOUR_BASE_URL", customAuthScheme: "YOUR_CUSTOM_AUTH_SCHEME" });
 await client.customAuth.postWithCustomAuth({
-=======
-const seedCustomAuth = new SeedCustomAuthClient();
-=======
-const seedCustomAuth = new SeedCustomAuthClient({
-    environment: "YOUR_BASE_URL",
-    customAuthScheme: "YOUR_CUSTOM_AUTH_SCHEME",
-});
->>>>>>> 817067be3d (fix readme snippets to include env params)
-await seedCustomAuth.customAuth.postWithCustomAuth({
->>>>>>> 52b1822299 (merge env variable changes)
     key: "value",
 });
 ```

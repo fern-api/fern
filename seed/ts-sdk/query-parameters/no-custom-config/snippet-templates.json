@@ -11,12 +11,9 @@
             "identifierOverride": "endpoint_user.getUsername"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedQueryParametersClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedQueryParameters = new SeedQueryParametersClient($FERN_INPUT);",
+                "templateString": "const client = new SeedQueryParametersClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -44,7 +41,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.user.getUsername(\n\t$FERN_INPUT\n)",

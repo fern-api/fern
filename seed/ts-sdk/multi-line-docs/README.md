@@ -18,17 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedMultiLineDocsClient } from "@fern/multi-line-docs";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 const client = new SeedMultiLineDocsClient({ environment: "YOUR_BASE_URL" });
 await client.user.createUser({
-=======
-const seedMultiLineDocs = new SeedMultiLineDocsClient();
-=======
-const seedMultiLineDocs = new SeedMultiLineDocsClient({ environment: "YOUR_BASE_URL" });
->>>>>>> 817067be3d (fix readme snippets to include env params)
-await seedMultiLineDocs.user.createUser({
->>>>>>> 52b1822299 (merge env variable changes)
     name: "string",
     age: 1,
 });

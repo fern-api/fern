@@ -18,24 +18,12 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedBasicAuthEnvironmentVariablesClient } from "@fern/basic-auth-environment-variables";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 const client = new SeedBasicAuthEnvironmentVariablesClient({
-=======
-const seedBasicAuthEnvironmentVariables = new SeedBasicAuthEnvironmentVariablesClient({
->>>>>>> 817067be3d (fix readme snippets to include env params)
     environment: "YOUR_BASE_URL",
     username: "YOUR_USERNAME",
     password: "YOUR_PASSWORD",
 });
-<<<<<<< HEAD
 await client.basicAuth.postWithBasicAuth({
-=======
-const seedBasicAuthEnvironmentVariables = new SeedBasicAuthEnvironmentVariablesClient();
-=======
->>>>>>> 817067be3d (fix readme snippets to include env params)
-await seedBasicAuthEnvironmentVariables.basicAuth.postWithBasicAuth({
->>>>>>> 52b1822299 (merge env variable changes)
     key: "value",
 });
 ```

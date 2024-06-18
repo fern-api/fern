@@ -11,12 +11,9 @@
             "identifierOverride": "endpoint_folder-a/service.getDirectThread"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedAudiencesClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedAudiences = new SeedAudiencesClient($FERN_INPUT);",
+                "templateString": "const client = new SeedAudiencesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -44,7 +41,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.folderA.service.getDirectThread()",
@@ -68,12 +64,9 @@
             "identifierOverride": "endpoint_foo.find"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedAudiencesClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedAudiences = new SeedAudiencesClient($FERN_INPUT);",
+                "templateString": "const client = new SeedAudiencesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -101,7 +94,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.foo.find(\n\t$FERN_INPUT\n)",

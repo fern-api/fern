@@ -8,15 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
-<<<<<<< HEAD
                 "client": "import { SeedExtraPropertiesClient } from \"@fern/extra-properties\";\n\nconst client = new SeedExtraPropertiesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createUser({\n    type: \"CreateUserRequest\",\n    version: \"v1\",\n    name: \"string\"\n});\n"
-=======
-                "client": "import { SeedExtraPropertiesClient } from \"@fern/extra-properties\";\n\nconst seedExtraProperties = new SeedExtraPropertiesClient();\nawait seedExtraProperties.user.createUser({\n    type: \"CreateUserRequest\",\n    version: \"v1\",\n    name: \"string\"\n});\n"
->>>>>>> 52b1822299 (merge env variable changes)
-=======
-                "client": "import { SeedExtraPropertiesClient } from \"@fern/extra-properties\";\n\nconst seedExtraProperties = new SeedExtraPropertiesClient({ environment: \"YOUR_BASE_URL\" });\nawait seedExtraProperties.user.createUser({\n    type: \"CreateUserRequest\",\n    version: \"v1\",\n    name: \"string\"\n});\n"
->>>>>>> 817067be3d (fix readme snippets to include env params)
             }
         }
     ],

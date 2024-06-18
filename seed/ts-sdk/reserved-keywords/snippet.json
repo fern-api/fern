@@ -8,15 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
-<<<<<<< HEAD
                 "client": "import { SeedNurseryApiClient } from \"@fern/reserved-keywords\";\n\nconst client = new SeedNurseryApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.package.test({\n    for: \"string\"\n});\n"
-=======
-                "client": "import { SeedNurseryApiClient } from \"@fern/reserved-keywords\";\n\nconst seedNurseryApi = new SeedNurseryApiClient();\nawait seedNurseryApi.package.test({\n    for: \"string\"\n});\n"
->>>>>>> 52b1822299 (merge env variable changes)
-=======
-                "client": "import { SeedNurseryApiClient } from \"@fern/reserved-keywords\";\n\nconst seedNurseryApi = new SeedNurseryApiClient({ environment: \"YOUR_BASE_URL\" });\nawait seedNurseryApi.package.test({\n    for: \"string\"\n});\n"
->>>>>>> 817067be3d (fix readme snippets to include env params)
             }
         }
     ],

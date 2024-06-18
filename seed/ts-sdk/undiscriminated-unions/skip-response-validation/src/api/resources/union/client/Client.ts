@@ -6,6 +6,7 @@ import * as core from "../../../../core";
 import * as SeedUndiscriminatedUnions from "../../../index";
 import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
+import urlJoin from "url-join";
 
 export declare namespace Union {
     interface Options {
@@ -80,7 +81,6 @@ export class Union {
                 });
         }
     }
-<<<<<<< HEAD
 
     /**
      * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
@@ -135,6 +135,4 @@ export class Union {
                 });
         }
     }
-=======
->>>>>>> 52b1822299 (merge env variable changes)
 }

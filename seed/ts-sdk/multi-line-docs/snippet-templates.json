@@ -11,12 +11,9 @@
             "identifierOverride": "endpoint_user.getUser"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedMultiLineDocsClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedMultiLineDocs = new SeedMultiLineDocsClient($FERN_INPUT);",
+                "templateString": "const client = new SeedMultiLineDocsClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -44,7 +41,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.user.getUser(\n\t$FERN_INPUT\n)",
@@ -97,12 +93,9 @@
             "identifierOverride": "endpoint_user.createUser"
         },
         "snippetTemplate": {
-<<<<<<< HEAD
-            "clientInstantiation": "const client = new SeedMultiLineDocsClient({ environment: \"YOUR_BASE_URL\" });\n",
-=======
             "clientInstantiation": {
                 "imports": [],
-                "templateString": "const seedMultiLineDocs = new SeedMultiLineDocsClient($FERN_INPUT);",
+                "templateString": "const client = new SeedMultiLineDocsClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
                 "templateInputs": [
@@ -130,7 +123,6 @@
                 ],
                 "type": "generic"
             },
->>>>>>> 52b1822299 (merge env variable changes)
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await client.user.createUser(\n\t$FERN_INPUT\n)",

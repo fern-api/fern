@@ -8,15 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
-<<<<<<< HEAD
                 "client": "import { SeedObjectsWithImportsClient } from \"@fern/optional\";\n\nconst client = new SeedObjectsWithImportsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.optional.sendOptionalBody({\n    \"string\": {\n        \"key\": \"value\"\n    }\n});\n"
-=======
-                "client": "import { SeedObjectsWithImportsClient } from \"@fern/optional\";\n\nconst seedObjectsWithImports = new SeedObjectsWithImportsClient();\nawait seedObjectsWithImports.optional.sendOptionalBody({\n    \"string\": {\n        \"key\": \"value\"\n    }\n});\n"
->>>>>>> 52b1822299 (merge env variable changes)
-=======
-                "client": "import { SeedObjectsWithImportsClient } from \"@fern/optional\";\n\nconst seedObjectsWithImports = new SeedObjectsWithImportsClient({ environment: \"YOUR_BASE_URL\" });\nawait seedObjectsWithImports.optional.sendOptionalBody({\n    \"string\": {\n        \"key\": \"value\"\n    }\n});\n"
->>>>>>> 817067be3d (fix readme snippets to include env params)
             }
         }
     ],

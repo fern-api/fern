@@ -8,15 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
-<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedMultiUrlEnvironmentClient } from \"@fern/multi-url-environment\";\n\nconst client = new SeedMultiUrlEnvironmentClient({ token: \"YOUR_TOKEN\" });\nawait client.ec2.bootInstance({\n    size: \"string\"\n});\n"
-=======
-                "client": "import { SeedMultiUrlEnvironmentClient } from \"@fern/multi-url-environment\";\n\nconst seedMultiUrlEnvironment = new SeedMultiUrlEnvironmentClient();\nawait seedMultiUrlEnvironment.ec2.bootInstance({\n    size: \"string\"\n});\n"
->>>>>>> 52b1822299 (merge env variable changes)
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedMultiUrlEnvironmentClient } from \"@fern/multi-url-environment\";\n\nconst seedMultiUrlEnvironment = new SeedMultiUrlEnvironmentClient({ token: \"YOUR_TOKEN\" });\nawait seedMultiUrlEnvironment.ec2.bootInstance({\n    size: \"string\"\n});\n"
->>>>>>> 817067be3d (fix readme snippets to include env params)
             }
         },
         {
@@ -27,15 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-<<<<<<< HEAD
-<<<<<<< HEAD
                 "client": "import * as environments from \"../src/environments\";\nimport { SeedMultiUrlEnvironmentClient } from \"@fern/multi-url-environment\";\n\nconst client = new SeedMultiUrlEnvironmentClient({ token: \"YOUR_TOKEN\" });\nawait client.s3.getPresignedUrl({\n    s3Key: \"string\"\n});\n"
-=======
-                "client": "import { SeedMultiUrlEnvironmentClient } from \"@fern/multi-url-environment\";\n\nconst seedMultiUrlEnvironment = new SeedMultiUrlEnvironmentClient();\nawait seedMultiUrlEnvironment.s3.getPresignedUrl({\n    s3Key: \"string\"\n});\n"
->>>>>>> 52b1822299 (merge env variable changes)
-=======
-                "client": "import * as environments from \"../src/environments\";\nimport { SeedMultiUrlEnvironmentClient } from \"@fern/multi-url-environment\";\n\nconst seedMultiUrlEnvironment = new SeedMultiUrlEnvironmentClient({ token: \"YOUR_TOKEN\" });\nawait seedMultiUrlEnvironment.s3.getPresignedUrl({\n    s3Key: \"string\"\n});\n"
->>>>>>> 817067be3d (fix readme snippets to include env params)
             }
         }
     ],

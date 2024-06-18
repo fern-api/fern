@@ -18,20 +18,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { FiddleClient } from "@fern/exhaustive";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.container.getAndReturnListOfPrimitives(["string"]);
-=======
-=======
->>>>>>> 52b1822299 (merge env variable changes)
-const fiddle = new FiddleClient();
-=======
-const fiddle = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
->>>>>>> 817067be3d (fix readme snippets to include env params)
-await fiddle.endpoints.container.getAndReturnListOfPrimitives(["string"]);
->>>>>>> 1f89872e83 (Adds support for templatized client instantiation in dynamic snippets for TS)
 ```
 
 ## Request And Response Types
