@@ -57,6 +57,7 @@ const ROOT_CLIENT_VARIABLE_NAME = "client";
 
 export declare namespace SdkContextImpl {
     export interface Init {
+        ir: IntermediateRepresentation;
         sourceFile: SourceFile;
         importsManager: ImportsManager;
         dependencyManager: DependencyManager;
@@ -103,6 +104,7 @@ export declare namespace SdkContextImpl {
 }
 
 export class SdkContextImpl implements SdkContext {
+    public readonly ir: IntermediateRepresentation;
     public readonly sourceFile: SourceFile;
     public readonly externalDependencies: ExternalDependencies;
     public readonly coreUtilities: CoreUtilities;
@@ -132,6 +134,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly generateOAuthClients: boolean;
 
     constructor({
+        ir,
         npmPackage,
         isForSnippet,
         intermediateRepresentation,
@@ -175,6 +178,7 @@ export class SdkContextImpl implements SdkContext {
         inlineFileProperties,
         generateOAuthClients
     }: SdkContextImpl.Init) {
+        this.ir = ir;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;

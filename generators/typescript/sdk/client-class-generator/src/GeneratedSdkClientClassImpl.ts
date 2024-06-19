@@ -810,10 +810,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public getOptionsPropertiesForSnippet(context: SdkContext): ts.ObjectLiteralElementLike[] {
         const properties: ts.ObjectLiteralElementLike[] = [];
 
-        const defaultEnvironment = context.environments
-            .getGeneratedEnvironments()
-            .getReferenceToDefaultEnvironment(context);
-        if (!this.requireDefaultEnvironment && defaultEnvironment == null) {
+        if (!this.requireDefaultEnvironment && context.ir.environments?.defaultEnvironment == null) {
             const firstEnvironment = context.environments.getReferenceToFirstEnvironmentEnum();
             const environment =
                 firstEnvironment != null

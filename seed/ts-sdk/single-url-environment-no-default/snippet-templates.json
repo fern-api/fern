@@ -28,7 +28,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: environments.SeedSingleUrlEnvironmentNoDefaultEnvironment.Production",
+                                        "templateString": "environment: SeedSingleUrlEnvironmentNoDefaultEnvironment.Production",
                                         "isOptional": false,
                                         "templateInputs": [],
                                         "type": "generic"
