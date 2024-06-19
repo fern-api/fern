@@ -151,12 +151,12 @@ class FastAPI:
         )
 
     @staticmethod
-    def jsonable_encoder(body: AST.Expression, *, exclude_none: bool = None) -> AST.Expression:
+    def jsonable_encoder(body: AST.Expression, *, exclude_none: bool = False) -> AST.Expression:
         return AST.Expression(
             AST.FunctionInvocation(
                 function_definition=_export("encoders", "jsonable_encoder"),
                 args=[body],
-                kwargs=[("exclude_none", AST.Expression(str(exclude_none)))] if exclude_none is not None else None,
+                kwargs=[("exclude_none", AST.Expression(str(exclude_none)))] if exclude_none else [],
             )
         )
 

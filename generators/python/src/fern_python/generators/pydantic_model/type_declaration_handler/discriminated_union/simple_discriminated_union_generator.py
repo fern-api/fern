@@ -39,10 +39,11 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
         self._property_type_ids = self.get_direct_references_for_union()
 
     def get_type_id(self, tr: ir_types.TypeReference) -> List[Union[ir_types.TypeId, None]]:
-        if tr.get_as_union().type == "named":
-            return [tr.get_as_union().type_id]
-        elif tr.get_as_union().type == "container":
-            return tr.get_as_union().container.visit(
+        union = tr.get_as_union()
+        if union.type == "named":
+            return [union.type_id]
+        elif union.type == "container":
+            return union.container.visit(
                 list_=lambda lt: self.get_type_id(lt),
                 map_=lambda mt: self.get_type_id(mt.key_type) + self.get_type_id(mt.value_type),
                 optional=lambda ot: self.get_type_id(ot),

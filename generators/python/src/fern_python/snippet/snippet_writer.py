@@ -104,7 +104,7 @@ class SnippetWriter:
             )
             if value is not None:
                 maybe_rewritten_name = (
-                    request_parameter_names.get(property.name) or property.name.name.snake_case.safe_name
+                    request_parameter_names.get(property.name.name) or property.name.name.snake_case.safe_name
                 )
                 args.append(
                     self.get_snippet_for_named_parameter(
@@ -204,6 +204,7 @@ class SnippetWriter:
             map_=lambda map: self._get_snippet_for_map(
                 pairs=map,
             ),
+            literal=lambda _: None,
         )
 
     def _get_snippet_for_unknown(

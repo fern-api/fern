@@ -76,7 +76,7 @@ class AliasGenerator(AbstractTypeGenerator):
                 literal=lambda x: "from_string",
             ),
             named=lambda type_name: "from_" + type_name.name.snake_case.unsafe_name,
-            primitive=lambda primitive: primitive.visit(
+            primitive=lambda primitive: primitive.v_1.visit(
                 integer=lambda: "from_int",
                 double=lambda: "from_float",
                 string=lambda: "from_str",
@@ -86,6 +86,7 @@ class AliasGenerator(AbstractTypeGenerator):
                 date=lambda: "from_date",
                 uuid_=lambda: "from_uuid",
                 base_64=lambda: "from_str",
+                big_integer=lambda: "from_str",
             ),
             unknown=lambda: "from_",
         )
@@ -100,7 +101,7 @@ class AliasGenerator(AbstractTypeGenerator):
                 literal=lambda x: "get_as_string",
             ),
             named=lambda type_name: "get_as_" + type_name.name.snake_case.unsafe_name,
-            primitive=lambda primitive: primitive.visit(
+            primitive=lambda primitive: primitive.v_1.visit(
                 integer=lambda: "get_as_int",
                 double=lambda: "get_as_float",
                 string=lambda: "get_as_str",
@@ -110,6 +111,7 @@ class AliasGenerator(AbstractTypeGenerator):
                 date=lambda: "get_as_date",
                 uuid_=lambda: "get_as_uuid",
                 base_64=lambda: "get_as_str",
+                big_integer=lambda: "get_as_str",
             ),
             unknown=lambda: "get_value",
         )
