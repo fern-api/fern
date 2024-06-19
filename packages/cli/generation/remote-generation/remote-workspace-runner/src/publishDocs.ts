@@ -55,6 +55,7 @@ export async function publishDocs({
 
     let docsRegistrationId: string | undefined;
     let urlToOutput = customDomains[0] ?? domain;
+    const basePath = parseBasePath(domain);
     const resolver = new DocsDefinitionResolver(
         domain,
         docsWorkspace,
@@ -101,7 +102,8 @@ export async function publishDocs({
                     orgId: organization,
                     authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
                     filepaths,
-                    images
+                    images,
+                    basePath
                 });
                 if (startDocsRegisterResponse.ok) {
                     urlToOutput = startDocsRegisterResponse.body.previewUrl;
@@ -273,5 +275,13 @@ function startDocsRegisterFailed(
             );
         default:
             return context.failAndThrow("Failed to publish docs.", error);
+    }
+}
+
+function parseBasePath(domain: string): string | undefined {
+    try {
+        return new URL(wrapWithHttps(domain)).pathname;
+    } catch (e) {
+        return undefined;
     }
 }
