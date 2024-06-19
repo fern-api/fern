@@ -19,7 +19,10 @@ public class PlaylistClient
     /// </summary>
     public async Task<Playlist> CreatePlaylistAsync(CreatePlaylistRequest request)
     {
-        var _query = new Dictionary<string, object>() { { "datetime", request.ToString("o") }, };
+        var _query = new Dictionary<string, object>()
+        {
+            { "datetime", request.Datetime.ToString("o") },
+        };
         if (request.OptionalDatetime != null)
         {
             _query["optionalDatetime"] = request.OptionalDatetime;

@@ -75,7 +75,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
                             } else if (this.isDatetime(queryParameter.valueType)) {
                                 return {
                                     key: csharp.codeblock(`"${queryParameter.name.wireValue}"`),
-                                    value: csharp.codeblock(`${this.getParameterName()}.ToString("o")`)
+                                    value: csharp.codeblock(
+                                        `${this.getParameterName()}.${
+                                            queryParameter.name.name.pascalCase.safeName
+                                        }.ToString("o")`
+                                    )
                                 };
                             } else {
                                 return {
@@ -135,7 +139,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
                             } else if (this.isDatetime(header.valueType)) {
                                 return {
                                     key: csharp.codeblock(`"${header.name.wireValue}"`),
-                                    value: csharp.codeblock(`${this.getParameterName()}.ToString("o")`)
+                                    value: csharp.codeblock(
+                                        `${this.getParameterName()}.${
+                                            header.name.name.pascalCase.safeName
+                                        }.ToString("o")`
+                                    )
                                 };
                             } else {
                                 return {
