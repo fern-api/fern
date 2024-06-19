@@ -21,7 +21,7 @@ public class UserClient
             { "limit", request.Limit.ToString() },
             { "id", request.Id.ToString() },
             { "date", request.Date.ToString() },
-            { "deadline", request.Deadline.ToString() },
+            { "deadline", request.Deadline.ToString("o0") },
             { "bytes", request.Bytes.ToString() },
             { "user", request.User.ToString() },
             { "userList", request.UserList.ToString() },
