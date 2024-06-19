@@ -7,7 +7,7 @@ service:
       method: POST
       request: MyUnion
       response: MyUnion
-
+    
     getMetadata:
       path: "/metadata"
       method: GET
