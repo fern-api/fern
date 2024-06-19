@@ -270,7 +270,7 @@ class CsProj {
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net8.0;net7.0;net6.0;net5.0;net4.0</TargetFrameworks>
+        <TargetFrameworks>net8.0;net7.0;net6.0;</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
         <NuGetAudit>false</NuGetAudit>
         ${propertyGroups.join(`\n${FOUR_SPACES}${FOUR_SPACES}`)}
