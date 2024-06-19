@@ -11,8 +11,8 @@ class FunctionInvocation(AstNode):
     def __init__(
         self,
         function_definition: Reference,
-        args: Sequence[Expression] = None,
-        kwargs: Sequence[Tuple[str, Expression]] = None,
+        args: Sequence[Expression] = [],
+        kwargs: Sequence[Tuple[str, Expression]] = [],
     ):
         self._callable_invocation = CallableInvocation(callable=function_definition, args=args, kwargs=kwargs)
 

@@ -29,9 +29,9 @@ class PydanticModel:
         smart_union: bool,
         version: PydanticVersionCompatibility,
         require_optional_fields: bool,
-        should_export: bool = None,
-        base_models: Sequence[AST.ClassReference] = None,
-        parent: ClassParent = None,
+        should_export: bool = True,
+        base_models: Sequence[AST.ClassReference] = [],
+        parent: Optional[ClassParent] = None,
         docstring: Optional[str] = None,
         snippet: Optional[str] = None,
         extra_fields: Optional[Literal["allow", "forbid"]] = None,
@@ -104,7 +104,7 @@ class PydanticModel:
         return self._fields
 
     def add_private_instance_field(
-        self, name: str, type_hint: AST.TypeHint, default_factory: AST.Expression = None
+        self, name: str, type_hint: AST.TypeHint, default_factory: Optional[AST.Expression] = None
     ) -> None:
         if not name.startswith("_"):
             raise RuntimeError(
@@ -117,13 +117,13 @@ class PydanticModel:
                 initializer=AST.Expression(
                     AST.ClassInstantiation(
                         Pydantic.PrivateAttr(self._version),
-                        kwargs=[("default_factory", default_factory)] if default_factory is not None else None,
+                        kwargs=[("default_factory", default_factory)] if default_factory is not None else [],
                     )
                 ),
             )
         )
 
-    def add_class_var(self, name: str, type_hint: AST.TypeHint, initializer: AST.Expression = None) -> None:
+    def add_class_var(self, name: str, type_hint: AST.TypeHint, initializer: Optional[AST.Expression] = None) -> None:
         self._class_declaration.add_class_var(
             AST.VariableDeclaration(
                 name=name,
@@ -156,7 +156,7 @@ class PydanticModel:
     def add_method(
         self,
         declaration: AST.FunctionDeclaration,
-        decorator: AST.ClassMethodDecorator = None,
+        decorator: Optional[AST.ClassMethodDecorator] = None,
     ) -> AST.FunctionDeclaration:
         return self._class_declaration.add_method(
             declaration=declaration,
@@ -266,7 +266,7 @@ class PydanticModel:
             is_forward_reference=True,
         )
 
-    def update_forward_refs(self, localns: Iterable[AST.ClassReference] = None) -> None:
+    def update_forward_refs(self, localns: Iterable[AST.ClassReference] = []) -> None:
         self._source_file.add_footer_expression(
             AST.Expression(
                 AST.FunctionInvocation(
@@ -281,9 +281,7 @@ class PydanticModel:
                         [(get_named_import_or_throw(reference), AST.Expression(reference)) for reference in localns],
                         # sort by name for consistency
                         key=lambda kwarg: kwarg[0],
-                    )
-                    if localns is not None
-                    else None,
+                    ),
                 )
             )
         )

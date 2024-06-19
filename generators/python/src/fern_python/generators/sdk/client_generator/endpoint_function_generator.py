@@ -31,10 +31,10 @@ from .request_body_parameters import (
 
 HTTPX_PRIMITIVE_DATA_TYPES = set(
     [
-        ir_types.PrimitiveType.STRING,
-        ir_types.PrimitiveType.INTEGER,
-        ir_types.PrimitiveType.DOUBLE,
-        ir_types.PrimitiveType.BOOLEAN,
+        ir_types.PrimitiveTypeV1.STRING,
+        ir_types.PrimitiveTypeV1.INTEGER,
+        ir_types.PrimitiveTypeV1.DOUBLE,
+        ir_types.PrimitiveTypeV1.BOOLEAN,
     ]
 )
 
@@ -175,8 +175,8 @@ class EndpointFunctionGenerator:
 
     def _get_endpoint_return_type(self) -> AST.TypeHint:
         return_type = (
-            self._get_response_body_type(self._endpoint.response, self._is_async)
-            if self._endpoint.response is not None
+            self._get_response_body_type(self._endpoint.response.body, self._is_async)
+            if self._endpoint.response is not None and self._endpoint.response.body is not None
             else AST.TypeHint.none()
         )
         return (
@@ -328,9 +328,10 @@ class EndpointFunctionGenerator:
             is_streaming = (
                 True
                 if endpoint.response is not None
+                and endpoint.response.body
                 and (
-                    endpoint.response.get_as_union().type == "streaming"
-                    or endpoint.response.get_as_union().type == "fileDownload"
+                    endpoint.response.body.get_as_union().type == "streaming"
+                    or endpoint.response.body.get_as_union().type == "fileDownload"
                 )
                 else False
             )
@@ -626,14 +627,16 @@ class EndpointFunctionGenerator:
     def _unwrap_container_types(self, type_reference: ir_types.TypeReference) -> Optional[ir_types.TypeReference]:
         unwrapped_type: Union[ir_types.TypeReference, None] = type_reference
         maybe_wrapped_type: Union[ir_types.TypeReference, None] = type_reference
-        if maybe_wrapped_type is not None and maybe_wrapped_type.get_as_union().type == "container":
-            unwrapped_type = maybe_wrapped_type.get_as_union().container.visit(
-                list_=lambda item_type: item_type,
-                set_=lambda item_type: item_type,
-                optional=lambda item_type: self._unwrap_container_types(item_type),
-                map_=lambda _: None,
-                literal=lambda _: None,
-            )
+        if maybe_wrapped_type is not None:
+            union = maybe_wrapped_type.get_as_union()
+            if union.type == "container":
+                unwrapped_type = union.container.visit(
+                    list_=lambda item_type: item_type,
+                    set_=lambda item_type: item_type,
+                    optional=lambda item_type: self._unwrap_container_types(item_type),
+                    map_=lambda _: None,
+                    literal=lambda _: None,
+                )
         return unwrapped_type
 
     def _get_pagination_results_type(self, fallback_typehint: AST.TypeHint) -> AST.TypeHint:
@@ -649,8 +652,8 @@ class EndpointFunctionGenerator:
 
         return fallback_typehint
 
-    def _get_response_body_type(self, response: ir_types.HttpResponse, is_async: bool) -> AST.TypeHint:
-        response_type = response.visit(
+    def _get_response_body_type(self, response_body: ir_types.HttpResponseBody, is_async: bool) -> AST.TypeHint:
+        response_type = response_body.visit(
             file_download=lambda _: (
                 AST.TypeHint.async_iterator(AST.TypeHint.bytes())
                 if self._is_async
@@ -684,8 +687,8 @@ class EndpointFunctionGenerator:
     def _write_response_body_type(
         self, writer: NodeWriter, response: Optional[ir_types.HttpResponse], response_hint: AST.TypeHint
     ) -> None:
-        if response is not None:
-            response.visit(
+        if response is not None and response.body:
+            response.body.visit(
                 file_download=lambda fd: self._write_yielding_return(writer, response_hint, fd.docs),
                 json=lambda json_response: self._write_standard_return(
                     writer, response_hint, json_response.get_as_union().docs
@@ -881,7 +884,7 @@ class EndpointFunctionGenerator:
     ) -> bool:
         return self._does_type_reference_match_primitives(
             type_reference,
-            expected=set([ir_types.PrimitiveType.DATE_TIME]),
+            expected=set([ir_types.PrimitiveTypeV1.DATE_TIME]),
             allow_optional=allow_optional,
             allow_enum=False,
         )
@@ -893,7 +896,10 @@ class EndpointFunctionGenerator:
         allow_optional: bool,
     ) -> bool:
         return self._does_type_reference_match_primitives(
-            type_reference, expected=set([ir_types.PrimitiveType.DATE]), allow_optional=allow_optional, allow_enum=False
+            type_reference,
+            expected=set([ir_types.PrimitiveTypeV1.DATE]),
+            allow_optional=allow_optional,
+            allow_enum=False,
         )
 
     def _is_httpx_primitive_data(self, type_reference: ir_types.TypeReference, *, allow_optional: bool) -> bool:
@@ -905,7 +911,7 @@ class EndpointFunctionGenerator:
         self,
         type_reference: ir_types.TypeReference,
         *,
-        expected: Set[ir_types.PrimitiveType],
+        expected: Set[ir_types.PrimitiveTypeV1],
         allow_optional: bool,
         allow_enum: bool,
     ) -> bool:
@@ -945,12 +951,12 @@ class EndpointFunctionGenerator:
                 ),
                 map_=lambda x: False,
                 literal=lambda literal: literal.visit(
-                    boolean=lambda x: ir_types.PrimitiveType.BOOLEAN in expected,
-                    string=lambda x: ir_types.PrimitiveType.STRING in expected,
+                    boolean=lambda x: ir_types.PrimitiveTypeV1.BOOLEAN in expected,
+                    string=lambda x: ir_types.PrimitiveTypeV1.STRING in expected,
                 ),
             ),
             named=visit_named_type,
-            primitive=lambda primitive: primitive in expected,
+            primitive=lambda primitive: primitive.v_1 in expected,
             unknown=lambda: False,
         )
 
@@ -996,12 +1002,20 @@ class EndpointFunctionGenerator:
         return query_parameter_type_hint
 
 
+def _is_request_body_optional(request_body: ir_types.HttpRequestBody) -> bool:
+    union = request_body.get_as_union()
+    if union.type == "reference":
+        return _is_type_reference_optional(union.request_body_type)
+    return False
+
+
 def _is_type_reference_optional(type_reference: ir_types.TypeReference) -> bool:
-    return (
-        type_reference.get_as_union().type == "reference"
-        and type_reference.get_as_union().request_body_type.get_as_union().type == "container"
-        and type_reference.get_as_union().request_body_type.get_as_union().container.get_as_union().type == "optional"
-    )
+    union = type_reference.get_as_union()
+    if union.type == "reference":
+        request_body = union.request_body_type.get_as_union()
+        if request_body.type == "container":
+            return request_body.container.get_as_union().type == "optional"
+    return False
 
 
 # TODO: this is effectively what should be exposed when creating the snippets API.
@@ -1089,8 +1103,8 @@ class EndpointFunctionSnippetGenerator:
         if self.example.request is not None:
             # For some reason the example type reference is not marking it's type as optional, so we need to specify it so the
             # snippets (and thus unit tests) write correctly
-            is_optional = self.endpoint.request_body is not None and _is_type_reference_optional(
-                self.endpoint.request_body
+            is_optional = self.endpoint.request_body is not None and _is_request_body_optional(
+                request_body=self.endpoint.request_body
             )
             args.extend(
                 self.example.request.visit(
@@ -1115,7 +1129,11 @@ class EndpointFunctionSnippetGenerator:
         )
 
     def generate_usage(self, response_name: str, is_async: bool) -> Optional[AST.Expression]:
-        if self.endpoint.response is not None and self.endpoint.response.get_as_union().type == "streaming":
+        if (
+            self.endpoint.response is not None
+            and self.endpoint.response.body
+            and self.endpoint.response.body.get_as_union().type == "streaming"
+        ):
 
             def snippet_writer(writer: AST.NodeWriter) -> None:
                 if is_async:
@@ -1174,16 +1192,15 @@ class EndpointFunctionSnippetGenerator:
         request_parameter_names: Dict[ir_types.Name, str],
     ) -> List[AST.Expression]:
         if self.context.custom_config.inline_request_params and not is_optional:
-            if example_type_reference.shape.get_as_union().type == "named":
-                inner_shape = example_type_reference.shape.get_as_union().shape
-                if inner_shape.get_as_union().type == "alias":
+            union = example_type_reference.shape.get_as_union()
+            if union.type == "named":
+                shape = union.shape.get_as_union()
+                if shape.type == "alias":
                     return self._get_snippet_for_request_reference(
                         example_type_reference, is_optional, request_parameter_names
                     )
-                if inner_shape.get_as_union().type == "object":
-                    return self._get_snippet_for_request_reference_flattened(
-                        inner_shape.get_as_union(), request_parameter_names
-                    )
+                if shape.type == "object":
+                    return self._get_snippet_for_request_reference_flattened(shape, request_parameter_names)
             return self._get_snippet_for_request_reference_default(example_type_reference)
         else:
             return self._get_snippet_for_request_reference_default(example_type_reference)

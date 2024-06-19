@@ -89,7 +89,7 @@ class SourceFileImpl(SourceFile):
     def add_class_declaration(
         self,
         declaration: AST.ClassDeclaration,
-        should_export: bool = None,
+        should_export: bool = True,
     ) -> LocalClassReference:
         new_declaration = declaration
 
@@ -97,7 +97,7 @@ class SourceFileImpl(SourceFile):
             def add_class_declaration(
                 class_reference_self,
                 declaration: AST.ClassDeclaration,
-                should_export: bool = None,
+                should_export: bool = True,
             ) -> LocalClassReference:
                 new_declaration.add_class(declaration)
                 return LocalClassReferenceImpl(
@@ -112,7 +112,7 @@ class SourceFileImpl(SourceFile):
 
         self.add_declaration(
             declaration=declaration,
-            should_export=should_export if should_export is not None else not declaration.name.startswith("_"),
+            should_export=should_export if not declaration.name.startswith("_") else False,
         )
         return LocalClassReferenceImpl(
             qualified_name_excluding_import=(),

@@ -11,8 +11,8 @@ class ClassInstantiation(AstNode):
     def __init__(
         self,
         class_: ClassReference,
-        args: Sequence[Expression] = None,
-        kwargs: Sequence[Tuple[str, Expression]] = None,
+        args: Sequence[Expression] = [],
+        kwargs: Sequence[Tuple[str, Expression]] = [],
     ):
         self.callable_invocation = CallableInvocation(callable=class_, args=args, kwargs=kwargs)
 

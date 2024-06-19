@@ -78,9 +78,9 @@ class EndpointGenerator:
 
     def _get_return_type(self) -> AST.TypeHint:
         response = self._endpoint.response
-        if response is None:
+        if response is None or response.body is None:
             return AST.TypeHint.none()
-        return self._get_response_body_type(response)
+        return self._get_response_body_type(response.body)
 
     def _get_endpoint_path(self) -> str:
         # remove leading slashes from the head and add a single one
@@ -174,7 +174,7 @@ class EndpointGenerator:
                     writer.write("None")
                 writer.write_line(",")
 
-                if self._endpoint.response is None:
+                if self._endpoint.response is None or self._endpoint.response.body is None:
                     writer.write("status_code=")
                     writer.write_node(AST.TypeHint(Starlette.HTTP_204_NO_CONTENT))
                     writer.write_line(",")
@@ -325,8 +325,8 @@ class EndpointGenerator:
             writer.write_line(")")
             writer.write_line(f"raise {CAUGHT_ERROR_NAME}")
 
-    def _get_response_body_type(self, response: ir_types.HttpResponse) -> AST.TypeHint:
-        return response.visit(
+    def _get_response_body_type(self, response_body: ir_types.HttpResponseBody) -> AST.TypeHint:
+        return response_body.visit(
             file_download=raise_file_download_unsupported,
             json=lambda json_response: self._get_json_response_body_type(json_response),
             text=lambda _: AST.TypeHint.str_(),

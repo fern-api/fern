@@ -21,9 +21,9 @@ class ClassDeclaration(AstNode):
         self,
         name: str,
         is_abstract: bool = False,
-        extends: Sequence[ClassReference] = None,
-        constructor: ClassConstructor = None,
-        docstring: Docstring = None,
+        extends: Sequence[ClassReference] = [],
+        constructor: Optional[ClassConstructor] = None,
+        docstring: Optional[Docstring] = None,
         snippet: Optional[str] = None,
         write_parameter_docstring: bool = False,
     ):
@@ -42,7 +42,7 @@ class ClassDeclaration(AstNode):
         self.snippet = snippet
         self.class_vars: List[VariableDeclaration] = []
         self.statements: List[AstNode] = []
-        self.ghost_references: OrderedSet[Reference] = OrderedSet()
+        self.ghost_references: OrderedSet[Reference] = OrderedSet([])
         self.write_parameter_docstring = write_parameter_docstring
 
     def add_class_var(self, variable_declaration: VariableDeclaration) -> None:
@@ -51,7 +51,7 @@ class ClassDeclaration(AstNode):
     def add_method(
         self,
         declaration: FunctionDeclaration,
-        decorator: ClassMethodDecorator = None,
+        decorator: Optional[ClassMethodDecorator] = None,
         no_implicit_decorator: bool = False,
     ) -> FunctionDeclaration:
         def augment_signature(signature: FunctionSignature) -> FunctionSignature:
@@ -96,7 +96,7 @@ class ClassDeclaration(AstNode):
         self,
         name: str,
         signature: FunctionSignature,
-        docstring: Docstring = None,
+        docstring: Optional[Docstring] = None,
         is_async: bool = False,
     ) -> FunctionDeclaration:
         return self.add_method(
