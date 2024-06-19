@@ -8,7 +8,7 @@ authors = []
 python = "^3.9"
 pydantic = "^1.9.2,<=1.10.14"
 typer = {extras = ["all"], version = "^0.6.1"}
-fern-fern-generator-exec-sdk = {version = "0.0.846", source = "fern-prod"}
+fern-fern-generator-exec-sdk = {version = "0.0.890", source = "fern-prod"}
 ordered-set = "^4.1.0"
 fern-fern-fdr-sdk = {version = "0.0.5435", source = "fern-prod"}
 fern-fern-ir-v39 = "^0.0.3473"

@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [0.24.3] - 2024-06-18
+
+- Fix: The generator only adds a publish step in github actions if credentials are specified.
+
+
 ## [0.24.2] - 2024-06-19
 
 - Improvement: Remove the unnecessary client call from the request/response README.md section.
