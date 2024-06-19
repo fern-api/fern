@@ -78,7 +78,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                                     value: csharp.codeblock(
                                         `${this.getParameterName()}.${
                                             queryParameter.name.name.pascalCase.safeName
-                                        }.ToString("o")`
+                                        }.ToString("o0")`
                                     )
                                 };
                             } else {
@@ -142,7 +142,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                                     value: csharp.codeblock(
                                         `${this.getParameterName()}.${
                                             header.name.name.pascalCase.safeName
-                                        }.ToString("o")`
+                                        }.ToString("o0")`
                                     )
                                 };
                             } else {
