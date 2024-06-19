@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Feature: The generator now merges the user's original `README.md` file (if any).
 
+## [0.24.4] - 2024-06-19
+
+- Fix: APIs that specify a default environment no longer include an unused environment import
+  in their generated snippets.
+
 ## [0.24.3] - 2024-06-18
 
 - Fix: The generator only adds a publish step in github actions if credentials are specified.

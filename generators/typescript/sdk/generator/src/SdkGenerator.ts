@@ -261,6 +261,7 @@ export class SdkGenerator {
         this.environmentsDeclarationReferencer = new EnvironmentsDeclarationReferencer({
             containingDirectory: [],
             namespaceExport,
+            npmPackage: this.npmPackage,
             environmentsConfig: intermediateRepresentation.environments ?? undefined
         });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
@@ -1111,6 +1112,7 @@ export class SdkGenerator {
         { isForSnippet }: { isForSnippet?: boolean } = {}
     ): SdkContextImpl {
         return new SdkContextImpl({
+            ir: this.intermediateRepresentation,
             npmPackage: this.npmPackage,
             isForSnippet: isForSnippet ?? false,
             intermediateRepresentation: this.intermediateRepresentation,
