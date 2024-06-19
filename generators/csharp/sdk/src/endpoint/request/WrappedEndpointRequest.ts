@@ -72,6 +72,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
                                         `${this.getParameterName()}.${queryParameter.name.name.pascalCase.safeName}`
                                     )
                                 };
+                            } else if (this.isDatetime(queryParameter.valueType)) {
+                                return {
+                                    key: csharp.codeblock(`"${queryParameter.name.wireValue}"`),
+                                    value: csharp.codeblock(`${this.getParameterName()}.ToString("o")`)
+                                };
                             } else {
                                 return {
                                     key: csharp.codeblock(`"${queryParameter.name.wireValue}"`),
@@ -126,6 +131,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
                                     value: csharp.codeblock(
                                         `${this.getParameterName()}.${header.name.name.pascalCase.safeName}`
                                     )
+                                };
+                            } else if (this.isDatetime(header.valueType)) {
+                                return {
+                                    key: csharp.codeblock(`"${header.name.wireValue}"`),
+                                    value: csharp.codeblock(`${this.getParameterName()}.ToString("o")`)
                                 };
                             } else {
                                 return {
@@ -189,6 +199,29 @@ export class WrappedEndpointRequest extends EndpointRequest {
             }
             case "primitive": {
                 return typeReference.primitive === "STRING";
+            }
+            case "unknown": {
+                return false;
+            }
+        }
+    }
+
+    private isDatetime(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                if (typeReference.container.type === "optional") {
+                    return this.isString(typeReference.container.optional);
+                }
+                return false;
+            case "named": {
+                const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (declaration.shape.type === "alias") {
+                    return this.isDatetime(declaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "primitive": {
+                return typeReference.primitive === "DATE_TIME";
             }
             case "unknown": {
                 return false;
