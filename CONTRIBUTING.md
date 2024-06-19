@@ -187,7 +187,7 @@ yarn seed run --generator ts-sdk --path /Users/jdoe/fern/apis/imdb
 To run against a custom fixture with an audience, run 
 
 ```sh
-yarn seed run --generator ts-sdk --path /Users/jdoe/fern/apis/imdb --audiences external
+yarn seed run --generator ts-sdk --path /Users/jdoe/fern/apis/imdb --audience external
 ```
 
 ### Running generators from source
