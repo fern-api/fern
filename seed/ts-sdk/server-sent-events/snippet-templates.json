@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedServerSentEventsClient } from \"@fern/server-sent-events\";"
+                ],
                 "templateString": "const client = new SeedServerSentEventsClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",

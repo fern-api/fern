@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedExamplesClient } from \"@fern/examples\";"
+                ],
                 "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -109,7 +111,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedExamplesClient } from \"@fern/examples\";"
+                ],
                 "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -207,7 +211,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedExamplesClient } from \"@fern/examples\";"
+                ],
                 "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -305,7 +311,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedExamplesClient } from \"@fern/examples\";"
+                ],
                 "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -403,7 +411,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedExamplesClient } from \"@fern/examples\";"
+                ],
                 "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -472,7 +482,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedExamplesClient } from \"@fern/examples\";"
+                ],
                 "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -570,7 +582,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedExamplesClient } from \"@fern/examples\";"
+                ],
                 "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -816,7 +830,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedExamplesClient } from \"@fern/examples\";"
+                ],
                 "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -946,7 +962,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedExamplesClient } from \"@fern/examples\";"
+                ],
                 "templateString": "const client = new SeedExamplesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",

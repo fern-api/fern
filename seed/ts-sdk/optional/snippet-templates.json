@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedObjectsWithImportsClient } from \"@fern/optional\";"
+                ],
                 "templateString": "const client = new SeedObjectsWithImportsClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
