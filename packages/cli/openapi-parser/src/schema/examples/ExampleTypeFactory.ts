@@ -171,7 +171,7 @@ export class ExampleTypeFactory {
                         const exampleUnionVariantSchema = schema.value.schemas[exampleDiscriminant];
 
                         // Pick the union variant from the example, or default to the first one
-                        let unionVariant =
+                        const unionVariant =
                             this.getDiscriminatedUnionVariantSchema(schema.value, fullExample) ??
                             Object.entries(schema.value.schemas)[0];
                         if (
