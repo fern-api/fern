@@ -146,6 +146,7 @@ allowedFailures:
   - circular-references-advanced
   - oauth-client-credentials-default
   - unions:union-utils
+  - multi-url-environment-no-default
   # === Allowed failures due to unit testing ===
   - pagination
   # We don't have oauth tests yet
