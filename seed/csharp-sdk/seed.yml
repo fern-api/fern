@@ -5,3 +5,27 @@ dockerCommand: yarn workspace @fern-api/fern-csharp-sdk dockerTagLatest
 language: java # change to csharp
 generatorType: SDK
 defaultOutputMode: github
+scripts:
+  - docker: bitnami/dotnet-sdk:8
+    commands:
+      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true
+allowedFailures:
+  - alias
+  - auth-environment-variables
+  - basic-auth-environment-variables
+  - bearer-token-environment-variable
+  - circular-references
+  - circular-references-advanced
+  - enum
+  - examples
+  - exhaustive
+  - idempotency-headers
+  - mixed-case
+  - multi-line-docs
+  - object
+  - objects-with-imports
+  - pagination
+  - trace
+  - undiscriminated-unions
+  - unions
+  - validation
