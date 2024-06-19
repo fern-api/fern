@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedMixedCase", "SeedMixedCase\SeedMixedCase.csproj", "{44E5BBE4-FAD9-43FD-A206-34AD9BE05600}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedMixedCase.Test", "SeedMixedCase.Test\SeedMixedCase.Test.csproj", "{5F2851B3-54D6-4C3B-BAD9-DA385A699BE1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{44E5BBE4-FAD9-43FD-A206-34AD9BE05600}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44E5BBE4-FAD9-43FD-A206-34AD9BE05600}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44E5BBE4-FAD9-43FD-A206-34AD9BE05600}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44E5BBE4-FAD9-43FD-A206-34AD9BE05600}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F2851B3-54D6-4C3B-BAD9-DA385A699BE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F2851B3-54D6-4C3B-BAD9-DA385A699BE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F2851B3-54D6-4C3B-BAD9-DA385A699BE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F2851B3-54D6-4C3B-BAD9-DA385A699BE1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

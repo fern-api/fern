@@ -1,0 +1,44 @@
+imports:
+  objects: ../types/object.yml
+
+service:
+  auth: true
+  base-path: /object
+  endpoints:
+    getAndReturnWithOptionalField:
+      path: /get-and-return-with-optional-field
+      method: POST
+      request: objects.ObjectWithOptionalField
+      response: objects.ObjectWithOptionalField
+
+    getAndReturnWithRequiredField:
+      path: /get-and-return-with-required-field
+      method: POST
+      request: objects.ObjectWithRequiredField
+      response: objects.ObjectWithRequiredField
+
+    getAndReturnWithMapOfMap:
+      path: /get-and-return-with-map-of-map
+      method: POST
+      request: objects.ObjectWithMapOfMap
+      response: objects.ObjectWithMapOfMap
+
+    getAndReturnNestedWithOptionalField:
+      path: /get-and-return-nested-with-optional-field
+      method: POST
+      request: objects.NestedObjectWithOptionalField
+      response: objects.NestedObjectWithOptionalField
+
+    getAndReturnNestedWithRequiredField:
+      path: /get-and-return-nested-with-required-field/{string}
+      method: POST
+      path-parameters:
+        string: string
+      request: objects.NestedObjectWithRequiredField
+      response: objects.NestedObjectWithRequiredField
+
+    getAndReturnNestedWithRequiredFieldAsList:
+      path: /get-and-return-nested-with-required-field-list
+      method: POST
+      request: list<objects.NestedObjectWithRequiredField>
+      response: objects.NestedObjectWithRequiredField
