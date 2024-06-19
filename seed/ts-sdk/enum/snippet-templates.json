@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedEnumClient } from \"@fern/enum\";"
+                ],
                 "templateString": "const client = new SeedEnumClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -116,7 +118,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedEnumClient } from \"@fern/enum\";"
+                ],
                 "templateString": "const client = new SeedEnumClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -220,7 +224,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedEnumClient } from \"@fern/enum\";"
+                ],
                 "templateString": "const client = new SeedEnumClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -324,7 +330,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedEnumClient } from \"@fern/enum\";"
+                ],
                 "templateString": "const client = new SeedEnumClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",

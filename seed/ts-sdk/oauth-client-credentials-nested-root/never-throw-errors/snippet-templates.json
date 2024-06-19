@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials-nested-root\";"
+                ],
                 "templateString": "const client = new SeedOauthClientCredentialsClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",

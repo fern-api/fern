@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedNoEnvironmentClient } from \"@fern/no-environment\";"
+                ],
                 "templateString": "const client = new SeedNoEnvironmentClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",

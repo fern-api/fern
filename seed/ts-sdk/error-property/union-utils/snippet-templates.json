@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedErrorPropertyClient } from \"@fern/error-property\";"
+                ],
                 "templateString": "const client = new SeedErrorPropertyClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",

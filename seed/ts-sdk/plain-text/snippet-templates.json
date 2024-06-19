@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedPlainTextClient } from \"@fern/plain-text\";"
+                ],
                 "templateString": "const client = new SeedPlainTextClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",

@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedApiClient } from \"@fern/imdb\";"
+                ],
                 "templateString": "const client = new SeedApiClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -138,7 +140,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedApiClient } from \"@fern/imdb\";"
+                ],
                 "templateString": "const client = new SeedApiClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
