@@ -3331,7 +3331,7 @@ __metadata:
     jwks-rsa: ^3.1.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -3359,7 +3359,7 @@ __metadata:
     react-dom: ^18.2.0
     sass: ^1.72.0
     stylelint: ^16.2.1
-    typescript: 4.6.4
+    typescript: 5.4.5
     url-join: ^5.0.0
     vite: ^5.2.8
     vite-plugin-checker: ^0.6.4
@@ -3435,7 +3435,7 @@ __metadata:
     prettier: ^2.7.1
     tar: ^6.2.1
     tmp-promise: ^3.0.3
-    typescript: 4.6.4
+    typescript: 5.4.5
     validate-npm-package-name: ^5.0.1
     yargs: ^17.4.1
   bin:
@@ -3468,7 +3468,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     tinycolor2: ^1.6.0
-    typescript: 4.6.4
+    typescript: 5.4.5
     zod: ^3.22.3
   languageName: unknown
   linkType: soft
@@ -3487,7 +3487,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     strip-ansi: ^7.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
     ua-parser-js: ^1.0.37
     whatwg-mimetype: ^4.0.0
   languageName: unknown
@@ -3508,7 +3508,7 @@ __metadata:
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -3530,7 +3530,7 @@ __metadata:
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
     zod: ^3.22.3
   languageName: unknown
   linkType: soft
@@ -3550,7 +3550,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -3585,7 +3585,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
-    typescript: 4.6.4
+    typescript: 5.4.5
     uuid: ^9.0.1
     watcher: ^2.3.1
     ws: ^8.17.0
@@ -3622,7 +3622,7 @@ __metadata:
     micromark-extension-mdx: ^2.1.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
     unist-util-visit: ^5.0.0
     url-join: ^5.0.0
   languageName: unknown
@@ -3648,7 +3648,7 @@ __metadata:
     prettier: ^2.7.1
     remark-gfm: ^3.0.1
     tinycolor2: ^1.6.0
-    typescript: 4.6.4
+    typescript: 5.4.5
     zod: ^3.22.3
   languageName: unknown
   linkType: soft
@@ -3677,7 +3677,7 @@ __metadata:
     prettier: ^2.7.1
     strip-ansi: ^7.1.0
     tmp-promise: ^3.0.3
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -3717,7 +3717,7 @@ __metadata:
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
     zod: ^3.22.3
   bin:
     fern-csharp-model: ./dist/bundle.cjs
@@ -3747,7 +3747,7 @@ __metadata:
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
     zod: ^3.22.3
   bin:
     fern-csharp-sdk: ./dist/bundle.cjs
@@ -3776,7 +3776,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-loader: ^9.3.1
-    typescript: 4.6.4
+    typescript: 5.4.5
     zod: ^3.22.3
   bin:
     fern-ruby-model: ./dist/bundle.cjs
@@ -3805,7 +3805,7 @@ __metadata:
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
     zod: ^3.22.3
   bin:
     fern-ruby-sdk: ./dist/bundle.cjs
@@ -3826,7 +3826,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -3848,7 +3848,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
-    typescript: 4.6.4
+    typescript: 5.4.5
     zod: ^3.22.3
   languageName: unknown
   linkType: soft
@@ -3881,7 +3881,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -3912,7 +3912,7 @@ __metadata:
     object-hash: ^3.0.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
     url-join: ^5.0.0
   languageName: unknown
   linkType: soft
@@ -3986,7 +3986,7 @@ __metadata:
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -4001,7 +4001,7 @@ __metadata:
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -4019,7 +4019,7 @@ __metadata:
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
     zod: ^3.22.3
     zod-to-json-schema: 3.14.1
   languageName: unknown
@@ -4037,7 +4037,7 @@ __metadata:
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -4067,7 +4067,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -4084,7 +4084,7 @@ __metadata:
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -4102,7 +4102,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -4130,7 +4130,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     qs: 6.12.1
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -4153,7 +4153,7 @@ __metadata:
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
     url-join: ^5.0.0
   languageName: unknown
   linkType: soft
@@ -4179,7 +4179,7 @@ __metadata:
     openapi-types: ^12.1.3
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
     url-join: ^5.0.0
   bin:
     fern-openapi-cli: ./dist/bundle.cjs
@@ -4197,7 +4197,7 @@ __metadata:
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -4222,7 +4222,7 @@ __metadata:
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -4254,7 +4254,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     swagger2openapi: 7.0.8
-    typescript: 4.6.4
+    typescript: 5.4.5
     zod: ^3.22.3
   languageName: unknown
   linkType: soft
@@ -4275,7 +4275,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     posthog-node: ^3.1.2
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
     uuid: ^9.0.1
   languageName: unknown
   linkType: soft
@@ -4300,7 +4300,7 @@ __metadata:
     lodash: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
     zod: ^3.22.3
   bin:
     fern-postman-cli: ./dist/bundle.cjs
@@ -4327,7 +4327,7 @@ __metadata:
     js-yaml: ^4.1.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
     zod: ^3.22.3
   languageName: unknown
   linkType: soft
@@ -4354,7 +4354,7 @@ __metadata:
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -4401,7 +4401,7 @@ __metadata:
     tar: ^6.2.1
     terminal-link: ^3.0.0
     tmp-promise: ^3.0.3
-    typescript: 4.6.4
+    typescript: 5.4.5
     url-join: ^5.0.0
   languageName: unknown
   linkType: soft
@@ -4422,7 +4422,7 @@ __metadata:
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
     url-join: ^5.0.0
   languageName: unknown
   linkType: soft
@@ -4444,7 +4444,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -4471,7 +4471,7 @@ __metadata:
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
     yargs: ^17.4.1
   bin:
     fern-scripts: ./dist/bundle.cjs
@@ -4514,7 +4514,7 @@ __metadata:
     prettier: ^2.7.1
     pretty-ms: ^9.0.0
     tmp-promise: ^3.0.3
-    typescript: 4.6.4
+    typescript: 5.4.5
     yargs: ^17.4.1
   bin:
     seed: ./dist/bundle.cjs
@@ -4533,7 +4533,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     semver-diff: ^4.0.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -4549,7 +4549,7 @@ __metadata:
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -4577,7 +4577,7 @@ __metadata:
     prettier: ^2.7.1
     strip-ansi: ^7.1.0
     terminal-link: ^3.0.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -4624,7 +4624,7 @@ __metadata:
     prettier: ^2.7.1
     tar: ^6.2.1
     tmp-promise: ^3.0.3
-    typescript: 4.6.4
+    typescript: 5.4.5
     zod: ^3.22.3
   languageName: unknown
   linkType: soft
@@ -4647,7 +4647,7 @@ __metadata:
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -4678,7 +4678,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
-    typescript: 4.6.4
+    typescript: 5.4.5
     yaml: ^2.3.2
     zod: ^3.22.3
   languageName: unknown
@@ -4701,7 +4701,7 @@ __metadata:
     js-yaml: ^4.1.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
     zod: ^3.22.3
   languageName: unknown
   linkType: soft
@@ -5186,7 +5186,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5208,7 +5208,7 @@ __metadata:
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5226,7 +5226,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5243,7 +5243,7 @@ __metadata:
     js-base64: ^3.7.6
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5258,7 +5258,7 @@ __metadata:
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5273,7 +5273,7 @@ __metadata:
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5311,7 +5311,7 @@ __metadata:
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
     url-join: ^5.0.0
   languageName: unknown
   linkType: soft
@@ -5331,7 +5331,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5352,7 +5352,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5371,7 +5371,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5392,7 +5392,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5412,7 +5412,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5433,7 +5433,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5460,7 +5460,7 @@ __metadata:
     prettier: ^2.7.1
     ts-loader: ^9.3.1
     tsup: ^8.0.2
-    typescript: 4.6.4
+    typescript: 5.4.5
     zod: ^3.22.3
   languageName: unknown
   linkType: soft
@@ -5495,7 +5495,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5513,7 +5513,7 @@ __metadata:
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5533,7 +5533,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5555,7 +5555,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5575,7 +5575,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5597,7 +5597,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     qs: 6.12.1
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5616,7 +5616,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5635,7 +5635,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5655,7 +5655,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5672,7 +5672,7 @@ __metadata:
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5694,7 +5694,7 @@ __metadata:
     prettier: ^2.7.1
     ts-morph: ^15.1.0
     ts-poet: ^6.7.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5717,7 +5717,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5737,7 +5737,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5758,7 +5758,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5786,7 +5786,7 @@ __metadata:
     prettier: ^2.7.1
     ts-loader: ^9.3.1
     tsup: ^8.0.2
-    typescript: 4.6.4
+    typescript: 5.4.5
     zod: ^3.22.3
   languageName: unknown
   linkType: soft
@@ -5839,7 +5839,7 @@ __metadata:
     tmp-promise: ^3.0.3
     ts-morph: ^15.1.0
     ts-poet: ^6.7.0
-    typescript: 4.6.4
+    typescript: 5.4.5
     url-join: ^5.0.0
     uuid: ^9.0.1
   languageName: unknown
@@ -5861,7 +5861,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5881,7 +5881,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5900,7 +5900,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5920,7 +5920,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5941,7 +5941,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5961,7 +5961,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5981,7 +5981,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -5996,7 +5996,7 @@ __metadata:
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    typescript: 4.6.4
+    typescript: 5.4.5
   languageName: unknown
   linkType: soft
 
@@ -12922,7 +12922,7 @@ env-cmd@toddbluhm/env-cmd:
     tailwindcss: ^3.3.2
     terminal-link: ^3.0.0
     ts-node: ^10.9.2
-    typescript: 4.6.4
+    typescript: 5.4.5
     workspace: ^0.0.1-preview.1
   dependenciesMeta:
     jsonc-parser@2.2.1:
@@ -23737,23 +23737,23 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.6.4":
-  version: 4.6.4
-  resolution: "typescript@npm:4.6.4"
+"typescript@npm:5.4.5":
+  version: 5.4.5
+  resolution: "typescript@npm:5.4.5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: e7bfcc39cd4571a63a54e5ea21f16b8445268b9900bf55aee0e02ad981be576acc140eba24f1af5e3c1457767c96cea6d12861768fb386cf3ffb34013718631a
+  checksum: 53c879c6fa1e3bcb194b274d4501ba1985894b2c2692fa079db03c5a5a7140587a1e04e1ba03184605d35f439b40192d9e138eb3279ca8eee313c081c8bcd9b0
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@4.6.4#~builtin<compat/typescript>":
-  version: 4.6.4
-  resolution: "typescript@patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"
+"typescript@patch:typescript@5.4.5#~builtin<compat/typescript>":
+  version: 5.4.5
+  resolution: "typescript@patch:typescript@npm%3A5.4.5#~builtin<compat/typescript>::version=5.4.5&hash=14eedb"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 1cb434fbc637d347be90e3a0c6cd05e33c38f941713c8786d3031faf1842c2c148ba91d2fac01e7276b0ae3249b8633f1660e32686cc7a8c6a8fd5361dc52c66
+  checksum: 2373c693f3b328f3b2387c3efafe6d257b057a142f9a79291854b14ff4d5367d3d730810aee981726b677ae0fd8329b23309da3b6aaab8263dbdccf1da07a3ba
   languageName: node
   linkType: hard
 
