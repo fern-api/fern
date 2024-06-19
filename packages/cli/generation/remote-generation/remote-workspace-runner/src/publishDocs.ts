@@ -14,6 +14,7 @@ import { readFile } from "fs/promises";
 import { chunk } from "lodash-es";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
+import { parse } from "url";
 import { measureImageSizes } from "./measureImageSizes";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
@@ -55,6 +56,7 @@ export async function publishDocs({
 
     let docsRegistrationId: string | undefined;
     let urlToOutput = customDomains[0] ?? domain;
+    const basePath = parse(domain).pathname ?? undefined;
     const resolver = new DocsDefinitionResolver(
         domain,
         docsWorkspace,
@@ -101,7 +103,8 @@ export async function publishDocs({
                     orgId: organization,
                     authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
                     filepaths,
-                    images
+                    images,
+                    basePath
                 });
                 if (startDocsRegisterResponse.ok) {
                     urlToOutput = startDocsRegisterResponse.body.previewUrl;
