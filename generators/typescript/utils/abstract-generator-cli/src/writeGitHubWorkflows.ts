@@ -61,23 +61,20 @@ ${getTestJob({ config })}`;
         (publishInfo != null && publishInfo?.shouldGeneratePublishWorkflow == null) ||
         publishInfo?.shouldGeneratePublishWorkflow === true
     ) {
-        workflowYaml += `  publish:
-        needs: [ compile, test ]
-        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-        runs-on: ubuntu-latest
-    
-        steps:
-          - name: Checkout repo
-            uses: actions/checkout@v3
-    
-          - name: Set up node
-            uses: actions/setup-node@v3
-    
-          - name: Install dependencies
-            run: yarn install
-    
-          - name: Build
-            run: yarn build
+        workflowYaml += `
+  publish:
+    needs: [ compile, test ]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Set up node
+        uses: actions/setup-node@v3
+      - name: Install dependencies
+        run: yarn install
+      - name: Build
+        run: yarn build
 
       - name: Publish to npm
         run: |
