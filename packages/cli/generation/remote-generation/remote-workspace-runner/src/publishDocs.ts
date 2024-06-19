@@ -14,7 +14,6 @@ import { readFile } from "fs/promises";
 import { chunk } from "lodash-es";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
-import { parse } from "url";
 import { measureImageSizes } from "./measureImageSizes";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
@@ -56,7 +55,7 @@ export async function publishDocs({
 
     let docsRegistrationId: string | undefined;
     let urlToOutput = customDomains[0] ?? domain;
-    const basePath = parse(domain).pathname ?? undefined;
+    const basePath = parseBasePath(domain);
     const resolver = new DocsDefinitionResolver(
         domain,
         docsWorkspace,
@@ -276,5 +275,13 @@ function startDocsRegisterFailed(
             );
         default:
             return context.failAndThrow("Failed to publish docs.", error);
+    }
+}
+
+function parseBasePath(domain: string): string | undefined {
+    try {
+        return new URL(wrapWithHttps(domain)).pathname;
+    } catch (e) {
+        return undefined;
     }
 }
