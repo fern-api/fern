@@ -184,6 +184,12 @@ specific API that you are looking to generate:
 yarn seed run --generator ts-sdk --path /Users/jdoe/fern/apis/imdb
 ```
 
+To run against a custom fixture with an audience, run 
+
+```sh
+yarn seed run --generator ts-sdk --path /Users/jdoe/fern/apis/imdb --audiences external
+```
+
 ### Running generators from source
 
 By default, seed will build the docker container for the generator and execute the docker. Building a docker
