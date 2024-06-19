@@ -116,6 +116,8 @@ export declare namespace SdkGenerator {
         organization: string;
         apiName: string;
         packageJson: Record<string, unknown> | undefined;
+        githubRepoUrl: string | undefined;
+        githubInstallationToken: string | undefined;
     }
 }
 
@@ -701,7 +703,9 @@ export class SdkGenerator {
                 const readmeContent = await this.generatorCli.generateReadme({
                     context,
                     endpointSnippets: this.endpointSnippets,
-                    originalReadmeFilepath: this.config.originalReadmeFilepath
+                    originalReadmeFilepath: this.config.originalReadmeFilepath,
+                    githubRepoUrl: this.config.githubRepoUrl,
+                    githubInstallationToken: this.config.githubInstallationToken
                 });
                 sourceFile.replaceWithText(readmeContent);
             }
