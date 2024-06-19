@@ -5,3 +5,7 @@ dockerCommand: yarn workspace @fern-api/fern-csharp-sdk dockerTagLatest
 language: java # change to csharp
 generatorType: SDK
 defaultOutputMode: github
+scripts:
+  - docker: bitnami/dotnet-sdk:8
+    commands:
+      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true
