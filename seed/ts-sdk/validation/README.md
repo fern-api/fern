@@ -37,7 +37,6 @@ import { SeedValidation } from "@fern/validation";
 const request: SeedValidation.CreateRequest = {
     ...
 };
-const response = await client.create(request);
 ```
 
 ## Exception Handling

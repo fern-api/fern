@@ -35,7 +35,6 @@ import { SeedCodeSamples } from "@fern/code-samples";
 const request: SeedCodeSamples.MyRequest = {
     ...
 };
-const response = await client.hello(request);
 ```
 
 ## Exception Handling
@@ -47,7 +46,7 @@ will be thrown.
 import { SeedCodeSamplesError } from "@fern/code-samples";
 
 try {
-    await client.hello(...);
+    await client.service.hello(...);
 } catch (err) {
     if (err instanceof SeedCodeSamplesError) {
         console.log(err.statusCode);
@@ -72,7 +71,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.hello(..., {
+const response = await client.service.hello(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -82,7 +81,7 @@ const response = await client.hello(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.hello(..., {
+const response = await client.service.hello(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -93,7 +92,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.hello(..., {
+const response = await client.service.hello(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request

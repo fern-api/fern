@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.24.2] - 2024-06-19
+
+- Improvement: Remove the unnecessary client call from the request/response README.md section.
+- Fix: The generated README.md snippets now correctly referenced nested methods. For example,
+  `client.users.create` (instead of `client.create`) in the following:
+
+  ```ts
+  import { AcmeClient } from "acme";
+
+  const client = new AcmeClient({ apiKey: "YOUR_API_KEY" });
+  await client.users.create({
+    firstName: "john",
+    lastName: "doe"
+  });
+  
 ## [0.24.1] - 2024-06-19
 
 - Fix: Dynamic snippets now support importing the client directly from the package.
