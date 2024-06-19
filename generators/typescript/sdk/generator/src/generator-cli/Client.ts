@@ -57,11 +57,15 @@ export class GeneratorCli {
     public async generateReadme({
         context,
         endpointSnippets,
-        originalReadmeFilepath
+        originalReadmeFilepath,
+        githubRepoUrl,
+        githubInstallationToken
     }: {
         context: SdkContext;
         endpointSnippets: FernGeneratorExec.Endpoint[];
         originalReadmeFilepath: string | undefined;
+        githubRepoUrl: string | undefined;
+        githubInstallationToken: string | undefined;
     }): Promise<string> {
         const readmeSnippetBuilder = new ReadmeSnippetBuilder({
             context,
@@ -71,7 +75,9 @@ export class GeneratorCli {
             endpointSnippets
         });
         const readmeConfigFilepath = await this.writeReadmeConfig({
-            snippets: readmeSnippetBuilder.buildReadmeSnippets()
+            snippets: readmeSnippetBuilder.buildReadmeSnippets(),
+            githubRepoUrl,
+            githubInstallationToken
         });
         const args = ["generate", "readme", "--config", readmeConfigFilepath];
         if (originalReadmeFilepath) {
@@ -83,20 +89,28 @@ export class GeneratorCli {
     }
 
     private async writeReadmeConfig({
-        snippets
+        snippets,
+        githubRepoUrl,
+        githubInstallationToken
     }: {
         snippets: Record<FernGeneratorCli.FeatureId, string[]>;
+        githubRepoUrl: string | undefined;
+        githubInstallationToken: string | undefined;
     }): Promise<AbsoluteFilePath> {
-        const readmeConfig = await this.getReadmeConfig({ snippets });
+        const readmeConfig = await this.getReadmeConfig({ snippets, githubRepoUrl, githubInstallationToken });
         const readmeConfigFile = await tmp.file();
         await writeFile(readmeConfigFile.path, JSON.stringify(readmeConfig));
         return AbsoluteFilePath.of(readmeConfigFile.path);
     }
 
     private async getReadmeConfig({
-        snippets
+        snippets,
+        githubRepoUrl,
+        githubInstallationToken
     }: {
         snippets: Record<FernGeneratorCli.FeatureId, string[]>;
+        githubRepoUrl: string | undefined;
+        githubInstallationToken: string | undefined;
     }): Promise<FernGeneratorCli.ReadmeConfig> {
         const featureConfig = await this.readFeatureConfig();
         const features: FernGeneratorCli.ReadmeFeature[] = [];
@@ -113,6 +127,10 @@ export class GeneratorCli {
             });
         }
         return {
+            remote: this.getRemote({
+                githubRepoUrl,
+                githubInstallationToken
+            }),
             language: this.getLanguageInfo(),
             organization: this.organization,
             apiReferenceLink: this.ir.readmeConfig?.apiReferenceLink,
@@ -161,6 +179,22 @@ export class GeneratorCli {
 
         this.generatorCli = generatorCli;
         return generatorCli;
+    }
+
+    private getRemote({
+        githubRepoUrl,
+        githubInstallationToken
+    }: {
+        githubRepoUrl: string | undefined;
+        githubInstallationToken: string | undefined;
+    }): FernGeneratorCli.Remote | undefined {
+        if (githubRepoUrl != null && githubInstallationToken != null) {
+            return FernGeneratorCli.Remote.github({
+                repoUrl: githubRepoUrl,
+                installationToken: githubInstallationToken
+            });
+        }
+        return undefined;
     }
 
     private getLanguageInfo(): FernGeneratorCli.LanguageInfo {

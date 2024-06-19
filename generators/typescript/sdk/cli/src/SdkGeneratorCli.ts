@@ -75,6 +75,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             customConfig.namespaceExport ??
             `${upperFirst(camelCase(config.organization))}${upperFirst(camelCase(config.workspaceName))}`;
 
+        const maybeGithubOutputMode = config.output.mode.type === "github" ? config.output.mode : undefined;
+
         const sdkGenerator = new SdkGenerator({
             namespaceExport,
             intermediateRepresentation,
@@ -126,7 +128,9 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 inlineFileProperties: customConfig.inlineFileProperties ?? false,
                 writeUnitTests: false,
                 executionEnvironment: this.exectuionEnvironment(config),
-                packageJson: customConfig.packageJson
+                packageJson: customConfig.packageJson,
+                githubRepoUrl: maybeGithubOutputMode?.repoUrl,
+                githubInstallationToken: maybeGithubOutputMode?.installationToken
             }
         });
         const typescriptProject = await sdkGenerator.generate();

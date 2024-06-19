@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.25.0-rc0] - 2024-06-19
+
+- Feature: The generator now merges the user's original `README.md` file (if any).
+
 ## [0.24.4] - 2024-06-19
 
 - Fix: APIs that specify a default environment no longer include an unused environment import
@@ -28,7 +32,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     firstName: "john",
     lastName: "doe"
   });
-  
+  ```
+
 ## [0.24.1] - 2024-06-19
 
 - Fix: Dynamic snippets now support importing the client directly from the package.
