@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedUnknownAsAnyClient } from \"@fern/unknown\";"
+                ],
                 "templateString": "const client = new SeedUnknownAsAnyClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",

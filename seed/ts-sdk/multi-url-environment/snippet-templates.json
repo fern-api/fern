@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedMultiUrlEnvironmentClient } from \"@fern/multi-url-environment\";"
+                ],
                 "templateString": "const client = new SeedMultiUrlEnvironmentClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -100,7 +102,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedMultiUrlEnvironmentClient } from \"@fern/multi-url-environment\";"
+                ],
                 "templateString": "const client = new SeedMultiUrlEnvironmentClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",

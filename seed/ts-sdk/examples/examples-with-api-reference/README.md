@@ -59,7 +59,6 @@ import { SeedExamples } from "@fern/examples";
 const request: SeedExamples.GetFileRequest = {
     ...
 };
-const response = await client.getFile(..., request);
 ```
 
 ## Exception Handling
@@ -71,7 +70,7 @@ will be thrown.
 import { SeedExamplesError } from "@fern/examples";
 
 try {
-    await client.createMovie(...);
+    await client.service.createMovie(...);
 } catch (err) {
     if (err instanceof SeedExamplesError) {
         console.log(err.statusCode);
@@ -96,7 +95,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.createMovie(..., {
+const response = await client.service.createMovie(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -106,13 +105,13 @@ const response = await client.createMovie(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.getMovie(..., {
+const response = await client.service.getMovie(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
 
 ```typescript
-const response = await client.createMovie(..., {
+const response = await client.service.createMovie(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -123,7 +122,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.createMovie(..., {
+const response = await client.service.createMovie(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request

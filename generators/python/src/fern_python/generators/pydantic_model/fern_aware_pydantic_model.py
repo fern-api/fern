@@ -41,9 +41,9 @@ class FernAwarePydanticModel:
         custom_config: PydanticModelCustomConfig,
         class_name: str,
         type_name: Optional[ir_types.DeclaredTypeName],
-        should_export: bool = None,
-        extends: Sequence[ir_types.DeclaredTypeName] = None,
-        base_models: Sequence[AST.ClassReference] = None,
+        should_export: bool = True,
+        extends: Sequence[ir_types.DeclaredTypeName] = [],
+        base_models: Sequence[AST.ClassReference] = [],
         docstring: Optional[str] = None,
         snippet: Optional[str] = None,
     ):
@@ -105,16 +105,15 @@ class FernAwarePydanticModel:
         description: Optional[str] = None,
         default_value: Optional[AST.Expression] = None,
     ) -> PydanticField:
-        if (
-            default_value is None
-            and type_reference.get_as_union().type == "container"
-            and type_reference.get_as_union().container.get_as_union().type == "literal"
-        ):
-            literal_type = type_reference.get_as_union().container.get_as_union().literal
-            if literal_type.get_as_union().type == "string":
-                default_value = AST.Expression(f'"{literal_type.get_as_union().string}"')
-            else:
-                default_value = AST.Expression(f"{literal_type.get_as_union().boolean}")
+        union = type_reference.get_as_union()
+        if default_value is None and union.type == "container" and union.container.get_as_union().type == "literal":
+            container = union.container.get_as_union()
+            if container is not None and container.type == "literal":
+                literal = container.literal.get_as_union()
+                if literal.type == "string":
+                    default_value = AST.Expression(f'"{literal.string}"')
+                else:
+                    default_value = AST.Expression(f"{literal.boolean}")
 
         field = self._create_pydantic_field(
             name=name,
@@ -128,11 +127,15 @@ class FernAwarePydanticModel:
         return field
 
     def add_private_instance_field_unsafe(
-        self, name: str, type_hint: AST.TypeHint, default_factory: AST.Expression = None
+        self, name: str, type_hint: AST.TypeHint, default_factory: AST.Expression
     ) -> None:
+        if default_factory is None:
+            return None
         self._pydantic_model.add_private_instance_field(name=name, type_hint=type_hint, default_factory=default_factory)
 
-    def add_class_var_unsafe(self, name: str, type_hint: AST.TypeHint, initializer: AST.Expression = None) -> None:
+    def add_class_var_unsafe(self, name: str, type_hint: AST.TypeHint, initializer: AST.Expression) -> None:
+        if initializer is None:
+            return None
         self._pydantic_model.add_class_var(name, type_hint, initializer=initializer)
 
     def get_type_hint_for_type_reference(self, type_reference: ir_types.TypeReference) -> AST.TypeHint:
@@ -167,7 +170,7 @@ class FernAwarePydanticModel:
         parameters: Sequence[Tuple[str, ir_types.TypeReference]],
         return_type: ir_types.TypeReference,
         body: AST.CodeWriter,
-        decorator: AST.ClassMethodDecorator = None,
+        decorator: Optional[AST.ClassMethodDecorator] = None,
     ) -> AST.FunctionDeclaration:
         return self.add_method_unsafe(
             declaration=AST.FunctionDeclaration(
@@ -189,7 +192,7 @@ class FernAwarePydanticModel:
     def add_method_unsafe(
         self,
         declaration: AST.FunctionDeclaration,
-        decorator: AST.ClassMethodDecorator = None,
+        decorator: Optional[AST.ClassMethodDecorator] = None,
     ) -> AST.FunctionDeclaration:
         return self._pydantic_model.add_method(declaration=declaration, decorator=decorator)
 

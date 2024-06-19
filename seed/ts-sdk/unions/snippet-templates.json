@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedUnionsClient } from \"@fern/unions\";"
+                ],
                 "templateString": "const client = new SeedUnionsClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -94,7 +96,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedUnionsClient } from \"@fern/unions\";"
+                ],
                 "templateString": "const client = new SeedUnionsClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",

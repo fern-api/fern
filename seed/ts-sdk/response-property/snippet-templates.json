@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedResponsePropertyClient } from \"@fern/response-property\";"
+                ],
                 "templateString": "const client = new SeedResponsePropertyClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -93,7 +95,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedResponsePropertyClient } from \"@fern/response-property\";"
+                ],
                 "templateString": "const client = new SeedResponsePropertyClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -174,7 +178,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedResponsePropertyClient } from \"@fern/response-property\";"
+                ],
                 "templateString": "const client = new SeedResponsePropertyClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -255,7 +261,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedResponsePropertyClient } from \"@fern/response-property\";"
+                ],
                 "templateString": "const client = new SeedResponsePropertyClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -336,7 +344,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedResponsePropertyClient } from \"@fern/response-property\";"
+                ],
                 "templateString": "const client = new SeedResponsePropertyClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -417,7 +427,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedResponsePropertyClient } from \"@fern/response-property\";"
+                ],
                 "templateString": "const client = new SeedResponsePropertyClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -498,7 +510,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedResponsePropertyClient } from \"@fern/response-property\";"
+                ],
                 "templateString": "const client = new SeedResponsePropertyClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",

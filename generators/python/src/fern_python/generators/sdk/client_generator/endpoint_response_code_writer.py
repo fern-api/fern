@@ -194,11 +194,12 @@ class EndpointResponseCodeWriter:
             # Has next
             # Always allow a next page if the response has a next property, for offset
             # pagination we're going to continue until there aren't any more pages
-            if self._pagination.get_as_union().type == "cursor":
+            pagination = self._pagination.get_as_union()
+            if pagination.type == "cursor":
                 # TODO: This is mirroring go for now, we should really bake in the types of the property_path into the
                 # IR so we can do a quick check on the type and only do this conditional if the property can be null
-                none_safe_condition = self._get_none_safe_property_condition(self._pagination.get_as_union().next)
-                property_path_next_access = f"{EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE}.{self._response_property_to_dot_access(self._pagination.get_as_union().next)}"
+                none_safe_condition = self._get_none_safe_property_condition(pagination.next)
+                property_path_next_access = f"{EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE}.{self._response_property_to_dot_access(pagination.next)}"
                 if none_safe_condition is not None:
                     writer.write_line(f"{EndpointResponseCodeWriter.PAGINATION_HAS_NEXT_VARIABLE} = False")
                     writer.write_line(f"{EndpointResponseCodeWriter.PAGINATION_GET_NEXT_VARIABLE} = None")
@@ -229,7 +230,7 @@ class EndpointResponseCodeWriter:
                     writer.write(f"{EndpointResponseCodeWriter.PAGINATION_GET_NEXT_VARIABLE} = lambda: ")
                     self._write_dummy_snippet_to_paginate(
                         writer=writer,
-                        page_parameter=self._pagination.get_as_union().page,
+                        page_parameter=pagination.page,
                         type="cursor",
                     )
             else:
@@ -305,10 +306,10 @@ class EndpointResponseCodeWriter:
     def _write_status_code_discriminated_response_handler(self, *, writer: AST.NodeWriter) -> None:
         writer.write_line(f"if 200 <= {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.status_code < 300:")
         with writer.indent():
-            if self._endpoint.response is None:
+            if self._endpoint.response is None or self._endpoint.response.body is None:
                 writer.write_line("return")
             else:
-                self._endpoint.response.visit(
+                self._endpoint.response.body.visit(
                     json=lambda json_response: self._handle_success_json(
                         writer=writer, json_response=json_response, use_response_json=False
                     ),
@@ -321,9 +322,13 @@ class EndpointResponseCodeWriter:
 
         # in streaming responses, we need to call read() or aread()
         # before deserializing or httpx will raise ResponseNotRead
-        if self._endpoint.response is not None and (
-            self._endpoint.response.get_as_union().type == "streaming"
-            or self._endpoint.response.get_as_union().type == "fileDownload"
+        if (
+            self._endpoint.response is not None
+            and self._endpoint.response.body
+            and (
+                self._endpoint.response.body.get_as_union().type == "streaming"
+                or self._endpoint.response.body.get_as_union().type == "fileDownload"
+            )
         ):
             writer.write_line(
                 f"await {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.aread()"
@@ -351,7 +356,7 @@ class EndpointResponseCodeWriter:
                             )
                         ]
                         if error_declaration.type is not None
-                        else None,
+                        else [],
                     )
                 )
                 writer.write_newline_if_last_line_not()
@@ -373,15 +378,15 @@ class EndpointResponseCodeWriter:
         writer: AST.NodeWriter,
         strategy: ir_types.ErrorDiscriminationByPropertyStrategy,
     ) -> None:
-        if self._endpoint.response is not None:
+        if self._endpoint.response is not None and self._endpoint.response.body is not None:
             self._try_deserialize_json_response(writer=writer)
 
         writer.write_line(f"if 200 <= {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.status_code < 300:")
         with writer.indent():
-            if self._endpoint.response is None:
+            if self._endpoint.response is None or self._endpoint.response.body is None:
                 writer.write_line("return")
             else:
-                self._endpoint.response.visit(
+                self._endpoint.response.body.visit(
                     json=lambda json_response: self._handle_success_json(
                         writer=writer, json_response=json_response, use_response_json=True
                     ),
@@ -392,7 +397,7 @@ class EndpointResponseCodeWriter:
                     text=lambda _: self._handle_success_text(writer=writer),
                 )
 
-        if self._endpoint.response is None:
+        if self._endpoint.response is None or self._endpoint.response.body is None:
             self._try_deserialize_json_response(writer=writer)
 
         if len(self._endpoint.errors.get_as_list()) > 0:
@@ -422,7 +427,7 @@ class EndpointResponseCodeWriter:
                                     )
                                 ]
                                 if error_declaration.type is not None
-                                else None,
+                                else [],
                             )
                         )
                         writer.write_newline_if_last_line_not()
@@ -458,15 +463,17 @@ class EndpointResponseCodeWriter:
             )
             writer.write_newline_if_last_line_not()
 
-    def _get_response_body_type(self, response: ir_types.HttpResponse) -> AST.TypeHint:
-        return response.visit(
-            file_download=lambda _: AST.TypeHint.async_iterator(AST.TypeHint.bytes())
-            if self._is_async
-            else AST.TypeHint.iterator(AST.TypeHint.bytes()),
-            json=lambda json_response: self._get_json_response_body_type(json_response),
-            streaming=lambda streaming_response: self._get_streaming_response_data_type(streaming_response),
-            text=lambda _: AST.TypeHint.str_(),
-        )
+    def _get_response_body_type(self, response: ir_types.HttpResponse) -> Optional[AST.TypeHint]:
+        if response.body is not None:
+            return response.body.visit(
+                file_download=lambda _: AST.TypeHint.async_iterator(AST.TypeHint.bytes())
+                if self._is_async
+                else AST.TypeHint.iterator(AST.TypeHint.bytes()),
+                json=lambda json_response: self._get_json_response_body_type(json_response),
+                streaming=lambda streaming_response: self._get_streaming_response_data_type(streaming_response),
+                text=lambda _: AST.TypeHint.str_(),
+            )
+        return None
 
     def _get_json_response_body_type(
         self,

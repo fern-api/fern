@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials\";"
+                ],
                 "templateString": "const client = new SeedOauthClientCredentialsClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -158,7 +160,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials\";"
+                ],
                 "templateString": "const client = new SeedOauthClientCredentialsClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
