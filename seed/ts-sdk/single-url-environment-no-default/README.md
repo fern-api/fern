@@ -16,11 +16,13 @@ npm i -s @fern/single-url-environment-no-default
 Instantiate and use the client with the following:
 
 ```typescript
-import * as environments from "../src/environments";
-import { SeedSingleUrlEnvironmentNoDefaultClient } from "@fern/single-url-environment-no-default";
+import {
+    SeedSingleUrlEnvironmentNoDefaultEnvironment,
+    SeedSingleUrlEnvironmentNoDefaultClient,
+} from "@fern/single-url-environment-no-default";
 
 const client = new SeedSingleUrlEnvironmentNoDefaultClient({
-    environment: environments.SeedSingleUrlEnvironmentNoDefaultEnvironment.Production,
+    environment: SeedSingleUrlEnvironmentNoDefaultEnvironment.Production,
     token: "YOUR_TOKEN",
 });
 await client.dummy.getDummy();

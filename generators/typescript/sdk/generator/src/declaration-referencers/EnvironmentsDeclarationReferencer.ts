@@ -1,8 +1,10 @@
 import { EnvironmentsConfig, MultipleBaseUrlsEnvironments, SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api";
 import {
     ExportedFilePath,
+    getReferenceToExportFromPackage,
     getReferenceToExportViaNamespaceImport,
     ImportsManager,
+    NpmPackage,
     Reference
 } from "@fern-typescript/commons";
 import { SourceFile } from "ts-morph";
@@ -10,15 +12,18 @@ import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
 
 export declare namespace EnvironmentsDeclarationReferencer {
     export interface Init extends AbstractDeclarationReferencer.Init {
+        npmPackage: NpmPackage | undefined;
         environmentsConfig: EnvironmentsConfig | undefined;
     }
 }
 
 export class EnvironmentsDeclarationReferencer extends AbstractDeclarationReferencer {
+    private npmPackage: NpmPackage | undefined;
     private environmentsConfig: EnvironmentsConfig | undefined;
 
-    constructor({ environmentsConfig, ...superInit }: EnvironmentsDeclarationReferencer.Init) {
+    constructor({ npmPackage, environmentsConfig, ...superInit }: EnvironmentsDeclarationReferencer.Init) {
         super(superInit);
+        this.npmPackage = npmPackage;
         this.environmentsConfig = environmentsConfig;
     }
 
@@ -51,7 +56,7 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
         return `${this.namespaceExport}EnvironmentUrls`;
     }
 
-    public getExportedNameOfFirstEnvironmentEnum(): string | undefined {
+    public getExportedNameOfFirstEnvironmentEnum(): { namepaceImport: string; exportedName: string } | undefined {
         if (this.environmentsConfig == null) {
             return undefined;
         }
@@ -59,7 +64,10 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
         if (maybeFirstEnvironmentName == null) {
             return undefined;
         }
-        return `${this.getExportedNameOfEnvironmentsEnum()}.${maybeFirstEnvironmentName}`;
+        return {
+            namepaceImport: this.getExportedNameOfEnvironmentsEnum(),
+            exportedName: maybeFirstEnvironmentName
+        };
     }
 
     public getReferenceToEnvironmentsEnum({
@@ -83,14 +91,25 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
         importsManager: ImportsManager;
         sourceFile: SourceFile;
     }): Reference | undefined {
-        const exportedName = this.getExportedNameOfFirstEnvironmentEnum();
-        if (exportedName == null) {
+        const firstEnvironmentEnum = this.getExportedNameOfFirstEnvironmentEnum();
+        if (firstEnvironmentEnum == null) {
             return undefined;
         }
-        return this.getReferenceToExport({
+        if (this.npmPackage != null) {
+            return this.getReferenceToPackageExport({
+                importsManager,
+                exportedName: firstEnvironmentEnum.exportedName,
+                namespaceImport: firstEnvironmentEnum.namepaceImport,
+                npmPackage: this.npmPackage
+            });
+        }
+        return getReferenceToExportViaNamespaceImport({
+            exportedName: firstEnvironmentEnum.exportedName,
+            filepathToNamespaceImport: this.getExportedFilepath(),
+            filepathInsideNamespaceImport: undefined,
+            namespaceImport: "environments",
             importsManager,
-            sourceFile,
-            exportedName
+            referencedIn: sourceFile
         });
     }
 
@@ -105,6 +124,25 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
             importsManager,
             sourceFile,
             exportedName: this.getExportedNameOfEnvironmentUrls()
+        });
+    }
+
+    private getReferenceToPackageExport({
+        importsManager,
+        exportedName,
+        namespaceImport,
+        npmPackage
+    }: {
+        importsManager: ImportsManager;
+        exportedName: string;
+        namespaceImport: string;
+        npmPackage: NpmPackage;
+    }): Reference {
+        return getReferenceToExportFromPackage({
+            packageName: npmPackage.packageName,
+            exportedName,
+            namespaceImport,
+            importsManager
         });
     }
 

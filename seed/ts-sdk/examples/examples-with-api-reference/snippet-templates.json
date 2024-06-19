@@ -28,7 +28,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: environments.SeedExamplesEnvironment.Production",
+                                        "templateString": "environment: SeedExamplesEnvironment.Production",
                                         "isOptional": false,
                                         "templateInputs": [],
                                         "type": "generic"
@@ -127,7 +127,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: environments.SeedExamplesEnvironment.Production",
+                                        "templateString": "environment: SeedExamplesEnvironment.Production",
                                         "isOptional": false,
                                         "templateInputs": [],
                                         "type": "generic"
@@ -227,7 +227,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: environments.SeedExamplesEnvironment.Production",
+                                        "templateString": "environment: SeedExamplesEnvironment.Production",
                                         "isOptional": false,
                                         "templateInputs": [],
                                         "type": "generic"
@@ -327,7 +327,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: environments.SeedExamplesEnvironment.Production",
+                                        "templateString": "environment: SeedExamplesEnvironment.Production",
                                         "isOptional": false,
                                         "templateInputs": [],
                                         "type": "generic"
@@ -427,7 +427,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: environments.SeedExamplesEnvironment.Production",
+                                        "templateString": "environment: SeedExamplesEnvironment.Production",
                                         "isOptional": false,
                                         "templateInputs": [],
                                         "type": "generic"
@@ -498,7 +498,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: environments.SeedExamplesEnvironment.Production",
+                                        "templateString": "environment: SeedExamplesEnvironment.Production",
                                         "isOptional": false,
                                         "templateInputs": [],
                                         "type": "generic"
@@ -598,7 +598,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: environments.SeedExamplesEnvironment.Production",
+                                        "templateString": "environment: SeedExamplesEnvironment.Production",
                                         "isOptional": false,
                                         "templateInputs": [],
                                         "type": "generic"
@@ -846,7 +846,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: environments.SeedExamplesEnvironment.Production",
+                                        "templateString": "environment: SeedExamplesEnvironment.Production",
                                         "isOptional": false,
                                         "templateInputs": [],
                                         "type": "generic"
@@ -978,7 +978,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: environments.SeedExamplesEnvironment.Production",
+                                        "templateString": "environment: SeedExamplesEnvironment.Production",
                                         "isOptional": false,
                                         "templateInputs": [],
                                         "type": "generic"
