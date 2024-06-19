@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -120,7 +122,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -241,7 +245,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -349,7 +355,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -470,7 +478,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -591,7 +601,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -725,7 +737,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -835,7 +849,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -936,7 +952,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -1034,7 +1052,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -1144,7 +1164,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -1282,7 +1304,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -1658,7 +1682,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -1756,7 +1782,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -2104,7 +2132,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -2214,7 +2244,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -2372,7 +2404,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -2748,7 +2782,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -3152,7 +3188,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -3539,7 +3577,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -3637,7 +3677,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -3751,7 +3793,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -3865,7 +3909,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -3991,7 +4037,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -4116,7 +4164,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -4213,7 +4263,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -4310,7 +4362,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -4407,7 +4461,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -4504,7 +4560,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -4601,7 +4659,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -4698,7 +4758,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -4795,7 +4857,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -4892,7 +4956,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -4989,7 +5055,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -5191,7 +5259,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -5571,7 +5641,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -5668,7 +5740,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -5737,7 +5811,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -5806,7 +5882,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { FiddleClient } from \"@fern/exhaustive\";"
+                ],
                 "templateString": "const client = new FiddleClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
