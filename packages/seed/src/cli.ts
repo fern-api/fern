@@ -154,6 +154,10 @@ function addRunCommand(cli: Argv) {
                 .option("log-level", {
                     default: LogLevel.Info,
                     choices: LOG_LEVELS
+                })
+                .option("audience", {
+                    string: true,
+                    demandOption: false
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
@@ -169,7 +173,8 @@ function addRunCommand(cli: Argv) {
                     ? AbsoluteFilePath.of(argv.path)
                     : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv.path)),
                 workspace: generator,
-                logLevel: argv["log-level"]
+                logLevel: argv["log-level"],
+                audience: argv.audience
             });
         }
     );
