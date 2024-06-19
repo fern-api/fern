@@ -1062,7 +1062,7 @@ export class TemplateGenerator {
 
         return FdrSnippetTemplate.VersionedSnippetTemplate.v1({
             clientInstantiation: FdrSnippetTemplate.Template.generic({
-                imports: [],
+                imports: [`import { ${rootSdkClientName} } from "${this.npmPackage.packageName}";`],
                 templateString: clientInstantiationTemplateString,
                 isOptional: false,
                 inputDelimiter: ",",

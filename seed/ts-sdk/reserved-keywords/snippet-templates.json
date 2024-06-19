@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedNurseryApiClient } from \"@fern/reserved-keywords\";"
+                ],
                 "templateString": "const client = new SeedNurseryApiClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",

@@ -37,7 +37,6 @@ import { SeedExamples } from "@fern/examples";
 const request: SeedExamples.GetFileRequest = {
     ...
 };
-const response = await client.getFile(..., request);
 ```
 
 ## Exception Handling

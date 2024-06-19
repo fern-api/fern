@@ -43,7 +43,6 @@ import { SeedOauthClientCredentialsEnvironmentVariables } from "@fern/oauth-clie
 const request: SeedOauthClientCredentialsEnvironmentVariables.GetTokenRequest = {
     ...
 };
-const response = await client.getTokenWithClientCredentials(request);
 ```
 
 ## Exception Handling
@@ -55,7 +54,7 @@ will be thrown.
 import { SeedOauthClientCredentialsEnvironmentVariablesError } from "@fern/oauth-client-credentials-environment-variables";
 
 try {
-    await client.getTokenWithClientCredentials(...);
+    await client.auth.getTokenWithClientCredentials(...);
 } catch (err) {
     if (err instanceof SeedOauthClientCredentialsEnvironmentVariablesError) {
         console.log(err.statusCode);
@@ -80,7 +79,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.getTokenWithClientCredentials(..., {
+const response = await client.auth.getTokenWithClientCredentials(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -90,7 +89,7 @@ const response = await client.getTokenWithClientCredentials(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.getTokenWithClientCredentials(..., {
+const response = await client.auth.getTokenWithClientCredentials(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -101,7 +100,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.getTokenWithClientCredentials(..., {
+const response = await client.auth.getTokenWithClientCredentials(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request

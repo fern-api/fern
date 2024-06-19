@@ -37,7 +37,6 @@ import { SeedAuthEnvironmentVariables } from "@fern/auth-environment-variables";
 const request: SeedAuthEnvironmentVariables.HeaderAuthRequest = {
     ...
 };
-const response = await client.getWithHeader(request);
 ```
 
 ## Exception Handling
@@ -49,7 +48,7 @@ will be thrown.
 import { SeedAuthEnvironmentVariablesError } from "@fern/auth-environment-variables";
 
 try {
-    await client.getWithApiKey(...);
+    await client.service.getWithApiKey(...);
 } catch (err) {
     if (err instanceof SeedAuthEnvironmentVariablesError) {
         console.log(err.statusCode);
@@ -74,7 +73,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.getWithApiKey(..., {
+const response = await client.service.getWithApiKey(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -84,7 +83,7 @@ const response = await client.getWithApiKey(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.getWithApiKey(..., {
+const response = await client.service.getWithApiKey(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -95,7 +94,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.getWithApiKey(..., {
+const response = await client.service.getWithApiKey(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request

@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedPackageYmlClient } from \"@fern/package-yml\";"
+                ],
                 "templateString": "const client = new SeedPackageYmlClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -121,7 +123,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedPackageYmlClient } from \"@fern/package-yml\";"
+                ],
                 "templateString": "const client = new SeedPackageYmlClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",

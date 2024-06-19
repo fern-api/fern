@@ -7,3 +7,6 @@ navigation:
           contents:
             - DELETE /movies/{id}
             - GET /movies/{id}
+      - imdb:
+          contents:
+            - trailers

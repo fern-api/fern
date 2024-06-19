@@ -31,7 +31,7 @@ will be thrown.
 import { SeedPlainTextError } from "@fern/plain-text";
 
 try {
-    await client.getText(...);
+    await client.service.getText(...);
 } catch (err) {
     if (err instanceof SeedPlainTextError) {
         console.log(err.statusCode);
@@ -56,7 +56,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.getText(..., {
+const response = await client.service.getText(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -66,7 +66,7 @@ const response = await client.getText(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.getText(..., {
+const response = await client.service.getText(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -77,7 +77,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.getText(..., {
+const response = await client.service.getText(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
