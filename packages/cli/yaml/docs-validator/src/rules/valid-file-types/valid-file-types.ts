@@ -1,3 +1,4 @@
+import { doesPathExist } from "@fern-api/fs-utils";
 import { fileTypeFromBuffer } from "file-type";
 import { readFile } from "fs/promises";
 import isSvg from "is-svg";
@@ -27,16 +28,20 @@ export const ValidFileTypes: Rule = {
     create: () => {
         return {
             filepath: async ({ absoluteFilepath, value }) => {
-                const file = await readFile(absoluteFilepath);
-                const isValid = await isValidFileType(file);
+                const doesExist = await doesPathExist(absoluteFilepath);
 
-                if (!isValid) {
-                    return [
-                        {
-                            severity: "error",
-                            message: `File type of ${value} is invalid`
-                        }
-                    ];
+                if (doesExist) {
+                    const file = await readFile(absoluteFilepath);
+                    const isValid = await isValidFileType(file);
+
+                    if (!isValid) {
+                        return [
+                            {
+                                severity: "error",
+                                message: `File type of ${value} is invalid`
+                            }
+                        ];
+                    }
                 }
 
                 return [];
