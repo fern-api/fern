@@ -32,7 +32,7 @@ public class UserClient
         };
         if (request.OptionalDeadline != null)
         {
-            _query["optionalDeadline"] = request.OptionalDeadline.ToString("o0");
+            _query["optionalDeadline"] = request.OptionalDeadline.Value.ToString("o0");
         }
         if (request.OptionalString != null)
         {
