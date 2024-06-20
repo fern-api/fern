@@ -882,17 +882,6 @@ files = [
 ]
 
 [[package]]
-name = "types-pyyaml"
-version = "6.0.12.20240311"
-description = "Typing stubs for PyYAML"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "types-PyYAML-6.0.12.20240311.tar.gz", hash = "sha256:a9e0f0f88dc835739b0c1ca51ee90d04ca2a897a71af79de9aec5f38cb0a5342"},
-    {file = "types_PyYAML-6.0.12.20240311-py3-none-any.whl", hash = "sha256:b845b06a1c7e54b8e5b4c683043de0d9caf205e7434b3edc678ff2411979b8f6"},
-]
-
-[[package]]
 name = "typing-extensions"
 version = "4.10.0"
 description = "Backported and Experimental Type Hints for Python 3.8+"
@@ -972,4 +961,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "89388d33160eb105a4b741477b0d20da9938324bea68255f307c18f66903de60"
+content-hash = "02ee883957991003eaed907ca706f3dc73887f7b96adb8945cb70d1be6980e58"

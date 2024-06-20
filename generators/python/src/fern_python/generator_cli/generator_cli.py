@@ -6,7 +6,7 @@ from typing import Dict, List, Optional
 import fern.generator_exec.resources as generator_exec
 import fern.ir.resources as ir_types
 import generatorcli
-import yaml
+import yaml  # type: ignore
 
 from fern_python.codegen import ProjectConfig
 from fern_python.generator_cli.readme_snippet_builder import ReadmeSnippetBuilder
