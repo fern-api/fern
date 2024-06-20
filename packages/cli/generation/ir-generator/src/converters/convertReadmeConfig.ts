@@ -13,6 +13,7 @@ export function convertReadmeConfig({
     return {
         apiReferenceLink: readme.apiReferenceLink,
         bannerLink: readme.bannerLink,
+        introduction: readme.introduction,
         defaultEndpoint:
             readme.defaultEndpoint != null
                 ? readmeEndpointCache.getEndpointForReadmeOrThrow(readme.defaultEndpoint).id

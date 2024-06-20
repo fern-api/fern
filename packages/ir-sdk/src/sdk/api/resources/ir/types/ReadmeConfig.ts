@@ -16,6 +16,7 @@ export interface ReadmeConfig {
      */
     defaultEndpoint: FernIr.EndpointId | undefined;
     bannerLink: string | undefined;
+    introduction: string | undefined;
     apiReferenceLink: string | undefined;
     /**
      * If specified, configures the list of endpoints to associate

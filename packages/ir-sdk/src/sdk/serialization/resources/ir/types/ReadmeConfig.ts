@@ -10,6 +10,7 @@ export const ReadmeConfig: core.serialization.ObjectSchema<serializers.ReadmeCon
     core.serialization.objectWithoutOptionalProperties({
         defaultEndpoint: core.serialization.lazy(async () => (await import("../../..")).EndpointId).optional(),
         bannerLink: core.serialization.string().optional(),
+        introduction: core.serialization.string().optional(),
         apiReferenceLink: core.serialization.string().optional(),
         features: core.serialization
             .record(
@@ -23,6 +24,7 @@ export declare namespace ReadmeConfig {
     interface Raw {
         defaultEndpoint?: serializers.EndpointId.Raw | null;
         bannerLink?: string | null;
+        introduction?: string | null;
         apiReferenceLink?: string | null;
         features?: Record<serializers.FeatureId.Raw, serializers.EndpointId.Raw[]> | null;
     }

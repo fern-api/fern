@@ -3,6 +3,7 @@ import { ReadmeEndpointSchema } from "./ReadmeEndpointSchema";
 
 export const ReadmeSchema = z.strictObject({
     bannerLink: z.optional(z.string()),
+    introduction: z.optional(z.string()),
     apiReferenceLink: z.optional(z.string()),
     defaultEndpoint: z
         .optional(ReadmeEndpointSchema)
