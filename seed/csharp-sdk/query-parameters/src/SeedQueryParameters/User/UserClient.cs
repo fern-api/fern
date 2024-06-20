@@ -30,13 +30,17 @@ public class UserClient
             { "excludeUser", request.ExcludeUser.ToString() },
             { "filter", request.Filter },
         };
+        if (request.OptionalDeadline != null)
+        {
+            _query["optionalDeadline"] = request.OptionalDeadline.ToString("o0");
+        }
         if (request.OptionalString != null)
         {
             _query["optionalString"] = request.OptionalString;
         }
         if (request.OptionalUser != null)
         {
-            _query["optionalUser"] = request.OptionalUser;
+            _query["optionalUser"] = request.OptionalUser.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest

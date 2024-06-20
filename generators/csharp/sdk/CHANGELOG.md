@@ -5,27 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.0.26 - 2024-06-19]
+## [0.0.27 - 2024-06-19]
 
-- Improvement: Query parameter and header parameters with optional datetimes are 
+- Improvement: Query parameter and header parameters with optional datetimes are
   now ISO 8601 encoded before making a request.
 
 ## [0.0.25 - 2024-06-20]
 
 - Fix: Discriminated unions are generated as `object`. Eventually these will be more type safe, but
-  that will require partnering with existing customers to understand what a better DX looks like. 
+  that will require partnering with existing customers to understand what a better DX looks like.
 
-- Improvement: Header parameters are no longer required in the constructor so that the user 
-  doesn't have to provide redundant information. 
+- Improvement: Header parameters are no longer required in the constructor so that the user
+  doesn't have to provide redundant information.
 
 ## [0.0.24 - 2024-06-19]
 
-- Improvement: Query parameter and header parameters are now ISO 8601 encoded before 
+- Improvement: Query parameter and header parameters are now ISO 8601 encoded before
   making a request.
 
 ## [0.0.23 - 2024-06-07]
 
-- Improvement: Only publish a `.NET 6` compatible SDK. There are larger code changes that 
+- Improvement: Only publish a `.NET 6` compatible SDK. There are larger code changes that
   need to be made to be `.NET 4+` compatible.
 
 ## [0.0.22 - 2024-06-07]
@@ -34,9 +34,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.21 - 2024-05-31]
 
-- Fix: Array and List fields are now generated as `IEnumerable<>`. Additionally, if the 
-  item type is a `OneOf`, then a new core class called `CollectionItemSerializer` is used 
-  to deserialize the values. 
+- Fix: Array and List fields are now generated as `IEnumerable<>`. Additionally, if the
+  item type is a `OneOf`, then a new core class called `CollectionItemSerializer` is used
+  to deserialize the values.
 
 ## [0.0.20 - 2024-05-29]
 

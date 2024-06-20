@@ -20,6 +20,8 @@ public class GetUsersRequest
 
     public IEnumerable<User> UserList { get; init; }
 
+    public DateTime? OptionalDeadline { get; init; }
+
     public Dictionary<string, string> KeyValue { get; init; }
 
     public string? OptionalString { get; init; }
