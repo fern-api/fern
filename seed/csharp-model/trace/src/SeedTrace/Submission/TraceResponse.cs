@@ -14,7 +14,7 @@ public class TraceResponse
     public int LineNumber { get; init; }
 
     [JsonPropertyName("returnValue")]
-    public DebugVariableValue? ReturnValue { get; init; }
+    public object? ReturnValue { get; init; }
 
     [JsonPropertyName("expressionLocation")]
     public ExpressionLocation? ExpressionLocation { get; init; }

@@ -17,5 +17,5 @@ public class TestSubmissionState
     public IEnumerable<TestCase> CustomTestCases { get; init; }
 
     [JsonPropertyName("status")]
-    public TestSubmissionStatus Status { get; init; }
+    public object Status { get; init; }
 }

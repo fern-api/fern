@@ -25,7 +25,5 @@ allowedFailures:
   - object
   - objects-with-imports
   - pagination
-  - trace
   - undiscriminated-unions
-  - unions
   - validation

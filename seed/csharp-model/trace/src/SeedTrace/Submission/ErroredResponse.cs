@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
 
 #nullable enable
 
@@ -11,5 +10,5 @@ public class ErroredResponse
     public Guid SubmissionId { get; init; }
 
     [JsonPropertyName("errorInfo")]
-    public ErrorInfo ErrorInfo { get; init; }
+    public object ErrorInfo { get; init; }
 }

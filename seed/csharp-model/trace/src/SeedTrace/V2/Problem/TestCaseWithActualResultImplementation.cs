@@ -11,5 +11,5 @@ public class TestCaseWithActualResultImplementation
     public NonVoidFunctionDefinition GetActualResult { get; init; }
 
     [JsonPropertyName("assertCorrectnessCheck")]
-    public AssertCorrectnessCheck AssertCorrectnessCheck { get; init; }
+    public object AssertCorrectnessCheck { get; init; }
 }
