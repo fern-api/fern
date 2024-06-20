@@ -199,6 +199,7 @@ export function generateRootPackage(
     timeoutProperty: Property,
     artifactRegistry: ArtifactRegistry,
     oauthTokenProviderClass: Class_ | undefined,
+    locationGenerator: LocationGenerator,
     environmentClass?: ClassReference,
     defaultEnvironment?: string,
     rootService?: HttpService
@@ -437,12 +438,13 @@ export function generateRootPackage(
 
     const maybeEnvironmentImport = environmentClass?.import_;
     const typeExporterImport = new Import({ from: typeExporterLocation, isExternal: false });
-    const rootNode = Module_.wrapInModules(
-        clientName,
-        [clientClass, asyncClientClass],
-        undefined,
-        maybeEnvironmentImport !== undefined ? [maybeEnvironmentImport, typeExporterImport] : [typeExporterImport]
-    );
+    const rootNode = Module_.wrapInModules({
+        locationGenerator: locationGenerator,
+        child: [clientClass, asyncClientClass],
+        arbitraryImports:
+            maybeEnvironmentImport !== undefined ? [maybeEnvironmentImport, typeExporterImport] : [typeExporterImport]
+    });
+
     return new GeneratedRubyFile({
         rootNode,
         fullPath: gemName
@@ -570,7 +572,7 @@ export function generateService(
     artifactRegistry: ArtifactRegistry
 ): ClientClassPair {
     const subpackageName = subpackage.name;
-    const serviceName = subpackageName.pascalCase.safeName;
+    const serviceName = subpackageName.pascalCase.unsafeName;
     const import_ = new Import({
         from: locationGenerator.getLocationForServiceDeclaration(service.name),
         isExternal: false
