@@ -21,7 +21,7 @@ public class UserClient
             { "limit", request.Limit.ToString() },
             { "id", request.Id.ToString() },
             { "date", request.Date.ToString() },
-            { "deadline", request.Deadline.ToString("o0") },
+            { "deadline", request.Deadline.Value.ToString("o0") },
             { "bytes", request.Bytes.ToString() },
             { "user", request.User.ToString() },
             { "userList", request.UserList.ToString() },
@@ -32,7 +32,7 @@ public class UserClient
         };
         if (request.OptionalDeadline != null)
         {
-            _query["optionalDeadline"] = request.OptionalDeadline.ToString("o0");
+            _query["optionalDeadline"] = request.OptionalDeadline.Value.ToString("o0");
         }
         if (request.OptionalString != null)
         {

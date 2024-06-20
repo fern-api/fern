@@ -89,7 +89,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             return csharp.codeblock(`${this.getParameterName()}.${queryParameter.name.name.pascalCase.safeName}`);
         } else if (this.isDatetime(queryParameter.valueType)) {
             return csharp.codeblock(
-                `${this.getParameterName()}.${queryParameter.name.name.pascalCase.safeName}.ToString("o0")`
+                `${this.getParameterName()}.${queryParameter.name.name.pascalCase.safeName}.Value.ToString("o0")`
             );
         } else {
             return csharp.codeblock(
@@ -144,7 +144,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             return csharp.codeblock(`${this.getParameterName()}.${header.name.name.pascalCase.safeName}`);
         } else if (this.isDatetime(header.valueType)) {
             return csharp.codeblock(
-                `${this.getParameterName()}.${header.name.name.pascalCase.safeName}.ToString("o0")`
+                `${this.getParameterName()}.${header.name.name.pascalCase.safeName}.Value.ToString("o0")`
             );
         } else {
             return csharp.codeblock(`${this.getParameterName()}.${header.name.name.pascalCase.safeName}.ToString()`);
