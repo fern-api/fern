@@ -31,8 +31,7 @@ export class Auth {
      * @example
      *     await client.auth.getToken({
      *         clientId: "string",
-     *         clientSecret: "string",
-     *         grantType: "client_credentials"
+     *         clientSecret: "string"
      *     })
      */
     public async getToken(

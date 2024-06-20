@@ -1,14 +1,14 @@
 # Seed TypeScript Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
-[![npm shield](https://img.shields.io/npm/v/@fern/oauth-client-credentials-nested-root)](https://www.npmjs.com/package/@fern/oauth-client-credentials-nested-root)
+[![npm shield](https://img.shields.io/npm/v/@fern/server-sent-events)](https://www.npmjs.com/package/@fern/server-sent-events)
 
 The Seed TypeScript library provides convenient access to the Seed API from TypeScript.
 
 ## Installation
 
 ```sh
-npm i -s @fern/oauth-client-credentials-nested-root
+npm i -s @fern/server-sent-events
 ```
 
 ## Usage
@@ -16,17 +16,11 @@ npm i -s @fern/oauth-client-credentials-nested-root
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedOauthClientCredentialsClient } from "@fern/oauth-client-credentials-nested-root";
+import { SeedServerSentEventsClient } from "@fern/server-sent-events";
 
-const client = new SeedOauthClientCredentialsClient({
-    environment: "YOUR_BASE_URL",
-    clientId: "YOUR_CLIENT_ID",
-    clientSecret: "YOUR_CLIENT_SECRET",
-});
-await client.auth.getToken({
-    clientId: "string",
-    clientSecret: "string",
-    scope: "string",
+const client = new SeedServerSentEventsClient({ environment: "YOUR_BASE_URL" });
+await client.completions.stream({
+    query: "string",
 });
 ```
 
@@ -36,9 +30,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedOauthClientCredentials } from "@fern/oauth-client-credentials-nested-root";
+import { SeedServerSentEvents } from "@fern/server-sent-events";
 
-const request: SeedOauthClientCredentials.GetTokenRequest = {
+const request: SeedServerSentEvents.StreamCompletionRequest = {
     ...
 };
 ```
@@ -49,12 +43,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedOauthClientCredentialsError } from "@fern/oauth-client-credentials-nested-root";
+import { SeedServerSentEventsError } from "@fern/server-sent-events";
 
 try {
-    await client.auth.getToken(...);
+    await client.completions.stream(...);
 } catch (err) {
-    if (err instanceof SeedOauthClientCredentialsError) {
+    if (err instanceof SeedServerSentEventsError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -77,7 +71,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.auth.getToken(..., {
+const response = await client.completions.stream(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -87,7 +81,7 @@ const response = await client.auth.getToken(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.auth.getToken(..., {
+const response = await client.completions.stream(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -98,7 +92,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.auth.getToken(..., {
+const response = await client.completions.stream(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -122,9 +116,9 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedOauthClientCredentialsClient } from "@fern/oauth-client-credentials-nested-root";
+import { SeedServerSentEventsClient } from "@fern/server-sent-events";
 
-const client = new SeedOauthClientCredentialsClient({
+const client = new SeedServerSentEventsClient({
     ...
     fetcher: // provide your implementation here
 });

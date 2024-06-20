@@ -7,8 +7,6 @@
  *     {
  *         clientId: "string",
  *         clientSecret: "string",
- *         audience: "https://api.example.com",
- *         grantType: "client_credentials",
  *         scope: "string"
  *     }
  */
