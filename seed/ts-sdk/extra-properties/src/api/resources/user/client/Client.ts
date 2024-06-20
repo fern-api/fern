@@ -29,8 +29,6 @@ export class User {
      *
      * @example
      *     await client.user.createUser({
-     *         type: "CreateUserRequest",
-     *         version: "v1",
      *         name: "string"
      *     })
      */

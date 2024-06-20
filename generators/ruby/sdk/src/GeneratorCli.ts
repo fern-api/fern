@@ -24,16 +24,16 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation, ObjectProperty, TypeId } from "@fern-fern/ir-sdk/api";
 import { cp } from "fs/promises";
 import { ClientsGenerator } from "./ClientsGenerator";
-import { parseCustomConfig, RubySdkCustomConfig } from "./CustomConfig";
+import { parseCustomConfig, RubySdkCustomConfigConsumed } from "./CustomConfig";
 
-export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfig> {
+export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfigConsumed> {
     generatedFiles: GeneratedFile[] = [];
     generatedClasses: Map<TypeId, Class_> = new Map();
     flattenedProperties: Map<TypeId, ObjectProperty[]> = new Map();
     classReferenceFactory: ClassReferenceFactory | undefined;
     locationGenerator: LocationGenerator | undefined;
 
-    protected parseCustomConfig(customConfig: unknown): RubySdkCustomConfig {
+    protected parseCustomConfig(customConfig: unknown): RubySdkCustomConfigConsumed {
         return parseCustomConfig(customConfig);
     }
 
@@ -100,9 +100,16 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         gemName: string,
         clientName: string,
         generatorContext: AbstractGeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation
+        intermediateRepresentation: IntermediateRepresentation,
+        customConfig: RubySdkCustomConfigConsumed
     ) {
-        const generatedTypes = new TypesGenerator(gemName, clientName, generatorContext, intermediateRepresentation);
+        const generatedTypes = new TypesGenerator({
+            gemName,
+            clientName,
+            generatorContext,
+            intermediateRepresentation,
+            shouldFlattenModules: customConfig.flattenModuleStructure
+        });
         this.generatedFiles.push(...Array.from(generatedTypes.generateFiles().values()));
         this.generatedClasses = generatedTypes.getResolvedClasses();
         this.flattenedProperties = generatedTypes.flattenedProperties;
@@ -115,22 +122,25 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         clientName: string,
         config: FernGeneratorExec.GeneratorConfig,
         generatorContext: AbstractGeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation
+        intermediateRepresentation: IntermediateRepresentation,
+        customConfig: RubySdkCustomConfigConsumed
     ) {
         const sdkVersion = getSdkVersion(config);
-        const generatedClientFiles = new ClientsGenerator(
+        const generatedClientFiles = new ClientsGenerator({
             gemName,
             clientName,
             generatorContext,
             intermediateRepresentation,
             sdkVersion,
-            this.generatedClasses,
-            this.flattenedProperties,
-            this.hasFileUploadEndpoints(intermediateRepresentation) ||
+            generatedClasses: this.generatedClasses,
+            flattenedProperties: this.flattenedProperties,
+            hasFileBasedDependencies:
+                this.hasFileUploadEndpoints(intermediateRepresentation) ||
                 intermediateRepresentation.sdkConfig.hasFileDownloadEndpoints,
-            this.locationGenerator,
-            this.classReferenceFactory
-        ).generateFiles();
+            locationGenerator: this.locationGenerator,
+            classReferenceFactory: this.classReferenceFactory,
+            shouldFlattenModules: customConfig.flattenModuleStructure
+        }).generateFiles();
         this.generatedFiles.push(...Array.from(generatedClientFiles.values()));
     }
 
@@ -140,19 +150,20 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         config: FernGeneratorExec.GeneratorConfig,
         generatorContext: AbstractGeneratorContext,
         intermediateRepresentation: IntermediateRepresentation,
+        customConfig: RubySdkCustomConfigConsumed,
         repoUrl?: string
     ) {
         generatorContext.logger.debug("[Ruby] Generating Ruby project boilerplate.");
         this.generateRubyBoilerPlate(gemName, clientName, config, intermediateRepresentation, repoUrl);
         generatorContext.logger.debug("[Ruby] Generating Ruby classes.");
-        this.generateTypes(gemName, clientName, generatorContext, intermediateRepresentation);
+        this.generateTypes(gemName, clientName, generatorContext, intermediateRepresentation, customConfig);
         generatorContext.logger.debug("[Ruby] Generating HTTP client classes.");
-        this.generateClients(gemName, clientName, config, generatorContext, intermediateRepresentation);
+        this.generateClients(gemName, clientName, config, generatorContext, intermediateRepresentation, customConfig);
     }
 
     protected async publishPackage(
         _config: FernGeneratorExec.GeneratorConfig,
-        _customConfig: RubySdkCustomConfig,
+        _customConfig: RubySdkCustomConfigConsumed,
         _generatorContext: AbstractGeneratorContext,
         _intermediateRepresentation: IntermediateRepresentation
     ): Promise<void> {
@@ -160,7 +171,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
     }
     protected async writeForGithub(
         config: FernGeneratorExec.GeneratorConfig,
-        customConfig: RubySdkCustomConfig,
+        customConfig: RubySdkCustomConfigConsumed,
         generatorContext: AbstractGeneratorContext,
         intermediateRepresentation: IntermediateRepresentation,
         githubOutputMode: FernGeneratorExec.GithubOutputMode
@@ -185,6 +196,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
             config,
             generatorContext,
             intermediateRepresentation,
+            customConfig,
             githubOutputMode.repoUrl
         );
 
@@ -220,7 +232,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
     }
     protected async writeForDownload(
         config: FernGeneratorExec.GeneratorConfig,
-        customConfig: RubySdkCustomConfig,
+        customConfig: RubySdkCustomConfigConsumed,
         generatorContext: AbstractGeneratorContext,
         intermediateRepresentation: IntermediateRepresentation
     ): Promise<void> {
@@ -236,7 +248,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
             customConfig.clientClassName
         );
         generatorContext.logger.debug("[Ruby] Generating Ruby project.");
-        this.generateProject(gemName, clientName, config, generatorContext, intermediateRepresentation);
+        this.generateProject(gemName, clientName, config, generatorContext, intermediateRepresentation, customConfig);
 
         generatorContext.logger.debug("[Ruby] Writing files to disk.");
         const outputDir = AbsoluteFilePath.of("/fern/ruby_output");

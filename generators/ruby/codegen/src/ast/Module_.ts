@@ -1,4 +1,5 @@
 import { FernFilepath } from "@fern-fern/ir-sdk/api";
+import { LocationGenerator } from "../utils/LocationGenerator";
 import { BLOCK_END } from "../utils/RubyConstants";
 import { ClassReference } from "./classes/ClassReference";
 import { Class_ } from "./classes/Class_";
@@ -33,51 +34,51 @@ export class Module_ extends AstNode {
         this.addText({ stringContent: BLOCK_END, startingTabSpaces });
     }
 
-    static wrapInModules<T extends AstNode | AstNode[]>(
-        rootModule: string,
-        child: T,
-        path?: FernFilepath,
-        arbitraryImports?: Import[],
-        includeFilename = true
-    ): Module_ | Class_ | T {
-        const moduleBreadcrumbs = path ? Module_.getModulePathFromTypeName(path) : [];
-        const classWrapper = path ? Module_.getClassPathFromTypeName(path) : undefined;
+    static wrapInModules<T extends AstNode | AstNode[]>({
+        locationGenerator,
+        child,
+        path,
+        arbitraryImports,
+        includeFilename = true,
+        isType
+    }: {
+        locationGenerator: LocationGenerator;
+        child: T;
+        path?: FernFilepath;
+        arbitraryImports?: Import[];
+        includeFilename?: boolean;
+        isType?: boolean;
+    }): Module_ | Class_ | T {
         let moduleWrappedItem: Module_ | Class_ | T = child;
-        if (classWrapper !== undefined && includeFilename) {
-            moduleWrappedItem = new Class_({
-                classReference: new ClassReference({ name: classWrapper }),
-                includeInitializer: false,
-                children: child
-            });
+        let moduleBreadcrumbs: string[] = [locationGenerator.rootModule];
+        if (path) {
+            if (!locationGenerator.shouldFlattenModules) {
+                moduleBreadcrumbs = moduleBreadcrumbs.concat(locationGenerator.getModulePathFromTypeName(path));
+                const classWrapper = locationGenerator.getClassPathFromTypeName(path);
+
+                if (classWrapper !== undefined && includeFilename) {
+                    moduleWrappedItem = new Class_({
+                        classReference: new ClassReference({ name: classWrapper }),
+                        includeInitializer: false,
+                        children: child
+                    });
+                }
+            } else {
+                moduleBreadcrumbs = locationGenerator.getModuleBreadcrumbs({ path, includeFilename, isType });
+            }
         }
-        [rootModule, ...moduleBreadcrumbs].reverse().forEach(
+
+        moduleBreadcrumbs.reverse().forEach(
             (mod) =>
                 (moduleWrappedItem = new Module_({
                     name: mod,
                     child: moduleWrappedItem,
-                    writeImports: rootModule === mod,
-                    arbitraryImports: rootModule === mod ? arbitraryImports : undefined
+                    writeImports: locationGenerator.rootModule === mod,
+                    arbitraryImports: locationGenerator.rootModule === mod ? arbitraryImports : undefined
                 }))
         );
 
         return moduleWrappedItem;
-    }
-
-    static getModuleBreadcrumbs(path: FernFilepath, includeFilename: boolean, rootModule: string): string[] {
-        const modulePath = Module_.getModulePathFromTypeName(path);
-        const classPath = Module_.getClassPathFromTypeName(path);
-        return [
-            rootModule,
-            ...(includeFilename && classPath !== undefined ? modulePath.concat([classPath]) : modulePath)
-        ];
-    }
-
-    static getModulePathFromTypeName(path: FernFilepath): string[] {
-        return path.packagePath.map((pathSegment) => pathSegment.pascalCase.safeName);
-    }
-
-    static getClassPathFromTypeName(path: FernFilepath): string | undefined {
-        return path.file?.pascalCase.safeName;
     }
 
     public getImports(): Set<Import> {

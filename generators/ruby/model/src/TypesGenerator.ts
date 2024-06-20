@@ -36,12 +36,19 @@ export class TypesGenerator {
     private gemName: string;
     private clientName: string;
 
-    constructor(
-        gemName: string,
-        clientName: string,
-        generatorContext: AbstractGeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation
-    ) {
+    constructor({
+        gemName,
+        clientName,
+        generatorContext,
+        intermediateRepresentation,
+        shouldFlattenModules
+    }: {
+        gemName: string;
+        clientName: string;
+        generatorContext: AbstractGeneratorContext;
+        intermediateRepresentation: IntermediateRepresentation;
+        shouldFlattenModules: boolean;
+    }) {
         this.types = new Map();
         this.flattenedProperties = new Map();
         this.generatedClasses = new Map();
@@ -65,7 +72,7 @@ export class TypesGenerator {
         }
         this.gc.logger.debug("[Ruby] Done flattening properties.");
 
-        this.locationGenerator = new LocationGenerator(this.gemName, this.clientName);
+        this.locationGenerator = new LocationGenerator(this.gemName, this.clientName, shouldFlattenModules);
         this.classReferenceFactory = new ClassReferenceFactory(this.types, this.locationGenerator);
     }
 
@@ -158,7 +165,12 @@ export class TypesGenerator {
         });
 
         if (shouldGenerate) {
-            const rootNode = Module_.wrapInModules(this.clientName, aliasExpression, typeDeclaration.name.fernFilepath);
+            const rootNode = Module_.wrapInModules({
+                locationGenerator: this.locationGenerator,
+                child: aliasExpression,
+                path: typeDeclaration.name.fernFilepath,
+                isType: true
+            });
             return new GeneratedRubyFile({
                 rootNode,
                 fullPath: this.locationGenerator.getLocationForTypeDeclaration(typeDeclaration.name)
@@ -175,7 +187,12 @@ export class TypesGenerator {
             enumTypeDeclaration,
             typeDeclaration
         );
-        const rootNode = Module_.wrapInModules(this.clientName, enumExpression, typeDeclaration.name.fernFilepath);
+        const rootNode = Module_.wrapInModules({
+            locationGenerator: this.locationGenerator,
+            child: enumExpression,
+            path: typeDeclaration.name.fernFilepath,
+            isType: true
+        });
         return new GeneratedRubyFile({
             rootNode,
             fullPath: this.locationGenerator.getLocationForTypeDeclaration(typeDeclaration.name)
@@ -194,7 +211,12 @@ export class TypesGenerator {
             typeDeclaration
         );
         this.generatedClasses.set(typeId, serializableObject);
-        const rootNode = Module_.wrapInModules(this.clientName, serializableObject, typeDeclaration.name.fernFilepath);
+        const rootNode = Module_.wrapInModules({
+            locationGenerator: this.locationGenerator,
+            child: serializableObject,
+            path: typeDeclaration.name.fernFilepath,
+            isType: true
+        });
         return new GeneratedRubyFile({
             rootNode,
             fullPath: this.locationGenerator.getLocationForTypeDeclaration(typeDeclaration.name)
@@ -213,7 +235,12 @@ export class TypesGenerator {
             typeDeclaration
         );
         this.generatedClasses.set(typeId, unionObject);
-        const rootNode = Module_.wrapInModules(this.clientName, unionObject, typeDeclaration.name.fernFilepath);
+        const rootNode = Module_.wrapInModules({
+            locationGenerator: this.locationGenerator,
+            child: unionObject,
+            path: typeDeclaration.name.fernFilepath,
+            isType: true
+        });
         return new GeneratedRubyFile({
             rootNode,
             fullPath: this.locationGenerator.getLocationForTypeDeclaration(typeDeclaration.name)
@@ -231,7 +258,12 @@ export class TypesGenerator {
         );
 
         this.generatedClasses.set(typeId, unionObject);
-        const rootNode = Module_.wrapInModules(this.clientName, unionObject, typeDeclaration.name.fernFilepath);
+        const rootNode = Module_.wrapInModules({
+            locationGenerator: this.locationGenerator,
+            child: unionObject,
+            path: typeDeclaration.name.fernFilepath,
+            isType: true
+        });
         return new GeneratedRubyFile({
             rootNode,
             fullPath: this.locationGenerator.getLocationForTypeDeclaration(typeDeclaration.name)
