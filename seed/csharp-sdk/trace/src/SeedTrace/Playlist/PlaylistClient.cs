@@ -21,7 +21,7 @@ public class PlaylistClient
     {
         var _query = new Dictionary<string, object>()
         {
-            { "datetime", request.Datetime.Value.ToString("o0") },
+            { "datetime", request.Datetime.ToString("o0") },
         };
         if (request.OptionalDatetime != null)
         {
