@@ -61,7 +61,7 @@ export class LocationGenerator {
                 ...(includeFilename && classPath !== undefined ? modulePath.concat([classPath]) : modulePath)
             ];
         } else {
-            const modulePath = this.getModulePathFromTypeName(path, true);
+            const modulePath = this.getModulePathFromTypeName(path, isType);
             return [this.rootModule, ...modulePath, ...(isType ? [TYPES_MODULE] : [])];
         }
     }

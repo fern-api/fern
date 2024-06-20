@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.7.0-rc3] - 2024-06-20
+
+- Fix: service module path matches across LocationGenerator functions, this fixes a bug in the new `flattenModuleStructure` below where top level services module paths do not match between the class reference and the class definition.
+
 ## [0.7.0-rc2] - 2024-06-20
 
 - Fix: the ruby generator now nests types under a type module to avoid naming conflicts, this is behind a configuration flag
@@ -14,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   generators:
     - name: fernapi/fern-ruby-sdk
       config:
-        shouldFlattenModules: true
+        flattenModuleStructure: true
   ```
 
 ## [0.7.0-rc1] - 2024-06-13
