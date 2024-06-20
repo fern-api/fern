@@ -55,8 +55,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         this.refOccurrences = getReferenceOccurrences(document);
         this.DUMMY = this.getDummy();
         this.shouldUseTitleAsName = shouldUseTitleAsName;
-        this.shouldUseUndiscriminatedUnionsWithLiterals =
-            shouldUseUndiscriminatedUnionsWithLiterals && sdkLanguage === generatorsYml.GenerationLanguage.PYTHON;
+        this.shouldUseUndiscriminatedUnionsWithLiterals = shouldUseUndiscriminatedUnionsWithLiterals;
     }
 
     public getNumberOfOccurrencesForRef(schema: OpenAPIV3.ReferenceObject): number {
