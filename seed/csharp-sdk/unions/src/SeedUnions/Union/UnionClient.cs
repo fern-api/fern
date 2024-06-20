@@ -14,7 +14,7 @@ public class UnionClient
         _client = client;
     }
 
-    public async Task<Shape> GetAsync(string id)
+    public async Task<object> GetAsync(string id)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/{id}" }
@@ -22,12 +22,12 @@ public class UnionClient
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<Shape>(responseBody);
+            return JsonSerializer.Deserialize<object>(responseBody);
         }
         throw new Exception(responseBody);
     }
 
-    public async Task<bool> UpdateAsync(Shape request)
+    public async Task<bool> UpdateAsync(object request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest

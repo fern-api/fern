@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
 using SeedTrace.V2;
 
 #nullable enable
@@ -12,5 +11,5 @@ public class DefaultProvidedFile
     public FileInfoV2 File { get; init; }
 
     [JsonPropertyName("relatedTypes")]
-    public IEnumerable<VariableType> RelatedTypes { get; init; }
+    public IEnumerable<object> RelatedTypes { get; init; }
 }

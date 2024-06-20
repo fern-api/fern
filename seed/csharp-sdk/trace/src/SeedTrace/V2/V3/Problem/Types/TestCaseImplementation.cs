@@ -11,5 +11,5 @@ public class TestCaseImplementation
     public TestCaseImplementationDescription Description { get; init; }
 
     [JsonPropertyName("function")]
-    public TestCaseFunction Function { get; init; }
+    public object Function { get; init; }
 }

@@ -8,10 +8,15 @@ public partial class SeedLiteralClient
 {
     private RawClient _client;
 
-    public SeedLiteralClient(string version, bool auditLogging, ClientOptions clientOptions = null)
+    public SeedLiteralClient(ClientOptions clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, string>()
+            {
+                { "version", $"02-02-2024" },
+                { "auditLogging", true.ToString() },
+                { "X-Fern-Language", "C#" },
+            },
             clientOptions ?? new ClientOptions()
         );
         Headers = new HeadersClient(_client);
@@ -33,7 +38,7 @@ public partial class SeedLiteralClient
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);

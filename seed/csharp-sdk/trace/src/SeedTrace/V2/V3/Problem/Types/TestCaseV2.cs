@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
 using SeedTrace.V2.V3;
 
 #nullable enable
@@ -12,10 +11,10 @@ public class TestCaseV2
     public TestCaseMetadata Metadata { get; init; }
 
     [JsonPropertyName("implementation")]
-    public TestCaseImplementationReference Implementation { get; init; }
+    public object Implementation { get; init; }
 
     [JsonPropertyName("arguments")]
-    public Dictionary<string, VariableValue> Arguments { get; init; }
+    public Dictionary<string, object> Arguments { get; init; }
 
     [JsonPropertyName("expects")]
     public TestCaseExpects? Expects { get; init; }

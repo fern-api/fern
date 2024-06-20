@@ -24,7 +24,7 @@ public partial class SeedUnionsClient
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);
