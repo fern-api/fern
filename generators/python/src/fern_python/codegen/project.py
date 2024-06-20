@@ -173,6 +173,7 @@ class Project:
                 pypi_metadata=self._pypi_metadata,
                 license_=self.license_,
                 extras=self._extras,
+                generate_readme=self._generate_readme,
             )
             py_project_toml.write()
 
