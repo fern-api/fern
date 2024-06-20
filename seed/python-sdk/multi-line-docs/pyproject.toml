@@ -2,9 +2,7 @@
 name = "fern_multi-line-docs"
 version = "0.0.1"
 description = ""
-
 readme = "README.md"
-
 authors = []
 keywords = []
 

@@ -1,15 +1,16 @@
 import json
+import os
 from typing import Literal, Optional, Sequence, Tuple, Union, cast
 from uuid import uuid4
 
 import fern.ir.resources as ir_types
-from fern.generator_exec.resources import GeneratorUpdate, LogLevel, LogUpdate
+from fern.generator_exec.resources import GeneratorUpdate, LogLevel, LogUpdate, Snippets
 from fern.generator_exec.resources.config import GeneratorConfig
-from fern.generator_exec.resources.readme import BadgeType, GenerateReadmeRequest
 
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import AST, Project
 from fern_python.codegen.filepath import Filepath
+from fern_python.generator_cli import README_FILENAME, GeneratorCli
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model import PydanticModelGenerator
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
@@ -115,6 +116,12 @@ class SdkGenerator(AbstractGenerator):
                 ir=ir,
             ),
         )
+        generator_cli = GeneratorCli(
+            organization=generator_config.organization,
+            project_config=project._project_config,
+            ir=ir,
+            generator_exec_wrapper=generator_exec_wrapper,
+        )
         snippet_registry = SnippetRegistry()
         snippet_writer = build_snippet_writer(
             context=context.pydantic_generator_context,
@@ -210,13 +217,30 @@ class SdkGenerator(AbstractGenerator):
                 project=project,
             )
 
-        context.core_utilities.copy_to_project(project=project)
+        snippets = snippet_registry.snippets()
+        if snippets is not None:
+            self._maybe_write_snippets(
+                context=context,
+                snippets=snippets,
+                project=project,
+            )
 
-        self._maybe_write_snippets(
-            context=context,
-            snippet_registry=snippet_registry,
-            project=project,
-        )
+            try:
+                self._write_readme(
+                    context=context,
+                    generator_cli=generator_cli,
+                    snippets=snippets,
+                    project=project,
+                )
+            except Exception:
+                generator_exec_wrapper.send_update(
+                    GeneratorUpdate.factory.log(
+                        LogUpdate(level=LogLevel.DEBUG, message=f"Failed to generate README.md; this is OK")
+                    )
+                )
+
+
+        context.core_utilities.copy_to_project(project=project)
 
         snippet_template_source_file = SourceFileFactory.create_snippet()
         self._maybe_write_snippet_templates(
@@ -251,17 +275,6 @@ class SdkGenerator(AbstractGenerator):
                 snippet_writer=snippet_writer,
                 ir=ir,
             )
-
-        output_mode = generator_config.output.mode.get_as_union()
-        if output_mode.type == "github":
-            request_sent = self._generate_readme(
-                generator_exec_wrapper=generator_exec_wrapper,
-                generated_root_client=generated_root_client,
-                capitalized_org_name=generator_config.organization.capitalize(),
-                project=project,
-            )
-            if request_sent:
-                project.set_generate_readme(False)
 
     def _generate_environments_base(
         self,
@@ -422,51 +435,6 @@ __version__ = metadata.version("{project._project_config.package_name}")
                 exports={"__version__"},
             )
 
-    def _generate_readme(
-        self,
-        generator_exec_wrapper: GeneratorExecWrapper,
-        generated_root_client: GeneratedRootClient,
-        capitalized_org_name: str,
-        project: Project,
-    ) -> bool:
-        return generator_exec_wrapper.generate_readme(
-            self._new_generate_readme_request(
-                generated_root_client=generated_root_client,
-                capitalized_org_name=capitalized_org_name,
-                project=project,
-            ),
-        )
-
-    def _new_generate_readme_request(
-        self,
-        generated_root_client: GeneratedRootClient,
-        capitalized_org_name: str,
-        project: Project,
-    ) -> GenerateReadmeRequest:
-        installation: Optional[str] = None
-        if project._project_config is not None:
-            installation = f"""```sh
-pip install --upgrade {project._project_config.package_name}
-```"""
-
-        usage_snippet = SourceFileFactory.create_snippet()
-        usage_snippet.add_expression(generated_root_client.sync_instantiation)
-        usage = "```python\n" + usage_snippet.to_str() + "```\n"
-
-        async_usage_snippet = SourceFileFactory.create_snippet()
-        async_usage_snippet.add_expression(generated_root_client.async_instantiation)
-        async_usage = "```python\n" + async_usage_snippet.to_str() + "```\n"
-
-        return GenerateReadmeRequest(
-            title=f"{capitalized_org_name} Python Library",
-            badge=BadgeType.PYPI,
-            summary=f"The {capitalized_org_name} Python Library provides convenient access to the {capitalized_org_name} API from applications written in Python.",
-            installation=installation,
-            usage=usage,
-            async_usage=async_usage,
-            requirements=[],
-        )
-
     def _maybe_write_snippet_templates(
         self,
         context: SdkGeneratorContext,
@@ -530,14 +498,34 @@ pip install --upgrade {project._project_config.package_name}
     def _maybe_write_snippets(
         self,
         context: SdkGeneratorContext,
-        snippet_registry: SnippetRegistry,
+        snippets: Snippets,
         project: Project,
     ) -> None:
         if context.generator_config.output.snippet_filepath is not None:
-            snippets = snippet_registry.snippets()
-            if snippets is None:
-                return
             project.add_file(context.generator_config.output.snippet_filepath, snippets.json(indent=4))
+
+    def _write_readme(
+        self,
+        context: SdkGeneratorContext,
+        generator_cli: GeneratorCli,
+        snippets: Snippets,
+        project: Project,
+    ) -> None:
+        contents = generator_cli.generate_readme(
+            snippets=snippets,
+            github_repo_url=project._github_output_mode.repo_url if project._github_output_mode is not None else None,
+            github_installation_token=project._github_output_mode.installation_token
+            if project._github_output_mode is not None
+            else None,
+        )
+        project.add_file(
+            os.path.join(
+                context.generator_config.output.path,
+                README_FILENAME,
+            ),
+            contents,
+        )
+        project.set_generate_readme(False)
 
     def _write_snippet_tests(
         self,
