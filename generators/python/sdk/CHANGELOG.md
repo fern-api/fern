@@ -5,10 +5,6 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.9.10] - 2024-06-20
-
-- Fix: the generator now only specifies the readme location within pyproject.toml if one was successfully created.
-
 ## [2.9.9] - 2024-06-19
 
 - Internal: The generator now consumes IRv46.
