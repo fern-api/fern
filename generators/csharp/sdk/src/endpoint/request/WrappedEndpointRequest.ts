@@ -218,7 +218,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         switch (typeReference.type) {
             case "container":
                 if (typeReference.container.type === "optional") {
-                    return this.isString(typeReference.container.optional);
+                    return this.isDatetime(typeReference.container.optional);
                 }
                 return false;
             case "named": {
