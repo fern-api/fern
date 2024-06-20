@@ -24,7 +24,7 @@ public class ProblemInfoV2
     public HashSet<Language> SupportedLanguages { get; init; }
 
     [JsonPropertyName("customFiles")]
-    public CustomFiles CustomFiles { get; init; }
+    public object CustomFiles { get; init; }
 
     [JsonPropertyName("generatedFiles")]
     public GeneratedFiles GeneratedFiles { get; init; }

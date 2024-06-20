@@ -25,7 +25,7 @@ from fastapi import FastAPI
 
 FastAPI(
     openapi_url="/openapi.json",  # <-- this is the file and URL needed to access the OpenAPI spec, `docs_url` and `redoc_url` are convenient wrappers that display the file in a UI!
-    docs_url="/openapi",          # <-- this is the URL to access the Swagger UI, which will point to your OpenAPI spec
+    docs_url="/docs",             # <-- this is the URL to access the Swagger UI, which will point to your OpenAPI spec
     redoc_url="/redoc"            # <-- this is the URL to access the ReDoc UI, which will point to your OpenAPI spec
 )
 ```
@@ -35,13 +35,13 @@ FastAPI(
 Fern will automatically generate clients that point to the servers you configure within your OpenAPI spec, so it's important to specify the servers that your API will be hosted on.
 
 ```python {5}
-from fastapi import FastAPI, Server
+from fastapi import FastAPI
 
 ...
 
-my_production_server = Server(url="http://prod.test.com")
-
-app = FastAPI(servers=[my_production_server])
+app = FastAPI(servers=[{"url": "http://prod.test.com", "description": "Production server"}])
+# This creates the following server object in your OpenAPI spec:
+# "servers":[{"url":"http://prod.test.com","description":"Production server"}],
 ```
 
 ## OpenAPI extensions

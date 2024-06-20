@@ -17,5 +17,5 @@ public class GetSubmissionStateResponse
     public Language Language { get; init; }
 
     [JsonPropertyName("submissionTypeState")]
-    public SubmissionTypeState SubmissionTypeState { get; init; }
+    public object SubmissionTypeState { get; init; }
 }

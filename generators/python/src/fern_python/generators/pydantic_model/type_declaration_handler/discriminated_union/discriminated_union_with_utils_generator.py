@@ -68,8 +68,8 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                         same_properties_as_object=lambda type_name: [
                             self._context.get_class_reference_for_type_id(type_name.type_id)
                         ],
-                        single_property=lambda property_: None,
-                        no_properties=lambda: None,
+                        single_property=lambda _: [],
+                        no_properties=lambda: [],
                     ),
                     parent=internal_union,
                     frozen=self._custom_config.frozen,

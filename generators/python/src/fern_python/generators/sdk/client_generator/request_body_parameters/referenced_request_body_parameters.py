@@ -75,7 +75,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
                     maybe_body_name = self.get_body_name()
                     property_name = f'{(maybe_body_name.snake_case.safe_name if maybe_body_name is not None else "request")}_{property_name}'
 
-                self.parameter_name_rewrites[property.name] = property_name
+                self.parameter_name_rewrites[property.name.name] = property_name
                 parameters.append(
                     AST.NamedFunctionParameter(
                         name=property_name,

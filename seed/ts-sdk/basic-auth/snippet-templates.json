@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedBasicAuthClient } from \"@fern/basic-auth\";"
+                ],
                 "templateString": "const client = new SeedBasicAuthClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -97,7 +99,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedBasicAuthClient } from \"@fern/basic-auth\";"
+                ],
                 "templateString": "const client = new SeedBasicAuthClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",

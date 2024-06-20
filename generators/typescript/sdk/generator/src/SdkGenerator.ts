@@ -116,6 +116,8 @@ export declare namespace SdkGenerator {
         organization: string;
         apiName: string;
         packageJson: Record<string, unknown> | undefined;
+        githubRepoUrl: string | undefined;
+        githubInstallationToken: string | undefined;
     }
 }
 
@@ -259,6 +261,7 @@ export class SdkGenerator {
         this.environmentsDeclarationReferencer = new EnvironmentsDeclarationReferencer({
             containingDirectory: [],
             namespaceExport,
+            npmPackage: this.npmPackage,
             environmentsConfig: intermediateRepresentation.environments ?? undefined
         });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
@@ -701,7 +704,9 @@ export class SdkGenerator {
                 const readmeContent = await this.generatorCli.generateReadme({
                     context,
                     endpointSnippets: this.endpointSnippets,
-                    originalReadmeFilepath: this.config.originalReadmeFilepath
+                    originalReadmeFilepath: this.config.originalReadmeFilepath,
+                    githubRepoUrl: this.config.githubRepoUrl,
+                    githubInstallationToken: this.config.githubInstallationToken
                 });
                 sourceFile.replaceWithText(readmeContent);
             }
@@ -1107,6 +1112,7 @@ export class SdkGenerator {
         { isForSnippet }: { isForSnippet?: boolean } = {}
     ): SdkContextImpl {
         return new SdkContextImpl({
+            ir: this.intermediateRepresentation,
             npmPackage: this.npmPackage,
             isForSnippet: isForSnippet ?? false,
             intermediateRepresentation: this.intermediateRepresentation,

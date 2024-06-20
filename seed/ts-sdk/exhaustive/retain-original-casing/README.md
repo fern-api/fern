@@ -33,7 +33,6 @@ import { SeedExhaustive } from "@fern/exhaustive";
 const request: SeedExhaustive.GetWithQuery = {
     ...
 };
-const response = await client.getWithQuery(request);
 ```
 
 ## Exception Handling
@@ -45,7 +44,7 @@ will be thrown.
 import { SeedExhaustiveError } from "@fern/exhaustive";
 
 try {
-    await client.getAndReturnListOfPrimitives(...);
+    await client.endpoints.container.getAndReturnListOfPrimitives(...);
 } catch (err) {
     if (err instanceof SeedExhaustiveError) {
         console.log(err.statusCode);
@@ -70,7 +69,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.getAndReturnListOfPrimitives(..., {
+const response = await client.endpoints.container.getAndReturnListOfPrimitives(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -80,7 +79,7 @@ const response = await client.getAndReturnListOfPrimitives(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.getAndReturnListOfPrimitives(..., {
+const response = await client.endpoints.container.getAndReturnListOfPrimitives(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -91,7 +90,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.getAndReturnListOfPrimitives(..., {
+const response = await client.endpoints.container.getAndReturnListOfPrimitives(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request

@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedStreamingClient } from \"@fern/streaming\";"
+                ],
                 "templateString": "const client = new SeedStreamingClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",

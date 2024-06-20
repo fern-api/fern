@@ -10,8 +10,8 @@ class CallableInvocation(AstNode):
     def __init__(
         self,
         callable: Reference,
-        args: Sequence[Expression] = None,
-        kwargs: Sequence[Tuple[str, Expression]] = None,
+        args: Sequence[Expression] = [],
+        kwargs: Sequence[Tuple[str, Expression]] = [],
     ):
         self.callable = callable
         self.args = args or []

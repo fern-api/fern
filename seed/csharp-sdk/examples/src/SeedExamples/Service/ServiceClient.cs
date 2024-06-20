@@ -45,12 +45,12 @@ public class ServiceClient
         throw new Exception(responseBody);
     }
 
-    public async Task<Metadata> GetMetadataAsync(GetMetadataRequest request)
+    public async Task<object> GetMetadataAsync(GetMetadataRequest request)
     {
         var _query = new Dictionary<string, object>() { };
         if (request.Shallow != null)
         {
-            _query["shallow"] = request.Shallow;
+            _query["shallow"] = request.Shallow.ToString();
         }
         if (request.Tag != null)
         {
@@ -72,7 +72,7 @@ public class ServiceClient
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<Metadata>(responseBody);
+            return JsonSerializer.Deserialize<object>(responseBody);
         }
         throw new Exception(responseBody);
     }

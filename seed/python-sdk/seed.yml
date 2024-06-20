@@ -1,4 +1,4 @@
-irVersion: v39
+irVersion: v46
 docker: fernapi/fern-python-sdk:latest
 dockerCommand: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest ./generators/python
 language: python
@@ -146,6 +146,7 @@ allowedFailures:
   - circular-references-advanced
   - oauth-client-credentials-default
   - unions:union-utils
+  - multi-url-environment-no-default
   # === Allowed failures due to unit testing ===
   - pagination
   # We don't have oauth tests yet

@@ -3,6 +3,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
     EndpointId,
     FeatureId,
+    FernFilepath,
     HttpEndpoint,
     HttpService,
     ReadmeConfig,
@@ -13,6 +14,11 @@ import { getTextOfTsNode, NpmPackage } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { camelCase } from "lodash-es";
 import { code, Code } from "ts-poet";
+
+interface EndpointWithFilepath {
+    endpoint: HttpEndpoint;
+    fernFilepath: FernFilepath;
+}
 
 interface EndpointWithRequest {
     endpoint: HttpEndpoint;
@@ -27,7 +33,7 @@ export class ReadmeSnippetBuilder {
 
     private readonly context: SdkContext;
     private readonly readmeConfig: ReadmeConfig | undefined = undefined;
-    private readonly endpoints: Record<EndpointId, HttpEndpoint> = {};
+    private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
     private readonly snippets: Record<EndpointId, string> = {};
     private readonly defaultEndpointId: EndpointId;
     private readonly rootPackageName: string;
@@ -115,8 +121,6 @@ try {
             return undefined;
         }
         const requestTypeName = `${this.context.namespaceExport}.${endpointWithRequest.requestWrapper.wrapperName.pascalCase.unsafeName}`;
-        const parameters =
-            endpointWithRequest.endpoint.allPathParameters.length > 0 ? code`..., request` : code`request`;
         return [
             this.writeCode(
                 code`
@@ -125,7 +129,6 @@ import { ${this.context.namespaceExport} } from "${this.rootPackageName}";
 const request: ${requestTypeName} = {
     ...
 };
-const response = await ${this.getMethodCall(endpointWithRequest.endpoint)}(${parameters});
 `
             )
         ];
@@ -186,7 +189,7 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         return [snippet];
     }
 
-    private getEndpointsForFeature(featureId: FeatureId): HttpEndpoint[] {
+    private getEndpointsForFeature(featureId: FeatureId): EndpointWithFilepath[] {
         const endpointIds = this.getEndpointIdsForFeature(featureId);
         return endpointIds != null ? this.getEndpoints(endpointIds) : this.getEndpoints([this.defaultEndpointId]);
     }
@@ -195,7 +198,7 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         return this.readmeConfig?.features?.[this.getFeatureKey(featureId)];
     }
 
-    private getEndpoints(endpointIds: EndpointId[]): HttpEndpoint[] {
+    private getEndpoints(endpointIds: EndpointId[]): EndpointWithFilepath[] {
         return endpointIds.map((endpointId) => {
             const endpoint = this.endpoints[endpointId];
             if (endpoint == null) {
@@ -205,11 +208,14 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         });
     }
 
-    private buildEndpoints(services: Record<ServiceId, HttpService>): Record<EndpointId, HttpEndpoint> {
-        const endpoints: Record<EndpointId, HttpEndpoint> = {};
+    private buildEndpoints(services: Record<ServiceId, HttpService>): Record<EndpointId, EndpointWithFilepath> {
+        const endpoints: Record<EndpointId, EndpointWithFilepath> = {};
         for (const service of Object.values(services)) {
             for (const endpoint of service.endpoints) {
-                endpoints[endpoint.id] = endpoint;
+                endpoints[endpoint.id] = {
+                    endpoint,
+                    fernFilepath: service.name.fernFilepath
+                };
             }
         }
         return endpoints;
@@ -261,11 +267,11 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
     }
 
     private getEndpointWithRequest(): EndpointWithRequest | undefined {
-        for (const endpoint of Object.values(this.endpoints)) {
-            if (endpoint.sdkRequest?.shape?.type === "wrapper") {
+        for (const endpointWithFilepath of Object.values(this.endpoints)) {
+            if (endpointWithFilepath.endpoint.sdkRequest?.shape?.type === "wrapper") {
                 return {
-                    endpoint,
-                    requestWrapper: endpoint.sdkRequest.shape
+                    endpoint: endpointWithFilepath.endpoint,
+                    requestWrapper: endpointWithFilepath.endpoint.sdkRequest.shape
                 };
             }
         }
@@ -303,12 +309,21 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         return split[1] ?? errorName;
     }
 
-    private getMethodCall(endpoint: HttpEndpoint): string {
-        return `${this.clientVariableName}.${this.getEndpointMethodName(endpoint)}`;
+    private getMethodCall(endpoint: EndpointWithFilepath): string {
+        return `${this.getAccessFromRootClient(endpoint.fernFilepath)}.${this.getEndpointMethodName(
+            endpoint.endpoint
+        )}`;
     }
 
     private getFeatureKey(featureId: FeatureId): string {
         return camelCase(featureId);
+    }
+
+    private getAccessFromRootClient(fernFilepath: FernFilepath): string {
+        const clientAccessParts = fernFilepath.allParts.map((part) => part.camelCase.unsafeName);
+        return clientAccessParts.length > 0
+            ? `${this.clientVariableName}.${clientAccessParts.join(".")}`
+            : this.clientVariableName;
     }
 
     private getEndpointMethodName(endpoint: HttpEndpoint): string {

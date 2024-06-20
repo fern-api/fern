@@ -16,11 +16,13 @@ npm i -s @fern/single-url-environment-no-default
 Instantiate and use the client with the following:
 
 ```typescript
-import * as environments from "../src/environments";
-import { SeedSingleUrlEnvironmentNoDefaultClient } from "@fern/single-url-environment-no-default";
+import {
+    SeedSingleUrlEnvironmentNoDefaultEnvironment,
+    SeedSingleUrlEnvironmentNoDefaultClient,
+} from "@fern/single-url-environment-no-default";
 
 const client = new SeedSingleUrlEnvironmentNoDefaultClient({
-    environment: environments.SeedSingleUrlEnvironmentNoDefaultEnvironment.Production,
+    environment: SeedSingleUrlEnvironmentNoDefaultEnvironment.Production,
     token: "YOUR_TOKEN",
 });
 await client.dummy.getDummy();
@@ -35,7 +37,7 @@ will be thrown.
 import { SeedSingleUrlEnvironmentNoDefaultError } from "@fern/single-url-environment-no-default";
 
 try {
-    await client.getDummy(...);
+    await client.dummy.getDummy(...);
 } catch (err) {
     if (err instanceof SeedSingleUrlEnvironmentNoDefaultError) {
         console.log(err.statusCode);
@@ -60,7 +62,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.getDummy(..., {
+const response = await client.dummy.getDummy(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -70,7 +72,7 @@ const response = await client.getDummy(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.getDummy(..., {
+const response = await client.dummy.getDummy(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -81,7 +83,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.getDummy(..., {
+const response = await client.dummy.getDummy(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request

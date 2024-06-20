@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedAuthEnvironmentVariablesClient } from \"@fern/auth-environment-variables\";"
+                ],
                 "templateString": "const client = new SeedAuthEnvironmentVariablesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -97,7 +99,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedAuthEnvironmentVariablesClient } from \"@fern/auth-environment-variables\";"
+                ],
                 "templateString": "const client = new SeedAuthEnvironmentVariablesClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",

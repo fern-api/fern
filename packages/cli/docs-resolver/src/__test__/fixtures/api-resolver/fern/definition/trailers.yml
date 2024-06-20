@@ -1,0 +1,52 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  imdb: ./imdb.yml
+
+service:
+  auth: false
+  base-path: /trailers
+  endpoints:
+    createTrailer:
+      method: POST
+      path: /create
+      request: CreateTrailerRequest
+      response: TrailerId
+
+    getTrailer:
+      method: GET
+      path: /{id}
+      path-parameters:
+        id: TrailerId
+      response: Trailer
+
+    getTrailerForMovie:
+      method: GET
+      path: /movie/{id}
+      path-parameters:
+        id: imdb.MovieId
+      response: list<Trailer>
+
+    deleteTrailer:
+      method: DELETE
+      path: /{id}
+      path-parameters:
+        id: TrailerId
+
+types:
+  TrailerId:
+    type: string
+    docs: The unique identifier for a trailer in the database
+
+  CreateTrailerRequest:
+    properties:
+      id: TrailerId
+      movieId: imdb.MovieId
+      title: string
+      url: string
+
+  Trailer:
+    properties:
+      movieId: imdb.MovieId
+      title: string
+      url: string

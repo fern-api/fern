@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
 using SeedTrace.V2;
 
 #nullable enable
@@ -12,5 +11,5 @@ public class VoidFunctionSignatureThatTakesActualResult
     public IEnumerable<Parameter> Parameters { get; init; }
 
     [JsonPropertyName("actualResultType")]
-    public VariableType ActualResultType { get; init; }
+    public object ActualResultType { get; init; }
 }

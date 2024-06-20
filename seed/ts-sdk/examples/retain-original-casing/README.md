@@ -16,13 +16,9 @@ npm i -s @fern/examples
 Instantiate and use the client with the following:
 
 ```typescript
-import * as environments from "../src/environments";
-import { SeedExamplesClient } from "@fern/examples";
+import { SeedExamplesEnvironment, SeedExamplesClient } from "@fern/examples";
 
-const client = new SeedExamplesClient({
-    environment: environments.SeedExamplesEnvironment.Production,
-    token: "YOUR_TOKEN",
-});
+const client = new SeedExamplesClient({ environment: SeedExamplesEnvironment.Production, token: "YOUR_TOKEN" });
 await client.echo("Hello world!\\n\\nwith\\n\\tnewlines");
 ```
 
@@ -37,7 +33,6 @@ import { SeedExamples } from "@fern/examples";
 const request: SeedExamples.GetFileRequest = {
     ...
 };
-const response = await client.getFile(..., request);
 ```
 
 ## Exception Handling

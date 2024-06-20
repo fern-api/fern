@@ -55,27 +55,26 @@ jobs:
 
       - name: Compile
         run: yarn && yarn build
-${getTestJob({ config })}
+${getTestJob({ config })}`;
+    // First condition is for resilience in the event that Fiddle isn't upgraded to include the new flag
+    if (
+        (publishInfo != null && publishInfo?.shouldGeneratePublishWorkflow == null) ||
+        publishInfo?.shouldGeneratePublishWorkflow === true
+    ) {
+        workflowYaml += `
   publish:
     needs: [ compile, test ]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-
       - name: Set up node
         uses: actions/setup-node@v3
-
       - name: Install dependencies
         run: yarn install
-
       - name: Build
-        run: yarn build`;
-
-    if (publishInfo?.tokenEnvironmentVariable != null) {
-        workflowYaml += `
+        run: yarn build
 
       - name: Publish to npm
         run: |

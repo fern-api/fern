@@ -182,7 +182,7 @@ class OAuthTokenProviderGenerator:
             )
 
         token_subpackage_id = self._get_subpackage_id_for_endpoint_id(
-            endpoint_id=client_credentials.token_endpoint.endpoint_reference,
+            endpoint_id=client_credentials.token_endpoint.endpoint_reference.endpoint_id,
         )
 
         result.append(
@@ -197,7 +197,9 @@ class OAuthTokenProviderGenerator:
         )
 
         refresh_subpackage_id = (
-            self._get_subpackage_id_for_endpoint_id(endpoint_id=client_credentials.refresh_endpoint.endpoint_reference)
+            self._get_subpackage_id_for_endpoint_id(
+                endpoint_id=client_credentials.refresh_endpoint.endpoint_reference.endpoint_id
+            )
             if client_credentials.refresh_endpoint is not None
             else None
         )
@@ -396,7 +398,7 @@ class OAuthTokenProviderGenerator:
         ]
         if client_credentials.refresh_endpoint is None:
             token_endpoint: ir_types.HttpEndpoint = self._get_endpoint_for_id(
-                client_credentials.token_endpoint.endpoint_reference
+                client_credentials.token_endpoint.endpoint_reference.endpoint_id
             )
             return AST.FunctionInvocation(
                 function_definition=AST.Reference(
@@ -408,7 +410,7 @@ class OAuthTokenProviderGenerator:
             )
 
         refresh_token_endpoint: ir_types.HttpEndpoint = self._get_endpoint_for_id(
-            client_credentials.refresh_endpoint.endpoint_reference
+            client_credentials.refresh_endpoint.endpoint_reference.endpoint_id
         )
         kwargs.append(
             (

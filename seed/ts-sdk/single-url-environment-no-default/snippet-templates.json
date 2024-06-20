@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedSingleUrlEnvironmentNoDefaultClient } from \"@fern/single-url-environment-no-default\";"
+                ],
                 "templateString": "const client = new SeedSingleUrlEnvironmentNoDefaultClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -26,7 +28,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: environments.SeedSingleUrlEnvironmentNoDefaultEnvironment.Production",
+                                        "templateString": "environment: SeedSingleUrlEnvironmentNoDefaultEnvironment.Production",
                                         "isOptional": false,
                                         "templateInputs": [],
                                         "type": "generic"

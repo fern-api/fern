@@ -38,9 +38,10 @@ export async function convertGeneratorsConfiguration({
 }): Promise<GeneratorsConfiguration> {
     const maybeTopLevelMetadata = getOutputMetadata(rawGeneratorsConfiguration.metadata);
     const readme = rawGeneratorsConfiguration.readme;
+    const parsedApiConfiguration = await parseAPIConfiguration(rawGeneratorsConfiguration);
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
-        api: await parseAPIConfiguration(rawGeneratorsConfiguration),
+        api: parsedApiConfiguration,
         rawConfiguration: rawGeneratorsConfiguration,
         defaultGroup: rawGeneratorsConfiguration["default-group"],
         groups:

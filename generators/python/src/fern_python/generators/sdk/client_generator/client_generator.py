@@ -27,10 +27,10 @@ class ConstructorParameter:
 
 HTTPX_PRIMITIVE_DATA_TYPES = set(
     [
-        ir_types.PrimitiveType.STRING,
-        ir_types.PrimitiveType.INTEGER,
-        ir_types.PrimitiveType.DOUBLE,
-        ir_types.PrimitiveType.BOOLEAN,
+        ir_types.PrimitiveTypeV1.STRING,
+        ir_types.PrimitiveTypeV1.INTEGER,
+        ir_types.PrimitiveTypeV1.DOUBLE,
+        ir_types.PrimitiveTypeV1.BOOLEAN,
     ]
 )
 

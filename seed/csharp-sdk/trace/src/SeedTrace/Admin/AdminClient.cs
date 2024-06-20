@@ -13,10 +13,7 @@ public class AdminClient
         _client = client;
     }
 
-    public async void UpdateTestSubmissionStatusAsync(
-        Guid submissionId,
-        TestSubmissionStatus request
-    )
+    public async void UpdateTestSubmissionStatusAsync(Guid submissionId, object request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -40,10 +37,7 @@ public class AdminClient
         );
     }
 
-    public async void UpdateWorkspaceSubmissionStatusAsync(
-        Guid submissionId,
-        WorkspaceSubmissionStatus request
-    )
+    public async void UpdateWorkspaceSubmissionStatusAsync(Guid submissionId, object request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest

@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";"
+                ],
                 "templateString": "const client = new SeedUndiscriminatedUnionsClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -65,7 +67,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";"
+                ],
                 "templateString": "const client = new SeedUndiscriminatedUnionsClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",

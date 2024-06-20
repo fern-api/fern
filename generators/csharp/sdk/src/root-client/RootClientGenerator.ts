@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { AuthScheme, HttpHeader, PrimitiveType, Subpackage, TypeReference } from "@fern-fern/ir-sdk/api";
+import { AuthScheme, HttpHeader, Literal, PrimitiveType, Subpackage, TypeReference } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -15,6 +15,11 @@ interface ConstructorParameter {
      */
     header?: HeaderInfo;
     environmentVariable?: string;
+}
+
+interface LiteralParameter {
+    name: string;
+    value: Literal;
 }
 
 interface HeaderInfo {
@@ -83,7 +88,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
     }
 
     private getConstructorMethod(): csharp.Class.Constructor {
-        const { requiredParameters, optionalParameters } = this.getConstructorParameters();
+        const { requiredParameters, optionalParameters, literalParameters } = this.getConstructorParameters();
         const parameters: csharp.Parameter[] = [];
         for (const param of requiredParameters) {
             parameters.push(
@@ -122,6 +127,15 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     )
                 });
             }
+        }
+
+        for (const param of literalParameters) {
+            headerEntries.push({
+                key: csharp.codeblock(`"${param.name}"`),
+                value: csharp.codeblock(
+                    param.value.type === "string" ? `$"${param.value.string}"` : `${param.value.boolean}.ToString()`
+                )
+            });
         }
 
         const platformHeaders = this.context.ir.sdkConfig.platformHeaders;
@@ -189,10 +203,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         allParameters: ConstructorParameter[];
         requiredParameters: ConstructorParameter[];
         optionalParameters: ConstructorParameter[];
+        literalParameters: LiteralParameter[];
     } {
         const allParameters: ConstructorParameter[] = [];
         const requiredParameters: ConstructorParameter[] = [];
         const optionalParameters: ConstructorParameter[] = [];
+        const literalParameters: LiteralParameter[] = [];
 
         for (const scheme of this.context.ir.auth.schemes) {
             allParameters.push(...this.getParameterFromAuthScheme(scheme));
@@ -204,6 +220,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         for (const param of allParameters) {
             if (param.isOptional || param.environmentVariable != null) {
                 optionalParameters.push(param);
+            } else if (param.typeReference.type === "container" && param.typeReference.container.type === "literal") {
+                literalParameters.push({
+                    name: param.name,
+                    value: param.typeReference.container.literal
+                });
             } else {
                 requiredParameters.push(param);
             }
@@ -211,7 +232,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         return {
             allParameters,
             requiredParameters,
-            optionalParameters
+            optionalParameters,
+            literalParameters
         };
     }
 
@@ -305,7 +327,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             ],
             isAsync: false,
             body: csharp.codeblock((writer) => {
-                writer.writeLine("var value = Environment.GetEnvironmentVariable(env);");
+                writer.writeLine("var value = System.Environment.GetEnvironmentVariable(env);");
                 writer.writeLine("if (value == null) {");
                 writer.writeLine("    throw new Exception(message);");
                 writer.writeLine("}");

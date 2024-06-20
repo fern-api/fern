@@ -21,15 +21,15 @@ public class UsersClient
         var _query = new Dictionary<string, object>() { };
         if (request.Page != null)
         {
-            _query["page"] = request.Page;
+            _query["page"] = request.Page.ToString();
         }
         if (request.PerPage != null)
         {
-            _query["per_page"] = request.PerPage;
+            _query["per_page"] = request.PerPage.ToString();
         }
         if (request.Order != null)
         {
-            _query["order"] = request.Order;
+            _query["order"] = request.Order.ToString();
         }
         if (request.StartingAfter != null)
         {
@@ -58,15 +58,15 @@ public class UsersClient
         var _query = new Dictionary<string, object>() { };
         if (request.Page != null)
         {
-            _query["page"] = request.Page;
+            _query["page"] = request.Page.ToString();
         }
         if (request.PerPage != null)
         {
-            _query["per_page"] = request.PerPage;
+            _query["per_page"] = request.PerPage.ToString();
         }
         if (request.Order != null)
         {
-            _query["order"] = request.Order;
+            _query["order"] = request.Order.ToString();
         }
         if (request.StartingAfter != null)
         {
@@ -95,15 +95,15 @@ public class UsersClient
         var _query = new Dictionary<string, object>() { };
         if (request.Page != null)
         {
-            _query["page"] = request.Page;
+            _query["page"] = request.Page.ToString();
         }
         if (request.Limit != null)
         {
-            _query["limit"] = request.Limit;
+            _query["limit"] = request.Limit.ToString();
         }
         if (request.Order != null)
         {
-            _query["order"] = request.Order;
+            _query["order"] = request.Order.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -128,7 +128,7 @@ public class UsersClient
         var _query = new Dictionary<string, object>() { };
         if (request.Cursor != null)
         {
-            _query["cursor"] = request.Cursor;
+            _query["cursor"] = request.Cursor.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -176,7 +176,7 @@ public class UsersClient
         var _query = new Dictionary<string, object>() { };
         if (request.Offset != null)
         {
-            _query["offset"] = request.Offset;
+            _query["offset"] = request.Offset.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest

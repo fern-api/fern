@@ -43,7 +43,6 @@ import { SeedOauthClientCredentials } from "@fern/oauth-client-credentials-neste
 const request: SeedOauthClientCredentials.GetTokenRequest = {
     ...
 };
-const response = await client.getToken(request);
 ```
 
 ## Exception Handling
@@ -55,7 +54,7 @@ will be thrown.
 import { SeedOauthClientCredentialsError } from "@fern/oauth-client-credentials-nested-root";
 
 try {
-    await client.getToken(...);
+    await client.auth.getToken(...);
 } catch (err) {
     if (err instanceof SeedOauthClientCredentialsError) {
         console.log(err.statusCode);
@@ -80,7 +79,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.getToken(..., {
+const response = await client.auth.getToken(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -90,7 +89,7 @@ const response = await client.getToken(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.getToken(..., {
+const response = await client.auth.getToken(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -101,7 +100,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.getToken(..., {
+const response = await client.auth.getToken(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request

@@ -135,7 +135,8 @@ export function getGeneratorConfig({
                 mode: FernGeneratorExec.OutputMode.github({
                     repoUrl: `https://github.com/${value.owner}/${value.repo}`,
                     version: outputVersion,
-                    publishInfo: getGithubPublishConfig(value.publishInfo)
+                    publishInfo: getGithubPublishConfig(value.publishInfo),
+                    installationToken: undefined // Don't attempt to clone the repository when generating locally.
                 }),
                 path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
                 publishingMetadata: generatorInvocation.publishMetadata

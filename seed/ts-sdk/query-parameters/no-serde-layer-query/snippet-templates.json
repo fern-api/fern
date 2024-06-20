@@ -12,7 +12,9 @@
         },
         "snippetTemplate": {
             "clientInstantiation": {
-                "imports": [],
+                "imports": [
+                    "import { SeedQueryParametersClient } from \"@fern/query-parameters\";"
+                ],
                 "templateString": "const client = new SeedQueryParametersClient($FERN_INPUT);",
                 "isOptional": false,
                 "inputDelimiter": ",",
@@ -253,6 +255,22 @@
                                             "type": "payload"
                                         },
                                         "type": "iterable"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "optionalDeadline: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "optionalDeadline",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
                                     },
                                     "type": "template"
                                 },

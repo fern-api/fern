@@ -1,6 +1,5 @@
 using System.Text.Json;
 using SeedExhaustive;
-using SeedExhaustive.Types;
 
 #nullable enable
 
@@ -15,7 +14,7 @@ public class UnionClient
         _client = client;
     }
 
-    public async Task<Animal> GetAndReturnUnionAsync(Animal request)
+    public async Task<object> GetAndReturnUnionAsync(object request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -28,7 +27,7 @@ public class UnionClient
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<Animal>(responseBody);
+            return JsonSerializer.Deserialize<object>(responseBody);
         }
         throw new Exception(responseBody);
     }
