@@ -28,23 +28,35 @@ export const ValidFileTypes: Rule = {
         return {
             filepath: async ({ absoluteFilepath, value }) => {
                 const file = await readFile(absoluteFilepath);
+                const isValid = await isValidFileType(file);
 
-                if (!isSvg(file.toString("utf-8"))) {
-                    // if the file is not an SVG, check the file type
-                    const fileType = await fileTypeFromBuffer(file);
-                    // if the file can't be parsed or is not an allowed file type return an error
-                    if (!fileType || !ALLOWED_FILE_TYPES.includes(fileType.mime)) {
-                        return [
-                            {
-                                severity: "error",
-                                message: `File type of ${value} is invalid`
-                            }
-                        ];
-                    }
+                if (!isValid) {
+                    return [
+                        {
+                            severity: "error",
+                            message: `File type of ${value} is invalid`
+                        }
+                    ];
                 }
 
                 return [];
             }
         };
     }
+};
+
+export const isValidFileType = async (file: Buffer): Promise<boolean> => {
+    if (isSvg(file.toString("utf-8"))) {
+        // exit early if the file is an SVG
+        return true;
+    }
+
+    // otherwise, check the file type
+    const fileType = await fileTypeFromBuffer(file);
+    if (fileType && ALLOWED_FILE_TYPES.includes(fileType.mime)) {
+        return true;
+    }
+
+    // in all other cases, return false
+    return false;
 };
