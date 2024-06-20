@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
 
 #nullable enable
 
@@ -11,5 +10,5 @@ public class TestCase
     public string Id { get; init; }
 
     [JsonPropertyName("params")]
-    public IEnumerable<VariableValue> Params { get; init; }
+    public IEnumerable<object> Params { get; init; }
 }

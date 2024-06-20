@@ -11,5 +11,5 @@ public class TestCaseWithExpectedResult
     public TestCase TestCase { get; init; }
 
     [JsonPropertyName("expectedResult")]
-    public VariableValue ExpectedResult { get; init; }
+    public object ExpectedResult { get; init; }
 }

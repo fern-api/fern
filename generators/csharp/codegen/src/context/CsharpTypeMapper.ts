@@ -110,7 +110,7 @@ export class CsharpTypeMapper {
             case "object":
                 return csharp.Type.reference(objectClassReference);
             case "union":
-                return csharp.Type.reference(objectClassReference);
+                return csharp.Type.object();
             case "undiscriminatedUnion": {
                 return csharp.Type.oneOf(
                     typeDeclaration.shape.members.map((member) => {

@@ -15,7 +15,7 @@ public class CreateProblemRequestV2
     public ProblemDescription ProblemDescription { get; init; }
 
     [JsonPropertyName("customFiles")]
-    public CustomFiles CustomFiles { get; init; }
+    public object CustomFiles { get; init; }
 
     [JsonPropertyName("customTestCaseTemplates")]
     public IEnumerable<TestCaseTemplate> CustomTestCaseTemplates { get; init; }

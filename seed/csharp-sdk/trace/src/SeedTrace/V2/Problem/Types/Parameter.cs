@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
 
 #nullable enable
 
@@ -14,5 +13,5 @@ public class Parameter
     public string Name { get; init; }
 
     [JsonPropertyName("variableType")]
-    public VariableType VariableType { get; init; }
+    public object VariableType { get; init; }
 }

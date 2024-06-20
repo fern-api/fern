@@ -20,7 +20,7 @@ public class CreateProblemRequest
     public IEnumerable<VariableTypeAndName> InputParams { get; init; }
 
     [JsonPropertyName("outputType")]
-    public VariableType OutputType { get; init; }
+    public object OutputType { get; init; }
 
     [JsonPropertyName("testcases")]
     public IEnumerable<TestCaseWithExpectedResult> Testcases { get; init; }

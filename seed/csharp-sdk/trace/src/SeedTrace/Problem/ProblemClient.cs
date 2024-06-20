@@ -17,7 +17,7 @@ public class ProblemClient
     /// <summary>
     /// Creates a problem
     /// </summary>
-    public async Task<CreateProblemResponse> CreateProblemAsync(CreateProblemRequest request)
+    public async Task<object> CreateProblemAsync(CreateProblemRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -30,7 +30,7 @@ public class ProblemClient
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<CreateProblemResponse>(responseBody);
+            return JsonSerializer.Deserialize<object>(responseBody);
         }
         throw new Exception(responseBody);
     }

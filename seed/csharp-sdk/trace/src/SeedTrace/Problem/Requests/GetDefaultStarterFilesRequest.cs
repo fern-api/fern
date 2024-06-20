@@ -11,7 +11,7 @@ public class GetDefaultStarterFilesRequest
     public IEnumerable<VariableTypeAndName> InputParams { get; init; }
 
     [JsonPropertyName("outputType")]
-    public VariableType OutputType { get; init; }
+    public object OutputType { get; init; }
 
     /// <summary>
     /// The name of the `method` that the student has to complete.
