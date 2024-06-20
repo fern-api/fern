@@ -18,6 +18,7 @@ def test_pyproject_toml_gen(tmpdir: Path) -> None:
         pypi_metadata=None,
         github_output_mode=None,
         license_=None,
+        generate_readme=True,
     )
     pyproject_toml.write()
 
@@ -31,7 +32,9 @@ def test_pyproject_toml_gen(tmpdir: Path) -> None:
 name = "fern-fern-ir-model"
 version = "0.0.0"
 description = ""
+
 readme = "README.md"
+
 authors = []
 keywords = []
 
