@@ -307,7 +307,7 @@ export class ClientsGenerator {
                 artifactRegistry
             );
             const serviceModule = Module_.wrapInModules({
-                locationGenerator: locationGenerator,
+                locationGenerator,
                 child: [serviceClasses.syncClientClass, serviceClasses.asyncClientClass],
                 path: subpackage.fernFilepath,
                 includeFilename: false

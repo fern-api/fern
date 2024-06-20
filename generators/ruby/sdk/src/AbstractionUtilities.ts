@@ -439,7 +439,7 @@ export function generateRootPackage(
     const maybeEnvironmentImport = environmentClass?.import_;
     const typeExporterImport = new Import({ from: typeExporterLocation, isExternal: false });
     const rootNode = Module_.wrapInModules({
-        locationGenerator: locationGenerator,
+        locationGenerator,
         child: [clientClass, asyncClientClass],
         arbitraryImports:
             maybeEnvironmentImport !== undefined ? [maybeEnvironmentImport, typeExporterImport] : [typeExporterImport]
