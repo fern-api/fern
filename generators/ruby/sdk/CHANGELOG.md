@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.7.0-rc2] - 2024-06-20
+
+- Fix: the ruby generator now nests types under a type module to avoid naming conflicts, this is behind a configuration flag
+  ```yaml
+  generators:
+    - name: fernapi/fern-ruby-sdk
+      config:
+        shouldFlattenModules: true
+  ```
+
 ## [0.7.0-rc1] - 2024-06-13
 
 - Fix: nested loops leverage different variable names to deconflict
