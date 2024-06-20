@@ -41,6 +41,7 @@ export class User {
      *                 name: "string",
      *                 tags: ["string"]
      *             }],
+     *         optionalDeadline: new Date("2024-01-15T09:30:00.000Z"),
      *         keyValue: {
      *             "string": "string"
      *         },
@@ -75,6 +76,7 @@ export class User {
             bytes,
             user,
             userList,
+            optionalDeadline,
             keyValue,
             optionalString,
             nestedUser,
@@ -90,6 +92,10 @@ export class User {
         _queryParams["bytes"] = bytes;
         _queryParams["user"] = user;
         _queryParams["userList"] = JSON.stringify(userList);
+        if (optionalDeadline != null) {
+            _queryParams["optionalDeadline"] = optionalDeadline;
+        }
+
         _queryParams["keyValue"] = JSON.stringify(keyValue);
         if (optionalString != null) {
             _queryParams["optionalString"] = optionalString;

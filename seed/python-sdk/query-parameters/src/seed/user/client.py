@@ -33,6 +33,7 @@ class UserClient:
         nested_user: NestedUser,
         exclude_user: typing.Union[User, typing.Sequence[User]],
         filter: typing.Union[str, typing.Sequence[str]],
+        optional_deadline: typing.Optional[dt.datetime] = None,
         optional_string: typing.Optional[str] = None,
         optional_user: typing.Optional[User] = None,
         request_options: typing.Optional[RequestOptions] = None
@@ -61,6 +62,8 @@ class UserClient:
         exclude_user : typing.Union[User, typing.Sequence[User]]
 
         filter : typing.Union[str, typing.Sequence[str]]
+
+        optional_deadline : typing.Optional[dt.datetime]
 
         optional_string : typing.Optional[str]
 
@@ -106,6 +109,9 @@ class UserClient:
                     tags=["string"],
                 )
             ],
+            optional_deadline=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
             key_value={"string": "string"},
             optional_string="string",
             nested_user=NestedUser(
@@ -137,6 +143,7 @@ class UserClient:
                 "bytes": jsonable_encoder(bytes),
                 "user": jsonable_encoder(user),
                 "userList": jsonable_encoder(user_list),
+                "optionalDeadline": serialize_datetime(optional_deadline) if optional_deadline is not None else None,
                 "keyValue": jsonable_encoder(key_value),
                 "optionalString": optional_string,
                 "nestedUser": jsonable_encoder(nested_user),
@@ -173,6 +180,7 @@ class AsyncUserClient:
         nested_user: NestedUser,
         exclude_user: typing.Union[User, typing.Sequence[User]],
         filter: typing.Union[str, typing.Sequence[str]],
+        optional_deadline: typing.Optional[dt.datetime] = None,
         optional_string: typing.Optional[str] = None,
         optional_user: typing.Optional[User] = None,
         request_options: typing.Optional[RequestOptions] = None
@@ -201,6 +209,8 @@ class AsyncUserClient:
         exclude_user : typing.Union[User, typing.Sequence[User]]
 
         filter : typing.Union[str, typing.Sequence[str]]
+
+        optional_deadline : typing.Optional[dt.datetime]
 
         optional_string : typing.Optional[str]
 
@@ -246,6 +256,9 @@ class AsyncUserClient:
                     tags=["string"],
                 )
             ],
+            optional_deadline=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
             key_value={"string": "string"},
             optional_string="string",
             nested_user=NestedUser(
@@ -277,6 +290,7 @@ class AsyncUserClient:
                 "bytes": jsonable_encoder(bytes),
                 "user": jsonable_encoder(user),
                 "userList": jsonable_encoder(user_list),
+                "optionalDeadline": serialize_datetime(optional_deadline) if optional_deadline is not None else None,
                 "keyValue": jsonable_encoder(key_value),
                 "optionalString": optional_string,
                 "nestedUser": jsonable_encoder(nested_user),

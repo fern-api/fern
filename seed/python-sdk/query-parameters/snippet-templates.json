@@ -227,6 +227,22 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
+                            "templateString": "optional_deadline=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "QUERY",
+                                    "path": "optionalDeadline",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
                             "containerTemplateString": "key_value={\n\t\t$FERN_INPUT\n\t}",
                             "delimiter": ",\n\t\t",
                             "keyTemplate": {
@@ -713,6 +729,22 @@
                                     "path": "userList"
                                 },
                                 "type": "iterable"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "optional_deadline=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "QUERY",
+                                        "path": "optionalDeadline",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
                             }
                         },
                         {

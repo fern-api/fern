@@ -24,7 +24,7 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/user?limit=&id=&date=&deadline=&bytes=&user=&userList=&keyValue=&optionalString=&nestedUser=&optionalUser=&excludeUser=&filter=",
+              "raw": "{{baseUrl}}/user?limit=&id=&date=&deadline=&bytes=&user=&userList=&optionalDeadline=&keyValue=&optionalString=&nestedUser=&optionalUser=&excludeUser=&filter=",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -64,6 +64,11 @@
                 },
                 {
                   "key": "userList",
+                  "value": "",
+                  "description": null
+                },
+                {
+                  "key": "optionalDeadline",
                   "value": "",
                   "description": null
                 },
