@@ -191,14 +191,35 @@ url = "https://pypi.buildwithfern.com"
 reference = "fern-prod"
 
 [[package]]
+name = "fern-fern-generator-cli-sdk"
+version = "0.0.33"
+description = ""
+optional = false
+python-versions = ">=3.8,<4.0"
+files = [
+    {file = "fern_fern_generator_cli_sdk-0.0.33-py3-none-any.whl", hash = "sha256:24f23896e5c0c3e6089fb0d728f0acf710116fcd625cffc2fd45bc38812e8d99"},
+    {file = "fern_fern_generator_cli_sdk-0.0.33.tar.gz", hash = "sha256:f678ee094c011336fa645e32ca4d289597c2d9ebf3231577fe5c69cd2caefbd6"},
+]
+
+[package.dependencies]
+httpx = ">=0.21.2"
+pydantic = ">=1.9.2"
+typing_extensions = ">=4.0.0"
+
+[package.source]
+type = "legacy"
+url = "https://pypi.buildwithfern.com"
+reference = "fern-prod"
+
+[[package]]
 name = "fern-fern-generator-exec-sdk"
-version = "0.0.890"
+version = "0.0.899"
 description = ""
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "fern_fern_generator_exec_sdk-0.0.890-py3-none-any.whl", hash = "sha256:6f3ccef5ec917b7e491aea966811400989874e6c51aaa2a84c5d9713303f33b5"},
-    {file = "fern_fern_generator_exec_sdk-0.0.890.tar.gz", hash = "sha256:ee12bc68cfd3633e5ded1ed308ddbd2cf298609dfb2599555d474598b4adb1a3"},
+    {file = "fern_fern_generator_exec_sdk-0.0.899-py3-none-any.whl", hash = "sha256:37b6fc25af45b2d0194da37a979b5edd449f0e3a6f9f2feef74925b28295def6"},
+    {file = "fern_fern_generator_exec_sdk-0.0.899.tar.gz", hash = "sha256:3a4780376e78e082c079cd1a3c30529f9cfcc606cb80717bc33b48dda81915ef"},
 ]
 
 [package.dependencies]
@@ -233,18 +254,18 @@ reference = "fern-prod"
 
 [[package]]
 name = "filelock"
-version = "3.15.1"
+version = "3.15.3"
 description = "A platform independent file lock."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "filelock-3.15.1-py3-none-any.whl", hash = "sha256:71b3102950e91dfc1bb4209b64be4dc8854f40e5f534428d8684f953ac847fac"},
-    {file = "filelock-3.15.1.tar.gz", hash = "sha256:58a2549afdf9e02e10720eaa4d4470f56386d7a6f72edd7d0596337af8ed7ad8"},
+    {file = "filelock-3.15.3-py3-none-any.whl", hash = "sha256:0151273e5b5d6cf753a61ec83b3a9b7d8821c39ae9af9d7ecf2f9e2f17404103"},
+    {file = "filelock-3.15.3.tar.gz", hash = "sha256:e1199bf5194a2277273dacd50269f0d87d0682088a3c561c15674ea9005d8635"},
 ]
 
 [package.extras]
 docs = ["furo (>=2023.9.10)", "sphinx (>=7.2.6)", "sphinx-autodoc-typehints (>=1.25.2)"]
-testing = ["covdefaults (>=2.3)", "coverage (>=7.3.2)", "diff-cover (>=8.0.1)", "pytest (>=7.4.3)", "pytest-asyncio (>=0.21)", "pytest-cov (>=4.1)", "pytest-mock (>=3.12)", "pytest-timeout (>=2.2)"]
+testing = ["covdefaults (>=2.3)", "coverage (>=7.3.2)", "diff-cover (>=8.0.1)", "pytest (>=7.4.3)", "pytest-asyncio (>=0.21)", "pytest-cov (>=4.1)", "pytest-mock (>=3.12)", "pytest-timeout (>=2.2)", "virtualenv (>=20.26.2)"]
 typing = ["typing-extensions (>=4.8)"]
 
 [[package]]
@@ -940,4 +961,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "67dd5d9b1f67aa42c74903cbd1b89e5bcde5f8ca8d53ab5b1e4fc49e729b5561"
+content-hash = "02ee883957991003eaed907ca706f3dc73887f7b96adb8945cb70d1be6980e58"

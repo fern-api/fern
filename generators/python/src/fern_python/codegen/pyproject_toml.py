@@ -42,7 +42,6 @@ class PyProjectToml:
         github_output_mode: Optional[GithubOutputMode],
         license_: Optional[LicenseConfig],
         extras: typing.Dict[str, List[str]] = {},
-        generate_readme: bool,
     ):
         self._poetry_block = PyProjectToml.PoetryBlock(
             name=name,
@@ -51,7 +50,6 @@ class PyProjectToml:
             pypi_metadata=pypi_metadata,
             github_output_mode=github_output_mode,
             license_=license_,
-            generate_readme=generate_readme,
         )
         self._dependency_manager = dependency_manager
         self._path = path
@@ -97,7 +95,6 @@ class PyProjectToml:
         pypi_metadata: Optional[PypiMetadata]
         github_output_mode: Optional[GithubOutputMode]
         license_: Optional[LicenseConfig]
-        generate_readme: bool
 
         def to_string(self) -> str:
             s = f'''[tool.poetry]
@@ -162,12 +159,7 @@ name = "{self.name}"'''
 
             s += f"""
 description = "{description}"
-"""
-            if self.generate_readme:
-                s += f"""
 readme = "README.md"
-"""
-            s += f"""
 authors = {json.dumps(authors, indent=4)}
 keywords = {json.dumps(keywords, indent=4)}
 {license_evaluated}
