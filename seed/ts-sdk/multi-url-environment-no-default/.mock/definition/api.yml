@@ -9,5 +9,6 @@ environments:
     urls:
       ec2: https://staging.ec2.aws.com
       s3: https://staging.s3.aws.com
+default-environment: null
 error-discrimination:
   strategy: status-code

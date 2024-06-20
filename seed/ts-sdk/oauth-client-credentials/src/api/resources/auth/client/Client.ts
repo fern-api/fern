@@ -32,8 +32,6 @@ export class Auth {
      *     await client.auth.getTokenWithClientCredentials({
      *         clientId: "string",
      *         clientSecret: "string",
-     *         audience: "https://api.example.com",
-     *         grantType: "client_credentials",
      *         scope: "string"
      *     })
      */
@@ -102,8 +100,6 @@ export class Auth {
      *         clientId: "string",
      *         clientSecret: "string",
      *         refreshToken: "string",
-     *         audience: "https://api.example.com",
-     *         grantType: "refresh_token",
      *         scope: "string"
      *     })
      */
