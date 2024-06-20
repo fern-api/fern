@@ -239,7 +239,6 @@ class SdkGenerator(AbstractGenerator):
                     )
                 )
 
-
         context.core_utilities.copy_to_project(project=project)
 
         snippet_template_source_file = SourceFileFactory.create_snippet()
