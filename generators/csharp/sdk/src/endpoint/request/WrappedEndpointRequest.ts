@@ -65,46 +65,37 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         keyType: csharp.Type.string(),
                         valueType: csharp.Type.object(),
                         entries: requiredQueryParameters.map((queryParameter) => {
-                            if (this.isString(queryParameter.valueType)) {
-                                return {
-                                    key: csharp.codeblock(`"${queryParameter.name.wireValue}"`),
-                                    value: csharp.codeblock(
-                                        `${this.getParameterName()}.${queryParameter.name.name.pascalCase.safeName}`
-                                    )
-                                };
-                            } else if (this.isDatetime(queryParameter.valueType)) {
-                                return {
-                                    key: csharp.codeblock(`"${queryParameter.name.wireValue}"`),
-                                    value: csharp.codeblock(
-                                        `${this.getParameterName()}.${
-                                            queryParameter.name.name.pascalCase.safeName
-                                        }.ToString("o0")`
-                                    )
-                                };
-                            } else {
-                                return {
-                                    key: csharp.codeblock(`"${queryParameter.name.wireValue}"`),
-                                    value: csharp.codeblock(
-                                        `${this.getParameterName()}.${
-                                            queryParameter.name.name.pascalCase.safeName
-                                        }.ToString()`
-                                    )
-                                };
-                            }
+                            return {
+                                key: csharp.codeblock(`"${queryParameter.name.wireValue}"`),
+                                value: this.stringifyQueryParameter(queryParameter)
+                            };
                         })
                     })
                 );
                 for (const query of optionalQueryParameters) {
                     const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
                     writer.controlFlow("if", `${queryParameterReference} != null`);
-                    writer.writeTextStatement(
-                        `${QUERY_PARAMETER_BAG_NAME}["${query.name.wireValue}"] = ${queryParameterReference}`
-                    );
+                    writer.write(`${QUERY_PARAMETER_BAG_NAME}["${query.name.wireValue}"] = `);
+                    writer.writeNodeStatement(this.stringifyQueryParameter(query));
                     writer.endControlFlow();
                 }
             }),
             queryParameterBagReference: QUERY_PARAMETER_BAG_NAME
         };
+    }
+
+    private stringifyQueryParameter(queryParameter: QueryParameter): csharp.CodeBlock {
+        if (this.isString(queryParameter.valueType)) {
+            return csharp.codeblock(`${this.getParameterName()}.${queryParameter.name.name.pascalCase.safeName}`);
+        } else if (this.isDatetime(queryParameter.valueType)) {
+            return csharp.codeblock(
+                `${this.getParameterName()}.${queryParameter.name.name.pascalCase.safeName}.ToString("o0")`
+            );
+        } else {
+            return csharp.codeblock(
+                `${this.getParameterName()}.${queryParameter.name.name.pascalCase.safeName}.ToString()`
+            );
+        }
     }
 
     public getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined {
@@ -129,42 +120,35 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         keyType: csharp.Type.string(),
                         valueType: csharp.Type.string(),
                         entries: requiredHeaders.map((header) => {
-                            if (this.isString(header.valueType)) {
-                                return {
-                                    key: csharp.codeblock(`"${header.name.wireValue}"`),
-                                    value: csharp.codeblock(
-                                        `${this.getParameterName()}.${header.name.name.pascalCase.safeName}`
-                                    )
-                                };
-                            } else if (this.isDatetime(header.valueType)) {
-                                return {
-                                    key: csharp.codeblock(`"${header.name.wireValue}"`),
-                                    value: csharp.codeblock(
-                                        `${this.getParameterName()}.${
-                                            header.name.name.pascalCase.safeName
-                                        }.ToString("o0")`
-                                    )
-                                };
-                            } else {
-                                return {
-                                    key: csharp.codeblock(`"${header.name.wireValue}"`),
-                                    value: csharp.codeblock(
-                                        `${this.getParameterName()}.${header.name.name.pascalCase.safeName}.ToString()`
-                                    )
-                                };
-                            }
+                            return {
+                                key: csharp.codeblock(`"${header.name.wireValue}"`),
+                                value: this.stringifyHeader(header)
+                            };
                         })
                     })
                 );
                 for (const header of optionalHeaders) {
                     const headerReference = `${this.getParameterName()}.${header.name.name.pascalCase.safeName}`;
                     writer.controlFlow("if", `${headerReference} != null`);
-                    writer.writeTextStatement(`${HEADER_BAG_NAME}["${header.name.wireValue}"] = ${headerReference}`);
+                    writer.write(`${HEADER_BAG_NAME}["${header.name.wireValue}"] = `);
+                    writer.writeNodeStatement(this.stringifyHeader(header));
                     writer.endControlFlow();
                 }
             }),
             headerParameterBagReference: HEADER_BAG_NAME
         };
+    }
+
+    private stringifyHeader(header: HttpHeader): csharp.CodeBlock {
+        if (this.isString(header.valueType)) {
+            return csharp.codeblock(`${this.getParameterName()}.${header.name.name.pascalCase.safeName}`);
+        } else if (this.isDatetime(header.valueType)) {
+            return csharp.codeblock(
+                `${this.getParameterName()}.${header.name.name.pascalCase.safeName}.ToString("o0")`
+            );
+        } else {
+            return csharp.codeblock(`${this.getParameterName()}.${header.name.name.pascalCase.safeName}.ToString()`);
+        }
     }
 
     public getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined {

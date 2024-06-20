@@ -25,7 +25,7 @@ public class PlaylistClient
         };
         if (request.OptionalDatetime != null)
         {
-            _query["optionalDatetime"] = request.OptionalDatetime;
+            _query["optionalDatetime"] = request.OptionalDatetime.ToString("o0");
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -57,7 +57,7 @@ public class PlaylistClient
         };
         if (request.Limit != null)
         {
-            _query["limit"] = request.Limit;
+            _query["limit"] = request.Limit.ToString();
         }
         if (request.OptionalMultipleField != null)
         {

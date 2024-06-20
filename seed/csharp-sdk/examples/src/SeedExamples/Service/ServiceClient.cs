@@ -50,7 +50,7 @@ public class ServiceClient
         var _query = new Dictionary<string, object>() { };
         if (request.Shallow != null)
         {
-            _query["shallow"] = request.Shallow;
+            _query["shallow"] = request.Shallow.ToString();
         }
         if (request.Tag != null)
         {

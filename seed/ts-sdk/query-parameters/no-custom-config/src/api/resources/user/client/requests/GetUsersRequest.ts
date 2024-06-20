@@ -20,6 +20,7 @@ import * as SeedQueryParameters from "../../../../index";
  *                 name: "string",
  *                 tags: ["string"]
  *             }],
+ *         optionalDeadline: new Date("2024-01-15T09:30:00.000Z"),
  *         keyValue: {
  *             "string": "string"
  *         },
@@ -50,6 +51,7 @@ export interface GetUsersRequest {
     bytes: string;
     user: SeedQueryParameters.User;
     userList: SeedQueryParameters.User[];
+    optionalDeadline?: Date;
     keyValue: Record<string, string>;
     optionalString?: string;
     nestedUser: SeedQueryParameters.NestedUser;

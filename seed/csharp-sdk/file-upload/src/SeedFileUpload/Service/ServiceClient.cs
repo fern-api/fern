@@ -40,7 +40,7 @@ public class ServiceClient
         }
         if (request.MaybeInteger != null)
         {
-            _query["maybeInteger"] = request.MaybeInteger;
+            _query["maybeInteger"] = request.MaybeInteger.ToString();
         }
         if (request.OptionalListOfStrings != null)
         {

@@ -41,6 +41,8 @@ public final class GetUsersRequest {
 
     private final List<User> userList;
 
+    private final Optional<OffsetDateTime> optionalDeadline;
+
     private final Map<String, String> keyValue;
 
     private final Optional<String> optionalString;
@@ -63,6 +65,7 @@ public final class GetUsersRequest {
             byte[] bytes,
             User user,
             List<User> userList,
+            Optional<OffsetDateTime> optionalDeadline,
             Map<String, String> keyValue,
             Optional<String> optionalString,
             NestedUser nestedUser,
@@ -77,6 +80,7 @@ public final class GetUsersRequest {
         this.bytes = bytes;
         this.user = user;
         this.userList = userList;
+        this.optionalDeadline = optionalDeadline;
         this.keyValue = keyValue;
         this.optionalString = optionalString;
         this.nestedUser = nestedUser;
@@ -119,6 +123,11 @@ public final class GetUsersRequest {
     @JsonProperty("userList")
     public List<User> getUserList() {
         return userList;
+    }
+
+    @JsonProperty("optionalDeadline")
+    public Optional<OffsetDateTime> getOptionalDeadline() {
+        return optionalDeadline;
     }
 
     @JsonProperty("keyValue")
@@ -170,6 +179,7 @@ public final class GetUsersRequest {
                 && bytes.equals(other.bytes)
                 && user.equals(other.user)
                 && userList.equals(other.userList)
+                && optionalDeadline.equals(other.optionalDeadline)
                 && keyValue.equals(other.keyValue)
                 && optionalString.equals(other.optionalString)
                 && nestedUser.equals(other.nestedUser)
@@ -188,6 +198,7 @@ public final class GetUsersRequest {
                 this.bytes,
                 this.user,
                 this.userList,
+                this.optionalDeadline,
                 this.keyValue,
                 this.optionalString,
                 this.nestedUser,
@@ -252,6 +263,10 @@ public final class GetUsersRequest {
 
         _FinalStage addAllUserList(List<User> userList);
 
+        _FinalStage optionalDeadline(Optional<OffsetDateTime> optionalDeadline);
+
+        _FinalStage optionalDeadline(OffsetDateTime optionalDeadline);
+
         _FinalStage keyValue(Map<String, String> keyValue);
 
         _FinalStage putAllKeyValue(Map<String, String> keyValue);
@@ -303,6 +318,8 @@ public final class GetUsersRequest {
 
         private Map<String, String> keyValue = new LinkedHashMap<>();
 
+        private Optional<OffsetDateTime> optionalDeadline = Optional.empty();
+
         private List<User> userList = new ArrayList<>();
 
         @JsonAnySetter
@@ -319,6 +336,7 @@ public final class GetUsersRequest {
             bytes(other.getBytes());
             user(other.getUser());
             userList(other.getUserList());
+            optionalDeadline(other.getOptionalDeadline());
             keyValue(other.getKeyValue());
             optionalString(other.getOptionalString());
             nestedUser(other.getNestedUser());
@@ -438,6 +456,19 @@ public final class GetUsersRequest {
         }
 
         @java.lang.Override
+        public _FinalStage optionalDeadline(OffsetDateTime optionalDeadline) {
+            this.optionalDeadline = Optional.of(optionalDeadline);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "optionalDeadline", nulls = Nulls.SKIP)
+        public _FinalStage optionalDeadline(Optional<OffsetDateTime> optionalDeadline) {
+            this.optionalDeadline = optionalDeadline;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage addAllUserList(List<User> userList) {
             this.userList.addAll(userList);
             return this;
@@ -467,6 +498,7 @@ public final class GetUsersRequest {
                     bytes,
                     user,
                     userList,
+                    optionalDeadline,
                     keyValue,
                     optionalString,
                     nestedUser,

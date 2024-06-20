@@ -261,6 +261,22 @@
                                 {
                                     "value": {
                                         "imports": [],
+                                        "templateString": "optionalDeadline: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "optionalDeadline",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
                                         "isOptional": true,
                                         "containerTemplateString": "keyValue: {\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "delimiter": ",\n\t\t\t",

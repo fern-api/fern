@@ -21,6 +21,7 @@ export interface UserServiceMethods {
                 bytes: string;
                 user: SeedQueryParameters.User;
                 userList: SeedQueryParameters.User[];
+                optionalDeadline?: Date;
                 keyValue: Record<string, string>;
                 optionalString?: string;
                 nestedUser: SeedQueryParameters.NestedUser;

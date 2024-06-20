@@ -40,6 +40,10 @@ public class UserClient {
         httpUrl.addQueryParameter("bytes", request.getBytes().toString());
         httpUrl.addQueryParameter("user", request.getUser().toString());
         httpUrl.addQueryParameter("userList", request.getUserList().toString());
+        if (request.getOptionalDeadline().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "optionalDeadline", request.getOptionalDeadline().get().toString());
+        }
         httpUrl.addQueryParameter("keyValue", request.getKeyValue());
         if (request.getOptionalString().isPresent()) {
             httpUrl.addQueryParameter(

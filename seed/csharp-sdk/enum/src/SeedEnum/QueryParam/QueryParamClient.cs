@@ -22,11 +22,11 @@ public class QueryParamClient
         };
         if (request.MaybeOperand != null)
         {
-            _query["maybeOperand"] = request.MaybeOperand;
+            _query["maybeOperand"] = request.MaybeOperand.ToString();
         }
         if (request.MaybeOperandOrColor != null)
         {
-            _query["maybeOperandOrColor"] = request.MaybeOperandOrColor;
+            _query["maybeOperandOrColor"] = request.MaybeOperandOrColor.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -47,11 +47,11 @@ public class QueryParamClient
         };
         if (request.MaybeOperand != null)
         {
-            _query["maybeOperand"] = request.MaybeOperand;
+            _query["maybeOperand"] = request.MaybeOperand.ToString();
         }
         if (request.MaybeOperandOrColor != null)
         {
-            _query["maybeOperandOrColor"] = request.MaybeOperandOrColor;
+            _query["maybeOperandOrColor"] = request.MaybeOperandOrColor.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest

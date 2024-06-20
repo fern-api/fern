@@ -29,6 +29,7 @@ public interface UserService {
       @RequestParam("date") String date, @RequestParam("deadline") OffsetDateTime deadline,
       @RequestParam("bytes") byte[] bytes, @RequestParam("user") User user,
       @RequestParam("userList") List<User> userList,
+      @RequestParam("optionalDeadline") Optional<OffsetDateTime> optionalDeadline,
       @RequestParam("keyValue") Map<String, String> keyValue,
       @RequestParam("optionalString") Optional<String> optionalString,
       @RequestParam("nestedUser") NestedUser nestedUser,
