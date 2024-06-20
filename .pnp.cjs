@@ -6661,9 +6661,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["depcheck", "npm:1.4.6"],\
             ["diff", "npm:5.2.0"],\
             ["eslint", "npm:8.56.0"],\
-            ["file-type", "npm:19.0.0"],\
             ["gray-matter", "npm:4.0.3"],\
-            ["is-svg", "npm:5.0.1"],\
             ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["mdast-util-from-markdown", "npm:2.0.0"],\
@@ -6693,6 +6691,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/tinycolor2", "npm:1.4.6"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
+            ["file-type", "npm:19.0.0"],\
+            ["is-svg", "npm:5.0.1"],\
             ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
             ["next-mdx-remote", "virtual:2434b322786904da39177ff03bdc5c7dbbf348dd60dac92e23ac99d71edb460312c4755faf7215e21192d941b8070d96ed0843e8723d06d3b608bb1250bd6880#npm:4.4.1"],\
             ["organize-imports-cli", "npm:0.10.0"],\
