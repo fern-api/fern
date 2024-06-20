@@ -68,5 +68,10 @@
         "esbuild": "0.16.15",
         "prettier": "2.7.1",
         "typescript": "4.6.4"
+    },
+    "browser": {
+        "fs": false,
+        "os": false,
+        "path": false
     }
 }
