@@ -138,7 +138,7 @@ export class RawClient {
             const reference = pathParameterReferences[part.pathParameter];
             if (reference == null) {
                 throw new Error(
-                    `Failed to find request parameter for the endpointt${endpoint.id} with path parameter ${part.pathParameter}`
+                    `Failed to find request parameter for the endpoint ${endpoint.id} with path parameter ${part.pathParameter}`
                 );
             }
             path += `{${reference}}${part.tail}`;
