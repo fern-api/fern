@@ -17,7 +17,7 @@ public class UnknownClient
     public async Task<IEnumerable<object>> PostAsync(object request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "",

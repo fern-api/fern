@@ -17,7 +17,7 @@ public class PrimitiveClient
     public async Task<string> GetAndReturnStringAsync(string request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/primitive/string",
@@ -35,7 +35,7 @@ public class PrimitiveClient
     public async Task<int> GetAndReturnIntAsync(int request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/primitive/integer",
@@ -53,7 +53,7 @@ public class PrimitiveClient
     public async Task<long> GetAndReturnLongAsync(long request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/primitive/long",
@@ -71,7 +71,7 @@ public class PrimitiveClient
     public async Task<double> GetAndReturnDoubleAsync(double request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/primitive/double",
@@ -89,7 +89,7 @@ public class PrimitiveClient
     public async Task<bool> GetAndReturnBoolAsync(bool request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/primitive/boolean",
@@ -107,7 +107,7 @@ public class PrimitiveClient
     public async Task<DateTime> GetAndReturnDatetimeAsync(DateTime request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/primitive/datetime",
@@ -125,7 +125,7 @@ public class PrimitiveClient
     public async Task<DateOnly> GetAndReturnDateAsync(DateOnly request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/primitive/date",
@@ -143,7 +143,7 @@ public class PrimitiveClient
     public async Task<Guid> GetAndReturnUuidAsync(Guid request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/primitive/uuid",
@@ -161,7 +161,7 @@ public class PrimitiveClient
     public async Task<string> GetAndReturnBase64Async(string request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/primitive/base64",

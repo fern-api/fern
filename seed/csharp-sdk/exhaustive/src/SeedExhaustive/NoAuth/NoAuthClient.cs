@@ -20,7 +20,7 @@ public class NoAuthClient
     public async Task<bool> PostWithNoAuthAsync(object request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/no-auth",

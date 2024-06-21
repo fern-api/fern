@@ -17,7 +17,7 @@ public class ServiceClient
     public async Task<object> GetExceptionAsync(string notificationId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
                 Path = $"/file/notification/{notificationId}"

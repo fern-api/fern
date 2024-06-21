@@ -38,6 +38,7 @@ export class EndpointGenerator {
         endpoint: HttpEndpoint;
         rawClientReference: string;
     }): csharp.Method {
+        console.log(`Generating endpoint id ${endpoint.id}`);
         const { parameters: nonEndpointParameters, pathParameterReferences } = this.getNonEndpointParameters({
             endpoint,
             serviceId
@@ -73,6 +74,7 @@ export class EndpointGenerator {
                 writer.write(`var ${RESPONSE_VARIABLE_NAME} = `);
                 writer.writeNodeStatement(
                     this.rawClient.makeRequest({
+                        requestType: request?.getRequestType(),
                         clientReference: rawClientReference,
                         endpoint,
                         bodyReference: requestBodyCodeBlock?.requestBodyReference,

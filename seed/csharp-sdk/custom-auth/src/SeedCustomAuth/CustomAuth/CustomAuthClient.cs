@@ -20,7 +20,7 @@ public class CustomAuthClient
     public async Task<bool> GetWithCustomAuthAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "custom-auth" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "custom-auth" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
@@ -36,7 +36,7 @@ public class CustomAuthClient
     public async Task<bool> PostWithCustomAuthAsync(object request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "custom-auth",

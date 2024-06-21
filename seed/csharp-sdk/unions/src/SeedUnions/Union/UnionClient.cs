@@ -17,7 +17,7 @@ public class UnionClient
     public async Task<object> GetAsync(string id)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/{id}" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"/{id}" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
@@ -30,7 +30,7 @@ public class UnionClient
     public async Task<bool> UpdateAsync(object request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Patch,
                 Path = "",

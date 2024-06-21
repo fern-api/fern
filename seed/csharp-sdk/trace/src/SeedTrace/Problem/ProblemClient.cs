@@ -20,7 +20,7 @@ public class ProblemClient
     public async Task<object> CreateProblemAsync(CreateProblemRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/problem-crud/create",
@@ -44,7 +44,7 @@ public class ProblemClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = $"/problem-crud/update/{problemId}",
@@ -65,7 +65,7 @@ public class ProblemClient
     public async void DeleteProblemAsync(string problemId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Delete,
                 Path = $"/problem-crud/delete/{problemId}"
@@ -81,7 +81,7 @@ public class ProblemClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/problem-crud/default-starter-files",

@@ -20,7 +20,7 @@ public class ServiceClient
     public async void CheckAsync(string id)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/check/{id}" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"/check/{id}" }
         );
     }
 
@@ -30,7 +30,7 @@ public class ServiceClient
     public async Task<bool> PingAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/ping" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "/ping" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)

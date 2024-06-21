@@ -18,7 +18,7 @@ public class EnumClient
     public async Task<WeatherReport> GetAndReturnEnumAsync(WeatherReport request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/enum",

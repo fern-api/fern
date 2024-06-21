@@ -17,7 +17,7 @@ public class OptionalClient
     public async Task<string> SendOptionalBodyAsync(Dictionary<string, object>? request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "send-optional-body",

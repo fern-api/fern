@@ -1,5 +1,5 @@
 import { csharp } from "@fern-api/csharp-codegen";
-import { HttpEndpoint, SdkRequest, TypeReference } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { RawClient } from "../RawClient";
 import {
@@ -9,21 +9,17 @@ import {
     RequestBodyCodeBlock
 } from "./EndpointRequest";
 
-export class ReferencedEndpointRequest extends EndpointRequest {
-    private requestBodyShape: TypeReference;
-
-    public constructor(
-        context: SdkGeneratorContext,
-        sdkRequest: SdkRequest,
-        endpoint: HttpEndpoint,
-        requestBodyShape: TypeReference
-    ) {
+export class BytesOnlyEndpointRequest extends EndpointRequest {
+    public constructor(context: SdkGeneratorContext, sdkRequest: SdkRequest, endpoint: HttpEndpoint) {
         super(context, sdkRequest, endpoint);
-        this.requestBodyShape = requestBodyShape;
     }
 
     public getParameterType(): csharp.Type {
-        return this.context.csharpTypeMapper.convert({ reference: this.requestBodyShape });
+        return csharp.Type.coreClass(
+            csharp.coreClassReference({
+                name: "Stream"
+            })
+        );
     }
 
     public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {
@@ -41,6 +37,6 @@ export class ReferencedEndpointRequest extends EndpointRequest {
     }
 
     public getRequestType(): RawClient.RequestBodyType | undefined {
-        return "json";
+        return "bytes";
     }
 }

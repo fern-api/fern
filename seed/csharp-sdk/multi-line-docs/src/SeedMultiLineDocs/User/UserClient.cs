@@ -21,7 +21,7 @@ public class UserClient
     public async void GetUserAsync(string userId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"users/{userId}" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"users/{userId}" }
         );
     }
 
@@ -32,7 +32,7 @@ public class UserClient
     public async Task<User> CreateUserAsync(CreateUserRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "users",

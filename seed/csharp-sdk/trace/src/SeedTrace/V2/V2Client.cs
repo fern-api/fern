@@ -24,7 +24,7 @@ public class V2Client
     public async void TestAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "" }
         );
     }
 }
