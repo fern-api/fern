@@ -130,7 +130,9 @@ public class RawClient
 
   public string BuildUrl(string path, Dictionary<string, object> query)
   {
-    var url = $"{_clientOptions.BaseUrl}{path}";
+    var trimmedBaseUrl = _clientOptions.BaseUrl.TrimEnd('/');
+    var trimmedBasePath = _clientOptions.BaseUrl.TrimStart('/');
+    var url = $"{trimmedBaseUrl}/{trimmedBasePath}";
     if (query.Count > 0)
     {
       url += "?";
