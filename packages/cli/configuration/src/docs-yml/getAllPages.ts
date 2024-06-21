@@ -19,19 +19,29 @@ export async function getAllPages({
             return combineMaps(
                 await Promise.all(
                     navigation.items.map(async (tab) => {
-                        if (tab.layout == null) {
-                            return {};
+                        if (tab.child.type === "layout") {
+                            return combineMaps(
+                                await Promise.all(
+                                    tab.child.layout.map(async (item) => {
+                                        return await getAllPagesFromNavigationItem({
+                                            item,
+                                            absolutePathToFernFolder
+                                        });
+                                    })
+                                )
+                            );
+                        } else if (tab.child.type === "changelog") {
+                            return combineMaps(
+                                await Promise.all(
+                                    tab.child.changelog.map(async (filepath) => ({
+                                        [await relativize(absolutePathToFernFolder, filepath)]: (
+                                            await readFile(filepath)
+                                        ).toString()
+                                    }))
+                                )
+                            );
                         }
-                        return combineMaps(
-                            await Promise.all(
-                                tab.layout.map(async (item) => {
-                                    return await getAllPagesFromNavigationItem({
-                                        item,
-                                        absolutePathToFernFolder
-                                    });
-                                })
-                            )
-                        );
+                        return {};
                     })
                 )
             );
@@ -99,6 +109,14 @@ export async function getAllPagesFromNavigationItem({
                     item.contents.map(async (sectionItem) => {
                         return await getAllPagesFromNavigationItem({ item: sectionItem, absolutePathToFernFolder });
                     })
+                )
+            );
+        case "changelog":
+            return combineMaps(
+                await Promise.all(
+                    item.changelog.map(async (filepath) => ({
+                        [await relativize(absolutePathToFernFolder, filepath)]: (await readFile(filepath)).toString()
+                    }))
                 )
             );
         default:

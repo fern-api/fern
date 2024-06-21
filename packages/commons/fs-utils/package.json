@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
+    "glob-promise": "^6.0.7",
     "json-stream-stringify": "^3.0.1",
     "tmp-promise": "^3.0.3"
   },

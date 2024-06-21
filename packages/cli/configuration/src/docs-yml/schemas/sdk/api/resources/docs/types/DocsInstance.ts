@@ -4,7 +4,7 @@
 
 import * as FernDocsConfig from "../../..";
 
-export interface DocsInstances {
+export interface DocsInstance {
     url: string;
     customDomain?: FernDocsConfig.CustomDomain;
     audiences?: FernDocsConfig.AudiencesConfig;

@@ -7,7 +7,7 @@ import {
 } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { listFiles } from "./listFiles";
+import { listFiles } from "./listFernFiles";
 import { loadAPIChangelog } from "./loadAPIChangelog";
 import { getValidAbsolutePathToAsyncAPIFromFolder } from "./loadAsyncAPIFile";
 import { getValidAbsolutePathToOpenAPIFromFolder } from "./loadOpenAPIFile";

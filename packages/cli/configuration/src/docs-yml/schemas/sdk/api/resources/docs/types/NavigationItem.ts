@@ -8,4 +8,5 @@ export type NavigationItem =
     | FernDocsConfig.PageConfiguration
     | FernDocsConfig.SectionConfiguration
     | FernDocsConfig.ApiReferenceConfiguration
-    | FernDocsConfig.LinkConfiguration;
+    | FernDocsConfig.LinkConfiguration
+    | FernDocsConfig.ChangelogConfiguration;

@@ -10,7 +10,7 @@ export interface FontConfig {
     /** The relative path of the font file. To define multiple weight and style varations of the same font, use `paths` instead. */
     path?: string;
     /** @default: `100 900`. */
-    weight?: string;
+    weight?: FernDocsConfig.FontWeight;
     /** @default: `normal`. */
     style?: FernDocsConfig.FontStyle;
     /** Use this instead of `path` if you want to specify multiple font files for different font weights and styles. */

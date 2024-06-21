@@ -12,6 +12,7 @@ export const NavigationItem: core.serialization.Schema<serializers.NavigationIte
         core.serialization.lazyObject(async () => (await import("../../..")).SectionConfiguration),
         core.serialization.lazyObject(async () => (await import("../../..")).ApiReferenceConfiguration),
         core.serialization.lazyObject(async () => (await import("../../..")).LinkConfiguration),
+        core.serialization.lazyObject(async () => (await import("../../..")).ChangelogConfiguration),
     ]);
 
 export declare namespace NavigationItem {
@@ -19,5 +20,6 @@ export declare namespace NavigationItem {
         | serializers.PageConfiguration.Raw
         | serializers.SectionConfiguration.Raw
         | serializers.ApiReferenceConfiguration.Raw
-        | serializers.LinkConfiguration.Raw;
+        | serializers.LinkConfiguration.Raw
+        | serializers.ChangelogConfiguration.Raw;
 }

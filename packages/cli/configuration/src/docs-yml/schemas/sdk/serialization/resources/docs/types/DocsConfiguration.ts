@@ -11,7 +11,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     FernDocsConfig.DocsConfiguration
 > = core.serialization.object({
     instances: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("../../..")).DocsInstances)
+        core.serialization.lazyObject(async () => (await import("../../..")).DocsInstance)
     ),
     title: core.serialization.string().optional(),
     tabs: core.serialization
@@ -52,7 +52,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
 
 export declare namespace DocsConfiguration {
     interface Raw {
-        instances: serializers.DocsInstances.Raw[];
+        instances: serializers.DocsInstance.Raw[];
         title?: string | null;
         tabs?: Record<serializers.TabId.Raw, serializers.TabConfig.Raw> | null;
         versions?: serializers.VersionConfig.Raw[] | null;

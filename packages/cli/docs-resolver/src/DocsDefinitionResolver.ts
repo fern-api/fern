@@ -12,6 +12,8 @@ import matter from "gray-matter";
 import { kebabCase } from "lodash-es";
 import urlJoin from "url-join";
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
+import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
+import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
@@ -241,11 +243,7 @@ export class DocsDefinitionResolver {
             }
             case "tabbed": {
                 return {
-                    tabsV2: await this.convertTabbedNavigation(
-                        this.parsedDocsConfig.navigation.items,
-                        this.parsedDocsConfig.tabs,
-                        slug
-                    )
+                    tabsV2: await this.convertTabbedNavigation(this.parsedDocsConfig.navigation.items, slug)
                 };
             }
             case "versioned": {
@@ -255,7 +253,6 @@ export class DocsDefinitionResolver {
                             const versionSlug = slug.setVersionSlug(version.slug ?? kebabCase(version.version));
                             const convertedNavigation = await this.convertUnversionedNavigationConfig({
                                 navigationConfig: version.navigation,
-                                tabs: version.tabs,
                                 parentSlug: versionSlug
                             });
                             return {
@@ -346,6 +343,31 @@ export class DocsDefinitionResolver {
                     url: item.url
                 };
             }
+            case "changelog": {
+                const idgen = NodeIdGenerator.init(parentSlug.get());
+                const node = new ChangelogNodeConverter(
+                    this.markdownFilesToFullSlugs,
+                    item.changelog,
+                    this.docsWorkspace,
+                    idgen
+                ).convert({
+                    parentSlug,
+                    title: item.title,
+                    icon: item.title,
+                    hidden: item.hidden,
+                    slug: item.slug
+                });
+                return {
+                    type: "changelogV3",
+                    node: node ?? {
+                        id: idgen.append("changelog").get(),
+                        type: "changelog",
+                        title: item.title,
+                        slug: parentSlug.append(item.slug ?? kebabCase(item.title)).get(),
+                        children: []
+                    }
+                };
+            }
             default:
                 assertNever(item);
         }
@@ -353,25 +375,23 @@ export class DocsDefinitionResolver {
 
     private async convertUnversionedNavigationConfig({
         navigationConfig,
-        tabs,
         parentSlug
     }: {
         navigationConfig: docsYml.UnversionedNavigationConfiguration;
-        tabs: Record<string, docsYml.RawSchemas.TabConfig> | undefined;
         parentSlug: FernNavigation.SlugGenerator;
     }): Promise<DocsV1Write.UnversionedNavigationConfig> {
         switch (navigationConfig.type) {
             case "untabbed": {
-                const untabbedItems = await Promise.all(
+                const untabs = await Promise.all(
                     navigationConfig.items.map((item) => this.convertNavigationItem(item, parentSlug))
                 );
                 return {
-                    items: untabbedItems
+                    items: untabs
                 };
             }
             case "tabbed": {
                 return {
-                    tabsV2: await this.convertTabbedNavigation(navigationConfig.items, tabs, parentSlug)
+                    tabsV2: await this.convertTabbedNavigation(navigationConfig.items, parentSlug)
                 };
             }
             default:
@@ -381,56 +401,68 @@ export class DocsDefinitionResolver {
 
     private async convertTabbedNavigation(
         items: docsYml.TabbedNavigation[],
-        tabs: Record<string, docsYml.RawSchemas.TabConfig> | undefined,
         parentSlug: FernNavigation.SlugGenerator
     ): Promise<DocsV1Write.NavigationTabV2[]> {
         return Promise.all(
-            items.map(async (tabbedItem): Promise<WithoutQuestionMarks<DocsV1Write.NavigationTabV2>> => {
-                const tabConfig = tabs?.[tabbedItem.tab];
-                if (tabConfig == null) {
-                    throw new Error(`Couldn't find config for tab id ${tabbedItem.tab}`);
-                }
-
-                if (tabConfig.href != null) {
-                    if (tabbedItem.layout != null) {
-                        throw new Error(
-                            `Tab ${tabConfig.displayName} contains an external link (href), and should not have any items`
-                        );
-                    }
-
+            items.map(async (tab): Promise<WithoutQuestionMarks<DocsV1Write.NavigationTabV2>> => {
+                if (tab.child.type === "link") {
                     return {
                         type: "link",
-                        title: tabConfig.displayName,
-                        icon: tabConfig.icon,
-                        url: tabConfig.href
+                        title: tab.title,
+                        icon: tab.icon,
+                        url: tab.child.href
                     };
                 }
 
-                if (tabbedItem.layout == null) {
-                    throw new Error(
-                        `Tab ${tabConfig.displayName} does not contain an external link (href), and should have items`
-                    );
+                if (tab.child.type === "changelog") {
+                    const idgen = NodeIdGenerator.init(parentSlug.get());
+                    const node = new ChangelogNodeConverter(
+                        this.markdownFilesToFullSlugs,
+                        tab.child.changelog,
+                        this.docsWorkspace,
+                        idgen
+                    ).convert({
+                        parentSlug,
+                        title: tab.title,
+                        icon: tab.title,
+                        hidden: tab.hidden,
+                        slug: tab.slug
+                    });
+                    return {
+                        type: "changelogV3",
+                        node: node ?? {
+                            id: idgen.append("changelog").get(),
+                            type: "changelog",
+                            title: tab.title,
+                            slug: parentSlug.append(tab.slug ?? kebabCase(tab.title)).get(),
+                            children: []
+                        }
+                    };
                 }
 
-                const slug = parentSlug.apply({
-                    skipUrlSlug: tabConfig.skipSlug,
-                    urlSlug: tabConfig.slug ?? kebabCase(tabConfig.displayName)
-                });
+                if (tab.child.type === "layout") {
+                    const slug = parentSlug.apply({
+                        skipUrlSlug: tab.skipUrlSlug,
+                        urlSlug: tab.slug ?? kebabCase(tab.title)
+                    });
 
-                const tabbedItems = await Promise.all(
-                    tabbedItem.layout.map((item) => this.convertNavigationItem(item, slug))
-                );
+                    const tabs = await Promise.all(
+                        tab.child.layout.map((item) => this.convertNavigationItem(item, slug))
+                    );
 
-                return {
-                    type: "group",
-                    title: tabConfig.displayName,
-                    icon: tabConfig.icon,
-                    items: tabbedItems,
-                    urlSlugOverride: tabConfig.slug,
-                    skipUrlSlug: tabConfig.skipSlug,
-                    hidden: tabConfig.hidden,
-                    fullSlug: undefined
-                };
+                    return {
+                        type: "group",
+                        title: tab.title,
+                        icon: tab.icon,
+                        items: tabs,
+                        urlSlugOverride: tab.slug,
+                        skipUrlSlug: tab.skipUrlSlug,
+                        hidden: tab.hidden,
+                        fullSlug: undefined
+                    };
+                }
+
+                assertNever(tab.child);
             })
         );
     }
