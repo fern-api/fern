@@ -20,7 +20,7 @@ public class SubmissionClient
     public async Task<ExecutionSessionResponse> CreateExecutionSessionAsync(Language language)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = $"/sessions/create-session/{language}"
@@ -40,7 +40,11 @@ public class SubmissionClient
     public async Task<ExecutionSessionResponse?> GetExecutionSessionAsync(string sessionId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/sessions/{sessionId}" }
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = $"/sessions/{sessionId}"
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
@@ -56,7 +60,7 @@ public class SubmissionClient
     public async void StopExecutionSessionAsync(string sessionId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Delete,
                 Path = $"/sessions/stop/{sessionId}"
@@ -67,7 +71,7 @@ public class SubmissionClient
     public async Task<GetExecutionSessionStateResponse> GetExecutionSessionsStateAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
                 Path = "/sessions/execution-sessions-state"

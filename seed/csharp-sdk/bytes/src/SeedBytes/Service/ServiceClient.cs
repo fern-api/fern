@@ -13,10 +13,15 @@ public class ServiceClient
         _client = client;
     }
 
-    public async void UploadAsync()
+    public async void UploadAsync(Stream request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "upload-content" }
+            new RawClient.StreamApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "upload-content",
+                Body = request
+            }
         );
     }
 }

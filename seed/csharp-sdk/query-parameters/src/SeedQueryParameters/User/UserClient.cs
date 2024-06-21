@@ -43,7 +43,7 @@ public class UserClient
             _query["optionalUser"] = request.OptionalUser.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
                 Path = "/user",

@@ -28,7 +28,7 @@ public class PlaylistClient
             _query["optionalDatetime"] = request.OptionalDatetime.Value.ToString("o0");
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = $"/v2/playlist/{serviceParam}/create",
@@ -67,7 +67,7 @@ public class PlaylistClient
             _query["optionalMultipleField"] = request.OptionalMultipleField;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
                 Path = $"/v2/playlist/{serviceParam}/all",
@@ -88,7 +88,7 @@ public class PlaylistClient
     public async Task<Playlist> GetPlaylistAsync(int serviceParam, string playlistId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
                 Path = $"/v2/playlist/{serviceParam}/{playlistId}"
@@ -112,7 +112,7 @@ public class PlaylistClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Put,
                 Path = $"/v2/playlist/{serviceParam}/{playlistId}",
@@ -133,7 +133,7 @@ public class PlaylistClient
     public async void DeletePlaylistAsync(int serviceParam, string playlistId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Delete,
                 Path = $"/v2/playlist/{serviceParam}/{playlistId}"

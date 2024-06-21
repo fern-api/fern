@@ -20,7 +20,7 @@ public class ContainerClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/container/list-of-primitives",
@@ -40,7 +40,7 @@ public class ContainerClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/container/list-of-objects",
@@ -58,7 +58,7 @@ public class ContainerClient
     public async Task<HashSet<string>> GetAndReturnSetOfPrimitivesAsync(HashSet<string> request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/container/set-of-primitives",
@@ -78,7 +78,7 @@ public class ContainerClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/container/set-of-objects",
@@ -98,7 +98,7 @@ public class ContainerClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/container/map-prim-to-prim",
@@ -118,7 +118,7 @@ public class ContainerClient
     > GetAndReturnMapOfPrimToObjectAsync(Dictionary<string, ObjectWithRequiredField> request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/container/map-prim-to-object",
@@ -140,7 +140,7 @@ public class ContainerClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/container/opt-objects",

@@ -10,6 +10,7 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { RawClient } from "../RawClient";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
@@ -129,6 +130,20 @@ export class WrappedEndpointRequest extends EndpointRequest {
         };
     }
 
+    public getRequestType(): RawClient.RequestBodyType | undefined {
+        if (this.endpoint.requestBody == null) {
+            return undefined;
+        }
+        switch (this.endpoint.requestBody.type) {
+            case "bytes":
+                return "bytes";
+            case "reference":
+            case "inlinedRequestBody":
+                return "json";
+        }
+        return undefined;
+    }
+
     private stringify({ reference, name }: { reference: TypeReference; name: Name }): csharp.CodeBlock {
         if (this.isString(reference)) {
             return csharp.codeblock(`${this.getParameterName()}.${name.pascalCase.safeName}`);
@@ -160,7 +175,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 return undefined;
             },
             fileUpload: () => undefined,
-            bytes: () => undefined,
+            bytes: () => {
+                return {
+                    requestBodyReference: `${this.getParameterName()}.${this.wrapper.bodyKey.pascalCase.safeName}`
+                };
+            },
             _other: () => undefined
         });
     }

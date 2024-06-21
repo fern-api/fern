@@ -73,6 +73,7 @@ export class EndpointGenerator {
                 writer.write(`var ${RESPONSE_VARIABLE_NAME} = `);
                 writer.writeNodeStatement(
                     this.rawClient.makeRequest({
+                        requestType: request?.getRequestType(),
                         clientReference: rawClientReference,
                         endpoint,
                         bodyReference: requestBodyCodeBlock?.requestBodyReference,
@@ -114,7 +115,11 @@ export class EndpointGenerator {
         const parameters: csharp.Parameter[] = [];
         const service = this.context.getHttpServiceOrThrow(serviceId);
         const pathParameterReferences: Record<string, string> = {};
-        for (const pathParam of [...service.pathParameters, ...endpoint.pathParameters]) {
+        for (const pathParam of [
+            ...this.context.ir.pathParameters,
+            ...service.pathParameters,
+            ...endpoint.pathParameters
+        ]) {
             const parameterName = pathParam.name.camelCase.safeName;
             pathParameterReferences[pathParam.name.originalName] = parameterName;
             parameters.push(

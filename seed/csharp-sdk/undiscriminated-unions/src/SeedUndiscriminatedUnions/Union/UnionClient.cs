@@ -36,7 +36,7 @@ public class UnionClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "",
@@ -63,7 +63,7 @@ public class UnionClient
     public async Task<Dictionary<OneOf<KeyType, string>, string>> GetMetadataAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/metadata" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "/metadata" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)

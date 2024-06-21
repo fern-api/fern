@@ -16,7 +16,7 @@ public class DummyClient
     public async void GenerateStreamAsync(GenerateStreamRequestzs request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "generate-stream",

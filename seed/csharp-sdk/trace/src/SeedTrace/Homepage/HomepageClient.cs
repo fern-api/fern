@@ -17,7 +17,7 @@ public class HomepageClient
     public async Task<IEnumerable<string>> GetHomepageProblemsAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/homepage-problems" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "/homepage-problems" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
@@ -30,7 +30,7 @@ public class HomepageClient
     public async void SetHomepageProblemsAsync(IEnumerable<string> request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/homepage-problems",
