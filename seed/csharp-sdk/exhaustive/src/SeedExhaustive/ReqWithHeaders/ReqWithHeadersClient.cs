@@ -23,7 +23,7 @@ public class ReqWithHeadersClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/custom-header",
+                Path = "/test-headers/custom-header",
                 Body = request.Body,
                 Headers = _headers
             }

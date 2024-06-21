@@ -25,7 +25,7 @@ public class HeadersClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/headers",
+                Path = "headers",
                 Headers = _headers
             }
         );

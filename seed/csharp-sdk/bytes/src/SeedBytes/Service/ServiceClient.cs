@@ -16,7 +16,7 @@ public class ServiceClient
     public async void UploadAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/upload-content" }
+            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "upload-content" }
         );
     }
 }

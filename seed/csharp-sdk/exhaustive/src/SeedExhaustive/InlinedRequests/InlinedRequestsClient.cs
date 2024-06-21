@@ -26,7 +26,7 @@ public class InlinedRequestsClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/object",
+                Path = "/req-bodies/object",
                 Body = request
             }
         );

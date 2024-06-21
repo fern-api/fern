@@ -20,7 +20,7 @@ public class S3Client
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/presigned-url",
+                Path = "/s3/presigned-url",
                 Body = request
             }
         );

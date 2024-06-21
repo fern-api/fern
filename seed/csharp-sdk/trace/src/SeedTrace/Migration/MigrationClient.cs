@@ -26,7 +26,7 @@ public class MigrationClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/all",
+                Path = "/migration-info/all",
                 Headers = _headers
             }
         );

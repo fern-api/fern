@@ -23,7 +23,7 @@ public class ContainerClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/list-of-primitives",
+                Path = "/container/list-of-primitives",
                 Body = request
             }
         );
@@ -43,7 +43,7 @@ public class ContainerClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/list-of-objects",
+                Path = "/container/list-of-objects",
                 Body = request
             }
         );
@@ -61,7 +61,7 @@ public class ContainerClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/set-of-primitives",
+                Path = "/container/set-of-primitives",
                 Body = request
             }
         );
@@ -81,7 +81,7 @@ public class ContainerClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/set-of-objects",
+                Path = "/container/set-of-objects",
                 Body = request
             }
         );
@@ -101,7 +101,7 @@ public class ContainerClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/map-prim-to-prim",
+                Path = "/container/map-prim-to-prim",
                 Body = request
             }
         );
@@ -121,7 +121,7 @@ public class ContainerClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/map-prim-to-object",
+                Path = "/container/map-prim-to-object",
                 Body = request
             }
         );
@@ -143,7 +143,7 @@ public class ContainerClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/opt-objects",
+                Path = "/container/opt-objects",
                 Body = request
             }
         );

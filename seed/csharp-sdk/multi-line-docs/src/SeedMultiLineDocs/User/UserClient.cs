@@ -21,7 +21,7 @@ public class UserClient
     public async void GetUserAsync(string userId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/users/{userId}" }
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"users/{userId}" }
         );
     }
 
@@ -35,7 +35,7 @@ public class UserClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/users",
+                Path = "users",
                 Body = request
             }
         );

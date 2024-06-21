@@ -21,7 +21,11 @@ public class ProblemClient
     public async Task<IEnumerable<LightweightProblemInfoV2>> GetLightweightProblemsAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/lightweight-problem-info" }
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = "/problems-v2/lightweight-problem-info"
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
@@ -37,7 +41,7 @@ public class ProblemClient
     public async Task<IEnumerable<ProblemInfoV2>> GetProblemsAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/problem-info" }
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/problems-v2/problem-info" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
@@ -56,7 +60,7 @@ public class ProblemClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/problem-info/{problemId}"
+                Path = $"/problems-v2/problem-info/{problemId}"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -76,7 +80,7 @@ public class ProblemClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/problem-info/{problemId}/version/{problemVersion}"
+                Path = $"/problems-v2/problem-info/{problemId}/version/{problemVersion}"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

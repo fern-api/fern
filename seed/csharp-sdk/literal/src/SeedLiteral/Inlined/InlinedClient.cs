@@ -20,7 +20,7 @@ public class InlinedClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/inlined",
+                Path = "inlined",
                 Body = request
             }
         );

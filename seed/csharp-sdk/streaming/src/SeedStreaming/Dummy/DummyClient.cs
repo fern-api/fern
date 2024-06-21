@@ -19,7 +19,7 @@ public class DummyClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/generate-stream",
+                Path = "generate-stream",
                 Body = request
             }
         );

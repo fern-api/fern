@@ -14,10 +14,14 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task<object> GetExceptionAsync()
+    public async Task<object> GetExceptionAsync(string notificationId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = $"/file/notification/{notificationId}"
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)

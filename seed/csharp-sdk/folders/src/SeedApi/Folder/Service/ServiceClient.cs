@@ -16,7 +16,7 @@ public class ServiceClient
     public async void EndpointAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/service" }
         );
     }
 
@@ -26,7 +26,7 @@ public class ServiceClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "",
+                Path = "/service",
                 Body = request
             }
         );

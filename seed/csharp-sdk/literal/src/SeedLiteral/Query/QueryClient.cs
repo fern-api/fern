@@ -26,7 +26,7 @@ public class QueryClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/query",
+                Path = "query",
                 Query = _query
             }
         );

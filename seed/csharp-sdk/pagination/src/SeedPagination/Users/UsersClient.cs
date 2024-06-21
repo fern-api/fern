@@ -39,7 +39,7 @@ public class UsersClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "",
+                Path = "/users",
                 Query = _query
             }
         );
@@ -76,7 +76,7 @@ public class UsersClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "",
+                Path = "/users",
                 Query = _query
             }
         );
@@ -109,7 +109,7 @@ public class UsersClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "",
+                Path = "/users",
                 Query = _query
             }
         );
@@ -134,7 +134,7 @@ public class UsersClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "",
+                Path = "/users",
                 Query = _query
             }
         );
@@ -157,7 +157,7 @@ public class UsersClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "",
+                Path = "/users",
                 Query = _query
             }
         );
@@ -182,7 +182,7 @@ public class UsersClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "",
+                Path = "/users",
                 Query = _query
             }
         );

@@ -20,7 +20,7 @@ public class ServiceClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/movie",
+                Path = "movie",
                 Body = request
             }
         );
@@ -38,7 +38,7 @@ public class ServiceClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/movie",
+                Path = "movie",
                 Body = request
             }
         );
@@ -56,7 +56,7 @@ public class ServiceClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/movie",
+                Path = "movie",
                 Body = request
             }
         );
@@ -74,7 +74,7 @@ public class ServiceClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/movie",
+                Path = "movie",
                 Body = request
             }
         );
@@ -92,7 +92,7 @@ public class ServiceClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/movie",
+                Path = "movie",
                 Body = request
             }
         );
@@ -110,7 +110,7 @@ public class ServiceClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/movie",
+                Path = "movie",
                 Body = request
             }
         );
@@ -128,7 +128,7 @@ public class ServiceClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/movie",
+                Path = "movie",
                 Body = request
             }
         );

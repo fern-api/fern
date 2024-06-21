@@ -20,7 +20,7 @@ public class ReferenceClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/reference",
+                Path = "reference",
                 Body = request
             }
         );

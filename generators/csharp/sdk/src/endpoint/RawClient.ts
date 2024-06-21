@@ -48,7 +48,10 @@ export class RawClient {
             {
                 name: "Path",
                 assignment: csharp.codeblock(
-                    `${this.getPathString({ endpoint, pathParameterReferences: pathParameterReferences ?? {} })}`
+                    `${this.getPathString({
+                        endpoint,
+                        pathParameterReferences: pathParameterReferences ?? {}
+                    })}`
                 )
             }
         ];
@@ -114,14 +117,14 @@ export class RawClient {
         endpoint: HttpEndpoint;
         pathParameterReferences: Record<string, string>;
     }): string {
-        let path = endpoint.path.head;
+        let path = endpoint.fullPath.head;
         let pathParametersPresent = false;
-        for (const part of endpoint.path.parts) {
+        for (const part of endpoint.fullPath.parts) {
             pathParametersPresent = true;
             const reference = pathParameterReferences[part.pathParameter];
             if (reference == null) {
                 throw new Error(
-                    `Failed to find request parameter for the endpointt ${endpoint.id} with path parameter ${part.pathParameter}`
+                    `Failed to find request parameter for the endpointt${endpoint.id} with path parameter ${part.pathParameter}`
                 );
             }
             path += `{${reference}}${part.tail}`;
