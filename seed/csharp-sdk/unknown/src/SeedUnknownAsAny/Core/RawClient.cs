@@ -107,7 +107,9 @@ public class RawClient
 
     private string BuildUrl(string path, Dictionary<string, object> query)
     {
-        var url = $"{_clientOptions.BaseUrl}{path}";
+        uri1 = _clientOptions.BaseUrl.TrimEnd('/');
+        uri2 = path.TrimStart('/');
+        var url = $"{uri1}/{uri2}";
         if (query.Count > 0)
         {
             url += "?";
