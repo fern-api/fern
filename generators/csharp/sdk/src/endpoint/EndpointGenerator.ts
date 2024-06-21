@@ -112,8 +112,9 @@ export class EndpointGenerator {
         pathParameterReferences: Record<string, string>;
     } {
         const parameters: csharp.Parameter[] = [];
+        const service = this.context.getHttpServiceOrThrow(serviceId);
         const pathParameterReferences: Record<string, string> = {};
-        for (const pathParam of endpoint.pathParameters) {
+        for (const pathParam of [...service.pathParameters, ...endpoint.pathParameters]) {
             const parameterName = pathParam.name.camelCase.safeName;
             pathParameterReferences[pathParam.name.originalName] = parameterName;
             parameters.push(
