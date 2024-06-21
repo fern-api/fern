@@ -3823,7 +3823,7 @@ __metadata:
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    glob-promise: ^6.0.7
+    glob-promise: ^5.0.0
     jest: ^29.7.0
     json-stream-stringify: ^3.0.1
     organize-imports-cli: ^0.10.0
@@ -13650,15 +13650,6 @@ env-cmd@toddbluhm/env-cmd:
   peerDependencies:
     glob: ^8.0.3
   checksum: df374e774939f202a834b2f218fca7b67345701962aec1d5eecda81e3a29b8bdcf4436f2660d3e500cfaa52aa3c2b8f4cd1f04860ea29a7d5661decdb301ed9c
-  languageName: node
-  linkType: hard
-
-"glob-promise@npm:^6.0.7":
-  version: 6.0.7
-  resolution: "glob-promise@npm:6.0.7"
-  peerDependencies:
-    glob: ^8.0.3
-  checksum: 1f6c4b2b5cd882d12be3d58cedd36b5b0dcdbf619b126dd7c2b2763e478c34f90b2ea75c58ceb7fbdc78f72ec58495269782e0b0ab66598267ed3f7b12491a0e
   languageName: node
   linkType: hard
 

@@ -6877,7 +6877,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
-            ["glob-promise", "virtual:e401be82496dc167edf01d3c12cddb65fce2b3c6a7cdaee5612373ef5a05bd4c0271021eedd68e19ad3daff0ce7948355f15d583cfad42430558127eda867398#npm:6.0.7"],\
+            ["glob-promise", "virtual:e401be82496dc167edf01d3c12cddb65fce2b3c6a7cdaee5612373ef5a05bd4c0271021eedd68e19ad3daff0ce7948355f15d583cfad42430558127eda867398#npm:5.0.1"],\
             ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
             ["json-stream-stringify", "npm:3.0.1"],\
             ["organize-imports-cli", "npm:0.10.0"],\
@@ -18079,13 +18079,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["npm:6.0.7", {\
-          "packageLocation": "./.yarn/cache/glob-promise-npm-6.0.7-3fd4718c1a-1f6c4b2b5c.zip/node_modules/glob-promise/",\
-          "packageDependencies": [\
-            ["glob-promise", "npm:6.0.7"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
         ["virtual:05c9e45862260c886c225652bec99cad7887f66633a7523be0779a61d1b18e00a53a73459a92e616cdddaec4e56c4785468ac2461291fb12a8be2bd2de789022#npm:5.0.1", {\
           "packageLocation": "./.yarn/unplugged/glob-promise-virtual-5125ea585c/node_modules/glob-promise/",\
           "packageDependencies": [\
@@ -18099,15 +18092,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["virtual:e401be82496dc167edf01d3c12cddb65fce2b3c6a7cdaee5612373ef5a05bd4c0271021eedd68e19ad3daff0ce7948355f15d583cfad42430558127eda867398#npm:6.0.7", {\
-          "packageLocation": "./.yarn/__virtual__/glob-promise-virtual-a91acde901/0/cache/glob-promise-npm-6.0.7-3fd4718c1a-1f6c4b2b5c.zip/node_modules/glob-promise/",\
+        ["virtual:e401be82496dc167edf01d3c12cddb65fce2b3c6a7cdaee5612373ef5a05bd4c0271021eedd68e19ad3daff0ce7948355f15d583cfad42430558127eda867398#npm:5.0.1", {\
+          "packageLocation": "./.yarn/unplugged/glob-promise-virtual-948a49dab3/node_modules/glob-promise/",\
           "packageDependencies": [\
-            ["glob-promise", "virtual:e401be82496dc167edf01d3c12cddb65fce2b3c6a7cdaee5612373ef5a05bd4c0271021eedd68e19ad3daff0ce7948355f15d583cfad42430558127eda867398#npm:6.0.7"],\
-            ["@types/glob", null],\
-            ["glob", null]\
+            ["glob-promise", "virtual:e401be82496dc167edf01d3c12cddb65fce2b3c6a7cdaee5612373ef5a05bd4c0271021eedd68e19ad3daff0ce7948355f15d583cfad42430558127eda867398#npm:5.0.1"],\
+            ["@types/glob", "npm:8.1.0"],\
+            ["glob", null],\
+            ["npm-install-peers", "npm:1.2.2"]\
           ],\
           "packagePeers": [\
-            "@types/glob",\
             "glob"\
           ],\
           "linkType": "HARD"\

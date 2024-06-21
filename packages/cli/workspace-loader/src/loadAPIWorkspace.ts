@@ -7,7 +7,7 @@ import {
 } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { listFiles } from "./listFernFiles";
+import { listFernFiles } from "./listFernFiles";
 import { loadAPIChangelog } from "./loadAPIChangelog";
 import { getValidAbsolutePathToAsyncAPIFromFolder } from "./loadAsyncAPIFile";
 import { getValidAbsolutePathToOpenAPIFromFolder } from "./loadOpenAPIFile";
@@ -155,7 +155,7 @@ export async function loadAPIWorkspace({
         absolutePathToWorkspace,
         context
     });
-    const yamlFiles = await listFiles(absolutePathToDefinition, "{yml,yaml}");
+    const yamlFiles = await listFernFiles(absolutePathToDefinition, "{yml,yaml}");
 
     const parseResult = await parseYamlFiles(yamlFiles);
     if (!parseResult.didSucceed) {
