@@ -32,7 +32,7 @@ public class QueryParamClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/query",
+                Path = "query",
                 Query = _query
             }
         );
@@ -57,7 +57,7 @@ public class QueryParamClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/query-list",
+                Path = "query-list",
                 Query = _query
             }
         );

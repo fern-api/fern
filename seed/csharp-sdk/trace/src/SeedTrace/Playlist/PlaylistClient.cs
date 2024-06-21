@@ -17,7 +17,7 @@ public class PlaylistClient
     /// <summary>
     /// Create a new playlist
     /// </summary>
-    public async Task<Playlist> CreatePlaylistAsync(CreatePlaylistRequest request)
+    public async Task<Playlist> CreatePlaylistAsync(int serviceParam, CreatePlaylistRequest request)
     {
         var _query = new Dictionary<string, object>()
         {
@@ -31,7 +31,7 @@ public class PlaylistClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/create",
+                Path = $"/v2/playlist/{serviceParam}/create",
                 Body = request.Body,
                 Query = _query
             }
@@ -47,7 +47,10 @@ public class PlaylistClient
     /// <summary>
     /// Returns the user's playlists
     /// </summary>
-    public async Task<IEnumerable<Playlist>> GetPlaylistsAsync(GetPlaylistsRequest request)
+    public async Task<IEnumerable<Playlist>> GetPlaylistsAsync(
+        int serviceParam,
+        GetPlaylistsRequest request
+    )
     {
         var _query = new Dictionary<string, object>()
         {
@@ -67,7 +70,7 @@ public class PlaylistClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/all",
+                Path = $"/v2/playlist/{serviceParam}/all",
                 Query = _query
             }
         );
@@ -82,10 +85,14 @@ public class PlaylistClient
     /// <summary>
     /// Returns a playlist
     /// </summary>
-    public async Task<Playlist> GetPlaylistAsync(string playlistId)
+    public async Task<Playlist> GetPlaylistAsync(int serviceParam, string playlistId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/{playlistId}" }
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = $"/v2/playlist/{serviceParam}/{playlistId}"
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
@@ -99,6 +106,7 @@ public class PlaylistClient
     /// Updates a playlist
     /// </summary>
     public async Task<Playlist?> UpdatePlaylistAsync(
+        int serviceParam,
         string playlistId,
         UpdatePlaylistRequest? request
     )
@@ -107,7 +115,7 @@ public class PlaylistClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Put,
-                Path = $"/{playlistId}",
+                Path = $"/v2/playlist/{serviceParam}/{playlistId}",
                 Body = request
             }
         );
@@ -122,10 +130,14 @@ public class PlaylistClient
     /// <summary>
     /// Deletes a playlist
     /// </summary>
-    public async void DeletePlaylistAsync(string playlistId)
+    public async void DeletePlaylistAsync(int serviceParam, string playlistId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Delete, Path = $"/{playlistId}" }
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Delete,
+                Path = $"/v2/playlist/{serviceParam}/{playlistId}"
+            }
         );
     }
 }

@@ -19,7 +19,7 @@ public class CompletionsClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/stream",
+                Path = "stream",
                 Body = request
             }
         );

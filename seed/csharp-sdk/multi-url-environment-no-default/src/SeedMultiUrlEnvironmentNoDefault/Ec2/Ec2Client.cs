@@ -19,7 +19,7 @@ public class Ec2Client
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/boot",
+                Path = "/ec2/boot",
                 Body = request
             }
         );

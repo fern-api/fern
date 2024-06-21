@@ -20,7 +20,7 @@ public class UnionClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "",
+                Path = "/union",
                 Body = request
             }
         );

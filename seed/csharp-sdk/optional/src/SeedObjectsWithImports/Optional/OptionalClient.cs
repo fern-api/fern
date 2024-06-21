@@ -20,7 +20,7 @@ public class OptionalClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/send-optional-body",
+                Path = "send-optional-body",
                 Body = request
             }
         );

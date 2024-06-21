@@ -20,7 +20,7 @@ public class PrimitiveClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/string",
+                Path = "/primitive/string",
                 Body = request
             }
         );
@@ -38,7 +38,7 @@ public class PrimitiveClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/integer",
+                Path = "/primitive/integer",
                 Body = request
             }
         );
@@ -56,7 +56,7 @@ public class PrimitiveClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/long",
+                Path = "/primitive/long",
                 Body = request
             }
         );
@@ -74,7 +74,7 @@ public class PrimitiveClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/double",
+                Path = "/primitive/double",
                 Body = request
             }
         );
@@ -92,7 +92,7 @@ public class PrimitiveClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/boolean",
+                Path = "/primitive/boolean",
                 Body = request
             }
         );
@@ -110,7 +110,7 @@ public class PrimitiveClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/datetime",
+                Path = "/primitive/datetime",
                 Body = request
             }
         );
@@ -128,7 +128,7 @@ public class PrimitiveClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/date",
+                Path = "/primitive/date",
                 Body = request
             }
         );
@@ -146,7 +146,7 @@ public class PrimitiveClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/uuid",
+                Path = "/primitive/uuid",
                 Body = request
             }
         );
@@ -164,7 +164,7 @@ public class PrimitiveClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/base64",
+                Path = "/primitive/base64",
                 Body = request
             }
         );

@@ -46,7 +46,7 @@ public class UserClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "",
+                Path = "/user",
                 Query = _query
             }
         );

@@ -21,7 +21,7 @@ public class EnumClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "",
+                Path = "/enum",
                 Body = request
             }
         );

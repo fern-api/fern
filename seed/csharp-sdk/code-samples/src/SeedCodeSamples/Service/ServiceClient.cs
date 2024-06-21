@@ -20,7 +20,7 @@ public class ServiceClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/hello",
+                Path = "hello",
                 Body = request
             }
         );

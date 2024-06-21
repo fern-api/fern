@@ -23,7 +23,7 @@ public class ProblemClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/create",
+                Path = "/problem-crud/create",
                 Body = request
             }
         );
@@ -47,7 +47,7 @@ public class ProblemClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/update/{problemId}",
+                Path = $"/problem-crud/update/{problemId}",
                 Body = request
             }
         );
@@ -65,7 +65,11 @@ public class ProblemClient
     public async void DeleteProblemAsync(string problemId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Delete, Path = $"/delete/{problemId}" }
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Delete,
+                Path = $"/problem-crud/delete/{problemId}"
+            }
         );
     }
 
@@ -80,7 +84,7 @@ public class ProblemClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/default-starter-files",
+                Path = "/problem-crud/default-starter-files",
                 Body = request
             }
         );

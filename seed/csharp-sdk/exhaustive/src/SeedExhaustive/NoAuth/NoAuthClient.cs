@@ -23,7 +23,7 @@ public class NoAuthClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "",
+                Path = "/no-auth",
                 Body = request
             }
         );

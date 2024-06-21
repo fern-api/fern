@@ -17,7 +17,7 @@ public class ServiceClient
     public async Task<object> GetResourceAsync(string resourceId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/{resourceId}" }
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/resource/{resourceId}" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
@@ -38,7 +38,7 @@ public class ServiceClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "",
+                Path = "/resource",
                 Query = _query
             }
         );
