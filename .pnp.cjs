@@ -7724,8 +7724,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["axios", "npm:0.28.0"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
-            ["glob", "npm:8.1.0"],\
-            ["glob-promise", "virtual:e401be82496dc167edf01d3c12cddb65fce2b3c6a7cdaee5612373ef5a05bd4c0271021eedd68e19ad3daff0ce7948355f15d583cfad42430558127eda867398#npm:5.0.1"],\
             ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
             ["js-yaml", "npm:4.1.0"],\
             ["lodash-es", "npm:4.17.21"],\
