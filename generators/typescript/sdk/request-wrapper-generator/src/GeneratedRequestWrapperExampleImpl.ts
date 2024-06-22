@@ -5,7 +5,7 @@ import {
     Name,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
+import { GetReferenceOpts, PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapperExample, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -160,7 +160,6 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                     throw new Error("Encountered unknown example request type");
                 }
             }) ?? [];
-        console.log("Example: ", getTextOfTsNode(ts.factory.createObjectLiteralExpression([...bodyProperties], true)));
 
         return ts.factory.createObjectLiteralExpression(
             [...fileProperties, ...headerProperties, ...queryParamProperties, ...bodyProperties],
