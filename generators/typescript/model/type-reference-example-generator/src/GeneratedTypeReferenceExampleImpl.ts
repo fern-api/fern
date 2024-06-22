@@ -165,7 +165,18 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                         throw new Error("Unknown primitive example: " + primitiveExample.type);
                     }
                 }),
-            container: () => {
+            container: (containerExample) => {
+                switch (containerExample.type) {
+                    case "literal":
+                        return this.getExampleAsPropertyName({
+                            example: {
+                                shape: ExampleTypeReferenceShape.primitive(containerExample.literal),
+                                jsonExample: example.jsonExample
+                            },
+                            context,
+                            opts
+                        });
+                }
                 throw new Error("Cannot convert container to property name");
             },
             named: ({ shape: example, typeName }) => {
