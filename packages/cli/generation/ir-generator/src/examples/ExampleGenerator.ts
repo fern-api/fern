@@ -342,7 +342,7 @@ export class ExampleGenerator {
         );
     }
 
-    private generateInlinedRequestBodyExample(requestBody: InlinedRequestBody): ExampleRequestBody {
+    private  generateInlinedRequestBodyExample(requestBody: InlinedRequestBody): ExampleRequestBody {
         const exampleProperties = [
             ...new Set([
                 ...requestBody.properties.map((prop) => ({

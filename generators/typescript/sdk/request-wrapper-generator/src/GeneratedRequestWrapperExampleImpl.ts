@@ -5,7 +5,7 @@ import {
     Name,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts, PackageId } from "@fern-typescript/commons";
+import { GetReferenceOpts, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapperExample, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -89,7 +89,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
             }
         }
         const headerProperties = [...this.example.serviceHeaders, ...this.example.endpointHeaders]
-            .filter((header) => this.isLiteral(header.value.shape))
+            .filter((header) => this.isNotLiteral(header.value.shape))
             .map((header) => {
                 return ts.factory.createPropertyAssignment(
                     asObjectProperty(generatedType.getPropertyNameOfNonLiteralHeaderFromName(header.name).propertyName),
@@ -97,7 +97,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                 );
             });
         const queryParamProperties = [...this.example.queryParameters]
-            .filter((queryParam) => this.isLiteral(queryParam.value.shape))
+            .filter((queryParam) => this.isNotLiteral(queryParam.value.shape))
             .map((queryParam) => {
                 return ts.factory.createPropertyAssignment(
                     asObjectProperty(
@@ -110,7 +110,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
             this.example.request?._visit<ts.PropertyAssignment[]>({
                 inlinedRequestBody: (body) => {
                     return body.properties
-                        .filter((property) => this.isLiteral(property.value.shape))
+                        .filter((property) => this.isNotLiteral(property.value.shape))
                         .map((property) => {
                             if (property.originalTypeDeclaration != null) {
                                 const originalTypeForProperty = context.type.getGeneratedType(
@@ -160,6 +160,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                     throw new Error("Encountered unknown example request type");
                 }
             }) ?? [];
+        console.log("Example: ", getTextOfTsNode(ts.factory.createObjectLiteralExpression([...bodyProperties], true)));
 
         return ts.factory.createObjectLiteralExpression(
             [...fileProperties, ...headerProperties, ...queryParamProperties, ...bodyProperties],
@@ -167,7 +168,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
         );
     }
 
-    private isLiteral(shape: ExampleTypeReferenceShape): boolean {
+    private isNotLiteral(shape: ExampleTypeReferenceShape): boolean {
         return !(shape.type === "container" && shape.container.type === "literal");
     }
 }

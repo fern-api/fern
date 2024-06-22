@@ -32,7 +32,7 @@ following namespace:
 ```typescript
 import { SeedStreaming } from "@fern/streaming";
 
-const request: SeedStreaming.GenerateStreamRequestzs = {
+const request: SeedStreaming.GenerateStreamRequest = {
     ...
 };
 ```

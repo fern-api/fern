@@ -17,9 +17,39 @@ paths:
             schema:
               type: object
               properties:
+                stream:
+                  type: boolean
                 num_events:
                   type: integer
               required:
+                - stream
+                - num_events
+  /generate:
+    post:
+      operationId: dummy_generate
+      tags:
+        - Dummy
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stream:
+                  type: boolean
+                num_events:
+                  type: integer
+              required:
+                - stream
                 - num_events
 components:
   schemas:

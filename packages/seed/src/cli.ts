@@ -87,14 +87,14 @@ function addTestCommand(cli: Argv) {
                     continue;
                 }
                 let testRunner;
-                const scriptRunner = new ScriptRunner(generator);
+                const scriptRunner = new ScriptRunner(generator, argv.skipScripts);
                 if (argv.local && generator.workspaceConfig.local != null) {
                     testRunner = new LocalTestRunner({
                         generator,
                         lock,
                         taskContextFactory,
                         skipScripts: argv.skipScripts,
-                        scriptRunner: new ScriptRunner(generator),
+                        scriptRunner: scriptRunner,
                         keepDocker: false // dummy
                     });
                 } else {
@@ -104,7 +104,7 @@ function addTestCommand(cli: Argv) {
                         taskContextFactory,
                         skipScripts: argv.skipScripts,
                         keepDocker: argv.keepDocker,
-                        scriptRunner: new ScriptRunner(generator)
+                        scriptRunner: scriptRunner
                     });
                     scriptRunners.push(scriptRunner);
                     CONSOLE_LOGGER.info(`${generator.workspaceName} does not support local mode. Running in docker.`);

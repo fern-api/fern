@@ -8,6 +8,6 @@
  *         numEvents: 1
  *     }
  */
-export interface GenerateStreamRequestzs {
+export interface GenerateStreamRequest {
     numEvents: number;
 }

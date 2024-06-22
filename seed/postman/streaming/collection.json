@@ -39,7 +39,38 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"num_events\": 0\n}",
+              "raw": "{\n    \"stream\": true,\n    \"num_events\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "_type": "endpoint",
+          "name": "Generate",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/generate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "generate"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"stream\": true,\n    \"num_events\": 0\n}",
               "options": {
                 "raw": {
                   "language": "json"
