@@ -1,6 +1,6 @@
 import { assertNever, isPlainObject } from "@fern-api/core-utils";
 import { DocsV1Write } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, doesPathExist, listFiles, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -18,6 +18,7 @@ import {
     ParsedDocsConfiguration,
     ParsedMetadataConfig,
     TabbedDocsNavigation,
+    TabbedNavigation,
     TypographyConfig,
     UntabbedDocsNavigation,
     VersionInfo
@@ -67,6 +68,7 @@ export async function parseDocsConfiguration({
     } = rawDocsConfiguration;
 
     const convertedNavigationPromise = getNavigationConfiguration({
+        tabs,
         versions,
         navigation: rawNavigation,
         absolutePathToFernFolder,
@@ -115,7 +117,7 @@ export async function parseDocsConfiguration({
         pages,
 
         /* navigation */
-        tabs,
+        // tabs,
         navigation,
         navbarLinks: convertNavbarLinks(navbarLinks),
         footerLinks: convertFooterLinks(footerLinks),
@@ -290,12 +292,14 @@ function parseSizeConfig(sizeAsString: string | undefined): DocsV1Write.SizeConf
 }
 
 async function getNavigationConfiguration({
+    tabs,
     versions,
     navigation,
     absolutePathToFernFolder,
     absolutePathToConfig,
     context
 }: {
+    tabs?: Record<string, RawDocs.TabConfig>;
     versions?: VersionConfig[];
     navigation?: NavigationConfig;
     absolutePathToFernFolder: AbsoluteFilePath;
@@ -304,6 +308,7 @@ async function getNavigationConfiguration({
 }): Promise<DocsNavigationConfiguration> {
     if (navigation != null) {
         return await convertNavigationConfiguration({
+            tabs,
             rawNavigationConfig: navigation,
             absolutePathToFernFolder,
             absolutePathToConfig,
@@ -316,13 +321,14 @@ async function getNavigationConfiguration({
             const content = yaml.load((await readFile(absoluteFilepathToVersionFile)).toString());
             const result = await Serializer.VersionFileConfig.parseOrThrow(content);
             const navigation = await convertNavigationConfiguration({
+                tabs: result.tabs,
                 rawNavigationConfig: result.navigation,
                 absolutePathToFernFolder,
                 absolutePathToConfig: absoluteFilepathToVersionFile,
                 context
             });
             versionedNavbars.push({
-                tabs: result.tabs,
+                // tabs: result.tabs,
                 version: version.displayName,
                 navigation,
                 availability: version.availability,
@@ -424,9 +430,13 @@ function constructVariants(
     );
 }
 
-function parseWeight(weight: string | undefined): string[] | undefined {
+function parseWeight(weight: string | number | undefined): string[] | undefined {
     if (weight == null) {
         return undefined;
+    }
+
+    if (typeof weight === "number") {
+        return [weight.toString()];
     }
 
     const weights = weight
@@ -438,12 +448,82 @@ function parseWeight(weight: string | undefined): string[] | undefined {
     return weights;
 }
 
+async function convertNavigationTabConfiguration({
+    tabs,
+    item,
+    absolutePathToFernFolder,
+    absolutePathToConfig,
+    context
+}: {
+    tabs: Record<string, RawDocs.TabConfig>;
+    item: RawDocs.TabbedNavigationItem;
+    absolutePathToFernFolder: AbsoluteFilePath;
+    absolutePathToConfig: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<TabbedNavigation> {
+    const tab = tabs[item.tab];
+    if (tab == null) {
+        throw new Error(`Tab ${item.tab} is not defined in the tabs config.`);
+    }
+
+    if (item.layout != null) {
+        const layout = await Promise.all(
+            item.layout.map((item) =>
+                convertNavigationItem({ rawConfig: item, absolutePathToFernFolder, absolutePathToConfig, context })
+            )
+        );
+        return {
+            title: tab.displayName,
+            icon: tab.icon,
+            slug: tab.slug,
+            skipUrlSlug: tab.skipSlug,
+            hidden: tab.hidden,
+            child: {
+                type: "layout",
+                layout
+            }
+        };
+    }
+
+    if (tab.href != null) {
+        return {
+            title: tab.displayName,
+            icon: tab.icon,
+            slug: tab.slug,
+            skipUrlSlug: tab.skipSlug,
+            hidden: tab.hidden,
+            child: {
+                type: "link",
+                href: tab.href
+            }
+        };
+    }
+
+    if (tab.changelog != null) {
+        return {
+            title: tab.displayName,
+            icon: tab.icon,
+            slug: tab.slug,
+            skipUrlSlug: tab.skipSlug,
+            hidden: tab.hidden,
+            child: {
+                type: "changelog",
+                changelog: await listFiles(resolveFilepath(tab.changelog, absolutePathToConfig), "{md,mdx}")
+            }
+        };
+    }
+
+    assertNever(tab as never);
+}
+
 async function convertNavigationConfiguration({
+    tabs = {},
     rawNavigationConfig,
     absolutePathToFernFolder,
     absolutePathToConfig,
     context
 }: {
+    tabs?: Record<string, RawDocs.TabConfig>;
     rawNavigationConfig: RawDocs.NavigationConfig;
     absolutePathToFernFolder: AbsoluteFilePath;
     absolutePathToConfig: AbsoluteFilePath;
@@ -451,25 +531,15 @@ async function convertNavigationConfiguration({
 }): Promise<UntabbedDocsNavigation | TabbedDocsNavigation> {
     if (isTabbedNavigationConfig(rawNavigationConfig)) {
         const tabbedNavigationItems = await Promise.all(
-            rawNavigationConfig.map(async (item) => {
-                if (item.layout == null) {
-                    return { tab: item.tab };
-                }
-                const layout = await Promise.all(
-                    item.layout.map((item) =>
-                        convertNavigationItem({
-                            rawConfig: item,
-                            absolutePathToFernFolder,
-                            absolutePathToConfig,
-                            context
-                        })
-                    )
-                );
-                return {
-                    tab: item.tab,
-                    layout
-                };
-            })
+            rawNavigationConfig.map((item) =>
+                convertNavigationTabConfiguration({
+                    tabs,
+                    item,
+                    absolutePathToFernFolder,
+                    absolutePathToConfig,
+                    context
+                })
+            )
         );
         return {
             type: "tabbed",
@@ -486,6 +556,8 @@ async function convertNavigationConfiguration({
         };
     }
 }
+
+const DEFAULT_CHANGELOG_TITLE = "Changelog";
 
 async function convertNavigationItem({
     rawConfig,
@@ -554,6 +626,16 @@ async function convertNavigationItem({
             text: rawConfig.link,
             url: rawConfig.href,
             icon: rawConfig.icon
+        };
+    }
+    if (isRawChangelogConfig(rawConfig)) {
+        return {
+            type: "changelog",
+            changelog: await listFiles(resolveFilepath(rawConfig.changelog, absolutePathToConfig), "{md,mdx}"),
+            hidden: rawConfig.hidden ?? false,
+            icon: rawConfig.icon,
+            title: rawConfig.title ?? DEFAULT_CHANGELOG_TITLE,
+            slug: rawConfig.slug
         };
     }
     assertNever(rawConfig);
@@ -675,6 +757,10 @@ function isRawLinkConfig(item: unknown): item is RawDocs.LinkConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     RawDocs;
     return isPlainObject(item) && typeof item.link === "string" && typeof item.href === "string";
+}
+
+function isRawChangelogConfig(item: unknown): item is RawDocs.ChangelogConfiguration {
+    return isPlainObject(item) && typeof item.changelog === "string";
 }
 
 function isRawApiRefSectionConfiguration(item: unknown): item is RawDocs.ApiReferenceSectionConfiguration {

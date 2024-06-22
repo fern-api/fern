@@ -1,9 +1,12 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+docs: |-
+  This file contains the schema for the `docs.yml` configuration file, which is used to configure the appearance and behavior of the documentation site.
+  The docs schema is intended to be human-readable and hand-maintained, by using human-friendly undiscriminated unions and optional properties.
 
 types:
   DocsConfiguration:
     properties:
-      instances: list<DocsInstances>
+      instances: list<DocsInstance>
       title:
         type: optional<string>
         docs: used as tab bar title, and in the navbar if no logo is defined
@@ -51,8 +54,23 @@ types:
           If `href` is set, clicking on the tab will redirect to the given URL.
 
           Tabs with `href` must not have children in the navigation config.
+      changelog: optional<ChangelogFolderRelativePath>
 
-  DocsInstances:
+  ChangelogFolderRelativePath:
+    type: string
+    docs: |-
+      The relative path to a folder containing markdown files broken down by date.
+
+      Example:
+      ```
+      changelog: "changelog"
+      ```
+
+      This will look for markdown files in the `/fern/changelog` directory, which should contain files named like 
+      - `/fern/changelog/2024-04-29.mdx`.
+      - `/fern/changelog/2023-01-02.mdx`.
+
+  DocsInstance:
     properties:
       url: string
       "custom-domain": optional<CustomDomain>
@@ -170,6 +188,7 @@ types:
       - SectionConfiguration
       - ApiReferenceConfiguration
       - LinkConfiguration
+      - ChangelogConfiguration
 
   LogoConfiguration:
     properties:
@@ -314,7 +333,7 @@ types:
         type: optional<string>
         docs: The relative path of the font file. To define multiple weight and style varations of the same font, use `paths` instead.
       weight:
-        type: optional<string>
+        type: optional<FontWeight>
         docs: |
           @default: `100 900`.
         availability: in-development
@@ -342,6 +361,12 @@ types:
         type: optional<string>
         availability: in-development
 
+  FontWeight:
+    discriminated: false
+    union:
+      - string
+      - integer
+
   FontStyle:
     enum:
       - normal
@@ -365,7 +390,7 @@ types:
     properties:
       path: string
       weight:
-        type: optional<string>
+        type: optional<FontWeight>
         docs: |
           @default: `100 900`.
       style:
@@ -380,6 +405,15 @@ types:
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
+
+  ChangelogConfiguration:
+    properties:
+      changelog: ChangelogFolderRelativePath
+      title: optional<string> # defaults to "Changelog"
+      slug: optional<string>
+      icon: optional<string>
+      hidden: optional<boolean>
+      # skip-slug: optional<boolean> # skip-slug is not needed for changelog
 
   SectionConfiguration:
     properties:
@@ -722,7 +756,7 @@ types:
     docs: |
       The `metadata` object allows you to customize the appearance of your docs site in search engines and social media.
       These settings are applied globally, but can be overridden on a per-page basis using frontmatter.
-    availability: in-development
+    availability: pre-release
     properties:
       "og:site_name": optional<string>
       "og:title": optional<string>
