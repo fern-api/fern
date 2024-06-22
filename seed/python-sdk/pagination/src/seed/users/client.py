@@ -74,23 +74,23 @@ class UsersClient:
             params={"page": page, "per_page": per_page, "order": order, "starting_after": starting_after},
             request_options=request_options,
         )
-        if 200 <= _response.status_code < 300:
-            _parsed_response = pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
-            _has_next = False
-            _get_next = None
-            if _parsed_response.page is not None and _parsed_response.page.next is not None:
-                _parsed_next = _parsed_response.page.next.starting_after
-                _has_next = _parsed_next is not None
-                _get_next = lambda: self.list_with_cursor_pagination(
-                    page=page,
-                    per_page=per_page,
-                    order=order,
-                    starting_after=_parsed_next,
-                    request_options=request_options,
-                )
-            _items = _parsed_response.data
-            return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+                _has_next = False
+                _get_next = None
+                if _parsed_response.page is not None and _parsed_response.page.next is not None:
+                    _parsed_next = _parsed_response.page.next.starting_after
+                    _has_next = _parsed_next is not None
+                    _get_next = lambda: self.list_with_cursor_pagination(
+                        page=page,
+                        per_page=per_page,
+                        order=order,
+                        starting_after=_parsed_next,
+                        request_options=request_options,
+                    )
+                _items = _parsed_response.data
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -149,19 +149,19 @@ class UsersClient:
             params={"page": page, "per_page": per_page, "order": order, "starting_after": starting_after},
             request_options=request_options,
         )
-        if 200 <= _response.status_code < 300:
-            _parsed_response = pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
-            _has_next = True
-            _get_next = lambda: self.list_with_offset_pagination(
-                page=page + 1,
-                per_page=per_page,
-                order=order,
-                starting_after=starting_after,
-                request_options=request_options,
-            )
-            _items = _parsed_response.data
-            return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+                _has_next = True
+                _get_next = lambda: self.list_with_offset_pagination(
+                    page=page + 1,
+                    per_page=per_page,
+                    order=order,
+                    starting_after=starting_after,
+                    request_options=request_options,
+                )
+                _items = _parsed_response.data
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -215,9 +215,9 @@ class UsersClient:
             params={"page": page, "limit": limit, "order": order},
             request_options=request_options,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -257,16 +257,18 @@ class UsersClient:
         _response = self._client_wrapper.httpx_client.request(
             "users", method="GET", params={"cursor": jsonable_encoder(cursor)}, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            _parsed_response = pydantic_v1.parse_obj_as(ListUsersExtendedResponse, _response.json())  # type: ignore
-            _has_next = _parsed_response.next is not None
-            _parsed_next = _parsed_response.next
-            _get_next = lambda: self.list_with_extended_results(cursor=_parsed_next, request_options=request_options)
-            _items = []
-            if _parsed_response.data is not None:
-                _items = _parsed_response.data.users
-            return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = pydantic_v1.parse_obj_as(ListUsersExtendedResponse, _response.json())  # type: ignore
+                _has_next = _parsed_response.next is not None
+                _parsed_next = _parsed_response.next
+                _get_next = lambda: self.list_with_extended_results(
+                    cursor=_parsed_next, request_options=request_options
+                )
+                _items = []
+                if _parsed_response.data is not None:
+                    _items = _parsed_response.data.users
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -304,19 +306,21 @@ class UsersClient:
         _response = self._client_wrapper.httpx_client.request(
             "users", method="GET", params={"starting_after": starting_after}, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            _parsed_response = pydantic_v1.parse_obj_as(UsernameCursor, _response.json())  # type: ignore
-            _has_next = False
-            _get_next = None
-            if _parsed_response.cursor is not None:
-                _parsed_next = _parsed_response.cursor.after
-                _has_next = _parsed_next is not None
-                _get_next = lambda: self.list_usernames(starting_after=_parsed_next, request_options=request_options)
-            _items = []
-            if _parsed_response.cursor is not None:
-                _items = _parsed_response.cursor.data
-            return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = pydantic_v1.parse_obj_as(UsernameCursor, _response.json())  # type: ignore
+                _has_next = False
+                _get_next = None
+                if _parsed_response.cursor is not None:
+                    _parsed_next = _parsed_response.cursor.after
+                    _has_next = _parsed_next is not None
+                    _get_next = lambda: self.list_usernames(
+                        starting_after=_parsed_next, request_options=request_options
+                    )
+                _items = []
+                if _parsed_response.cursor is not None:
+                    _items = _parsed_response.cursor.data
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -353,13 +357,13 @@ class UsersClient:
         _response = self._client_wrapper.httpx_client.request(
             "users", method="GET", params={"offset": offset}, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            _parsed_response = pydantic_v1.parse_obj_as(UsernameContainer, _response.json())  # type: ignore
-            _has_next = True
-            _get_next = lambda: self.list_with_global_config(offset=offset + 1, request_options=request_options)
-            _items = _parsed_response.results
-            return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = pydantic_v1.parse_obj_as(UsernameContainer, _response.json())  # type: ignore
+                _has_next = True
+                _get_next = lambda: self.list_with_global_config(offset=offset + 1, request_options=request_options)
+                _items = _parsed_response.results
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -422,23 +426,23 @@ class AsyncUsersClient:
             params={"page": page, "per_page": per_page, "order": order, "starting_after": starting_after},
             request_options=request_options,
         )
-        if 200 <= _response.status_code < 300:
-            _parsed_response = pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
-            _has_next = False
-            _get_next = None
-            if _parsed_response.page is not None and _parsed_response.page.next is not None:
-                _parsed_next = _parsed_response.page.next.starting_after
-                _has_next = _parsed_next is not None
-                _get_next = lambda: self.list_with_cursor_pagination(
-                    page=page,
-                    per_page=per_page,
-                    order=order,
-                    starting_after=_parsed_next,
-                    request_options=request_options,
-                )
-            _items = _parsed_response.data
-            return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+                _has_next = False
+                _get_next = None
+                if _parsed_response.page is not None and _parsed_response.page.next is not None:
+                    _parsed_next = _parsed_response.page.next.starting_after
+                    _has_next = _parsed_next is not None
+                    _get_next = lambda: self.list_with_cursor_pagination(
+                        page=page,
+                        per_page=per_page,
+                        order=order,
+                        starting_after=_parsed_next,
+                        request_options=request_options,
+                    )
+                _items = _parsed_response.data
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -497,19 +501,19 @@ class AsyncUsersClient:
             params={"page": page, "per_page": per_page, "order": order, "starting_after": starting_after},
             request_options=request_options,
         )
-        if 200 <= _response.status_code < 300:
-            _parsed_response = pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
-            _has_next = True
-            _get_next = lambda: self.list_with_offset_pagination(
-                page=page + 1,
-                per_page=per_page,
-                order=order,
-                starting_after=starting_after,
-                request_options=request_options,
-            )
-            _items = _parsed_response.data
-            return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+                _has_next = True
+                _get_next = lambda: self.list_with_offset_pagination(
+                    page=page + 1,
+                    per_page=per_page,
+                    order=order,
+                    starting_after=starting_after,
+                    request_options=request_options,
+                )
+                _items = _parsed_response.data
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -563,9 +567,9 @@ class AsyncUsersClient:
             params={"page": page, "limit": limit, "order": order},
             request_options=request_options,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -605,16 +609,18 @@ class AsyncUsersClient:
         _response = await self._client_wrapper.httpx_client.request(
             "users", method="GET", params={"cursor": jsonable_encoder(cursor)}, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            _parsed_response = pydantic_v1.parse_obj_as(ListUsersExtendedResponse, _response.json())  # type: ignore
-            _has_next = _parsed_response.next is not None
-            _parsed_next = _parsed_response.next
-            _get_next = lambda: self.list_with_extended_results(cursor=_parsed_next, request_options=request_options)
-            _items = []
-            if _parsed_response.data is not None:
-                _items = _parsed_response.data.users
-            return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = pydantic_v1.parse_obj_as(ListUsersExtendedResponse, _response.json())  # type: ignore
+                _has_next = _parsed_response.next is not None
+                _parsed_next = _parsed_response.next
+                _get_next = lambda: self.list_with_extended_results(
+                    cursor=_parsed_next, request_options=request_options
+                )
+                _items = []
+                if _parsed_response.data is not None:
+                    _items = _parsed_response.data.users
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -652,19 +658,21 @@ class AsyncUsersClient:
         _response = await self._client_wrapper.httpx_client.request(
             "users", method="GET", params={"starting_after": starting_after}, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            _parsed_response = pydantic_v1.parse_obj_as(UsernameCursor, _response.json())  # type: ignore
-            _has_next = False
-            _get_next = None
-            if _parsed_response.cursor is not None:
-                _parsed_next = _parsed_response.cursor.after
-                _has_next = _parsed_next is not None
-                _get_next = lambda: self.list_usernames(starting_after=_parsed_next, request_options=request_options)
-            _items = []
-            if _parsed_response.cursor is not None:
-                _items = _parsed_response.cursor.data
-            return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = pydantic_v1.parse_obj_as(UsernameCursor, _response.json())  # type: ignore
+                _has_next = False
+                _get_next = None
+                if _parsed_response.cursor is not None:
+                    _parsed_next = _parsed_response.cursor.after
+                    _has_next = _parsed_next is not None
+                    _get_next = lambda: self.list_usernames(
+                        starting_after=_parsed_next, request_options=request_options
+                    )
+                _items = []
+                if _parsed_response.cursor is not None:
+                    _items = _parsed_response.cursor.data
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -701,13 +709,13 @@ class AsyncUsersClient:
         _response = await self._client_wrapper.httpx_client.request(
             "users", method="GET", params={"offset": offset}, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            _parsed_response = pydantic_v1.parse_obj_as(UsernameContainer, _response.json())  # type: ignore
-            _has_next = True
-            _get_next = lambda: self.list_with_global_config(offset=offset + 1, request_options=request_options)
-            _items = _parsed_response.results
-            return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = pydantic_v1.parse_obj_as(UsernameContainer, _response.json())  # type: ignore
+                _has_next = True
+                _get_next = lambda: self.list_with_global_config(offset=offset + 1, request_options=request_options)
+                _items = _parsed_response.results
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

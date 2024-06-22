@@ -47,9 +47,9 @@ class ContainerClient:
         _response = self._client_wrapper.httpx_client.request(
             "container/list-of-primitives", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(typing.List[str], construct_type(type_=typing.List[str], object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(typing.List[str], construct_type(type_=typing.List[str], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -93,9 +93,9 @@ class ContainerClient:
         _response = self._client_wrapper.httpx_client.request(
             "container/list-of-objects", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(typing.List[ObjectWithRequiredField], construct_type(type_=typing.List[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(typing.List[ObjectWithRequiredField], construct_type(type_=typing.List[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -131,9 +131,9 @@ class ContainerClient:
         _response = self._client_wrapper.httpx_client.request(
             "container/set-of-primitives", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(typing.Set[str], construct_type(type_=typing.Set[str], object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(typing.Set[str], construct_type(type_=typing.Set[str], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -177,9 +177,9 @@ class ContainerClient:
         _response = self._client_wrapper.httpx_client.request(
             "container/set-of-objects", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(typing.List[ObjectWithRequiredField], construct_type(type_=typing.List[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(typing.List[ObjectWithRequiredField], construct_type(type_=typing.List[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -215,9 +215,9 @@ class ContainerClient:
         _response = self._client_wrapper.httpx_client.request(
             "container/map-prim-to-prim", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(typing.Dict[str, str], construct_type(type_=typing.Dict[str, str], object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(typing.Dict[str, str], construct_type(type_=typing.Dict[str, str], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -261,9 +261,9 @@ class ContainerClient:
         _response = self._client_wrapper.httpx_client.request(
             "container/map-prim-to-object", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(typing.Dict[str, ObjectWithRequiredField], construct_type(type_=typing.Dict[str, ObjectWithRequiredField], object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(typing.Dict[str, ObjectWithRequiredField], construct_type(type_=typing.Dict[str, ObjectWithRequiredField], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -305,9 +305,9 @@ class ContainerClient:
         _response = self._client_wrapper.httpx_client.request(
             "container/opt-objects", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(typing.Optional[ObjectWithRequiredField], construct_type(type_=typing.Optional[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(typing.Optional[ObjectWithRequiredField], construct_type(type_=typing.Optional[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -348,9 +348,9 @@ class AsyncContainerClient:
         _response = await self._client_wrapper.httpx_client.request(
             "container/list-of-primitives", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(typing.List[str], construct_type(type_=typing.List[str], object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(typing.List[str], construct_type(type_=typing.List[str], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -394,9 +394,9 @@ class AsyncContainerClient:
         _response = await self._client_wrapper.httpx_client.request(
             "container/list-of-objects", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(typing.List[ObjectWithRequiredField], construct_type(type_=typing.List[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(typing.List[ObjectWithRequiredField], construct_type(type_=typing.List[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -432,9 +432,9 @@ class AsyncContainerClient:
         _response = await self._client_wrapper.httpx_client.request(
             "container/set-of-primitives", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(typing.Set[str], construct_type(type_=typing.Set[str], object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(typing.Set[str], construct_type(type_=typing.Set[str], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -478,9 +478,9 @@ class AsyncContainerClient:
         _response = await self._client_wrapper.httpx_client.request(
             "container/set-of-objects", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(typing.List[ObjectWithRequiredField], construct_type(type_=typing.List[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(typing.List[ObjectWithRequiredField], construct_type(type_=typing.List[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -516,9 +516,9 @@ class AsyncContainerClient:
         _response = await self._client_wrapper.httpx_client.request(
             "container/map-prim-to-prim", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(typing.Dict[str, str], construct_type(type_=typing.Dict[str, str], object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(typing.Dict[str, str], construct_type(type_=typing.Dict[str, str], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -562,9 +562,9 @@ class AsyncContainerClient:
         _response = await self._client_wrapper.httpx_client.request(
             "container/map-prim-to-object", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(typing.Dict[str, ObjectWithRequiredField], construct_type(type_=typing.Dict[str, ObjectWithRequiredField], object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(typing.Dict[str, ObjectWithRequiredField], construct_type(type_=typing.Dict[str, ObjectWithRequiredField], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -606,9 +606,9 @@ class AsyncContainerClient:
         _response = await self._client_wrapper.httpx_client.request(
             "container/opt-objects", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(typing.Optional[ObjectWithRequiredField], construct_type(type_=typing.Optional[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(typing.Optional[ObjectWithRequiredField], construct_type(type_=typing.Optional[ObjectWithRequiredField], object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
