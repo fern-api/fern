@@ -16,15 +16,20 @@ import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = GenerateStreamRequestzs.Builder.class)
-public final class GenerateStreamRequestzs {
+@JsonDeserialize(builder = Generateequest.Builder.class)
+public final class Generateequest {
     private final int numEvents;
 
     private final Map<String, Object> additionalProperties;
 
-    private GenerateStreamRequestzs(int numEvents, Map<String, Object> additionalProperties) {
+    private Generateequest(int numEvents, Map<String, Object> additionalProperties) {
         this.numEvents = numEvents;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("stream")
+    public Boolean getStream() {
+        return false;
     }
 
     @JsonProperty("num_events")
@@ -35,7 +40,7 @@ public final class GenerateStreamRequestzs {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof GenerateStreamRequestzs && equalTo((GenerateStreamRequestzs) other);
+        return other instanceof Generateequest && equalTo((Generateequest) other);
     }
 
     @JsonAnyGetter
@@ -43,7 +48,7 @@ public final class GenerateStreamRequestzs {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(GenerateStreamRequestzs other) {
+    private boolean equalTo(Generateequest other) {
         return numEvents == other.numEvents;
     }
 
@@ -64,11 +69,11 @@ public final class GenerateStreamRequestzs {
     public interface NumEventsStage {
         _FinalStage numEvents(int numEvents);
 
-        Builder from(GenerateStreamRequestzs other);
+        Builder from(Generateequest other);
     }
 
     public interface _FinalStage {
-        GenerateStreamRequestzs build();
+        Generateequest build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -81,7 +86,7 @@ public final class GenerateStreamRequestzs {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(GenerateStreamRequestzs other) {
+        public Builder from(Generateequest other) {
             numEvents(other.getNumEvents());
             return this;
         }
@@ -94,8 +99,8 @@ public final class GenerateStreamRequestzs {
         }
 
         @java.lang.Override
-        public GenerateStreamRequestzs build() {
-            return new GenerateStreamRequestzs(numEvents, additionalProperties);
+        public Generateequest build() {
+            return new Generateequest(numEvents, additionalProperties);
         }
     }
 }

@@ -29,8 +29,6 @@ export class Query {
      *
      * @example
      *     await client.query.send({
-     *         prompt: "You are a helpful assistant",
-     *         stream: false,
      *         query: "What is the weather today"
      *     })
      */

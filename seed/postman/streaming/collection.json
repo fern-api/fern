@@ -39,7 +39,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"num_events\": 0\n}",
+              "raw": "{\n    \"stream\": true,\n    \"num_events\": 0\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -48,6 +48,84 @@
             }
           },
           "response": []
+        },
+        {
+          "_type": "endpoint",
+          "name": "Generate",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/generate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "generate"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"stream\": false,\n    \"num_events\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/generate",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "generate"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"stream\": false,\n    \"num_events\": 5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }

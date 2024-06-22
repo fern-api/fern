@@ -288,12 +288,16 @@ export function convertTypeReferenceExample({
             literal: (literal) => {
                 switch (literal.type) {
                     case "boolean":
-                        return ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(literal.boolean));
+                        return ExampleTypeReferenceShape.container(
+                            ExampleContainer.literal(ExamplePrimitive.boolean(literal.boolean))
+                        );
                     case "string":
-                        return ExampleTypeReferenceShape.primitive(
-                            ExamplePrimitive.string({
-                                original: literal.string
-                            })
+                        return ExampleTypeReferenceShape.container(
+                            ExampleContainer.literal(
+                                ExamplePrimitive.string({
+                                    original: literal.string
+                                })
+                            )
                         );
                     default:
                         assertNever(literal);

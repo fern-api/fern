@@ -34,12 +34,14 @@ interface RunningScriptConfig extends ScriptConfig {
  * Runs scripts on the generated code to verify the output.
  */
 export class ScriptRunner {
-    private startContainersFn: Promise<void>;
+    private startContainersFn: Promise<void> | undefined;
     private scripts: RunningScriptConfig[] = [];
     private lock = new Semaphore(1);
 
-    constructor(private readonly workspace: GeneratorWorkspace) {
-        this.startContainersFn = this.startContainers();
+    constructor(private readonly workspace: GeneratorWorkspace, private readonly skipScripts: boolean) {
+        if (!skipScripts) {
+            this.startContainersFn = this.startContainers();
+        }
     }
 
     public async run({ taskContext, id, outputDir }: ScriptRunner.RunArgs): Promise<ScriptRunner.RunResponse> {

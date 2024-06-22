@@ -38,8 +38,6 @@ class ReferenceClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.reference.send(
-            prompt="You are a helpful assistant",
-            stream=False,
             query="What is the weather today",
         )
         """
@@ -84,8 +82,6 @@ class AsyncReferenceClient:
             base_url="https://yourhost.com/path/to/api",
         )
         await client.reference.send(
-            prompt="You are a helpful assistant",
-            stream=False,
             query="What is the weather today",
         )
         """

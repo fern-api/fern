@@ -37,7 +37,7 @@ export async function runWithCustomFixture({
         taskContextFactory,
         skipScripts: true,
         keepDocker: true,
-        scriptRunner: new ScriptRunner(workspace)
+        scriptRunner: new ScriptRunner(workspace, false)
     });
 
     const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
