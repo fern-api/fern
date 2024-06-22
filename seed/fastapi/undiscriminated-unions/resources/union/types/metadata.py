@@ -20,11 +20,7 @@ class Metadata(pydantic_v1.BaseModel):
     --------
     from seed.undiscriminated_unions import KeyType
 
-    {
-        KeyType.NAME: "exampleName",
-        KeyType.VALUE: "exampleValue",
-        "default": "exampleDefault",
-    }
+    {KeyType.NAME: "exampleName", KeyType.VALUE: "exampleValue"}
     """
 
     __root__: typing.Dict[Key, str]

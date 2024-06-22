@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/generate",
+                "method": "POST",
+                "identifierOverride": "endpoint_dummy.generate"
+            },
+            "snippet": {
+                "client": "require \"fern_streaming\"\n\nstreaming = SeedStreamingClient::Client.new(base_url: \"https://api.example.com\")\nstreaming.dummy.generate(num_events: 5)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/generate",
+                "method": "POST",
+                "identifierOverride": "endpoint_dummy.generate"
+            },
+            "snippet": {
+                "client": "require \"fern_streaming\"\n\nstreaming = SeedStreamingClient::Client.new(base_url: \"https://api.example.com\")\nstreaming.dummy.generate(num_events: 5)",
+                "type": "ruby"
+            }
+        }
+    ],
+    "types": {}
+}
