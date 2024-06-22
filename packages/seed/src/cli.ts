@@ -7,13 +7,22 @@ import { ScriptRunner } from "./commands/test/ScriptRunner";
 import { TaskContextFactory } from "./commands/test/TaskContextFactory";
 import { DockerTestRunner, LocalTestRunner } from "./commands/test/test-runner";
 import { FIXTURES, testGenerator } from "./commands/test/testWorkspaceFixtures";
-import { loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
+import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
 import { Semaphore } from "./Semaphore";
 
 void tryRunCli();
 
 export async function tryRunCli(): Promise<void> {
-    const cli: Argv = yargs(hideBin(process.argv));
+    const cli: Argv = yargs(hideBin(process.argv))
+        .strict()
+        .fail((message, error: unknown, argv) => {
+            // if error is null, it's a yargs validation error
+            if (error == null) {
+                argv.showHelp();
+                // eslint-disable-next-line
+                console.error(message);
+            }
+        });
 
     addTestCommand(cli);
     addRunCommand(cli);
@@ -76,6 +85,9 @@ function addTestCommand(cli: Argv) {
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
+            if (argv.generator != null) {
+                throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generator });
+            }
 
             const taskContextFactory = new TaskContextFactory(argv["log-level"]);
             const lock = new Semaphore(argv.parallel);
@@ -161,6 +173,8 @@ function addRunCommand(cli: Argv) {
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
+            throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
+
             const generator = generators.find((g) => g.workspaceName === argv.generator);
             if (generator == null) {
                 throw new Error(
@@ -178,4 +192,31 @@ function addRunCommand(cli: Argv) {
             });
         }
     );
+}
+
+function throwIfGeneratorDoesNotExist({
+    seedWorkspaces,
+    generators
+}: {
+    seedWorkspaces: GeneratorWorkspace[];
+    generators: string[];
+}) {
+    const generatorNames = new Set(
+        seedWorkspaces.map((gen) => {
+            return gen.workspaceName;
+        })
+    );
+    const missingGenerators = [];
+    for (const generator of generators) {
+        if (!generatorNames.has(generator)) {
+            missingGenerators.push(generator);
+        }
+    }
+    if (missingGenerators.length > 0) {
+        throw new Error(
+            `Generators ${missingGenerators.join(
+                ", "
+            )} not found. Please make sure that there is a folder with those names in the seed directory.`
+        );
+    }
 }

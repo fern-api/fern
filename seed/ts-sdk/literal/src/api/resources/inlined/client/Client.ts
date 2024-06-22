@@ -30,8 +30,6 @@ export class Inlined {
      * @example
      *     await client.inlined.send({
      *         temperature: 10.1,
-     *         prompt: "You are a helpful assistant",
-     *         stream: false,
      *         query: "What is the weather today"
      *     })
      */
