@@ -1,4 +1,4 @@
-from typing import List, Literal, Optional
+from typing import Callable, List, Literal, Optional
 
 import fern.ir.resources as ir_types
 from typing_extensions import Never
@@ -304,64 +304,65 @@ class EndpointResponseCodeWriter:
             return "iter_bytes"
 
     def _write_status_code_discriminated_response_handler(self, *, writer: AST.NodeWriter) -> None:
-        writer.write_line(f"if 200 <= {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.status_code < 300:")
-        with writer.indent():
-            if self._endpoint.response is None or self._endpoint.response.body is None:
-                writer.write_line("return")
-            else:
-                self._endpoint.response.body.visit(
-                    json=lambda json_response: self._handle_success_json(
-                        writer=writer, json_response=json_response, use_response_json=False
-                    ),
-                    streaming=lambda stream_response: self._handle_success_stream(
-                        writer=writer, stream_response=stream_response
-                    ),
-                    file_download=lambda _: self._handle_success_file_download(writer=writer),
-                    text=lambda _: self._handle_success_text(writer=writer),
-                )
-
-        # in streaming responses, we need to call read() or aread()
-        # before deserializing or httpx will raise ResponseNotRead
-        if (
-            self._endpoint.response is not None
-            and self._endpoint.response.body
-            and (
-                self._endpoint.response.body.get_as_union().type == "streaming"
-                or self._endpoint.response.body.get_as_union().type == "fileDownload"
-            )
-        ):
-            writer.write_line(
-                f"await {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.aread()"
-                if self._is_async
-                else f"{EndpointResponseCodeWriter.RESPONSE_VARIABLE}.read()"
-            )
-
-        for error in self._endpoint.errors.get_as_list():
-            error_declaration = self._context.ir.errors[error.error.error_id]
-
-            writer.write_line(
-                f"if {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.status_code == {error_declaration.status_code}:"
-            )
+        def handle_endpoint_response(writer: AST.NodeWriter) -> None:
+            writer.write_line(f"if 200 <= {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.status_code < 300:")
             with writer.indent():
-                writer.write("raise ")
-                writer.write_node(
-                    AST.ClassInstantiation(
-                        class_=self._context.get_reference_to_error(error.error),
-                        args=[
-                            self._context.core_utilities.get_construct(
-                                self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                                    error_declaration.type
-                                ),
-                                AST.Expression(f"{EndpointResponseCodeWriter.RESPONSE_VARIABLE}.json()"),
-                            )
-                        ]
-                        if error_declaration.type is not None
-                        else [],
+                if self._endpoint.response is None or self._endpoint.response.body is None:
+                    writer.write_line("return")
+                else:
+                    self._endpoint.response.body.visit(
+                        json=lambda json_response: self._handle_success_json(
+                            writer=writer, json_response=json_response, use_response_json=False
+                        ),
+                        streaming=lambda stream_response: self._handle_success_stream(
+                            writer=writer, stream_response=stream_response
+                        ),
+                        file_download=lambda _: self._handle_success_file_download(writer=writer),
+                        text=lambda _: self._handle_success_text(writer=writer),
                     )
-                )
-                writer.write_newline_if_last_line_not()
 
-        self._try_deserialize_json_response(writer=writer)
+            # in streaming responses, we need to call read() or aread()
+            # before deserializing or httpx will raise ResponseNotRead
+            if (
+                self._endpoint.response is not None
+                and self._endpoint.response.body
+                and (
+                    self._endpoint.response.body.get_as_union().type == "streaming"
+                    or self._endpoint.response.body.get_as_union().type == "fileDownload"
+                )
+            ):
+                writer.write_line(
+                    f"await {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.aread()"
+                    if self._is_async
+                    else f"{EndpointResponseCodeWriter.RESPONSE_VARIABLE}.read()"
+                )
+
+            for error in self._endpoint.errors.get_as_list():
+                error_declaration = self._context.ir.errors[error.error.error_id]
+
+                writer.write_line(
+                    f"if {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.status_code == {error_declaration.status_code}:"
+                )
+                with writer.indent():
+                    writer.write("raise ")
+                    writer.write_node(
+                        AST.ClassInstantiation(
+                            class_=self._context.get_reference_to_error(error.error),
+                            args=[
+                                self._context.core_utilities.get_construct(
+                                    self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                                        error_declaration.type
+                                    ),
+                                    AST.Expression(f"{EndpointResponseCodeWriter.RESPONSE_VARIABLE}.json()"),
+                                )
+                            ]
+                            if error_declaration.type is not None
+                            else [],
+                        )
+                    )
+                    writer.write_newline_if_last_line_not()
+
+        self._try_deserialize_json_response(writer=writer, response_handler=handle_endpoint_response)
 
         writer.write("raise ")
         writer.write_node(
@@ -398,7 +399,7 @@ class EndpointResponseCodeWriter:
                 )
 
         if self._endpoint.response is None or self._endpoint.response.body is None:
-            self._try_deserialize_json_response(writer=writer)
+            self._try_deserialize_json_response(writer=writer, response_handler=None)
 
         if len(self._endpoint.errors.get_as_list()) > 0:
             writer.write_line(
@@ -446,9 +447,13 @@ class EndpointResponseCodeWriter:
             f"{EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE} = {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.json()"
         )
 
-    def _try_deserialize_json_response(self, *, writer: AST.NodeWriter) -> None:
+    def _try_deserialize_json_response(
+        self, *, writer: AST.NodeWriter, response_handler: Optional[Callable[[AST.NodeWriter], None]] = None
+    ) -> None:
         writer.write_line("try:")
         with writer.indent():
+            if response_handler is not None:
+                response_handler(writer)
             self._deserialize_json_response(writer=writer)
         writer.write("except ")
         writer.write_reference(Json.JSONDecodeError())

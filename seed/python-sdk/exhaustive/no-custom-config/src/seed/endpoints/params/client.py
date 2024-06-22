@@ -47,9 +47,9 @@ class ParamsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"params/path/{jsonable_encoder(param)}", method="GET", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(str, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(str, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -90,9 +90,9 @@ class ParamsClient:
         _response = self._client_wrapper.httpx_client.request(
             "params", method="GET", params={"query": query, "number": number}, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
         try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -137,9 +137,9 @@ class ParamsClient:
         _response = self._client_wrapper.httpx_client.request(
             "params", method="GET", params={"query": query, "numer": numer}, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
         try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -183,9 +183,9 @@ class ParamsClient:
             params={"query": query},
             request_options=request_options,
         )
-        if 200 <= _response.status_code < 300:
-            return
         try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -230,9 +230,9 @@ class ParamsClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(str, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(str, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -273,9 +273,9 @@ class AsyncParamsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"params/path/{jsonable_encoder(param)}", method="GET", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(str, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(str, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -316,9 +316,9 @@ class AsyncParamsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "params", method="GET", params={"query": query, "number": number}, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
         try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -363,9 +363,9 @@ class AsyncParamsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "params", method="GET", params={"query": query, "numer": numer}, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
         try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -409,9 +409,9 @@ class AsyncParamsClient:
             params={"query": query},
             request_options=request_options,
         )
-        if 200 <= _response.status_code < 300:
-            return
         try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -456,9 +456,9 @@ class AsyncParamsClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(str, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(str, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

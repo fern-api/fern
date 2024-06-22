@@ -51,13 +51,13 @@ class CompletionsClient:
         with self._client_wrapper.httpx_client.stream(
             "stream", method="POST", json={"query": query}, request_options=request_options, omit=OMIT
         ) as _response:
-            if 200 <= _response.status_code < 300:
-                _event_source = httpx_sse.EventSource(_response)
-                for _sse in _event_source.iter_sse():
-                    yield pydantic_v1.parse_obj_as(StreamedCompletion, json.loads(_sse.data))  # type: ignore
-                return
-            _response.read()
             try:
+                if 200 <= _response.status_code < 300:
+                    _event_source = httpx_sse.EventSource(_response)
+                    for _sse in _event_source.iter_sse():
+                        yield pydantic_v1.parse_obj_as(StreamedCompletion, json.loads(_sse.data))  # type: ignore
+                    return
+                _response.read()
                 _response_json = _response.json()
             except JSONDecodeError:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -99,13 +99,13 @@ class AsyncCompletionsClient:
         async with self._client_wrapper.httpx_client.stream(
             "stream", method="POST", json={"query": query}, request_options=request_options, omit=OMIT
         ) as _response:
-            if 200 <= _response.status_code < 300:
-                _event_source = httpx_sse.EventSource(_response)
-                async for _sse in _event_source.aiter_sse():
-                    yield pydantic_v1.parse_obj_as(StreamedCompletion, json.loads(_sse.data))  # type: ignore
-                return
-            await _response.aread()
             try:
+                if 200 <= _response.status_code < 300:
+                    _event_source = httpx_sse.EventSource(_response)
+                    async for _sse in _event_source.aiter_sse():
+                        yield pydantic_v1.parse_obj_as(StreamedCompletion, json.loads(_sse.data))  # type: ignore
+                    return
+                await _response.aread()
                 _response_json = _response.json()
             except JSONDecodeError:
                 raise ApiError(status_code=_response.status_code, body=_response.text)

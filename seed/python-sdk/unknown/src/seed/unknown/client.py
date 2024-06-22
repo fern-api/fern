@@ -45,9 +45,9 @@ class UnknownClient:
         _response = self._client_wrapper.httpx_client.request(
             method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(typing.List[typing.Any], _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(typing.List[typing.Any], _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -87,9 +87,9 @@ class AsyncUnknownClient:
         _response = await self._client_wrapper.httpx_client.request(
             method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(typing.List[typing.Any], _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(typing.List[typing.Any], _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

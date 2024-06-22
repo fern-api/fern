@@ -49,9 +49,9 @@ class Ec2Client:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return
         try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -96,9 +96,9 @@ class AsyncEc2Client:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return
         try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
