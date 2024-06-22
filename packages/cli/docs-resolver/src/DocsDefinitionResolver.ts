@@ -353,7 +353,7 @@ export class DocsDefinitionResolver {
                 ).convert({
                     parentSlug,
                     title: item.title,
-                    icon: item.title,
+                    icon: item.icon,
                     hidden: item.hidden,
                     slug: item.slug
                 });
@@ -424,7 +424,7 @@ export class DocsDefinitionResolver {
                     ).convert({
                         parentSlug,
                         title: tab.title,
-                        icon: tab.title,
+                        icon: tab.icon,
                         hidden: tab.hidden,
                         slug: tab.slug
                     });

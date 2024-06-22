@@ -3823,6 +3823,7 @@ __metadata:
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
+    glob: ^8.0.3
     glob-promise: ^5.0.0
     jest: ^29.7.0
     json-stream-stringify: ^3.0.1
