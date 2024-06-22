@@ -3642,8 +3642,6 @@ __metadata:
     "@types/tinycolor2": ^1.4.6
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    file-type: ^19.0.0
-    is-svg: ^5.0.1
     jest: ^29.7.0
     next-mdx-remote: ^4.4.1
     organize-imports-cli: ^0.10.0
@@ -6877,13 +6875,6 @@ __metadata:
   dependencies:
     defer-to-connect: ^2.0.1
   checksum: fc9cb993e808806692e4a3337c90ece0ec00c89f4b67e3652a356b89730da98bc824273a6d67ca84d5f33cd85f317dcd5ce39d8cc0a2f060145a608a7cb8ce92
-  languageName: node
-  linkType: hard
-
-"@tokenizer/token@npm:^0.3.0":
-  version: 0.3.0
-  resolution: "@tokenizer/token@npm:0.3.0"
-  checksum: 1d575d02d2a9f0c5a4ca5180635ebd2ad59e0f18b42a65f3d04844148b49b3db35cf00b6012a1af2d59c2ab3caca59451c5689f747ba8667ee586ad717ee58e1
   languageName: node
   linkType: hard
 
@@ -12852,17 +12843,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"fast-xml-parser@npm:^4.1.3":
-  version: 4.4.0
-  resolution: "fast-xml-parser@npm:4.4.0"
-  dependencies:
-    strnum: ^1.0.5
-  bin:
-    fxparser: src/cli/cli.js
-  checksum: ad33a4b5165a0ffcb6e17ae78825bd4619a8298844a8a8408f2ea141a0d2d9439d18865dc5254162f09fe54d510ff18e5d5c0a190869cab21fc745ee66be816b
-  languageName: node
-  linkType: hard
-
 "fastest-levenshtein@npm:^1.0.16":
   version: 1.0.16
   resolution: "fastest-levenshtein@npm:1.0.16"
@@ -12972,17 +12952,6 @@ env-cmd@toddbluhm/env-cmd:
   dependencies:
     flat-cache: ^4.0.0
   checksum: f67802d3334809048c69b3d458f672e1b6d26daefda701761c81f203b80149c35dea04d78ea4238969dd617678e530876722a0634c43031a0957f10cc3ed190f
-  languageName: node
-  linkType: hard
-
-"file-type@npm:^19.0.0":
-  version: 19.0.0
-  resolution: "file-type@npm:19.0.0"
-  dependencies:
-    readable-web-to-node-stream: ^3.0.2
-    strtok3: ^7.0.0
-    token-types: ^5.0.1
-  checksum: 03eec30a0b098f400436d5c578a0f2e8eaf58989fe7eae8762477348305181489c6108c4d560d78d6425fd0e16e99a302ea85fb33d1e046aa166c86884e109af
   languageName: node
   linkType: hard
 
@@ -15056,15 +15025,6 @@ env-cmd@toddbluhm/env-cmd:
   dependencies:
     has-tostringtag: ^1.0.0
   checksum: 323b3d04622f78d45077cf89aab783b2f49d24dc641aa89b5ad1a72114cfeff2585efc8c12ef42466dff32bde93d839ad321b26884cf75e5a7892a938b089989
-  languageName: node
-  linkType: hard
-
-"is-svg@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "is-svg@npm:5.0.1"
-  dependencies:
-    fast-xml-parser: ^4.1.3
-  checksum: 284683d6a92950e4a9b507d2402bef1646aa46c9a9329f6a51a6ff449885fbff49ba2c32dfbbb394f050880f4f6c612ade88059dea2433e5bc40203b3a1dc00d
   languageName: node
   linkType: hard
 
@@ -19868,13 +19828,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"peek-readable@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "peek-readable@npm:5.0.0"
-  checksum: bef5ceb50586eb42e14efba274ac57ffe97f0ed272df9239ce029f688f495d9bf74b2886fa27847c706a9db33acda4b7d23bbd09a2d21eb4c2a54da915117414
-  languageName: node
-  linkType: hard
-
 "pend@npm:~1.2.0":
   version: 1.2.0
   resolution: "pend@npm:1.2.0"
@@ -20718,15 +20671,6 @@ env-cmd@toddbluhm/env-cmd:
     isarray: 0.0.1
     string_decoder: ~0.10.x
   checksum: 17dfeae3e909945a4a1abc5613ea92d03269ef54c49288599507fc98ff4615988a1c39a999dcf9aacba70233d9b7040bc11a5f2bfc947e262dedcc0a8b32b5a0
-  languageName: node
-  linkType: hard
-
-"readable-web-to-node-stream@npm:^3.0.2":
-  version: 3.0.2
-  resolution: "readable-web-to-node-stream@npm:3.0.2"
-  dependencies:
-    readable-stream: ^3.6.0
-  checksum: 8c56cc62c68513425ddfa721954875b382768f83fa20e6b31e365ee00cbe7a3d6296f66f7f1107b16cd3416d33aa9f1680475376400d62a081a88f81f0ea7f9c
   languageName: node
   linkType: hard
 
@@ -22657,23 +22601,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"strnum@npm:^1.0.5":
-  version: 1.0.5
-  resolution: "strnum@npm:1.0.5"
-  checksum: 651b2031db5da1bf4a77fdd2f116a8ac8055157c5420f5569f64879133825915ad461513e7202a16d7fec63c54fd822410d0962f8ca12385c4334891b9ae6dd2
-  languageName: node
-  linkType: hard
-
-"strtok3@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "strtok3@npm:7.0.0"
-  dependencies:
-    "@tokenizer/token": ^0.3.0
-    peek-readable: ^5.0.0
-  checksum: 2ebe7ad8f2aea611dec6742cf6a42e82764892a362907f7ce493faf334501bf981ce21c828dcc300457e6d460dc9c34d644ededb3b01dcb9e37559203cf1748c
-  languageName: node
-  linkType: hard
-
 "stubborn-fs@npm:^1.2.5":
   version: 1.2.5
   resolution: "stubborn-fs@npm:1.2.5"
@@ -23349,16 +23276,6 @@ env-cmd@toddbluhm/env-cmd:
   version: 1.0.1
   resolution: "toidentifier@npm:1.0.1"
   checksum: 952c29e2a85d7123239b5cfdd889a0dde47ab0497f0913d70588f19c53f7e0b5327c95f4651e413c74b785147f9637b17410ac8c846d5d4a20a5a33eb6dc3a45
-  languageName: node
-  linkType: hard
-
-"token-types@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "token-types@npm:5.0.1"
-  dependencies:
-    "@tokenizer/token": ^0.3.0
-    ieee754: ^1.2.1
-  checksum: 32780123bc6ce8b6a2231d860445c994a02a720abf38df5583ea957aa6626873cd1c4dd8af62314da4cf16ede00c379a765707a3b06f04b8808c38efdae1c785
   languageName: node
   linkType: hard
 
