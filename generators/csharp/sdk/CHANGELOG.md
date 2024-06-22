@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [0.0.30 - 2024-06-20]
+- Fix: The underlying HTTP client safely joins endpoint path with base url. 
+
+## [0.0.30 - 2024-06-20]
 
 - Fix: The SDK now supports making bytes requests with Content Type `application/octet-stream`. 
 - Fix: The SDK now supports api wide path parameters and joining them safely in `RawClient.cs`.  
