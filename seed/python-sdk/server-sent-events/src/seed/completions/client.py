@@ -55,7 +55,12 @@ class CompletionsClient:
                 if 200 <= _response.status_code < 300:
                     _event_source = httpx_sse.EventSource(_response)
                     for _sse in _event_source.iter_sse():
-                        yield pydantic_v1.parse_obj_as(StreamedCompletion, json.loads(_sse.data))  # type: ignore
+                        if _sse.data == "[[DONE]]":
+                            return
+                        try:
+                            yield pydantic_v1.parse_obj_as(StreamedCompletion, json.loads(_sse.data))  # type: ignore
+                        except:
+                            pass
                     return
                 _response.read()
                 _response_json = _response.json()
@@ -103,7 +108,12 @@ class AsyncCompletionsClient:
                 if 200 <= _response.status_code < 300:
                     _event_source = httpx_sse.EventSource(_response)
                     async for _sse in _event_source.aiter_sse():
-                        yield pydantic_v1.parse_obj_as(StreamedCompletion, json.loads(_sse.data))  # type: ignore
+                        if _sse.data == "[[DONE]]":
+                            return
+                        try:
+                            yield pydantic_v1.parse_obj_as(StreamedCompletion, json.loads(_sse.data))  # type: ignore
+                        except:
+                            pass
                     return
                 await _response.aread()
                 _response_json = _response.json()

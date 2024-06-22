@@ -56,9 +56,12 @@ class DummyClient:
             try:
                 if 200 <= _response.status_code < 300:
                     for _text in _response.iter_lines():
-                        if len(_text) == 0:
-                            continue
-                        yield typing.cast(StreamResponse, construct_type(type_=StreamResponse, object_=json.loads(_text)))  # type: ignore
+                        try:
+                            if len(_text) == 0:
+                                continue
+                            yield typing.cast(StreamResponse, construct_type(type_=StreamResponse, object_=json.loads(_text)))  # type: ignore
+                        except:
+                            pass
                     return
                 _response.read()
                 _response_json = _response.json()
@@ -148,9 +151,12 @@ class AsyncDummyClient:
             try:
                 if 200 <= _response.status_code < 300:
                     async for _text in _response.aiter_lines():
-                        if len(_text) == 0:
-                            continue
-                        yield typing.cast(StreamResponse, construct_type(type_=StreamResponse, object_=json.loads(_text)))  # type: ignore
+                        try:
+                            if len(_text) == 0:
+                                continue
+                            yield typing.cast(StreamResponse, construct_type(type_=StreamResponse, object_=json.loads(_text)))  # type: ignore
+                        except:
+                            pass
                     return
                 await _response.aread()
                 _response_json = _response.json()
