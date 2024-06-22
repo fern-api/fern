@@ -8,10 +8,10 @@ from .utilities import validate_response
 
 
 async def test_generate(client: SeedStreaming, async_client: AsyncSeedStreaming) -> None:
-    expected_response: typing.Any = {"id": "string", "name": "string"}
+    expected_response: typing.Any = {"id": "id", "name": "name"}
     expected_types: typing.Any = {"id": None, "name": None}
-    response = client.dummy.generate(num_events=1)
+    response = client.dummy.generate(num_events=5)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.dummy.generate(num_events=1)
+    async_response = await async_client.dummy.generate(num_events=5)
     validate_response(async_response, expected_response, expected_types)

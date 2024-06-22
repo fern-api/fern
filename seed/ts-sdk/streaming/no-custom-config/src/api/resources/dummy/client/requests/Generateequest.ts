@@ -5,7 +5,7 @@
 /**
  * @example
  *     {
- *         numEvents: 1
+ *         numEvents: 5
  *     }
  */
 export interface Generateequest {

@@ -87,7 +87,7 @@ class DummyClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.dummy.generate(
-            num_events=1,
+            num_events=5,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -181,7 +181,7 @@ class AsyncDummyClient:
             base_url="https://yourhost.com/path/to/api",
         )
         await client.dummy.generate(
-            num_events=1,
+            num_events=5,
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

@@ -15,15 +15,15 @@
             }
         },
         {
-            "example_identifier": "default",
+            "example_identifier": "Default",
             "id": {
                 "path": "/generate",
                 "method": "POST",
                 "identifier_override": "endpoint_dummy.generate"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedStreaming\n\nclient = SeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.dummy.generate(\n    num_events=1,\n)\n",
-                "async_client": "from seed.client import AsyncSeedStreaming\n\nclient = AsyncSeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.dummy.generate(\n    num_events=1,\n)\n",
+                "sync_client": "from seed.client import SeedStreaming\n\nclient = SeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.dummy.generate(\n    num_events=5,\n)\n",
+                "async_client": "from seed.client import AsyncSeedStreaming\n\nclient = AsyncSeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.dummy.generate(\n    num_events=5,\n)\n",
                 "type": "python"
             }
         }

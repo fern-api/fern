@@ -96,7 +96,7 @@ export class Dummy {
      *
      * @example
      *     await client.dummy.generate({
-     *         numEvents: 1
+     *         numEvents: 5
      *     })
      */
     public async generate(
