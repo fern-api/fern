@@ -88,9 +88,11 @@ class EndpointResponseCodeWriter:
                 f"for {EndpointResponseCodeWriter.SSE_VARIABLE} in {EndpointResponseCodeWriter.EVENT_SOURCE_VARIABLE}.{self._get_iter_sse_method(is_async=self._is_async)}():"
             )
             with writer.indent():
-                if stream_response_union.terminator is not None: 
-                    writer.write_line(f"if {EndpointResponseCodeWriter.SSE_VARIABLE}.data == \"{stream_response_union.terminator}\":")
-                    with writer.indent(): 
+                if stream_response_union.terminator is not None:
+                    writer.write_line(
+                        f'if {EndpointResponseCodeWriter.SSE_VARIABLE}.data == "{stream_response_union.terminator}":'
+                    )
+                    with writer.indent():
                         writer.write_line("return")
                 writer.write_line("try:")
                 with writer.indent():
@@ -98,7 +100,9 @@ class EndpointResponseCodeWriter:
                     writer.write_node(
                         self._context.core_utilities.get_construct(
                             self._get_streaming_response_data_type(stream_response),
-                            AST.Expression(Json.loads(AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data"))),
+                            AST.Expression(
+                                Json.loads(AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data"))
+                            ),
                         ),
                     )
                 writer.write_line("except:")
@@ -115,8 +119,10 @@ class EndpointResponseCodeWriter:
                 with writer.indent():
                     # handle stream termination
                     if stream_response_union.type == "json" and stream_response_union.terminator is not None:
-                        writer.write_line(f"if {EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE} == \"{stream_response_union.terminator}\":")
-                        with writer.indent(): 
+                        writer.write_line(
+                            f'if {EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE} == "{stream_response_union.terminator}":'
+                        )
+                        with writer.indent():
                             writer.write_line("return")
                     # handle stream message that is empty
                     writer.write_line(f"if len({EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE}) == 0:")
