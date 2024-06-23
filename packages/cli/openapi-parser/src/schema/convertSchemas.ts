@@ -120,7 +120,7 @@ export function convertSchemaObject(
 ): SchemaWithExample {
     const nameOverride =
         getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ??
-        (context.shouldUseTitleAsName ? getTitleAsName(schema.title) : undefined);
+        (context.options.useTitlesAsName ? getTitleAsName(schema.title) : undefined);
     const mixedGroupName =
         getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME) ??
         getExtension<string[]>(schema, OpenAPIExtension.TAGS)?.[0];
@@ -422,7 +422,7 @@ export function convertSchemaObject(
     }
 
     if (schema.type === "object" && schema.discriminator != null && schema.discriminator.mapping != null) {
-        if (!context.shouldUseUndiscriminatedUnionsWithLiterals) {
+        if (!context.options.discriminatedUnionV2) {
             return convertDiscriminatedOneOf({
                 nameOverride,
                 generatedName,
@@ -455,7 +455,7 @@ export function convertSchemaObject(
             schema.discriminator.mapping != null &&
             Object.keys(schema.discriminator.mapping).length > 0
         ) {
-            if (!context.shouldUseUndiscriminatedUnionsWithLiterals) {
+            if (!context.options.discriminatedUnionV2) {
                 return convertDiscriminatedOneOf({
                     nameOverride,
                     generatedName,
@@ -515,7 +515,7 @@ export function convertSchemaObject(
             }
 
             const maybeDiscriminant = getDiscriminant({ schemas: schema.oneOf, context });
-            if (maybeDiscriminant != null && !context.shouldUseUndiscriminatedUnionsWithLiterals) {
+            if (maybeDiscriminant != null && !context.options.discriminatedUnionV2) {
                 return convertDiscriminatedOneOfWithVariants({
                     nameOverride,
                     generatedName,
@@ -580,7 +580,7 @@ export function convertSchemaObject(
             schemas: schema.anyOf,
             context
         });
-        if (maybeDiscriminant != null && !context.shouldUseUndiscriminatedUnionsWithLiterals) {
+        if (maybeDiscriminant != null && !context.options.discriminatedUnionV2) {
             return convertDiscriminatedOneOfWithVariants({
                 nameOverride,
                 generatedName,

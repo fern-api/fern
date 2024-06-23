@@ -1,7 +1,7 @@
-import { generatorsYml } from "@fern-api/configuration";
 import { Logger } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
+import { ParseOpenAPIOptions } from "../options";
 import { SCHEMA_REFERENCE_PREFIX } from "../schema/convertSchemas";
 import { SchemaParserContext } from "../schema/SchemaParserContext";
 import { isReferenceObject } from "../schema/utils/isReferenceObject";
@@ -14,29 +14,22 @@ export abstract class AbstractAsyncAPIV2ParserContext implements SchemaParserCon
     public document: AsyncAPIV2.Document;
     public taskContext: TaskContext;
     public DUMMY: SchemaParserContext;
-    public shouldUseTitleAsName: boolean;
-    public shouldUseUndiscriminatedUnionsWithLiterals: boolean;
+    public options: ParseOpenAPIOptions;
 
     constructor({
         document,
         taskContext,
-        shouldUseTitleAsName,
-        shouldUseUndiscriminatedUnionsWithLiterals,
-        sdkLanguage
+        options
     }: {
         document: AsyncAPIV2.Document;
         taskContext: TaskContext;
-        shouldUseTitleAsName: boolean;
-        shouldUseUndiscriminatedUnionsWithLiterals: boolean;
-        sdkLanguage: generatorsYml.GenerationLanguage | undefined;
+        options: ParseOpenAPIOptions;
     }) {
         this.document = document;
         this.taskContext = taskContext;
         this.logger = taskContext.logger;
         this.DUMMY = this;
-        this.shouldUseTitleAsName = shouldUseTitleAsName;
-        this.shouldUseUndiscriminatedUnionsWithLiterals =
-            shouldUseUndiscriminatedUnionsWithLiterals && sdkLanguage === generatorsYml.GenerationLanguage.PYTHON;
+        this.options = options;
     }
 
     public resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject {
@@ -129,22 +122,16 @@ export class AsyncAPIV2ParserContext extends AbstractAsyncAPIV2ParserContext {
     constructor({
         document,
         taskContext,
-        shouldUseTitleAsName,
-        shouldUseUndiscriminatedUnionsWithLiterals,
-        sdkLanguage
+        options
     }: {
         document: AsyncAPIV2.Document;
         taskContext: TaskContext;
-        shouldUseTitleAsName: boolean;
-        shouldUseUndiscriminatedUnionsWithLiterals: boolean;
-        sdkLanguage: generatorsYml.GenerationLanguage | undefined;
+        options: ParseOpenAPIOptions;
     }) {
         super({
             document,
             taskContext,
-            shouldUseTitleAsName,
-            shouldUseUndiscriminatedUnionsWithLiterals,
-            sdkLanguage
+            options
         });
     }
 

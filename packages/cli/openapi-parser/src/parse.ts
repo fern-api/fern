@@ -4,12 +4,13 @@ import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
-import { parseAsyncAPI } from "../asyncapi/parse";
-import { AsyncAPIV2 } from "../asyncapi/v2";
-import { loadOpenAPI } from "../loadOpenAPI";
-import { mergeWithOverrides } from "../mergeWithOverrides";
-import { generateIr as generateIrFromV2 } from "./v2/generateIr";
-import { generateIr as generateIrFromV3 } from "./v3/generateIr";
+import { parseAsyncAPI } from "./asyncapi/parse";
+import { AsyncAPIV2 } from "./asyncapi/v2";
+import { loadOpenAPI } from "./loadOpenAPI";
+import { mergeWithOverrides } from "./mergeWithOverrides";
+import { generateIr as generateIrFromV2 } from "./openapi/v2/generateIr";
+import { generateIr as generateIrFromV3 } from "./openapi/v3/generateIr";
+import { DEFAULT_PARSE_OPENAPI_SETTINGS, ParseOpenAPIOptions } from "./options";
 
 export interface Spec {
     absoluteFilepath: AbsoluteFilePath;
@@ -74,22 +75,14 @@ export async function parse({
                 const openapiIr = generateIrFromV3({
                     openApi: openApiDocument,
                     taskContext,
-                    disableExamples: false,
-                    audiences: spec.settings?.audiences ?? [],
-                    shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true,
-                    shouldUseUndiscriminatedUnionsWithLiterals:
-                        spec.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false
+                    options: getParseOptions({ specSettings: spec.settings })
                 });
                 ir = merge(ir, openapiIr);
             } else if (isOpenApiV2(openApiDocument)) {
                 const openapiIr = await generateIrFromV2({
                     openApi: openApiDocument,
                     taskContext,
-                    disableExamples: false,
-                    audiences: spec.settings?.audiences ?? [],
-                    shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true,
-                    shouldUseUndiscriminatedUnionsWithLiterals:
-                        spec.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false
+                    options: getParseOptions({ specSettings: spec.settings })
                 });
                 ir = merge(ir, openapiIr);
             }
@@ -103,10 +96,7 @@ export async function parse({
             const parsedAsyncAPI = parseAsyncAPI({
                 document: asyncAPI,
                 taskContext,
-                shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true,
-                shouldUseUndiscriminatedUnionsWithLiterals:
-                    spec.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
-                sdkLanguage: undefined
+                options: getParseOptions({ specSettings: spec.settings })
             });
             if (parsedAsyncAPI.channel != null) {
                 ir.channel.push(parsedAsyncAPI.channel);
@@ -123,6 +113,17 @@ export async function parse({
     }
 
     return ir;
+}
+
+function getParseOptions({ specSettings }: { specSettings?: SpecImportSettings }): ParseOpenAPIOptions {
+    return {
+        disableExamples: DEFAULT_PARSE_OPENAPI_SETTINGS.disableExamples,
+        discriminatedUnionV2:
+            specSettings?.shouldUseUndiscriminatedUnionsWithLiterals ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.discriminatedUnionV2,
+        useTitlesAsName: specSettings?.shouldUseTitleAsName ?? DEFAULT_PARSE_OPENAPI_SETTINGS.useTitlesAsName,
+        audiences: specSettings?.audiences ?? DEFAULT_PARSE_OPENAPI_SETTINGS.audiences
+    };
 }
 
 function merge(

@@ -19,6 +19,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { mapValues } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../getExtension";
+import { ParseOpenAPIOptions } from "../../options";
 import { convertSchema } from "../../schema/convertSchemas";
 import { convertToFullExample } from "../../schema/examples/convertToFullExample";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
@@ -45,17 +46,11 @@ import { runResolutions } from "./runResolutions";
 export function generateIr({
     openApi,
     taskContext,
-    disableExamples,
-    audiences,
-    shouldUseTitleAsName,
-    shouldUseUndiscriminatedUnionsWithLiterals
+    options
 }: {
     openApi: OpenAPIV3.Document;
     taskContext: TaskContext;
-    disableExamples: boolean | undefined;
-    audiences: string[];
-    shouldUseTitleAsName: boolean;
-    shouldUseUndiscriminatedUnionsWithLiterals: boolean;
+    options: ParseOpenAPIOptions;
 }): OpenApiIntermediateRepresentation {
     openApi = runResolutions({ openapi: openApi });
 
@@ -82,12 +77,13 @@ export function generateIr({
         document: openApi,
         taskContext,
         authHeaders,
-        shouldUseTitleAsName,
-        shouldUseUndiscriminatedUnionsWithLiterals
+        options
     });
     const variables = getVariableDefinitions(openApi);
     const globalHeaders = getGlobalHeaders(openApi);
     const idempotencyHeaders = getIdempotencyHeaders(openApi);
+
+    const audiences = options.audiences ?? [];
 
     const endpointsWithExample: EndpointWithExample[] = [];
     const webhooks: Webhook[] = [];
@@ -185,7 +181,7 @@ export function generateIr({
         // if x-fern-examples is not present, generate an example
         const extensionExamples = endpointWithExample.examples;
         let examples: EndpointExample[] = extensionExamples;
-        if (!disableExamples && (extensionExamples.length === 0 || extensionExamples.every(hasIncompleteExample))) {
+        if (!options.disableExamples && (extensionExamples.length === 0 || extensionExamples.every(hasIncompleteExample))) {
             const endpointExample = exampleEndpointFactory.buildEndpointExample(endpointWithExample);
             if (endpointExample.length > 0) {
                 examples = [

@@ -1,4 +1,3 @@
-import { generatorsYml } from "@fern-api/configuration";
 import {
     HeaderWithExample,
     PathParameterWithExample,
@@ -13,6 +12,7 @@ import {
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../getExtension";
+import { ParseOpenAPIOptions } from "../options";
 import { convertSchema } from "../schema/convertSchemas";
 import { convertUndiscriminatedOneOf } from "../schema/convertUndiscriminatedOneOf";
 import { convertSchemaWithExampleToSchema } from "../schema/utils/convertSchemaWithExampleToSchema";
@@ -31,15 +31,11 @@ export interface AsyncAPIIntermediateRepresentation {
 export function parseAsyncAPI({
     document,
     taskContext,
-    sdkLanguage,
-    shouldUseTitleAsName,
-    shouldUseUndiscriminatedUnionsWithLiterals
+    options
 }: {
     document: AsyncAPIV2.Document;
     taskContext: TaskContext;
-    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
-    shouldUseTitleAsName: boolean;
-    shouldUseUndiscriminatedUnionsWithLiterals: boolean;
+    options: ParseOpenAPIOptions;
 }): AsyncAPIIntermediateRepresentation {
     const breadcrumbs: string[] = [];
     if (document.tags?.[0] != null) {
@@ -51,9 +47,7 @@ export function parseAsyncAPI({
     const context = new AsyncAPIV2ParserContext({
         document,
         taskContext,
-        shouldUseTitleAsName,
-        shouldUseUndiscriminatedUnionsWithLiterals,
-        sdkLanguage
+        options
     });
 
     const schemas: Record<SchemaId, SchemaWithExample> = {};
