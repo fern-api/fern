@@ -43,15 +43,14 @@ it("converts to api reference node", async () => {
         absolutePathToWorkspace: resolve(AbsoluteFilePath.of(__dirname), "fixtures/stream/fern"),
         context,
         cliVersion: "0.0.0",
-        workspaceName: undefined,
-        sdkLanguage: undefined
+        workspaceName: undefined
     });
 
     if (!result.didSucceed) {
         throw new Error("API workspace failed to load");
     }
 
-    const apiWorkspace = result.workspace;
+    const apiWorkspace = await result.workspace.toFernWorkspace({ context });
 
     if (apiWorkspace.type !== "fern") {
         throw new Error("Expected fern workspace");

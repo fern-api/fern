@@ -1,5 +1,4 @@
 import { Project } from "@fern-api/project-loader";
-import { convertOpenApiWorkspaceToFernWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext";
 import { validateAPIWorkspaceAndLogIssues } from "./validateAPIWorkspaceAndLogIssues";
 import { validateDocsWorkspaceAndLogIssues } from "./validateDocsWorkspaceAndLogIssues";
@@ -23,17 +22,8 @@ export async function validateWorkspaces({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                if (workspace.type === "oss") {
-                    const fernWorkspace = await convertOpenApiWorkspaceToFernWorkspace(
-                        workspace,
-                        context,
-                        false,
-                        undefined
-                    );
-                    await validateAPIWorkspaceAndLogIssues({ workspace: fernWorkspace, context, logWarnings });
-                } else {
-                    await validateAPIWorkspaceAndLogIssues({ workspace, context, logWarnings });
-                }
+                const fernWorkspace = await workspace.toFernWorkspace({ context });
+                await validateAPIWorkspaceAndLogIssues({ workspace: fernWorkspace, context, logWarnings });
             });
         })
     );

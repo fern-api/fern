@@ -50,11 +50,8 @@ export function testParseOpenAPI(
             }
 
             const openApiIr = await parse({
-                workspace: {
-                    specs
-                },
-                taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER }),
-                sdkLanguage
+                specs,
+                taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER })
             });
             const openApiIrJson = await serialization.OpenApiIntermediateRepresentation.jsonOrThrow(openApiIr, {
                 skipValidation: true

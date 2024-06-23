@@ -88,7 +88,7 @@ export async function generateIntermediateRepresentation({
     const variableResolver = new VariableResolverImpl();
 
     const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> = {
-        apiName: casingsGenerator.generateName(workspace.name),
+        apiName: casingsGenerator.generateName(workspace.definition.rootApiFile.contents.name),
         apiDisplayName: workspace.definition.rootApiFile.contents["display-name"],
         apiDocs: await formatDocs(workspace.definition.rootApiFile.contents.docs),
         auth: await convertApiAuth({

@@ -23,7 +23,7 @@ export class LocalTestRunner extends TestRunner {
             commands: localConfig.buildCommand,
             doNotPipeOutput: false,
             logger: CONSOLE_LOGGER,
-            workingDir: workingDir
+            workingDir
         });
         if (result.exitCode !== 0) {
             throw new Error(`Failed to locally build ${this.generator.workspaceName}.`);
@@ -76,7 +76,7 @@ export class LocalTestRunner extends TestRunner {
         let generatorConfig = getGeneratorConfig({
             generatorInvocation,
             customConfig,
-            workspaceName: fernWorkspace.name,
+            workspaceName: fernWorkspace.definition.rootApiFile.contents.name,
             outputVersion: undefined,
             organization: DUMMY_ORGANIZATION,
             absolutePathToSnippetTemplates: AbsoluteFilePath.of(
@@ -120,7 +120,7 @@ export class LocalTestRunner extends TestRunner {
             commands: [`${localConfig.runCommand} ${absolutePathToGeneratorConfig}`],
             doNotPipeOutput: false,
             logger: taskContext.logger,
-            workingDir: workingDir,
+            workingDir,
             env: localConfig.env ?? {}
         });
         if (result.exitCode !== 0) {

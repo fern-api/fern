@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { DefinitionFileSchema } from "@fern-api/yaml-schema";
-import { FernWorkspace } from "../types/Workspace";
+import { FernWorkspace } from "../workspaces";
 import { getAllDefinitionFiles } from "./getAllDefinitionFiles";
 
 export function getDefinitionFile(

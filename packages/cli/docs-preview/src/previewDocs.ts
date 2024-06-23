@@ -14,7 +14,6 @@ import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
-import { convertOpenApiWorkspaceToFernWorkspace } from "@fern-api/workspace-loader";
 import { v4 as uuidv4 } from "uuid";
 
 export async function getPreviewDocsDefinition({
@@ -33,11 +32,7 @@ export async function getPreviewDocsDefinition({
     }
 
     const fernWorkspaces = await Promise.all(
-        apiWorkspaces.map((workspace) =>
-            workspace.type === "oss"
-                ? convertOpenApiWorkspaceToFernWorkspace(workspace, context, false, undefined)
-                : workspace
-        )
+        apiWorkspaces.map(async (workspace) => await workspace.toFernWorkspace({ context }))
     );
 
     const apiCollector = new ReferencedAPICollector();

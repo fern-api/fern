@@ -1,25 +1,21 @@
-import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
 
 export async function convertGeneratorWorkspaceToFernWorkspace({
     fixture,
     absolutePathToAPIDefinition,
-    taskContext,
-    sdkLanguage
+    taskContext
 }: {
     fixture: string;
     absolutePathToAPIDefinition: AbsoluteFilePath;
     taskContext: TaskContext;
-    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<FernWorkspace | undefined> {
     const workspace = await loadAPIWorkspace({
         absolutePathToWorkspace: absolutePathToAPIDefinition,
         context: taskContext,
         cliVersion: "DUMMY",
-        workspaceName: fixture,
-        sdkLanguage
+        workspaceName: fixture
     });
     if (!workspace.didSucceed) {
         taskContext.logger.info(
@@ -29,7 +25,5 @@ export async function convertGeneratorWorkspaceToFernWorkspace({
         );
         return undefined;
     }
-    return workspace.workspace.type === "fern"
-        ? workspace.workspace
-        : await convertOpenApiWorkspaceToFernWorkspace(workspace.workspace, taskContext, false, sdkLanguage);
+    return workspace.workspace.toFernWorkspace({ context: taskContext });
 }

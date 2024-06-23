@@ -1,6 +1,7 @@
 import { createOrganizationIfDoesNotExist, FernToken } from "@fern-api/auth";
 import { createFiddleService } from "@fern-api/core";
 import { Project } from "@fern-api/project-loader";
+import { OSSWorkspace } from "@fern-api/workspace-loader";
 import { YAML_SCHEMA_VERSION } from "@fern-api/yaml-schema";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
@@ -35,7 +36,7 @@ export async function registerWorkspacesV1({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                if (workspace.type === "oss") {
+                if (workspace instanceof OSSWorkspace) {
                     context.failWithoutThrowing("Registering from OpenAPI not currently supported.");
                     return;
                 }

@@ -6,20 +6,18 @@ import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 
 export async function getIrForApi(absolutePathToWorkspace: AbsoluteFilePath): Promise<IntermediateRepresentation> {
     const context = createMockTaskContext();
-    const workspace = await loadAPIWorkspace({
+    const response = await loadAPIWorkspace({
         absolutePathToWorkspace,
         context,
         cliVersion: "0.0.0",
-        workspaceName: undefined,
-        sdkLanguage: undefined
+        workspaceName: undefined
     });
-    if (!workspace.didSucceed) {
-        return context.failAndThrow("Failed to load workspace", workspace.failures);
-    } else if (workspace.workspace.type === "oss") {
-        return context.failAndThrow("Expected fern workspace but received openapi.");
+    if (!response.didSucceed) {
+        return context.failAndThrow("Failed to load workspace", response.failures);
     }
+    const fernWorkspace = await response.workspace.toFernWorkspace({ context });
     return generateIntermediateRepresentation({
-        workspace: workspace.workspace,
+        workspace: fernWorkspace,
         generationLanguage: undefined,
         audiences: { type: "all" },
         keywords: undefined,

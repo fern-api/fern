@@ -1,7 +1,7 @@
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { MockServer } from "@fern-api/mock";
 import { Project } from "@fern-api/project-loader";
-import { APIWorkspace, convertOpenApiWorkspaceToFernWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { APIWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext";
 import { API_CLI_OPTION } from "../../constants";
 import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues";
@@ -27,10 +27,7 @@ export async function mockServer({
     const workspace: APIWorkspace = project.apiWorkspaces[0];
 
     await cliContext.runTaskForWorkspace(workspace, async (context) => {
-        const fernWorkspace: FernWorkspace =
-            workspace.type === "fern"
-                ? workspace
-                : await convertOpenApiWorkspaceToFernWorkspace(workspace, context, false, undefined);
+        const fernWorkspace: FernWorkspace = await workspace.toFernWorkspace({ context });
 
         await validateAPIWorkspaceAndLogIssues({
             context,

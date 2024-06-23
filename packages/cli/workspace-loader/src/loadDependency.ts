@@ -1,4 +1,4 @@
-import { dependenciesYml, generatorsYml } from "@fern-api/configuration";
+import { dependenciesYml } from "@fern-api/configuration";
 import { createFiddleService } from "@fern-api/core";
 import { assertNever, noop, visitObject } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
@@ -15,8 +15,8 @@ import tar from "tar";
 import tmp from "tmp-promise";
 import { loadAPIWorkspace } from "./loadAPIWorkspace";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
-import { FernDefinition, FernWorkspace } from "./types/Workspace";
-import { convertToFernWorkspace } from "./utils/convertOpenApiWorkspaceToFernWorkspace";
+import { FernDefinition } from "./types/Workspace";
+import { FernWorkspace } from "./workspaces";
 
 const FIDDLE = createFiddleService();
 
@@ -39,15 +39,13 @@ export async function loadDependency({
     dependenciesConfiguration,
     context,
     rootApiFile,
-    cliVersion,
-    sdkLanguage
+    cliVersion
 }: {
     dependencyName: string;
     dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
     context: TaskContext;
     rootApiFile: RootApiFileSchema;
     cliVersion: string;
-    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<loadDependency.Return> {
     let definition: FernDefinition | undefined;
     let failure: WorkspaceLoader.DependencyFailure = {
@@ -71,16 +69,14 @@ export async function loadDependency({
                         definition = await validateVersionedDependencyAndGetDefinition({
                             context: contextForDependency,
                             dependency,
-                            cliVersion,
-                            sdkLanguage
+                            cliVersion
                         });
                         return;
                     case "local":
                         definition = await validateLocalDependencyAndGetDefinition({
                             context: contextForDependency,
                             dependency,
-                            cliVersion,
-                            sdkLanguage
+                            cliVersion
                         });
                         return;
                     default:
@@ -100,13 +96,11 @@ export async function loadDependency({
 async function validateLocalDependencyAndGetDefinition({
     dependency,
     context,
-    cliVersion,
-    sdkLanguage
+    cliVersion
 }: {
     dependency: dependenciesYml.LocalApiDependency;
     context: TaskContext;
     cliVersion: string;
-    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<FernDefinition | undefined> {
     // parse workspace
     context.logger.info("Parsing...");
@@ -114,32 +108,24 @@ async function validateLocalDependencyAndGetDefinition({
         absolutePathToWorkspace: dependency.absoluteFilepath,
         context,
         cliVersion,
-        workspaceName: undefined,
-        sdkLanguage
+        workspaceName: undefined
     });
     if (!loadDependencyWorkspaceResult.didSucceed) {
         context.failWithoutThrowing("Failed to load api definition", loadDependencyWorkspaceResult.failures);
         return undefined;
     }
 
-    const workspaceOfDependency =
-        loadDependencyWorkspaceResult.workspace.type === "fern"
-            ? loadDependencyWorkspaceResult.workspace
-            : await convertToFernWorkspace(loadDependencyWorkspaceResult.workspace, context, false, sdkLanguage);
-
-    return workspaceOfDependency.definition;
+    return await loadDependencyWorkspaceResult.workspace.getDefinition({ context });
 }
 
 async function validateVersionedDependencyAndGetDefinition({
     dependency,
     context,
-    cliVersion,
-    sdkLanguage
+    cliVersion
 }: {
     dependency: dependenciesYml.VersionedDependency;
     context: TaskContext;
     cliVersion: string;
-    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<FernDefinition | undefined> {
     // load API
     context.logger.info("Downloading manifest...");
@@ -216,8 +202,7 @@ async function validateVersionedDependencyAndGetDefinition({
         absolutePathToWorkspace: pathToDependency,
         context,
         cliVersion: response.body.cliVersion,
-        workspaceName: undefined,
-        sdkLanguage
+        workspaceName: undefined
     });
     if (!loadDependencyWorkspaceResult.didSucceed) {
         context.failWithoutThrowing(
@@ -233,7 +218,7 @@ async function validateVersionedDependencyAndGetDefinition({
         return undefined;
     }
 
-    return workspaceOfDependency.definition;
+    return await loadDependencyWorkspaceResult.workspace.getDefinition({ context });
 }
 
 async function getAreRootApiFilesEquivalent(
