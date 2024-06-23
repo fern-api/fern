@@ -181,7 +181,10 @@ export function generateIr({
         // if x-fern-examples is not present, generate an example
         const extensionExamples = endpointWithExample.examples;
         let examples: EndpointExample[] = extensionExamples;
-        if (!options.disableExamples && (extensionExamples.length === 0 || extensionExamples.every(hasIncompleteExample))) {
+        if (
+            !options.disableExamples &&
+            (extensionExamples.length === 0 || extensionExamples.every(hasIncompleteExample))
+        ) {
             const endpointExample = exampleEndpointFactory.buildEndpointExample(endpointWithExample);
             if (endpointExample.length > 0) {
                 examples = [
