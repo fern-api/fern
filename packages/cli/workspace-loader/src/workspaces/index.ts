@@ -1,3 +1,3 @@
 export { type APIWorkspace } from "./APIWorkspace";
 export { FernWorkspace } from "./FernWorkspace";
-export { OSSWorkspace } from "./OSSWorkspace";
+export { getOSSWorkspaceSettingsFromGeneratorInvocation, OSSWorkspace } from "./OSSWorkspace";

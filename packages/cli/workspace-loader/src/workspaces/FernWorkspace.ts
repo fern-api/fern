@@ -14,7 +14,7 @@ export declare namespace FernWorkspace {
     }
 }
 
-export class FernWorkspace extends AbstractAPIWorkspace {
+export class FernWorkspace extends AbstractAPIWorkspace<void> {
     public type: "fern" | "oss" = "fern";
     public workspaceName: string | undefined;
     public absoluteFilepath: AbsoluteFilePath;

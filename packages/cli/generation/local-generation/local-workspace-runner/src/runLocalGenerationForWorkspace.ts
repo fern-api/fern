@@ -1,6 +1,11 @@
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { TaskContext } from "@fern-api/task-context";
-import { APIWorkspace } from "@fern-api/workspace-loader";
+import {
+    APIWorkspace,
+    FernWorkspace,
+    getOSSWorkspaceSettingsFromGeneratorInvocation,
+    OSSWorkspace
+} from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import os from "os";
 import path from "path";
@@ -30,9 +35,15 @@ export async function runLocalGenerationForWorkspace({
                         "Cannot generate because output location is not local-file-system"
                     );
                 } else {
-                    // TODO(dsinghvi): pass in feature flags here
-                    // for union v2 generation and streaming v2 generation
-                    const fernWorkspace = await workspace.toFernWorkspace({ context });
+                    let fernWorkspace: FernWorkspace;
+                    if (workspace instanceof OSSWorkspace) {
+                        fernWorkspace = await workspace.toFernWorkspace(
+                            { context },
+                            getOSSWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
+                        );
+                    } else {
+                        fernWorkspace = workspace;
+                    }
 
                     await writeFilesToDiskAndRunGenerator({
                         organization: projectConfig.organization,

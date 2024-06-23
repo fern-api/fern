@@ -32,7 +32,9 @@ export async function getPreviewDocsDefinition({
     }
 
     const fernWorkspaces = await Promise.all(
-        apiWorkspaces.map(async (workspace) => await workspace.toFernWorkspace({ context }))
+        apiWorkspaces.map(
+            async (workspace) => await workspace.toFernWorkspace({ context }, { enableUniqueErrorsPerEndpoint: true })
+        )
     );
 
     const apiCollector = new ReferencedAPICollector();

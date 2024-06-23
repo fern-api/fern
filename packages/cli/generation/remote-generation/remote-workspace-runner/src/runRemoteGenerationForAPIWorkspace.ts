@@ -2,7 +2,7 @@ import { FernToken } from "@fern-api/auth";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { APIWorkspace } from "@fern-api/workspace-loader";
+import { APIWorkspace, FernWorkspace, getOSSWorkspaceSettingsFromGeneratorInvocation, OSSWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { downloadSnippetsForTask } from "./downloadSnippetsForTask";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator";
@@ -45,9 +45,15 @@ export async function runRemoteGenerationForAPIWorkspace({
     interactiveTasks.push(
         ...generatorGroup.generators.map((generatorInvocation) =>
             context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
-                // TODO(dsinghvi): pass in feature flags here
-                // for union v2 generation and streaming v2 generation
-                const fernWorkspace = await workspace.toFernWorkspace({ context });
+                let fernWorkspace: FernWorkspace;
+                if (workspace instanceof OSSWorkspace) {
+                    fernWorkspace = await workspace.toFernWorkspace(
+                        { context },
+                        getOSSWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
+                    );
+                } else {
+                    fernWorkspace = workspace;
+                }
 
                 const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({
                     projectConfig,
