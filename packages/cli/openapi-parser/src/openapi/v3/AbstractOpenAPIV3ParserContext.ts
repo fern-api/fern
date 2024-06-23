@@ -23,13 +23,13 @@ export interface DiscriminatedUnionMetadata {
 }
 
 export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserContext {
-    public logger: Logger;
-    public document: OpenAPIV3.Document;
-    public taskContext: TaskContext;
-    public authHeaders: Set<string>;
-    public refOccurrences: Record<string, number>;
-    public DUMMY: SchemaParserContext;
-    public options: ParseOpenAPIOptions;
+    public readonly logger: Logger;
+    public readonly document: OpenAPIV3.Document;
+    public readonly taskContext: TaskContext;
+    public readonly authHeaders: Set<string>;
+    public readonly refOccurrences: Record<string, number>;
+    public readonly DUMMY: SchemaParserContext;
+    public readonly options: ParseOpenAPIOptions;
 
     constructor({
         document,
@@ -47,8 +47,8 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         this.taskContext = taskContext;
         this.authHeaders = authHeaders;
         this.refOccurrences = getReferenceOccurrences(document);
-        this.DUMMY = this.getDummy();
         this.options = options;
+        this.DUMMY = this.getDummy();
     }
 
     public getNumberOfOccurrencesForRef(schema: OpenAPIV3.ReferenceObject): number {
