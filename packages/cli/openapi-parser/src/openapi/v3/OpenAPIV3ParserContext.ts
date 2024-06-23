@@ -1,4 +1,3 @@
-import { generatorsYml } from "@fern-api/configuration";
 import { SchemaId } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
@@ -27,23 +26,20 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
         taskContext,
         authHeaders,
         shouldUseTitleAsName,
-        shouldUseUndiscriminatedUnionsWithLiterals,
-        sdkLanguage
+        shouldUseUndiscriminatedUnionsWithLiterals
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
         authHeaders: Set<string>;
         shouldUseTitleAsName: boolean;
         shouldUseUndiscriminatedUnionsWithLiterals: boolean;
-        sdkLanguage: generatorsYml.GenerationLanguage | undefined;
     }) {
         super({
             document,
             taskContext,
             authHeaders,
             shouldUseTitleAsName,
-            shouldUseUndiscriminatedUnionsWithLiterals,
-            sdkLanguage
+            shouldUseUndiscriminatedUnionsWithLiterals
         });
     }
 

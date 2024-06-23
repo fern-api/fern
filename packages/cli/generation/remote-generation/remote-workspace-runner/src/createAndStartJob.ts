@@ -146,7 +146,7 @@ async function createJob({
             // Upload definition to S3
             context.logger.debug("Getting upload URL for Fern definition.");
             const definitionUploadUrlRequest = await remoteGenerationService.remoteGen.getDefinitionUploadUrl({
-                apiName: workspace.name,
+                apiName: workspace.definition.rootApiFile.contents.name,
                 organizationName: organization,
                 version
             });
@@ -181,7 +181,7 @@ async function createJob({
     }
 
     const createResponse = await remoteGenerationService.remoteGen.createJobV3({
-        apiName: workspace.name,
+        apiName: workspace.definition.rootApiFile.contents.name,
         version,
         organizationName: organization,
         generators: [generatorConfigsWithEnvVarSubstitutions],
@@ -199,7 +199,7 @@ async function createJob({
     if (!createResponse.ok) {
         return convertCreateJobError(createResponse.error as unknown as Fetcher.Error)._visit({
             illegalApiNameError: () => {
-                return context.failAndThrow("API name is invalid: " + workspace.name);
+                return context.failAndThrow("API name is invalid: " + workspace.definition.rootApiFile.contents.name);
             },
             illegalApiVersionError: () => {
                 return context.failAndThrow("API version is invalid: " + version);

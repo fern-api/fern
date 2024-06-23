@@ -1,4 +1,3 @@
-import { generatorsYml } from "@fern-api/configuration";
 import { assertNever, isNonNullish } from "@fern-api/core-utils";
 import {
     Endpoint,
@@ -49,8 +48,7 @@ export function generateIr({
     disableExamples,
     audiences,
     shouldUseTitleAsName,
-    shouldUseUndiscriminatedUnionsWithLiterals,
-    sdkLanguage
+    shouldUseUndiscriminatedUnionsWithLiterals
 }: {
     openApi: OpenAPIV3.Document;
     taskContext: TaskContext;
@@ -58,7 +56,6 @@ export function generateIr({
     audiences: string[];
     shouldUseTitleAsName: boolean;
     shouldUseUndiscriminatedUnionsWithLiterals: boolean;
-    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): OpenApiIntermediateRepresentation {
     openApi = runResolutions({ openapi: openApi });
 
@@ -86,8 +83,7 @@ export function generateIr({
         taskContext,
         authHeaders,
         shouldUseTitleAsName,
-        shouldUseUndiscriminatedUnionsWithLiterals,
-        sdkLanguage
+        shouldUseUndiscriminatedUnionsWithLiterals
     });
     const variables = getVariableDefinitions(openApi);
     const globalHeaders = getGlobalHeaders(openApi);

@@ -35,8 +35,7 @@ export async function loadProject({
     commandLineApiWorkspace,
     defaultToAllApiWorkspaces,
     context,
-    nameOverride,
-    sdkLanguage
+    nameOverride
 }: loadProject.Args): Promise<Project> {
     const fernDirectory = await getFernDirectory(nameOverride);
     if (fernDirectory == null) {
@@ -49,8 +48,7 @@ export async function loadProject({
         cliVersion,
         context,
         commandLineApiWorkspace,
-        defaultToAllApiWorkspaces,
-        sdkLanguage
+        defaultToAllApiWorkspaces
     });
 
     return {
@@ -66,8 +64,7 @@ export async function loadApis({
     context,
     cliVersion,
     commandLineApiWorkspace,
-    defaultToAllApiWorkspaces,
-    sdkLanguage
+    defaultToAllApiWorkspaces
 }: {
     cliName: string;
     fernDirectory: AbsoluteFilePath;
@@ -75,7 +72,6 @@ export async function loadApis({
     cliVersion: string;
     commandLineApiWorkspace: string | undefined;
     defaultToAllApiWorkspaces: boolean;
-    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<APIWorkspace[]> {
     const apisDirectory = join(fernDirectory, RelativeFilePath.of(APIS_DIRECTORY));
     const apisDirectoryExists = await doesPathExist(apisDirectory);
@@ -126,8 +122,7 @@ export async function loadApis({
                     absolutePathToWorkspace: join(apisDirectory, RelativeFilePath.of(workspaceDirectoryName)),
                     context,
                     cliVersion,
-                    workspaceName: workspaceDirectoryName,
-                    sdkLanguage
+                    workspaceName: workspaceDirectoryName
                 });
                 if (workspace.didSucceed) {
                     apiWorkspaces.push(workspace.workspace);
@@ -145,8 +140,7 @@ export async function loadApis({
         absolutePathToWorkspace: fernDirectory,
         context,
         cliVersion,
-        workspaceName: undefined,
-        sdkLanguage
+        workspaceName: undefined
     });
     if (workspace.didSucceed) {
         return [workspace.workspace];

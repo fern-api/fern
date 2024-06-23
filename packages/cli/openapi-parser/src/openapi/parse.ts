@@ -1,4 +1,3 @@
-import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -35,15 +34,11 @@ export interface RawAsyncAPIFile {
 }
 
 export async function parse({
-    workspace,
-    taskContext,
-    sdkLanguage
+    specs,
+    taskContext
 }: {
-    workspace: {
-        specs: Spec[];
-    };
+    specs: Spec[];
     taskContext: TaskContext;
-    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<OpenApiIntermediateRepresentation> {
     let ir: OpenApiIntermediateRepresentation = {
         title: undefined,
@@ -67,7 +62,7 @@ export async function parse({
         groups: {}
     };
 
-    for (const spec of workspace.specs) {
+    for (const spec of specs) {
         const contents = (await readFile(spec.absoluteFilepath)).toString();
         if (contents.includes("openapi") || contents.includes("swagger")) {
             const openApiDocument = await loadOpenAPI({
@@ -83,8 +78,7 @@ export async function parse({
                     audiences: spec.settings?.audiences ?? [],
                     shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true,
                     shouldUseUndiscriminatedUnionsWithLiterals:
-                        spec.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
-                    sdkLanguage
+                        spec.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false
                 });
                 ir = merge(ir, openapiIr);
             } else if (isOpenApiV2(openApiDocument)) {
@@ -95,8 +89,7 @@ export async function parse({
                     audiences: spec.settings?.audiences ?? [],
                     shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true,
                     shouldUseUndiscriminatedUnionsWithLiterals:
-                        spec.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
-                    sdkLanguage
+                        spec.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false
                 });
                 ir = merge(ir, openapiIr);
             }
@@ -113,7 +106,7 @@ export async function parse({
                 shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true,
                 shouldUseUndiscriminatedUnionsWithLiterals:
                     spec.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
-                sdkLanguage
+                sdkLanguage: undefined
             });
             if (parsedAsyncAPI.channel != null) {
                 ir.channel.push(parsedAsyncAPI.channel);

@@ -104,7 +104,7 @@ export abstract class TestRunner {
      * Runs the generator.
      */
     public async run({ fixture, configuration }: TestRunner.RunArgs): Promise<TestRunner.TestResult> {
-        if (this.buildInvocation == undefined) {
+        if (this.buildInvocation == null) {
             this.buildInvocation = this.build();
         }
         await this.buildInvocation;
@@ -142,8 +142,7 @@ export abstract class TestRunner {
         const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
             absolutePathToAPIDefinition,
             taskContext,
-            fixture,
-            sdkLanguage: language
+            fixture
         });
         if (fernWorkspace == null) {
             return {
@@ -242,7 +241,7 @@ export abstract class TestRunner {
     /**
      *
      */
-    public abstract runGenerator({}: TestRunner.DoRunArgs): Promise<void>;
+    public abstract runGenerator(args: TestRunner.DoRunArgs): Promise<void>;
 
     protected getParsedDockerName(): ParsedDockerName {
         return parseDockerOrThrow(this.generator.workspaceConfig.docker);

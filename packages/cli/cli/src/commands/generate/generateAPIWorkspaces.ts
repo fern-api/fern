@@ -8,11 +8,7 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
-import {
-    APIWorkspace,
-    convertOpenApiWorkspaceToFernWorkspace,
-    FernWorkspaceMetadata
-} from "@fern-api/workspace-loader";
+import { APIWorkspace, FernWorkspaceMetadata } from "@fern-api/workspace-loader";
 import { join } from "path";
 import { CliContext } from "../../cli-context/CliContext";
 import { GROUP_CLI_OPTION, PREVIEW_DIRECTORY } from "../../constants";
@@ -26,12 +22,7 @@ async function getFernWorkspace(
     context: TaskContext,
     preview: boolean
 ): Promise<FernWorkspaceMetadata | undefined> {
-    let fernWorkspace;
-    if (apiWorkspace.type === "fern") {
-        fernWorkspace = apiWorkspace;
-    } else {
-        fernWorkspace = await convertOpenApiWorkspaceToFernWorkspace(apiWorkspace, context, false, sdkLanguage);
-    }
+    const fernWorkspace = await apiWorkspace.toFernWorkspace({ context });
     if (fernWorkspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
         return;
@@ -112,7 +103,7 @@ export async function generateAPIWorkspaces({
         properties: {
             workspaces: project.apiWorkspaces.map((workspace) => {
                 return {
-                    name: workspace.name,
+                    name: workspace.workspaceName,
                     group: groupName,
                     generators: workspace.generatorsConfiguration?.groups
                         .filter((group) => (groupName == null ? true : group.groupName === groupName))

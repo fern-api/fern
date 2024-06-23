@@ -4,7 +4,7 @@ import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-mi
 import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
-import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext";
@@ -34,28 +34,8 @@ export async function generateIrForWorkspaces({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                cliContext.logger.info(`Generating IR for workspace ${workspace.name}`);
-                let fernWorkspace: FernWorkspace;
-                if (workspace.type === "fern") {
-                    cliContext.logger.info("Found a fern workspace");
-                    fernWorkspace = workspace;
-                } else {
-                    workspace.specs = workspace.specs.map((spec) => ({
-                        ...spec,
-                        settings: {
-                            audiences: spec.settings?.audiences ?? [],
-                            shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true,
-                            shouldUseUndiscriminatedUnionsWithLiterals:
-                                spec.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false
-                        }
-                    }));
-                    fernWorkspace = await convertOpenApiWorkspaceToFernWorkspace(
-                        workspace,
-                        context,
-                        false,
-                        generationLanguage
-                    );
-                }
+                cliContext.logger.info(`Generating IR for workspace ${workspace.workspaceName}`);
+                const fernWorkspace = await workspace.toFernWorkspace({ context });
 
                 const intermediateRepresentation = await getIntermediateRepresentation({
                     workspace: fernWorkspace,

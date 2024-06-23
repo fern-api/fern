@@ -1,4 +1,3 @@
-import { generatorsYml } from "@fern-api/configuration";
 import { Logger } from "@fern-api/logger";
 import { SchemaId } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -31,22 +30,19 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public DUMMY: SchemaParserContext;
     public shouldUseTitleAsName: boolean;
     public shouldUseUndiscriminatedUnionsWithLiterals: boolean;
-    public sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 
     constructor({
         document,
         taskContext,
         authHeaders,
         shouldUseTitleAsName,
-        shouldUseUndiscriminatedUnionsWithLiterals,
-        sdkLanguage
+        shouldUseUndiscriminatedUnionsWithLiterals
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
         authHeaders: Set<string>;
         shouldUseTitleAsName: boolean;
         shouldUseUndiscriminatedUnionsWithLiterals: boolean;
-        sdkLanguage: generatorsYml.GenerationLanguage | undefined;
     }) {
         this.document = document;
         this.logger = taskContext.logger;

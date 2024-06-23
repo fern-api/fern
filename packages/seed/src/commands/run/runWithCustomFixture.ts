@@ -43,8 +43,7 @@ export async function runWithCustomFixture({
     const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
         absolutePathToAPIDefinition: pathToFixture,
         taskContext,
-        fixture: "custom",
-        sdkLanguage: workspace.workspaceConfig.language
+        fixture: "custom"
     });
     if (fernWorkspace == null) {
         taskContext.logger.error("Failed to load API definition.");

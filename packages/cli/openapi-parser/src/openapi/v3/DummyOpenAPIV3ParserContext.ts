@@ -15,8 +15,7 @@ export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext 
             taskContext,
             authHeaders: new Set(),
             shouldUseTitleAsName: false,
-            shouldUseUndiscriminatedUnionsWithLiterals: false,
-            sdkLanguage: undefined
+            shouldUseUndiscriminatedUnionsWithLiterals: false
         });
     }
 

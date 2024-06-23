@@ -3,7 +3,7 @@ import { entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { DefinitionFileSchema } from "@fern-api/yaml-schema";
 import path from "path";
-import { FernWorkspace } from "../types/Workspace";
+import { FernWorkspace } from "../workspaces";
 import { getAllDefinitionFiles } from "./getAllDefinitionFiles";
 
 export async function visitAllDefinitionFiles(

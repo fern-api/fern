@@ -101,7 +101,7 @@ export async function writeFilesToDiskAndRunGenerator({
         absolutePathToSnippetTemplates: absolutePathToTmpSnippetTemplatesJSON,
         absolutePathToIr,
         absolutePathToWriteConfigJson,
-        workspaceName: workspace.name,
+        workspaceName: workspace.workspaceName ?? workspace.definition.rootApiFile.contents.name,
         organization,
         outputVersion: outputVersionOverride,
         keepDocker,

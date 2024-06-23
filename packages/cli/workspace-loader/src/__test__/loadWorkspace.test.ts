@@ -6,18 +6,20 @@ import { loadAPIWorkspace } from "../loadAPIWorkspace";
 
 describe("loadWorkspace", () => {
     it("fern definition", async () => {
+        const context = createMockTaskContext();
         const workspace = await loadAPIWorkspace({
             absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/simple")),
-            context: createMockTaskContext(),
+            context,
             cliVersion: "0.0.0",
-            workspaceName: undefined,
-            sdkLanguage: undefined
+            workspaceName: undefined
         });
         expect(workspace.didSucceed).toBe(true);
         assert(workspace.didSucceed);
         assert(workspace.workspace.type === "fern");
 
-        const simpleYaml = workspace.workspace.definition.namedDefinitionFiles[RelativeFilePath.of("simple.yml")];
+        const definition = await workspace.workspace.getDefinition({ context });
+
+        const simpleYaml = definition.namedDefinitionFiles[RelativeFilePath.of("simple.yml")];
         const exampleDateTime = (simpleYaml?.contents.types?.MyDateTime as RawSchemas.BaseTypeDeclarationSchema)
             .examples?.[0]?.value;
         expect(typeof exampleDateTime).toBe("string");
@@ -28,8 +30,7 @@ describe("loadWorkspace", () => {
             absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/openapi-path")),
             context: createMockTaskContext(),
             cliVersion: "0.0.0",
-            workspaceName: undefined,
-            sdkLanguage: undefined
+            workspaceName: undefined
         });
         expect(workspace.didSucceed).toBe(true);
         assert(workspace.didSucceed);

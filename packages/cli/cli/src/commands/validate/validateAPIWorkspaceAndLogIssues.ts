@@ -13,8 +13,8 @@ export async function validateAPIWorkspaceAndLogIssues({
     context: TaskContext;
     logWarnings: boolean;
 }): Promise<void> {
-    if (!validatePackageName(workspace.name).validForNewPackages) {
-        context.failAndThrow("Workspace name is not valid.");
+    if (!validatePackageName(workspace.definition.rootApiFile.contents.name).validForNewPackages) {
+        context.failAndThrow("API name is not valid.");
     }
 
     const violations = await validateFernWorkspace(workspace, context.logger);
