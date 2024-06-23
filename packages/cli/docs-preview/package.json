@@ -35,7 +35,6 @@
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/register": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-api/workspace-loader": "workspace:*",
     "chalk": "^5.0.1",
     "cors": "^2.8.5",
     "decompress": "^4.2.1",

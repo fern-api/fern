@@ -76,7 +76,7 @@ export class LocalTestRunner extends TestRunner {
         let generatorConfig = getGeneratorConfig({
             generatorInvocation,
             customConfig,
-            workspaceName: fernWorkspace.workspaceName ?? fernWorkspace.definition.rootApiFile.contents.name,
+            workspaceName: fernWorkspace.definition.rootApiFile.contents.name,
             outputVersion: undefined,
             organization: DUMMY_ORGANIZATION,
             absolutePathToSnippetTemplates: AbsoluteFilePath.of(

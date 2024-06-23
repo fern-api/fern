@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`fern generate missing docs page 1`] = `
-"[docs]:   Found 1 errors and 0 warnings. Run fern check --warnings to print out the warnings.
-[docs]:   docs.yml -> navigation -> 0 -> page
-          Path missing.md does not exist"
+"[docs]: Found 1 errors and 0 warnings. Run fern check --warnings to print out the warnings.
+[docs]: docs.yml -> navigation -> 0 -> page
+        Path missing.md does not exist"
 `;
