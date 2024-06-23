@@ -1,6 +1,7 @@
 import { SchemaId } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
+import { ParseOpenAPIOptions } from "../../options";
 import { SchemaParserContext } from "../../schema/SchemaParserContext";
 import {
     AbstractOpenAPIV3ParserContext,
@@ -9,13 +10,20 @@ import {
 } from "./AbstractOpenAPIV3ParserContext";
 
 export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
-    constructor({ document, taskContext }: { document: OpenAPIV3.Document; taskContext: TaskContext }) {
+    constructor({
+        document,
+        taskContext,
+        options
+    }: {
+        document: OpenAPIV3.Document;
+        taskContext: TaskContext;
+        options: ParseOpenAPIOptions;
+    }) {
         super({
             document,
             taskContext,
             authHeaders: new Set(),
-            shouldUseTitleAsName: false,
-            shouldUseUndiscriminatedUnionsWithLiterals: false
+            options
         });
     }
 

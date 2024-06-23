@@ -1,9 +1,8 @@
-import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { serialization } from "@fern-api/openapi-ir-sdk";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { parse } from "../openapi/parse";
+import { parse, SpecImportSettings } from "../parse";
 
 const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
@@ -12,9 +11,7 @@ export function testParseOpenAPI(
     fixtureName: string,
     openApiFilename: string,
     asyncApiFilename?: string,
-    useTitle?: boolean,
-    useUndiscriminatedUnions?: boolean,
-    sdkLanguage?: generatorsYml.GenerationLanguage
+    settings?: SpecImportSettings
 ): void {
     // eslint-disable-next-line jest/valid-title
     describe(fixtureName, () => {
@@ -28,11 +25,6 @@ export function testParseOpenAPI(
                 asyncApiFilename != null
                     ? join(FIXTURES_PATH, RelativeFilePath.of(fixtureName), RelativeFilePath.of(asyncApiFilename))
                     : undefined;
-            const settings = {
-                shouldUseTitleAsName: useTitle ?? true,
-                audiences: [],
-                shouldUseUndiscriminatedUnionsWithLiterals: useUndiscriminatedUnions ?? false
-            };
             const specs = [];
             if (absolutePathToOpenAPI != null) {
                 specs.push({

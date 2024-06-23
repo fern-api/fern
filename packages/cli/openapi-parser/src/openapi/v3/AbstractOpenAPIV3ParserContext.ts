@@ -2,6 +2,7 @@ import { Logger } from "@fern-api/logger";
 import { SchemaId } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
+import { ParseOpenAPIOptions } from "../../options";
 import { SchemaParserContext } from "../../schema/SchemaParserContext";
 import { getReferenceOccurrences } from "../../schema/utils/getReferenceOccurrences";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
@@ -22,36 +23,32 @@ export interface DiscriminatedUnionMetadata {
 }
 
 export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserContext {
-    public logger: Logger;
-    public document: OpenAPIV3.Document;
-    public taskContext: TaskContext;
-    public authHeaders: Set<string>;
-    public refOccurrences: Record<string, number>;
-    public DUMMY: SchemaParserContext;
-    public shouldUseTitleAsName: boolean;
-    public shouldUseUndiscriminatedUnionsWithLiterals: boolean;
+    public readonly logger: Logger;
+    public readonly document: OpenAPIV3.Document;
+    public readonly taskContext: TaskContext;
+    public readonly authHeaders: Set<string>;
+    public readonly refOccurrences: Record<string, number>;
+    public readonly DUMMY: SchemaParserContext;
+    public readonly options: ParseOpenAPIOptions;
 
     constructor({
         document,
         taskContext,
         authHeaders,
-        shouldUseTitleAsName,
-        shouldUseUndiscriminatedUnionsWithLiterals
+        options
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
         authHeaders: Set<string>;
-        shouldUseTitleAsName: boolean;
-        shouldUseUndiscriminatedUnionsWithLiterals: boolean;
+        options: ParseOpenAPIOptions;
     }) {
         this.document = document;
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
         this.authHeaders = authHeaders;
         this.refOccurrences = getReferenceOccurrences(document);
+        this.options = options;
         this.DUMMY = this.getDummy();
-        this.shouldUseTitleAsName = shouldUseTitleAsName;
-        this.shouldUseUndiscriminatedUnionsWithLiterals = shouldUseUndiscriminatedUnionsWithLiterals;
     }
 
     public getNumberOfOccurrencesForRef(schema: OpenAPIV3.ReferenceObject): number {
