@@ -45,6 +45,7 @@ import { V45_TO_V44_MIGRATION } from "./migrations/v45-to-v44/migrateFromV45ToV4
 import { V46_TO_V45_MIGRATION } from "./migrations/v46-to-v45/migrateFromV46ToV45";
 import { V47_TO_V46_MIGRATION } from "./migrations/v47-to-v46/migrateFromV47ToV46";
 import { V48_TO_V47_MIGRATION } from "./migrations/v48-to-v47/migrateFromV48ToV47";
+import { V49_TO_V48_MIGRATION } from "./migrations/v49-to-v48/migrateFromV49ToV48";
 import { V5_TO_V4_MIGRATION } from "./migrations/v5-to-v4/migrateFromV5ToV4";
 import { V6_TO_V5_MIGRATION } from "./migrations/v6-to-v5/migrateFromV6ToV5";
 import { V7_TO_V6_MIGRATION } from "./migrations/v7-to-v6/migrateFromV7ToV6";
@@ -273,6 +274,7 @@ const IntermediateRepresentationMigrator = {
 
 const INTERMEDIATE_REPRESENTATION_MIGRATOR = IntermediateRepresentationMigrator.Builder
     // put new migrations here
+    .withMigration(V49_TO_V48_MIGRATION)
     .withMigration(V48_TO_V47_MIGRATION)
     .withMigration(V47_TO_V46_MIGRATION)
     .withMigration(V46_TO_V45_MIGRATION)

@@ -207,6 +207,25 @@ export class IrGraph {
                         }
                     });
                 },
+                streamParameter: (response) => {
+                    response.streamResponse._visit({
+                        sse: (sse) =>
+                            populateReferencesFromTypeReference(sse.payload, referencedTypes, referencedSubpackages),
+                        json: (json) =>
+                            populateReferencesFromTypeReference(json.payload, referencedTypes, referencedSubpackages),
+                        text: noop,
+                        _other: () => {
+                            throw new Error("Unknown streamingResponse type: " + response.streamResponse.type);
+                        }
+                    });
+                    if (response.nonStreamResponse.type === "json") {
+                        populateReferencesFromTypeReference(
+                            response.nonStreamResponse.value.responseBodyType,
+                            referencedTypes,
+                            referencedSubpackages
+                        );
+                    }
+                },
                 text: noop,
                 _other: () => {
                     throw new Error("Unknown HttpResponse: " + httpEndpoint.response?.body?.type);
