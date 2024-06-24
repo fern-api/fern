@@ -238,7 +238,8 @@ async function convertGenerator({
         language: getLanguageFromGeneratorName(generator.name),
         irVersionOverride: generator["ir-version"] ?? undefined,
         publishMetadata: getPublishMetadata({ generatorInvocation: generator }),
-        readme
+        readme,
+        settings: generator.api?.settings ?? undefined
     };
 }
 

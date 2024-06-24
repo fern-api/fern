@@ -36,10 +36,12 @@ export interface RawAsyncAPIFile {
 
 export async function parse({
     specs,
-    taskContext
+    taskContext,
+    optionOverrides
 }: {
     specs: Spec[];
     taskContext: TaskContext;
+    optionOverrides?: Partial<ParseOpenAPIOptions>;
 }): Promise<OpenApiIntermediateRepresentation> {
     let ir: OpenApiIntermediateRepresentation = {
         title: undefined,
@@ -75,7 +77,7 @@ export async function parse({
                 const openapiIr = generateIrFromV3({
                     openApi: openApiDocument,
                     taskContext,
-                    options: getParseOptions({ specSettings: spec.settings })
+                    options: getParseOptions({ specSettings: spec.settings, overrides: optionOverrides })
                 });
                 ir = merge(ir, openapiIr);
             } else if (isOpenApiV2(openApiDocument)) {
@@ -115,14 +117,24 @@ export async function parse({
     return ir;
 }
 
-function getParseOptions({ specSettings }: { specSettings?: SpecImportSettings }): ParseOpenAPIOptions {
+function getParseOptions({
+    specSettings,
+    overrides
+}: {
+    specSettings?: SpecImportSettings;
+    overrides?: Partial<ParseOpenAPIOptions>;
+}): ParseOpenAPIOptions {
     return {
-        disableExamples: DEFAULT_PARSE_OPENAPI_SETTINGS.disableExamples,
+        disableExamples: overrides?.disableExamples ?? DEFAULT_PARSE_OPENAPI_SETTINGS.disableExamples,
         discriminatedUnionV2:
+            overrides?.discriminatedUnionV2 ??
             specSettings?.shouldUseUndiscriminatedUnionsWithLiterals ??
             DEFAULT_PARSE_OPENAPI_SETTINGS.discriminatedUnionV2,
-        useTitlesAsName: specSettings?.shouldUseTitleAsName ?? DEFAULT_PARSE_OPENAPI_SETTINGS.useTitlesAsName,
-        audiences: specSettings?.audiences ?? DEFAULT_PARSE_OPENAPI_SETTINGS.audiences
+        useTitlesAsName:
+            overrides?.useTitlesAsName ??
+            specSettings?.shouldUseTitleAsName ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.useTitlesAsName,
+        audiences: overrides?.audiences ?? specSettings?.audiences ?? DEFAULT_PARSE_OPENAPI_SETTINGS.audiences
     };
 }
 

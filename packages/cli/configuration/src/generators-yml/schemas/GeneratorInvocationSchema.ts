@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { APIDefinitionSettingsSchema } from "./APIConfigurationSchema";
 import { GeneratorOutputSchema } from "./GeneratorOutputSchema";
 import { GeneratorPublishMetadataSchema } from "./GeneratorPublishMetadataSchema";
 import { GeneratorSnippetsSchema } from "./GeneratorSnippetsSchema";
@@ -19,6 +20,8 @@ export const GeneratorInvocationSchema = z.strictObject({
     "ir-version": z.optional(z.string()),
     // Feature flag used to enable better IR naming.
     "smart-casing": z.optional(z.boolean()),
+    // Override API import settings (this is applied across all specs)
+    api: z.optional(z.object({ settings: z.optional(APIDefinitionSettingsSchema) })),
     // Temporary way to unblock example serialization.
     "disable-examples": z.optional(z.boolean()),
     // Deprecated, use `metadata` on the output block instead.

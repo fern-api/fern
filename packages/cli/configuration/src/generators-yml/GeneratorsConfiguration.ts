@@ -4,6 +4,7 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { Audiences } from "../commons";
 import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
 import { ReadmeSchema } from "./schemas/ReadmeSchema";
+import { APIDefinitionSettingsSchema } from "./schemas/APIConfigurationSchema";
 
 export interface GeneratorsConfiguration {
     api?: APIDefinition;
@@ -55,6 +56,7 @@ export interface GeneratorInvocation {
     language: GenerationLanguage | undefined;
     publishMetadata: FernFiddle.remoteGen.PublishingMetadata | undefined;
     readme: ReadmeSchema | undefined;
+    settings: APIDefinitionSettingsSchema | undefined;
 }
 
 export const GenerationLanguage = {

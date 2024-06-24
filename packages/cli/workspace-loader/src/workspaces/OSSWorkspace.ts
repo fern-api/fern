@@ -1,7 +1,7 @@
 import { FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { convert } from "@fern-api/openapi-ir-to-fern";
-import { parse } from "@fern-api/openapi-parser";
+import { parse, ParseOpenAPIOptions } from "@fern-api/openapi-parser";
 import { TaskContext } from "@fern-api/task-context";
 import yaml from "js-yaml";
 import { mapValues as mapValuesLodash } from "lodash-es";
@@ -17,9 +17,22 @@ export declare namespace OSSWorkspace {
         changelog: APIChangelog | undefined;
         generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
     }
+
+    export interface Settings {
+        /*
+         * Whether or not to parse unique errors for OpenAPI operation. This is
+         * an option that is typically enabled for docs generation.
+         */
+        enableUniqueErrorsPerEndpoint?: boolean;
+        /*
+         * Whether or not to parse discriminated unions as undiscriminated unions with literals.
+         * Typically enabled for duck typed languages like Python / TypeScript.
+         */
+        enableDiscriminatedUnionV2?: boolean;
+    }
 }
 
-export class OSSWorkspace extends AbstractAPIWorkspace {
+export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
     public type: "fern" | "oss" = "oss";
     public absoluteFilepath: AbsoluteFilePath;
     public workspaceName: string | undefined;
@@ -36,16 +49,24 @@ export class OSSWorkspace extends AbstractAPIWorkspace {
         this.generatorsConfiguration = generatorsConfiguration;
     }
 
-    public async getDefinition({ context }: { context: TaskContext }): Promise<FernDefinition> {
+    public async getDefinition(
+        {
+            context
+        }: {
+            context: TaskContext;
+        },
+        settings?: OSSWorkspace.Settings
+    ): Promise<FernDefinition> {
         const openApiIr = await parse({
             specs: this.specs,
-            taskContext: context
+            taskContext: context,
+            optionOverrides: getOptionsOverridesFromSettings(settings)
         });
 
         const definition = convert({
             taskContext: context,
             ir: openApiIr,
-            enableUniqueErrorsPerEndpoint: false // Come back to this
+            enableUniqueErrorsPerEndpoint: settings?.enableUniqueErrorsPerEndpoint ?? false
         });
 
         return {
@@ -74,8 +95,11 @@ export class OSSWorkspace extends AbstractAPIWorkspace {
         };
     }
 
-    public async toFernWorkspace({ context }: { context: TaskContext }): Promise<FernWorkspace> {
-        const definition = await this.getDefinition({ context });
+    public async toFernWorkspace(
+        { context }: { context: TaskContext },
+        settings?: OSSWorkspace.Settings
+    ): Promise<FernWorkspace> {
+        const definition = await this.getDefinition({ context }, settings);
         return new FernWorkspace({
             absoluteFilepath: this.absoluteFilepath,
             workspaceName: this.workspaceName,
@@ -87,6 +111,31 @@ export class OSSWorkspace extends AbstractAPIWorkspace {
             changelog: this.changelog
         });
     }
+}
+
+export function getOSSWorkspaceSettingsFromGeneratorInvocation(
+    generatorInvocation: generatorsYml.GeneratorInvocation
+): OSSWorkspace.Settings | undefined {
+    if (generatorInvocation.settings == null) {
+        return undefined;
+    }
+    const result: OSSWorkspace.Settings = {};
+    if (generatorInvocation.settings.unions === "v1") {
+        result.enableDiscriminatedUnionV2 = true;
+    }
+
+    return result;
+}
+
+function getOptionsOverridesFromSettings(settings?: OSSWorkspace.Settings): Partial<ParseOpenAPIOptions> | undefined {
+    if (settings == null) {
+        return undefined;
+    }
+    const result: Partial<ParseOpenAPIOptions> = {};
+    if (settings.enableDiscriminatedUnionV2) {
+        result.discriminatedUnionV2 = true;
+    }
+    return result;
 }
 
 function mapValues<T extends object, U>(items: T, mapper: (item: T[keyof T]) => U): Record<keyof T, U> {
