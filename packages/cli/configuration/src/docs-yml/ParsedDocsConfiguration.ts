@@ -2,17 +2,17 @@ import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { Audiences } from "../commons";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
-import { DocsInstances, TabConfig, VersionAvailability } from "./schemas";
+import { DocsInstance, VersionAvailability } from "./schemas";
 
 export interface ParsedDocsConfiguration {
-    instances: DocsInstances[];
+    instances: DocsInstance[];
     title: string | undefined;
 
     /* filepath of page to contents */
     pages: Record<RelativeFilePath, string>;
 
     /* navigation */
-    tabs?: Record<RelativeFilePath, TabConfig>;
+    // tabs?: Record<RelativeFilePath, TabConfig>;
     navigation: DocsNavigationConfiguration;
     navbarLinks: DocsV1Write.NavbarLink[] | undefined;
     footerLinks: DocsV1Write.FooterLink[] | undefined;
@@ -131,7 +131,7 @@ export interface VersionedDocsNavigation {
 }
 
 export interface VersionInfo {
-    tabs?: Record<RelativeFilePath, TabConfig>;
+    // tabs?: Record<RelativeFilePath, TabConfig>;
     navigation: UntabbedDocsNavigation | TabbedDocsNavigation;
     version: string;
     availability: VersionAvailability | undefined;
@@ -143,15 +143,43 @@ export type DocsNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNav
 export type UnversionedNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNavigation;
 
 export interface TabbedNavigation {
-    tab: string;
-    layout?: DocsNavigationItem[];
+    // tab: string;
+    title: string;
+    icon: string | undefined;
+    slug: string | undefined;
+    skipUrlSlug: boolean | undefined;
+    hidden: boolean | undefined;
+    child: TabbedNavigationChild;
+}
+
+type TabbedNavigationChild =
+    | TabbedNavigationChild.Layout
+    | TabbedNavigationChild.Link
+    | TabbedNavigationChild.Changelog;
+
+export declare namespace TabbedNavigationChild {
+    export interface Layout {
+        type: "layout";
+        layout: DocsNavigationItem[];
+    }
+
+    export interface Link {
+        type: "link";
+        href: string;
+    }
+
+    export interface Changelog {
+        type: "changelog";
+        changelog: AbsoluteFilePath[];
+    }
 }
 
 export type DocsNavigationItem =
     | DocsNavigationItem.Page
     | DocsNavigationItem.Section
     | DocsNavigationItem.ApiSection
-    | DocsNavigationItem.Link;
+    | DocsNavigationItem.Link
+    | DocsNavigationItem.Changelog;
 
 export declare namespace DocsNavigationItem {
     export interface Page {
@@ -197,6 +225,15 @@ export declare namespace DocsNavigationItem {
         text: string;
         url: string;
         icon: string | undefined;
+    }
+
+    export interface Changelog {
+        type: "changelog";
+        changelog: AbsoluteFilePath[];
+        title: string;
+        icon: string | undefined;
+        hidden: boolean | undefined;
+        slug: string | undefined;
     }
 
     export interface VersionedSnippetLanguageConfiguration {

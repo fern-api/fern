@@ -51,9 +51,9 @@ class ServiceClient:
         _response = self._client_wrapper.httpx_client.request(
             f"movie/{jsonable_encoder(movie_id)}", method="GET", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(Movie, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Movie, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -114,7 +114,6 @@ class ServiceClient:
             title="The Boy and the Heron",
             from_="Hayao Miyazaki",
             rating=8.0,
-            type="movie",
             tag="tag-wf9as23d",
             metadata={
                 "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
@@ -140,9 +139,9 @@ class ServiceClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(MovieId, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(MovieId, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -194,9 +193,9 @@ class ServiceClient:
             headers={"X-API-Version": str(x_api_version) if x_api_version is not None else None},
             request_options=request_options,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(Metadata, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Metadata, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -227,9 +226,9 @@ class ServiceClient:
         _response = self._client_wrapper.httpx_client.request(
             "response", method="POST", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(Response, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Response, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -269,9 +268,9 @@ class AsyncServiceClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"movie/{jsonable_encoder(movie_id)}", method="GET", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(Movie, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Movie, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -332,7 +331,6 @@ class AsyncServiceClient:
             title="The Boy and the Heron",
             from_="Hayao Miyazaki",
             rating=8.0,
-            type="movie",
             tag="tag-wf9as23d",
             metadata={
                 "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
@@ -358,9 +356,9 @@ class AsyncServiceClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(MovieId, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(MovieId, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -412,9 +410,9 @@ class AsyncServiceClient:
             headers={"X-API-Version": str(x_api_version) if x_api_version is not None else None},
             request_options=request_options,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(Metadata, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Metadata, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -445,9 +443,9 @@ class AsyncServiceClient:
         _response = await self._client_wrapper.httpx_client.request(
             "response", method="POST", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(Response, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Response, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

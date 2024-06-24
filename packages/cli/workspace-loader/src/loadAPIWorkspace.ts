@@ -7,28 +7,27 @@ import {
 } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { listFiles } from "./listFiles";
+import { listFernFiles } from "./listFernFiles";
 import { loadAPIChangelog } from "./loadAPIChangelog";
 import { getValidAbsolutePathToAsyncAPIFromFolder } from "./loadAsyncAPIFile";
 import { getValidAbsolutePathToOpenAPIFromFolder } from "./loadOpenAPIFile";
 import { parseYamlFiles } from "./parseYamlFiles";
 import { processPackageMarkers } from "./processPackageMarkers";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
-import { APIChangelog, FernWorkspace, Spec } from "./types/Workspace";
+import { APIChangelog, Spec } from "./types/Workspace";
 import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
+import { FernWorkspace, OSSWorkspace } from "./workspaces";
 
 export async function loadAPIWorkspace({
     absolutePathToWorkspace,
     context,
     cliVersion,
-    workspaceName,
-    sdkLanguage
+    workspaceName
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
     cliVersion: string;
     workspaceName: string | undefined;
-    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<WorkspaceLoader.Result> {
     const generatorsConfiguration = await generatorsYml.loadGeneratorsConfiguration({
         absolutePathToWorkspace,
@@ -92,15 +91,13 @@ export async function loadAPIWorkspace({
         }
         return {
             didSucceed: true,
-            workspace: {
-                type: "oss",
-                name: "api",
+            workspace: new OSSWorkspace({
                 specs,
                 workspaceName,
                 absoluteFilepath: absolutePathToWorkspace,
                 generatorsConfiguration,
                 changelog
-            }
+            })
         };
     }
 
@@ -137,15 +134,13 @@ export async function loadAPIWorkspace({
         }
         return {
             didSucceed: true,
-            workspace: {
-                type: "oss",
-                name: "api",
+            workspace: new OSSWorkspace({
                 specs,
                 workspaceName,
                 absoluteFilepath: absolutePathToWorkspace,
                 generatorsConfiguration,
                 changelog
-            }
+            })
         };
     }
 
@@ -155,7 +150,7 @@ export async function loadAPIWorkspace({
         absolutePathToWorkspace,
         context
     });
-    const yamlFiles = await listFiles(absolutePathToDefinition, "{yml,yaml}");
+    const yamlFiles = await listFernFiles(absolutePathToDefinition, "{yml,yaml}");
 
     const parseResult = await parseYamlFiles(yamlFiles);
     if (!parseResult.didSucceed) {
@@ -174,16 +169,13 @@ export async function loadAPIWorkspace({
         dependenciesConfiguration,
         structuralValidationResult,
         context,
-        cliVersion,
-        sdkLanguage
+        cliVersion
     });
     if (!processPackageMarkersResult.didSucceed) {
         return processPackageMarkersResult;
     }
 
-    const fernWorkspace: FernWorkspace = {
-        type: "fern",
-        name: structuralValidationResult.rootApiFile.contents.name,
+    const fernWorkspace = new FernWorkspace({
         absoluteFilepath: absolutePathToWorkspace,
         generatorsConfiguration,
         dependenciesConfiguration,
@@ -196,7 +188,7 @@ export async function loadAPIWorkspace({
             importedDefinitions: processPackageMarkersResult.importedDefinitions
         },
         changelog
-    };
+    });
 
     return {
         didSucceed: true,

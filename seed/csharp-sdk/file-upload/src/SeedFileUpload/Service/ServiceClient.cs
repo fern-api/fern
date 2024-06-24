@@ -16,14 +16,14 @@ public class ServiceClient
     public async void PostAsync(MyRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = "" }
         );
     }
 
     public async void JustFileAsync(JustFileRequet request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/just-file" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = "/just-file" }
         );
     }
 
@@ -47,7 +47,7 @@ public class ServiceClient
             _query["optionalListOfStrings"] = request.OptionalListOfStrings;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/just-file-with-query-params",

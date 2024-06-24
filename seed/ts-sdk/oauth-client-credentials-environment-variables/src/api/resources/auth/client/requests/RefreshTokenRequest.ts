@@ -8,8 +8,6 @@
  *         clientId: "string",
  *         clientSecret: "string",
  *         refreshToken: "string",
- *         audience: "https://api.example.com",
- *         grantType: "refresh_token",
  *         scope: "string"
  *     }
  */

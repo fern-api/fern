@@ -17,7 +17,7 @@ public class ServiceClient
     public async Task<Movie> GetMovieAsync(string movieId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/movie/{movieId}" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"/movie/{movieId}" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
@@ -30,7 +30,7 @@ public class ServiceClient
     public async Task<string> CreateMovieAsync(Movie request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/movie",
@@ -61,7 +61,7 @@ public class ServiceClient
             { "X-API-Version", request.XApiVersion },
         };
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
                 Path = "/metadata",
@@ -80,7 +80,7 @@ public class ServiceClient
     public async Task<Response> GetResponseAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/response" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = "/response" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)

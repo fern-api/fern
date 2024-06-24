@@ -77,12 +77,13 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         generatorContext: AbstractGeneratorContext,
         intermediateRepresentation: IntermediateRepresentation
     ) {
-        const generatedTypeFiles = new TypesGenerator(
+        const generatedTypeFiles = new TypesGenerator({
             gemName,
             clientName,
             generatorContext,
-            intermediateRepresentation
-        ).generateFiles(true);
+            intermediateRepresentation,
+            shouldFlattenModules: false
+        }).generateFiles(true);
         this.generatedFiles.push(...Array.from(generatedTypeFiles.values()));
     }
 

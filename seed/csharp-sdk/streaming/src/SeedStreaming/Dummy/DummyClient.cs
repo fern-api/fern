@@ -1,3 +1,4 @@
+using System.Text.Json;
 using SeedStreaming;
 
 #nullable enable
@@ -13,15 +14,33 @@ public class DummyClient
         _client = client;
     }
 
-    public async void GenerateStreamAsync(GenerateStreamRequestzs request)
+    public async void GenerateStreamAsync(GenerateStreamRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/generate-stream",
+                Path = "generate-stream",
                 Body = request
             }
         );
+    }
+
+    public async Task<StreamResponse> GenerateAsync(Generateequest request)
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "generate",
+                Body = request
+            }
+        );
+        string responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        {
+            return JsonSerializer.Deserialize<StreamResponse>(responseBody);
+        }
+        throw new Exception(responseBody);
     }
 }

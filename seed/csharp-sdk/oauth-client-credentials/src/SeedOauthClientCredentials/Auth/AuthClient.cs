@@ -17,7 +17,7 @@ public class AuthClient
     public async Task<TokenResponse> GetTokenWithClientCredentialsAsync(GetTokenRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/token",
@@ -35,7 +35,7 @@ public class AuthClient
     public async Task<TokenResponse> RefreshTokenAsync(RefreshTokenRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/token",

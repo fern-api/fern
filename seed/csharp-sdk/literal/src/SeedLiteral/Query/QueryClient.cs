@@ -23,10 +23,10 @@ public class QueryClient
             { "stream", request.Stream.ToString() },
         };
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/query",
+                Path = "query",
                 Query = _query
             }
         );

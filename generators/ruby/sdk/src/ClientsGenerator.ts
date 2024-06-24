@@ -70,18 +70,31 @@ export class ClientsGenerator {
     // TODO: should this be an object instead of a string
     private defaultEnvironment: string | undefined;
 
-    constructor(
-        gemName: string,
-        clientName: string,
-        generatorContext: AbstractGeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation,
-        sdkVersion: string | undefined,
-        generatedClasses: Map<TypeId, Class_>,
-        flattenedProperties: Map<TypeId, ObjectProperty[]>,
-        hasFileBasedDependencies: boolean,
-        locationGenerator: LocationGenerator | undefined,
-        classReferenceFactory: ClassReferenceFactory | undefined
-    ) {
+    constructor({
+        gemName,
+        clientName,
+        generatorContext,
+        intermediateRepresentation,
+        sdkVersion,
+        generatedClasses,
+        flattenedProperties,
+        hasFileBasedDependencies,
+        locationGenerator,
+        classReferenceFactory,
+        shouldFlattenModules
+    }: {
+        gemName: string;
+        clientName: string;
+        generatorContext: AbstractGeneratorContext;
+        intermediateRepresentation: IntermediateRepresentation;
+        sdkVersion: string | undefined;
+        generatedClasses: Map<TypeId, Class_>;
+        flattenedProperties: Map<TypeId, ObjectProperty[]>;
+        hasFileBasedDependencies: boolean;
+        locationGenerator: LocationGenerator | undefined;
+        classReferenceFactory: ClassReferenceFactory | undefined;
+        shouldFlattenModules: boolean;
+    }) {
         this.gc = generatorContext;
         this.sdkVersion = sdkVersion;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -92,7 +105,9 @@ export class ClientsGenerator {
 
         // These should be gotten from the TypesGenerator
         this.locationGenerator =
-            locationGenerator == null ? new LocationGenerator(this.gemName, this.clientName) : locationGenerator;
+            locationGenerator == null
+                ? new LocationGenerator(this.gemName, this.clientName, shouldFlattenModules)
+                : locationGenerator;
         if (classReferenceFactory !== undefined) {
             this.crf = classReferenceFactory;
         } else {
@@ -151,7 +166,10 @@ export class ClientsGenerator {
                 this.intermediateRepresentation.environments,
                 this.clientName
             );
-            const environmentsModule = Module_.wrapInModules(this.clientName, environmentClass);
+            const environmentsModule = Module_.wrapInModules({
+                locationGenerator: this.locationGenerator,
+                child: environmentClass
+            });
             clientFiles.push(
                 new GeneratedRubyFile({
                     rootNode: environmentsModule,
@@ -207,12 +225,10 @@ export class ClientsGenerator {
             retriesProperty,
             timeoutProperty
         );
-        const requestsModule = Module_.wrapInModules(this.clientName, [
-            syncClientClass,
-            asyncClientClass,
-            requestOptionsClass,
-            idempotencyRequestOptionsClass
-        ]);
+        const requestsModule = Module_.wrapInModules({
+            locationGenerator: this.locationGenerator,
+            child: [syncClientClass, asyncClientClass, requestOptionsClass, idempotencyRequestOptionsClass]
+        });
 
         clientFiles.push(
             new GeneratedRubyFile({
@@ -232,7 +248,10 @@ export class ClientsGenerator {
 
         const fileUtilityClass = new FileUploadUtility(this.clientName);
         if (this.hasFileBasedDependencies) {
-            const fileUtilityModule = Module_.wrapInModules(this.clientName, fileUtilityClass);
+            const fileUtilityModule = Module_.wrapInModules({
+                locationGenerator: this.locationGenerator,
+                child: fileUtilityClass
+            });
             clientFiles.push(
                 new GeneratedRubyFile({
                     rootNode: fileUtilityModule,
@@ -287,13 +306,12 @@ export class ClientsGenerator {
                 subpackagePaths.get(packageId) ?? [],
                 artifactRegistry
             );
-            const serviceModule = Module_.wrapInModules(
-                clientName,
-                [serviceClasses.syncClientClass, serviceClasses.asyncClientClass],
-                subpackage.fernFilepath,
-                [],
-                false
-            );
+            const serviceModule = Module_.wrapInModules({
+                locationGenerator,
+                child: [serviceClasses.syncClientClass, serviceClasses.asyncClientClass],
+                path: subpackage.fernFilepath,
+                includeFilename: false
+            });
             const serviceFile = new GeneratedRubyFile({
                 rootNode: serviceModule,
                 fullPath: locationGenerator.getLocationFromFernFilepath(subpackage.fernFilepath, "client")
@@ -374,11 +392,11 @@ export class ClientsGenerator {
                         new Map(classPairs.map((cp) => [cp.subpackageName, cp.asyncClientClass]))
                     );
 
-                    const subpackageModule = Module_.wrapInModules(
-                        clientName,
-                        [subpackageClasses.syncClientClass, subpackageClasses.asyncClientClass],
-                        subpackage.fernFilepath
-                    );
+                    const subpackageModule = Module_.wrapInModules({
+                        locationGenerator,
+                        child: [subpackageClasses.syncClientClass, subpackageClasses.asyncClientClass],
+                        path: subpackage.fernFilepath
+                    });
                     const subpackageFile = new GeneratedRubyFile({
                         rootNode: subpackageModule,
                         fullPath: locationGenerator.getLocationFromFernFilepath(subpackage.fernFilepath, "client")
@@ -447,7 +465,10 @@ export class ClientsGenerator {
                 requestClientReference: syncClientClass.classReference,
                 accessTokenReference: accessTokenClass.classReference
             });
-            const oauthModule = Module_.wrapInModules(this.clientName, [accessTokenClass, oauthTokenProvider]);
+            const oauthModule = Module_.wrapInModules({
+                locationGenerator,
+                child: [accessTokenClass, oauthTokenProvider]
+            });
             clientFiles.push(
                 new GeneratedRubyFile({
                     rootNode: oauthModule,
@@ -478,6 +499,7 @@ export class ClientsGenerator {
                 timeoutProperty,
                 this.artifactRegistry,
                 oauthTokenProvider,
+                locationGenerator,
                 environmentClass?.classReference,
                 this.defaultEnvironment,
                 this.services.get(this.intermediateRepresentation.rootPackage.service ?? "")

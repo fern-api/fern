@@ -17,10 +17,10 @@ public class ReferenceClient
     public async Task<SendResponse> SendAsync(SendRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/reference",
+                Path = "reference",
                 Body = request
             }
         );

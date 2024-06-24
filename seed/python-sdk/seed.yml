@@ -11,8 +11,9 @@ local:
     - poetry config virtualenvs.in-project true
     - poetry install
   # The envvar is needed to trick the generator to look in the right place for the core_utils files
-  runCommand: PYTEST_CURRENT_TEST="some value" poetry run python -m src.fern_python.generators.sdk.cli
-  env: {}
+  runCommand: poetry run python -m src.fern_python.generators.sdk.cli
+  env: 
+    PYTEST_CURRENT_TEST: "some value"
 fixtures:
   examples: 
     - customConfig: null
@@ -30,7 +31,7 @@ fixtures:
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /movie
         features:
-          timeouts:
+          asyncClient:
             - GET /movie/{movieId}
             - method: POST
               path: /movie

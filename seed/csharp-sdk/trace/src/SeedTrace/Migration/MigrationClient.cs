@@ -23,10 +23,10 @@ public class MigrationClient
             { "admin-key-header", request.AdminKeyHeader },
         };
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/all",
+                Path = "/migration-info/all",
                 Headers = _headers
             }
         );

@@ -11,7 +11,8 @@ import com.seed.streaming.core.RequestOptions;
 import com.seed.streaming.core.SeedStreamingApiError;
 import com.seed.streaming.core.SeedStreamingError;
 import com.seed.streaming.core.Stream;
-import com.seed.streaming.resources.dummy.requests.GenerateStreamRequestzs;
+import com.seed.streaming.resources.dummy.requests.GenerateStreamRequest;
+import com.seed.streaming.resources.dummy.requests.Generateequest;
 import com.seed.streaming.resources.dummy.types.StreamResponse;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -29,11 +30,11 @@ public class DummyClient {
         this.clientOptions = clientOptions;
     }
 
-    public Iterable<StreamResponse> generateStream(GenerateStreamRequestzs request) {
+    public Iterable<StreamResponse> generateStream(GenerateStreamRequest request) {
         return generateStream(request, null);
     }
 
-    public Iterable<StreamResponse> generateStream(GenerateStreamRequestzs request, RequestOptions requestOptions) {
+    public Iterable<StreamResponse> generateStream(GenerateStreamRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("generate-stream")
@@ -59,6 +60,47 @@ public class DummyClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return new Stream<StreamResponse>(StreamResponse.class, responseBody.charStream(), "\n");
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedStreamingApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new SeedStreamingError("Network error executing HTTP request", e);
+        }
+    }
+
+    public StreamResponse generate(Generateequest request) {
+        return generate(request, null);
+    }
+
+    public StreamResponse generate(Generateequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("generate")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedStreamingError("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), StreamResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedStreamingApiError(

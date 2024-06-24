@@ -22,7 +22,7 @@ public class FooClient
             _query["optionalString"] = request.OptionalString;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "",

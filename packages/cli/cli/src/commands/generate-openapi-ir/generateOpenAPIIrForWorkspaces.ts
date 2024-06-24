@@ -3,6 +3,7 @@ import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { serialization } from "@fern-api/openapi-ir-sdk";
 import { parse } from "@fern-api/openapi-parser";
 import { Project } from "@fern-api/project-loader";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext";
@@ -21,24 +22,13 @@ export async function generateOpenAPIIrForWorkspaces({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                if (workspace.type === "fern") {
+                if (workspace instanceof FernWorkspace) {
                     context.logger.info("Skipping, API is specified as a Fern Definition.");
                     return;
                 }
-
-                workspace.specs = workspace.specs.map((spec) => ({
-                    ...spec,
-                    settings: {
-                        audiences: spec.settings?.audiences ?? [],
-                        shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true,
-                        shouldUseUndiscriminatedUnionsWithLiterals:
-                            spec.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false
-                    }
-                }));
                 const openAPIIr = await parse({
-                    workspace,
-                    taskContext: context,
-                    sdkLanguage
+                    specs: workspace.specs,
+                    taskContext: context
                 });
 
                 const irOutputFilePath = path.resolve(irFilepath);

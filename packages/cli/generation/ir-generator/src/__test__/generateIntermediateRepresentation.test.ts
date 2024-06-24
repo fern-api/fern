@@ -30,34 +30,35 @@ it("generate IR", async () => {
         absolutePathToWorkspace: AbsoluteFilePath.of(FHIR_DIR),
         context: createMockTaskContext(),
         cliVersion: "0.0.0",
-        workspaceName: "fhir",
-        sdkLanguage: undefined
+        workspaceName: "fhir"
     });
     if (fhirWorkspace.didSucceed) {
         apiWorkspaces.push(fhirWorkspace.workspace);
     }
 
     // Test for audiences
+    const context = createMockTaskContext();
     const audiences = await loadAPIWorkspace({
         absolutePathToWorkspace: AbsoluteFilePath.of(AUDIENCES_DIR),
-        context: createMockTaskContext(),
+        context,
         cliVersion: "0.0.0",
-        workspaceName: "audiences",
-        sdkLanguage: undefined
+        workspaceName: "audiences"
     });
     if (audiences.didSucceed) {
         apiWorkspaces.push(audiences.workspace);
     }
 
     for (const workspace of apiWorkspaces) {
-        if (workspace.type === "oss") {
-            throw new Error("Convert OpenAPI to Fern workspace before generating IR");
-        }
+        const fernWorkspace = await workspace.toFernWorkspace({
+            context
+        });
 
         const intermediateRepresentation = await generateIntermediateRepresentation({
-            workspace,
+            workspace: fernWorkspace,
             generationLanguage: undefined,
-            audiences: TEST_DEFINITION_CONFIG[workspace.name]?.audiences ?? { type: "all" },
+            audiences: TEST_DEFINITION_CONFIG[fernWorkspace.definition.rootApiFile.contents.name]?.audiences ?? {
+                type: "all"
+            },
             keywords: undefined,
             smartCasing: true, // Verify the special casing convention in tests.
             disableExamples: false,
@@ -70,6 +71,8 @@ it("generate IR", async () => {
                 unrecognizedObjectKeys: "strip"
             }
         );
-        expect(intermediateRepresentationJson).toMatchSpecificSnapshot(`__snapshots__/${workspace.workspaceName}.txt`);
+        expect(intermediateRepresentationJson).toMatchSpecificSnapshot(
+            `__snapshots__/${fernWorkspace.workspaceName}.txt`
+        );
     }
 });

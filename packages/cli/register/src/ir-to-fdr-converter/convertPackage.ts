@@ -430,6 +430,7 @@ function convertResponse(irResponse: Ir.http.HttpResponse): APIV1Write.HttpRespo
             };
         },
         text: () => undefined, // TODO: support text/plain in FDR
+        streamParameter: () => undefined, // TODO: support stream parameter in FDR
         streaming: (streamingResponse) => {
             if (streamingResponse.type === "text") {
                 return {

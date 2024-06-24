@@ -123,11 +123,14 @@ export async function convertHttpService({
                               )
                             : [],
                     requestBody: convertHttpRequestBody({ request: endpoint.request, file }),
-                    sdkRequest: convertHttpSdkRequest({
+                    sdkRequest: await convertHttpSdkRequest({
                         service: serviceDefinition,
                         request: endpoint.request,
+                        endpoint,
+                        endpointKey,
                         file,
-                        typeResolver
+                        typeResolver,
+                        propertyResolver
                     }),
                     response: await convertHttpResponse({ endpoint, file, typeResolver }),
                     errors: [...convertResponseErrors({ errors: endpoint.errors, file }), ...globalErrors],

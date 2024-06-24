@@ -17,10 +17,10 @@ public class SyspropClient
     public async void SetNumWarmInstancesAsync(Language language, int numWarmInstances)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Put,
-                Path = $"/num-warm-instances/{language}/{numWarmInstances}"
+                Path = $"/sysprop/num-warm-instances/{language}/{numWarmInstances}"
             }
         );
     }
@@ -28,7 +28,11 @@ public class SyspropClient
     public async Task<Dictionary<Language, int>> GetNumWarmInstancesAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/num-warm-instances" }
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = "/sysprop/num-warm-instances"
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)

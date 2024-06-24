@@ -48,7 +48,6 @@ async def test_create_movie(client: SeedExamples, async_client: AsyncSeedExample
         title="The Boy and the Heron",
         from_="Hayao Miyazaki",
         rating=8.0,
-        type="movie",
         tag="tag-wf9as23d",
         metadata={
             "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
@@ -64,7 +63,6 @@ async def test_create_movie(client: SeedExamples, async_client: AsyncSeedExample
         title="The Boy and the Heron",
         from_="Hayao Miyazaki",
         rating=8.0,
-        type="movie",
         tag="tag-wf9as23d",
         metadata={
             "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],

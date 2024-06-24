@@ -8,12 +8,16 @@ import * as core from "../../../../core";
 
 export const SdkRequest: core.serialization.ObjectSchema<serializers.SdkRequest.Raw, FernIr.SdkRequest> =
     core.serialization.objectWithoutOptionalProperties({
+        streamParameter: core.serialization
+            .lazyObject(async () => (await import("../../..")).RequestProperty)
+            .optional(),
         requestParameterName: core.serialization.lazyObject(async () => (await import("../../..")).Name),
         shape: core.serialization.lazy(async () => (await import("../../..")).SdkRequestShape),
     });
 
 export declare namespace SdkRequest {
     interface Raw {
+        streamParameter?: serializers.RequestProperty.Raw | null;
         requestParameterName: serializers.Name.Raw;
         shape: serializers.SdkRequestShape.Raw;
     }

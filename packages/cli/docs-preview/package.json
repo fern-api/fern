@@ -28,14 +28,13 @@
   },
   "dependencies": {
     "@fern-api/docs-resolver": "workspace:*",
-    "@fern-api/fdr-sdk": "0.98.2-feb732f15",
+    "@fern-api/fdr-sdk": "0.98.4-bf08716d8",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/register": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-api/workspace-loader": "workspace:*",
     "chalk": "^5.0.1",
     "cors": "^2.8.5",
     "decompress": "^4.2.1",
@@ -43,7 +42,7 @@
     "tmp-promise": "^3.0.3",
     "uuid": "^9.0.1",
     "watcher": "^2.3.1",
-    "ws": "^8.17.0",
+    "ws": "^8.17.1",
     "xml2js": "^0.6.2"
   },
   "devDependencies": {

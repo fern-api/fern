@@ -17,10 +17,10 @@ public class ServiceClient
     public async Task<Response> GetMovieAsync(string request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/movie",
+                Path = "movie",
                 Body = request
             }
         );
@@ -35,10 +35,10 @@ public class ServiceClient
     public async Task<Response> GetMovieDocsAsync(string request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/movie",
+                Path = "movie",
                 Body = request
             }
         );
@@ -53,10 +53,10 @@ public class ServiceClient
     public async Task<StringResponse> GetMovieNameAsync(string request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/movie",
+                Path = "movie",
                 Body = request
             }
         );
@@ -71,10 +71,10 @@ public class ServiceClient
     public async Task<Response> GetMovieMetadataAsync(string request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/movie",
+                Path = "movie",
                 Body = request
             }
         );
@@ -89,10 +89,10 @@ public class ServiceClient
     public async Task<Response?> GetOptionalMovieAsync(string request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/movie",
+                Path = "movie",
                 Body = request
             }
         );
@@ -107,10 +107,10 @@ public class ServiceClient
     public async Task<WithDocs?> GetOptionalMovieDocsAsync(string request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/movie",
+                Path = "movie",
                 Body = request
             }
         );
@@ -125,10 +125,10 @@ public class ServiceClient
     public async Task<StringResponse?> GetOptionalMovieNameAsync(string request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/movie",
+                Path = "movie",
                 Body = request
             }
         );

@@ -475,13 +475,16 @@ exports[`migrateFromV47ToV46 snapshot 1`] = `
                                               "value": {
                                                 "jsonExample": "goose",
                                                 "shape": {
-                                                  "primitive": {
-                                                    "string": {
-                                                      "original": "goose",
+                                                  "container": {
+                                                    "literal": {
+                                                      "string": {
+                                                        "original": "goose",
+                                                      },
+                                                      "type": "string",
                                                     },
-                                                    "type": "string",
+                                                    "type": "literal",
                                                   },
-                                                  "type": "primitive",
+                                                  "type": "container",
                                                 },
                                               },
                                             },
@@ -756,13 +759,16 @@ exports[`migrateFromV47ToV46 snapshot 1`] = `
                                               "value": {
                                                 "jsonExample": "goose",
                                                 "shape": {
-                                                  "primitive": {
-                                                    "string": {
-                                                      "original": "goose",
+                                                  "container": {
+                                                    "literal": {
+                                                      "string": {
+                                                        "original": "goose",
+                                                      },
+                                                      "type": "string",
                                                     },
-                                                    "type": "string",
+                                                    "type": "literal",
                                                   },
-                                                  "type": "primitive",
+                                                  "type": "container",
                                                 },
                                               },
                                             },
@@ -928,7 +934,7 @@ exports[`migrateFromV47ToV46 snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "57602a4bf907e3ac838da409789827c823858b7c",
+              "id": "1507bb3bff076877f695465398d74db8e464f689",
               "name": null,
               "queryParameters": [
                 {
@@ -1289,13 +1295,16 @@ exports[`migrateFromV47ToV46 snapshot 1`] = `
                                               "value": {
                                                 "jsonExample": "goose",
                                                 "shape": {
-                                                  "primitive": {
-                                                    "string": {
-                                                      "original": "goose",
+                                                  "container": {
+                                                    "literal": {
+                                                      "string": {
+                                                        "original": "goose",
+                                                      },
+                                                      "type": "string",
                                                     },
-                                                    "type": "string",
+                                                    "type": "literal",
                                                   },
-                                                  "type": "primitive",
+                                                  "type": "container",
                                                 },
                                               },
                                             },
@@ -1570,13 +1579,16 @@ exports[`migrateFromV47ToV46 snapshot 1`] = `
                                               "value": {
                                                 "jsonExample": "goose",
                                                 "shape": {
-                                                  "primitive": {
-                                                    "string": {
-                                                      "original": "goose",
+                                                  "container": {
+                                                    "literal": {
+                                                      "string": {
+                                                        "original": "goose",
+                                                      },
+                                                      "type": "string",
                                                     },
-                                                    "type": "string",
+                                                    "type": "literal",
                                                   },
-                                                  "type": "primitive",
+                                                  "type": "container",
                                                 },
                                               },
                                             },

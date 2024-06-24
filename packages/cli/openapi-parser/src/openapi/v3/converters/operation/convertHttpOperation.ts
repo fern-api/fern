@@ -49,7 +49,8 @@ export function convertHttpOperation({
                   document,
                   context: new DummyOpenAPIV3ParserContext({
                       document: context.document,
-                      taskContext: context.taskContext
+                      taskContext: context.taskContext,
+                      options: context.options
                   }),
                   requestBreadcrumbs
               })

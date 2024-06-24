@@ -32,7 +32,7 @@ public class UserClient
         };
         if (request.OptionalDeadline != null)
         {
-            _query["optionalDeadline"] = request.OptionalDeadline.ToString("o0");
+            _query["optionalDeadline"] = request.OptionalDeadline.Value.ToString("o0");
         }
         if (request.OptionalString != null)
         {
@@ -43,10 +43,10 @@ public class UserClient
             _query["optionalUser"] = request.OptionalUser.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "",
+                Path = "/user",
                 Query = _query
             }
         );

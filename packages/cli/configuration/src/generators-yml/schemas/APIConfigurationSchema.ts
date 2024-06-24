@@ -20,6 +20,8 @@ export const APIDefinitionSettingsSchema = z.object({
         .describe("What version of union generation to use, this will grow over time. Defaults to v0.")
 });
 
+export type APIDefinitionSettingsSchema = z.infer<typeof APIDefinitionSettingsSchema>;
+
 /**
  * @example
  * api:

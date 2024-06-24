@@ -26,8 +26,6 @@ const client = new SeedOauthClientCredentialsClient({
 await client.auth.getTokenWithClientCredentials({
     clientId: "string",
     clientSecret: "string",
-    audience: "https://api.example.com",
-    grantType: "client_credentials",
     scope: "string",
 });
 ```

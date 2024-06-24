@@ -16,7 +16,7 @@ public class ServiceClient
     public async void GetTextAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/text" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = "text" }
         );
     }
 }

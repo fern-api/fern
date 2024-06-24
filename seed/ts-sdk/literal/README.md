@@ -20,8 +20,6 @@ import { SeedLiteralClient } from "@fern/literal";
 
 const client = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
 await client.headers.send({
-    endpointVersion: "02-12-2024",
-    async: true,
     query: "What is the weather today",
 });
 ```

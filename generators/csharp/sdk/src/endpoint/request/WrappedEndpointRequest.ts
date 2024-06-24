@@ -2,6 +2,7 @@ import { csharp } from "@fern-api/csharp-codegen";
 import {
     HttpEndpoint,
     HttpHeader,
+    Name,
     QueryParameter,
     SdkRequest,
     SdkRequestWrapper,
@@ -9,6 +10,7 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { RawClient } from "../RawClient";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
@@ -67,7 +69,10 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         entries: requiredQueryParameters.map((queryParameter) => {
                             return {
                                 key: csharp.codeblock(`"${queryParameter.name.wireValue}"`),
-                                value: this.stringifyQueryParameter(queryParameter)
+                                value: this.stringify({
+                                    reference: queryParameter.valueType,
+                                    name: queryParameter.name.name
+                                })
                             };
                         })
                     })
@@ -76,26 +81,12 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
                     writer.controlFlow("if", `${queryParameterReference} != null`);
                     writer.write(`${QUERY_PARAMETER_BAG_NAME}["${query.name.wireValue}"] = `);
-                    writer.writeNodeStatement(this.stringifyQueryParameter(query));
+                    writer.writeNodeStatement(this.stringify({ reference: query.valueType, name: query.name.name }));
                     writer.endControlFlow();
                 }
             }),
             queryParameterBagReference: QUERY_PARAMETER_BAG_NAME
         };
-    }
-
-    private stringifyQueryParameter(queryParameter: QueryParameter): csharp.CodeBlock {
-        if (this.isString(queryParameter.valueType)) {
-            return csharp.codeblock(`${this.getParameterName()}.${queryParameter.name.name.pascalCase.safeName}`);
-        } else if (this.isDatetime(queryParameter.valueType)) {
-            return csharp.codeblock(
-                `${this.getParameterName()}.${queryParameter.name.name.pascalCase.safeName}.ToString("o0")`
-            );
-        } else {
-            return csharp.codeblock(
-                `${this.getParameterName()}.${queryParameter.name.name.pascalCase.safeName}.ToString()`
-            );
-        }
     }
 
     public getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined {
@@ -122,7 +113,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         entries: requiredHeaders.map((header) => {
                             return {
                                 key: csharp.codeblock(`"${header.name.wireValue}"`),
-                                value: this.stringifyHeader(header)
+                                value: this.stringify({ reference: header.valueType, name: header.name.name })
                             };
                         })
                     })
@@ -131,7 +122,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     const headerReference = `${this.getParameterName()}.${header.name.name.pascalCase.safeName}`;
                     writer.controlFlow("if", `${headerReference} != null`);
                     writer.write(`${HEADER_BAG_NAME}["${header.name.wireValue}"] = `);
-                    writer.writeNodeStatement(this.stringifyHeader(header));
+                    writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name.name }));
                     writer.endControlFlow();
                 }
             }),
@@ -139,15 +130,29 @@ export class WrappedEndpointRequest extends EndpointRequest {
         };
     }
 
-    private stringifyHeader(header: HttpHeader): csharp.CodeBlock {
-        if (this.isString(header.valueType)) {
-            return csharp.codeblock(`${this.getParameterName()}.${header.name.name.pascalCase.safeName}`);
-        } else if (this.isDatetime(header.valueType)) {
-            return csharp.codeblock(
-                `${this.getParameterName()}.${header.name.name.pascalCase.safeName}.ToString("o0")`
-            );
+    public getRequestType(): RawClient.RequestBodyType | undefined {
+        if (this.endpoint.requestBody == null) {
+            return undefined;
+        }
+        switch (this.endpoint.requestBody.type) {
+            case "bytes":
+                return "bytes";
+            case "reference":
+            case "inlinedRequestBody":
+                return "json";
+        }
+        return undefined;
+    }
+
+    private stringify({ reference, name }: { reference: TypeReference; name: Name }): csharp.CodeBlock {
+        if (this.isString(reference)) {
+            return csharp.codeblock(`${this.getParameterName()}.${name.pascalCase.safeName}`);
+        } else if (this.isDatetime({ typeReference: reference, allowOptionals: false })) {
+            return csharp.codeblock(`${this.getParameterName()}.${name.pascalCase.safeName}.ToString("o0")`);
+        } else if (this.isDatetime({ typeReference: reference, allowOptionals: true })) {
+            return csharp.codeblock(`${this.getParameterName()}.${name.pascalCase.safeName}.Value.ToString("o0")`);
         } else {
-            return csharp.codeblock(`${this.getParameterName()}.${header.name.name.pascalCase.safeName}.ToString()`);
+            return csharp.codeblock(`${this.getParameterName()}.${name.pascalCase.safeName}.ToString()`);
         }
     }
 
@@ -170,7 +175,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 return undefined;
             },
             fileUpload: () => undefined,
-            bytes: () => undefined,
+            bytes: () => {
+                return {
+                    requestBodyReference: `${this.getParameterName()}.${this.wrapper.bodyKey.pascalCase.safeName}`
+                };
+            },
             _other: () => undefined
         });
     }
@@ -198,17 +207,23 @@ export class WrappedEndpointRequest extends EndpointRequest {
         }
     }
 
-    private isDatetime(typeReference: TypeReference): boolean {
+    private isDatetime({
+        typeReference,
+        allowOptionals = true
+    }: {
+        typeReference: TypeReference;
+        allowOptionals: boolean;
+    }): boolean {
         switch (typeReference.type) {
             case "container":
-                if (typeReference.container.type === "optional") {
-                    return this.isDatetime(typeReference.container.optional);
+                if (typeReference.container.type === "optional" && allowOptionals) {
+                    return this.isDatetime({ typeReference: typeReference.container.optional, allowOptionals });
                 }
                 return false;
             case "named": {
                 const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (declaration.shape.type === "alias") {
-                    return this.isDatetime(declaration.shape.aliasOf);
+                    return this.isDatetime({ typeReference: declaration.shape.aliasOf, allowOptionals });
                 }
                 return false;
             }

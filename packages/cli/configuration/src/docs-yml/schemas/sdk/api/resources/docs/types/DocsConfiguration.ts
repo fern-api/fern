@@ -5,7 +5,7 @@
 import * as FernDocsConfig from "../../..";
 
 export interface DocsConfiguration {
-    instances: FernDocsConfig.DocsInstances[];
+    instances: FernDocsConfig.DocsInstance[];
     /** used as tab bar title, and in the navbar if no logo is defined */
     title?: string;
     tabs?: Record<FernDocsConfig.TabId, FernDocsConfig.TabConfig>;

@@ -36,10 +36,10 @@ public class UsersClient
             _query["starting_after"] = request.StartingAfter;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "",
+                Path = "/users",
                 Query = _query
             }
         );
@@ -73,10 +73,10 @@ public class UsersClient
             _query["starting_after"] = request.StartingAfter;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "",
+                Path = "/users",
                 Query = _query
             }
         );
@@ -106,10 +106,10 @@ public class UsersClient
             _query["order"] = request.Order.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "",
+                Path = "/users",
                 Query = _query
             }
         );
@@ -131,10 +131,10 @@ public class UsersClient
             _query["cursor"] = request.Cursor.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "",
+                Path = "/users",
                 Query = _query
             }
         );
@@ -154,10 +154,10 @@ public class UsersClient
             _query["starting_after"] = request.StartingAfter;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "",
+                Path = "/users",
                 Query = _query
             }
         );
@@ -179,10 +179,10 @@ public class UsersClient
             _query["offset"] = request.Offset.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "",
+                Path = "/users",
                 Query = _query
             }
         );

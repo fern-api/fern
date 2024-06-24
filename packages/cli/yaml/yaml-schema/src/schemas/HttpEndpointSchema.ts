@@ -16,6 +16,7 @@ export const HttpEndpointSchema = DeclarationSchema.extend({
     ["path-parameters"]: z.optional(z.record(HttpPathParameterSchema)),
     auth: z.optional(z.boolean()),
     idempotent: z.optional(z.boolean()),
+    "stream-condition": z.optional(z.string()),
     request: z.optional(z.union([z.string(), HttpRequestSchema])),
     response: z.optional(HttpResponseSchema),
     "response-stream": z.optional(z.union([z.string(), HttpResponseStreamSchema])),

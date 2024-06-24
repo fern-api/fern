@@ -51,9 +51,11 @@ export function visitNavigation({
     switch (navigation.type) {
         case "tabbed":
             navigation.items.forEach((tab) => {
-                tab.layout?.forEach((item) => {
-                    visitDocsNavigationItem({ item, collector });
-                });
+                if (tab.child.type === "layout") {
+                    tab.child.layout.forEach((item) => {
+                        visitDocsNavigationItem({ item, collector });
+                    });
+                }
             });
             break;
         case "untabbed":
@@ -84,6 +86,7 @@ export function visitDocsNavigationItem({
             return;
         case "page":
         case "link":
+        case "changelog":
             return;
         default:
             assertNever(item);

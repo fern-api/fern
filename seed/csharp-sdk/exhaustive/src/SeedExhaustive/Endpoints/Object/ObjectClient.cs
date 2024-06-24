@@ -14,8 +14,8 @@ public class ObjectClient
     }
 
     public async Task<ObjectWithOptionalField> GetAndReturnWithOptionalFieldAsync(ObjectWithOptionalField request) {
-        var response = await _client.MakeRequestAsync(new RawClient.ApiRequest{
-                Method = HttpMethod.Post, Path = "/get-and-return-with-optional-field", Body = request});
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{
+                Method = HttpMethod.Post, Path = "/object/get-and-return-with-optional-field", Body = request});
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400) {
         return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody);
@@ -24,8 +24,8 @@ public class ObjectClient
     }
 
     public async Task<ObjectWithRequiredField> GetAndReturnWithRequiredFieldAsync(ObjectWithRequiredField request) {
-        var response = await _client.MakeRequestAsync(new RawClient.ApiRequest{
-                Method = HttpMethod.Post, Path = "/get-and-return-with-required-field", Body = request});
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{
+                Method = HttpMethod.Post, Path = "/object/get-and-return-with-required-field", Body = request});
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400) {
         return JsonSerializer.Deserialize<ObjectWithRequiredField>(responseBody);
@@ -34,8 +34,8 @@ public class ObjectClient
     }
 
     public async Task<ObjectWithMapOfMap> GetAndReturnWithMapOfMapAsync(ObjectWithMapOfMap request) {
-        var response = await _client.MakeRequestAsync(new RawClient.ApiRequest{
-                Method = HttpMethod.Post, Path = "/get-and-return-with-map-of-map", Body = request});
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{
+                Method = HttpMethod.Post, Path = "/object/get-and-return-with-map-of-map", Body = request});
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400) {
         return JsonSerializer.Deserialize<ObjectWithMapOfMap>(responseBody);
@@ -44,8 +44,8 @@ public class ObjectClient
     }
 
     public async Task<NestedObjectWithOptionalField> GetAndReturnNestedWithOptionalFieldAsync(NestedObjectWithOptionalField request) {
-        var response = await _client.MakeRequestAsync(new RawClient.ApiRequest{
-                Method = HttpMethod.Post, Path = "/get-and-return-nested-with-optional-field", Body = request});
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{
+                Method = HttpMethod.Post, Path = "/object/get-and-return-nested-with-optional-field", Body = request});
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400) {
         return JsonSerializer.Deserialize<NestedObjectWithOptionalField>(responseBody);
@@ -54,8 +54,8 @@ public class ObjectClient
     }
 
     public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsync(string string, NestedObjectWithRequiredField request) {
-        var response = await _client.MakeRequestAsync(new RawClient.ApiRequest{
-                Method = HttpMethod.Post, Path = $"/get-and-return-nested-with-required-field/{string}", Body = request});
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{
+                Method = HttpMethod.Post, Path = $"/object/get-and-return-nested-with-required-field/{string}", Body = request});
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400) {
         return JsonSerializer.Deserialize<NestedObjectWithRequiredField>(responseBody);
@@ -64,8 +64,8 @@ public class ObjectClient
     }
 
     public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsListAsync(IEnumerable<NestedObjectWithRequiredField> request) {
-        var response = await _client.MakeRequestAsync(new RawClient.ApiRequest{
-                Method = HttpMethod.Post, Path = "/get-and-return-nested-with-required-field-list", Body = request});
+        var response = await _client.MakeRequestAsync(new RawClient.JsonApiRequest{
+                Method = HttpMethod.Post, Path = "/object/get-and-return-nested-with-required-field-list", Body = request});
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400) {
         return JsonSerializer.Deserialize<NestedObjectWithRequiredField>(responseBody);

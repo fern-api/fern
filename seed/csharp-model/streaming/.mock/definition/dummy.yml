@@ -12,9 +12,21 @@ service:
       path: /generate-stream
       method: POST
       request:
-        name: GenerateStreamRequestzs
+        name: GenerateStreamRequest
         body:
           properties:
+            stream: literal<true>
             num_events: integer
       response-stream:
         type: StreamResponse
+    
+    generate:
+      path: /generate
+      method: POST
+      request:
+        name: Generateequest
+        body:
+          properties:
+            stream: literal<false>
+            num_events: integer
+      response: StreamResponse

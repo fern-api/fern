@@ -6,8 +6,7 @@
  * @example
  *     {
  *         clientId: "string",
- *         clientSecret: "string",
- *         grantType: "client_credentials"
+ *         clientSecret: "string"
  *     }
  */
 export interface GetTokenRequest {

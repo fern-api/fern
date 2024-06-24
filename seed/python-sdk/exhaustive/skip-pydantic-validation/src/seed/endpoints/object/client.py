@@ -132,9 +132,9 @@ class ObjectClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(ObjectWithOptionalField, construct_type(type_=ObjectWithOptionalField, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(ObjectWithOptionalField, construct_type(type_=ObjectWithOptionalField, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -174,9 +174,9 @@ class ObjectClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(ObjectWithRequiredField, construct_type(type_=ObjectWithRequiredField, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(ObjectWithRequiredField, construct_type(type_=ObjectWithRequiredField, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -216,9 +216,9 @@ class ObjectClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(ObjectWithMapOfMap, construct_type(type_=ObjectWithMapOfMap, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(ObjectWithMapOfMap, construct_type(type_=ObjectWithMapOfMap, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -289,9 +289,9 @@ class ObjectClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(NestedObjectWithOptionalField, construct_type(type_=NestedObjectWithOptionalField, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(NestedObjectWithOptionalField, construct_type(type_=NestedObjectWithOptionalField, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -366,9 +366,9 @@ class ObjectClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(NestedObjectWithRequiredField, construct_type(type_=NestedObjectWithRequiredField, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(NestedObjectWithRequiredField, construct_type(type_=NestedObjectWithRequiredField, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -440,9 +440,9 @@ class ObjectClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(NestedObjectWithRequiredField, construct_type(type_=NestedObjectWithRequiredField, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(NestedObjectWithRequiredField, construct_type(type_=NestedObjectWithRequiredField, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -561,9 +561,9 @@ class AsyncObjectClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(ObjectWithOptionalField, construct_type(type_=ObjectWithOptionalField, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(ObjectWithOptionalField, construct_type(type_=ObjectWithOptionalField, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -603,9 +603,9 @@ class AsyncObjectClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(ObjectWithRequiredField, construct_type(type_=ObjectWithRequiredField, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(ObjectWithRequiredField, construct_type(type_=ObjectWithRequiredField, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -645,9 +645,9 @@ class AsyncObjectClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(ObjectWithMapOfMap, construct_type(type_=ObjectWithMapOfMap, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(ObjectWithMapOfMap, construct_type(type_=ObjectWithMapOfMap, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -718,9 +718,9 @@ class AsyncObjectClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(NestedObjectWithOptionalField, construct_type(type_=NestedObjectWithOptionalField, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(NestedObjectWithOptionalField, construct_type(type_=NestedObjectWithOptionalField, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -795,9 +795,9 @@ class AsyncObjectClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(NestedObjectWithRequiredField, construct_type(type_=NestedObjectWithRequiredField, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(NestedObjectWithRequiredField, construct_type(type_=NestedObjectWithRequiredField, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -869,9 +869,9 @@ class AsyncObjectClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(NestedObjectWithRequiredField, construct_type(type_=NestedObjectWithRequiredField, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(NestedObjectWithRequiredField, construct_type(type_=NestedObjectWithRequiredField, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

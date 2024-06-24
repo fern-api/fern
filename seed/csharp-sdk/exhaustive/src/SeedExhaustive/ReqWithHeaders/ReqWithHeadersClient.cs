@@ -20,10 +20,10 @@ public class ReqWithHeadersClient
             { "X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader },
         };
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/custom-header",
+                Path = "/test-headers/custom-header",
                 Body = request.Body,
                 Headers = _headers
             }

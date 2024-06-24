@@ -200,6 +200,13 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 ...this.getDevDependencies(),
                 ...this.extraDevDependencies
             };
+
+            draft.browser = {
+                fs: false,
+                os: false,
+                path: false
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            } as any;
         });
 
         packageJson = mergeExtraConfigs(packageJson, this.extraConfigs);

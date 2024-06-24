@@ -45,9 +45,9 @@ class UnionClient:
         _response = self._client_wrapper.httpx_client.request(
             method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(MyUnion, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(MyUnion, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -74,9 +74,9 @@ class UnionClient:
         client.union.get_metadata()
         """
         _response = self._client_wrapper.httpx_client.request("metadata", method="GET", request_options=request_options)
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(Metadata, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Metadata, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -114,9 +114,9 @@ class AsyncUnionClient:
         _response = await self._client_wrapper.httpx_client.request(
             method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(MyUnion, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(MyUnion, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -145,9 +145,9 @@ class AsyncUnionClient:
         _response = await self._client_wrapper.httpx_client.request(
             "metadata", method="GET", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(Metadata, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Metadata, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

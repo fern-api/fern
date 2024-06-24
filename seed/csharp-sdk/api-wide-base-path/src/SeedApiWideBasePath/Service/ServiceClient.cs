@@ -13,13 +13,18 @@ public class ServiceClient
         _client = client;
     }
 
-    public async void PostAsync(string resourceParam, int endpointParam)
+    public async void PostAsync(
+        string pathParam,
+        string serviceParam,
+        string resourceParam,
+        int endpointParam
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/{endpointParam}/{resourceParam}"
+                Path = $"/test/{pathParam}/{serviceParam}/{endpointParam}/{resourceParam}"
             }
         );
     }

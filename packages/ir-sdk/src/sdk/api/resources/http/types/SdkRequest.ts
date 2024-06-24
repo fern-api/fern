@@ -5,6 +5,8 @@
 import * as FernIr from "../../..";
 
 export interface SdkRequest {
+    /** The request property that controls whether or not the response is streamed. */
+    streamParameter: FernIr.RequestProperty | undefined;
     requestParameterName: FernIr.Name;
     shape: FernIr.SdkRequestShape;
 }

@@ -46,9 +46,9 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "primitive/string", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(str, construct_type(type_=str, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(str, construct_type(type_=str, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -82,9 +82,9 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "primitive/integer", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(int, construct_type(type_=int, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(int, construct_type(type_=int, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -118,9 +118,9 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "primitive/long", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(int, construct_type(type_=int, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(int, construct_type(type_=int, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -156,9 +156,9 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "primitive/double", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(float, construct_type(type_=float, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(float, construct_type(type_=float, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -192,9 +192,9 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "primitive/boolean", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(bool, construct_type(type_=bool, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(bool, construct_type(type_=bool, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -234,9 +234,9 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "primitive/datetime", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(dt.datetime, construct_type(type_=dt.datetime, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(dt.datetime, construct_type(type_=dt.datetime, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -276,9 +276,9 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "primitive/date", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(dt.date, construct_type(type_=dt.date, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(dt.date, construct_type(type_=dt.date, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -318,9 +318,9 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "primitive/uuid", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(uuid.UUID, construct_type(type_=uuid.UUID, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(uuid.UUID, construct_type(type_=uuid.UUID, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -354,9 +354,9 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "primitive/base64", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(str, construct_type(type_=str, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(str, construct_type(type_=str, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -397,9 +397,9 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/string", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(str, construct_type(type_=str, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(str, construct_type(type_=str, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -433,9 +433,9 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/integer", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(int, construct_type(type_=int, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(int, construct_type(type_=int, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -471,9 +471,9 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/long", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(int, construct_type(type_=int, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(int, construct_type(type_=int, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -509,9 +509,9 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/double", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(float, construct_type(type_=float, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(float, construct_type(type_=float, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -547,9 +547,9 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/boolean", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(bool, construct_type(type_=bool, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(bool, construct_type(type_=bool, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -589,9 +589,9 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/datetime", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(dt.datetime, construct_type(type_=dt.datetime, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(dt.datetime, construct_type(type_=dt.datetime, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -631,9 +631,9 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/date", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(dt.date, construct_type(type_=dt.date, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(dt.date, construct_type(type_=dt.date, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -673,9 +673,9 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/uuid", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(uuid.UUID, construct_type(type_=uuid.UUID, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(uuid.UUID, construct_type(type_=uuid.UUID, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -711,9 +711,9 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/base64", method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(str, construct_type(type_=str, object_=_response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(str, construct_type(type_=str, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

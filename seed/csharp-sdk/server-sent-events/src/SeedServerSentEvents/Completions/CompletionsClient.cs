@@ -16,10 +16,10 @@ public class CompletionsClient
     public async void StreamAsync(StreamCompletionRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/stream",
+                Path = "stream",
                 Body = request
             }
         );

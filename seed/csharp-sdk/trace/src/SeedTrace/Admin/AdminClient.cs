@@ -16,10 +16,10 @@ public class AdminClient
     public async void UpdateTestSubmissionStatusAsync(Guid submissionId, object request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/store-test-submission-status/{submissionId}",
+                Path = $"/admin/store-test-submission-status/{submissionId}",
                 Body = request
             }
         );
@@ -28,10 +28,10 @@ public class AdminClient
     public async void SendTestSubmissionUpdateAsync(Guid submissionId, TestSubmissionUpdate request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/store-test-submission-status-v2/{submissionId}",
+                Path = $"/admin/store-test-submission-status-v2/{submissionId}",
                 Body = request
             }
         );
@@ -40,10 +40,10 @@ public class AdminClient
     public async void UpdateWorkspaceSubmissionStatusAsync(Guid submissionId, object request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/store-workspace-submission-status/{submissionId}",
+                Path = $"/admin/store-workspace-submission-status/{submissionId}",
                 Body = request
             }
         );
@@ -55,10 +55,10 @@ public class AdminClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/store-workspace-submission-status-v2/{submissionId}",
+                Path = $"/admin/store-workspace-submission-status-v2/{submissionId}",
                 Body = request
             }
         );
@@ -71,10 +71,10 @@ public class AdminClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/store-test-trace/submission/{submissionId}/testCase/{testCaseId}",
+                Path = $"/admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}",
                 Body = request
             }
         );
@@ -87,10 +87,11 @@ public class AdminClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}",
+                Path =
+                    $"/admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}",
                 Body = request
             }
         );
@@ -102,10 +103,10 @@ public class AdminClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/store-workspace-trace/submission/{submissionId}",
+                Path = $"/admin/store-workspace-trace/submission/{submissionId}",
                 Body = request
             }
         );
@@ -117,10 +118,10 @@ public class AdminClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/store-workspace-trace-v2/submission/{submissionId}",
+                Path = $"/admin/store-workspace-trace-v2/submission/{submissionId}",
                 Body = request
             }
         );

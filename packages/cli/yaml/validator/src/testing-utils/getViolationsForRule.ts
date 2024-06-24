@@ -18,12 +18,12 @@ export async function getViolationsForRule({
     rule,
     absolutePathToWorkspace
 }: getViolationsForRule.Args): Promise<ValidationViolation[]> {
+    const context = createMockTaskContext();
     const parseResult = await loadAPIWorkspace({
         absolutePathToWorkspace,
-        context: createMockTaskContext(),
+        context,
         cliVersion: "0.0.0",
-        workspaceName: undefined,
-        sdkLanguage: undefined
+        workspaceName: undefined
     });
     if (!parseResult.didSucceed) {
         throw new Error("Failed to parse workspace: " + JSON.stringify(parseResult));
@@ -34,7 +34,7 @@ export async function getViolationsForRule({
     }
 
     const violations = await runRulesOnWorkspace({
-        workspace: parseResult.workspace,
+        workspace: await parseResult.workspace.toFernWorkspace({ context }),
         logger: CONSOLE_LOGGER,
         rules: [rule]
     });

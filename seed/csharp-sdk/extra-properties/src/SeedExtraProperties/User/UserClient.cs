@@ -17,7 +17,7 @@ public class UserClient
     public async Task<User> CreateUserAsync(CreateUserRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/user",

@@ -17,10 +17,10 @@ public class S3Client
     public async Task<string> GetPresignedUrlAsync(GetPresignedUrlRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/presigned-url",
+                Path = "/s3/presigned-url",
                 Body = request
             }
         );

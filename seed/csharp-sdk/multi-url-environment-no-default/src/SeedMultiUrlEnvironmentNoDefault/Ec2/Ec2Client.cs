@@ -16,10 +16,10 @@ public class Ec2Client
     public async void BootInstanceAsync(BootInstanceRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/boot",
+                Path = "/ec2/boot",
                 Body = request
             }
         );

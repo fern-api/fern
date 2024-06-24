@@ -29,10 +29,10 @@ public class QueryParamClient
             _query["maybeOperandOrColor"] = request.MaybeOperandOrColor.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/query",
+                Path = "query",
                 Query = _query
             }
         );
@@ -54,10 +54,10 @@ public class QueryParamClient
             _query["maybeOperandOrColor"] = request.MaybeOperandOrColor.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/query-list",
+                Path = "query-list",
                 Query = _query
             }
         );

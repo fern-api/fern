@@ -22,10 +22,10 @@ public class HeadersClient
             { "X-Async", request.Async.ToString() },
         };
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/headers",
+                Path = "headers",
                 Headers = _headers
             }
         );

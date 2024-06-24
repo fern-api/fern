@@ -1570,7 +1570,8 @@ exports[`ir {"name":"file-upload"} 1`] = `
                                 "unsafeName": "Request",
                                 "safeName": "Request"
                             }
-                        }
+                        },
+                        "streamParameter": null
                     },
                     "response": {
                         "body": null,
@@ -12397,7 +12398,8 @@ exports[`ir {"name":"response-property"} 1`] = `
                                 "unsafeName": "Request",
                                 "safeName": "Request"
                             }
-                        }
+                        },
+                        "streamParameter": null
                     },
                     "response": {
                         "body": {
@@ -12879,7 +12881,8 @@ exports[`ir {"name":"response-property"} 1`] = `
                                 "unsafeName": "Request",
                                 "safeName": "Request"
                             }
-                        }
+                        },
+                        "streamParameter": null
                     },
                     "response": {
                         "body": {
@@ -13899,7 +13902,8 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                                 "unsafeName": "Request",
                                 "safeName": "Request"
                             }
-                        }
+                        },
+                        "streamParameter": null
                     },
                     "response": {
                         "body": {
@@ -16018,7 +16022,8 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                 "unsafeName": "Request",
                                 "safeName": "Request"
                             }
-                        }
+                        },
+                        "streamParameter": null
                     },
                     "response": {
                         "body": {
@@ -25456,7 +25461,8 @@ exports[`ir {"name":"simple"} 1`] = `
                                 "unsafeName": "Request",
                                 "safeName": "Request"
                             }
-                        }
+                        },
+                        "streamParameter": null
                     },
                     "response": {
                         "body": {
@@ -26344,7 +26350,8 @@ exports[`ir {"name":"simple"} 1`] = `
                                 "unsafeName": "Request",
                                 "safeName": "Request"
                             }
-                        }
+                        },
+                        "streamParameter": null
                     },
                     "response": {
                         "body": {
@@ -29191,7 +29198,8 @@ exports[`ir {"name":"simple"} 1`] = `
                                 "unsafeName": "Request",
                                 "safeName": "Request"
                             }
-                        }
+                        },
+                        "streamParameter": null
                     },
                     "response": {
                         "body": {
@@ -33713,7 +33721,8 @@ exports[`ir {"name":"streaming"} 1`] = `
                                 "unsafeName": "Request",
                                 "safeName": "Request"
                             }
-                        }
+                        },
+                        "streamParameter": null
                     },
                     "response": {
                         "body": {

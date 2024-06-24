@@ -20,10 +20,10 @@ public class ContainerClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/list-of-primitives",
+                Path = "/container/list-of-primitives",
                 Body = request
             }
         );
@@ -40,10 +40,10 @@ public class ContainerClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/list-of-objects",
+                Path = "/container/list-of-objects",
                 Body = request
             }
         );
@@ -58,10 +58,10 @@ public class ContainerClient
     public async Task<HashSet<string>> GetAndReturnSetOfPrimitivesAsync(HashSet<string> request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/set-of-primitives",
+                Path = "/container/set-of-primitives",
                 Body = request
             }
         );
@@ -78,10 +78,10 @@ public class ContainerClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/set-of-objects",
+                Path = "/container/set-of-objects",
                 Body = request
             }
         );
@@ -98,10 +98,10 @@ public class ContainerClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/map-prim-to-prim",
+                Path = "/container/map-prim-to-prim",
                 Body = request
             }
         );
@@ -118,10 +118,10 @@ public class ContainerClient
     > GetAndReturnMapOfPrimToObjectAsync(Dictionary<string, ObjectWithRequiredField> request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/map-prim-to-object",
+                Path = "/container/map-prim-to-object",
                 Body = request
             }
         );
@@ -140,10 +140,10 @@ public class ContainerClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/opt-objects",
+                Path = "/container/opt-objects",
                 Body = request
             }
         );

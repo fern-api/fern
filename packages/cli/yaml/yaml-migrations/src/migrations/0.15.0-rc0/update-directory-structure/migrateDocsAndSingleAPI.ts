@@ -41,7 +41,7 @@ async function migrateAndWriteDocsYml({
     docsURLs
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
-    docsURLs: docsYml.RawSchemas.DocsInstances[];
+    docsURLs: docsYml.RawSchemas.DocsInstance[];
 }): Promise<void> {
     const docsConfiguration = await loadRawDocsConfiguration({ absolutePathToWorkspace });
     if (docsConfiguration == null) {
@@ -60,7 +60,7 @@ async function migrateAndWriteGeneratorsYml({
     absolutePathToWorkspace
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
-}): Promise<docsYml.RawSchemas.DocsInstances[]> {
+}): Promise<docsYml.RawSchemas.DocsInstance[]> {
     const generatorsConfiguration = await loadRawGeneratorsConfiguration({ absolutePathToWorkspace });
     if (generatorsConfiguration == null) {
         return [];

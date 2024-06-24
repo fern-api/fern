@@ -17,10 +17,10 @@ public class PaymentClient
     public async Task<Guid> CreateAsync(CreatePaymentRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "",
+                Path = "/payment",
                 Body = request
             }
         );
@@ -35,7 +35,11 @@ public class PaymentClient
     public async void DeleteAsync(string paymentId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Delete, Path = $"/{paymentId}" }
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Delete,
+                Path = $"/payment/{paymentId}"
+            }
         );
     }
 }

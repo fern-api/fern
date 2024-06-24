@@ -17,10 +17,10 @@ public class InlinedClient
     public async Task<SendResponse> SendAsync(SendLiteralsInlinedRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/inlined",
+                Path = "inlined",
                 Body = request
             }
         );

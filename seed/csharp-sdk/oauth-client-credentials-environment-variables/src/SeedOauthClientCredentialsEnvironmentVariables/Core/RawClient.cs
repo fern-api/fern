@@ -26,12 +26,10 @@ public class RawClient
         _headers = headers;
     }
 
-    public async Task<ApiResponse> MakeRequestAsync(ApiRequest request)
+    public async Task<ApiResponse> MakeRequestAsync(BaseApiRequest request)
     {
-        var httpRequest = new HttpRequestMessage(
-            request.Method,
-            this.BuildUrl(request.Path, request.Query)
-        );
+        var url = this.BuildUrl(request.Path, request.Query);
+        var httpRequest = new HttpRequestMessage(request.Method, url);
         if (request.ContentType != null)
         {
             request.Headers.Add("Content-Type", request.ContentType);
@@ -47,24 +45,31 @@ public class RawClient
             httpRequest.Headers.Add(key, value);
         }
         // Add the request body to the request
-        if (request.Body != null)
+        if (request is JsonApiRequest jsonRequest)
         {
-            var serializerOptions = new JsonSerializerOptions { WriteIndented = true, };
-            httpRequest.Content = new StringContent(
-                JsonSerializer.Serialize(request.Body, serializerOptions),
-                Encoding.UTF8,
-                "application/json"
-            );
+            if (jsonRequest.Body != null)
+            {
+                var serializerOptions = new JsonSerializerOptions { WriteIndented = true, };
+                httpRequest.Content = new StringContent(
+                    JsonSerializer.Serialize(jsonRequest.Body, serializerOptions),
+                    Encoding.UTF8,
+                    "application/json"
+                );
+            }
+        }
+        else if (request is StreamApiRequest streamRequest)
+        {
+            if (streamRequest.Body != null)
+            {
+                httpRequest.Content = new StreamContent(streamRequest.Body);
+            }
         }
         // Send the request
         HttpResponseMessage response = await _clientOptions.HttpClient.SendAsync(httpRequest);
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
 
-    /// <summary>
-    /// The request object to be sent to the API.
-    /// </summary>
-    public class ApiRequest
+    public abstract class BaseApiRequest
     {
         public HttpMethod Method;
 
@@ -72,13 +77,27 @@ public class RawClient
 
         public string? ContentType = null;
 
-        public object? Body { get; init; } = null;
-
         public Dictionary<string, object> Query { get; init; } = new();
 
         public Dictionary<string, string> Headers { get; init; } = new();
 
         public object RequestOptions { get; init; }
+    }
+
+    /// <summary>
+    /// The request object to be sent for streaming uploads.
+    /// </summary>
+    public class StreamApiRequest : BaseApiRequest
+    {
+        public Stream? Body { get; init; } = null;
+    }
+
+    /// <summary>
+    /// The request object to be sent for JSON APIs.
+    /// </summary>
+    public class JsonApiRequest : BaseApiRequest
+    {
+        public object? Body { get; init; } = null;
     }
 
     /// <summary>
@@ -91,7 +110,7 @@ public class RawClient
         public HttpResponseMessage Raw;
     }
 
-    private Dictionary<string, string> GetHeaders(ApiRequest request)
+    private Dictionary<string, string> GetHeaders(BaseApiRequest request)
     {
         var headers = new Dictionary<string, string>();
         foreach (var (key, value) in request.Headers)
@@ -105,9 +124,11 @@ public class RawClient
         return headers;
     }
 
-    private string BuildUrl(string path, Dictionary<string, object> query)
+    public string BuildUrl(string path, Dictionary<string, object> query)
     {
-        var url = $"{_clientOptions.BaseUrl}{path}";
+        var trimmedBaseUrl = _clientOptions.BaseUrl.TrimEnd('/');
+        var trimmedBasePath = path.TrimStart('/');
+        var url = $"{trimmedBaseUrl}/{trimmedBasePath}";
         if (query.Count > 0)
         {
             url += "?";

@@ -17,10 +17,10 @@ public class ServiceClient
     public async Task<MyResponse> HelloAsync(MyRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/hello",
+                Path = "hello",
                 Body = request
             }
         );

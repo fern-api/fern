@@ -1,7 +1,7 @@
-import { generatorsYml } from "@fern-api/configuration";
 import { SchemaId } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
+import { ParseOpenAPIOptions } from "../../options";
 import { SchemaParserContext } from "../../schema/SchemaParserContext";
 import {
     AbstractOpenAPIV3ParserContext,
@@ -26,29 +26,27 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
         document,
         taskContext,
         authHeaders,
-        shouldUseTitleAsName,
-        shouldUseUndiscriminatedUnionsWithLiterals,
-        sdkLanguage
+        options
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
         authHeaders: Set<string>;
-        shouldUseTitleAsName: boolean;
-        shouldUseUndiscriminatedUnionsWithLiterals: boolean;
-        sdkLanguage: generatorsYml.GenerationLanguage | undefined;
+        options: ParseOpenAPIOptions;
     }) {
         super({
             document,
             taskContext,
             authHeaders,
-            shouldUseTitleAsName,
-            shouldUseUndiscriminatedUnionsWithLiterals,
-            sdkLanguage
+            options
         });
     }
 
     public getDummy(): SchemaParserContext {
-        return new DummyOpenAPIV3ParserContext({ document: this.document, taskContext: this.taskContext });
+        return new DummyOpenAPIV3ParserContext({
+            document: this.document,
+            taskContext: this.taskContext,
+            options: this.options
+        });
     }
 
     public markSchemaAsReferencedByNonRequest(schemaId: SchemaId): void {
