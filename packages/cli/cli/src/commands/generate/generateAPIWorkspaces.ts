@@ -1,10 +1,17 @@
 import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
+import { Values } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 import { CliContext } from "../../cli-context/CliContext";
 import { PREVIEW_DIRECTORY } from "../../constants";
 import { generateWorkspace } from "./generateAPIWorkspace";
+
+export const GenerationMode = {
+    PullRequest: "pull-request"
+} as const;
+
+export type GenerationMode = Values<typeof GenerationMode>;
 
 export async function generateAPIWorkspaces({
     project,
@@ -14,7 +21,8 @@ export async function generateAPIWorkspaces({
     shouldLogS3Url,
     keepDocker,
     useLocalDocker,
-    preview
+    preview,
+    mode
 }: {
     project: Project;
     cliContext: CliContext;
@@ -24,6 +32,7 @@ export async function generateAPIWorkspaces({
     useLocalDocker: boolean;
     keepDocker: boolean;
     preview: boolean;
+    mode: GenerationMode | undefined;
 }): Promise<void> {
     const token = await cliContext.runTask(async (context) => {
         return askToLogin(context);
@@ -86,7 +95,8 @@ export async function generateAPIWorkspaces({
                     token,
                     useLocalDocker,
                     keepDocker,
-                    absolutePathToPreview
+                    absolutePathToPreview,
+                    mode
                 });
             });
         })

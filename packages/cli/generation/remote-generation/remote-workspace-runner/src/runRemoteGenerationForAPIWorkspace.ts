@@ -26,7 +26,8 @@ export async function runRemoteGenerationForAPIWorkspace({
     shouldLogS3Url,
     token,
     whitelabel,
-    absolutePathToPreview
+    absolutePathToPreview,
+    mode
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -38,6 +39,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    mode: "pull-request" | undefined;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -65,7 +67,29 @@ export async function runRemoteGenerationForAPIWorkspace({
                     organization,
                     workspace: fernWorkspace,
                     interactiveTaskContext,
-                    generatorInvocation,
+                    generatorInvocation: {
+                        ...generatorInvocation,
+                        outputMode: generatorInvocation.outputMode._visit<FernFiddle.OutputMode>({
+                            downloadFiles: () => generatorInvocation.outputMode,
+                            github: (val) => {
+                                return FernFiddle.OutputMode.github({
+                                    ...val,
+                                    makePr: mode === "pull-request"
+                                });
+                            },
+                            githubV2: (val) => {
+                                if (mode === "pull-request") {
+                                    return FernFiddle.OutputMode.githubV2(
+                                        FernFiddle.GithubOutputModeV2.pullRequest(val)
+                                    );
+                                }
+                                return generatorInvocation.outputMode;
+                            },
+                            publish: () => generatorInvocation.outputMode,
+                            publishV2: () => generatorInvocation.outputMode,
+                            _other: () => generatorInvocation.outputMode
+                        })
+                    },
                     version,
                     audiences: generatorGroup.audiences,
                     shouldLogS3Url,
