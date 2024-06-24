@@ -31,7 +31,8 @@ export function validateTypeReferenceExample({
     typeResolver,
     exampleResolver,
     file,
-    workspace
+    workspace,
+    breadcrumbs,
 }: {
     rawTypeReference: string;
     example: RawSchemas.ExampleTypeReferenceSchema;
@@ -39,6 +40,7 @@ export function validateTypeReferenceExample({
     exampleResolver: ExampleResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
+    breadcrumbs: string[]
 }): ExampleViolation[] {
     if (typeof example === "string" && example.startsWith(EXAMPLE_REFERENCE_PREFIX)) {
         // if it's a reference to another example, we just need to compare the
@@ -102,7 +104,8 @@ export function validateTypeReferenceExample({
                     example,
                     typeResolver,
                     exampleResolver,
-                    workspace
+                    workspace,
+                    breadcrumbs,
                 });
             },
             map: ({ keyType, valueType }) => {
@@ -116,7 +119,8 @@ export function validateTypeReferenceExample({
                         typeResolver,
                         exampleResolver,
                         file,
-                        workspace
+                        workspace,
+                        breadcrumbs: [...breadcrumbs, exampleKey],
                     }),
                     ...validateTypeReferenceExample({
                         rawTypeReference: valueType,
@@ -124,7 +128,8 @@ export function validateTypeReferenceExample({
                         typeResolver,
                         exampleResolver,
                         file,
-                        workspace
+                        workspace,
+                        breadcrumbs: [...breadcrumbs, exampleKey],
                     })
                 ]);
             },
@@ -132,14 +137,15 @@ export function validateTypeReferenceExample({
                 if (!Array.isArray(example)) {
                     return getViolationsForMisshapenExample(example, "a list");
                 }
-                return example.flatMap((exampleItem) =>
+                return example.flatMap((exampleItem, idx) =>
                     validateTypeReferenceExample({
                         rawTypeReference: itemType,
                         example: exampleItem,
                         typeResolver,
                         exampleResolver,
                         file,
-                        workspace
+                        workspace,
+                        breadcrumbs: [...breadcrumbs, `${idx}`],
                     })
                 );
             },
@@ -160,14 +166,15 @@ export function validateTypeReferenceExample({
                     ];
                 }
 
-                return example.flatMap((exampleItem) =>
+                return example.flatMap((exampleItem, idx) =>
                     validateTypeReferenceExample({
                         rawTypeReference: itemType,
                         example: exampleItem,
                         typeResolver,
                         exampleResolver,
                         file,
-                        workspace
+                        workspace,
+                        breadcrumbs: [...breadcrumbs, `${idx}`],
                     })
                 );
             },
@@ -181,7 +188,8 @@ export function validateTypeReferenceExample({
                     typeResolver,
                     exampleResolver,
                     file,
-                    workspace
+                    workspace,
+                    breadcrumbs
                 });
             },
             unknown: () => {
