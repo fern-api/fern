@@ -34,7 +34,7 @@ export interface BearerAuth {
 
 // For global headers + auth headers
 export class HeadersGenerator {
-    BASIC_AUTH_VARIABLE_NAME = "basic_auth";
+    BASIC_AUTH_VARIABLE_NAME = "basic_auth_token";
     public headers: HttpHeader[];
     public crf: ClassReferenceFactory;
     public auth: ApiAuth;
