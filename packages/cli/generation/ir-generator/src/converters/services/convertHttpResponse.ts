@@ -47,7 +47,9 @@ export async function convertHttpResponseBody({
     });
 
     const streamResponse = await convertStreamHttpResponseBody({
-        endpoint
+        endpoint, 
+        file, 
+        typeResolver
     });
 
     if (response != null && streamResponse != null) {
@@ -115,9 +117,13 @@ export async function convertNonStreamHttpResponseBody({
 }
 
 export async function convertStreamHttpResponseBody({
-    endpoint
+    endpoint,
+    file,
+    typeResolver
 }: {
     endpoint: RawSchemas.HttpEndpointSchema;
+    typeResolver: TypeResolver;
+    file: FernFileContext;
 }): Promise<StreamingResponse | undefined> {
     const { ["response-stream"]: responseStream } = endpoint;
 
@@ -130,12 +136,16 @@ export async function convertStreamHttpResponseBody({
                 docs
             });
         } else if (typeof responseStream !== "string" && streamFormat === "sse") {
-            return StreamingResponse.text({
-                docs
+            return StreamingResponse.sse({
+                docs,
+                payload: file.parseTypeReference(typeReference),
+                terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined
             });
         } else {
-            return StreamingResponse.text({
-                docs
+            return StreamingResponse.json({
+                docs,
+                payload: file.parseTypeReference(typeReference),
+                terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined
             });
         }
     }
