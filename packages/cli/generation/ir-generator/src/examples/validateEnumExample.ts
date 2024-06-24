@@ -4,10 +4,12 @@ import { getViolationsForMisshapenExample } from "./getViolationsForMisshapenExa
 
 export function validateEnumExample({
     rawEnum,
-    example
+    example,
+    breadcrumbs
 }: {
     rawEnum: RawSchemas.EnumSchema;
     example: RawSchemas.ExampleTypeValueSchema;
+    breadcrumbs: string[];
 }): ExampleViolation[] {
     const wireValues = rawEnum.enum.map((enumValue) => (typeof enumValue === "string" ? enumValue : enumValue.value));
     const validEnumValuesLines = wireValues.map((wireValue) => `  - ${wireValue}`).join("\n");

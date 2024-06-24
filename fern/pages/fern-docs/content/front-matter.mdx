@@ -1,10 +1,10 @@
 ---
 title: Customize content using frontmatter
 subtitle: Set titles, add meta descriptions, and more
-description: Use frontmatter to set the page title, subtitle, slug, meta description, its OpenGraph image, and a URL to suggest edits.
+description: Use frontmatter to set a variety of page properties and metadata.
 ---
 
-You can optionally use front matter to set each page's title, full slug override, meta description, a URL to suggest edits to the page, and its OpenGraph image. 
+You can optionally use front matter to set each page's title, full slug override, meta description, a URL to suggest edits to the page, and its OpenGraph image. You can also use front matter to disable certain page element like the table of contents and on-page feedback. 
 
 Front matter must be added to the top of a `.md` or `.mdx` file, before the rest of the content. Use sets of three dashes to indicate the beginning and end of your front matter, as shown:
 
@@ -15,8 +15,6 @@ title: Customize content using frontmatter
 subtitle: Set titles, add meta descriptions, and more 
 slug: frontmatter
 description: Use frontmatter to set the page title, subtitle, slug, meta description, its OpenGraph image, and a URL to suggest edits.
-editThisPageUrl: https://github.com/fern-api/fern/blob/main/fern/pages/fern-docs/content/front-matter.mdx
-image: https://github.com/fern-api/fern/blob/main/fern/images/logo-green.png
 ---
 ```
 
@@ -118,12 +116,16 @@ The page then becomes available at `/email`.
 
 Set the [meta description](https://web.dev/learn/html/metadata#description) for a page. Like the page title, the meta description is important for SEO. It impacts the text that search engines display about your page in search results snippets. It can also influence search engine indexing and ranking. For more information, see [Google's guidelines for meta descriptions](https://developers.google.com/search/docs/appearance/snippet#meta-descriptions).
 
-## editThisPageUrl
+## edit-this-page-url
 
 **Type**: string (absolute URL)<br />
 **Default**: None
 
 Provide the absolute link to the source `.md` or `.mdx` file in GitHub. Fern uses it to add an `Edit this page` link to the page, which users of your documentation can use to suggest corrections or additions.
+
+<Frame>
+  <img src="./edit-this-page.png" alt="Edit this page feature" />
+</Frame>
 
 ## image
 
@@ -131,3 +133,36 @@ Provide the absolute link to the source `.md` or `.mdx` file in GitHub. Fern use
 **Default**: None
 
 Configure the `<meta property="og:image">` metadata for a page using an absolute path to an image hosted online. This provides an image to show next to a link to your documentation when the link is shared on social media, using a metadata protocol called [OpenGraph](https://ogp.me/). For more information, see the [web.dev explanation of OpenGraph](https://web.dev/learn/html/metadata#open_graph).
+
+## hide-toc
+
+**Type**: boolean<br />
+**Default**: false
+
+Controls the conditional rendering of the table of contents feature on the right-side of the page. Set to true to disable this feature. 
+
+<Frame>
+  <img src="./table-of-contents.png" alt="Table of contents feature" />
+</Frame>
+
+## hide-nav-links
+
+**Type**: boolean<br />
+**Default**: false
+
+Controls the conditional rendering of the navigation links (previous, next) at the bottom of the page. Set to true to disable this feature. 
+
+<Frame>
+  <img src="./nav-link.png" alt="Navigation links feature" />
+</Frame>
+
+## hide-feedback
+
+**Type**: boolean<br />
+**Default**: false
+
+Controls the conditional rendering of the on-page feedback form at the bottom of the page. Set to true to disable this feature. 
+
+<Frame>
+  <img src="./on-page-feedback.png" alt="On-page feedback feature" />
+</Frame>

@@ -445,7 +445,7 @@ async function getGithubLicense({
                 });
             case "Apache-2.0":
                 return FernFiddle.GithubLicense.basic({
-                    id: FernFiddle.GithubLicenseId.Apache2
+                    id: FernFiddle.GithubLicenseId.Apache
                 });
             default:
                 assertNever(githubLicense);
