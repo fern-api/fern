@@ -172,7 +172,8 @@ async function createJob({
                 // Create definition metadata
                 fernDefinitionMetadata = {
                     definitionS3DownloadUrl: definitionUploadUrlRequest.body.s3Url,
-                    outputPath: ".mock"
+                    outputPath: ".mock",
+                    cliVersion: projectConfig.version
                 };
             }
         } catch (error) {
