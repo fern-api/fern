@@ -137,11 +137,7 @@ types:
       typeReference: HttpRequestBodyReference
       bytes: BytesRequest
   SdkRequest:
-    properties: 
-      streamParameter: 
-        type: optional<RequestProperty>
-        docs: | 
-          The request property that controls whether or not the response is streamed. 
+    properties:
       requestParameterName: commons.Name
       shape: SdkRequestShape
   SdkRequestShape:
@@ -157,12 +153,6 @@ types:
     properties:
       status-code: optional<integer>
       body: optional<HttpResponseBody>
-  
-  NonStreamHttpResponseBody: 
-    union: 
-      json: JsonResponse
-      fileDownload: FileDownloadResponse
-      text: TextResponse
 
   HttpResponseBody:
     union:
@@ -170,11 +160,6 @@ types:
       fileDownload: FileDownloadResponse
       text: TextResponse
       streaming: StreamingResponse
-      streamParameter: 
-        type: StreamParameterResponse
-        docs: | 
-          If there is a parameter that controls whether the response is streaming or not. Note 
-          that if this is the response then `sdkRequest.streamParameter` will always be populated. 
 
   JsonResponse:
     union:
@@ -204,11 +189,6 @@ types:
 
   TextResponse:
     extends: commons.WithDocs
-  
-  StreamParameterResponse: 
-    properties: 
-      nonStreamResponse: NonStreamHttpResponseBody
-      streamResponse: StreamingResponse
 
   StreamingResponse:
     union:
