@@ -21,7 +21,7 @@ export function validateAliasExample({
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
-    breadcrumbs: string[]
+    breadcrumbs: string[];
 }): ExampleViolation[] {
     return validateTypeReferenceExample({
         rawTypeReference: typeof rawAlias === "string" ? rawAlias : rawAlias.type,

@@ -42,7 +42,7 @@ export const ValidExampleEndpointCallRule: Rule = {
                             }),
                             rawType: typeof header === "string" ? header : header.type
                         }),
-                        breadcrumbs: ["headers"],
+                        breadcrumbs: ["headers"]
                     });
                 },
                 examplePathParameters: (
@@ -71,7 +71,7 @@ export const ValidExampleEndpointCallRule: Rule = {
                                     rootApiFile: workspace.definition.rootApiFile.contents
                                 })
                             }),
-                        breadcrumbs: ["path-parameters"],
+                        breadcrumbs: ["path-parameters"]
                     });
                 },
                 exampleQueryParameters: ({ endpoint, examples }, { relativeFilepath, contents: definitionFile }) => {
@@ -92,7 +92,7 @@ export const ValidExampleEndpointCallRule: Rule = {
                             }),
                             rawType: typeof queryParameter === "string" ? queryParameter : queryParameter.type
                         }),
-                        breadcrumbs: ["query-parameters"],
+                        breadcrumbs: ["query-parameters"]
                     });
                 },
                 exampleRequest: ({ endpoint, example }, { relativeFilepath, contents: definitionFile }) => {

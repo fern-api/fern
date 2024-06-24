@@ -13,7 +13,7 @@ export function validateUndiscriminatedUnionExample({
     exampleResolver,
     file,
     workspace,
-    breadcrumbs,
+    breadcrumbs
 }: {
     rawUnion: RawSchemas.UndiscriminatedUnionSchema;
     example: RawSchemas.ExampleTypeValueSchema;

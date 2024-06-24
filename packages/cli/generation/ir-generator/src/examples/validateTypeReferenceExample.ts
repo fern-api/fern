@@ -32,7 +32,7 @@ export function validateTypeReferenceExample({
     exampleResolver,
     file,
     workspace,
-    breadcrumbs,
+    breadcrumbs
 }: {
     rawTypeReference: string;
     example: RawSchemas.ExampleTypeReferenceSchema;
@@ -40,7 +40,7 @@ export function validateTypeReferenceExample({
     exampleResolver: ExampleResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-    breadcrumbs: string[]
+    breadcrumbs: string[];
 }): ExampleViolation[] {
     if (typeof example === "string" && example.startsWith(EXAMPLE_REFERENCE_PREFIX)) {
         // if it's a reference to another example, we just need to compare the
@@ -105,7 +105,7 @@ export function validateTypeReferenceExample({
                     typeResolver,
                     exampleResolver,
                     workspace,
-                    breadcrumbs,
+                    breadcrumbs
                 });
             },
             map: ({ keyType, valueType }) => {
@@ -120,7 +120,7 @@ export function validateTypeReferenceExample({
                         exampleResolver,
                         file,
                         workspace,
-                        breadcrumbs: [...breadcrumbs, exampleKey],
+                        breadcrumbs: [...breadcrumbs, exampleKey]
                     }),
                     ...validateTypeReferenceExample({
                         rawTypeReference: valueType,
@@ -129,7 +129,7 @@ export function validateTypeReferenceExample({
                         exampleResolver,
                         file,
                         workspace,
-                        breadcrumbs: [...breadcrumbs, exampleKey],
+                        breadcrumbs: [...breadcrumbs, exampleKey]
                     })
                 ]);
             },
@@ -145,7 +145,7 @@ export function validateTypeReferenceExample({
                         exampleResolver,
                         file,
                         workspace,
-                        breadcrumbs: [...breadcrumbs, `${idx}`],
+                        breadcrumbs: [...breadcrumbs, `${idx}`]
                     })
                 );
             },
@@ -174,7 +174,7 @@ export function validateTypeReferenceExample({
                         exampleResolver,
                         file,
                         workspace,
-                        breadcrumbs: [...breadcrumbs, `${idx}`],
+                        breadcrumbs: [...breadcrumbs, `${idx}`]
                     })
                 );
             },

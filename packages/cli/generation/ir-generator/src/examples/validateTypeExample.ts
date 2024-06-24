@@ -18,7 +18,7 @@ export function validateTypeExample({
     exampleResolver,
     example,
     workspace,
-    breadcrumbs,
+    breadcrumbs
 }: {
     typeName: string;
     typeDeclaration: RawSchemas.TypeDeclarationSchema;

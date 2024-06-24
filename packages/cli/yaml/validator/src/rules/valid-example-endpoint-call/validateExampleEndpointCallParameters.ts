@@ -11,7 +11,7 @@ export function validateExampleEndpointCallParameters<T>({
     exampleResolver,
     workspace,
     getRawType,
-    breadcrumbs 
+    breadcrumbs
 }: {
     allDeclarations: Record<string, T> | undefined;
     examples: Record<string, RawSchemas.ExampleTypeReferenceSchema> | undefined;
@@ -20,7 +20,7 @@ export function validateExampleEndpointCallParameters<T>({
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
     getRawType: (parameter: T) => { rawType: string; file: FernFileContext } | undefined;
-    breadcrumbs: string[]
+    breadcrumbs: string[];
 }): RuleViolation[] {
     const violations: RuleViolation[] = [];
 
