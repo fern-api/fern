@@ -6450,7 +6450,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.7.18"],\
             ["@types/tar", "npm:6.1.11"],\
             ["@types/validate-npm-package-name", "npm:4.0.0"],\
-            ["@types/yargs", "npm:17.0.28"],\
+            ["@types/yargs", "npm:17.0.32"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:b567308d600cc49ad0dcf5ee9f761adc5572b914144f87bbc3284c71fbc29382723507bb61a8e531e29275684fd9c09310bc363ee648e9b47f4ea2c53497d2c8#npm:3.0.0-rc.14"],\
             ["ansi-escapes", "npm:5.0.0"],\
             ["axios", "npm:0.28.0"],\
@@ -7557,7 +7557,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/yargs", "npm:17.0.28"],\
+            ["@types/yargs", "npm:17.0.32"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:b567308d600cc49ad0dcf5ee9f761adc5572b914144f87bbc3284c71fbc29382723507bb61a8e531e29275684fd9c09310bc363ee648e9b47f4ea2c53497d2c8#npm:3.0.0-rc.14"],\
             ["chalk", "npm:5.0.1"],\
             ["depcheck", "npm:1.4.6"],\
@@ -7597,7 +7597,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/pretty-ms", "npm:5.0.1"],\
-            ["@types/yargs", "npm:17.0.28"],\
+            ["@types/yargs", "npm:17.0.32"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:b567308d600cc49ad0dcf5ee9f761adc5572b914144f87bbc3284c71fbc29382723507bb61a8e531e29275684fd9c09310bc363ee648e9b47f4ea2c53497d2c8#npm:3.0.0-rc.14"],\
             ["chalk", "npm:5.0.1"],\
             ["console-table-printer", "npm:2.12.0"],\
@@ -11386,10 +11386,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:17.0.28", {\
-          "packageLocation": "./.yarn/cache/@types-yargs-npm-17.0.28-0ffbb5b635-f78c5e5c29.zip/node_modules/@types/yargs/",\
+        ["npm:17.0.32", {\
+          "packageLocation": "./.yarn/cache/@types-yargs-npm-17.0.32-38712e567a-4505bdebe8.zip/node_modules/@types/yargs/",\
           "packageDependencies": [\
-            ["@types/yargs", "npm:17.0.28"],\
+            ["@types/yargs", "npm:17.0.32"],\
             ["@types/yargs-parser", "npm:21.0.0"]\
           ],\
           "linkType": "HARD"\

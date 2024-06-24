@@ -3413,7 +3413,7 @@ __metadata:
     "@types/node": ^18.7.18
     "@types/tar": ^6.1.11
     "@types/validate-npm-package-name": ^4.0.0
-    "@types/yargs": ^17.0.28
+    "@types/yargs": ^17.0.32
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     ansi-escapes: ^5.0.0
     axios: ^0.28.0
@@ -4459,7 +4459,7 @@ __metadata:
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
-    "@types/yargs": ^17.0.28
+    "@types/yargs": ^17.0.32
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     chalk: ^5.0.1
     depcheck: ^1.4.6
@@ -4499,7 +4499,7 @@ __metadata:
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/pretty-ms": ^5.0.1
-    "@types/yargs": ^17.0.28
+    "@types/yargs": ^17.0.32
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     chalk: ^5.0.1
     console-table-printer: ^2.12.0
@@ -7841,12 +7841,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/yargs@npm:^17.0.28":
-  version: 17.0.28
-  resolution: "@types/yargs@npm:17.0.28"
+"@types/yargs@npm:^17.0.32":
+  version: 17.0.32
+  resolution: "@types/yargs@npm:17.0.32"
   dependencies:
     "@types/yargs-parser": "*"
-  checksum: f78c5e5c29903933c0557b4ffcd1d0b8564d66859c8ca4aa51da3714e49109ed7c2644334a1918d033df19028f4cecc91fd2e502651bb8e8451f246c371da847
+  checksum: 4505bdebe8716ff383640c6e928f855b5d337cb3c68c81f7249fc6b983d0aa48de3eee26062b84f37e0d75a5797bc745e0c6e76f42f81771252a758c638f36ba
   languageName: node
   linkType: hard
 
