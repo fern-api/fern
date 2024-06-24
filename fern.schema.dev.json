@@ -431,6 +431,7 @@
                   },
                   "auth": { "type": "boolean" },
                   "idempotent": { "type": "boolean" },
+                  "stream-condition": { "type": "string" },
                   "request": {
                     "anyOf": [
                       { "type": "string" },

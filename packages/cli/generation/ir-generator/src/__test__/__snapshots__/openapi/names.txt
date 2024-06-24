@@ -1388,6 +1388,7 @@ exports[`generate IR from OpenAPI 1`] = `
                 },
               },
             },
+            "streamParameter": null,
           },
           "userSpecifiedExamples": [
             {

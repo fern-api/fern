@@ -444,6 +444,24 @@ export class ExampleGenerator {
                             ]),
                         _other: () => ExampleEndpointSuccessResponse.stream([this.generateExampleUnknown()])
                     }),
+                streamParameter: (value) => {
+                    const nonStreamResponse = value.nonStreamResponse._visit({
+                        fileDownload: (value) => HttpResponseBody.fileDownload({ ...value }),
+                        json: (value) => HttpResponseBody.fileDownload({ ...value }),
+                        text: (value) => HttpResponseBody.fileDownload({ ...value }),
+                        _other: (type) => {
+                            throw new Error(`Received unrecognized response ${type}`);
+                        }
+                    });
+                    const example = this.generateSuccessResponseExample({
+                        response: nonStreamResponse,
+                        maybeResponse: undefined
+                    });
+                    if (example.type === "error") {
+                        throw new Error("Unexpected: received error example");
+                    }
+                    return example.value;
+                },
                 _other: () => ExampleEndpointSuccessResponse.body(this.generateExampleUnknown())
             })
         );

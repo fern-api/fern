@@ -2,30 +2,46 @@ import { SdkRequest, SdkRequestBodyType, SdkRequestShape } from "@fern-api/ir-sd
 import { isInlineRequestBody, parseRawBytesType, RawSchemas } from "@fern-api/yaml-schema";
 import { size } from "lodash-es";
 import { FernFileContext } from "../../FernFileContext";
+import { PropertyResolver } from "../../resolvers/PropertyResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { convertReferenceHttpRequestBody } from "./convertHttpRequestBody";
+import { getRequestPropertyComponents } from "./convertProperty";
 
 export const DEFAULT_REQUEST_PARAMETER_NAME = "request";
 export const DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER = "body";
 
-export function convertHttpSdkRequest({
+export async function convertHttpSdkRequest({
     request,
+    endpointKey,
+    endpoint,
     service,
     file,
-    typeResolver
+    typeResolver,
+    propertyResolver
 }: {
     request: string | RawSchemas.HttpRequestSchema | null | undefined;
+    endpointKey: string;
+    endpoint: RawSchemas.HttpEndpointSchema;
     service: RawSchemas.HttpServiceSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): SdkRequest | undefined {
+    propertyResolver: PropertyResolver;
+}): Promise<SdkRequest | undefined> {
     const shape = convertHttpSdkRequestShape({ request, service, file, typeResolver });
     if (shape == null) {
         return undefined;
     }
     return {
         shape,
-        requestParameterName: file.casingsGenerator.generateName(DEFAULT_REQUEST_PARAMETER_NAME)
+        requestParameterName: file.casingsGenerator.generateName(DEFAULT_REQUEST_PARAMETER_NAME),
+        streamParameter:
+            endpoint["stream-condition"] != null
+                ? await propertyResolver.resolveRequestPropertyOrThrow({
+                      file,
+                      endpoint: endpointKey,
+                      propertyComponents: getRequestPropertyComponents(endpoint["stream-condition"])
+                  })
+                : undefined
     };
 }
 
