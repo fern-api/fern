@@ -331,6 +331,7 @@ class EndpointGenerator:
             json=lambda json_response: self._get_json_response_body_type(json_response),
             text=lambda _: AST.TypeHint.str_(),
             streaming=lambda _: raise_streaming_unsupported(),
+            stream_parameter=lambda _: raise_stream_parameter_unsupported(),
         )
 
     def _get_json_response_body_type(
@@ -354,6 +355,10 @@ def convert_http_method_to_fastapi_method_name(http_method: ir_types.HttpMethod)
         patch=lambda: "patch",
         delete=lambda: "delete",
     )
+
+
+def raise_stream_parameter_unsupported() -> Never:
+    raise RuntimeError("streaming parameter is not supported")
 
 
 def raise_streaming_unsupported() -> Never:

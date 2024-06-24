@@ -176,12 +176,19 @@ class EndpointResponseCodeWriter:
         return ".".join(path_name)
 
     def _write_dummy_snippet_to_paginate(
-        self, *, writer: AST.NodeWriter, page_parameter: ir_types.QueryParameter, type: Literal["cursor", "offset"]
+        self,
+        *,
+        writer: AST.NodeWriter,
+        page_parameter: ir_types.RequestPropertyValue,
+        type: Literal["cursor", "offset"],
     ) -> None:
+        parameter_name = page_parameter.visit(
+            body=lambda b: b.name.name.snake_case.safe_name, query=lambda q: q.name.name.snake_case.safe_name
+        )
         writer.write(f"self.{self._dummy_snippet_config.endpoint_name}(")
         for parameter in self._dummy_snippet_config.parameters:
             # We currently assume the paging mechanism is a direct parameter (e.g. not nested)
-            if parameter.name == page_parameter.name.name.snake_case.safe_name:
+            if parameter.name == parameter_name:
                 if type == "offset":
                     # Here we assume the offset parameter is an integer
                     writer.write(f"{parameter.name} + 1")
@@ -192,7 +199,7 @@ class EndpointResponseCodeWriter:
             writer.write(", ")
 
         for parameter in self._dummy_snippet_config.named_parameters:
-            if parameter.name == page_parameter.name.name.snake_case.safe_name:
+            if parameter.name == parameter_name:
                 if type == "offset":
                     # Here we assume the offset parameter is an integer
                     writer.write(f"{parameter.name}={parameter.name} + 1")
@@ -244,7 +251,7 @@ class EndpointResponseCodeWriter:
                         writer.write(f"{EndpointResponseCodeWriter.PAGINATION_GET_NEXT_VARIABLE} = lambda: ")
                         self._write_dummy_snippet_to_paginate(
                             writer=writer,
-                            page_parameter=self._pagination.get_as_union().page,
+                            page_parameter=pagination.page.property,
                             type="cursor",
                         )
                 else:
@@ -257,7 +264,7 @@ class EndpointResponseCodeWriter:
                     writer.write(f"{EndpointResponseCodeWriter.PAGINATION_GET_NEXT_VARIABLE} = lambda: ")
                     self._write_dummy_snippet_to_paginate(
                         writer=writer,
-                        page_parameter=pagination.page,
+                        page_parameter=pagination.page.property,
                         type="cursor",
                     )
             else:
@@ -270,7 +277,7 @@ class EndpointResponseCodeWriter:
                 pagination_type = self._pagination.get_as_union().type
                 self._write_dummy_snippet_to_paginate(
                     writer=writer,
-                    page_parameter=page_parameter,
+                    page_parameter=page_parameter.property,
                     type=pagination_type,
                 )
 
@@ -346,6 +353,7 @@ class EndpointResponseCodeWriter:
                         ),
                         file_download=lambda _: self._handle_success_file_download(writer=writer),
                         text=lambda _: self._handle_success_text(writer=writer),
+                        stream_parameter=lambda _: raise_stream_parameter_unsupported(),
                     )
 
             # in streaming responses, we need to call read() or aread()
@@ -423,6 +431,7 @@ class EndpointResponseCodeWriter:
                     ),
                     file_download=lambda _: self._handle_success_file_download(writer=writer),
                     text=lambda _: self._handle_success_text(writer=writer),
+                    stream_parameter=raise_stream_parameter_unsupported(),
                 )
 
         if self._endpoint.response is None or self._endpoint.response.body is None:
@@ -496,6 +505,7 @@ class EndpointResponseCodeWriter:
             writer.write_newline_if_last_line_not()
 
     def _get_response_body_type(self, response: ir_types.HttpResponse) -> Optional[AST.TypeHint]:
+        print(f"response {response}")
         if response.body is not None:
             return response.body.visit(
                 file_download=lambda _: AST.TypeHint.async_iterator(AST.TypeHint.bytes())
@@ -504,6 +514,7 @@ class EndpointResponseCodeWriter:
                 json=lambda json_response: self._get_json_response_body_type(json_response),
                 streaming=lambda streaming_response: self._get_streaming_response_data_type(streaming_response),
                 text=lambda _: AST.TypeHint.str_(),
+                stream_parameter=lambda _: raise_stream_parameter_unsupported(),
             )
         return None
 
@@ -531,3 +542,7 @@ class EndpointResponseCodeWriter:
 
 def raise_json_nested_property_as_response_unsupported() -> Never:
     raise RuntimeError("nested property json response is unsupported")
+
+
+def raise_stream_parameter_unsupported() -> Never:
+    raise RuntimeError("stream parameter is unsupported")
