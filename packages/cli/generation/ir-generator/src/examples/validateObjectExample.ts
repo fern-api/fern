@@ -53,6 +53,14 @@ export function validateObjectExample({
     // ensure required properties are present
     const requiredProperties = allPropertiesForObject.filter((property) => !property.isOptional);
     for (const requiredProperty of requiredProperties) {
+        // dont error on literal properties
+        if (
+            requiredProperty.resolvedPropertyType._type === "container" &&
+            requiredProperty.resolvedPropertyType.container._type === "literal"
+        ) {
+            continue;
+        }
+
         if (example[requiredProperty.wireKey] == null) {
             const propertyReference =
                 breadcrumbs.length > 0
