@@ -22,7 +22,7 @@ export async function runRemoteGenerationForGenerator({
     whitelabel,
     irVersionOverride,
     absolutePathToPreview,
-    readme,
+    readme
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
