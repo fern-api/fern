@@ -198,15 +198,13 @@ describe("valid-example-type", () => {
             {
                 severity: "error",
                 relativeFilepath: RelativeFilePath.of("object.yml"),
-                message:
-                    'Example is missing required property "foo". Object1 -> (extends) commons.ObjectWithFooAndBar -> foo',
+                message: 'Example is missing required property "foo"',
                 nodePath: ["types", "Object1", { key: "examples", arrayIndex: 2 }]
             },
             {
                 severity: "error",
                 relativeFilepath: RelativeFilePath.of("object.yml"),
-                message:
-                    'Example is missing required property "bar". Object1 -> (extends) commons.ObjectWithFooAndBar -> (extends) ObjectWithBar -> bar',
+                message: 'Example is missing required property "bar"',
                 nodePath: ["types", "Object1", { key: "examples", arrayIndex: 3 }]
             },
             {
