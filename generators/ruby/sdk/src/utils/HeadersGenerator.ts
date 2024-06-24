@@ -242,13 +242,13 @@ export class HeadersGenerator {
     }
 
     // Get as hash
-    public getAdditionalHeaders(): [string, string][] {
-        return this.headers.map((header) => [`"${header.name.wireValue}"`, header.name.name.snakeCase.safeName]);
-    }
+    // public getAdditionalHeaders(): [string, string][] {
+    //     return this.headers.map((header) => [`"${header.name.wireValue}"`, header.name.name.snakeCase.safeName]);
+    // }
 
     private getBearerAuthorizationHeader(bas: BearerAuthScheme): [string, string] {
         const bearerValue = new Expression({ rightSide: bas.token.snakeCase.safeName, isAssignment: false });
-        return ['"Authorization"', `"Bearer #{@${bearerValue.write({})}}"`];
+        return [`@${bas.token.snakeCase.safeName}`, `"Bearer #{@${bearerValue.write({})}}"`];
     }
 
     private getOAuthBearerAuthorizationHeader(oas: OAuthScheme): [string, string] {
@@ -259,7 +259,7 @@ export class HeadersGenerator {
                   clientCredentials: (cc) => {
                       // Note we're hardcoding to bearer auth and assuming that we're setting an `@token` property
                       return [
-                          '"Authorization"',
+                          `@${OauthTokenProvider.FIELD_NAME}`,
                           cc.tokenPrefix != null
                               ? `"${cc.tokenPrefix} #{${OauthTokenProvider.FIELD_NAME}}"`
                               : OauthTokenProvider.FIELD_NAME
@@ -287,7 +287,7 @@ export class HeadersGenerator {
             ]
         });
 
-        return [`@${OauthTokenProvider.FIELD_NAME}`, `"Basic #{${b64.write({})}}"`];
+        return [`@${this.BASIC_AUTH_VARIABLE_NAME}`, `"Basic #{${b64.write({})}}"`];
     }
 
     // TODO: I don't love how this works, ideally it's a string to expression hash instead, but we don't

@@ -21,7 +21,7 @@ module SeedBasicAuthClient
     # @return [SeedBasicAuthClient::RequestClient]
     def initialize(username:, password:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
       @base_url = base_url
-      @token = "Basic #{Base64.encode64("#{username}:#{password}")}"
+      @basic_auth = "Basic #{Base64.encode64("#{username}:#{password}")}"
       @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
@@ -60,7 +60,7 @@ module SeedBasicAuthClient
     # @return [SeedBasicAuthClient::AsyncRequestClient]
     def initialize(username:, password:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
       @base_url = base_url
-      @token = "Basic #{Base64.encode64("#{username}:#{password}")}"
+      @basic_auth = "Basic #{Base64.encode64("#{username}:#{password}")}"
       @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
