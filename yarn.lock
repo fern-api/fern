@@ -3405,7 +3405,7 @@ __metadata:
     "@types/axios": ^0.14.0
     "@types/boxen": ^3.0.1
     "@types/get-port": ^4.2.0
-    "@types/is-ci": ^3.0.2
+    "@types/is-ci": ^3.0.4
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/latest-version": ^4.0.1
@@ -7257,12 +7257,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/is-ci@npm:^3.0.2":
-  version: 3.0.2
-  resolution: "@types/is-ci@npm:3.0.2"
+"@types/is-ci@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "@types/is-ci@npm:3.0.4"
   dependencies:
     ci-info: ^3.1.0
-  checksum: 38ff40670403ecb90bdfc072aa17d0d8e7461f95613ffe5080b641fed218b93001c53fd8d0283b207d2c6353f08bafda514eaeb9f947759312160a01b95cc597
+  checksum: 5cb58dd3b64830bf2ce577017f554139cd35e3250a3feb3c2d5e5a2cb261cca909cf68faab6f31dde0c054719c7b360dd0f46d3a83a05b1e78453a9872d056c5
   languageName: node
   linkType: hard
 
@@ -12895,7 +12895,7 @@ env-cmd@toddbluhm/env-cmd:
     "@fern-api/logging-execa": "workspace:^"
     "@fern-fern/generator-exec-sdk": ^0.0.816
     "@fern-fern/ir-v39-sdk": ^0.0.1
-    "@types/is-ci": ^3.0.2
+    "@types/is-ci": ^3.0.4
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.7.18
