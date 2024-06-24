@@ -60,7 +60,7 @@ export const V49_TO_V48_MIGRATION: IrMigration<
                     const convertedEndpoint: IrVersions.V48.HttpEndpoint = {
                         ...endpoint,
                         response:
-                            response == null
+                            endpoint.response == null
                                 ? undefined
                                 : {
                                       statusCode: endpoint.response?.statusCode,
