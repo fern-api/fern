@@ -47,8 +47,8 @@ export async function convertHttpResponseBody({
     });
 
     const streamResponse = await convertStreamHttpResponseBody({
-        endpoint, 
-        file, 
+        endpoint,
+        file,
         typeResolver
     });
 
