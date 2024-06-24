@@ -27,7 +27,7 @@ module SeedTraceClient
                    timeout_in_seconds: nil, x_random_header: nil)
       @default_environment = environment
       @base_url = environment || base_url
-      @token = token
+      @token = "Bearer #{@token}"
       @headers = {}
       @headers["X-Random-Header"] = x_random_header unless x_random_header.nil?
       @conn = Faraday.new(headers: @headers) do |faraday|
@@ -47,7 +47,7 @@ module SeedTraceClient
     # @return [Hash{String => String}]
     def get_headers
       headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_trace", "X-Fern-SDK-Version": "0.0.1" }
-      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless token.nil?
+      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless @token.nil?
       headers
     end
   end
@@ -73,7 +73,7 @@ module SeedTraceClient
                    timeout_in_seconds: nil, x_random_header: nil)
       @default_environment = environment
       @base_url = environment || base_url
-      @token = token
+      @token = "Bearer #{@token}"
       @headers = {}
       @headers["X-Random-Header"] = x_random_header unless x_random_header.nil?
       @conn = Faraday.new(headers: @headers) do |faraday|
@@ -94,7 +94,7 @@ module SeedTraceClient
     # @return [Hash{String => String}]
     def get_headers
       headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_trace", "X-Fern-SDK-Version": "0.0.1" }
-      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless token.nil?
+      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless @token.nil?
       headers
     end
   end
