@@ -1,5 +1,7 @@
 import { docsYml } from "@fern-api/configuration";
+import { parseImagePaths } from "@fern-api/docs-markdown-utils";
 import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { NodePath } from "../NodePath";
@@ -9,7 +11,9 @@ import { validateVersionConfigFileSchema } from "./validateVersionConfig";
 export async function visitDocsConfigFileYamlAst(
     contents: docsYml.RawSchemas.DocsConfiguration,
     visitor: Partial<DocsConfigFileAstVisitor>,
-    absoluteFilepathToConfiguration: AbsoluteFilePath
+    absoluteFilepathToConfiguration: AbsoluteFilePath,
+    absolutePathToFernFolder: AbsoluteFilePath,
+    context: TaskContext
 ): Promise<void> {
     await visitor.file?.(
         {
@@ -17,6 +21,21 @@ export async function visitDocsConfigFileYamlAst(
         },
         []
     );
+
+    const parsed = await docsYml.parseDocsConfiguration({
+        rawDocsConfiguration: contents,
+        context,
+        absoluteFilepathToDocsConfig: absoluteFilepathToConfiguration,
+        absolutePathToFernFolder
+    });
+
+    for (const [relativePath, markdown] of Object.entries(parsed.pages)) {
+        const { filepaths } = parseImagePaths(markdown, {
+            absolutePathToFernFolder,
+            absolutePathToMdx: resolve(absolutePathToFernFolder, relativePath)
+        });
+        console.log(filepaths);
+    }
 
     if (contents.backgroundImage != null) {
         if (typeof contents.backgroundImage === "string") {
