@@ -841,11 +841,11 @@ function generateRequestClientInitializer(
         );
     }
 
-    headersGenerator.getAuthHeadersAsProperties().forEach((prop) =>
+    headersGenerator.getAuthHeaders().forEach(([prop_name, prop_value]) =>
         functionBody.push(
             new Expression({
-                leftSide: prop.toVariable(),
-                rightSide: prop.name,
+                leftSide: prop_name,
+                rightSide: prop_value,
                 isAssignment: true
             })
         )
@@ -1044,9 +1044,9 @@ function requestClientFunctions(
                             leftSide: `headers["${prop.wireValue ?? prop.name}"]`,
                             rightSide: `((${prop.toVariable(VariableType.INSTANCE).write({})}.is_a? Method) ? ${prop
                                 .toVariable(VariableType.INSTANCE)
-                                .write({})}.call : ${prop
+                                .write({})}.call : ${prop.toVariable(VariableType.INSTANCE).write({})}) unless ${prop
                                 .toVariable(VariableType.INSTANCE)
-                                .write({})}) unless token.nil?`,
+                                .write({})}.nil?`,
                             isAssignment: true
                         })
                 ),

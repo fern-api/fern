@@ -11,9 +11,7 @@ module SeedBasicAuthClient
     # @return [String]
     attr_reader :base_url
     # @return [String]
-    attr_reader :username
-    # @return [String]
-    attr_reader :password
+    attr_reader :basic_auth
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -23,8 +21,7 @@ module SeedBasicAuthClient
     # @return [SeedBasicAuthClient::RequestClient]
     def initialize(username:, password:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
       @base_url = base_url
-      @username = username
-      @password = password
+      @token = "Basic #{Base64.encode64("#{username}:#{password}")}"
       @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
@@ -42,8 +39,7 @@ module SeedBasicAuthClient
     # @return [Hash{String => String}]
     def get_headers
       headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_basic_auth", "X-Fern-SDK-Version": "0.0.1" }
-      headers["username"] = ((@username.is_a? Method) ? @username.call : @username) unless token.nil?
-      headers["password"] = ((@password.is_a? Method) ? @password.call : @password) unless token.nil?
+      headers["Authorization"] = ((@basic_auth.is_a? Method) ? @basic_auth.call : @basic_auth) unless @basic_auth.nil?
       headers
     end
   end
@@ -54,9 +50,7 @@ module SeedBasicAuthClient
     # @return [String]
     attr_reader :base_url
     # @return [String]
-    attr_reader :username
-    # @return [String]
-    attr_reader :password
+    attr_reader :basic_auth
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -66,8 +60,7 @@ module SeedBasicAuthClient
     # @return [SeedBasicAuthClient::AsyncRequestClient]
     def initialize(username:, password:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
       @base_url = base_url
-      @username = username
-      @password = password
+      @token = "Basic #{Base64.encode64("#{username}:#{password}")}"
       @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
@@ -86,8 +79,7 @@ module SeedBasicAuthClient
     # @return [Hash{String => String}]
     def get_headers
       headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_basic_auth", "X-Fern-SDK-Version": "0.0.1" }
-      headers["username"] = ((@username.is_a? Method) ? @username.call : @username) unless token.nil?
-      headers["password"] = ((@password.is_a? Method) ? @password.call : @password) unless token.nil?
+      headers["Authorization"] = ((@basic_auth.is_a? Method) ? @basic_auth.call : @basic_auth) unless @basic_auth.nil?
       headers
     end
   end
@@ -98,9 +90,7 @@ module SeedBasicAuthClient
     # @return [String]
     attr_reader :base_url
     # @return [String]
-    attr_reader :username
-    # @return [String]
-    attr_reader :password
+    attr_reader :basic_auth
     # @return [Hash{String => Object}]
     attr_reader :additional_headers
     # @return [Hash{String => Object}]
@@ -111,18 +101,16 @@ module SeedBasicAuthClient
     attr_reader :timeout_in_seconds
 
     # @param base_url [String]
-    # @param username [String]
-    # @param password [String]
+    # @param basic_auth [String]
     # @param additional_headers [Hash{String => Object}]
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
     # @param timeout_in_seconds [Long]
     # @return [SeedBasicAuthClient::RequestOptions]
-    def initialize(base_url: nil, username: nil, password: nil, additional_headers: nil,
-                   additional_query_parameters: nil, additional_body_parameters: nil, timeout_in_seconds: nil)
+    def initialize(base_url: nil, basic_auth: nil, additional_headers: nil, additional_query_parameters: nil,
+                   additional_body_parameters: nil, timeout_in_seconds: nil)
       @base_url = base_url
-      @username = username
-      @password = password
+      @basic_auth = basic_auth
       @additional_headers = additional_headers
       @additional_query_parameters = additional_query_parameters
       @additional_body_parameters = additional_body_parameters
@@ -136,9 +124,7 @@ module SeedBasicAuthClient
     # @return [String]
     attr_reader :base_url
     # @return [String]
-    attr_reader :username
-    # @return [String]
-    attr_reader :password
+    attr_reader :basic_auth
     # @return [Hash{String => Object}]
     attr_reader :additional_headers
     # @return [Hash{String => Object}]
@@ -149,18 +135,16 @@ module SeedBasicAuthClient
     attr_reader :timeout_in_seconds
 
     # @param base_url [String]
-    # @param username [String]
-    # @param password [String]
+    # @param basic_auth [String]
     # @param additional_headers [Hash{String => Object}]
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
     # @param timeout_in_seconds [Long]
     # @return [SeedBasicAuthClient::IdempotencyRequestOptions]
-    def initialize(base_url: nil, username: nil, password: nil, additional_headers: nil,
-                   additional_query_parameters: nil, additional_body_parameters: nil, timeout_in_seconds: nil)
+    def initialize(base_url: nil, basic_auth: nil, additional_headers: nil, additional_query_parameters: nil,
+                   additional_body_parameters: nil, timeout_in_seconds: nil)
       @base_url = base_url
-      @username = username
-      @password = password
+      @basic_auth = basic_auth
       @additional_headers = additional_headers
       @additional_query_parameters = additional_query_parameters
       @additional_body_parameters = additional_body_parameters

@@ -34,6 +34,7 @@ export interface BearerAuth {
 
 // For global headers + auth headers
 export class HeadersGenerator {
+    BASIC_AUTH_VARIABLE_NAME = "basic_auth";
     public headers: HttpHeader[];
     public crf: ClassReferenceFactory;
     public auth: ApiAuth;
@@ -205,14 +206,16 @@ export class HeadersGenerator {
                 ],
                 basic: (bas: BasicAuthScheme) => [
                     new Property({
-                        name: bas.username.snakeCase.safeName,
+                        name: this.BASIC_AUTH_VARIABLE_NAME,
                         type: StringClassReference,
-                        isOptional: isOptionalOverride ?? (bas.usernameEnvVar !== undefined || !this.isAuthRequired)
-                    }),
-                    new Property({
-                        name: bas.password.snakeCase.safeName,
-                        type: StringClassReference,
-                        isOptional: isOptionalOverride ?? (bas.passwordEnvVar !== undefined || !this.isAuthRequired)
+                        // If you've overridden optionality, use that, otherwise:
+                        //     If there's an envvar it should be optional
+                        //     If there's not an envvar then check if auth is required
+                        isOptional:
+                            isOptionalOverride ??
+                            ((bas.usernameEnvVar !== undefined && bas.passwordEnvVar !== undefined) ||
+                                !this.isAuthRequired),
+                        wireValue: "Authorization"
                     })
                 ],
                 header: (has: HeaderAuthScheme) => [
@@ -245,7 +248,7 @@ export class HeadersGenerator {
 
     private getBearerAuthorizationHeader(bas: BearerAuthScheme): [string, string] {
         const bearerValue = new Expression({ rightSide: bas.token.snakeCase.safeName, isAssignment: false });
-        return ['"Authorization"', `Bearer #{@${bearerValue.write({})}}`];
+        return ['"Authorization"', `"Bearer #{@${bearerValue.write({})}}"`];
     }
 
     private getOAuthBearerAuthorizationHeader(oas: OAuthScheme): [string, string] {
@@ -255,13 +258,18 @@ export class HeadersGenerator {
             ? oas.configuration._visit<[string, string]>({
                   clientCredentials: (cc) => {
                       // Note we're hardcoding to bearer auth and assuming that we're setting an `@token` property
-                      return ['"Authorization"', `${cc.tokenPrefix} #{@${OauthTokenProvider.FIELD_NAME}}`];
+                      return [
+                          '"Authorization"',
+                          cc.tokenPrefix != null
+                              ? `"${cc.tokenPrefix} #{${OauthTokenProvider.FIELD_NAME}}"`
+                              : OauthTokenProvider.FIELD_NAME
+                      ];
                   },
                   _other: () => {
                       throw new Error("Unrecognized auth scheme.");
                   }
               })
-            : ['"Authorization"', `Bearer #{@${OauthTokenProvider.FIELD_NAME}}`];
+            : [`@${OauthTokenProvider.FIELD_NAME}`, `"Bearer #{${OauthTokenProvider.FIELD_NAME}}"`];
     }
 
     private getBasicAuthorizationHeader(bas: BasicAuthScheme): [string, string] {
@@ -274,12 +282,12 @@ export class HeadersGenerator {
             arguments_: [
                 new Argument({
                     isNamed: false,
-                    value: `"#{@${userName.write({})}}:#{@${password.write({})}}"`
+                    value: `'#{${userName.write({})}}:#{${password.write({})}}'`
                 })
             ]
         });
 
-        return ['"Authorization"', `Basic #{@${b64.write({})}}`];
+        return [`@${OauthTokenProvider.FIELD_NAME}`, `"Basic #{${b64.write({})}}"`];
     }
 
     // TODO: I don't love how this works, ideally it's a string to expression hash instead, but we don't
@@ -295,8 +303,8 @@ export class HeadersGenerator {
         const headerValue = new Expression({ rightSide: has.name.name.snakeCase.safeName, isAssignment: false });
 
         return [
-            `"${has.name.wireValue}"`,
-            `${has.prefix !== undefined ? has.prefix + " " : ""}#{@${headerValue.write({})}}`
+            `@${has.name.name.snakeCase.safeName}`,
+            has.prefix != null ? `"${has.prefix} #{${headerValue.write({})}}"` : headerValue.write({})
         ];
     }
 
