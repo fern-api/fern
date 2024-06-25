@@ -39,7 +39,6 @@
     "dayjs": "^1.11.11",
     "gray-matter": "^4.0.3",
     "lodash-es": "^4.17.21",
-    "mdast-util-from-markdown": "^2.0.0",
     "unist-util-visit": "^5.0.0",
     "url-join": "^5.0.0"
   },

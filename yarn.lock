@@ -3639,7 +3639,6 @@ __metadata:
     gray-matter: ^4.0.3
     jest: ^29.7.0
     lodash-es: ^4.17.21
-    mdast-util-from-markdown: ^2.0.0
     mdast-util-mdx: ^3.0.0
     micromark-extension-mdx: ^2.1.0
     organize-imports-cli: ^0.10.0
