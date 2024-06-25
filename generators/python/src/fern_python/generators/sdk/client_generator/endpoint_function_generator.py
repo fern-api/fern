@@ -453,6 +453,7 @@ class EndpointFunctionGenerator:
             example=example,
             path_parameter_names=self._path_parameter_names,
             request_parameter_names=self._request_parameter_name_rewrites,
+            generate_pagination=self.is_paginated == True,
         ).generate_snippet()
 
     def _generate_endpoint_snippets(
@@ -483,6 +484,7 @@ class EndpointFunctionGenerator:
                 example=example,
                 path_parameter_names=self._path_parameter_names,
                 request_parameter_names=self._request_parameter_name_rewrites,
+                generate_pagination=self.is_paginated == True,
             )
 
             endpoint_snippet = endpoint_snippet_generator.generate_snippet()
@@ -1029,6 +1031,7 @@ class EndpointFunctionSnippetGenerator:
         example: ir_types.HttpEndpointExample,
         path_parameter_names: Dict[ir_types.Name, str],
         request_parameter_names: Dict[ir_types.Name, str],
+        generate_pagination: bool,
     ):
         self.context = context
         self.snippet_writer = snippet_writer
@@ -1037,6 +1040,7 @@ class EndpointFunctionSnippetGenerator:
         self.example = example.get_as_union()
         self.path_parameter_names = path_parameter_names
         self.request_parameter_names = request_parameter_names
+        self.generate_pagination = generate_pagination
 
     # TODO: It should be sufficient for this to just take in the example and client
     def generate_snippet(self) -> AST.Expression:
@@ -1129,18 +1133,28 @@ class EndpointFunctionSnippetGenerator:
         )
 
     def generate_usage(self, response_name: str, is_async: bool) -> Optional[AST.Expression]:
+        is_paginated = self.endpoint.pagination and self.generate_pagination
+        chunk_name = "chunk" if not is_paginated else "item"
         if (
             self.endpoint.response is not None
             and self.endpoint.response.body
-            and self.endpoint.response.body.get_as_union().type == "streaming"
+            and (self.endpoint.response.body.get_as_union().type == "streaming" or is_paginated)
         ):
 
             def snippet_writer(writer: AST.NodeWriter) -> None:
                 if is_async:
                     writer.write("async ")
-                writer.write_line(f"for chunk in {response_name}:")
+                writer.write_line(f"for {chunk_name} in {response_name}:")
                 with writer.indent():
-                    writer.write_line("yield chunk")
+                    writer.write_line(f"yield {chunk_name}")
+
+                if is_paginated:
+                    writer.write_line("# alternatively, you can paginate page-by-page")
+                    if is_async:
+                        writer.write("async ")
+                    writer.write_line(f"for page in {response_name}.iter_pages():")
+                    with writer.indent():
+                        writer.write_line("yield page")
 
             return AST.Expression(AST.CodeWriter(snippet_writer))
         return None

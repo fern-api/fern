@@ -516,6 +516,7 @@ __version__ = metadata.version("{project._project_config.package_name}")
             github_installation_token=project._github_output_mode.installation_token
             if project._github_output_mode is not None
             else None,
+            pagination_enabled=context.generator_config.generate_paginated_clients,
         )
         project.add_file(
             os.path.join(
