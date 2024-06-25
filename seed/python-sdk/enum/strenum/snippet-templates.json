@@ -11,7 +11,16 @@
             "identifierOverride": "endpoint_inlined-request.send"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed.client import SeedEnum"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -61,7 +70,16 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed.client import AsyncSeedEnum"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
@@ -123,7 +141,16 @@
             "identifierOverride": "endpoint_path-param.send"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed.client import SeedEnum"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -173,7 +200,16 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed.client import AsyncSeedEnum"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
@@ -235,7 +271,16 @@
             "identifierOverride": "endpoint_query-param.send"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed.client import SeedEnum"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -285,7 +330,16 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed.client import AsyncSeedEnum"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
@@ -347,7 +401,16 @@
             "identifierOverride": "endpoint_query-param.sendList"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed.client import SeedEnum"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -397,7 +460,16 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed.client import AsyncSeedEnum"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
