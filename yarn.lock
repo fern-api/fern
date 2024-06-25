@@ -3401,7 +3401,7 @@ __metadata:
     "@fern-api/yaml-formatter": "workspace:*"
     "@fern-api/yaml-migrations": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.552
+    "@fern-fern/fiddle-sdk": 0.0.584
     "@types/axios": ^0.14.0
     "@types/boxen": ^3.0.1
     "@types/get-port": ^4.2.0
@@ -3453,7 +3453,7 @@ __metadata:
     "@fern-api/fdr-sdk": 0.98.4-bf08716d8
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.552
+    "@fern-fern/fiddle-sdk": 0.0.584
     "@types/dockerode": ^3.3.9
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
@@ -3500,7 +3500,7 @@ __metadata:
     "@fern-api/fdr-sdk": 0.98.4-bf08716d8
     "@fern-api/venus-api-sdk": 0.0.38
     "@fern-fern/fdr-test-sdk": ^0.0.5297
-    "@fern-fern/fiddle-sdk": ^0.0.552
+    "@fern-fern/fiddle-sdk": 0.0.584
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -4081,7 +4081,7 @@ __metadata:
     "@fern-api/logging-execa": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.552
+    "@fern-fern/fiddle-sdk": 0.0.584
     "@fern-fern/generator-exec-sdk": ^0.0.898
     "@types/decompress": ^4.2.7
     "@types/jest": ^29.0.3
@@ -4403,7 +4403,7 @@ __metadata:
     "@fern-api/register": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.552
+    "@fern-fern/fiddle-sdk": 0.0.584
     "@types/decompress": ^4.2.7
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
@@ -4517,7 +4517,7 @@ __metadata:
     "@fern-api/logging-execa": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.552
+    "@fern-fern/fiddle-sdk": 0.0.584
     "@fern-fern/generator-exec-sdk": ^0.0.898
     "@types/find-up": ^4.0.0
     "@types/jest": ^29.0.3
@@ -4633,7 +4633,7 @@ __metadata:
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.552
+    "@fern-fern/fiddle-sdk": 0.0.584
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.12
@@ -4753,16 +4753,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/fiddle-sdk@npm:^0.0.552":
-  version: 0.0.552
-  resolution: "@fern-fern/fiddle-sdk@npm:0.0.552"
+"@fern-fern/fiddle-sdk@npm:0.0.584":
+  version: 0.0.584
+  resolution: "@fern-fern/fiddle-sdk@npm:0.0.584"
   dependencies:
     form-data: 4.0.0
     js-base64: 3.7.2
     node-fetch: 2.7.0
     qs: 6.11.2
     url-join: 4.0.1
-  checksum: 06e7d52bfa4daf19cfd77c4d3605ad44f1b89da41ee09e3ec0d6b2cbb3680469faf37db46d0086dd1dba0e2bed75a7209df7ee9b98d153251ede76d17a90dc8c
+  checksum: 95cea30bfd53759fe88006cdf53d4b83f163ffddf498ae34522baa0ea16c8f54bb83bf40b71051f9eeaa136d9ec0d901c5235fb341359caa409c4ab2bfa2ecaf
   languageName: node
   linkType: hard
 

@@ -25,7 +25,7 @@ module SeedMultiUrlEnvironmentClient
     def initialize(token:, base_url: nil, environment: SeedMultiUrlEnvironmentClient::Environment::PRODUCTION,
                    max_retries: nil, timeout_in_seconds: nil)
       @default_environment = environment
-      @token = token
+      @token = "Bearer #{token}"
       @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
@@ -48,7 +48,7 @@ module SeedMultiUrlEnvironmentClient
         "X-Fern-SDK-Name": "fern_multi_url_environment",
         "X-Fern-SDK-Version": "0.0.1"
       }
-      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless token.nil?
+      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless @token.nil?
       headers
     end
   end
@@ -72,7 +72,7 @@ module SeedMultiUrlEnvironmentClient
     def initialize(token:, base_url: nil, environment: SeedMultiUrlEnvironmentClient::Environment::PRODUCTION,
                    max_retries: nil, timeout_in_seconds: nil)
       @default_environment = environment
-      @token = token
+      @token = "Bearer #{token}"
       @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
@@ -96,7 +96,7 @@ module SeedMultiUrlEnvironmentClient
         "X-Fern-SDK-Name": "fern_multi_url_environment",
         "X-Fern-SDK-Version": "0.0.1"
       }
-      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless token.nil?
+      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless @token.nil?
       headers
     end
   end

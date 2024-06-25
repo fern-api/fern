@@ -29,8 +29,7 @@ module SeedBasicAuthEnvironmentVariablesClient
     def get_with_basic_auth(request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers["username"] = request_options.username unless request_options&.username.nil?
-        req.headers["password"] = request_options.password unless request_options&.password.nil?
+        req.headers["Authorization"] = request_options.basic_auth_token unless request_options&.basic_auth_token.nil?
         req.headers = {
       **(req.headers || {}),
       **@request_client.get_headers,
@@ -56,8 +55,7 @@ module SeedBasicAuthEnvironmentVariablesClient
     def post_with_basic_auth(request: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers["username"] = request_options.username unless request_options&.username.nil?
-        req.headers["password"] = request_options.password unless request_options&.password.nil?
+        req.headers["Authorization"] = request_options.basic_auth_token unless request_options&.basic_auth_token.nil?
         req.headers = {
       **(req.headers || {}),
       **@request_client.get_headers,
@@ -95,8 +93,7 @@ module SeedBasicAuthEnvironmentVariablesClient
       Async do
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers["username"] = request_options.username unless request_options&.username.nil?
-          req.headers["password"] = request_options.password unless request_options&.password.nil?
+          req.headers["Authorization"] = request_options.basic_auth_token unless request_options&.basic_auth_token.nil?
           req.headers = {
         **(req.headers || {}),
         **@request_client.get_headers,
@@ -125,8 +122,7 @@ module SeedBasicAuthEnvironmentVariablesClient
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers["username"] = request_options.username unless request_options&.username.nil?
-          req.headers["password"] = request_options.password unless request_options&.password.nil?
+          req.headers["Authorization"] = request_options.basic_auth_token unless request_options&.basic_auth_token.nil?
           req.headers = {
         **(req.headers || {}),
         **@request_client.get_headers,

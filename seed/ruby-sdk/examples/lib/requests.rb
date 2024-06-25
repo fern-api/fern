@@ -25,7 +25,7 @@ module SeedExamplesClient
     def initialize(token:, base_url: nil, environment: nil, max_retries: nil, timeout_in_seconds: nil)
       @default_environment = environment
       @base_url = environment || base_url
-      @token = token
+      @token = "Bearer #{token}"
       @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
@@ -43,7 +43,7 @@ module SeedExamplesClient
     # @return [Hash{String => String}]
     def get_headers
       headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_examples", "X-Fern-SDK-Version": "0.0.1" }
-      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless token.nil?
+      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless @token.nil?
       headers
     end
   end
@@ -67,7 +67,7 @@ module SeedExamplesClient
     def initialize(token:, base_url: nil, environment: nil, max_retries: nil, timeout_in_seconds: nil)
       @default_environment = environment
       @base_url = environment || base_url
-      @token = token
+      @token = "Bearer #{token}"
       @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
@@ -86,7 +86,7 @@ module SeedExamplesClient
     # @return [Hash{String => String}]
     def get_headers
       headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_examples", "X-Fern-SDK-Version": "0.0.1" }
-      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless token.nil?
+      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless @token.nil?
       headers
     end
   end

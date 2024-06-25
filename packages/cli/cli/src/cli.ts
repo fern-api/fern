@@ -25,7 +25,7 @@ import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/g
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces";
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces";
-import { generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
+import { generateAPIWorkspaces, GenerationMode } from "./commands/generate/generateAPIWorkspaces";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
 import { mockServer } from "./commands/mock/mockServer";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
@@ -337,6 +337,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     type: "string",
                     description: "The group to generate"
                 })
+                .option("mode", {
+                    choices: Object.values(GenerationMode),
+                    description: "Defaults to the mode specified in generators.yml"
+                })
                 .option("version", {
                     type: "string",
                     description: "The version for the generated packages"
@@ -375,7 +379,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     shouldLogS3Url: argv.printZipUrl,
                     keepDocker: argv.keepDocker,
                     useLocalDocker: argv.local,
-                    preview: argv.preview
+                    preview: argv.preview,
+                    mode: argv.mode
                 });
             }
             if (argv.docs != null) {
@@ -411,7 +416,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 shouldLogS3Url: argv.printZipUrl,
                 keepDocker: argv.keepDocker,
                 useLocalDocker: argv.local,
-                preview: argv.preview
+                preview: argv.preview,
+                mode: argv.mode
             });
         }
     );

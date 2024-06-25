@@ -20,7 +20,7 @@ module SeedNoEnvironmentClient
     # @return [SeedNoEnvironmentClient::RequestClient]
     def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
       @base_url = base_url
-      @token = token
+      @token = "Bearer #{token}"
       @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
@@ -38,7 +38,7 @@ module SeedNoEnvironmentClient
     # @return [Hash{String => String}]
     def get_headers
       headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_no_environment", "X-Fern-SDK-Version": "0.0.1" }
-      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless token.nil?
+      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless @token.nil?
       headers
     end
   end
@@ -58,7 +58,7 @@ module SeedNoEnvironmentClient
     # @return [SeedNoEnvironmentClient::AsyncRequestClient]
     def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
       @base_url = base_url
-      @token = token
+      @token = "Bearer #{token}"
       @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
@@ -77,7 +77,7 @@ module SeedNoEnvironmentClient
     # @return [Hash{String => String}]
     def get_headers
       headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_no_environment", "X-Fern-SDK-Version": "0.0.1" }
-      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless token.nil?
+      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless @token.nil?
       headers
     end
   end

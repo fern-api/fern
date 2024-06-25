@@ -140,7 +140,8 @@ export function convertTypeExample({
                     typeResolver,
                     exampleResolver,
                     file: fileContainingType,
-                    workspace
+                    workspace,
+                    breadcrumbs: []
                 });
                 if (violationsForMember.length === 0) {
                     return ExampleTypeShape.undiscriminatedUnion({

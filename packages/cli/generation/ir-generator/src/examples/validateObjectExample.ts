@@ -5,7 +5,7 @@ import { keyBy } from "lodash-es";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
 import { TypeResolver } from "../resolvers/TypeResolver";
-import { convertObjectPropertyWithPathToString, getAllPropertiesForObject } from "../utils/getAllPropertiesForObject";
+import { getAllPropertiesForObject } from "../utils/getAllPropertiesForObject";
 import { ExampleViolation } from "./exampleViolation";
 import { getViolationsForMisshapenExample } from "./getViolationsForMisshapenExample";
 import { validateTypeReferenceExample } from "./validateTypeReferenceExample";
@@ -18,7 +18,8 @@ export function validateObjectExample({
     typeResolver,
     exampleResolver,
     workspace,
-    example
+    example,
+    breadcrumbs
 }: {
     // undefined for inline requests
     typeName: string | undefined;
@@ -29,6 +30,7 @@ export function validateObjectExample({
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
+    breadcrumbs: string[];
 }): ExampleViolation[] {
     if (!isPlainObject(example)) {
         return getViolationsForMisshapenExample(example, "an object");
@@ -51,16 +53,20 @@ export function validateObjectExample({
     // ensure required properties are present
     const requiredProperties = allPropertiesForObject.filter((property) => !property.isOptional);
     for (const requiredProperty of requiredProperties) {
+        // dont error on literal properties
+        if (
+            requiredProperty.resolvedPropertyType._type === "container" &&
+            requiredProperty.resolvedPropertyType.container._type === "literal"
+        ) {
+            continue;
+        }
+
         if (example[requiredProperty.wireKey] == null) {
-            let message = `Example is missing required property "${requiredProperty.wireKey}"`;
-            if (requiredProperty.path.length > 0) {
-                message +=
-                    ". " +
-                    convertObjectPropertyWithPathToString({
-                        property: requiredProperty,
-                        prefixBreadcrumbs: [typeNameForBreadcrumb]
-                    });
-            }
+            const propertyReference =
+                breadcrumbs.length > 0
+                    ? `${breadcrumbs.join(".")}.${requiredProperty.wireKey}`
+                    : requiredProperty.wireKey;
+            const message = `Example is missing required property "${propertyReference}"`;
             violations.push({
                 message
             });
@@ -91,7 +97,8 @@ export function validateObjectExample({
                     }),
                     workspace,
                     typeResolver,
-                    exampleResolver
+                    exampleResolver,
+                    breadcrumbs: [...breadcrumbs, `${exampleKey}`]
                 })
             );
         }
