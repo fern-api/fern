@@ -453,7 +453,7 @@ class EndpointFunctionGenerator:
             example=example,
             path_parameter_names=self._path_parameter_names,
             request_parameter_names=self._request_parameter_name_rewrites,
-            generate_pagination=self.is_paginated == True
+            generate_pagination=self.is_paginated == True,
         ).generate_snippet()
 
     def _generate_endpoint_snippets(
@@ -484,7 +484,7 @@ class EndpointFunctionGenerator:
                 example=example,
                 path_parameter_names=self._path_parameter_names,
                 request_parameter_names=self._request_parameter_name_rewrites,
-                generate_pagination=self.is_paginated == True
+                generate_pagination=self.is_paginated == True,
             )
 
             endpoint_snippet = endpoint_snippet_generator.generate_snippet()
@@ -1031,7 +1031,7 @@ class EndpointFunctionSnippetGenerator:
         example: ir_types.HttpEndpointExample,
         path_parameter_names: Dict[ir_types.Name, str],
         request_parameter_names: Dict[ir_types.Name, str],
-        generate_pagination: bool
+        generate_pagination: bool,
     ):
         self.context = context
         self.snippet_writer = snippet_writer
@@ -1140,13 +1140,14 @@ class EndpointFunctionSnippetGenerator:
             and self.endpoint.response.body
             and (self.endpoint.response.body.get_as_union().type == "streaming" or is_paginated)
         ):
+
             def snippet_writer(writer: AST.NodeWriter) -> None:
                 if is_async:
                     writer.write("async ")
                 writer.write_line(f"for {chunk_name} in {response_name}:")
                 with writer.indent():
                     writer.write_line(f"yield {chunk_name}")
-                
+
                 if is_paginated:
                     writer.write_line("# alternatively, you can paginate page-by-page")
                     if is_async:
