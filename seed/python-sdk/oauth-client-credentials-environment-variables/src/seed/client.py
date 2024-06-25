@@ -38,6 +38,8 @@ class SeedOauthClientCredentialsEnvironmentVariables:
 
     client = SeedOauthClientCredentialsEnvironmentVariables(
         base_url="https://yourhost.com/path/to/api",
+        client_id="YOUR_CLIENT_ID",
+        client_secret="YOUR_CLIENT_SECRET",
     )
     """
 
@@ -110,6 +112,8 @@ class AsyncSeedOauthClientCredentialsEnvironmentVariables:
 
     client = AsyncSeedOauthClientCredentialsEnvironmentVariables(
         base_url="https://yourhost.com/path/to/api",
+        client_id="YOUR_CLIENT_ID",
+        client_secret="YOUR_CLIENT_SECRET",
     )
     """
 
