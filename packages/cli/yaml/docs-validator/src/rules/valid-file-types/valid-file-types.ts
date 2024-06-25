@@ -11,6 +11,7 @@ const ALLOWED_FILE_TYPES = [
     "image/gif",
     "image/webp",
     "image/tiff",
+    "image/x-icon",
     // video files
     "video/quicktime",
     "video/mp4",
@@ -20,14 +21,23 @@ const ALLOWED_FILE_TYPES = [
     "audio/ogg",
     "audio/wav",
     // document files
-    "application/pdf"
+    "application/pdf",
+    // font files
+    "font/woff",
+    "font/woff2",
+    "font/otf",
+    "font/ttf"
 ];
 
 export const ValidFileTypes: Rule = {
     name: "valid-file-types",
     create: () => {
         return {
-            filepath: async ({ absoluteFilepath, value }) => {
+            filepath: async ({ absoluteFilepath, value, willBeUploaded }) => {
+                if (!willBeUploaded) {
+                    return [];
+                }
+
                 const doesExist = await doesPathExist(absoluteFilepath);
 
                 if (doesExist) {

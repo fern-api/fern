@@ -4,6 +4,7 @@ import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
+import path from "path";
 import { NodePath } from "../NodePath";
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
 import { validateVersionConfigFileSchema } from "./validateVersionConfig";
@@ -34,7 +35,17 @@ export async function visitDocsConfigFileYamlAst(
             absolutePathToFernFolder,
             absolutePathToMdx: resolve(absolutePathToFernFolder, relativePath)
         });
-        console.log(filepaths);
+
+        for (const filepath of filepaths) {
+            await visitor.filepath?.(
+                {
+                    absoluteFilepath: filepath,
+                    value: path.relative(absolutePathToFernFolder, filepath),
+                    willBeUploaded: true
+                },
+                [relativePath]
+            );
+        }
     }
 
     if (contents.backgroundImage != null) {
@@ -159,7 +170,8 @@ export async function visitDocsConfigFileYamlAst(
                     absoluteFilepathToConfiguration,
                     rawUnresolvedFilepath: version.path,
                     visitor,
-                    nodePath: ["versions", `${idx}`]
+                    nodePath: ["versions", `${idx}`],
+                    willBeUploaded: false
                 });
                 const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), version.path);
                 const content = yaml.load((await readFile(absoluteFilepath)).toString());
@@ -190,18 +202,21 @@ async function visitFilepath({
     absoluteFilepathToConfiguration,
     rawUnresolvedFilepath,
     visitor,
-    nodePath
+    nodePath,
+    willBeUploaded = true
 }: {
     absoluteFilepathToConfiguration: AbsoluteFilePath;
     rawUnresolvedFilepath: string;
     visitor: Partial<DocsConfigFileAstVisitor>;
     nodePath: NodePath;
+    willBeUploaded?: boolean;
 }) {
     const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), rawUnresolvedFilepath);
     await visitor.filepath?.(
         {
             absoluteFilepath,
-            value: rawUnresolvedFilepath
+            value: rawUnresolvedFilepath,
+            willBeUploaded
         },
         nodePath
     );
@@ -265,7 +280,8 @@ async function visitNavigationItem({
             absoluteFilepathToConfiguration,
             rawUnresolvedFilepath: navigationItem.path,
             visitor,
-            nodePath: [...nodePath, "page"]
+            nodePath: [...nodePath, "page"],
+            willBeUploaded: false
         });
         const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), navigationItem.path);
         if (await doesPathExist(absoluteFilepath)) {
