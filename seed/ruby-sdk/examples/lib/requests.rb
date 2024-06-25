@@ -25,7 +25,7 @@ module SeedExamplesClient
     def initialize(token:, base_url: nil, environment: nil, max_retries: nil, timeout_in_seconds: nil)
       @default_environment = environment
       @base_url = environment || base_url
-      @token = "Bearer #{@token}"
+      @token = "Bearer #{token}"
       @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
@@ -67,7 +67,7 @@ module SeedExamplesClient
     def initialize(token:, base_url: nil, environment: nil, max_retries: nil, timeout_in_seconds: nil)
       @default_environment = environment
       @base_url = environment || base_url
-      @token = "Bearer #{@token}"
+      @token = "Bearer #{token}"
       @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true

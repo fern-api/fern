@@ -248,7 +248,7 @@ export class HeadersGenerator {
 
     private getBearerAuthorizationHeader(bas: BearerAuthScheme): [string, string] {
         const bearerValue = new Expression({ rightSide: bas.token.snakeCase.safeName, isAssignment: false });
-        return [`@${bas.token.snakeCase.safeName}`, `"Bearer #{@${bearerValue.write({})}}"`];
+        return [`@${bas.token.snakeCase.safeName}`, `"Bearer #{${bearerValue.write({})}}"`];
     }
 
     private getOAuthBearerAuthorizationHeader(oas: OAuthScheme): [string, string] {
