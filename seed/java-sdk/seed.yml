@@ -26,9 +26,10 @@ fixtures:
       outputFolder: custom-dependency
     - customConfig:
         enable-forward-compatible-enums: true
-#    - customConfig:
-#        base-error-name: CustomErrorName
-#      outputFolder: custom-error-name
+      outputFolder: forward-compatible-enums
+    - customConfig:
+        base-error-name: CustomErrorName
+      outputFolder: custom-error-name
     - customConfig:
         package-prefix: com.fern.sdk
       outputMode: local_files
