@@ -82,6 +82,29 @@ export async function visitDocsConfigFileYamlAst(
         }
     }
 
+    if (contents.css != null) {
+        if (Array.isArray(contents.css)) {
+            // multiple CSS files
+            await Promise.all(
+                contents.css.map((stylesheet, idx) =>
+                    visitFilepath({
+                        absoluteFilepathToConfiguration,
+                        rawUnresolvedFilepath: stylesheet,
+                        visitor,
+                        nodePath: ["css", `${idx}`]
+                    })
+                )
+            );
+        } else {
+            await visitFilepath({
+                absoluteFilepathToConfiguration,
+                rawUnresolvedFilepath: contents.css,
+                visitor,
+                nodePath: ["css"]
+            });
+        }
+    }
+
     if (contents.backgroundImage != null) {
         if (typeof contents.backgroundImage === "string") {
             await visitFilepath({
