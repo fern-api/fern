@@ -3,10 +3,10 @@
  */
 package com.seed.exhaustive.resources.generalerrors.errors;
 
-import com.seed.exhaustive.core.SeedExhaustiveApiError;
+import com.seed.exhaustive.core.CustomApiError;
 import com.seed.exhaustive.resources.generalerrors.types.BadObjectRequestInfo;
 
-public final class SeedExhaustiveBadRequestBody extends SeedExhaustiveApiError {
+public final class SeedExhaustiveBadRequestBody extends CustomApiError {
     /**
      * The body of the response that triggered the exception.
      */

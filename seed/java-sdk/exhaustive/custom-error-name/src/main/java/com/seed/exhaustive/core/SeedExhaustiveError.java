@@ -6,12 +6,12 @@ package com.seed.exhaustive.core;
 /**
  * This class serves as the base exception for all errors in the SDK.
  */
-public class CustomErrorName extends RuntimeException {
-    public CustomErrorName(String message) {
+public class SeedExhaustiveError extends RuntimeException {
+    public SeedExhaustiveError(String message) {
         super(message);
     }
 
-    public CustomErrorName(String message, Exception e) {
+    public SeedExhaustiveError(String message, Exception e) {
         super(message, e);
     }
 }

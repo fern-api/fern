@@ -3,10 +3,10 @@
  */
 package com.seed.exhaustive.resources.types.object.errors;
 
-import com.seed.exhaustive.core.SeedExhaustiveApiError;
+import com.seed.exhaustive.core.CustomApiError;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 
-public final class SeedExhaustiveObjectWithOptionalFieldError extends SeedExhaustiveApiError {
+public final class SeedExhaustiveObjectWithOptionalFieldError extends CustomApiError {
     /**
      * The body of the response that triggered the exception.
      */

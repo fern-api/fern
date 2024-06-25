@@ -3,10 +3,10 @@
  */
 package com.seed.exhaustive.resources.types.union.errors;
 
-import com.seed.exhaustive.core.SeedExhaustiveApiError;
+import com.seed.exhaustive.core.CustomApiError;
 import com.seed.exhaustive.resources.types.union.types.Animal;
 
-public final class SeedExhaustiveErrorWithUnionBody extends SeedExhaustiveApiError {
+public final class SeedExhaustiveErrorWithUnionBody extends CustomApiError {
     /**
      * The body of the response that triggered the exception.
      */

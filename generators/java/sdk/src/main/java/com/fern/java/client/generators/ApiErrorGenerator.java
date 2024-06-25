@@ -53,7 +53,8 @@ public final class ApiErrorGenerator extends AbstractFileGenerator {
                         .getPoetClassNameFactory()
                         .getApiErrorClassName(
                                 generatorContext.getGeneratorConfig().getOrganization(),
-                                generatorContext.getGeneratorConfig().getWorkspaceName()),
+                                generatorContext.getGeneratorConfig().getWorkspaceName(),
+                                generatorContext.getCustomConfig().baseApiErrorClassName()),
                 generatorContext);
         this.generatedBaseErrorFile = generatedBaseErrorFile;
     }

@@ -53,14 +53,14 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
                 packageName, sdkRequestWrapper.getWrapperName().getPascalCase().getSafeName());
     }
 
-    public ClassName getApiErrorClassName(String organization, String workspaceName) {
-        return getCoreClassName(getBaseNamePrefix(organization, workspaceName) + "ApiError");
+    public ClassName getApiErrorClassName(
+            String organization, String workspaceName, Optional<String> configuredBaseApiErrorClassName) {
+        return getCoreClassName(configuredBaseApiErrorClassName.orElseGet(
+                () -> getBaseNamePrefix(organization, workspaceName) + "ApiError"));
     }
 
-    public ClassName getBaseErrorClassName(
-            String organization, String workspaceName, Optional<String> configuredBaseErrorName) {
-        return getCoreClassName(
-                configuredBaseErrorName.orElseGet(() -> getBaseNamePrefix(organization, workspaceName) + "Error"));
+    public ClassName getBaseErrorClassName(String organization, String workspaceName) {
+        return getCoreClassName(getBaseNamePrefix(organization, workspaceName) + "Error");
     }
 
     public static String getBaseNamePrefix(String organization, String workspaceName) {

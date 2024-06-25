@@ -4,11 +4,11 @@
 package com.seed.exhaustive.resources.reqwithheaders;
 
 import com.seed.exhaustive.core.ClientOptions;
-import com.seed.exhaustive.core.CustomErrorName;
+import com.seed.exhaustive.core.CustomApiError;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
-import com.seed.exhaustive.core.SeedExhaustiveApiError;
+import com.seed.exhaustive.core.SeedExhaustiveError;
 import com.seed.exhaustive.resources.reqwithheaders.requests.ReqWithHeaders;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -61,12 +61,12 @@ public class ReqWithHeadersClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedExhaustiveApiError(
+            throw new CustomApiError(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new CustomErrorName("Network error executing HTTP request", e);
+            throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }
     }
 }

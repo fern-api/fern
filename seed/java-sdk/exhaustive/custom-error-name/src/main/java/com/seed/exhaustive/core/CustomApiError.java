@@ -6,7 +6,7 @@ package com.seed.exhaustive.core;
 /**
  * This exception type will be thrown for any non-2XX API responses.
  */
-public class SeedExhaustiveApiError extends CustomErrorName {
+public class CustomApiError extends SeedExhaustiveError {
     /**
      * The error code of the response that triggered the exception.
      */
@@ -17,7 +17,7 @@ public class SeedExhaustiveApiError extends CustomErrorName {
      */
     private final Object body;
 
-    public SeedExhaustiveApiError(String message, int statusCode, Object body) {
+    public CustomApiError(String message, int statusCode, Object body) {
         super(message);
         this.statusCode = statusCode;
         this.body = body;
@@ -39,7 +39,6 @@ public class SeedExhaustiveApiError extends CustomErrorName {
 
     @java.lang.Override
     public String toString() {
-        return "SeedExhaustiveApiError{" + "message: " + getMessage() + ", statusCode: " + statusCode + ", body: "
-                + body + "}";
+        return "CustomApiError{" + "message: " + getMessage() + ", statusCode: " + statusCode + ", body: " + body + "}";
     }
 }

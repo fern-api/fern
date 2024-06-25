@@ -28,7 +28,7 @@ fixtures:
         enable-forward-compatible-enums: true
       outputFolder: forward-compatible-enums
     - customConfig:
-        base-error-name: CustomErrorName
+        base-api-error-class-name: CustomApiError
       outputFolder: custom-error-name
     - customConfig:
         package-prefix: com.fern.sdk

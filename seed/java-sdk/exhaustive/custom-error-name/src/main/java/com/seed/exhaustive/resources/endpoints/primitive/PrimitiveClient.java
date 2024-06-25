@@ -5,11 +5,11 @@ package com.seed.exhaustive.resources.endpoints.primitive;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.exhaustive.core.ClientOptions;
-import com.seed.exhaustive.core.CustomErrorName;
+import com.seed.exhaustive.core.CustomApiError;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
-import com.seed.exhaustive.core.SeedExhaustiveApiError;
+import com.seed.exhaustive.core.SeedExhaustiveError;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -43,7 +43,7 @@ public class PrimitiveClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new CustomErrorName("Failed to serialize request", e);
+            throw new SeedExhaustiveError("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -61,12 +61,12 @@ public class PrimitiveClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedExhaustiveApiError(
+            throw new CustomApiError(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new CustomErrorName("Network error executing HTTP request", e);
+            throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }
     }
 
@@ -85,7 +85,7 @@ public class PrimitiveClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new CustomErrorName("Failed to serialize request", e);
+            throw new SeedExhaustiveError("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -103,12 +103,12 @@ public class PrimitiveClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), int.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedExhaustiveApiError(
+            throw new CustomApiError(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new CustomErrorName("Network error executing HTTP request", e);
+            throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }
     }
 
@@ -127,7 +127,7 @@ public class PrimitiveClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new CustomErrorName("Failed to serialize request", e);
+            throw new SeedExhaustiveError("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -145,12 +145,12 @@ public class PrimitiveClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), long.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedExhaustiveApiError(
+            throw new CustomApiError(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new CustomErrorName("Network error executing HTTP request", e);
+            throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }
     }
 
@@ -169,7 +169,7 @@ public class PrimitiveClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new CustomErrorName("Failed to serialize request", e);
+            throw new SeedExhaustiveError("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -187,12 +187,12 @@ public class PrimitiveClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), double.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedExhaustiveApiError(
+            throw new CustomApiError(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new CustomErrorName("Network error executing HTTP request", e);
+            throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }
     }
 
@@ -211,7 +211,7 @@ public class PrimitiveClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new CustomErrorName("Failed to serialize request", e);
+            throw new SeedExhaustiveError("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -229,12 +229,12 @@ public class PrimitiveClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedExhaustiveApiError(
+            throw new CustomApiError(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new CustomErrorName("Network error executing HTTP request", e);
+            throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }
     }
 
@@ -253,7 +253,7 @@ public class PrimitiveClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new CustomErrorName("Failed to serialize request", e);
+            throw new SeedExhaustiveError("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -271,12 +271,12 @@ public class PrimitiveClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), OffsetDateTime.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedExhaustiveApiError(
+            throw new CustomApiError(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new CustomErrorName("Network error executing HTTP request", e);
+            throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }
     }
 
@@ -295,7 +295,7 @@ public class PrimitiveClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new CustomErrorName("Failed to serialize request", e);
+            throw new SeedExhaustiveError("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -313,12 +313,12 @@ public class PrimitiveClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedExhaustiveApiError(
+            throw new CustomApiError(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new CustomErrorName("Network error executing HTTP request", e);
+            throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }
     }
 
@@ -337,7 +337,7 @@ public class PrimitiveClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new CustomErrorName("Failed to serialize request", e);
+            throw new SeedExhaustiveError("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -355,12 +355,12 @@ public class PrimitiveClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UUID.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedExhaustiveApiError(
+            throw new CustomApiError(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new CustomErrorName("Network error executing HTTP request", e);
+            throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }
     }
 
@@ -379,7 +379,7 @@ public class PrimitiveClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new CustomErrorName("Failed to serialize request", e);
+            throw new SeedExhaustiveError("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -397,12 +397,12 @@ public class PrimitiveClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), byte[].class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedExhaustiveApiError(
+            throw new CustomApiError(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new CustomErrorName("Network error executing HTTP request", e);
+            throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }
     }
 }

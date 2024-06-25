@@ -5,11 +5,11 @@ package com.seed.exhaustive.resources.noauth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.exhaustive.core.ClientOptions;
-import com.seed.exhaustive.core.CustomErrorName;
+import com.seed.exhaustive.core.CustomApiError;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
-import com.seed.exhaustive.core.SeedExhaustiveApiError;
+import com.seed.exhaustive.core.SeedExhaustiveError;
 import com.seed.exhaustive.resources.generalerrors.errors.SeedExhaustiveBadRequestBody;
 import com.seed.exhaustive.resources.generalerrors.types.BadObjectRequestInfo;
 import java.io.IOException;
@@ -48,7 +48,7 @@ public class NoAuthClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new CustomErrorName("Failed to serialize request", e);
+            throw new SeedExhaustiveError("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -74,12 +74,12 @@ public class NoAuthClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new SeedExhaustiveApiError(
+            throw new CustomApiError(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new CustomErrorName("Network error executing HTTP request", e);
+            throw new SeedExhaustiveError("Network error executing HTTP request", e);
         }
     }
 }
