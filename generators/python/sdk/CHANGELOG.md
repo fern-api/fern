@@ -5,9 +5,53 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.12.0] - 2024-06-25
+
+- Feature: README generation now supports a section dedicated to streaming usage, as well as one for paginated endpoints.
+- Improvement: Paginated endpoint snippets now show using an iterator:
+
+  Before:
+
+  ```python
+  from seed.client import SeedPagination
+
+  client = SeedPagination(
+      token="YOUR_TOKEN",
+      base_url="https://yourhost.com/path/to/api",
+  )
+  client.users.list_with_cursor_pagination(
+      page=1,
+      per_page=1,
+      order="asc",
+      starting_after="string",
+  )
+  ```
+
+  After:
+
+  ```python
+  from seed.client import SeedPagination
+
+  client = SeedPagination(
+      token="YOUR_TOKEN",
+      base_url="https://yourhost.com/path/to/api",
+  )
+  response = client.users.list_with_cursor_pagination(
+      page=1,
+      per_page=1,
+      order="asc",
+      starting_after="string",
+  )
+  for item in response:
+      yield item
+  # alternatively, you can paginate page-by-page
+  for page in response.iter_pages():
+      yield page
+  ```
+
 ## [2.10.2] - 2024-06-20
 
-- Fix: The SDK now handles stream termination sequences like `[DONE]`. This is a typical way for LLM 
+- Fix: The SDK now handles stream termination sequences like `[DONE]`. This is a typical way for LLM
   providers to communicate when the stream has ended.
 
 ## [2.10.1] - 2024-06-20

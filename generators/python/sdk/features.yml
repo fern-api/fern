@@ -12,6 +12,14 @@ features:
       When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error
       will be thrown.
 
+  - id: STREAMING
+    description: |
+      The SDK supports streaming responses, as well, the response will be a generator that you can loop over.
+
+  - id: PAGINATION
+    description: |
+      Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
+
   - id: RETRIES
     description: |
       The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long

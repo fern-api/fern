@@ -45,6 +45,23 @@ async for chunk in response:
     yield chunk
 ```
 
+## Streaming
+
+The SDK supports streaming responses, as well, the response will be a generator that you can loop over.
+
+```python
+from seed.client import SeedStreaming
+
+client = SeedStreaming(
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.dummy.generate_stream(
+    num_events=1,
+)
+for chunk in response:
+    yield chunk
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

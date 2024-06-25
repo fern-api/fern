@@ -61,12 +61,17 @@ class UsersClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.users.list_with_cursor_pagination(
+        response = client.users.list_with_cursor_pagination(
             page=1,
             per_page=1,
             order="asc",
             starting_after="string",
         )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -135,12 +140,17 @@ class UsersClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.users.list_with_offset_pagination(
+        response = client.users.list_with_offset_pagination(
             page=1,
             per_page=1,
             order="asc",
             starting_after="string",
         )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
         page = page or 1
         _response = self._client_wrapper.httpx_client.request(
@@ -248,11 +258,16 @@ class UsersClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.users.list_with_extended_results(
+        response = client.users.list_with_extended_results(
             cursor=uuid.UUID(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
         )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
         _response = self._client_wrapper.httpx_client.request(
             "users", method="GET", params={"cursor": jsonable_encoder(cursor)}, request_options=request_options
@@ -299,9 +314,14 @@ class UsersClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.users.list_usernames(
+        response = client.users.list_usernames(
             starting_after="string",
         )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
         _response = self._client_wrapper.httpx_client.request(
             "users", method="GET", params={"starting_after": starting_after}, request_options=request_options
@@ -349,9 +369,14 @@ class UsersClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.users.list_with_global_config(
+        response = client.users.list_with_global_config(
             offset=1,
         )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
         offset = offset or 1
         _response = self._client_wrapper.httpx_client.request(
@@ -413,12 +438,17 @@ class AsyncUsersClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.users.list_with_cursor_pagination(
+        response = await client.users.list_with_cursor_pagination(
             page=1,
             per_page=1,
             order="asc",
             starting_after="string",
         )
+        async for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        async for page in response.iter_pages():
+            yield page
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -487,12 +517,17 @@ class AsyncUsersClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.users.list_with_offset_pagination(
+        response = await client.users.list_with_offset_pagination(
             page=1,
             per_page=1,
             order="asc",
             starting_after="string",
         )
+        async for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        async for page in response.iter_pages():
+            yield page
         """
         page = page or 1
         _response = await self._client_wrapper.httpx_client.request(
@@ -600,11 +635,16 @@ class AsyncUsersClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.users.list_with_extended_results(
+        response = await client.users.list_with_extended_results(
             cursor=uuid.UUID(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
         )
+        async for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        async for page in response.iter_pages():
+            yield page
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users", method="GET", params={"cursor": jsonable_encoder(cursor)}, request_options=request_options
@@ -651,9 +691,14 @@ class AsyncUsersClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.users.list_usernames(
+        response = await client.users.list_usernames(
             starting_after="string",
         )
+        async for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        async for page in response.iter_pages():
+            yield page
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users", method="GET", params={"starting_after": starting_after}, request_options=request_options
@@ -701,9 +746,14 @@ class AsyncUsersClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.users.list_with_global_config(
+        response = await client.users.list_with_global_config(
             offset=1,
         )
+        async for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        async for page in response.iter_pages():
+            yield page
         """
         offset = offset or 1
         _response = await self._client_wrapper.httpx_client.request(

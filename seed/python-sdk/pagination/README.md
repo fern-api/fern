@@ -22,12 +22,17 @@ client = SeedPagination(
     token="YOUR_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
-client.users.list_with_cursor_pagination(
+response = client.users.list_with_cursor_pagination(
     page=1,
     per_page=1,
     order="asc",
     starting_after="string",
 )
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
 ```
 
 ## Async Client
@@ -41,12 +46,41 @@ client = AsyncSeedPagination(
     token="YOUR_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
-await client.users.list_with_cursor_pagination(
+response = await client.users.list_with_cursor_pagination(
     page=1,
     per_page=1,
     order="asc",
     starting_after="string",
 )
+async for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+async for page in response.iter_pages():
+    yield page
+```
+
+## Pagination
+
+Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
+
+```python
+from seed.client import SeedPagination
+
+client = SeedPagination(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.users.list_with_cursor_pagination(
+    page=1,
+    per_page=1,
+    order="asc",
+    starting_after="string",
+)
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
 ```
 
 ## Contributing

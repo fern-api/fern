@@ -1,7 +1,7 @@
 import os
 import subprocess
 import tempfile
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
 import fern.generator_exec.resources as generator_exec
 import fern.ir.resources as ir_types
@@ -41,11 +41,13 @@ class GeneratorCli:
         snippets: generator_exec.Snippets,
         github_repo_url: Optional[str] = None,
         github_installation_token: Optional[str] = None,
+        pagination_enabled: Union[bool, None] = False,
     ) -> str:
         readme_snippet_builder = ReadmeSnippetBuilder(
             ir=self._ir,
             package_name=self._package_name,
             snippets=snippets,
+            pagination_enabled=pagination_enabled,
         )
         readme_config_filepath = self._write_readme_config(
             snippets=readme_snippet_builder.build_readme_snippets(),
