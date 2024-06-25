@@ -23,14 +23,21 @@ export async function visitDocsConfigFileYamlAst(
         []
     );
 
-    const parsed = await docsYml.parseDocsConfiguration({
-        rawDocsConfiguration: contents,
-        context,
-        absoluteFilepathToDocsConfig: absoluteFilepathToConfiguration,
-        absolutePathToFernFolder
-    });
+    let pageEntries: [string, string][];
 
-    for (const [relativePath, markdown] of Object.entries(parsed.pages)) {
+    try {
+        const { pages } = await docsYml.parseDocsConfiguration({
+            rawDocsConfiguration: contents,
+            context,
+            absoluteFilepathToDocsConfig: absoluteFilepathToConfiguration,
+            absolutePathToFernFolder
+        });
+        pageEntries = Object.entries(pages);
+    } catch {
+        pageEntries = [];
+    }
+
+    for (const [relativePath, markdown] of pageEntries) {
         const { filepaths } = parseImagePaths(markdown, {
             absolutePathToFernFolder,
             absolutePathToMdx: resolve(absolutePathToFernFolder, relativePath)
