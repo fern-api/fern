@@ -20,7 +20,7 @@ module SeedBearerTokenEnvironmentVariableClient
     # @return [SeedBearerTokenEnvironmentVariableClient::RequestClient]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: ENV["COURIER_API_KEY"])
       @base_url = base_url
-      @api_key = "Bearer #{@api_key}"
+      @api_key = "Bearer #{api_key}"
       @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
@@ -62,7 +62,7 @@ module SeedBearerTokenEnvironmentVariableClient
     # @return [SeedBearerTokenEnvironmentVariableClient::AsyncRequestClient]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: ENV["COURIER_API_KEY"])
       @base_url = base_url
-      @api_key = "Bearer #{@api_key}"
+      @api_key = "Bearer #{api_key}"
       @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true

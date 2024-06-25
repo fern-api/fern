@@ -27,7 +27,7 @@ module SeedTraceClient
                    timeout_in_seconds: nil, x_random_header: nil)
       @default_environment = environment
       @base_url = environment || base_url
-      @token = "Bearer #{@token}"
+      @token = "Bearer #{token}"
       @headers = {}
       @headers["X-Random-Header"] = x_random_header unless x_random_header.nil?
       @conn = Faraday.new(headers: @headers) do |faraday|
@@ -73,7 +73,7 @@ module SeedTraceClient
                    timeout_in_seconds: nil, x_random_header: nil)
       @default_environment = environment
       @base_url = environment || base_url
-      @token = "Bearer #{@token}"
+      @token = "Bearer #{token}"
       @headers = {}
       @headers["X-Random-Header"] = x_random_header unless x_random_header.nil?
       @conn = Faraday.new(headers: @headers) do |faraday|

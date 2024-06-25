@@ -20,7 +20,7 @@ module SeedIdempotencyHeadersClient
     # @return [SeedIdempotencyHeadersClient::RequestClient]
     def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
       @base_url = base_url
-      @token = "Bearer #{@token}"
+      @token = "Bearer #{token}"
       @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
@@ -62,7 +62,7 @@ module SeedIdempotencyHeadersClient
     # @return [SeedIdempotencyHeadersClient::AsyncRequestClient]
     def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
       @base_url = base_url
-      @token = "Bearer #{@token}"
+      @token = "Bearer #{token}"
       @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true

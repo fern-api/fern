@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.7.0-rc5] - 2024-06-24
+
+- Fix: additional fix for the same issue within 0.7.0-rc4 (regression introduced within the 0.7.0 RCs where the token prefix was dropped from requests).
+
 ## [0.7.0-rc4] - 2024-06-24
 
 - Fix: fixes regression introduced within the 0.7.0 RCs where the token prefix was dropped from requests.

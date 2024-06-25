@@ -25,7 +25,7 @@ module SeedMultiUrlEnvironmentClient
     def initialize(token:, base_url: nil, environment: SeedMultiUrlEnvironmentClient::Environment::PRODUCTION,
                    max_retries: nil, timeout_in_seconds: nil)
       @default_environment = environment
-      @token = "Bearer #{@token}"
+      @token = "Bearer #{token}"
       @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
@@ -72,7 +72,7 @@ module SeedMultiUrlEnvironmentClient
     def initialize(token:, base_url: nil, environment: SeedMultiUrlEnvironmentClient::Environment::PRODUCTION,
                    max_retries: nil, timeout_in_seconds: nil)
       @default_environment = environment
-      @token = "Bearer #{@token}"
+      @token = "Bearer #{token}"
       @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
