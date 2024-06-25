@@ -53,14 +53,13 @@ from fern_python.generators.sdk.client_generator.request_body_parameters.referen
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.snippet.snippet_writer import SnippetWriter
+from fern_python.snippet.template_utils import TEMPLATE_SENTINEL
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
 
 class SnippetTemplateFactory:
     CLIENT_FIXTURE_NAME = "client"
     TEST_URL_ENVVAR = "TESTS_BASE_URL"
-    # Write this in the fern def to share between FE + BE
-    TEMPLATE_SENTINEL = "$FERN_INPUT"
 
     TAB_CHAR = "\t"
 
@@ -104,11 +103,49 @@ class SnippetTemplateFactory:
         # For some reason we're appending newlines to snippets, so we need to strip them for tempaltes
         return snippet_full.replace(snippet_without_imports, "").strip(), snippet_without_imports.strip()
 
-    def _generate_client(self, is_async: Optional[bool] = False) -> str:
-        return self._expression_to_snippet_str(
-            self._generated_root_client.async_instantiation
-            if is_async
-            else self._generated_root_client.sync_instantiation
+    def _generate_client(self, is_async: Optional[bool] = False) -> Template:
+        if is_async:
+            client = self._generated_root_client.async_client
+        else:
+            client = self._generated_root_client.sync_client
+
+        # Because we don't allow for templating ALL inputs to the client, we need to separate out the template inputs
+        # from the non-template inputs, and keep the non-template inputs within the snippet.
+        # We could alternatively just nix the non-template inputs and only use the template inputs.
+        client_template_inputs = []
+        client_non_template_inputs = []
+        for param in client.parameters:
+            if param.template is not None:
+                client_template_inputs.append(TemplateInput.factory.template(param.template))
+            elif param.instantiation is not None:
+                client_non_template_inputs.append(param.instantiation)
+
+        # Create a new instantiation snippet as the one on the root client on self already
+        # has examples inputted into it, and we need the template sentinel present for auth.
+        instantiation_args = client_non_template_inputs
+        if len(client_template_inputs) > 0:
+            instantiation_args.append(AST.Expression(TEMPLATE_SENTINEL))
+        template_client_instantiation = AST.ClassInstantiation(
+            class_=client.class_reference,
+            args=instantiation_args,
+        )
+
+        def _client_writer(writer: AST.NodeWriter) -> None:
+            writer.write(f"{self.CLIENT_FIXTURE_NAME} = ")
+            writer.write_node(template_client_instantiation)
+
+        imports, instantiation = self._expression_to_snippet_str_and_imports(
+            AST.Expression(AST.CodeWriter(_client_writer))
+        )
+
+        return Template.factory.generic(
+            GenericTemplate(
+                imports=[imports] if imports is not None else [],
+                isOptional=True,
+                templateString=instantiation,
+                templateInputs=client_template_inputs,
+                inputDelimiter=",",
+            )
         )
 
     def _get_subpackage_client_accessor(
@@ -147,7 +184,7 @@ class SnippetTemplateFactory:
             GenericTemplate(
                 imports=[],
                 is_optional=True,
-                template_string=f"{name}={self.TEMPLATE_SENTINEL}" if name is not None else f"{self.TEMPLATE_SENTINEL}",
+                template_string=f"{name}={TEMPLATE_SENTINEL}" if name is not None else f"{TEMPLATE_SENTINEL}",
                 template_inputs=[
                     TemplateInput.factory.payload(
                         PayloadInput(
@@ -181,9 +218,9 @@ class SnippetTemplateFactory:
                     IterableTemplate(
                         imports=[],
                         is_optional=True,
-                        container_template_string=f"{name}=[\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}]"
+                        container_template_string=f"{name}=[\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}]"
                         if name is not None
-                        else f"[\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}]",
+                        else f"[\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}]",
                         delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
                         inner_template=inner_template,
                         template_input=PayloadInput(
@@ -204,9 +241,9 @@ class SnippetTemplateFactory:
                 IterableTemplate(
                     imports=[],
                     is_optional=True,
-                    container_template_string=f"{name}={{\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}"
+                    container_template_string=f"{name}={{\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}"
                     if name is not None
-                    else f"{{\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}",
+                    else f"{{\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}",
                     delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
                     inner_template=inner_template,
                     template_input=PayloadInput(
@@ -227,9 +264,9 @@ class SnippetTemplateFactory:
                     DictTemplate(
                         imports=[],
                         is_optional=True,
-                        container_template_string=f"{name}={{\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}"
+                        container_template_string=f"{name}={{\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}"
                         if name is not None
-                        else f"{{\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}",
+                        else f"{{\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}",
                         delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
                         key_value_separator=": ",
                         key_template=key_template,
@@ -281,7 +318,7 @@ class SnippetTemplateFactory:
                 imports=[],
                 is_optional=True,
                 values=value_map,
-                template_string=f"{name}={self.TEMPLATE_SENTINEL}" if name is not None else f"{self.TEMPLATE_SENTINEL}",
+                template_string=f"{name}={TEMPLATE_SENTINEL}" if name is not None else f"{TEMPLATE_SENTINEL}",
                 template_input=PayloadInput(
                     location=location,
                     path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs),
@@ -300,7 +337,7 @@ class SnippetTemplateFactory:
         indentation_level: int = 0,
     ) -> Union[Template, None]:
         child_indentation_level = indentation_level + 1
-        example_expression = f"\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}"
+        example_expression = f"\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}"
         sut_shape = sut.shape.get_as_union()
         if sut_shape.properties_type == "samePropertiesAsObject":
             object_properties = self._context.pydantic_generator_context.get_all_properties_including_extensions(
@@ -330,7 +367,7 @@ class SnippetTemplateFactory:
                 snippet_writer=self._snippet_writer,
                 name=type_name,
                 example=None,
-                example_expression=AST.Expression(self.TEMPLATE_SENTINEL),
+                example_expression=AST.Expression(TEMPLATE_SENTINEL),
                 single_union_type=sut,
             ).generate_snippet_template()
             if snippet_template is not None:
@@ -355,7 +392,7 @@ class SnippetTemplateFactory:
                 snippet_writer=self._snippet_writer,
                 name=type_name,
                 example=None,
-                example_expression=AST.Expression(self.TEMPLATE_SENTINEL),
+                example_expression=AST.Expression(TEMPLATE_SENTINEL),
                 single_union_type=sut,
             ).generate_snippet_template()
             child_breadcrumbs = name_breadcrumbs or []
@@ -393,7 +430,7 @@ class SnippetTemplateFactory:
                 snippet_writer=self._snippet_writer,
                 name=type_name,
                 example=None,
-                example_expression=AST.Expression(self.TEMPLATE_SENTINEL),
+                example_expression=AST.Expression(TEMPLATE_SENTINEL),
                 single_union_type=sut,
             ).generate_snippet_template()
 
@@ -443,7 +480,7 @@ class SnippetTemplateFactory:
                 imports=[],
                 is_optional=True,
                 discriminant_field=union_declaration.discriminant.wire_value,
-                template_string=f"{name}={self.TEMPLATE_SENTINEL}" if name is not None else f"{self.TEMPLATE_SENTINEL}",
+                template_string=f"{name}={TEMPLATE_SENTINEL}" if name is not None else f"{TEMPLATE_SENTINEL}",
                 members=member_templates,
                 template_input=PayloadInput(location="RELATIVE"),
             )
@@ -490,9 +527,9 @@ class SnippetTemplateFactory:
                 else [],
                 is_optional=True,
                 # TODO: move the object name getter to a function instead of the dot access below
-                template_string=f"{name}={object_class_name}(\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level})"
+                template_string=f"{name}={object_class_name}(\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level})"
                 if name is not None
-                else f"{object_class_name}(\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level})",
+                else f"{object_class_name}(\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level})",
                 template_inputs=template_inputs,
                 input_delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
             )
@@ -758,7 +795,7 @@ class SnippetTemplateFactory:
 
                 # Create the outermost template, with the above template inputs
                 async_init_expression = AST.Expression(
-                    f"await {self.CLIENT_FIXTURE_NAME}.{package_path}{get_endpoint_name(endpoint)}(\n\t{self.TEMPLATE_SENTINEL}\n)"
+                    f"await {self.CLIENT_FIXTURE_NAME}.{package_path}{get_endpoint_name(endpoint)}(\n\t{TEMPLATE_SENTINEL}\n)"
                 )
                 async_init_string_template = self._expression_to_snippet_str(async_init_expression)
                 async_function_template = Template.factory.generic(
@@ -772,7 +809,7 @@ class SnippetTemplateFactory:
                 )
 
                 init_expression = AST.Expression(
-                    f"{self.CLIENT_FIXTURE_NAME}.{package_path}{get_endpoint_name(endpoint)}(\n\t{self.TEMPLATE_SENTINEL}\n)"
+                    f"{self.CLIENT_FIXTURE_NAME}.{package_path}{get_endpoint_name(endpoint)}(\n\t{TEMPLATE_SENTINEL}\n)"
                 )
                 init_string_template = self._expression_to_snippet_str(init_expression)
                 function_template = Template.factory.generic(

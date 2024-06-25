@@ -4,11 +4,13 @@ from enum import Enum
 from typing import List, Optional
 
 import fern.ir.resources as ir_types
+from fdr import PayloadInput, Template, TemplateInput
 
 from fern_python.codegen import AST, Project, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies import httpx
 from fern_python.generators.sdk.core_utilities.core_utilities import CoreUtilities
+from fern_python.snippet.template_utils import TemplateGenerator
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from ..environment_generators import GeneratedEnvironment
@@ -26,6 +28,7 @@ class ConstructorParameter:
     environment_variable: typing.Optional[str] = None
     is_basic: bool = False
     docs: typing.Optional[str] = None
+    template: typing.Optional[Template] = None
 
 
 @dataclass
@@ -516,6 +519,18 @@ class ClientWrapperGenerator:
                     environment_variable=bearer_auth_scheme.token_env_var.get_as_str()
                     if bearer_auth_scheme.token_env_var is not None
                     else None,
+                    template=TemplateGenerator.string_template(
+                        is_optional=False,
+                        template_string_prefix=constructor_parameter_name,
+                        inputs=[
+                            TemplateInput.factory.payload(
+                                PayloadInput(
+                                    location="AUTH",
+                                    path="token",
+                                )
+                            )
+                        ],
+                    ),
                 )
             )
 
@@ -553,6 +568,18 @@ class ClientWrapperGenerator:
                 if basic_auth_scheme.username_env_var is not None
                 else None,
                 is_basic=True,
+                template=TemplateGenerator.string_template(
+                    is_optional=False,
+                    template_string_prefix=username_constructor_parameter_name,
+                    inputs=[
+                        TemplateInput.factory.payload(
+                            PayloadInput(
+                                location="AUTH",
+                                path="username",
+                            )
+                        ),
+                    ],
+                ),
             )
             password_constructor_parameter_name = self._get_password_constructor_parameter_name(basic_auth_scheme)
             password_constructor_parameter = ConstructorParameter(
@@ -586,6 +613,18 @@ class ClientWrapperGenerator:
                 environment_variable=basic_auth_scheme.password_env_var.get_as_str()
                 if basic_auth_scheme.password_env_var is not None
                 else None,
+                template=TemplateGenerator.string_template(
+                    is_optional=False,
+                    template_string_prefix=password_constructor_parameter_name,
+                    inputs=[
+                        TemplateInput.factory.payload(
+                            PayloadInput(
+                                location="AUTH",
+                                path="password",
+                            )
+                        ),
+                    ],
+                ),
             )
             parameters.extend(
                 [

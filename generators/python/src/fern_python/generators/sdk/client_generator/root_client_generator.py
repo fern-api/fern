@@ -103,24 +103,48 @@ class RootClientGenerator:
         if self._oauth_scheme is not None:
             oauth = self._oauth_scheme.configuration.get_as_union()
             if oauth.type == "clientCredentials":
-                if oauth.client_id_env_var is None:
-                    self._root_client_constructor_params.append(
-                        ConstructorParameter(
-                            constructor_parameter_name="client_id",
-                            type_hint=AST.TypeHint.str_(),
-                            private_member_name="client_id",
-                            instantiation=AST.Expression(f'client_id="YOUR_CLIENT_ID"'),
-                        )
+                self._root_client_constructor_params.append(
+                    ConstructorParameter(
+                        constructor_parameter_name="client_id",
+                        type_hint=AST.TypeHint.str_(),
+                        private_member_name="client_id",
+                        instantiation=AST.Expression(f'client_id="YOUR_CLIENT_ID"'),
+                        # TODO: support OAuth credentials in templates
+                        # template=TemplateGenerator.string_template(
+                        #     is_optional=False,
+                        #     template_string_prefix="client_id",
+                        #     inputs=[
+                        #         TemplateInput.factory.payload(
+                        #             PayloadInput(
+                        #                 location="AUTH",
+                        #                 path="client_id",
+                        #             )
+                        #         )
+                        #     ]
+                        # )
                     )
-                if oauth.client_secret_env_var is None:
-                    self._root_client_constructor_params.append(
-                        ConstructorParameter(
-                            constructor_parameter_name="client_secret",
-                            type_hint=AST.TypeHint.str_(),
-                            private_member_name="client_secret",
-                            instantiation=AST.Expression(f'client_secret="YOUR_CLIENT_SECRET"'),
-                        )
+                )
+                self._root_client_constructor_params.append(
+                    ConstructorParameter(
+                        constructor_parameter_name="client_secret",
+                        type_hint=AST.TypeHint.str_(),
+                        private_member_name="client_secret",
+                        instantiation=AST.Expression(f'client_secret="YOUR_CLIENT_SECRET"'),
+                        # TODO: support OAuth credentials in templates
+                        # template=TemplateGenerator.string_template(
+                        #     is_optional=False,
+                        #     template_string_prefix="client_secret",
+                        #     inputs=[
+                        #         TemplateInput.factory.payload(
+                        #             PayloadInput(
+                        #                 location="AUTH",
+                        #                 path="client_secret",
+                        #             )
+                        #         )
+                        #     ]
+                        # )
                     )
+                )
             self._root_client_constructor_params.append(
                 ConstructorParameter(
                     constructor_parameter_name=self.TOKEN_GETTER_PARAM_NAME,
@@ -857,7 +881,7 @@ class RootClientGenerator:
             self._module_path = module_path
             self._class_name = class_name
             self._async_class_name = async_class_name
-            self._consrtructor_parameters = constructor_parameters
+            self._constructor_parameters = constructor_parameters
 
         def build(self) -> GeneratedRootClient:
             def client_snippet_writer(class_name: str) -> typing.Tuple[AST.ClassReference, CodeWriterFunction]:
@@ -876,7 +900,7 @@ class RootClientGenerator:
                         class_=client_class_reference,
                         args=[
                             param.instantiation
-                            for param in self._consrtructor_parameters
+                            for param in self._constructor_parameters
                             if param.instantiation is not None
                         ],
                     )
@@ -891,9 +915,7 @@ class RootClientGenerator:
             sync_class_reference, sync_class_snippet_writer = client_snippet_writer(self._class_name)
             return GeneratedRootClient(
                 async_instantiation=AST.Expression(AST.CodeWriter(async_class_snippet_writer)),
-                async_client=RootClient(
-                    class_reference=async_class_reference, parameters=self._consrtructor_parameters
-                ),
+                async_client=RootClient(class_reference=async_class_reference, parameters=self._constructor_parameters),
                 sync_instantiation=AST.Expression(AST.CodeWriter(sync_class_snippet_writer)),
-                sync_client=RootClient(class_reference=sync_class_reference, parameters=self._consrtructor_parameters),
+                sync_client=RootClient(class_reference=sync_class_reference, parameters=self._constructor_parameters),
             )
