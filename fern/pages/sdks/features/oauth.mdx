@@ -50,6 +50,23 @@ and they're ready to go.
   the rest of the API (like the `UserClient`) can use the token to authenticate every request.
 
 </Tab>
+
+<Tab title="Java">
+
+  When OAuth is configured, the Java SDK’s builder methods for setting the `clientId` and `clientSecret` are available.
+
+  Constructing the client is as simple as:
+  ```java client.java
+  Client client = Client.builder()
+      .clientId("YOUR_CLIENT_ID")
+      .clientSecret("YOUR_CLIENT_SECRET")
+      .build();
+  ```
+
+  Behind the scenes, the `core.OAuthTokenProvider` retrieves an access token and refreshes it as needed. With this,
+  the rest of the API (like the `UserClient`) can use the token to authenticate every request.
+
+</Tab>
 </Tabs>
 
 ### Supported Authorization Flows
