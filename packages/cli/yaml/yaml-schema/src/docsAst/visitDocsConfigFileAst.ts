@@ -23,9 +23,11 @@ export async function visitDocsConfigFileYamlAst(
         []
     );
 
+    // the following code parses markdown files for media and adds them to the filepath visitor
     let pageEntries: [string, string][];
 
     try {
+        // wrap the parse call in a try/catch because it will throw if a markdown file doesn't exist
         const { pages } = await docsYml.parseDocsConfiguration({
             rawDocsConfiguration: contents,
             context,
@@ -43,6 +45,7 @@ export async function visitDocsConfigFileYamlAst(
             absolutePathToMdx: resolve(absolutePathToFernFolder, relativePath)
         });
 
+        // visit each media filepath in each markdown file
         for (const filepath of filepaths) {
             await visitor.filepath?.(
                 {
@@ -52,6 +55,30 @@ export async function visitDocsConfigFileYamlAst(
                 },
                 [relativePath]
             );
+        }
+    }
+
+    if (contents.js != null) {
+        if (Array.isArray(contents.js)) {
+            // multiple JS configs
+            await Promise.all(
+                contents.js.map((script, idx) =>
+                    visitScript({
+                        absoluteFilepathToConfiguration,
+                        visitor,
+                        script,
+                        nodePath: ["js", `${idx}`]
+                    })
+                )
+            );
+        } else {
+            // single JS config
+            await visitScript({
+                absoluteFilepathToConfiguration,
+                visitor,
+                script: contents.js,
+                nodePath: ["js"]
+            });
         }
     }
 
@@ -314,6 +341,29 @@ async function visitNavigationItem({
                 });
             })
         );
+    }
+}
+
+async function visitScript({
+    absoluteFilepathToConfiguration,
+    visitor,
+    script,
+    nodePath
+}: {
+    absoluteFilepathToConfiguration: AbsoluteFilePath;
+    visitor: Partial<DocsConfigFileAstVisitor>;
+    script: docsYml.RawSchemas.JsConfigOptions;
+    nodePath: NodePath;
+}) {
+    const rawUnresolvedFilepath = typeof script === "string" ? script : "path" in script ? script.path : null;
+
+    if (rawUnresolvedFilepath) {
+        await visitFilepath({
+            absoluteFilepathToConfiguration,
+            rawUnresolvedFilepath,
+            visitor,
+            nodePath
+        });
     }
 }
 
