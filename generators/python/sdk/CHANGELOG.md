@@ -5,9 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.11.0] - 2024-06-25
+
+- Improvement: The SDK now produces templates for the root clients within snippet-template.json. This allows users of the Templates API to pass in data for the auth variables present within the root client.
+
 ## [2.10.2] - 2024-06-20
 
-- Fix: The SDK now handles stream termination sequences like `[DONE]`. This is a typical way for LLM 
+- Fix: The SDK now handles stream termination sequences like `[DONE]`. This is a typical way for LLM
   providers to communicate when the stream has ended.
 
 ## [2.10.1] - 2024-06-20
