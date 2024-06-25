@@ -2,7 +2,6 @@ import typing
 from dataclasses import dataclass
 from typing import List, Optional
 
-from fdr import PayloadInput, TemplateInput
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, SourceFile
@@ -916,9 +915,7 @@ class RootClientGenerator:
             sync_class_reference, sync_class_snippet_writer = client_snippet_writer(self._class_name)
             return GeneratedRootClient(
                 async_instantiation=AST.Expression(AST.CodeWriter(async_class_snippet_writer)),
-                async_client=RootClient(
-                    class_reference=async_class_reference, parameters=self._constructor_parameters
-                ),
+                async_client=RootClient(class_reference=async_class_reference, parameters=self._constructor_parameters),
                 sync_instantiation=AST.Expression(AST.CodeWriter(sync_class_snippet_writer)),
                 sync_client=RootClient(class_reference=sync_class_reference, parameters=self._constructor_parameters),
             )

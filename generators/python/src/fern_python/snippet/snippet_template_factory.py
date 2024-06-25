@@ -105,7 +105,7 @@ class SnippetTemplateFactory:
 
     def _generate_client(self, is_async: Optional[bool] = False) -> Template:
         if is_async:
-            client = self._generated_root_client.async_client            
+            client = self._generated_root_client.async_client
         else:
             client = self._generated_root_client.sync_client
 
@@ -116,14 +116,10 @@ class SnippetTemplateFactory:
         client_non_template_inputs = []
         for param in client.parameters:
             if param.template is not None:
-                client_template_inputs.append(
-                    TemplateInput.factory.template(
-                        param.template
-                    )
-                )
+                client_template_inputs.append(TemplateInput.factory.template(param.template))
             elif param.instantiation is not None:
                 client_non_template_inputs.append(param.instantiation)
-        
+
         # Create a new instantiation snippet as the one on the root client on self already
         # has examples inputted into it, and we need the template sentinel present for auth.
         instantiation_args = client_non_template_inputs
@@ -132,11 +128,15 @@ class SnippetTemplateFactory:
         template_client_instantiation = AST.ClassInstantiation(
             class_=client.class_reference,
             args=instantiation_args,
-        )        
+        )
+
         def _client_writer(writer: AST.NodeWriter) -> None:
             writer.write(f"{self.CLIENT_FIXTURE_NAME} = ")
             writer.write_node(template_client_instantiation)
-        imports, instantiation = self._expression_to_snippet_str_and_imports(AST.Expression(AST.CodeWriter(_client_writer)))
+
+        imports, instantiation = self._expression_to_snippet_str_and_imports(
+            AST.Expression(AST.CodeWriter(_client_writer))
+        )
 
         return Template.factory.generic(
             GenericTemplate(

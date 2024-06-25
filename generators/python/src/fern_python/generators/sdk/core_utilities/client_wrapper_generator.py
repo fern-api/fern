@@ -3,8 +3,8 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import List, Optional
 
-from fdr import PayloadInput, Template, TemplateInput
 import fern.ir.resources as ir_types
+from fdr import PayloadInput, Template, TemplateInput
 
 from fern_python.codegen import AST, Project, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
@@ -529,8 +529,8 @@ class ClientWrapperGenerator:
                                     path="token",
                                 )
                             )
-                        ]
-                    )
+                        ],
+                    ),
                 )
             )
 
@@ -578,8 +578,8 @@ class ClientWrapperGenerator:
                                 path="username",
                             )
                         ),
-                    ]
-                )
+                    ],
+                ),
             )
             password_constructor_parameter_name = self._get_password_constructor_parameter_name(basic_auth_scheme)
             password_constructor_parameter = ConstructorParameter(
@@ -623,8 +623,8 @@ class ClientWrapperGenerator:
                                 path="password",
                             )
                         ),
-                    ]
-                )
+                    ],
+                ),
             )
             parameters.extend(
                 [
