@@ -26,19 +26,16 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderImmutablesStyle
-@JsonDeserialize(as = com.fern.java.client.ImmutableJavaSdkCustomConfig.class)
+@JsonDeserialize(as = ImmutableJavaSdkCustomConfig.class)
 public interface JavaSdkCustomConfig extends ICustomConfig {
 
     @JsonProperty("client-class-name")
     Optional<String> clientClassName();
 
-    @JsonProperty("base-error-name")
-    Optional<String> baseErrorName();
-
     @JsonProperty("custom-dependencies")
     Optional<List<String>> customDependencies();
 
-    static com.fern.java.client.ImmutableJavaSdkCustomConfig.Builder builder() {
-        return com.fern.java.client.ImmutableJavaSdkCustomConfig.builder();
+    static ImmutableJavaSdkCustomConfig.Builder builder() {
+        return ImmutableJavaSdkCustomConfig.builder();
     }
 }
