@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [v48.0.0] - 2024-06-17
 
 - Fix: The unique webhook id is now required.
-- Improvement: Pagination endpoints not support request body properties.
+- Improvement: Pagination endpoints now support request body properties.
 - Improvement: Offset pagination now supports a configurable `step` size request property, which
   is useful for offset values that represent the element's global index (e.g. the 500th element),
   rather than the page number (e.g the 5th page).
