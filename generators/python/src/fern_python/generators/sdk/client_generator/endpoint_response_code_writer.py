@@ -293,7 +293,7 @@ class EndpointResponseCodeWriter:
                     ),
                     file_download=lambda _: self._handle_success_file_download(writer=writer),
                     text=lambda _: self._handle_success_text(writer=writer),
-                    stream_parameter=raise_stream_parameter_unsupported(),
+                    stream_parameter=lambda _: raise_stream_parameter_unsupported(),
                 )
 
         if self._endpoint.response is None or self._endpoint.response.body is None:

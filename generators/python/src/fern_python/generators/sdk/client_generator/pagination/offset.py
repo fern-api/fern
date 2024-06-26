@@ -5,7 +5,11 @@ import fern.ir.resources as ir_types
 from fern_python.codegen import AST
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 
-from .abstract_paginator import PaginationSnippetConfig, Paginator, request_property_to_name
+from .abstract_paginator import (
+    PaginationSnippetConfig,
+    Paginator,
+    request_property_to_name,
+)
 
 
 class OffsetPagination(Paginator):
