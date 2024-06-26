@@ -8,8 +8,8 @@ import com.seed.codeSamples.core.ClientOptions;
 import com.seed.codeSamples.core.MediaTypes;
 import com.seed.codeSamples.core.ObjectMappers;
 import com.seed.codeSamples.core.RequestOptions;
-import com.seed.codeSamples.core.SeedCodeSamplesApiError;
-import com.seed.codeSamples.core.SeedCodeSamplesError;
+import com.seed.codeSamples.core.SeedCodeSamplesApiException;
+import com.seed.codeSamples.core.SeedCodeSamplesException;
 import com.seed.codeSamples.resources.service.requests.MyRequest;
 import com.seed.codeSamples.resources.service.types.MyResponse;
 import java.io.IOException;
@@ -42,7 +42,7 @@ public class ServiceClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedCodeSamplesError("Failed to serialize request", e);
+            throw new SeedCodeSamplesException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -60,12 +60,12 @@ public class ServiceClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), MyResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedCodeSamplesApiError(
+            throw new SeedCodeSamplesApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedCodeSamplesError("Network error executing HTTP request", e);
+            throw new SeedCodeSamplesException("Network error executing HTTP request", e);
         }
     }
 }

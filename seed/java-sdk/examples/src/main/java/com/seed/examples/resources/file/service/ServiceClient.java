@@ -7,10 +7,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.examples.core.ClientOptions;
 import com.seed.examples.core.ObjectMappers;
 import com.seed.examples.core.RequestOptions;
-import com.seed.examples.core.SeedExamplesApiError;
-import com.seed.examples.core.SeedExamplesError;
+import com.seed.examples.core.SeedExamplesApiException;
+import com.seed.examples.core.SeedExamplesException;
 import com.seed.examples.resources.file.service.requests.GetFileRequest;
-import com.seed.examples.resources.types.errors.SeedExamplesNotFoundError;
+import com.seed.examples.resources.types.errors.NotFoundError;
 import com.seed.examples.resources.types.types.File;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -69,18 +69,17 @@ public class ServiceClient {
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 404) {
-                    throw new SeedExamplesNotFoundError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class));
+                    throw new NotFoundError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class));
                 }
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new SeedExamplesApiError(
+            throw new SeedExamplesApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedExamplesError("Network error executing HTTP request", e);
+            throw new SeedExamplesException("Network error executing HTTP request", e);
         }
     }
 }

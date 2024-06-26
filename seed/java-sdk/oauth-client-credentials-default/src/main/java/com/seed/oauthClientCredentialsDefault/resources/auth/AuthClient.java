@@ -8,8 +8,8 @@ import com.seed.oauthClientCredentialsDefault.core.ClientOptions;
 import com.seed.oauthClientCredentialsDefault.core.MediaTypes;
 import com.seed.oauthClientCredentialsDefault.core.ObjectMappers;
 import com.seed.oauthClientCredentialsDefault.core.RequestOptions;
-import com.seed.oauthClientCredentialsDefault.core.SeedOauthClientCredentialsDefaultApiError;
-import com.seed.oauthClientCredentialsDefault.core.SeedOauthClientCredentialsDefaultError;
+import com.seed.oauthClientCredentialsDefault.core.SeedOauthClientCredentialsDefaultApiException;
+import com.seed.oauthClientCredentialsDefault.core.SeedOauthClientCredentialsDefaultException;
 import com.seed.oauthClientCredentialsDefault.resources.auth.requests.GetTokenRequest;
 import com.seed.oauthClientCredentialsDefault.resources.auth.types.TokenResponse;
 import java.io.IOException;
@@ -42,7 +42,7 @@ public class AuthClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedOauthClientCredentialsDefaultError("Failed to serialize request", e);
+            throw new SeedOauthClientCredentialsDefaultException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -60,12 +60,12 @@ public class AuthClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), TokenResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedOauthClientCredentialsDefaultApiError(
+            throw new SeedOauthClientCredentialsDefaultApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedOauthClientCredentialsDefaultError("Network error executing HTTP request", e);
+            throw new SeedOauthClientCredentialsDefaultException("Network error executing HTTP request", e);
         }
     }
 }

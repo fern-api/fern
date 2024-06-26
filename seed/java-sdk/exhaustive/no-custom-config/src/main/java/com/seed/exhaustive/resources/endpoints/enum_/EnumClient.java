@@ -8,8 +8,8 @@ import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
-import com.seed.exhaustive.core.SeedExhaustiveApiError;
-import com.seed.exhaustive.core.SeedExhaustiveError;
+import com.seed.exhaustive.core.SeedExhaustiveApiException;
+import com.seed.exhaustive.core.SeedExhaustiveException;
 import com.seed.exhaustive.resources.types.enum_.types.WeatherReport;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -41,7 +41,7 @@ public class EnumClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedExhaustiveError("Failed to serialize request", e);
+            throw new SeedExhaustiveException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -59,12 +59,12 @@ public class EnumClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), WeatherReport.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedExhaustiveApiError(
+            throw new SeedExhaustiveApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedExhaustiveError("Network error executing HTTP request", e);
+            throw new SeedExhaustiveException("Network error executing HTTP request", e);
         }
     }
 }

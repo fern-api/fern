@@ -6,8 +6,8 @@ package com.seed.noEnvironment.resources.dummy;
 import com.seed.noEnvironment.core.ClientOptions;
 import com.seed.noEnvironment.core.ObjectMappers;
 import com.seed.noEnvironment.core.RequestOptions;
-import com.seed.noEnvironment.core.SeedNoEnvironmentApiError;
-import com.seed.noEnvironment.core.SeedNoEnvironmentError;
+import com.seed.noEnvironment.core.SeedNoEnvironmentApiException;
+import com.seed.noEnvironment.core.SeedNoEnvironmentException;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -48,12 +48,12 @@ public class DummyClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedNoEnvironmentApiError(
+            throw new SeedNoEnvironmentApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedNoEnvironmentError("Network error executing HTTP request", e);
+            throw new SeedNoEnvironmentException("Network error executing HTTP request", e);
         }
     }
 }

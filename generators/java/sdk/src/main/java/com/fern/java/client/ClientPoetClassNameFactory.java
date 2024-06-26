@@ -17,12 +17,11 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
         super(packagePrefixTokens);
     }
 
-    public ClassName getErrorClassName(ErrorDeclaration errorDeclaration, String organization, String workspaceName) {
+    public ClassName getErrorClassName(ErrorDeclaration errorDeclaration) {
         String packageName = getErrorsPackageName(errorDeclaration.getName().getFernFilepath());
         return ClassName.get(
                 packageName,
-                getBaseNamePrefix(organization, workspaceName)
-                        + errorDeclaration.getName().getName().getPascalCase().getSafeName());
+                errorDeclaration.getName().getName().getPascalCase().getSafeName());
     }
 
     public ClassName getRetryInterceptorClassName() {
@@ -64,9 +63,11 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
 
     public ClassName getBaseExceptionClassName(
             String organization, String workspaceName, JavaSdkCustomConfig customConfig) {
-        String name = customConfig.baseExceptionClassName().orElseGet(() -> customConfig
-                .clientClassName()
-                .orElseGet(() -> getBaseNamePrefix(organization, workspaceName) + "Exception"));
+        String name = customConfig
+                .baseExceptionClassName()
+                .orElseGet(() ->
+                        customConfig.clientClassName().orElseGet(() -> getBaseNamePrefix(organization, workspaceName))
+                                + "Exception");
         return getCoreClassName(name);
     }
 

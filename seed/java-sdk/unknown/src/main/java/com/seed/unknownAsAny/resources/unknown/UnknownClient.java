@@ -9,8 +9,8 @@ import com.seed.unknownAsAny.core.ClientOptions;
 import com.seed.unknownAsAny.core.MediaTypes;
 import com.seed.unknownAsAny.core.ObjectMappers;
 import com.seed.unknownAsAny.core.RequestOptions;
-import com.seed.unknownAsAny.core.SeedUnknownAsAnyApiError;
-import com.seed.unknownAsAny.core.SeedUnknownAsAnyError;
+import com.seed.unknownAsAny.core.SeedUnknownAsAnyApiException;
+import com.seed.unknownAsAny.core.SeedUnknownAsAnyException;
 import java.io.IOException;
 import java.util.List;
 import okhttp3.Headers;
@@ -41,7 +41,7 @@ public class UnknownClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedUnknownAsAnyError("Failed to serialize request", e);
+            throw new SeedUnknownAsAnyException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -59,12 +59,12 @@ public class UnknownClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<List<Object>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedUnknownAsAnyApiError(
+            throw new SeedUnknownAsAnyApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedUnknownAsAnyError("Network error executing HTTP request", e);
+            throw new SeedUnknownAsAnyException("Network error executing HTTP request", e);
         }
     }
 }

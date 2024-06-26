@@ -8,10 +8,10 @@ import com.seed.basicAuthEnvironmentVariables.core.ClientOptions;
 import com.seed.basicAuthEnvironmentVariables.core.MediaTypes;
 import com.seed.basicAuthEnvironmentVariables.core.ObjectMappers;
 import com.seed.basicAuthEnvironmentVariables.core.RequestOptions;
-import com.seed.basicAuthEnvironmentVariables.core.SeedBasicAuthEnvironmentVariablesApiError;
-import com.seed.basicAuthEnvironmentVariables.core.SeedBasicAuthEnvironmentVariablesError;
-import com.seed.basicAuthEnvironmentVariables.resources.errors.errors.SeedBasicAuthEnvironmentVariablesBadRequest;
-import com.seed.basicAuthEnvironmentVariables.resources.errors.errors.SeedBasicAuthEnvironmentVariablesUnauthorizedRequest;
+import com.seed.basicAuthEnvironmentVariables.core.SeedBasicAuthEnvironmentVariablesApiException;
+import com.seed.basicAuthEnvironmentVariables.core.SeedBasicAuthEnvironmentVariablesException;
+import com.seed.basicAuthEnvironmentVariables.resources.errors.errors.BadRequest;
+import com.seed.basicAuthEnvironmentVariables.resources.errors.errors.UnauthorizedRequest;
 import com.seed.basicAuthEnvironmentVariables.resources.errors.types.UnauthorizedRequestErrorBody;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -62,18 +62,18 @@ public class BasicAuthClient {
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 401) {
-                    throw new SeedBasicAuthEnvironmentVariablesUnauthorizedRequest(ObjectMappers.JSON_MAPPER.readValue(
+                    throw new UnauthorizedRequest(ObjectMappers.JSON_MAPPER.readValue(
                             responseBodyString, UnauthorizedRequestErrorBody.class));
                 }
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new SeedBasicAuthEnvironmentVariablesApiError(
+            throw new SeedBasicAuthEnvironmentVariablesApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedBasicAuthEnvironmentVariablesError("Network error executing HTTP request", e);
+            throw new SeedBasicAuthEnvironmentVariablesException("Network error executing HTTP request", e);
         }
     }
 
@@ -97,7 +97,7 @@ public class BasicAuthClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedBasicAuthEnvironmentVariablesError("Failed to serialize request", e);
+            throw new SeedBasicAuthEnvironmentVariablesException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -118,22 +118,20 @@ public class BasicAuthClient {
             try {
                 switch (response.code()) {
                     case 400:
-                        throw new SeedBasicAuthEnvironmentVariablesBadRequest(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                        throw new BadRequest(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
                     case 401:
-                        throw new SeedBasicAuthEnvironmentVariablesUnauthorizedRequest(
-                                ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBodyString, UnauthorizedRequestErrorBody.class));
+                        throw new UnauthorizedRequest(ObjectMappers.JSON_MAPPER.readValue(
+                                responseBodyString, UnauthorizedRequestErrorBody.class));
                 }
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new SeedBasicAuthEnvironmentVariablesApiError(
+            throw new SeedBasicAuthEnvironmentVariablesApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedBasicAuthEnvironmentVariablesError("Network error executing HTTP request", e);
+            throw new SeedBasicAuthEnvironmentVariablesException("Network error executing HTTP request", e);
         }
     }
 }

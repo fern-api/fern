@@ -9,8 +9,8 @@ import com.seed.undiscriminatedUnions.core.ClientOptions;
 import com.seed.undiscriminatedUnions.core.MediaTypes;
 import com.seed.undiscriminatedUnions.core.ObjectMappers;
 import com.seed.undiscriminatedUnions.core.RequestOptions;
-import com.seed.undiscriminatedUnions.core.SeedUndiscriminatedUnionsApiError;
-import com.seed.undiscriminatedUnions.core.SeedUndiscriminatedUnionsError;
+import com.seed.undiscriminatedUnions.core.SeedUndiscriminatedUnionsApiException;
+import com.seed.undiscriminatedUnions.core.SeedUndiscriminatedUnionsException;
 import com.seed.undiscriminatedUnions.resources.union.types.Key;
 import com.seed.undiscriminatedUnions.resources.union.types.MyUnion;
 import java.io.IOException;
@@ -43,7 +43,7 @@ public class UnionClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedUndiscriminatedUnionsError("Failed to serialize request", e);
+            throw new SeedUndiscriminatedUnionsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -61,12 +61,12 @@ public class UnionClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), MyUnion.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedUndiscriminatedUnionsApiError(
+            throw new SeedUndiscriminatedUnionsApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedUndiscriminatedUnionsError("Network error executing HTTP request", e);
+            throw new SeedUndiscriminatedUnionsException("Network error executing HTTP request", e);
         }
     }
 
@@ -96,12 +96,12 @@ public class UnionClient {
                         responseBody.string(), new TypeReference<Map<Key, String>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedUndiscriminatedUnionsApiError(
+            throw new SeedUndiscriminatedUnionsApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedUndiscriminatedUnionsError("Network error executing HTTP request", e);
+            throw new SeedUndiscriminatedUnionsException("Network error executing HTTP request", e);
         }
     }
 }

@@ -8,8 +8,8 @@ import com.seed.oauthClientCredentials.core.ClientOptions;
 import com.seed.oauthClientCredentials.core.MediaTypes;
 import com.seed.oauthClientCredentials.core.ObjectMappers;
 import com.seed.oauthClientCredentials.core.RequestOptions;
-import com.seed.oauthClientCredentials.core.SeedOauthClientCredentialsApiError;
-import com.seed.oauthClientCredentials.core.SeedOauthClientCredentialsError;
+import com.seed.oauthClientCredentials.core.SeedOauthClientCredentialsApiException;
+import com.seed.oauthClientCredentials.core.SeedOauthClientCredentialsException;
 import com.seed.oauthClientCredentials.resources.auth.requests.GetTokenRequest;
 import com.seed.oauthClientCredentials.resources.auth.types.TokenResponse;
 import java.io.IOException;
@@ -42,7 +42,7 @@ public class AuthClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedOauthClientCredentialsError("Failed to serialize request", e);
+            throw new SeedOauthClientCredentialsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -60,12 +60,12 @@ public class AuthClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), TokenResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedOauthClientCredentialsApiError(
+            throw new SeedOauthClientCredentialsApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedOauthClientCredentialsError("Network error executing HTTP request", e);
+            throw new SeedOauthClientCredentialsException("Network error executing HTTP request", e);
         }
     }
 }

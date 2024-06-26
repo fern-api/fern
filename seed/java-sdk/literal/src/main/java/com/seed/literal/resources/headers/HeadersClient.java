@@ -7,8 +7,8 @@ import com.seed.literal.core.ClientOptions;
 import com.seed.literal.core.MediaTypes;
 import com.seed.literal.core.ObjectMappers;
 import com.seed.literal.core.RequestOptions;
-import com.seed.literal.core.SeedLiteralApiError;
-import com.seed.literal.core.SeedLiteralError;
+import com.seed.literal.core.SeedLiteralApiException;
+import com.seed.literal.core.SeedLiteralException;
 import com.seed.literal.resources.headers.requests.SendLiteralsInHeadersRequest;
 import com.seed.literal.types.SendResponse;
 import java.io.IOException;
@@ -65,12 +65,12 @@ public class HeadersClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), SendResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedLiteralApiError(
+            throw new SeedLiteralApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedLiteralError("Network error executing HTTP request", e);
+            throw new SeedLiteralException("Network error executing HTTP request", e);
         }
     }
 }

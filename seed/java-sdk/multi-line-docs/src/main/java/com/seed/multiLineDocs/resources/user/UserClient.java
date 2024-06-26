@@ -8,8 +8,8 @@ import com.seed.multiLineDocs.core.ClientOptions;
 import com.seed.multiLineDocs.core.MediaTypes;
 import com.seed.multiLineDocs.core.ObjectMappers;
 import com.seed.multiLineDocs.core.RequestOptions;
-import com.seed.multiLineDocs.core.SeedMultiLineDocsApiError;
-import com.seed.multiLineDocs.core.SeedMultiLineDocsError;
+import com.seed.multiLineDocs.core.SeedMultiLineDocsApiException;
+import com.seed.multiLineDocs.core.SeedMultiLineDocsException;
 import com.seed.multiLineDocs.resources.user.requests.CreateUserRequest;
 import com.seed.multiLineDocs.resources.user.types.User;
 import java.io.IOException;
@@ -61,12 +61,12 @@ public class UserClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedMultiLineDocsApiError(
+            throw new SeedMultiLineDocsApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedMultiLineDocsError("Network error executing HTTP request", e);
+            throw new SeedMultiLineDocsException("Network error executing HTTP request", e);
         }
     }
 
@@ -92,7 +92,7 @@ public class UserClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedMultiLineDocsError("Failed to serialize request", e);
+            throw new SeedMultiLineDocsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -110,12 +110,12 @@ public class UserClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), User.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedMultiLineDocsApiError(
+            throw new SeedMultiLineDocsApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedMultiLineDocsError("Network error executing HTTP request", e);
+            throw new SeedMultiLineDocsException("Network error executing HTTP request", e);
         }
     }
 }

@@ -28,8 +28,8 @@ fixtures:
         enable-forward-compatible-enums: true
       outputFolder: forward-compatible-enums
     - customConfig:
-        base-api-exception-class-name: CustomApiError
-        base-exception-class-name: CustomError
+        base-api-exception-class-name: CustomApiException
+        base-exception-class-name: CustomException
       outputFolder: custom-error-names
     - customConfig:
         client-class-name: Best

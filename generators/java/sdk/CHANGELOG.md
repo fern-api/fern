@@ -5,15 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] - 2024-06-25
+## [1.0.1] - 2024-06-26
 
-- Break: The Java SDK is now on major version 1. There are no substantial logic changes, however the default configuration 
-  has changed. To take this upgrade without any breaks, please add the below configuration to your `generators.yml` file:
+- Break: The Java SDK is now on major version 1. To take this upgrade without any breaks, please add the below 
+  configuration to your `generators.yml` file:
   ```yaml
   generators:
   - name: fernapi/fern-java-sdk
     config:
       base-api-error-class-name: ApiError
+  ```
+- Improvement: We now generate Exception types for all errors that are defined in the IR. Generated clients with an
+  error discrimination strategy of "status code" will throw one of these typed Exceptions based on the status code of
+  error responses. Example error type:
+  ```java
+  public final class BadRequest extends MyCompanyApiError {
+    public BadRequest(Object body) {
+        super("BadRequest", 400, body);
+    }
+  }
   ```
 
 ## [0.10.1] - 2024-06-13
