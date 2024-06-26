@@ -54,7 +54,7 @@ public final class ApiErrorGenerator extends AbstractFileGenerator {
                         .getApiErrorClassName(
                                 generatorContext.getGeneratorConfig().getOrganization(),
                                 generatorContext.getGeneratorConfig().getWorkspaceName(),
-                                generatorContext.getCustomConfig().baseApiErrorClassName()),
+                                generatorContext.getCustomConfig()),
                 generatorContext);
         this.generatedBaseErrorFile = generatedBaseErrorFile;
     }
