@@ -28,6 +28,9 @@ fixtures:
         enable-forward-compatible-enums: true
       outputFolder: forward-compatible-enums
     - customConfig:
+        base-api-error-class-name: CustomApiError
+      outputFolder: custom-error-name
+    - customConfig:
         package-prefix: com.fern.sdk
       outputMode: local_files
       outputFolder: local-files

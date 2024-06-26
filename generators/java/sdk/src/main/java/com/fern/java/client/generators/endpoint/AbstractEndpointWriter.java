@@ -145,7 +145,8 @@ public abstract class AbstractEndpointWriter {
                 .getPoetClassNameFactory()
                 .getApiErrorClassName(
                         clientGeneratorContext.getGeneratorConfig().getOrganization(),
-                        clientGeneratorContext.getGeneratorConfig().getWorkspaceName());
+                        clientGeneratorContext.getGeneratorConfig().getWorkspaceName(),
+                        clientGeneratorContext.getCustomConfig().baseApiErrorClassName());
         this.generatedErrors = generatedErrors;
     }
 
