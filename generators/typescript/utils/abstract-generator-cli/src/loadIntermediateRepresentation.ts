@@ -8,6 +8,6 @@ export async function loadIntermediateRepresentation(pathToFile: string): Promis
     return IrSerialization.IntermediateRepresentation.parseOrThrow(irJson, {
         unrecognizedObjectKeys: "passthrough",
         allowUnrecognizedEnumValues: true,
-        allowUnrecognizedUnionMembers: true,
+        allowUnrecognizedUnionMembers: true
     });
 }
