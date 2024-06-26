@@ -9,8 +9,8 @@ import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.MediaTypes;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.core.RequestOptions;
-import com.seed.trace.core.SeedTraceApiError;
-import com.seed.trace.core.SeedTraceError;
+import com.seed.trace.core.SeedTraceApiException;
+import com.seed.trace.core.SeedTraceException;
 import com.seed.trace.resources.playlist.requests.CreatePlaylistRequest;
 import com.seed.trace.resources.playlist.requests.GetPlaylistsRequest;
 import com.seed.trace.resources.playlist.types.Playlist;
@@ -77,12 +77,12 @@ public class PlaylistClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Playlist.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiError(
+            throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedTraceError("Network error executing HTTP request", e);
+            throw new SeedTraceException("Network error executing HTTP request", e);
         }
     }
 
@@ -129,12 +129,12 @@ public class PlaylistClient {
                         responseBody.string(), new TypeReference<List<Playlist>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiError(
+            throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedTraceError("Network error executing HTTP request", e);
+            throw new SeedTraceException("Network error executing HTTP request", e);
         }
     }
 
@@ -171,12 +171,12 @@ public class PlaylistClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Playlist.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiError(
+            throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedTraceError("Network error executing HTTP request", e);
+            throw new SeedTraceException("Network error executing HTTP request", e);
         }
     }
 
@@ -217,7 +217,7 @@ public class PlaylistClient {
                         ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
             }
         } catch (JsonProcessingException e) {
-            throw new SeedTraceError("Failed to serialize request", e);
+            throw new SeedTraceException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -236,12 +236,12 @@ public class PlaylistClient {
                         responseBody.string(), new TypeReference<Optional<Playlist>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiError(
+            throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedTraceError("Network error executing HTTP request", e);
+            throw new SeedTraceException("Network error executing HTTP request", e);
         }
     }
 
@@ -277,12 +277,12 @@ public class PlaylistClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiError(
+            throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedTraceError("Network error executing HTTP request", e);
+            throw new SeedTraceException("Network error executing HTTP request", e);
         }
     }
 }

@@ -6,8 +6,8 @@ package com.seed.plainText.resources.service;
 import com.seed.plainText.core.ClientOptions;
 import com.seed.plainText.core.ObjectMappers;
 import com.seed.plainText.core.RequestOptions;
-import com.seed.plainText.core.SeedPlainTextApiError;
-import com.seed.plainText.core.SeedPlainTextError;
+import com.seed.plainText.core.SeedPlainTextApiException;
+import com.seed.plainText.core.SeedPlainTextException;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -49,12 +49,12 @@ public class ServiceClient {
                 return responseBody.string();
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedPlainTextApiError(
+            throw new SeedPlainTextApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedPlainTextError("Network error executing HTTP request", e);
+            throw new SeedPlainTextException("Network error executing HTTP request", e);
         }
     }
 }

@@ -8,8 +8,8 @@ import com.seed.packageYml.core.ClientOptions;
 import com.seed.packageYml.core.MediaTypes;
 import com.seed.packageYml.core.ObjectMappers;
 import com.seed.packageYml.core.RequestOptions;
-import com.seed.packageYml.core.SeedPackageYmlApiError;
-import com.seed.packageYml.core.SeedPackageYmlError;
+import com.seed.packageYml.core.SeedPackageYmlApiException;
+import com.seed.packageYml.core.SeedPackageYmlException;
 import com.seed.packageYml.core.Suppliers;
 import com.seed.packageYml.resources.service.ServiceClient;
 import java.io.IOException;
@@ -45,7 +45,7 @@ public class SeedPackageYmlClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedPackageYmlError("Failed to serialize request", e);
+            throw new SeedPackageYmlException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -63,12 +63,12 @@ public class SeedPackageYmlClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedPackageYmlApiError(
+            throw new SeedPackageYmlApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedPackageYmlError("Network error executing HTTP request", e);
+            throw new SeedPackageYmlException("Network error executing HTTP request", e);
         }
     }
 

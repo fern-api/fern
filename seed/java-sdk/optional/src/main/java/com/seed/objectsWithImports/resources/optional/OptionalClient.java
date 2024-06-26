@@ -8,8 +8,8 @@ import com.seed.objectsWithImports.core.ClientOptions;
 import com.seed.objectsWithImports.core.MediaTypes;
 import com.seed.objectsWithImports.core.ObjectMappers;
 import com.seed.objectsWithImports.core.RequestOptions;
-import com.seed.objectsWithImports.core.SeedObjectsWithImportsApiError;
-import com.seed.objectsWithImports.core.SeedObjectsWithImportsError;
+import com.seed.objectsWithImports.core.SeedObjectsWithImportsApiException;
+import com.seed.objectsWithImports.core.SeedObjectsWithImportsException;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
@@ -49,7 +49,7 @@ public class OptionalClient {
                         ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
             }
         } catch (JsonProcessingException e) {
-            throw new SeedObjectsWithImportsError("Failed to serialize request", e);
+            throw new SeedObjectsWithImportsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -67,12 +67,12 @@ public class OptionalClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedObjectsWithImportsApiError(
+            throw new SeedObjectsWithImportsApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedObjectsWithImportsError("Network error executing HTTP request", e);
+            throw new SeedObjectsWithImportsException("Network error executing HTTP request", e);
         }
     }
 }

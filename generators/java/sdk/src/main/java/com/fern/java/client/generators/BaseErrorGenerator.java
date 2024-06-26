@@ -18,9 +18,10 @@ public class BaseErrorGenerator extends AbstractFileGenerator {
         super(
                 generatorContext
                         .getPoetClassNameFactory()
-                        .getBaseErrorClassName(
+                        .getBaseExceptionClassName(
                                 generatorContext.getGeneratorConfig().getOrganization(),
-                                generatorContext.getGeneratorConfig().getWorkspaceName()),
+                                generatorContext.getGeneratorConfig().getWorkspaceName(),
+                                generatorContext.getCustomConfig()),
                 generatorContext);
     }
 

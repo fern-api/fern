@@ -7,8 +7,8 @@ package com.fern.sdk.resources.noreqbody;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.core.SeedExhaustiveApiError;
-import com.fern.sdk.core.SeedExhaustiveError;
+import com.fern.sdk.core.SeedExhaustiveApiException;
+import com.fern.sdk.core.SeedExhaustiveException;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import java.io.IOException;
 import java.lang.Object;
@@ -53,10 +53,10 @@ public class NoReqBodyClient {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
-      throw new SeedExhaustiveError("Network error executing HTTP request", e);
+      throw new SeedExhaustiveException("Network error executing HTTP request", e);
     }
   }
 
@@ -85,10 +85,10 @@ public class NoReqBodyClient {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
-      throw new SeedExhaustiveError("Network error executing HTTP request", e);
+      throw new SeedExhaustiveException("Network error executing HTTP request", e);
     }
   }
 }

@@ -6,8 +6,8 @@ package com.seed.fileDownload.resources.service;
 import com.seed.fileDownload.core.ClientOptions;
 import com.seed.fileDownload.core.ObjectMappers;
 import com.seed.fileDownload.core.RequestOptions;
-import com.seed.fileDownload.core.SeedFileDownloadApiError;
-import com.seed.fileDownload.core.SeedFileDownloadError;
+import com.seed.fileDownload.core.SeedFileDownloadApiException;
+import com.seed.fileDownload.core.SeedFileDownloadException;
 import java.io.IOException;
 import java.io.InputStream;
 import okhttp3.Headers;
@@ -49,12 +49,12 @@ public class ServiceClient {
                 return responseBody.byteStream();
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedFileDownloadApiError(
+            throw new SeedFileDownloadApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedFileDownloadError("Network error executing HTTP request", e);
+            throw new SeedFileDownloadException("Network error executing HTTP request", e);
         }
     }
 }

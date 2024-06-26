@@ -9,8 +9,8 @@ import com.seed.idempotencyHeaders.core.IdempotentRequestOptions;
 import com.seed.idempotencyHeaders.core.MediaTypes;
 import com.seed.idempotencyHeaders.core.ObjectMappers;
 import com.seed.idempotencyHeaders.core.RequestOptions;
-import com.seed.idempotencyHeaders.core.SeedIdempotencyHeadersApiError;
-import com.seed.idempotencyHeaders.core.SeedIdempotencyHeadersError;
+import com.seed.idempotencyHeaders.core.SeedIdempotencyHeadersApiException;
+import com.seed.idempotencyHeaders.core.SeedIdempotencyHeadersException;
 import com.seed.idempotencyHeaders.resources.payment.requests.CreatePaymentRequest;
 import java.io.IOException;
 import java.util.UUID;
@@ -43,7 +43,7 @@ public class PaymentClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedIdempotencyHeadersError("Failed to serialize request", e);
+            throw new SeedIdempotencyHeadersException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -61,12 +61,12 @@ public class PaymentClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UUID.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedIdempotencyHeadersApiError(
+            throw new SeedIdempotencyHeadersApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedIdempotencyHeadersError("Network error executing HTTP request", e);
+            throw new SeedIdempotencyHeadersException("Network error executing HTTP request", e);
         }
     }
 
@@ -95,12 +95,12 @@ public class PaymentClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedIdempotencyHeadersApiError(
+            throw new SeedIdempotencyHeadersApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedIdempotencyHeadersError("Network error executing HTTP request", e);
+            throw new SeedIdempotencyHeadersException("Network error executing HTTP request", e);
         }
     }
 }

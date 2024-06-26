@@ -9,8 +9,8 @@ import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.MediaTypes;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.core.RequestOptions;
-import com.seed.trace.core.SeedTraceApiError;
-import com.seed.trace.core.SeedTraceError;
+import com.seed.trace.core.SeedTraceApiException;
+import com.seed.trace.core.SeedTraceException;
 import java.io.IOException;
 import java.util.List;
 import okhttp3.Headers;
@@ -53,12 +53,12 @@ public class HomepageClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<List<String>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiError(
+            throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedTraceError("Network error executing HTTP request", e);
+            throw new SeedTraceException("Network error executing HTTP request", e);
         }
     }
 
@@ -76,7 +76,7 @@ public class HomepageClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedTraceError("Failed to serialize request", e);
+            throw new SeedTraceException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -94,12 +94,12 @@ public class HomepageClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiError(
+            throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedTraceError("Network error executing HTTP request", e);
+            throw new SeedTraceException("Network error executing HTTP request", e);
         }
     }
 }
