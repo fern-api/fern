@@ -385,7 +385,8 @@ async function visitScript({
             absoluteFilepathToConfiguration,
             rawUnresolvedFilepath,
             visitor,
-            nodePath
+            nodePath,
+            willBeUploaded: true
         });
     }
 }

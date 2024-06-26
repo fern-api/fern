@@ -2,6 +2,7 @@ import { doesPathExist } from "@fern-api/fs-utils";
 import { fileTypeFromBuffer } from "file-type";
 import { readFile } from "fs/promises";
 import isSvg from "is-svg";
+import path from "path";
 import { Rule } from "../../Rule";
 
 const ALLOWED_FILE_TYPES = [
@@ -39,11 +40,8 @@ export const ValidFileTypes: Rule = {
                 }
 
                 const doesExist = await doesPathExist(absoluteFilepath);
-
                 if (doesExist) {
-                    const file = await readFile(absoluteFilepath);
-                    const isValid = await isValidFileType(file);
-
+                    const isValid = await isValidFileType(absoluteFilepath);
                     if (!isValid) {
                         return [
                             {
@@ -60,15 +58,23 @@ export const ValidFileTypes: Rule = {
     }
 };
 
-export const isValidFileType = async (file: Buffer): Promise<boolean> => {
+export const isValidFileType = async (absoluteFilepath: string): Promise<boolean> => {
+    const file = await readFile(absoluteFilepath);
+
+    // exit early if the file is an SVG
     if (isSvg(file.toString("utf-8"))) {
-        // exit early if the file is an SVG
         return true;
     }
 
     // otherwise, check the file type
     const fileType = await fileTypeFromBuffer(file);
-    if (fileType && ALLOWED_FILE_TYPES.includes(fileType.mime)) {
+    if (fileType) {
+        return ALLOWED_FILE_TYPES.includes(fileType.mime);
+    }
+
+    // if `fileType` is undefined, its type can't be parsed because it's likely a text file
+    if (path.extname(absoluteFilepath) === "js") {
+        // let JS files through
         return true;
     }
 
