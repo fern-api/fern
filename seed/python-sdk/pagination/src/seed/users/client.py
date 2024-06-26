@@ -282,8 +282,8 @@ class UsersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = pydantic_v1.parse_obj_as(ListUsersExtendedResponse, _response.json())  # type: ignore
-                _has_next = _parsed_response.next is not None
                 _parsed_next = _parsed_response.next
+                _has_next = _parsed_next is not None
                 _get_next = lambda: self.list_with_extended_results(
                     cursor=_parsed_next, request_options=request_options
                 )
@@ -666,8 +666,8 @@ class AsyncUsersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = pydantic_v1.parse_obj_as(ListUsersExtendedResponse, _response.json())  # type: ignore
-                _has_next = _parsed_response.next is not None
                 _parsed_next = _parsed_response.next
+                _has_next = _parsed_next is not None
                 _get_next = lambda: self.list_with_extended_results(
                     cursor=_parsed_next, request_options=request_options
                 )

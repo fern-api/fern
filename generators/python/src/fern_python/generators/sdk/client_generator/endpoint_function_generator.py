@@ -8,9 +8,11 @@ from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies import HttpX
 from fern_python.generators.sdk.client_generator.endpoint_response_code_writer import (
-    EndpointDummySnippetConfig,
     EndpointResponseCodeWriter,
     raise_stream_parameter_unsupported,
+)
+from fern_python.generators.sdk.client_generator.pagination.abstract_paginator import (
+    PaginationSnippetConfig,
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.generators.sdk.environment_generators.multiple_base_urls_environment_generator import (
@@ -341,7 +343,7 @@ class EndpointFunctionGenerator:
                 endpoint=endpoint,
                 is_async=is_async,
                 pagination=self.pagination,
-                dummy_snippet_config=EndpointDummySnippetConfig(
+                pagination_snippet_config=PaginationSnippetConfig(
                     endpoint_name=get_endpoint_name(self._endpoint),
                     parameters=parameters,
                     named_parameters=named_parameters,
@@ -354,11 +356,13 @@ class EndpointFunctionGenerator:
                 else None
             )
 
-            if self.is_paginated and self.pagination is not None and self.pagination.get_as_union().type == "offset":
-                page_parameter = self.pagination.get_as_union().page
-                writer.write_line(
-                    f"{page_parameter.property.get_as_union().name.name.snake_case.safe_name} = {page_parameter.property.get_as_union().name.name.snake_case.safe_name} or 1"
-                )
+            if self.is_paginated and self.pagination is not None:
+                pagination = self.pagination.get_as_union()
+                if pagination.type == "offset":
+                    param = pagination.page
+                    writer.write_line(
+                        f"{request_property_to_name(param.property)} = {request_property_to_name(param.property)} or 1"
+                    )
 
             writer.write_node(
                 HttpX.make_request(
@@ -1286,6 +1290,10 @@ def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.Typ
         if container_as_union.type == "optional":
             return unwrap_optional_type(container_as_union.optional)
     return type_reference
+
+
+def request_property_to_name(request_property: ir_types.RequestPropertyValue):
+    return request_property.get_as_union().name.name.snake_case.safe_name
 
 
 def raise_json_nested_property_as_response_unsupported() -> Never:
