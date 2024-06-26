@@ -5,7 +5,7 @@ import typing
 try:
     from typing import NotRequired  # type: ignore
 except ImportError:
-    from typing_extensions import NotRequired  # type: ignore
+    from typing_extensions import NotRequired
 
 
 class RequestOptions(typing.TypedDict, total=False):
