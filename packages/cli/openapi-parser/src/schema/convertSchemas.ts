@@ -13,6 +13,7 @@ import { OpenAPIExtension } from "../openapi/v3/extensions/extensions";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
 import { getFernEnum } from "../openapi/v3/extensions/getFernEnum";
 import { getFernTypeExtension } from "../openapi/v3/extensions/getFernTypeExtension";
+import { getValueIfBoolean } from "../utils/getValue";
 import { convertAdditionalProperties, wrapMap } from "./convertAdditionalProperties";
 import { convertArray } from "./convertArray";
 import { convertDiscriminatedOneOf, convertDiscriminatedOneOfWithVariants } from "./convertDiscriminatedOneOf";
@@ -296,8 +297,8 @@ export function convertSchemaObject(
             _default: schema.default,
             minimum: schema.minimum,
             maximum: schema.maximum,
-            exclusiveMinimum: schema.exclusiveMinimum,
-            exclusiveMaximum: schema.exclusiveMaximum,
+            exclusiveMinimum: getValueIfBoolean(schema.exclusiveMinimum),
+            exclusiveMaximum: getValueIfBoolean(schema.exclusiveMaximum),
             multipleOf: schema.multipleOf,
             description,
             wrapAsNullable,
