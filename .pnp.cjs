@@ -471,7 +471,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.816"],\
             ["@fern-fern/ir-v39-sdk", "npm:0.0.1"],\
-            ["@types/is-ci", "npm:3.0.2"],\
+            ["@types/is-ci", "npm:3.0.4"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
@@ -6442,7 +6442,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/axios", "npm:0.14.0"],\
             ["@types/boxen", "npm:3.0.1"],\
             ["@types/get-port", "npm:4.2.0"],\
-            ["@types/is-ci", "npm:3.0.2"],\
+            ["@types/is-ci", "npm:3.0.4"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/latest-version", "npm:4.0.1"],\
@@ -10711,10 +10711,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/is-ci", [\
-        ["npm:3.0.2", {\
-          "packageLocation": "./.yarn/cache/@types-is-ci-npm-3.0.2-80b68459fe-38ff406704.zip/node_modules/@types/is-ci/",\
+        ["npm:3.0.4", {\
+          "packageLocation": "./.yarn/cache/@types-is-ci-npm-3.0.4-d9f7893cdd-5cb58dd3b6.zip/node_modules/@types/is-ci/",\
           "packageDependencies": [\
-            ["@types/is-ci", "npm:3.0.2"],\
+            ["@types/is-ci", "npm:3.0.4"],\
             ["ci-info", "npm:3.3.2"]\
           ],\
           "linkType": "HARD"\
@@ -17226,7 +17226,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.816"],\
             ["@fern-fern/ir-v39-sdk", "npm:0.0.1"],\
-            ["@types/is-ci", "npm:3.0.2"],\
+            ["@types/is-ci", "npm:3.0.4"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
