@@ -1,4 +1,8 @@
 from core_utilities.sdk.http_client import get_request_body
+from core_utilities.sdk.request_options import RequestOptions
+
+def get_request_options() -> RequestOptions:
+    return {"additional_body_parameters": {"see you": "later"}}
 
 def test_get_json_request_body() -> None:
     json_body, data_body = get_request_body(
@@ -13,7 +17,7 @@ def test_get_json_request_body() -> None:
     json_body_extras, data_body_extras = get_request_body(
         json={"goodbye": "world"},
         data=None,
-        request_options={"additional_body_parameters": {"see you": "later"}},
+        request_options=get_request_options(),
         omit=None
     )
 
@@ -33,7 +37,7 @@ def test_get_files_request_body() -> None:
     json_body_extras, data_body_extras = get_request_body(
         json=None,
         data={"goodbye": "world"},
-        request_options={"additional_body_parameters": {"see you": "later"}},
+        request_options=get_request_options(),
         omit=None
     )
 
@@ -53,7 +57,7 @@ def test_get_none_request_body() -> None:
     json_body_extras, data_body_extras = get_request_body(
         json=None,
         data=None,
-        request_options={"additional_body_parameters": {"see you": "later"}},
+        request_options=get_request_options(),
         omit=None
     )
 

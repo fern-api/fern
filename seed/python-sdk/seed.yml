@@ -150,14 +150,4 @@ allowedFailures:
   - multi-url-environment-no-default
   # === Allowed failures due to unit testing ===
   - pagination
-  # We don't have oauth tests yet
-  - oauth-client-credentials
-  - oauth-client-credentials-environment-variables
-  - oauth-client-credentials-nested-root
-  # Currently, autogenned examples are not marking some literals as literals and so they're being passed
-  # into the method as parameters when they're meant to be omitted (so the tests fail on unrecognized params).
-  - examples:no-custom-config
-  - examples:client-filename
-  - examples:readme
-  - literal
   # ===========================================

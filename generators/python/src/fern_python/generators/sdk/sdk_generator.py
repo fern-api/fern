@@ -13,6 +13,7 @@ from fern_python.codegen.filepath import Filepath
 from fern_python.generator_cli import README_FILENAME, GeneratorCli
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model import PydanticModelGenerator
+from fern_python.generators.sdk import as_is_copier
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.generators.sdk.context.sdk_generator_context_impl import (
     SdkGeneratorContextImpl,
@@ -240,6 +241,7 @@ class SdkGenerator(AbstractGenerator):
                 )
 
         context.core_utilities.copy_to_project(project=project)
+        as_is_copier.copy_to_project(project=project)
 
         snippet_template_source_file = SourceFileFactory.create_snippet()
         self._maybe_write_snippet_templates(
