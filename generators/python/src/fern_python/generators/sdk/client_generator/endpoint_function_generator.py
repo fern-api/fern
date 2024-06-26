@@ -1292,7 +1292,7 @@ def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.Typ
     return type_reference
 
 
-def request_property_to_name(request_property: ir_types.RequestPropertyValue):
+def request_property_to_name(request_property: ir_types.RequestPropertyValue) -> str:
     return request_property.get_as_union().name.name.snake_case.safe_name
 
 
