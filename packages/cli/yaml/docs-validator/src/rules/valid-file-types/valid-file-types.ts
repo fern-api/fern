@@ -1,4 +1,5 @@
 import { doesPathExist } from "@fern-api/fs-utils";
+import chardet from "chardet";
 import { fileTypeFromBuffer } from "file-type";
 import { readFile } from "fs/promises";
 import isSvg from "is-svg";
@@ -73,8 +74,8 @@ export const isValidFileType = async (absoluteFilepath: string): Promise<boolean
     }
 
     // if `fileType` is undefined, its type can't be parsed because it's likely a text file
-    if (path.extname(absoluteFilepath) === "js") {
-        // let JS files through
+    if (path.extname(absoluteFilepath) === "js" && chardet.detect(file) === "UTF-8") {
+        // let JS files with UTF-8 encoding through
         return true;
     }
 
