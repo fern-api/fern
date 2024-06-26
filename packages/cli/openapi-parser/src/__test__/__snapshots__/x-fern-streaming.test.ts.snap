@@ -791,7 +791,7 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                     "schema": {
                       "default": null,
                       "exclusiveMaximum": null,
-                      "exclusiveMinimum": 0,
+                      "exclusiveMinimum": null,
                       "maximum": 1,
                       "minimum": null,
                       "multipleOf": null,
@@ -1583,7 +1583,7 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                     "schema": {
                       "default": null,
                       "exclusiveMaximum": null,
-                      "exclusiveMinimum": 0,
+                      "exclusiveMinimum": null,
                       "maximum": 1,
                       "minimum": null,
                       "multipleOf": null,
