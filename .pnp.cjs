@@ -6959,7 +6959,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/jest-specific-snapshot", "npm:0.5.7"],\
+            ["@types/jest-specific-snapshot", "npm:0.5.9"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/object-hash", "npm:3.0.6"],\
@@ -9076,7 +9076,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/type-reference-example-generator", "workspace:generators/typescript/model/type-reference-example-generator"],\
             ["@fern-typescript/type-schema-generator", "workspace:generators/typescript/model/type-schema-generator"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/jest-specific-snapshot", "npm:0.5.7"],\
+            ["@types/jest-specific-snapshot", "npm:0.5.9"],\
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
@@ -10770,10 +10770,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/jest-specific-snapshot", [\
-        ["npm:0.5.7", {\
-          "packageLocation": "./.yarn/cache/@types-jest-specific-snapshot-npm-0.5.7-2c017204ab-0b540abd40.zip/node_modules/@types/jest-specific-snapshot/",\
+        ["npm:0.5.9", {\
+          "packageLocation": "./.yarn/cache/@types-jest-specific-snapshot-npm-0.5.9-9806487307-b452e423a0.zip/node_modules/@types/jest-specific-snapshot/",\
           "packageDependencies": [\
-            ["@types/jest-specific-snapshot", "npm:0.5.7"],\
+            ["@types/jest-specific-snapshot", "npm:0.5.9"],\
             ["@types/jest", "npm:29.5.5"]\
           ],\
           "linkType": "HARD"\

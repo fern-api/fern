@@ -3899,7 +3899,7 @@ __metadata:
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/jest-specific-snapshot": ^0.5.7
+    "@types/jest-specific-snapshot": ^0.5.9
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/object-hash": ^3.0.6
@@ -5828,7 +5828,7 @@ __metadata:
     "@fern-typescript/type-reference-example-generator": "workspace:*"
     "@fern-typescript/type-schema-generator": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/jest-specific-snapshot": ^0.5.7
+    "@types/jest-specific-snapshot": ^0.5.9
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
@@ -7291,12 +7291,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest-specific-snapshot@npm:^0.5.7":
-  version: 0.5.7
-  resolution: "@types/jest-specific-snapshot@npm:0.5.7"
+"@types/jest-specific-snapshot@npm:^0.5.9":
+  version: 0.5.9
+  resolution: "@types/jest-specific-snapshot@npm:0.5.9"
   dependencies:
     "@types/jest": "*"
-  checksum: 0b540abd40b142168e8829c8c3819def2eeb3a8cae0e68f94cc4afe48dc70bdbc60ceca330c2e32e847981c2b4fdedfaecebcfbac38a32ffd1c65454b08d0e97
+  checksum: b452e423a024d20aa1091cb962f4b0c81c04fc5065af7e1ecb2b4b46f90255ebefd18463d9c39fcd2a15ba34c4ab09bfc4f03e35d8227da5f1bb73f79b9836d1
   languageName: node
   linkType: hard
 
