@@ -572,9 +572,11 @@ export class DocsDefinitionResolver {
             return;
         }
         return {
+            remote: this.parsedDocsConfig.js.remote,
             files: this.parsedDocsConfig.js.files
                 .map(({ absolutePath, strategy }) => ({ fileId: this.getFileId(absolutePath), strategy }))
-                .filter(isNonNullish)
+                .filter(isNonNullish),
+            inline: this.parsedDocsConfig.js.inline
         };
     }
 

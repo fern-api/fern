@@ -43,8 +43,9 @@ export interface AbsoluteJsFileConfig {
 }
 
 export interface JavascriptConfig {
-    remote?: DocsV1Write.JsRemoteConfig[];
+    remote: DocsV1Write.JsRemoteConfig[];
     files: AbsoluteJsFileConfig[];
+    inline: string[];
 }
 
 export interface DocsColorsConfiguration {

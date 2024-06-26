@@ -729,6 +729,7 @@ types:
     union:
       - JsRemoteConfig
       - JsFileConfig
+      - JsInlineConfig
 
   JsRemoteConfig:
     properties:
@@ -745,6 +746,10 @@ types:
     properties:
       path: string
       strategy: optional<JsScriptStrategy>
+
+  JsInlineConfig:
+    properties:
+      inline: string
 
   JsScriptStrategy:
     enum:

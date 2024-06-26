@@ -4,4 +4,7 @@
 
 import * as FernDocsConfig from "../../..";
 
-export type JsConfigOptions = FernDocsConfig.JsRemoteConfig | FernDocsConfig.JsFileConfig;
+export type JsConfigOptions =
+    | FernDocsConfig.JsRemoteConfig
+    | FernDocsConfig.JsFileConfig
+    | FernDocsConfig.JsInlineConfig;
