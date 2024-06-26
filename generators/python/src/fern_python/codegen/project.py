@@ -138,10 +138,16 @@ class Project:
         filepath_in_project: Filepath,
         exports: Set[str],
         include_src_root: Optional[bool] = True,
+        string_replacements: Optional[dict[str, str]] = None,
     ) -> None:
         with open(path_on_disk, "r") as existing_file:
             writer = WriterImpl(should_format=self._should_format_files)
-            writer.write(existing_file.read())
+            read_file = existing_file.read()
+            if string_replacements is not None:
+                for k, v in string_replacements.items():
+                    read_file = read_file.replace(k, v)
+
+            writer.write(read_file)
             writer.write_to_file(
                 filepath=self.get_source_file_filepath(
                     filepath_in_project, include_src_root=(include_src_root if include_src_root is not None else True)
