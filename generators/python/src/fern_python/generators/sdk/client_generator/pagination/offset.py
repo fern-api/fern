@@ -3,12 +3,9 @@ from typing import Optional
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST
-from fern_python.generators.sdk.client_generator.endpoint_function_generator import (
-    request_property_to_name,
-)
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 
-from .abstract_paginator import PaginationSnippetConfig, Paginator
+from .abstract_paginator import PaginationSnippetConfig, Paginator, request_property_to_name
 
 
 class OffsetPagination(Paginator):

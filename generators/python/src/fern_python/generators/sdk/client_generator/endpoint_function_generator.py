@@ -13,6 +13,7 @@ from fern_python.generators.sdk.client_generator.endpoint_response_code_writer i
 )
 from fern_python.generators.sdk.client_generator.pagination.abstract_paginator import (
     PaginationSnippetConfig,
+    request_property_to_name,
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.generators.sdk.environment_generators.multiple_base_urls_environment_generator import (
@@ -1290,10 +1291,6 @@ def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.Typ
         if container_as_union.type == "optional":
             return unwrap_optional_type(container_as_union.optional)
     return type_reference
-
-
-def request_property_to_name(request_property: ir_types.RequestPropertyValue) -> str:
-    return request_property.get_as_union().name.name.snake_case.safe_name
 
 
 def raise_json_nested_property_as_response_unsupported() -> Never:

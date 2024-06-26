@@ -213,11 +213,16 @@ class UsersClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.users.list_with_offset_step_pagination(
+        response = client.users.list_with_offset_step_pagination(
             page=1,
             limit=1,
             order="asc",
         )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
         page = page or 1
         _response = self._client_wrapper.httpx_client.request(
@@ -597,11 +602,16 @@ class AsyncUsersClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.users.list_with_offset_step_pagination(
+        response = await client.users.list_with_offset_step_pagination(
             page=1,
             limit=1,
             order="asc",
         )
+        async for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        async for page in response.iter_pages():
+            yield page
         """
         page = page or 1
         _response = await self._client_wrapper.httpx_client.request(
