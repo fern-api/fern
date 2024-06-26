@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - name: fernapi/fern-java-sdk
     config:
       base-api-exception-class-name: ApiError
+      base-exception-class-name: CompanyException # Optional: This should only be set if default naming is undesirable
   ```
 - Improvement: We now generate Exception types for all errors that are defined in the IR. Generated clients with an
   error discrimination strategy of "status code" will throw one of these typed Exceptions based on the status code of
