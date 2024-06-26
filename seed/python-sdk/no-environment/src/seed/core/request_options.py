@@ -5,10 +5,10 @@ import typing
 try:
     from typing import NotRequired  # type: ignore
 except ImportError:
-    from typing_extensions import NotRequired  # type: ignore
+    from typing_extensions import NotRequired
 
 
-class RequestOptions(typing.TypedDict):
+class RequestOptions(typing.TypedDict, total=False):
     """
     Additional options for request-specific configuration when calling APIs via the SDK.
     This is used primarily as an optional final parameter for service functions.
