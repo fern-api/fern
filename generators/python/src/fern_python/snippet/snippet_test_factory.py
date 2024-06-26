@@ -466,6 +466,9 @@ class SnippetTestFactory:
                 )
             )
 
+            if successful_examples is None or len(successful_examples) == 0:
+                continue
+
             example = successful_examples[0]
             _path_parameter_names = dict()
             for path_parameter in endpoint.all_path_parameters:
