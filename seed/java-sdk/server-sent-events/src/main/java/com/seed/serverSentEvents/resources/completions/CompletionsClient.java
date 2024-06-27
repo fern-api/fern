@@ -8,8 +8,8 @@ import com.seed.serverSentEvents.core.ClientOptions;
 import com.seed.serverSentEvents.core.MediaTypes;
 import com.seed.serverSentEvents.core.ObjectMappers;
 import com.seed.serverSentEvents.core.RequestOptions;
-import com.seed.serverSentEvents.core.SeedServerSentEventsApiError;
-import com.seed.serverSentEvents.core.SeedServerSentEventsError;
+import com.seed.serverSentEvents.core.SeedServerSentEventsApiException;
+import com.seed.serverSentEvents.core.SeedServerSentEventsException;
 import com.seed.serverSentEvents.core.Stream;
 import com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;
 import com.seed.serverSentEvents.resources.completions.types.StreamedCompletion;
@@ -43,7 +43,7 @@ public class CompletionsClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedServerSentEventsError("Failed to serialize request", e);
+            throw new SeedServerSentEventsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -61,12 +61,12 @@ public class CompletionsClient {
                 return new Stream<StreamedCompletion>(StreamedCompletion.class, responseBody.charStream(), "[[DONE]]");
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedServerSentEventsApiError(
+            throw new SeedServerSentEventsApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedServerSentEventsError("Network error executing HTTP request", e);
+            throw new SeedServerSentEventsException("Network error executing HTTP request", e);
         }
     }
 }

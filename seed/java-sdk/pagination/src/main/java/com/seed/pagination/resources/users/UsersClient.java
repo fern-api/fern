@@ -6,8 +6,8 @@ package com.seed.pagination.resources.users;
 import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.ObjectMappers;
 import com.seed.pagination.core.RequestOptions;
-import com.seed.pagination.core.SeedPaginationApiError;
-import com.seed.pagination.core.SeedPaginationError;
+import com.seed.pagination.core.SeedPaginationApiException;
+import com.seed.pagination.core.SeedPaginationException;
 import com.seed.pagination.core.pagination.SyncPagingIterable;
 import com.seed.pagination.resources.users.requests.ListUsernamesRequest;
 import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
@@ -93,12 +93,12 @@ public class UsersClient {
                         startingAfter.isPresent(), result, () -> listWithCursorPagination(nextRequest, requestOptions));
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedPaginationApiError(
+            throw new SeedPaginationApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedPaginationError("Network error executing HTTP request", e);
+            throw new SeedPaginationException("Network error executing HTTP request", e);
         }
     }
 
@@ -154,12 +154,12 @@ public class UsersClient {
                         true, result, () -> listWithOffsetPagination(nextRequest, requestOptions));
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedPaginationApiError(
+            throw new SeedPaginationApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedPaginationError("Network error executing HTTP request", e);
+            throw new SeedPaginationException("Network error executing HTTP request", e);
         }
     }
 
@@ -202,12 +202,12 @@ public class UsersClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedPaginationApiError(
+            throw new SeedPaginationApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedPaginationError("Network error executing HTTP request", e);
+            throw new SeedPaginationException("Network error executing HTTP request", e);
         }
     }
 
@@ -252,12 +252,12 @@ public class UsersClient {
                         startingAfter.isPresent(), result, () -> listWithExtendedResults(nextRequest, requestOptions));
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedPaginationApiError(
+            throw new SeedPaginationApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedPaginationError("Network error executing HTTP request", e);
+            throw new SeedPaginationException("Network error executing HTTP request", e);
         }
     }
 
@@ -302,12 +302,12 @@ public class UsersClient {
                         startingAfter.isPresent(), result, () -> listUsernames(nextRequest, requestOptions));
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedPaginationApiError(
+            throw new SeedPaginationApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedPaginationError("Network error executing HTTP request", e);
+            throw new SeedPaginationException("Network error executing HTTP request", e);
         }
     }
 
@@ -351,12 +351,12 @@ public class UsersClient {
                 return new SyncPagingIterable<>(true, result, () -> listWithGlobalConfig(nextRequest, requestOptions));
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedPaginationApiError(
+            throw new SeedPaginationApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedPaginationError("Network error executing HTTP request", e);
+            throw new SeedPaginationException("Network error executing HTTP request", e);
         }
     }
 }

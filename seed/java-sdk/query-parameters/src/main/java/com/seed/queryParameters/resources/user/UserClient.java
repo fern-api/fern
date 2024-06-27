@@ -6,8 +6,8 @@ package com.seed.queryParameters.resources.user;
 import com.seed.queryParameters.core.ClientOptions;
 import com.seed.queryParameters.core.ObjectMappers;
 import com.seed.queryParameters.core.RequestOptions;
-import com.seed.queryParameters.core.SeedQueryParametersApiError;
-import com.seed.queryParameters.core.SeedQueryParametersError;
+import com.seed.queryParameters.core.SeedQueryParametersApiException;
+import com.seed.queryParameters.core.SeedQueryParametersException;
 import com.seed.queryParameters.resources.user.requests.GetUsersRequest;
 import com.seed.queryParameters.resources.user.types.User;
 import java.io.IOException;
@@ -72,12 +72,12 @@ public class UserClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), User.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedQueryParametersApiError(
+            throw new SeedQueryParametersApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedQueryParametersError("Network error executing HTTP request", e);
+            throw new SeedQueryParametersException("Network error executing HTTP request", e);
         }
     }
 }

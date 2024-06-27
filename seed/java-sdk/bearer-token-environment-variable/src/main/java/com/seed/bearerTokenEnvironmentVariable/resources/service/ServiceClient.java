@@ -6,8 +6,8 @@ package com.seed.bearerTokenEnvironmentVariable.resources.service;
 import com.seed.bearerTokenEnvironmentVariable.core.ClientOptions;
 import com.seed.bearerTokenEnvironmentVariable.core.ObjectMappers;
 import com.seed.bearerTokenEnvironmentVariable.core.RequestOptions;
-import com.seed.bearerTokenEnvironmentVariable.core.SeedBearerTokenEnvironmentVariableApiError;
-import com.seed.bearerTokenEnvironmentVariable.core.SeedBearerTokenEnvironmentVariableError;
+import com.seed.bearerTokenEnvironmentVariable.core.SeedBearerTokenEnvironmentVariableApiException;
+import com.seed.bearerTokenEnvironmentVariable.core.SeedBearerTokenEnvironmentVariableException;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -54,12 +54,12 @@ public class ServiceClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedBearerTokenEnvironmentVariableApiError(
+            throw new SeedBearerTokenEnvironmentVariableApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedBearerTokenEnvironmentVariableError("Network error executing HTTP request", e);
+            throw new SeedBearerTokenEnvironmentVariableException("Network error executing HTTP request", e);
         }
     }
 }

@@ -6,8 +6,8 @@ package com.seed.nurseryApi.resources.package_;
 import com.seed.nurseryApi.core.ClientOptions;
 import com.seed.nurseryApi.core.ObjectMappers;
 import com.seed.nurseryApi.core.RequestOptions;
-import com.seed.nurseryApi.core.SeedNurseryApiApiError;
-import com.seed.nurseryApi.core.SeedNurseryApiError;
+import com.seed.nurseryApi.core.SeedNurseryApiApiException;
+import com.seed.nurseryApi.core.SeedNurseryApiException;
 import com.seed.nurseryApi.resources.package_.requests.TestRequest;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -49,12 +49,12 @@ public class PackageClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedNurseryApiApiError(
+            throw new SeedNurseryApiApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedNurseryApiError("Network error executing HTTP request", e);
+            throw new SeedNurseryApiException("Network error executing HTTP request", e);
         }
     }
 }

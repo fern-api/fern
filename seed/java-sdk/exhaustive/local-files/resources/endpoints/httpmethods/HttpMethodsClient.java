@@ -9,8 +9,8 @@ import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.core.SeedExhaustiveApiError;
-import com.fern.sdk.core.SeedExhaustiveError;
+import com.fern.sdk.core.SeedExhaustiveApiException;
+import com.fern.sdk.core.SeedExhaustiveException;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
 import java.io.IOException;
@@ -57,10 +57,10 @@ public class HttpMethodsClient {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
-      throw new SeedExhaustiveError("Network error executing HTTP request", e);
+      throw new SeedExhaustiveException("Network error executing HTTP request", e);
     }
   }
 
@@ -79,7 +79,7 @@ public class HttpMethodsClient {
       body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
     catch(JsonProcessingException e) {
-      throw new SeedExhaustiveError("Failed to serialize request", e);
+      throw new SeedExhaustiveException("Failed to serialize request", e);
     }
     Request okhttpRequest = new Request.Builder()
       .url(httpUrl)
@@ -97,10 +97,10 @@ public class HttpMethodsClient {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
-      throw new SeedExhaustiveError("Network error executing HTTP request", e);
+      throw new SeedExhaustiveException("Network error executing HTTP request", e);
     }
   }
 
@@ -120,7 +120,7 @@ public class HttpMethodsClient {
       body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
     catch(JsonProcessingException e) {
-      throw new SeedExhaustiveError("Failed to serialize request", e);
+      throw new SeedExhaustiveException("Failed to serialize request", e);
     }
     Request okhttpRequest = new Request.Builder()
       .url(httpUrl)
@@ -138,10 +138,10 @@ public class HttpMethodsClient {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
-      throw new SeedExhaustiveError("Network error executing HTTP request", e);
+      throw new SeedExhaustiveException("Network error executing HTTP request", e);
     }
   }
 
@@ -165,7 +165,7 @@ public class HttpMethodsClient {
       body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
     catch(JsonProcessingException e) {
-      throw new SeedExhaustiveError("Failed to serialize request", e);
+      throw new SeedExhaustiveException("Failed to serialize request", e);
     }
     Request okhttpRequest = new Request.Builder()
       .url(httpUrl)
@@ -183,10 +183,10 @@ public class HttpMethodsClient {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
-      throw new SeedExhaustiveError("Network error executing HTTP request", e);
+      throw new SeedExhaustiveException("Network error executing HTTP request", e);
     }
   }
 
@@ -216,10 +216,10 @@ public class HttpMethodsClient {
         return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class);
       }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiError("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
     }
     catch (IOException e) {
-      throw new SeedExhaustiveError("Network error executing HTTP request", e);
+      throw new SeedExhaustiveException("Network error executing HTTP request", e);
     }
   }
 }

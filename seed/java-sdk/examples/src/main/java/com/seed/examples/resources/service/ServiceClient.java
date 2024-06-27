@@ -8,8 +8,8 @@ import com.seed.examples.core.ClientOptions;
 import com.seed.examples.core.MediaTypes;
 import com.seed.examples.core.ObjectMappers;
 import com.seed.examples.core.RequestOptions;
-import com.seed.examples.core.SeedExamplesApiError;
-import com.seed.examples.core.SeedExamplesError;
+import com.seed.examples.core.SeedExamplesApiException;
+import com.seed.examples.core.SeedExamplesException;
 import com.seed.examples.resources.service.requests.GetMetadataRequest;
 import com.seed.examples.resources.types.types.Metadata;
 import com.seed.examples.resources.types.types.Movie;
@@ -55,12 +55,12 @@ public class ServiceClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Movie.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedExamplesApiError(
+            throw new SeedExamplesApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedExamplesError("Network error executing HTTP request", e);
+            throw new SeedExamplesException("Network error executing HTTP request", e);
         }
     }
 
@@ -78,7 +78,7 @@ public class ServiceClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedExamplesError("Failed to serialize request", e);
+            throw new SeedExamplesException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -96,12 +96,12 @@ public class ServiceClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedExamplesApiError(
+            throw new SeedExamplesApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedExamplesError("Network error executing HTTP request", e);
+            throw new SeedExamplesException("Network error executing HTTP request", e);
         }
     }
 
@@ -136,12 +136,12 @@ public class ServiceClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Metadata.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedExamplesApiError(
+            throw new SeedExamplesApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedExamplesError("Network error executing HTTP request", e);
+            throw new SeedExamplesException("Network error executing HTTP request", e);
         }
     }
 
@@ -171,12 +171,12 @@ public class ServiceClient {
                         responseBody.string(), com.seed.examples.resources.types.types.Response.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedExamplesApiError(
+            throw new SeedExamplesApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedExamplesError("Network error executing HTTP request", e);
+            throw new SeedExamplesException("Network error executing HTTP request", e);
         }
     }
 }

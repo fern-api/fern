@@ -8,9 +8,9 @@ import com.seed.api.core.ClientOptions;
 import com.seed.api.core.MediaTypes;
 import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.RequestOptions;
-import com.seed.api.core.SeedApiApiError;
-import com.seed.api.core.SeedApiError;
-import com.seed.api.resources.imdb.errors.SeedApiMovieDoesNotExistError;
+import com.seed.api.core.SeedApiApiException;
+import com.seed.api.core.SeedApiException;
+import com.seed.api.resources.imdb.errors.MovieDoesNotExistError;
 import com.seed.api.resources.imdb.types.CreateMovieRequest;
 import com.seed.api.resources.imdb.types.Movie;
 import java.io.IOException;
@@ -50,7 +50,7 @@ public class ImdbClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedApiError("Failed to serialize request", e);
+            throw new SeedApiException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -68,12 +68,12 @@ public class ImdbClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedApiApiError(
+            throw new SeedApiApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedApiError("Network error executing HTTP request", e);
+            throw new SeedApiException("Network error executing HTTP request", e);
         }
     }
 
@@ -105,18 +105,18 @@ public class ImdbClient {
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 404) {
-                    throw new SeedApiMovieDoesNotExistError(
+                    throw new MovieDoesNotExistError(
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class));
                 }
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new SeedApiApiError(
+            throw new SeedApiApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedApiError("Network error executing HTTP request", e);
+            throw new SeedApiException("Network error executing HTTP request", e);
         }
     }
 }

@@ -6,8 +6,8 @@ package com.seed.singleUrlEnvironmentNoDefault.resources.dummy;
 import com.seed.singleUrlEnvironmentNoDefault.core.ClientOptions;
 import com.seed.singleUrlEnvironmentNoDefault.core.ObjectMappers;
 import com.seed.singleUrlEnvironmentNoDefault.core.RequestOptions;
-import com.seed.singleUrlEnvironmentNoDefault.core.SeedSingleUrlEnvironmentNoDefaultApiError;
-import com.seed.singleUrlEnvironmentNoDefault.core.SeedSingleUrlEnvironmentNoDefaultError;
+import com.seed.singleUrlEnvironmentNoDefault.core.SeedSingleUrlEnvironmentNoDefaultApiException;
+import com.seed.singleUrlEnvironmentNoDefault.core.SeedSingleUrlEnvironmentNoDefaultException;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -48,12 +48,12 @@ public class DummyClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedSingleUrlEnvironmentNoDefaultApiError(
+            throw new SeedSingleUrlEnvironmentNoDefaultApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedSingleUrlEnvironmentNoDefaultError("Network error executing HTTP request", e);
+            throw new SeedSingleUrlEnvironmentNoDefaultException("Network error executing HTTP request", e);
         }
     }
 }

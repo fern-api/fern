@@ -26,14 +26,7 @@ public class ErrorGenerator extends AbstractFileGenerator {
             ClientGeneratorContext generatorContext,
             GeneratedJavaFile apiErrorClass,
             ErrorDeclaration errorDeclaration) {
-        super(
-                generatorContext
-                        .getPoetClassNameFactory()
-                        .getErrorClassName(
-                                errorDeclaration,
-                                generatorContext.getGeneratorConfig().getOrganization(),
-                                generatorContext.getGeneratorConfig().getWorkspaceName()),
-                generatorContext);
+        super(generatorContext.getPoetClassNameFactory().getErrorClassName(errorDeclaration), generatorContext);
 
         this.baseErrorClass = apiErrorClass;
         this.errorDeclaration = errorDeclaration;

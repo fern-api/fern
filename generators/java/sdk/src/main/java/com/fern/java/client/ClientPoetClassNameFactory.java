@@ -17,12 +17,11 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
         super(packagePrefixTokens);
     }
 
-    public ClassName getErrorClassName(ErrorDeclaration errorDeclaration, String organization, String workspaceName) {
+    public ClassName getErrorClassName(ErrorDeclaration errorDeclaration) {
         String packageName = getErrorsPackageName(errorDeclaration.getName().getFernFilepath());
         return ClassName.get(
                 packageName,
-                getBaseNamePrefix(organization, workspaceName)
-                        + errorDeclaration.getName().getName().getPascalCase().getSafeName());
+                errorDeclaration.getName().getName().getPascalCase().getSafeName());
     }
 
     public ClassName getRetryInterceptorClassName() {
@@ -53,14 +52,23 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
                 packageName, sdkRequestWrapper.getWrapperName().getPascalCase().getSafeName());
     }
 
-    public ClassName getApiErrorClassName(
-            String organization, String workspaceName, Optional<String> configuredBaseApiErrorClassName) {
-        return getCoreClassName(configuredBaseApiErrorClassName.orElseGet(
-                () -> getBaseNamePrefix(organization, workspaceName) + "ApiError"));
+    public ClassName getApiErrorClassName(String organization, String workspaceName, JavaSdkCustomConfig customConfig) {
+        String name = customConfig
+                .baseApiExceptionClassName()
+                .orElseGet(() ->
+                        customConfig.clientClassName().orElseGet(() -> getBaseNamePrefix(organization, workspaceName))
+                                + "ApiException");
+        return getCoreClassName(name);
     }
 
-    public ClassName getBaseErrorClassName(String organization, String workspaceName) {
-        return getCoreClassName(getBaseNamePrefix(organization, workspaceName) + "Error");
+    public ClassName getBaseExceptionClassName(
+            String organization, String workspaceName, JavaSdkCustomConfig customConfig) {
+        String name = customConfig
+                .baseExceptionClassName()
+                .orElseGet(() ->
+                        customConfig.clientClassName().orElseGet(() -> getBaseNamePrefix(organization, workspaceName))
+                                + "Exception");
+        return getCoreClassName(name);
     }
 
     public static String getBaseNamePrefix(String organization, String workspaceName) {

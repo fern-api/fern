@@ -139,13 +139,18 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
     "headers": {
       "another_header": {
         "env": "MY_HEADER_ENV",
-        "name": "anotherHeader",
-        "type": "string",
+        "name": undefined,
+        "type": "optional<string>",
       },
       "my-api-key": {
         "env": undefined,
-        "name": "apiKeyAlias",
+        "name": "api-key-alias",
         "type": "optional<string>",
+      },
+      "version": {
+        "env": "SQUARE_VERSION",
+        "name": "Square-Version",
+        "type": "literal<"2024-06-04">",
       },
       "x-api-key": {
         "name": "apiKey",
@@ -296,13 +301,18 @@ exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
     "headers": {
       "another_header": {
         "env": "MY_HEADER_ENV",
-        "name": "anotherHeader",
-        "type": "string",
+        "name": undefined,
+        "type": "optional<string>",
       },
       "my-api-key": {
         "env": undefined,
-        "name": "apiKeyAlias",
+        "name": "api-key-alias",
         "type": "optional<string>",
+      },
+      "version": {
+        "env": "SQUARE_VERSION",
+        "name": "Square-Version",
+        "type": "literal<"2024-06-04">",
       },
       "x-api-key": {
         "name": "apiKey",

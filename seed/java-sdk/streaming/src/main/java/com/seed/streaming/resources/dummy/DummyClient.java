@@ -8,8 +8,8 @@ import com.seed.streaming.core.ClientOptions;
 import com.seed.streaming.core.MediaTypes;
 import com.seed.streaming.core.ObjectMappers;
 import com.seed.streaming.core.RequestOptions;
-import com.seed.streaming.core.SeedStreamingApiError;
-import com.seed.streaming.core.SeedStreamingError;
+import com.seed.streaming.core.SeedStreamingApiException;
+import com.seed.streaming.core.SeedStreamingException;
 import com.seed.streaming.core.Stream;
 import com.seed.streaming.resources.dummy.requests.GenerateStreamRequest;
 import com.seed.streaming.resources.dummy.requests.Generateequest;
@@ -44,7 +44,7 @@ public class DummyClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedStreamingError("Failed to serialize request", e);
+            throw new SeedStreamingException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -62,12 +62,12 @@ public class DummyClient {
                 return new Stream<StreamResponse>(StreamResponse.class, responseBody.charStream(), "\n");
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedStreamingApiError(
+            throw new SeedStreamingApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedStreamingError("Network error executing HTTP request", e);
+            throw new SeedStreamingException("Network error executing HTTP request", e);
         }
     }
 
@@ -85,7 +85,7 @@ public class DummyClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedStreamingError("Failed to serialize request", e);
+            throw new SeedStreamingException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -103,12 +103,12 @@ public class DummyClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), StreamResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedStreamingApiError(
+            throw new SeedStreamingApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedStreamingError("Network error executing HTTP request", e);
+            throw new SeedStreamingException("Network error executing HTTP request", e);
         }
     }
 }

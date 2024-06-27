@@ -8,10 +8,10 @@ import com.seed.customAuth.core.ClientOptions;
 import com.seed.customAuth.core.MediaTypes;
 import com.seed.customAuth.core.ObjectMappers;
 import com.seed.customAuth.core.RequestOptions;
-import com.seed.customAuth.core.SeedCustomAuthApiError;
-import com.seed.customAuth.core.SeedCustomAuthError;
-import com.seed.customAuth.resources.errors.errors.SeedCustomAuthBadRequest;
-import com.seed.customAuth.resources.errors.errors.SeedCustomAuthUnauthorizedRequest;
+import com.seed.customAuth.core.SeedCustomAuthApiException;
+import com.seed.customAuth.core.SeedCustomAuthException;
+import com.seed.customAuth.resources.errors.errors.BadRequest;
+import com.seed.customAuth.resources.errors.errors.UnauthorizedRequest;
 import com.seed.customAuth.resources.errors.types.UnauthorizedRequestErrorBody;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -62,18 +62,18 @@ public class CustomAuthClient {
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 401) {
-                    throw new SeedCustomAuthUnauthorizedRequest(ObjectMappers.JSON_MAPPER.readValue(
+                    throw new UnauthorizedRequest(ObjectMappers.JSON_MAPPER.readValue(
                             responseBodyString, UnauthorizedRequestErrorBody.class));
                 }
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new SeedCustomAuthApiError(
+            throw new SeedCustomAuthApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedCustomAuthError("Network error executing HTTP request", e);
+            throw new SeedCustomAuthException("Network error executing HTTP request", e);
         }
     }
 
@@ -97,7 +97,7 @@ public class CustomAuthClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedCustomAuthError("Failed to serialize request", e);
+            throw new SeedCustomAuthException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -118,21 +118,20 @@ public class CustomAuthClient {
             try {
                 switch (response.code()) {
                     case 400:
-                        throw new SeedCustomAuthBadRequest(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+                        throw new BadRequest(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
                     case 401:
-                        throw new SeedCustomAuthUnauthorizedRequest(ObjectMappers.JSON_MAPPER.readValue(
+                        throw new UnauthorizedRequest(ObjectMappers.JSON_MAPPER.readValue(
                                 responseBodyString, UnauthorizedRequestErrorBody.class));
                 }
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new SeedCustomAuthApiError(
+            throw new SeedCustomAuthApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedCustomAuthError("Network error executing HTTP request", e);
+            throw new SeedCustomAuthException("Network error executing HTTP request", e);
         }
     }
 }

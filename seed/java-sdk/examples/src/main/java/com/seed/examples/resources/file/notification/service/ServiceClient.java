@@ -6,8 +6,8 @@ package com.seed.examples.resources.file.notification.service;
 import com.seed.examples.core.ClientOptions;
 import com.seed.examples.core.ObjectMappers;
 import com.seed.examples.core.RequestOptions;
-import com.seed.examples.core.SeedExamplesApiError;
-import com.seed.examples.core.SeedExamplesError;
+import com.seed.examples.core.SeedExamplesApiException;
+import com.seed.examples.core.SeedExamplesException;
 import com.seed.examples.resources.types.types.Exception;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -50,12 +50,12 @@ public class ServiceClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Exception.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedExamplesApiError(
+            throw new SeedExamplesApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedExamplesError("Network error executing HTTP request", e);
+            throw new SeedExamplesException("Network error executing HTTP request", e);
         }
     }
 }

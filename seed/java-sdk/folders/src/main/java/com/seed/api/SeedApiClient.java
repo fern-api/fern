@@ -6,8 +6,8 @@ package com.seed.api;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.RequestOptions;
-import com.seed.api.core.SeedApiApiError;
-import com.seed.api.core.SeedApiError;
+import com.seed.api.core.SeedApiApiException;
+import com.seed.api.core.SeedApiException;
 import com.seed.api.core.Suppliers;
 import com.seed.api.resources.a.AClient;
 import com.seed.api.resources.folder.FolderClient;
@@ -57,12 +57,12 @@ public class SeedApiClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedApiApiError(
+            throw new SeedApiApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedApiError("Network error executing HTTP request", e);
+            throw new SeedApiException("Network error executing HTTP request", e);
         }
     }
 

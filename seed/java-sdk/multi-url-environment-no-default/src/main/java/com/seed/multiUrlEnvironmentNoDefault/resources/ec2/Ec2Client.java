@@ -8,8 +8,8 @@ import com.seed.multiUrlEnvironmentNoDefault.core.ClientOptions;
 import com.seed.multiUrlEnvironmentNoDefault.core.MediaTypes;
 import com.seed.multiUrlEnvironmentNoDefault.core.ObjectMappers;
 import com.seed.multiUrlEnvironmentNoDefault.core.RequestOptions;
-import com.seed.multiUrlEnvironmentNoDefault.core.SeedMultiUrlEnvironmentNoDefaultApiError;
-import com.seed.multiUrlEnvironmentNoDefault.core.SeedMultiUrlEnvironmentNoDefaultError;
+import com.seed.multiUrlEnvironmentNoDefault.core.SeedMultiUrlEnvironmentNoDefaultApiException;
+import com.seed.multiUrlEnvironmentNoDefault.core.SeedMultiUrlEnvironmentNoDefaultException;
 import com.seed.multiUrlEnvironmentNoDefault.resources.ec2.requests.BootInstanceRequest;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -42,7 +42,7 @@ public class Ec2Client {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedMultiUrlEnvironmentNoDefaultError("Failed to serialize request", e);
+            throw new SeedMultiUrlEnvironmentNoDefaultException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -60,12 +60,12 @@ public class Ec2Client {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedMultiUrlEnvironmentNoDefaultApiError(
+            throw new SeedMultiUrlEnvironmentNoDefaultApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedMultiUrlEnvironmentNoDefaultError("Network error executing HTTP request", e);
+            throw new SeedMultiUrlEnvironmentNoDefaultException("Network error executing HTTP request", e);
         }
     }
 }

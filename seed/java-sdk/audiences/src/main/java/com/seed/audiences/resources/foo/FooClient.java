@@ -7,8 +7,8 @@ import com.seed.audiences.core.ClientOptions;
 import com.seed.audiences.core.MediaTypes;
 import com.seed.audiences.core.ObjectMappers;
 import com.seed.audiences.core.RequestOptions;
-import com.seed.audiences.core.SeedAudiencesApiError;
-import com.seed.audiences.core.SeedAudiencesError;
+import com.seed.audiences.core.SeedAudiencesApiException;
+import com.seed.audiences.core.SeedAudiencesException;
 import com.seed.audiences.resources.foo.requests.FindRequest;
 import com.seed.audiences.resources.foo.types.ImportingType;
 import java.io.IOException;
@@ -71,12 +71,12 @@ public class FooClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ImportingType.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedAudiencesApiError(
+            throw new SeedAudiencesApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedAudiencesError("Network error executing HTTP request", e);
+            throw new SeedAudiencesException("Network error executing HTTP request", e);
         }
     }
 }

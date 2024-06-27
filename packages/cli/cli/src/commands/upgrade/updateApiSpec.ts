@@ -1,10 +1,10 @@
 import { generatorsYml, getFernDirectory } from "@fern-api/configuration";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
 import * as fs from "fs";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
-import path from "path";
 import { Readable } from "stream";
 import { finished } from "stream/promises";
 import { ReadableStream } from "stream/web";
@@ -63,8 +63,11 @@ export async function updateApiSpec({
                 for (const api of apis) {
                     if (typeof api !== "string" && api.origin != null) {
                         cliContext.logger.info(`Origin found, fetching spec from ${api.origin}`);
-
-                        await fetchAndWriteFile(api.origin, path.join(fernDirectory, api.path), cliContext.logger);
+                        await fetchAndWriteFile(
+                            api.origin,
+                            join(workspace.absoluteFilepath, RelativeFilePath.of(api.path)),
+                            cliContext.logger
+                        );
                     }
                 }
             } else if (generatorConfig[generatorsYml.ASYNC_API_LOCATION_KEY] != null) {
@@ -75,7 +78,11 @@ export async function updateApiSpec({
                     const origin = generatorConfig[generatorsYml.API_ORIGIN_LOCATION_KEY];
                     const location = generatorConfig[generatorsYml.ASYNC_API_LOCATION_KEY];
                     if (origin != null && location != null) {
-                        await fetchAndWriteFile(origin, path.join(fernDirectory, location), cliContext.logger);
+                        await fetchAndWriteFile(
+                            origin,
+                            join(workspace.absoluteFilepath, RelativeFilePath.of(location)),
+                            cliContext.logger
+                        );
                     }
                 }
             } else if (generatorConfig[generatorsYml.OPENAPI_LOCATION_KEY] != null) {
@@ -90,7 +97,11 @@ export async function updateApiSpec({
                 if (apiOrigin != null && apiOutput != null) {
                     origin = apiOrigin;
                     cliContext.logger.info(`Origin found, fetching spec from ${apiOrigin}`);
-                    await fetchAndWriteFile(apiOrigin, path.join(fernDirectory, apiOutput), cliContext.logger);
+                    await fetchAndWriteFile(
+                        apiOrigin,
+                        join(workspace.absoluteFilepath, RelativeFilePath.of(apiOutput)),
+                        cliContext.logger
+                    );
                 }
             }
             return;

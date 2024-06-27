@@ -95,6 +95,10 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         });
     }
 
+    public getRequestParameter(context: SdkContext): ts.TypeNode | undefined {
+        return this.requestParameter?.getType(context);
+    }
+
     public getEndpointParameters(
         context: SdkContext
     ): OptionalKind<ParameterDeclarationStructure & { docs?: string }>[] {

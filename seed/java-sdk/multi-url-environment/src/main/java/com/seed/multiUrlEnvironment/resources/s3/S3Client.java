@@ -8,8 +8,8 @@ import com.seed.multiUrlEnvironment.core.ClientOptions;
 import com.seed.multiUrlEnvironment.core.MediaTypes;
 import com.seed.multiUrlEnvironment.core.ObjectMappers;
 import com.seed.multiUrlEnvironment.core.RequestOptions;
-import com.seed.multiUrlEnvironment.core.SeedMultiUrlEnvironmentApiError;
-import com.seed.multiUrlEnvironment.core.SeedMultiUrlEnvironmentError;
+import com.seed.multiUrlEnvironment.core.SeedMultiUrlEnvironmentApiException;
+import com.seed.multiUrlEnvironment.core.SeedMultiUrlEnvironmentException;
 import com.seed.multiUrlEnvironment.resources.s3.requests.GetPresignedUrlRequest;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -42,7 +42,7 @@ public class S3Client {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedMultiUrlEnvironmentError("Failed to serialize request", e);
+            throw new SeedMultiUrlEnvironmentException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -60,12 +60,12 @@ public class S3Client {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedMultiUrlEnvironmentApiError(
+            throw new SeedMultiUrlEnvironmentApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedMultiUrlEnvironmentError("Network error executing HTTP request", e);
+            throw new SeedMultiUrlEnvironmentException("Network error executing HTTP request", e);
         }
     }
 }

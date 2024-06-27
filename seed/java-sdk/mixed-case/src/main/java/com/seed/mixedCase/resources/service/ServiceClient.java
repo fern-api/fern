@@ -7,8 +7,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.mixedCase.core.ClientOptions;
 import com.seed.mixedCase.core.ObjectMappers;
 import com.seed.mixedCase.core.RequestOptions;
-import com.seed.mixedCase.core.SeedMixedCaseApiError;
-import com.seed.mixedCase.core.SeedMixedCaseError;
+import com.seed.mixedCase.core.SeedMixedCaseApiException;
+import com.seed.mixedCase.core.SeedMixedCaseException;
 import com.seed.mixedCase.resources.service.requests.ListResourcesRequest;
 import com.seed.mixedCase.resources.service.types.Resource;
 import java.io.IOException;
@@ -53,12 +53,12 @@ public class ServiceClient {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Resource.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedMixedCaseApiError(
+            throw new SeedMixedCaseApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedMixedCaseError("Network error executing HTTP request", e);
+            throw new SeedMixedCaseException("Network error executing HTTP request", e);
         }
     }
 
@@ -89,12 +89,12 @@ public class ServiceClient {
                         responseBody.string(), new TypeReference<List<Resource>>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedMixedCaseApiError(
+            throw new SeedMixedCaseApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedMixedCaseError("Network error executing HTTP request", e);
+            throw new SeedMixedCaseException("Network error executing HTTP request", e);
         }
     }
 }

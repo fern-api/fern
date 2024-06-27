@@ -8,8 +8,8 @@ import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.MediaTypes;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.core.RequestOptions;
-import com.seed.trace.core.SeedTraceApiError;
-import com.seed.trace.core.SeedTraceError;
+import com.seed.trace.core.SeedTraceApiException;
+import com.seed.trace.core.SeedTraceException;
 import com.seed.trace.resources.admin.requests.StoreTracedTestCaseRequest;
 import com.seed.trace.resources.admin.requests.StoreTracedWorkspaceRequest;
 import com.seed.trace.resources.submission.types.TestSubmissionStatus;
@@ -52,7 +52,7 @@ public class AdminClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedTraceError("Failed to serialize request", e);
+            throw new SeedTraceException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -70,12 +70,12 @@ public class AdminClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiError(
+            throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedTraceError("Network error executing HTTP request", e);
+            throw new SeedTraceException("Network error executing HTTP request", e);
         }
     }
 
@@ -96,7 +96,7 @@ public class AdminClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedTraceError("Failed to serialize request", e);
+            throw new SeedTraceException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -114,12 +114,12 @@ public class AdminClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiError(
+            throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedTraceError("Network error executing HTTP request", e);
+            throw new SeedTraceException("Network error executing HTTP request", e);
         }
     }
 
@@ -140,7 +140,7 @@ public class AdminClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedTraceError("Failed to serialize request", e);
+            throw new SeedTraceException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -158,12 +158,12 @@ public class AdminClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiError(
+            throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedTraceError("Network error executing HTTP request", e);
+            throw new SeedTraceException("Network error executing HTTP request", e);
         }
     }
 
@@ -184,7 +184,7 @@ public class AdminClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedTraceError("Failed to serialize request", e);
+            throw new SeedTraceException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -202,12 +202,12 @@ public class AdminClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiError(
+            throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedTraceError("Network error executing HTTP request", e);
+            throw new SeedTraceException("Network error executing HTTP request", e);
         }
     }
 
@@ -230,7 +230,7 @@ public class AdminClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedTraceError("Failed to serialize request", e);
+            throw new SeedTraceException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -248,12 +248,12 @@ public class AdminClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiError(
+            throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedTraceError("Network error executing HTTP request", e);
+            throw new SeedTraceException("Network error executing HTTP request", e);
         }
     }
 
@@ -276,7 +276,7 @@ public class AdminClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedTraceError("Failed to serialize request", e);
+            throw new SeedTraceException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -294,12 +294,12 @@ public class AdminClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiError(
+            throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedTraceError("Network error executing HTTP request", e);
+            throw new SeedTraceException("Network error executing HTTP request", e);
         }
     }
 
@@ -320,7 +320,7 @@ public class AdminClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedTraceError("Failed to serialize request", e);
+            throw new SeedTraceException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -338,12 +338,12 @@ public class AdminClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiError(
+            throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedTraceError("Network error executing HTTP request", e);
+            throw new SeedTraceException("Network error executing HTTP request", e);
         }
     }
 
@@ -364,7 +364,7 @@ public class AdminClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedTraceError("Failed to serialize request", e);
+            throw new SeedTraceException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -382,12 +382,12 @@ public class AdminClient {
                 return;
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiError(
+            throw new SeedTraceApiException(
                     "Error with status code " + response.code(),
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new SeedTraceError("Network error executing HTTP request", e);
+            throw new SeedTraceException("Network error executing HTTP request", e);
         }
     }
 }

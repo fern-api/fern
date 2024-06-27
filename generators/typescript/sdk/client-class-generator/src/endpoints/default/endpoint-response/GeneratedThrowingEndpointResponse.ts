@@ -3,7 +3,10 @@ import {
     ErrorDiscriminationStrategy,
     HttpEndpoint,
     HttpResponseBody,
-    ResponseError
+    Name,
+    NameAndWireValue,
+    ResponseError,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { getTextOfTsNode, PackageId, StreamingFetcher } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
@@ -12,7 +15,7 @@ import { ts } from "ts-morph";
 import { GeneratedSdkClientClassImpl } from "../../../GeneratedSdkClientClassImpl";
 import { GeneratedStreamingEndpointImplementation } from "../../GeneratedStreamingEndpointImplementation";
 import { getAbortSignalExpression } from "../../utils/requestOptionsParameter";
-import { GeneratedEndpointResponse } from "./GeneratedEndpointResponse";
+import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse";
 import {
     CONTENT_LENGTH_RESPONSE_KEY,
     CONTENT_LENGTH_VARIABLE_NAME,
@@ -70,6 +73,101 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         this.errorResolver = errorResolver;
         this.includeContentHeadersOnResponse = includeContentHeadersOnResponse;
         this.clientClass = clientClass;
+    }
+
+    private getItemTypeFromListOrOptionalList(typeReference: TypeReference): TypeReference | undefined {
+        if (typeReference.type === "container" && typeReference.container.type === "list") {
+            return typeReference.container.list;
+        }
+        if (typeReference.type === "container" && typeReference.container.type === "optional") {
+            return this.getItemTypeFromListOrOptionalList(typeReference.container.optional);
+        }
+        return undefined;
+    }
+
+    public getPaginationInfo(context: SdkContext): PaginationResponseInfo | undefined {
+        const successReturnType = getSuccessReturnType(this.response, context, {
+            includeContentHeadersOnResponse: this.includeContentHeadersOnResponse
+        });
+
+        if (this.endpoint.pagination != null && this.endpoint.pagination.type === "cursor") {
+            const cursor = this.endpoint.pagination;
+            const itemValueType = cursor.results.property.valueType;
+
+            const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType);
+            if (itemTypeReference == null) {
+                return undefined;
+            }
+
+            const itemType = context.type.getReferenceToType(itemTypeReference).typeNode;
+
+            // hasNextPage checks if next property is not null
+            const nextProperty = this.getNameFromWireValue({ name: cursor.next.property.name, context });
+            const nextPropertyPath = [
+                "response",
+                ...(cursor.next.propertyPath ?? []).map((name) => this.getName({ name, context }))
+            ].join("?.");
+            const nextPropertyAccess = ts.factory.createPropertyAccessChain(
+                ts.factory.createIdentifier(nextPropertyPath),
+                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                ts.factory.createIdentifier(nextProperty)
+            );
+            const hasNextPage = ts.factory.createBinaryExpression(
+                nextPropertyAccess,
+                ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                ts.factory.createNull()
+            );
+
+            // getItems gets the items
+            const itemsProperty = this.getNameFromWireValue({ name: cursor.results.property.name, context });
+            const itemsPropertyPath = [
+                "response",
+                ...(cursor.results.propertyPath ?? []).map((name) => this.getName({ name, context }))
+            ].join("?.");
+            const getItems = ts.factory.createBinaryExpression(
+                ts.factory.createPropertyAccessChain(
+                    ts.factory.createIdentifier(itemsPropertyPath),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                    ts.factory.createIdentifier(itemsProperty)
+                ),
+                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                ts.factory.createArrayLiteralExpression([], false)
+            );
+
+            // loadPage
+            const loadPage = ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
+                ts.factory.createObjectLiteralExpression(
+                    [
+                        ts.factory.createSpreadAssignment(ts.factory.createIdentifier("request")),
+                        ts.factory.createPropertyAssignment(
+                            ts.factory.createIdentifier(this.getNameFromWireValue({ name: cursor.page.name, context })),
+                            nextPropertyAccess
+                        )
+                    ],
+                    true
+                )
+            ]);
+
+            return {
+                itemType,
+                responseType: successReturnType,
+                hasNextPage,
+                getItems,
+                loadPage
+            };
+        }
+
+        return undefined;
+    }
+
+    private getName({ name, context }: { name: Name; context: SdkContext }): string {
+        return context.retainOriginalCasing || !context.includeSerdeLayer ? name.originalName : name.camelCase.safeName;
+    }
+
+    private getNameFromWireValue({ name, context }: { name: NameAndWireValue; context: SdkContext }): string {
+        return context.retainOriginalCasing || !context.includeSerdeLayer
+            ? name.wireValue
+            : name.name.camelCase.safeName;
     }
 
     public getResponseVariableName(): string {

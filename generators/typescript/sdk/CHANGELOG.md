@@ -5,6 +5,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [0.26.0-rc2] - 2024-06-27
+
+- Improvement: `RequestOptions` now supports overriding global headers like authentication 
+  and version. 
+
+## [0.26.0-rc1] - 2024-06-27
+
+- Fix: The generator was skipping auto pagination for item arrays that were optional. Now, 
+  those are safely handled as well. 
+
+## [0.26.0-rc0] - 2024-06-27
+
+- Feature: The TypeScript generator now supports cursor-based auto pagination. With 
+  auto pagination, a user can simply iterate over the results automatically: 
+
+  ```ts
+  for (const user of client.users.list()) {
+    consoler.log(user);
+  }
+  ```
+  
+  Users can also paginate over data manually 
+
+  ```ts
+  const page = client.users.list();
+  for (const user of page.data) {
+    consoler.log(user);
+  }
+
+  // Helper methods for manually paginating:
+  while (page.hasNextPage()) {
+    page = page.getNextPage();
+    // ...
+  }
+  ```
+
 ## [0.25.3] - 2024-06-26
 
 - Internal: The generator is now upgraded to `v46.2.0` of the IR.
