@@ -9,10 +9,17 @@ import generatorcli
 import yaml  # type: ignore
 
 from fern_python.codegen import ProjectConfig
+from fern_python.codegen.project import Project
 from fern_python.generator_cli.readme_snippet_builder import ReadmeSnippetBuilder
+from fern_python.generator_cli.reference_config_builder import ReferenceConfigBuilder
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
+    EndpointMetadataCollector,
+)
+from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 
 README_FILENAME = "README.md"
+REFERENCE_FILENAME = "reference.md"
 GENERATOR_CLI = "generator-cli"
 GENERATOR_CLI_NPM_PACKAGE = "@fern-api/generator-cli"
 DOCKER_FEATURES_CONFIG_PATH = "/assets/features.yml"
@@ -26,15 +33,29 @@ class GeneratorCli:
         project_config: Optional[ProjectConfig],
         ir: ir_types.IntermediateRepresentation,
         generator_exec_wrapper: GeneratorExecWrapper,
+        context: SdkGeneratorContext,
         skip_install: bool = False,
     ):
         self._organization = organization
         self._package_name = project_config.package_name if project_config is not None else organization
         self._ir = ir
         self._generator_exec_wrapper = generator_exec_wrapper
+        self._context = context
 
         if not skip_install:
             self._install()
+
+    def generate_reference(
+        self, snippets: generator_exec.Snippets, endpoint_metadata: EndpointMetadataCollector, project: Project
+    ) -> str:
+        reference_config_builder = ReferenceConfigBuilder(
+            ir=self._ir, snippets=snippets, endpoint_metadata=endpoint_metadata, context=self._context, project=project
+        )
+        reference_config_filepath = self._write_reference_config(
+            reference_config=reference_config_builder.generate_reference_config(),
+        )
+
+        return self._run_command(command=[GENERATOR_CLI, "generate-reference", "--config", reference_config_filepath])
 
     def generate_readme(
         self,
@@ -69,6 +90,15 @@ class GeneratorCli:
         version = self._run_command([GENERATOR_CLI, "--version"])
         self._debug_log(message=f"Successfully installed {GENERATOR_CLI_NPM_PACKAGE} version {version}")
         self._installed = True
+
+    def _write_reference_config(
+        self,
+        reference_config: generatorcli.reference.ReferenceConfig,
+    ) -> str:
+        file = tempfile.NamedTemporaryFile(delete=False, mode="w+")
+        file.write(reference_config.json())
+        file.flush()
+        return file.name
 
     def _write_readme_config(
         self,

@@ -11,9 +11,13 @@ from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import AST, Project
 from fern_python.codegen.filepath import Filepath
 from fern_python.generator_cli import README_FILENAME, GeneratorCli
+from fern_python.generator_cli.generator_cli import REFERENCE_FILENAME
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model import PydanticModelGenerator
 from fern_python.generators.sdk import as_is_copier
+from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
+    EndpointMetadataCollector,
+)
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.generators.sdk.context.sdk_generator_context_impl import (
     SdkGeneratorContextImpl,
@@ -122,6 +126,7 @@ class SdkGenerator(AbstractGenerator):
             project_config=project._project_config,
             ir=ir,
             generator_exec_wrapper=generator_exec_wrapper,
+            context=context,
         )
         snippet_registry = SnippetRegistry()
         snippet_writer = build_snippet_writer(
@@ -185,6 +190,8 @@ class SdkGenerator(AbstractGenerator):
 
         self._generate_version(project=project)
 
+        endpoint_metadata_collector = EndpointMetadataCollector()
+
         generated_root_client = self._generate_root_client(
             context=context,
             ir=ir,
@@ -193,6 +200,7 @@ class SdkGenerator(AbstractGenerator):
             project=project,
             snippet_registry=snippet_registry,
             snippet_writer=snippet_writer,
+            endpoint_metadata_collector=endpoint_metadata_collector,
             oauth_scheme=oauth_scheme,
         )
 
@@ -208,6 +216,7 @@ class SdkGenerator(AbstractGenerator):
                     generated_root_client=generated_root_client,
                     snippet_registry=snippet_registry,
                     snippet_writer=snippet_writer,
+                    endpoint_metadata_collector=endpoint_metadata_collector,
                 )
 
         for error in ir.errors.values():
@@ -239,6 +248,21 @@ class SdkGenerator(AbstractGenerator):
                         LogUpdate(level=LogLevel.DEBUG, message=f"Failed to generate README.md; this is OK")
                     )
                 )
+
+            # try:
+            self._write_reference(
+                context=context,
+                generator_cli=generator_cli,
+                snippets=snippets,
+                project=project,
+                endpoint_metadata_collector=endpoint_metadata_collector,
+            )
+            # except Exception:
+            #     generator_exec_wrapper.send_update(
+            #         GeneratorUpdate.factory.log(
+            #             LogUpdate(level=LogLevel.DEBUG, message=f"Failed to generate reference.md; this is OK")
+            #         )
+            #     )
 
         context.core_utilities.copy_to_project(project=project)
         as_is_copier.copy_to_project(project=project)
@@ -356,6 +380,7 @@ class SdkGenerator(AbstractGenerator):
         project: Project,
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
+        endpoint_metadata_collector: EndpointMetadataCollector,
         oauth_scheme: Optional[ir_types.OAuthScheme] = None,
     ) -> GeneratedRootClient:
         filepath = context.get_filepath_for_generated_root_client()
@@ -371,6 +396,7 @@ class SdkGenerator(AbstractGenerator):
             snippet_registry=snippet_registry,
             snippet_writer=snippet_writer,
             oauth_scheme=oauth_scheme,
+            endpoint_metadata_collector=endpoint_metadata_collector,
         ).generate(source_file=source_file)
         project.write_source_file(source_file=source_file, filepath=filepath)
         return generated_root_client
@@ -385,6 +411,7 @@ class SdkGenerator(AbstractGenerator):
         generated_root_client: GeneratedRootClient,
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
+        endpoint_metadata_collector: EndpointMetadataCollector,
     ) -> None:
         filepath = context.get_filepath_for_subpackage_service(subpackage_id)
         source_file = SourceFileFactory.create(
@@ -398,6 +425,7 @@ class SdkGenerator(AbstractGenerator):
             generated_root_client=generated_root_client,
             snippet_registry=snippet_registry,
             snippet_writer=snippet_writer,
+            endpoint_metadata_collector=endpoint_metadata_collector,
         ).generate(source_file=source_file)
         project.write_source_file(source_file=source_file, filepath=filepath)
 
@@ -528,6 +556,25 @@ __version__ = metadata.version("{project._project_config.package_name}")
             contents,
         )
         project.set_generate_readme(False)
+
+    def _write_reference(
+        self,
+        context: SdkGeneratorContext,
+        generator_cli: GeneratorCli,
+        snippets: Snippets,
+        project: Project,
+        endpoint_metadata_collector: EndpointMetadataCollector,
+    ) -> None:
+        contents = generator_cli.generate_reference(
+            snippets=snippets, endpoint_metadata=endpoint_metadata_collector, project=project
+        )
+        project.add_file(
+            os.path.join(
+                context.generator_config.output.path,
+                REFERENCE_FILENAME,
+            ),
+            contents,
+        )
 
     def _write_snippet_tests(
         self,

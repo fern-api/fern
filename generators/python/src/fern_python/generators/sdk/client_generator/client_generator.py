@@ -6,6 +6,9 @@ import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
+from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
+    EndpointMetadataCollector,
+)
 from fern_python.generators.sdk.client_generator.endpoint_response_code_writer import (
     EndpointResponseCodeWriter,
 )
@@ -52,6 +55,7 @@ class ClientGenerator:
         generated_root_client: GeneratedRootClient,
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
+        endpoint_metadata_collector: EndpointMetadataCollector,
     ):
         self._context = context
         self._package = package
@@ -61,6 +65,7 @@ class ClientGenerator:
         self._snippet_registry = snippet_registry
         self._snippet_writer = snippet_writer
         self._is_default_body_parameter_used = False
+        self._endpoint_metadata_collector = endpoint_metadata_collector
 
     def generate(self, source_file: SourceFile) -> None:
         class_declaration = self._create_class_declaration(is_async=False)
@@ -110,6 +115,7 @@ class ClientGenerator:
                     client_wrapper_member_name=self._get_client_wrapper_member_name(),
                     generated_root_client=self._generated_root_client,
                     snippet_writer=self._snippet_writer,
+                    endpoint_metadata_collector=self._endpoint_metadata_collector,
                 )
                 generated_endpoint_function = endpoint_function_generator.generate()
                 class_declaration.add_method(generated_endpoint_function.function)

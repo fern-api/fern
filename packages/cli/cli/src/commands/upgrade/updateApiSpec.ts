@@ -63,6 +63,7 @@ export async function updateApiSpec({
                 for (const api of apis) {
                     if (typeof api !== "string" && api.origin != null) {
                         cliContext.logger.info(`Origin found, fetching spec from ${api.origin}`);
+
                         await fetchAndWriteFile(api.origin, path.join(fernDirectory, api.path), cliContext.logger);
                     }
                 }

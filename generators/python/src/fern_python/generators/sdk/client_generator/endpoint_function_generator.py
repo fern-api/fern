@@ -7,6 +7,11 @@ from typing_extensions import Never
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies import HttpX
+from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
+    EndpointMetadata,
+    EndpointMetadataCollector,
+    ParameterMetadata,
+)
 from fern_python.generators.sdk.client_generator.endpoint_response_code_writer import (
     EndpointResponseCodeWriter,
     raise_stream_parameter_unsupported,
@@ -71,6 +76,7 @@ class EndpointFunctionGenerator:
         is_async: bool,
         generated_root_client: GeneratedRootClient,
         snippet_writer: SnippetWriter,
+        endpoint_metadata_collector: Optional[EndpointMetadataCollector],
     ):
         self._context = context
         self._package = package
@@ -81,6 +87,7 @@ class EndpointFunctionGenerator:
         self._client_wrapper_member_name = client_wrapper_member_name
         self._generated_root_client = generated_root_client
         self.snippet_writer = snippet_writer
+        self.endpoint_metadata_collector = endpoint_metadata_collector
 
         self.is_paginated = (
             self._endpoint.pagination is not None and self._context.generator_config.generate_paginated_clients
@@ -134,6 +141,37 @@ class EndpointFunctionGenerator:
                 self._path_parameter_names[path_parameter.name] = name
 
         self.is_default_body_parameter_used = self.request_body_parameters is not None
+        self.collect_metadata()
+
+    def collect_metadata(self) -> None:
+        if self.endpoint_metadata_collector is None:
+            return
+
+        # Consolidate the named parameters and path parameters in a single list.
+        parameters: List[AST.NamedFunctionParameter] = []
+        parameters = self._named_parameters_from_path_parameters(self._endpoint.all_path_parameters)
+        parameters.extend(self._named_parameters)
+
+        for param in parameters:
+            self.endpoint_metadata_collector.register_endpoint_parameter(
+                endpoint_id=self._endpoint.id,
+                parameter=ParameterMetadata(
+                    name=param.name,
+                    type_reference=param.raw_type,
+                    type_hint=param.type_hint,
+                    description=param.docs,
+                    is_required=param.type_hint is not None and param.type_hint.is_optional,
+                ),
+            )
+
+        self.endpoint_metadata_collector.register_endpoint(
+            endpoint_id=self._endpoint.id,
+            metadata=EndpointMetadata(
+                return_type=self._get_endpoint_return_type(),
+                endpoint_package_path=self._get_subpackage_client_accessor(self._package),
+                method_name=get_endpoint_name(self._endpoint),
+            ),
+        )
 
     def generate(self) -> GeneratedEndpointFunction:
         endpoint_snippets = self._generate_endpoint_snippets(
