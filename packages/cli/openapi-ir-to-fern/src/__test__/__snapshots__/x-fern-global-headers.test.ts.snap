@@ -137,16 +137,9 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
       "strategy": "status-code",
     },
     "headers": {
-      "another_header": {
-        "env": "MY_HEADER_ENV",
-        "name": "anotherHeader",
-        "type": "string",
-      },
-      "my-api-key": {
-        "env": undefined,
-        "name": "apiKeyAlias",
-        "type": "optional<string>",
-      },
+      "another_header": "optional<string>",
+      "my-api-key": "optional<string>",
+      "version": "literal<"2024-06-04">",
       "x-api-key": {
         "name": "apiKey",
         "type": "string",
@@ -294,16 +287,9 @@ exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
       "strategy": "status-code",
     },
     "headers": {
-      "another_header": {
-        "env": "MY_HEADER_ENV",
-        "name": "anotherHeader",
-        "type": "string",
-      },
-      "my-api-key": {
-        "env": undefined,
-        "name": "apiKeyAlias",
-        "type": "optional<string>",
-      },
+      "another_header": "optional<string>",
+      "my-api-key": "optional<string>",
+      "version": "literal<"2024-06-04">",
       "x-api-key": {
         "name": "apiKey",
         "type": "string",
