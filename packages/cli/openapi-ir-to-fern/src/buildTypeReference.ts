@@ -259,7 +259,9 @@ function maybeNumberValidation(
  * @returns The number if it is within the valid range, or `undefined` if it is outside the range.
  */
 function makeUndefinedIfOutsideRange(num: number | undefined, type: "integer" | "double"): number | undefined {
-    if (num === undefined) return undefined;
+    if (num === undefined) {
+        return undefined;
+    }
 
     const [min, max] = type === "integer" ? [MIN_INT_32, MAX_INT_32] : [MIN_DOUBLE_64, MAX_DOUBLE_64];
 
