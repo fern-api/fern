@@ -15,9 +15,16 @@ export declare namespace SeedLiteralClient {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Override the X-API-Version header */
+        version?: "02-02-2024";
+        /** Override the X-API-Enable-Audit-Logging header */
+        auditLogging?: true;
     }
 }
 
