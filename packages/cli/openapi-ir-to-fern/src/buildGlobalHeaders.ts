@@ -5,6 +5,7 @@ import { RawSchemas } from "@fern-api/yaml-schema";
 import { buildHeader } from "./buildHeader";
 import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional";
 
 class HeaderWithCount {
@@ -59,14 +60,24 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
 
     for (const [headerName, header] of Object.entries(predefinedGlobalHeaders)) {
         let schema: RawSchemas.HttpHeaderSchema = "optional<string>";
-        if (typeof header.schema === "string") {
+
+        if (header.name == null && header.env == null && typeof header.schema === "string") {
             schema = header.schema;
-        } else if (header.schema != null) {
-            schema = buildTypeReference({
-                schema: header.schema,
-                context,
-                fileContainingReference: RelativeFilePath.of("api.yml")
-            });
+        } else if (header != null) {
+            schema = {
+                name: header.name,
+                env: header.env,
+                type:
+                    header.schema != null
+                        ? getTypeFromTypeReference(
+                              buildTypeReference({
+                                  schema: header.schema,
+                                  context,
+                                  fileContainingReference: RelativeFilePath.of("api.yml")
+                              })
+                          ) ?? "optional<string>"
+                        : "optional<string>"
+            };
         }
         context.builder.addGlobalHeader({
             name: headerName,
