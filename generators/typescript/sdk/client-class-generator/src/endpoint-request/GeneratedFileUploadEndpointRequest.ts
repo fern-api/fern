@@ -103,6 +103,10 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         }
     }
 
+    public getRequestParameter(context: SdkContext): ts.TypeNode | undefined {
+        return this.requestParameter?.getType(context);
+    }
+
     public getExampleEndpointParameters({
         context,
         example,

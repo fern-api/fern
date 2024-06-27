@@ -48,6 +48,7 @@ export abstract class AbstractRequestParameter implements RequestParameter {
         return this.sdkRequest.requestParameterName.camelCase.unsafeName;
     }
 
+    public abstract getType(context: SdkContext): ts.TypeNode;
     public abstract getInitialStatements(context: SdkContext, args: { variablesInScope: string[] }): ts.Statement[];
     public abstract getAllQueryParameters(context: SdkContext): QueryParameter[];
     public abstract getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined;
