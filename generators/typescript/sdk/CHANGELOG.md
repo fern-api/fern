@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [0.26.0-rc1] - 2024-06-27
+
+- Improvement: `RequestOptions` now supports overriding global headers like authentication 
+  and version. 
+
 ## [0.26.0-rc1] - 2024-06-27
 
 - Fix: The generator was skipping auto pagination for item arrays that were optional. Now, 
