@@ -36,8 +36,8 @@ import {
 const MIN_INT_32 = -2147483648;
 const MAX_INT_32 = 2147483647;
 
-const MIN_DOUBLE_64 = -1.7976931348623157e+308;
-const MAX_DOUBLE_64 = 1.7976931348623157e+308;
+const MIN_DOUBLE_64 = -1.7976931348623157e308;
+const MAX_DOUBLE_64 = 1.7976931348623157e308;
 
 export function buildTypeReference({
     schema,
@@ -220,15 +220,17 @@ function maybeStringValidation(
 }
 
 function maybeNumberValidation(
-    schema: Omit<IntSchema, "default"> | Omit<DoubleSchema, "default"> | undefined, type: "integer" | "double"
+    schema: Omit<IntSchema, "default"> | Omit<DoubleSchema, "default"> | undefined,
+    type: "integer" | "double"
 ): RawSchemas.ValidationSchema | undefined {
     if (schema == null) {
         return undefined;
     }
-    let { minimum, maximum, exclusiveMinimum, exclusiveMaximum, multipleOf } = schema;
-    minimum = makeUndefinedIfOutsideRange(minimum, type)
-    maximum = makeUndefinedIfOutsideRange(maximum, type)
-    multipleOf = makeUndefinedIfOutsideRange(multipleOf, type)
+    let { minimum, maximum, multipleOf } = schema;
+    const { exclusiveMinimum, exclusiveMaximum } = schema;
+    minimum = makeUndefinedIfOutsideRange(minimum, type);
+    maximum = makeUndefinedIfOutsideRange(maximum, type);
+    multipleOf = makeUndefinedIfOutsideRange(multipleOf, type);
     if (
         minimum == null &&
         maximum == null &&
@@ -238,7 +240,7 @@ function maybeNumberValidation(
     ) {
         return undefined;
     }
-    
+
     return {
         min: minimum,
         max: maximum,
@@ -259,11 +261,9 @@ function maybeNumberValidation(
 function makeUndefinedIfOutsideRange(num: number | undefined, type: "integer" | "double"): number | undefined {
     if (num === undefined) return undefined;
 
-    const [min, max] = type === "integer"
-        ? [MIN_INT_32, MAX_INT_32]
-        : [MIN_DOUBLE_64, MAX_DOUBLE_64];
+    const [min, max] = type === "integer" ? [MIN_INT_32, MAX_INT_32] : [MIN_DOUBLE_64, MAX_DOUBLE_64];
 
-    return (num < min || num > max) ? undefined : num;
+    return num < min || num > max ? undefined : num;
 }
 
 export function buildReferenceTypeReference({
