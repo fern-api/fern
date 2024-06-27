@@ -18,7 +18,7 @@ public class QueryParamClient
     {
         var _query = new Dictionary<string, object>()
         {
-            { "operand", JsonSerializer.Serialize.Serialize(request.Operand) },
+            { "operand", JsonSerializer.Serialize(request.Operand) },
             { "operandOrColor", request.OperandOrColor.ToString() },
         };
         if (request.MaybeOperand != null)
@@ -43,7 +43,7 @@ public class QueryParamClient
     {
         var _query = new Dictionary<string, object>()
         {
-            { "operand", JsonSerializer.Serialize.Serialize(request.Operand) },
+            { "operand", JsonSerializer.Serialize(request.Operand) },
             { "operandOrColor", request.OperandOrColor.ToString() },
         };
         if (request.MaybeOperand != null)

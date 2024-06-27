@@ -155,7 +155,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             return csharp.codeblock((writer) => {
                 writer.writeNode(
                     csharp.classReference({
-                        name: "JsonSerializer.Serialize",
+                        name: "JsonSerializer",
                         namespace: "System.Test.Json"
                     })
                 );
