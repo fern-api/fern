@@ -156,7 +156,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 writer.writeNode(
                     csharp.classReference({
                         name: "JsonSerializer",
-                        namespace: "System.Test.Json"
+                        namespace: "System.Text.Json"
                     })
                 );
                 writer.write(`.Serialize(${this.getParameterName()}.${name.pascalCase.safeName})`);
