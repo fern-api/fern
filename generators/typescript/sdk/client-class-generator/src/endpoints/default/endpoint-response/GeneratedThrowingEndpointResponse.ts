@@ -95,7 +95,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             const itemValueType = cursor.results.property.valueType;
 
             const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType);
-            if (itemTypeReference == null) {
+p            if (itemTypeReference == null) {
                 return undefined;
             }
 

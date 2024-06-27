@@ -137,9 +137,21 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
       "strategy": "status-code",
     },
     "headers": {
-      "another_header": "optional<string>",
-      "my-api-key": "optional<string>",
-      "version": "literal<"2024-06-04">",
+      "another_header": {
+        "env": "MY_HEADER_ENV",
+        "name": undefined,
+        "type": "optional<string>",
+      },
+      "my-api-key": {
+        "env": undefined,
+        "name": "api-key-alias",
+        "type": "optional<string>",
+      },
+      "version": {
+        "env": "SQUARE_VERSION",
+        "name": "Square-Version",
+        "type": "literal<"2024-06-04">",
+      },
       "x-api-key": {
         "name": "apiKey",
         "type": "string",
@@ -288,6 +300,9 @@ exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
     },
     "headers": {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a3b362af49 (fix tests)
       "another_header": {
         "env": "MY_HEADER_ENV",
         "name": undefined,
@@ -303,11 +318,14 @@ exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
         "name": "Square-Version",
         "type": "literal<"2024-06-04">",
       },
+<<<<<<< HEAD
 =======
       "another_header": "optional<string>",
       "my-api-key": "optional<string>",
       "version": "literal<"2024-06-04">",
 >>>>>>> c2487420da ((fix, openapi):  works with predefined types)
+=======
+>>>>>>> a3b362af49 (fix tests)
       "x-api-key": {
         "name": "apiKey",
         "type": "string",
