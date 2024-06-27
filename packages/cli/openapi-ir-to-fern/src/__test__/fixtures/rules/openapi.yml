@@ -39,6 +39,15 @@ components:
           exclusiveMinimum: true
           exclusiveMaximum: false
           multipleOf: 10
+        age:
+          description: The age of the type.
+          type: integer
+          default: 50
+          minimum: -2147483649 # outside of min int
+          maximum: 2147483648 # outside of max int
+          exclusiveMinimum: true
+          exclusiveMaximum: false
+          multipleOf: 10
         name:
           description: The unique name of the type.
           type: string

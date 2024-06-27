@@ -10101,7 +10101,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
               "validation": {
                 "exclusiveMax": undefined,
                 "exclusiveMin": undefined,
-                "max": 9999999999,
+                "max": undefined,
                 "min": 1,
                 "multipleOf": undefined,
               },
@@ -23333,7 +23333,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 9999999999,
+              "max": undefined,
               "min": 1,
               "multipleOf": undefined,
             },
@@ -43491,7 +43491,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
               "validation": {
                 "exclusiveMax": undefined,
                 "exclusiveMin": undefined,
-                "max": 9999999999,
+                "max": undefined,
                 "min": 1,
                 "multipleOf": undefined,
               },
@@ -55348,7 +55348,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 9999999999,
+              "max": undefined,
               "min": 1,
               "multipleOf": undefined,
             },

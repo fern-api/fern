@@ -18770,7 +18770,7 @@ exports[`open api parser aries docs 1`] = `
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 18446744073709552000,
+              "max": undefined,
               "min": 0,
               "multipleOf": undefined,
             },
@@ -18782,7 +18782,7 @@ exports[`open api parser aries docs 1`] = `
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 18446744073709552000,
+              "max": undefined,
               "min": 0,
               "multipleOf": undefined,
             },
@@ -18986,7 +18986,7 @@ exports[`open api parser aries docs 1`] = `
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 18446744073709552000,
+              "max": undefined,
               "min": 0,
               "multipleOf": undefined,
             },
@@ -19073,7 +19073,7 @@ exports[`open api parser aries docs 1`] = `
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 18446744073709552000,
+              "max": undefined,
               "min": 0,
               "multipleOf": undefined,
             },
@@ -19085,7 +19085,7 @@ exports[`open api parser aries docs 1`] = `
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 18446744073709552000,
+              "max": undefined,
               "min": 0,
               "multipleOf": undefined,
             },
@@ -19126,7 +19126,7 @@ exports[`open api parser aries docs 1`] = `
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 18446744073709552000,
+              "max": undefined,
               "min": 0,
               "multipleOf": undefined,
             },
@@ -19138,7 +19138,7 @@ exports[`open api parser aries docs 1`] = `
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 18446744073709552000,
+              "max": undefined,
               "min": 0,
               "multipleOf": undefined,
             },
@@ -19218,7 +19218,7 @@ exports[`open api parser aries docs 1`] = `
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 18446744073709552000,
+              "max": undefined,
               "min": 0,
               "multipleOf": undefined,
             },
@@ -19230,7 +19230,7 @@ exports[`open api parser aries docs 1`] = `
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 18446744073709552000,
+              "max": undefined,
               "min": 0,
               "multipleOf": undefined,
             },
@@ -19365,7 +19365,7 @@ exports[`open api parser aries docs 1`] = `
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 18446744073709552000,
+              "max": undefined,
               "min": 0,
               "multipleOf": undefined,
             },
@@ -21105,7 +21105,7 @@ exports[`open api parser aries docs 1`] = `
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 18446744073709552000,
+              "max": undefined,
               "min": 0,
               "multipleOf": undefined,
             },
@@ -41856,7 +41856,7 @@ exports[`open api parser aries simple 1`] = `
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 18446744073709552000,
+              "max": undefined,
               "min": 0,
               "multipleOf": undefined,
             },
@@ -41868,7 +41868,7 @@ exports[`open api parser aries simple 1`] = `
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 18446744073709552000,
+              "max": undefined,
               "min": 0,
               "multipleOf": undefined,
             },
@@ -42072,7 +42072,7 @@ exports[`open api parser aries simple 1`] = `
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 18446744073709552000,
+              "max": undefined,
               "min": 0,
               "multipleOf": undefined,
             },
@@ -42159,7 +42159,7 @@ exports[`open api parser aries simple 1`] = `
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 18446744073709552000,
+              "max": undefined,
               "min": 0,
               "multipleOf": undefined,
             },
@@ -42171,7 +42171,7 @@ exports[`open api parser aries simple 1`] = `
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 18446744073709552000,
+              "max": undefined,
               "min": 0,
               "multipleOf": undefined,
             },
@@ -42212,7 +42212,7 @@ exports[`open api parser aries simple 1`] = `
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 18446744073709552000,
+              "max": undefined,
               "min": 0,
               "multipleOf": undefined,
             },
@@ -42224,7 +42224,7 @@ exports[`open api parser aries simple 1`] = `
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 18446744073709552000,
+              "max": undefined,
               "min": 0,
               "multipleOf": undefined,
             },
@@ -42304,7 +42304,7 @@ exports[`open api parser aries simple 1`] = `
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 18446744073709552000,
+              "max": undefined,
               "min": 0,
               "multipleOf": undefined,
             },
@@ -42316,7 +42316,7 @@ exports[`open api parser aries simple 1`] = `
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 18446744073709552000,
+              "max": undefined,
               "min": 0,
               "multipleOf": undefined,
             },
@@ -42451,7 +42451,7 @@ exports[`open api parser aries simple 1`] = `
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 18446744073709552000,
+              "max": undefined,
               "min": 0,
               "multipleOf": undefined,
             },
@@ -44191,7 +44191,7 @@ exports[`open api parser aries simple 1`] = `
             "validation": {
               "exclusiveMax": undefined,
               "exclusiveMin": undefined,
-              "max": 18446744073709552000,
+              "max": undefined,
               "min": 0,
               "multipleOf": undefined,
             },

@@ -16,6 +16,7 @@ exports[`rules rules docs 1`] = `
             {
               "response": {
                 "body": {
+                  "age": 1,
                   "id": 1,
                   "name": "name",
                   "value": 1.1,
@@ -51,6 +52,18 @@ exports[`rules rules docs 1`] = `
       "Schema": {
         "docs": undefined,
         "properties": {
+          "age": {
+            "default": 50,
+            "docs": "The age of the type.",
+            "type": "optional<integer>",
+            "validation": {
+              "exclusiveMax": false,
+              "exclusiveMin": true,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": 10,
+            },
+          },
           "id": {
             "default": 50,
             "docs": "The unique ID of the type.",
@@ -125,6 +138,7 @@ exports[`rules rules simple 1`] = `
             {
               "response": {
                 "body": {
+                  "age": 1,
                   "id": 1,
                   "name": "name",
                   "value": 1.1,
@@ -160,6 +174,18 @@ exports[`rules rules simple 1`] = `
       "Schema": {
         "docs": undefined,
         "properties": {
+          "age": {
+            "default": 50,
+            "docs": "The age of the type.",
+            "type": "optional<integer>",
+            "validation": {
+              "exclusiveMax": false,
+              "exclusiveMin": true,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": 10,
+            },
+          },
           "id": {
             "default": 50,
             "docs": "The unique ID of the type.",
