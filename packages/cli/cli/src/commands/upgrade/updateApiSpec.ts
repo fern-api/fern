@@ -1,10 +1,10 @@
 import { generatorsYml, getFernDirectory } from "@fern-api/configuration";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
 import * as fs from "fs";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
-import path from "path";
 import { Readable } from "stream";
 import { finished } from "stream/promises";
 import { ReadableStream } from "stream/web";
@@ -65,7 +65,7 @@ export async function updateApiSpec({
                         cliContext.logger.info(`Origin found, fetching spec from ${api.origin}`);
                         await fetchAndWriteFile(
                             api.origin,
-                            path.join(workspace.absoluteFilepath, api.path),
+                            join(workspace.absoluteFilepath, RelativeFilePath.of(api.path)),
                             cliContext.logger
                         );
                     }
@@ -80,7 +80,7 @@ export async function updateApiSpec({
                     if (origin != null && location != null) {
                         await fetchAndWriteFile(
                             origin,
-                            path.join(workspace.absoluteFilepath, location),
+                            join(workspace.absoluteFilepath, RelativeFilePath.of(location)),
                             cliContext.logger
                         );
                     }
@@ -99,7 +99,7 @@ export async function updateApiSpec({
                     cliContext.logger.info(`Origin found, fetching spec from ${apiOrigin}`);
                     await fetchAndWriteFile(
                         apiOrigin,
-                        path.join(workspace.absoluteFilepath, apiOutput),
+                        join(workspace.absoluteFilepath, RelativeFilePath.of(apiOutput)),
                         cliContext.logger
                     );
                 }
