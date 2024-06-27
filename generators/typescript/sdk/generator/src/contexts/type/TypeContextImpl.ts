@@ -92,6 +92,16 @@ export class TypeContextImpl implements TypeContext {
         return this.typeResolver.getTypeDeclarationFromName(typeName);
     }
 
+    public getItemTypeFromListOrOptionalList(typeReference: TypeReference): TypeReference | undefined {
+        if (typeReference.type === "container" && typeReference.container.type === "list") {
+            return typeReference.container.list;
+        }
+        if (typeReference.type === "container" && typeReference.container.type === "optional") {
+            return this.getItemTypeFromListOrOptionalList(typeReference.container.optional);
+        }
+        return undefined;
+    }
+
     public getReferenceToNamedType(typeName: DeclaredTypeName): Reference {
         if (this.isForSnippet) {
             return this.typeDeclarationReferencer.getReferenceToType({

@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.26.0-rc1] - 2024-06-27
+
+- Fix: The generator was skipping auto pagination for item arrays that were optional. Now, 
+  those are safely handled as well. 
+
 ## [0.26.0-rc0] - 2024-06-27
 
 - Feature: The TypeScript generator now supports cursor-based auto pagination. With 

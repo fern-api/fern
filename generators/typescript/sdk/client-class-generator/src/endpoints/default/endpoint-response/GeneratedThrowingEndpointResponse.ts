@@ -83,14 +83,12 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             const cursor = this.endpoint.pagination;
             const itemValueType = cursor.results.property.valueType;
 
-            if (itemValueType.type !== "container") {
-                return undefined;
-            }
-            if (itemValueType.container.type !== "list") {
+            const itemTypeReference = context.type.getItemTypeFromListOrOptionalList(itemValueType);
+            if (itemTypeReference == null) {
                 return undefined;
             }
 
-            const itemType = context.type.getReferenceToType(itemValueType.container.list).typeNode;
+            const itemType = context.type.getReferenceToType(itemTypeReference).typeNode;
 
             // hasNextPage checks if next property is not null
             const nextProperty = this.getNameFromWireValue({ name: cursor.next.property.name, context });
