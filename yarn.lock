@@ -12918,7 +12918,6 @@ env-cmd@toddbluhm/env-cmd:
     eslint-plugin-react-hooks: ^4.6.0
     eslint-plugin-tailwindcss: ^3.15.1
     execa: ^5.1.1
-    husky: ^8.0.1
     immer: ^9.0.15
     is-ci: ^3.0.1
     jest: ^29.7.0
@@ -14253,15 +14252,6 @@ env-cmd@toddbluhm/env-cmd:
   dependencies:
     ms: "npm:^2.0.0"
   checksum: 9c7a74a2827f9294c009266c82031030eae811ca87b0da3dceb8d6071b9bde22c9f3daef0469c3c533cc67a97d8a167cd9fc0389350e5f415f61a79b171ded16
-  languageName: node
-  linkType: hard
-
-"husky@npm:^8.0.1":
-  version: 8.0.1
-  resolution: "husky@npm:8.0.1"
-  bin:
-    husky: lib/bin.js
-  checksum: 943a73a13d0201318fd30e83d299bb81d866bd245b69e6277804c3b462638dc1921694cb94c2b8c920a4a187060f7d6058d3365152865406352e934c5fff70dc
   languageName: node
   linkType: hard
 

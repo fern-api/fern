@@ -63,10 +63,6 @@ yarn
 
 This tells VSCode to rely on the version of TypeScript that lives in `.yarn/sdks/typescript`, which is modified to work with Yarn PNP.
 
-**Step 5: Install Husky**
-
-Run `yarn husky install` from the root of the repo and this will configure pre-commit hooks that will lint your changes.
-
 ### Compiling
 
 To compile the packages in this monorepo, run `yarn compile`.
