@@ -63,7 +63,11 @@ export async function updateApiSpec({
                 for (const api of apis) {
                     if (typeof api !== "string" && api.origin != null) {
                         cliContext.logger.info(`Origin found, fetching spec from ${api.origin}`);
-                        await fetchAndWriteFile(api.origin, path.join(fernDirectory, api.path), cliContext.logger);
+                        await fetchAndWriteFile(
+                            api.origin,
+                            path.join(workspace.absoluteFilepath, api.path),
+                            cliContext.logger
+                        );
                     }
                 }
             } else if (generatorConfig[generatorsYml.ASYNC_API_LOCATION_KEY] != null) {
@@ -74,7 +78,11 @@ export async function updateApiSpec({
                     const origin = generatorConfig[generatorsYml.API_ORIGIN_LOCATION_KEY];
                     const location = generatorConfig[generatorsYml.ASYNC_API_LOCATION_KEY];
                     if (origin != null && location != null) {
-                        await fetchAndWriteFile(origin, path.join(fernDirectory, location), cliContext.logger);
+                        await fetchAndWriteFile(
+                            origin,
+                            path.join(workspace.absoluteFilepath, location),
+                            cliContext.logger
+                        );
                     }
                 }
             } else if (generatorConfig[generatorsYml.OPENAPI_LOCATION_KEY] != null) {
@@ -89,7 +97,11 @@ export async function updateApiSpec({
                 if (apiOrigin != null && apiOutput != null) {
                     origin = apiOrigin;
                     cliContext.logger.info(`Origin found, fetching spec from ${apiOrigin}`);
-                    await fetchAndWriteFile(apiOrigin, path.join(fernDirectory, apiOutput), cliContext.logger);
+                    await fetchAndWriteFile(
+                        apiOrigin,
+                        path.join(workspace.absoluteFilepath, apiOutput),
+                        cliContext.logger
+                    );
                 }
             }
             return;
