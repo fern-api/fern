@@ -161,6 +161,16 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 );
                 writer.write(`.Serialize(${this.getParameterName()}.${name.pascalCase.safeName})`);
             });
+        } else if (this.isEnum({ typeReference: reference, allowOptionals: true })) {
+            return csharp.codeblock((writer) => {
+                writer.writeNode(
+                    csharp.classReference({
+                        name: "JsonSerializer",
+                        namespace: "System.Test.Json"
+                    })
+                );
+                writer.write(`.Serialize(${this.getParameterName()}.Value.${name.pascalCase.safeName})`);
+            });
         } else {
             return csharp.codeblock(`${this.getParameterName()}.${name.pascalCase.safeName}.ToString()`);
         }

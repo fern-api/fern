@@ -23,7 +23,7 @@ public class QueryParamClient
         };
         if (request.MaybeOperand != null)
         {
-            _query["maybeOperand"] = request.MaybeOperand.ToString();
+            _query["maybeOperand"] = JsonSerializer.Serialize(request.Value.MaybeOperand);
         }
         if (request.MaybeOperandOrColor != null)
         {
@@ -48,7 +48,7 @@ public class QueryParamClient
         };
         if (request.MaybeOperand != null)
         {
-            _query["maybeOperand"] = request.MaybeOperand.ToString();
+            _query["maybeOperand"] = JsonSerializer.Serialize(request.Value.MaybeOperand);
         }
         if (request.MaybeOperandOrColor != null)
         {

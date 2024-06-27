@@ -1,3 +1,4 @@
+using System.Test.Json;
 using System.Text.Json;
 using SeedPagination;
 
@@ -29,7 +30,7 @@ public class UsersClient
         }
         if (request.Order != null)
         {
-            _query["order"] = request.Order.ToString();
+            _query["order"] = JsonSerializer.Serialize(request.Value.Order);
         }
         if (request.StartingAfter != null)
         {
@@ -66,7 +67,7 @@ public class UsersClient
         }
         if (request.Order != null)
         {
-            _query["order"] = request.Order.ToString();
+            _query["order"] = JsonSerializer.Serialize(request.Value.Order);
         }
         if (request.StartingAfter != null)
         {
@@ -103,7 +104,7 @@ public class UsersClient
         }
         if (request.Order != null)
         {
-            _query["order"] = request.Order.ToString();
+            _query["order"] = JsonSerializer.Serialize(request.Value.Order);
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
