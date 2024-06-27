@@ -2378,7 +2378,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
-                      "max": 5368709120,
+                      "max": undefined,
                       "min": 5242880,
                       "multipleOf": undefined,
                     },
@@ -6846,7 +6846,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
-                      "max": 5368709120,
+                      "max": undefined,
                       "min": 5242880,
                       "multipleOf": undefined,
                     },

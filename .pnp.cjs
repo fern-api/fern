@@ -487,7 +487,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-react-hooks", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:4.6.0"],\
             ["eslint-plugin-tailwindcss", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:3.15.1"],\
             ["execa", "npm:5.1.1"],\
-            ["husky", "npm:8.0.1"],\
             ["immer", "npm:9.0.15"],\
             ["is-ci", "npm:3.0.1"],\
             ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
@@ -17249,7 +17248,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-react-hooks", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:4.6.0"],\
             ["eslint-plugin-tailwindcss", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:3.15.1"],\
             ["execa", "npm:5.1.1"],\
-            ["husky", "npm:8.0.1"],\
             ["immer", "npm:9.0.15"],\
             ["is-ci", "npm:3.0.1"],\
             ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
@@ -18677,15 +18675,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["humanize-ms", "npm:1.2.1"],\
             ["ms", "npm:2.1.3"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["husky", [\
-        ["npm:8.0.1", {\
-          "packageLocation": "./.yarn/cache/husky-npm-8.0.1-85fede8470-943a73a13d.zip/node_modules/husky/",\
-          "packageDependencies": [\
-            ["husky", "npm:8.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\

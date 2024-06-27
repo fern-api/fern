@@ -33,6 +33,12 @@ import {
     getValidationFromTypeReference
 } from "./utils/getTypeFromTypeReference";
 
+const MIN_INT_32 = -2147483648;
+const MAX_INT_32 = 2147483647;
+
+const MIN_DOUBLE_64 = -1.7976931348623157e308;
+const MAX_DOUBLE_64 = 1.7976931348623157e308;
+
 export function buildTypeReference({
     schema,
     /* The file the type reference will be written to */
@@ -149,7 +155,7 @@ function buildIntegerTypeReference({
     schema: PrimitiveSchemaValue.Int;
 }): RawSchemas.TypeReferenceWithDocsSchema {
     const type = "integer";
-    const validation = maybeNumberValidation(schema);
+    const validation = maybeNumberValidation(schema, type);
     if (description == null && schema.default == null && validation == null) {
         return type;
     }
@@ -176,7 +182,7 @@ function buildDoubleTypeReference({
     schema: PrimitiveSchemaValue.Double;
 }): RawSchemas.TypeReferenceWithDocsSchema {
     const type = "double";
-    const validation = maybeNumberValidation(schema);
+    const validation = maybeNumberValidation(schema, type);
     if (description == null && schema.default == null && validation == null) {
         return type;
     }
@@ -214,12 +220,17 @@ function maybeStringValidation(
 }
 
 function maybeNumberValidation(
-    schema: Omit<IntSchema, "default"> | Omit<DoubleSchema, "default"> | undefined
+    schema: Omit<IntSchema, "default"> | Omit<DoubleSchema, "default"> | undefined,
+    type: "integer" | "double"
 ): RawSchemas.ValidationSchema | undefined {
     if (schema == null) {
         return undefined;
     }
-    const { minimum, maximum, exclusiveMinimum, exclusiveMaximum, multipleOf } = schema;
+    let { minimum, maximum, multipleOf } = schema;
+    const { exclusiveMinimum, exclusiveMaximum } = schema;
+    minimum = makeUndefinedIfOutsideRange(minimum, type);
+    maximum = makeUndefinedIfOutsideRange(maximum, type);
+    multipleOf = makeUndefinedIfOutsideRange(multipleOf, type);
     if (
         minimum == null &&
         maximum == null &&
@@ -229,6 +240,7 @@ function maybeNumberValidation(
     ) {
         return undefined;
     }
+
     return {
         min: minimum,
         max: maximum,
@@ -236,6 +248,24 @@ function maybeNumberValidation(
         exclusiveMax: exclusiveMaximum,
         multipleOf
     };
+}
+
+/**
+ * Ensures that a number is within the specified range for its type.
+ * Returns `undefined` if the number is outside the valid range for the given type.
+ *
+ * @param num - The number to check. Can be `undefined`.
+ * @param type - The type of the number, either "integer" or "double".
+ * @returns The number if it is within the valid range, or `undefined` if it is outside the range.
+ */
+function makeUndefinedIfOutsideRange(num: number | undefined, type: "integer" | "double"): number | undefined {
+    if (num === undefined) {
+        return undefined;
+    }
+
+    const [min, max] = type === "integer" ? [MIN_INT_32, MAX_INT_32] : [MIN_DOUBLE_64, MAX_DOUBLE_64];
+
+    return num < min || num > max ? undefined : num;
 }
 
 export function buildReferenceTypeReference({
