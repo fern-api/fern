@@ -166,10 +166,10 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 writer.writeNode(
                     csharp.classReference({
                         name: "JsonSerializer",
-                        namespace: "System.Test.Json"
+                        namespace: "System.Text.Json"
                     })
                 );
-                writer.write(`.Serialize(${this.getParameterName()}.Value.${name.pascalCase.safeName})`);
+                writer.write(`.Serialize(${this.getParameterName()}.${name.pascalCase.safeName}.Value)`);
             });
         } else {
             return csharp.codeblock(`${this.getParameterName()}.${name.pascalCase.safeName}.ToString()`);

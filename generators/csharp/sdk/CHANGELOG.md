@@ -5,17 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.32 - 2024-06-21]
+
+- Fix: Enum values are JSON serialized before they are sent to the server. For example, if the
+  json value of an enum.
+
 ## [0.0.31 - 2024-06-21]
-- Fix: The underlying HTTP client safely joins endpoint path with base url. 
+
+- Fix: The underlying HTTP client safely joins endpoint path with base url.
 
 ## [0.0.30 - 2024-06-20]
 
-- Fix: The SDK now supports making bytes requests with Content Type `application/octet-stream`. 
-- Fix: The SDK now supports api wide path parameters and joining them safely in `RawClient.cs`.  
+- Fix: The SDK now supports making bytes requests with Content Type `application/octet-stream`.
+- Fix: The SDK now supports api wide path parameters and joining them safely in `RawClient.cs`.
 
 ## [0.0.29 - 2024-06-20]
 
-- Fix: The generated SDK now respects service base paths. Previously they were omitted. 
+- Fix: The generated SDK now respects service base paths. Previously they were omitted.
 
 ## [0.0.28 - 2024-06-19]
 

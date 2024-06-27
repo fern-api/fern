@@ -1,4 +1,5 @@
 using System.Test.Json;
+using System.Text.Json;
 using SeedEnum;
 
 #nullable enable
@@ -23,7 +24,7 @@ public class QueryParamClient
         };
         if (request.MaybeOperand != null)
         {
-            _query["maybeOperand"] = JsonSerializer.Serialize(request.Value.MaybeOperand);
+            _query["maybeOperand"] = JsonSerializer.Serialize(request.MaybeOperand.Value);
         }
         if (request.MaybeOperandOrColor != null)
         {
@@ -48,7 +49,7 @@ public class QueryParamClient
         };
         if (request.MaybeOperand != null)
         {
-            _query["maybeOperand"] = JsonSerializer.Serialize(request.Value.MaybeOperand);
+            _query["maybeOperand"] = JsonSerializer.Serialize(request.MaybeOperand.Value);
         }
         if (request.MaybeOperandOrColor != null)
         {
