@@ -249,20 +249,20 @@ class SdkGenerator(AbstractGenerator):
                     )
                 )
 
-            # try:
-            self._write_reference(
-                context=context,
-                generator_cli=generator_cli,
-                snippets=snippets,
-                project=project,
-                endpoint_metadata_collector=endpoint_metadata_collector,
-            )
-            # except Exception:
-            #     generator_exec_wrapper.send_update(
-            #         GeneratorUpdate.factory.log(
-            #             LogUpdate(level=LogLevel.DEBUG, message=f"Failed to generate reference.md; this is OK")
-            #         )
-            #     )
+            try:
+                self._write_reference(
+                    context=context,
+                    generator_cli=generator_cli,
+                    snippets=snippets,
+                    project=project,
+                    endpoint_metadata_collector=endpoint_metadata_collector,
+                )
+            except Exception:
+                generator_exec_wrapper.send_update(
+                    GeneratorUpdate.factory.log(
+                        LogUpdate(level=LogLevel.DEBUG, message=f"Failed to generate reference.md; this is OK")
+                    )
+                )
 
         context.core_utilities.copy_to_project(project=project)
         as_is_copier.copy_to_project(project=project)
