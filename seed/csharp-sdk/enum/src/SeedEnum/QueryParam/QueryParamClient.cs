@@ -1,3 +1,4 @@
+using System.Test.Json;
 using SeedEnum;
 
 #nullable enable
@@ -17,7 +18,7 @@ public class QueryParamClient
     {
         var _query = new Dictionary<string, object>()
         {
-            { "operand", request.Operand.ToString() },
+            { "operand", JsonSerializer.Serialize.Serialize(request.Operand) },
             { "operandOrColor", request.OperandOrColor.ToString() },
         };
         if (request.MaybeOperand != null)
@@ -42,7 +43,7 @@ public class QueryParamClient
     {
         var _query = new Dictionary<string, object>()
         {
-            { "operand", request.Operand.ToString() },
+            { "operand", JsonSerializer.Serialize.Serialize(request.Operand) },
             { "operandOrColor", request.OperandOrColor.ToString() },
         };
         if (request.MaybeOperand != null)

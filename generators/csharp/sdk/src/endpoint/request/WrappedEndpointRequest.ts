@@ -151,6 +151,16 @@ export class WrappedEndpointRequest extends EndpointRequest {
             return csharp.codeblock(`${this.getParameterName()}.${name.pascalCase.safeName}.ToString("o0")`);
         } else if (this.isDatetime({ typeReference: reference, allowOptionals: true })) {
             return csharp.codeblock(`${this.getParameterName()}.${name.pascalCase.safeName}.Value.ToString("o0")`);
+        } else if (this.isEnum({ typeReference: reference, allowOptionals: false })) {
+            return csharp.codeblock((writer) => {
+                writer.writeNode(
+                    csharp.classReference({
+                        name: "JsonSerializer.Serialize",
+                        namespace: "System.Test.Json"
+                    })
+                );
+                writer.write(`.Serialize(${this.getParameterName()}.${name.pascalCase.safeName})`);
+            });
         } else {
             return csharp.codeblock(`${this.getParameterName()}.${name.pascalCase.safeName}.ToString()`);
         }
@@ -229,6 +239,38 @@ export class WrappedEndpointRequest extends EndpointRequest {
             }
             case "primitive": {
                 return typeReference.primitive === "DATE_TIME";
+            }
+            case "unknown": {
+                return false;
+            }
+        }
+    }
+
+    private isEnum({
+        typeReference,
+        allowOptionals = true
+    }: {
+        typeReference: TypeReference;
+        allowOptionals: boolean;
+    }): boolean {
+        switch (typeReference.type) {
+            case "container":
+                if (typeReference.container.type === "optional" && allowOptionals) {
+                    return this.isEnum({ typeReference: typeReference.container.optional, allowOptionals });
+                }
+                return false;
+            case "named": {
+                const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (declaration.shape.type === "enum") {
+                    return true;
+                }
+                if (declaration.shape.type === "alias") {
+                    return this.isEnum({ typeReference: declaration.shape.aliasOf, allowOptionals });
+                }
+                return false;
+            }
+            case "primitive": {
+                return false;
             }
             case "unknown": {
                 return false;
