@@ -18,6 +18,10 @@ export class RequestBodyParameter extends AbstractRequestParameter {
         this.requestBodyReference = requestBodyReference;
     }
 
+    public getType(context: SdkContext): ts.TypeNode {
+        return context.type.getReferenceToType(this.requestBodyReference.requestBodyType).typeNode;
+    }
+
     public getInitialStatements(): ts.Statement[] {
         return [];
     }
