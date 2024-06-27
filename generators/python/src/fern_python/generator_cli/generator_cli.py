@@ -45,17 +45,36 @@ class GeneratorCli:
         if not skip_install:
             self._install()
 
+    def _should_write_reference(self, reference_config: generatorcli.ReferenceConfig) -> bool:
+        if len(reference_config.sections) == 0 and (
+            reference_config.root_section is None or len(reference_config.root_section.endpoints) == 0
+        ):
+            self._generator_exec_wrapper.send_update(
+                generator_exec.logging.GeneratorUpdate.factory.log(
+                    generator_exec.logging.LogUpdate(
+                        level=generator_exec.logging.LogLevel.DEBUG,
+                        message="No sections found for reference.md, skipping generation. This is OK.",
+                    )
+                )
+            )
+            return False
+        return True
+
     def generate_reference(
         self, snippets: generator_exec.Snippets, endpoint_metadata: EndpointMetadataCollector, project: Project
-    ) -> str:
+    ) -> Optional[str]:
         reference_config_builder = ReferenceConfigBuilder(
             ir=self._ir, snippets=snippets, endpoint_metadata=endpoint_metadata, context=self._context, project=project
         )
-        reference_config_filepath = self._write_reference_config(
-            reference_config=reference_config_builder.generate_reference_config(),
-        )
 
-        return self._run_command(command=[GENERATOR_CLI, "generate-reference", "--config", reference_config_filepath])
+        reference_config = reference_config_builder.generate_reference_config()
+        if self._should_write_reference(reference_config):
+            reference_config_filepath = self._write_reference_config(reference_config=reference_config)
+            return self._run_command(
+                command=[GENERATOR_CLI, "generate-reference", "--config", reference_config_filepath]
+            )
+
+        return None
 
     def generate_readme(
         self,

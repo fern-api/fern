@@ -568,13 +568,14 @@ __version__ = metadata.version("{project._project_config.package_name}")
         contents = generator_cli.generate_reference(
             snippets=snippets, endpoint_metadata=endpoint_metadata_collector, project=project
         )
-        project.add_file(
-            os.path.join(
-                context.generator_config.output.path,
-                REFERENCE_FILENAME,
-            ),
-            contents,
-        )
+        if contents is not None:
+            project.add_file(
+                os.path.join(
+                    context.generator_config.output.path,
+                    REFERENCE_FILENAME,
+                ),
+                contents,
+            )
 
     def _write_snippet_tests(
         self,
