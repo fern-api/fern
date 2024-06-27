@@ -5,7 +5,7 @@
  */
 export class Page<T> implements AsyncIterable<T> {
     public data: T[];
-    
+
     private response: unknown;
     private _hasNextPage: (response: unknown) => boolean;
     private getItems: (response: unknown) => T[];
@@ -15,7 +15,7 @@ export class Page<T> implements AsyncIterable<T> {
         response,
         hasNextPage,
         getItems,
-        loadPage,
+        loadPage
     }: {
         response: unknown;
         hasNextPage: (response: unknown) => boolean;
@@ -31,7 +31,7 @@ export class Page<T> implements AsyncIterable<T> {
 
     /**
      * Retrieves the next page
-     * @returns this 
+     * @returns this
      */
     public async getNextPage(): Promise<this> {
         this.response = await this.loadNextPage(this.response);
@@ -40,7 +40,7 @@ export class Page<T> implements AsyncIterable<T> {
     }
 
     /**
-     * @returns whether there is a next page to load 
+     * @returns whether there is a next page to load
      */
     public hasNextPage(): boolean {
         return this._hasNextPage(this.response);
