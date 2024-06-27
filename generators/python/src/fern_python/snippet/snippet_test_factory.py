@@ -547,6 +547,7 @@ class SnippetTestFactory:
             ),
             # This doesn't matter here either
             is_async=False,
+            endpoint_metadata_collector=None,
         )
 
     def _write_test_files(self) -> None:

@@ -49,13 +49,13 @@ class Project:
         license_: Optional[LicenseConfig],
     ) -> None:
         if flat_layout:
-            self._project_filepath = (
-                filepath if project_config is None else os.path.join(filepath, relative_path_to_project)
-            )
+            self._project_relative_filepath = relative_path_to_project
         else:
-            self._project_filepath = (
-                filepath if project_config is None else os.path.join(filepath, "src", relative_path_to_project)
-            )
+            self._project_relative_filepath = os.path.join("src", relative_path_to_project)
+
+        self._project_filepath = (
+            filepath if project_config is None else os.path.join(filepath, self._project_relative_filepath)
+        )
         self._generate_readme = True
         self._root_filepath = filepath
         self._relative_path_to_project = relative_path_to_project
@@ -117,6 +117,9 @@ class Project:
                 filepath, include_src_root=(include_src_root if include_src_root is not None else True)
             )
         )
+
+    def get_relative_source_file_filepath(self, filepath: Filepath) -> str:
+        return os.path.join(self._project_relative_filepath, str(filepath))
 
     def get_source_file_filepath(self, filepath: Filepath, include_src_root: bool) -> str:
         return (
