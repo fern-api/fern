@@ -25,5 +25,4 @@ export interface TypeContext {
     getGeneratedType: (typeName: DeclaredTypeName) => GeneratedType;
     getGeneratedTypeById: (typeId: TypeId) => GeneratedType;
     getGeneratedExample: (example: ExampleTypeReference) => GeneratedTypeReferenceExample;
-    getItemTypeFromListOrOptionalList: (typeReference: TypeReference) => TypeReference | undefined;
 }

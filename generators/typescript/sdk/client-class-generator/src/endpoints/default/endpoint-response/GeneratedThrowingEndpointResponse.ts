@@ -5,7 +5,8 @@ import {
     HttpResponseBody,
     Name,
     NameAndWireValue,
-    ResponseError
+    ResponseError,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { getTextOfTsNode, PackageId, StreamingFetcher } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
@@ -74,6 +75,16 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         this.clientClass = clientClass;
     }
 
+    private getItemTypeFromListOrOptionalList(typeReference: TypeReference): TypeReference | undefined {
+        if (typeReference.type === "container" && typeReference.container.type === "list") {
+            return typeReference.container.list;
+        }
+        if (typeReference.type === "container" && typeReference.container.type === "optional") {
+            return this.getItemTypeFromListOrOptionalList(typeReference.container.optional);
+        }
+        return undefined;
+    }
+
     public getPaginationInfo(context: SdkContext): PaginationResponseInfo | undefined {
         const successReturnType = getSuccessReturnType(this.response, context, {
             includeContentHeadersOnResponse: this.includeContentHeadersOnResponse
@@ -83,7 +94,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             const cursor = this.endpoint.pagination;
             const itemValueType = cursor.results.property.valueType;
 
-            const itemTypeReference = context.type.getItemTypeFromListOrOptionalList(itemValueType);
+            const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType);
             if (itemTypeReference == null) {
                 return undefined;
             }
