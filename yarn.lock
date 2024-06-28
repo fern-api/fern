@@ -3411,6 +3411,7 @@ __metadata:
     "@types/latest-version": ^4.0.1
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
+    "@types/semver": ^7.5.8
     "@types/tar": ^6.1.11
     "@types/validate-npm-package-name": ^4.0.0
     "@types/yargs": ^17.0.28
@@ -3433,10 +3434,12 @@ __metadata:
     ora: ^7.0.1
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
+    semver: ^7.6.2
     tar: ^6.2.1
     tmp-promise: ^3.0.3
     typescript: 4.6.4
     validate-npm-package-name: ^5.0.1
+    yaml: ^2.4.5
     yargs: ^17.4.1
   bin:
     "fern:dev": ./dist/dev/bundle.cjs
@@ -3458,6 +3461,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
+    "@types/semver": ^7.5.8
     "@types/tinycolor2": ^1.4.6
     depcheck: ^1.4.6
     dockerode: ^4.0.2
@@ -3467,8 +3471,10 @@ __metadata:
     js-yaml: ^4.1.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
+    semver: ^7.6.2
     tinycolor2: ^1.6.0
     typescript: 4.6.4
+    yaml: ^2.4.5
     zod: ^3.22.3
   languageName: unknown
   linkType: soft
@@ -7662,6 +7668,13 @@ __metadata:
   version: 7.5.6
   resolution: "@types/semver@npm:7.5.6"
   checksum: 563a0120ec0efcc326567db2ed920d5d98346f3638b6324ea6b50222b96f02a8add3c51a916b6897b51523aad8ac227d21d3dcf8913559f1bfc6c15b14d23037
+  languageName: node
+  linkType: hard
+
+"@types/semver@npm:^7.5.8":
+  version: 7.5.8
+  resolution: "@types/semver@npm:7.5.8"
+  checksum: ea6f5276f5b84c55921785a3a27a3cd37afee0111dfe2bcb3e03c31819c197c782598f17f0b150a69d453c9584cd14c4c4d7b9a55d2c5e6cacd4d66fdb3b3663
   languageName: node
   linkType: hard
 
@@ -21658,6 +21671,15 @@ env-cmd@toddbluhm/env-cmd:
   bin:
     semver: bin/semver.js
   checksum: 12d8ad952fa353b0995bf180cdac205a4068b759a140e5d3c608317098b3575ac2f1e09182206bf2eb26120e1c0ed8fb92c48c592f6099680de56bb071423ca3
+  languageName: node
+  linkType: hard
+
+"semver@npm:^7.6.2":
+  version: 7.6.2
+  resolution: "semver@npm:7.6.2"
+  bin:
+    semver: bin/semver.js
+  checksum: 40f6a95101e8d854357a644da1b8dd9d93ce786d5c6a77227bc69dbb17bea83d0d1d1d7c4cd5920a6df909f48e8bd8a5909869535007f90278289f2451d0292d
   languageName: node
   linkType: hard
 
