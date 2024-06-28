@@ -1309,7 +1309,7 @@ class EndpointFunctionSnippetGenerator:
 
 
 def get_endpoint_name(endpoint: ir_types.HttpEndpoint) -> str:
-    if endpoint.name.get_as_name().original_name == "list":
+    if endpoint.name.get_as_name().original_name.lower() == "list":
         return "list"
     return endpoint.name.get_as_name().snake_case.safe_name
 
