@@ -26,6 +26,7 @@ import { AsyncAPIV2 } from "./v2";
 export interface AsyncAPIIntermediateRepresentation {
     schemas: Record<SchemaId, Schema>;
     channel: WebsocketChannel | undefined;
+    basePath: string | undefined;
 }
 
 export function parseAsyncAPI({
@@ -214,7 +215,8 @@ export function parseAsyncAPI({
         schemas: Object.fromEntries(
             Object.entries(schemas).map(([id, schema]) => [id, convertSchemaWithExampleToSchema(schema)])
         ),
-        channel: parsedChannel
+        channel: parsedChannel,
+        basePath: getExtension<string | undefined>(document, FernAsyncAPIExtension.BASE_PATH)
     };
 }
 
