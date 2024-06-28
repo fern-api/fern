@@ -29,3 +29,8 @@ typography:
     path: ./fonts/WorkSans-variable.woff2
   bodyFont:
     path: ./fonts/WorkSans-variable.woff2
+
+css: ./css/custom.css
+
+js:
+  - path: ./js/custom.js

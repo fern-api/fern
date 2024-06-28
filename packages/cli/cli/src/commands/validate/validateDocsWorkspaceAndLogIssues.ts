@@ -14,7 +14,7 @@ export async function validateDocsWorkspaceWithoutExiting({
     logWarnings: boolean;
     logSummary?: boolean;
 }): Promise<{ hasErrors: boolean }> {
-    const violations = await validateDocsWorkspace(workspace, context.logger);
+    const violations = await validateDocsWorkspace(workspace, context);
     const { hasErrors } = logViolations({ violations, context, logWarnings, logSummary });
 
     return { hasErrors };

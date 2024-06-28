@@ -1,7 +1,10 @@
 import { docsYml } from "@fern-api/configuration";
+import { parseImagePaths } from "@fern-api/docs-markdown-utils";
 import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
+import path from "path";
 import { NodePath } from "../NodePath";
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
 import { validateVersionConfigFileSchema } from "./validateVersionConfig";
@@ -9,7 +12,9 @@ import { validateVersionConfigFileSchema } from "./validateVersionConfig";
 export async function visitDocsConfigFileYamlAst(
     contents: docsYml.RawSchemas.DocsConfiguration,
     visitor: Partial<DocsConfigFileAstVisitor>,
-    absoluteFilepathToConfiguration: AbsoluteFilePath
+    absoluteFilepathToConfiguration: AbsoluteFilePath,
+    absolutePathToFernFolder: AbsoluteFilePath,
+    context: TaskContext
 ): Promise<void> {
     await visitor.file?.(
         {
@@ -17,6 +22,88 @@ export async function visitDocsConfigFileYamlAst(
         },
         []
     );
+
+    // the following code parses markdown files for media and adds them to the filepath visitor
+    let pageEntries: [string, string][];
+
+    try {
+        // wrap the parse call in a try/catch because it will throw if a markdown file doesn't exist
+        const { pages } = await docsYml.parseDocsConfiguration({
+            rawDocsConfiguration: contents,
+            context,
+            absoluteFilepathToDocsConfig: absoluteFilepathToConfiguration,
+            absolutePathToFernFolder
+        });
+        pageEntries = Object.entries(pages);
+    } catch {
+        pageEntries = [];
+    }
+
+    for (const [relativePath, markdown] of pageEntries) {
+        const { filepaths } = parseImagePaths(markdown, {
+            absolutePathToFernFolder,
+            absolutePathToMdx: resolve(absolutePathToFernFolder, relativePath)
+        });
+
+        // visit each media filepath in each markdown file
+        for (const filepath of filepaths) {
+            await visitor.filepath?.(
+                {
+                    absoluteFilepath: filepath,
+                    value: path.relative(absolutePathToFernFolder, filepath),
+                    willBeUploaded: true
+                },
+                [relativePath]
+            );
+        }
+    }
+
+    if (contents.js != null) {
+        if (Array.isArray(contents.js)) {
+            // multiple JS configs
+            await Promise.all(
+                contents.js.map((script, idx) =>
+                    visitScript({
+                        absoluteFilepathToConfiguration,
+                        visitor,
+                        script,
+                        nodePath: ["js", `${idx}`]
+                    })
+                )
+            );
+        } else {
+            // single JS config
+            await visitScript({
+                absoluteFilepathToConfiguration,
+                visitor,
+                script: contents.js,
+                nodePath: ["js"]
+            });
+        }
+    }
+
+    if (contents.css != null) {
+        if (Array.isArray(contents.css)) {
+            // multiple CSS files
+            await Promise.all(
+                contents.css.map((stylesheet, idx) =>
+                    visitFilepath({
+                        absoluteFilepathToConfiguration,
+                        rawUnresolvedFilepath: stylesheet,
+                        visitor,
+                        nodePath: ["css", `${idx}`]
+                    })
+                )
+            );
+        } else {
+            await visitFilepath({
+                absoluteFilepathToConfiguration,
+                rawUnresolvedFilepath: contents.css,
+                visitor,
+                nodePath: ["css"]
+            });
+        }
+    }
 
     if (contents.backgroundImage != null) {
         if (typeof contents.backgroundImage === "string") {
@@ -140,7 +227,8 @@ export async function visitDocsConfigFileYamlAst(
                     absoluteFilepathToConfiguration,
                     rawUnresolvedFilepath: version.path,
                     visitor,
-                    nodePath: ["versions", `${idx}`]
+                    nodePath: ["versions", `${idx}`],
+                    willBeUploaded: false
                 });
                 const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), version.path);
                 const content = yaml.load((await readFile(absoluteFilepath)).toString());
@@ -171,18 +259,21 @@ async function visitFilepath({
     absoluteFilepathToConfiguration,
     rawUnresolvedFilepath,
     visitor,
-    nodePath
+    nodePath,
+    willBeUploaded = true
 }: {
     absoluteFilepathToConfiguration: AbsoluteFilePath;
     rawUnresolvedFilepath: string;
     visitor: Partial<DocsConfigFileAstVisitor>;
     nodePath: NodePath;
+    willBeUploaded?: boolean;
 }) {
     const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), rawUnresolvedFilepath);
     await visitor.filepath?.(
         {
             absoluteFilepath,
-            value: rawUnresolvedFilepath
+            value: rawUnresolvedFilepath,
+            willBeUploaded
         },
         nodePath
     );
@@ -246,7 +337,8 @@ async function visitNavigationItem({
             absoluteFilepathToConfiguration,
             rawUnresolvedFilepath: navigationItem.path,
             visitor,
-            nodePath: [...nodePath, "page"]
+            nodePath: [...nodePath, "page"],
+            willBeUploaded: false
         });
         const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), navigationItem.path);
         if (await doesPathExist(absoluteFilepath)) {
@@ -272,6 +364,30 @@ async function visitNavigationItem({
                 });
             })
         );
+    }
+}
+
+async function visitScript({
+    absoluteFilepathToConfiguration,
+    visitor,
+    script,
+    nodePath
+}: {
+    absoluteFilepathToConfiguration: AbsoluteFilePath;
+    visitor: Partial<DocsConfigFileAstVisitor>;
+    script: docsYml.RawSchemas.JsConfigOptions;
+    nodePath: NodePath;
+}) {
+    const rawUnresolvedFilepath = typeof script === "string" ? script : "path" in script ? script.path : null;
+
+    if (rawUnresolvedFilepath) {
+        await visitFilepath({
+            absoluteFilepathToConfiguration,
+            rawUnresolvedFilepath,
+            visitor,
+            nodePath,
+            willBeUploaded: true
+        });
     }
 }
 
