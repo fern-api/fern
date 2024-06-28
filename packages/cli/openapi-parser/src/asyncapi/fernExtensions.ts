@@ -28,7 +28,18 @@ export const FernAsyncAPIExtension = {
      *             value:
      *              data: "12340213"
      */
-    FERN_EXAMPLES: "x-fern-examples"
+    FERN_EXAMPLES: "x-fern-examples",
+
+    /**
+     * Prepends the configured base path to all of the endpoint paths.
+     *
+     * x-fern-base-path: /v1
+     * servers:
+     *   - url: https://api.example.com
+     * paths:
+     *   /path/to/my/endpoint:
+     */
+    BASE_PATH: "x-fern-base-path"
 } as const;
 
 export type FernAsyncAPIExtension = Values<typeof FernAsyncAPIExtension>;
