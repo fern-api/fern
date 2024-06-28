@@ -44,6 +44,7 @@ export async function loadAndUpdateGenerators({
 
     for (const groupBlock of generatorGroups.items) {
         const groupName = groupBlock.key;
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments
         const group = groupBlock.value as YAML.YAMLMap<string, YAML.YAMLSeq<YAML.YAMLMap<unknown, unknown>>>;
         if (!YAML.isMap(group)) {
             context.failAndThrow(
