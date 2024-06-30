@@ -144,8 +144,10 @@ export async function loadApis({
     });
     if (workspace.didSucceed) {
         return [workspace.workspace];
-    } else {
+    } else if (commandLineApiWorkspace != null) {
         handleFailedWorkspaceParserResult(workspace, context.logger);
         return [];
     }
+
+    return [];
 }
