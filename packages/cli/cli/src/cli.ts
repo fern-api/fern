@@ -682,6 +682,12 @@ function addUpgradeGeneratorCommand(cli: Argv<GlobalCliOptions>, cliContext: Cli
                     string: true,
                     description:
                         "The API to upgrade the generator for. If not specified, the generator will be upgraded for all APIs."
+                })
+                .option("include-major", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Whether or not to include major versions within the upgrade. Defaults to false, meaning major versions will be skipped."
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
@@ -690,7 +696,8 @@ function addUpgradeGeneratorCommand(cli: Argv<GlobalCliOptions>, cliContext: Cli
                     generator: argv.generator,
                     version: argv.version,
                     api: argv.api,
-                    group: argv.group
+                    group: argv.group,
+                    includeMajor: argv.includeMajor
                 }
             });
             await upgradeGenerator({
@@ -700,7 +707,8 @@ function addUpgradeGeneratorCommand(cli: Argv<GlobalCliOptions>, cliContext: Cli
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: true
-                })
+                }),
+                includeMajor: argv.includeMajor
             });
         }
     );
