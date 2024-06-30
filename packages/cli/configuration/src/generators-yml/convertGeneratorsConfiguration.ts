@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
+import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
 import { readFile } from "fs/promises";
 import path from "path";
 import {
@@ -24,10 +24,12 @@ import {
     OPENAPI_OVERRIDES_LOCATION_KEY
 } from "./schemas/GeneratorsConfigurationSchema";
 import { GithubLicenseSchema } from "./schemas/GithubLicenseSchema";
+import { GithubPullRequestSchema } from "./schemas/GithubPullRequestSchema";
 import { MavenOutputLocationSchema } from "./schemas/MavenOutputLocationSchema";
 import { OutputMetadataSchema } from "./schemas/OutputMetadataSchema";
 import { PypiOutputMetadataSchema } from "./schemas/PypiOutputMetadataSchema";
 import { ReadmeSchema } from "./schemas/ReadmeSchema";
+import { ReviewersSchema } from "./schemas/ReviewersSchema";
 
 export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
@@ -44,6 +46,7 @@ export async function convertGeneratorsConfiguration({
         api: parsedApiConfiguration,
         rawConfiguration: rawGeneratorsConfiguration,
         defaultGroup: rawGeneratorsConfiguration["default-group"],
+        reviewers: rawGeneratorsConfiguration.reviewers,
         groups:
             rawGeneratorsConfiguration.groups != null
                 ? await Promise.all(
@@ -53,6 +56,7 @@ export async function convertGeneratorsConfiguration({
                               groupName,
                               group,
                               maybeTopLevelMetadata,
+                              maybeTopLevelReviewers: rawGeneratorsConfiguration.reviewers,
                               readme
                           })
                       )
@@ -175,17 +179,20 @@ async function convertGroup({
     groupName,
     group,
     maybeTopLevelMetadata,
+    maybeTopLevelReviewers,
     readme
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     groupName: string;
     group: GeneratorGroupSchema;
     maybeTopLevelMetadata: OutputMetadata | undefined;
+    maybeTopLevelReviewers: ReviewersSchema | undefined;
     readme: ReadmeSchema | undefined;
 }): Promise<GeneratorGroup> {
     const maybeGroupLevelMetadata = getOutputMetadata(group.metadata);
     return {
         groupName,
+        reviewers: group.reviewers,
         audiences: group.audiences == null ? { type: "all" } : { type: "select", audiences: group.audiences },
         generators: await Promise.all(
             group.generators.map((generator) =>
@@ -194,6 +201,8 @@ async function convertGroup({
                     generator,
                     maybeTopLevelMetadata,
                     maybeGroupLevelMetadata,
+                    maybeTopLevelReviewers,
+                    maybeGroupLevelReviewers: group.reviewers,
                     readme
                 })
             )
@@ -206,12 +215,16 @@ async function convertGenerator({
     generator,
     maybeGroupLevelMetadata,
     maybeTopLevelMetadata,
+    maybeGroupLevelReviewers,
+    maybeTopLevelReviewers,
     readme
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: GeneratorInvocationSchema;
     maybeGroupLevelMetadata: OutputMetadata | undefined;
     maybeTopLevelMetadata: OutputMetadata | undefined;
+    maybeGroupLevelReviewers: ReviewersSchema | undefined;
+    maybeTopLevelReviewers: ReviewersSchema | undefined;
     readme: ReadmeSchema | undefined;
 }): Promise<GeneratorInvocation> {
     return {
@@ -222,7 +235,9 @@ async function convertGenerator({
             absolutePathToGeneratorsConfiguration,
             generator,
             maybeGroupLevelMetadata,
-            maybeTopLevelMetadata
+            maybeTopLevelMetadata,
+            maybeGroupLevelReviewers,
+            maybeTopLevelReviewers
         }),
         keywords: generator.keywords,
         smartCasing: generator["smart-casing"] ?? false,
@@ -283,16 +298,63 @@ function _getPypiMetadata({
     }
     return maybePyPiMetadata;
 }
+
+function _getReviewers({
+    topLevelReviewers,
+    groupLevelReviewers,
+    outputModeReviewers
+}: {
+    topLevelReviewers: ReviewersSchema | undefined;
+    groupLevelReviewers: ReviewersSchema | undefined;
+    outputModeReviewers: ReviewersSchema | undefined;
+}): GithubPullRequestReviewer[] {
+    const teamNames = new Set<string>();
+    const userNames = new Set<string>();
+
+    const reviewers: GithubPullRequestReviewer[] = [];
+
+    const allTeamReviewers = [
+        ...(topLevelReviewers?.teams ?? []),
+        ...(groupLevelReviewers?.teams ?? []),
+        ...(outputModeReviewers?.teams ?? [])
+    ];
+    const allUserReviewers = [
+        ...(topLevelReviewers?.users ?? []),
+        ...(groupLevelReviewers?.users ?? []),
+        ...(outputModeReviewers?.users ?? [])
+    ];
+
+    for (const team of allTeamReviewers) {
+        if (!teamNames.has(team.name)) {
+            reviewers.push(GithubPullRequestReviewer.team({ name: team.name }));
+            teamNames.add(team.name);
+        }
+    }
+
+    for (const user of allUserReviewers) {
+        if (!userNames.has(user.name)) {
+            reviewers.push(GithubPullRequestReviewer.user({ name: user.name }));
+            userNames.add(user.name);
+        }
+    }
+
+    return reviewers;
+}
+
 async function convertOutputMode({
     absolutePathToGeneratorsConfiguration,
     generator,
     maybeGroupLevelMetadata = {},
-    maybeTopLevelMetadata = {}
+    maybeTopLevelMetadata = {},
+    maybeGroupLevelReviewers,
+    maybeTopLevelReviewers
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: GeneratorInvocationSchema;
     maybeGroupLevelMetadata: OutputMetadata | undefined;
     maybeTopLevelMetadata: OutputMetadata | undefined;
+    maybeGroupLevelReviewers: ReviewersSchema | undefined;
+    maybeTopLevelReviewers: ReviewersSchema | undefined;
 }): Promise<FernFiddle.OutputMode> {
     const downloadSnippets = generator.snippets != null && generator.snippets.path !== "";
     if (generator.github != null) {
@@ -324,16 +386,23 @@ async function convertOutputMode({
                         downloadSnippets
                     })
                 );
-            case "pull-request":
+            case "pull-request": {
+                const reviewers = _getReviewers({
+                    topLevelReviewers: maybeTopLevelReviewers,
+                    groupLevelReviewers: maybeGroupLevelReviewers,
+                    outputModeReviewers: (generator.github as GithubPullRequestSchema).reviewers
+                });
                 return FernFiddle.OutputMode.githubV2(
                     FernFiddle.GithubOutputModeV2.pullRequest({
                         owner,
                         repo,
                         license,
                         publishInfo,
-                        downloadSnippets
+                        downloadSnippets,
+                        reviewers
                     })
                 );
+            }
             case "push":
                 return FernFiddle.OutputMode.githubV2(
                     FernFiddle.GithubOutputModeV2.push({
