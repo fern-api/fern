@@ -6495,7 +6495,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/semver", "npm:7.5.8"],\
             ["@types/tinycolor2", "npm:1.4.6"],\
             ["depcheck", "npm:1.4.6"],\
             ["dockerode", "npm:4.0.2"],\
@@ -6505,10 +6504,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["js-yaml", "npm:4.1.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
-            ["semver", "npm:7.6.2"],\
             ["tinycolor2", "npm:1.6.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
-            ["yaml", "npm:2.3.3"],\
             ["zod", "npm:3.22.4"]\
           ],\
           "linkType": "SOFT"\
