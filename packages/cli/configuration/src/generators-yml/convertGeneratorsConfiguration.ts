@@ -314,14 +314,14 @@ function _getReviewers({
     const reviewers: GithubPullRequestReviewer[] = [];
 
     const allTeamReviewers = [
-        ...(topLevelReviewers?.teams || []),
-        ...(groupLevelReviewers?.teams || []),
-        ...(outputModeReviewers?.teams || [])
+        ...(topLevelReviewers?.teams ?? []),
+        ...(groupLevelReviewers?.teams ?? []),
+        ...(outputModeReviewers?.teams ?? [])
     ];
     const allUserReviewers = [
-        ...(topLevelReviewers?.users || []),
-        ...(groupLevelReviewers?.users || []),
-        ...(outputModeReviewers?.users || [])
+        ...(topLevelReviewers?.users ?? []),
+        ...(groupLevelReviewers?.users ?? []),
+        ...(outputModeReviewers?.users ?? [])
     ];
 
     for (const team of allTeamReviewers) {
