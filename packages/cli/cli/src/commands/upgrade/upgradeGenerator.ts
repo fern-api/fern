@@ -13,12 +13,14 @@ export async function loadAndUpdateGenerators({
     absolutePathToWorkspace,
     context,
     generatorFilter,
-    groupFilter
+    groupFilter,
+    includeMajor
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
     generatorFilter: string | undefined;
     groupFilter: string | undefined;
+    includeMajor: boolean;
 }): Promise<string | undefined> {
     const filepath = generatorsYml.getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
     if (!(await doesPathExist(filepath))) {
@@ -91,7 +93,7 @@ export async function loadAndUpdateGenerators({
             // check if the versions have the same major version, if not fail, if yes do the upgrade
             const currentMajor = semver.major(currentVersion);
             const latestMajor = semver.major(latestVersion);
-            if (currentMajor === latestMajor) {
+            if (currentMajor === latestMajor || includeMajor) {
                 generator.set("version", latestVersion);
                 context.logger.info(chalk.green(`${generatorName} has been upgraded to latest in group: ${groupName}`));
             }
@@ -105,12 +107,14 @@ export async function upgradeGenerator({
     cliContext,
     generator,
     group,
-    project: { apiWorkspaces }
+    project: { apiWorkspaces },
+    includeMajor
 }: {
     cliContext: CliContext;
     generator: string | undefined;
     group: string | undefined;
     project: Project;
+    includeMajor: boolean;
 }): Promise<void> {
     await Promise.all(
         apiWorkspaces.map(async (workspace) => {
@@ -134,7 +138,8 @@ export async function upgradeGenerator({
                     absolutePathToWorkspace: workspace.absoluteFilepath,
                     context,
                     generatorFilter: generator,
-                    groupFilter: group
+                    groupFilter: group,
+                    includeMajor
                 });
 
                 if (updatedConfiguration != null) {
