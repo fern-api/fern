@@ -63,6 +63,7 @@ export declare namespace ExpressGenerator {
         allowExtraFields: boolean;
         skipRequestValidation: boolean;
         skipResponseValidation: boolean;
+        requestValidationStatusCode: number;
     }
 }
 
@@ -208,7 +209,8 @@ export class ExpressGenerator {
             doNotHandleUnrecognizedErrors: config.doNotHandleUnrecognizedErrors,
             includeSerdeLayer: config.includeSerdeLayer,
             skipRequestValidation: config.skipRequestValidation,
-            skipResponseValidation: config.skipResponseValidation
+            skipResponseValidation: config.skipResponseValidation,
+            requestValidationStatusCode: config.requestValidationStatusCode,
         });
         this.expressRegisterGenerator = new ExpressRegisterGenerator({
             packageResolver: this.packageResolver,
