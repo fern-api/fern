@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.8.0-rc0] - 2024-07-01
+
+- Improvement: allow users to specify additional dependencies and dev dependencies for Ruby SDKs.
+  Example config:
+  ```yaml
+  generators:
+    - name: fernapi/fern-ruby-sdk
+      config:
+        extraDependencies:
+          faraday-multipart:
+            upperBound:
+              version: "1.0.4"
+              specifier: ">="
+            lowerBound:
+              version: "1.0"
+              specifier: "~>"
+        extraDevDependencies:
+          dotenv: "2.1"
+          faraday:
+            upperBound:
+              version: "0.17.3"
+              specifier: ">"
+            lowerBound:
+              version: "0.20.0"
+  ```
+
 ## [0.7.0-rc5] - 2024-06-24
 
 - Fix: additional fix for the same issue within 0.7.0-rc4 (regression introduced within the 0.7.0 RCs where the token prefix was dropped from requests).

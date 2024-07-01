@@ -4438,6 +4438,7 @@ __metadata:
   resolution: "@fern-api/ruby-codegen@workspace:generators/ruby/codegen"
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
+    "@fern-api/generator-commons": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.898
     "@fern-fern/ir-sdk": ^39
     "@types/jest": ^29.0.3

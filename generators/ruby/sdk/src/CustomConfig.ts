@@ -1,15 +1,17 @@
-import { BaseGeneratorConfigSchema } from "@fern-api/generator-commons";
+import { BaseGeneratorConfigSchema, ExtraDependenciesSchema } from "@fern-api/generator-commons";
 import { z } from "zod";
 
 export type RubySdkCustomConfig = z.infer<typeof RubySdkCustomConfigSchema>;
 export const RubySdkCustomConfigSchema = BaseGeneratorConfigSchema.extend({
     defaultTimeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
+    extraDevDependencies: z.optional(ExtraDependenciesSchema),
     flattenModuleStructure: z.optional(z.boolean())
 });
 
 export type RubySdkCustomConfigConsumed = z.infer<typeof RubySdkCustomConfigSchemaConsumed>;
 export const RubySdkCustomConfigSchemaConsumed = BaseGeneratorConfigSchema.extend({
     defaultTimeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
+    extraDevDependencies: z.optional(ExtraDependenciesSchema),
     flattenModuleStructure: z.boolean()
 });
 
@@ -19,6 +21,7 @@ export function parseCustomConfig(customConfig: unknown): RubySdkCustomConfigCon
     return {
         defaultTimeoutInSeconds: parsed?.defaultTimeoutInSeconds,
         extraDependencies: parsed?.extraDependencies,
+        extraDevDependencies: parsed?.extraDevDependencies,
         clientClassName: parsed?.clientClassName,
         flattenModuleStructure: parsed?.flattenModuleStructure ?? false
     };

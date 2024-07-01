@@ -5,6 +5,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import {
     ClassReferenceFactory,
     Class_,
+    ExternalDependency,
     generateBasicRakefile,
     generateBasicTests,
     GeneratedFile,
@@ -70,18 +71,21 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         clientName: string,
         config: FernGeneratorExec.GeneratorConfig,
         intermediateRepresentation: IntermediateRepresentation,
+        customConfig: RubySdkCustomConfigConsumed,
         repoUrl?: string
     ) {
         const sdkVersion = getSdkVersion(config);
 
         const boilerPlateFiles = [];
         boilerPlateFiles.push(generateRubocopConfig());
-        boilerPlateFiles.push(generateGemfile());
+        boilerPlateFiles.push(
+            generateGemfile(ExternalDependency.convertDependencies(customConfig.extraDevDependencies ?? {}))
+        );
         boilerPlateFiles.push(
             generateGemspec(
                 clientName,
                 gemName,
-                [],
+                ExternalDependency.convertDependencies(customConfig.extraDependencies ?? {}),
                 sdkVersion,
                 config.license,
                 this.hasFileUploadEndpoints(intermediateRepresentation) ||
@@ -154,7 +158,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         repoUrl?: string
     ) {
         generatorContext.logger.debug("[Ruby] Generating Ruby project boilerplate.");
-        this.generateRubyBoilerPlate(gemName, clientName, config, intermediateRepresentation, repoUrl);
+        this.generateRubyBoilerPlate(gemName, clientName, config, intermediateRepresentation, customConfig, repoUrl);
         generatorContext.logger.debug("[Ruby] Generating Ruby classes.");
         this.generateTypes(gemName, clientName, generatorContext, intermediateRepresentation, customConfig);
         generatorContext.logger.debug("[Ruby] Generating HTTP client classes.");

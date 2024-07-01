@@ -61,7 +61,7 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
 
         const boilerPlateFiles = [];
         boilerPlateFiles.push(generateRubocopConfig());
-        boilerPlateFiles.push(generateGemfile());
+        boilerPlateFiles.push(generateGemfile([]));
         boilerPlateFiles.push(generateGemspec(clientName, gemName, [], sdkVersion, config.license));
         boilerPlateFiles.push(generateGemConfig(clientName, repoUrl));
 
