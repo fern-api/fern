@@ -276,9 +276,7 @@ class AsyncParamsClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"params/path/{jsonable_encoder(param)}", method="GET", request_options=request_options
@@ -329,9 +327,7 @@ class AsyncParamsClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "params", method="GET", params={"query": query, "number": number}, request_options=request_options
@@ -386,9 +382,7 @@ class AsyncParamsClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "params", method="GET", params={"query": query, "numer": numer}, request_options=request_options
@@ -439,9 +433,7 @@ class AsyncParamsClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"params/path-query/{jsonable_encoder(param)}",
@@ -495,9 +487,7 @@ class AsyncParamsClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"params/path/{jsonable_encoder(param)}",

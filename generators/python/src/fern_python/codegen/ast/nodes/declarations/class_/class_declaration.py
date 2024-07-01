@@ -144,7 +144,7 @@ class ClassDeclaration(AstNode):
     def add_expression(self, expression: Expression) -> None:
         self.statements.append(expression)
 
-    def write(self, writer: NodeWriter) -> None:
+    def write(self, writer: NodeWriter, should_write_as_snippet: Optional[bool] = None) -> None:
         writer.write(f"class {self.name}")
 
         just_wrote_extension = False

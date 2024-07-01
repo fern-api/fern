@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedObjectsWithImports\n\nclient = SeedObjectsWithImports(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.optional.send_optional_body(\n    request={\"string\": {\"key\": \"value\"}},\n)\n",
-                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedObjectsWithImports\n\nclient = AsyncSeedObjectsWithImports(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.optional.send_optional_body(\n        request={\"string\": {\"key\": \"value\"}},\n    )\n\n\nasyncio.run(\n    main(),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedObjectsWithImports\n\nclient = AsyncSeedObjectsWithImports(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.optional.send_optional_body(\n        request={\"string\": {\"key\": \"value\"}},\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

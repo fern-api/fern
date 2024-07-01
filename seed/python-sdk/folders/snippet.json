@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.foo()\n",
-                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.foo()\n\n\nasyncio.run(\n    main(),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.foo()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -23,7 +23,7 @@
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.a.b.foo()\n",
-                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.a.b.foo()\n\n\nasyncio.run(\n    main(),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.a.b.foo()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -36,7 +36,7 @@
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.a.c.foo()\n",
-                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.a.c.foo()\n\n\nasyncio.run(\n    main(),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.a.c.foo()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -49,7 +49,7 @@
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.folder.foo()\n",
-                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.folder.foo()\n\n\nasyncio.run(\n    main(),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.folder.foo()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -62,7 +62,7 @@
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.folder.service.endpoint()\n",
-                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.folder.service.endpoint()\n\n\nasyncio.run(\n    main(),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.folder.service.endpoint()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -75,7 +75,7 @@
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.folder.service.unknown_request(\n    request={\"key\": \"value\"},\n)\n",
-                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.folder.service.unknown_request(\n        request={\"key\": \"value\"},\n    )\n\n\nasyncio.run(\n    main(),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.folder.service.unknown_request(\n        request={\"key\": \"value\"},\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

@@ -117,9 +117,7 @@ class AsyncUnionClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="POST", json=request, request_options=request_options, omit=OMIT
@@ -158,9 +156,7 @@ class AsyncUnionClient:
             await client.union.get_metadata()
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "metadata", method="GET", request_options=request_options

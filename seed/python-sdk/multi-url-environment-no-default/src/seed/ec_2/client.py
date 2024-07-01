@@ -94,9 +94,7 @@ class AsyncEc2Client:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "ec2/boot",

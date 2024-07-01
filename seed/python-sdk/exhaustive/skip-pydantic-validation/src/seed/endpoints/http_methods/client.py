@@ -331,9 +331,7 @@ class AsyncHttpMethodsClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"http-methods/{jsonable_encoder(id)}", method="GET", request_options=request_options
@@ -379,9 +377,7 @@ class AsyncHttpMethodsClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "http-methods", method="POST", json={"string": string}, request_options=request_options, omit=OMIT
@@ -430,9 +426,7 @@ class AsyncHttpMethodsClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"http-methods/{jsonable_encoder(id)}",
@@ -545,9 +539,7 @@ class AsyncHttpMethodsClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"http-methods/{jsonable_encoder(id)}",
@@ -609,9 +601,7 @@ class AsyncHttpMethodsClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"http-methods/{jsonable_encoder(id)}", method="DELETE", request_options=request_options

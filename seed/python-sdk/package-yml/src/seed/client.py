@@ -182,9 +182,7 @@ class AsyncSeedPackageYml:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"{jsonable_encoder(id)}/", method="POST", json=request, request_options=request_options, omit=OMIT

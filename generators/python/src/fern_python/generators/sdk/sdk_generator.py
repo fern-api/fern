@@ -121,13 +121,6 @@ class SdkGenerator(AbstractGenerator):
                 ir=ir,
             ),
         )
-        generator_cli = GeneratorCli(
-            organization=generator_config.organization,
-            project_config=project._project_config,
-            ir=ir,
-            generator_exec_wrapper=generator_exec_wrapper,
-            context=context,
-        )
         snippet_registry = SnippetRegistry()
         snippet_writer = build_snippet_writer(
             context=context.pydantic_generator_context,
@@ -227,6 +220,14 @@ class SdkGenerator(AbstractGenerator):
                 project=project,
             )
 
+        generator_cli = GeneratorCli(
+            organization=generator_config.organization,
+            project_config=project._project_config,
+            ir=ir,
+            generator_exec_wrapper=generator_exec_wrapper,
+            context=context,
+            endpoint_metadata=endpoint_metadata_collector,
+        )
         snippets = snippet_registry.snippets()
         if snippets is not None:
             self._maybe_write_snippets(
@@ -241,6 +242,7 @@ class SdkGenerator(AbstractGenerator):
                     generator_cli=generator_cli,
                     snippets=snippets,
                     project=project,
+                    generated_root_client=generated_root_client,
                 )
             except Exception:
                 generator_exec_wrapper.send_update(
@@ -255,7 +257,6 @@ class SdkGenerator(AbstractGenerator):
                     generator_cli=generator_cli,
                     snippets=snippets,
                     project=project,
-                    endpoint_metadata_collector=endpoint_metadata_collector,
                 )
             except Exception:
                 generator_exec_wrapper.send_update(
@@ -539,6 +540,7 @@ __version__ = metadata.version("{project._project_config.package_name}")
         generator_cli: GeneratorCli,
         snippets: Snippets,
         project: Project,
+        generated_root_client: GeneratedRootClient,
     ) -> None:
         contents = generator_cli.generate_readme(
             snippets=snippets,
@@ -547,6 +549,7 @@ __version__ = metadata.version("{project._project_config.package_name}")
             if project._github_output_mode is not None
             else None,
             pagination_enabled=context.generator_config.generate_paginated_clients,
+            generated_root_client=generated_root_client,
         )
         project.add_file(
             os.path.join(
@@ -563,11 +566,8 @@ __version__ = metadata.version("{project._project_config.package_name}")
         generator_cli: GeneratorCli,
         snippets: Snippets,
         project: Project,
-        endpoint_metadata_collector: EndpointMetadataCollector,
     ) -> None:
-        contents = generator_cli.generate_reference(
-            snippets=snippets, endpoint_metadata=endpoint_metadata_collector, project=project
-        )
+        contents = generator_cli.generate_reference(snippets=snippets, project=project)
         if contents is not None:
             project.add_file(
                 os.path.join(

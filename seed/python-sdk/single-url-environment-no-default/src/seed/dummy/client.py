@@ -77,9 +77,7 @@ class AsyncDummyClient:
             await client.dummy.get_dummy()
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "dummy", method="GET", request_options=request_options

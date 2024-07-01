@@ -148,9 +148,7 @@ class AsyncImdbClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "movies/create-movie",
@@ -198,9 +196,7 @@ class AsyncImdbClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"movies/{jsonable_encoder(movie_id)}", method="GET", request_options=request_options

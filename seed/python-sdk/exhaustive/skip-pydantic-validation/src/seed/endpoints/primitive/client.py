@@ -400,9 +400,7 @@ class AsyncPrimitiveClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/string", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -446,9 +444,7 @@ class AsyncPrimitiveClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/integer", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -494,9 +490,7 @@ class AsyncPrimitiveClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/long", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -542,9 +536,7 @@ class AsyncPrimitiveClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/double", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -590,9 +582,7 @@ class AsyncPrimitiveClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/boolean", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -641,9 +631,7 @@ class AsyncPrimitiveClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/datetime", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -692,9 +680,7 @@ class AsyncPrimitiveClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/date", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -743,9 +729,7 @@ class AsyncPrimitiveClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/uuid", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -791,9 +775,7 @@ class AsyncPrimitiveClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/base64", method="POST", json=request, request_options=request_options, omit=OMIT

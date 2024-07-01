@@ -265,9 +265,7 @@ class AsyncServiceClient:
             await client.service.post()
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
@@ -319,9 +317,7 @@ class AsyncServiceClient:
             await client.service.just_file()
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "just-file", method="POST", data={}, files={"file": file}, request_options=request_options, omit=OMIT
@@ -389,9 +385,7 @@ class AsyncServiceClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "just-file-with-query-params",

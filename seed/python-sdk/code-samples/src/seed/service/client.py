@@ -87,9 +87,7 @@ class AsyncServiceClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "hello", method="POST", json={"num_events": num_events}, request_options=request_options, omit=OMIT

@@ -114,9 +114,7 @@ class AsyncNoReqBodyClient:
             await client.no_req_body.get_with_no_request_body()
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "no-req-body", method="GET", request_options=request_options
@@ -156,9 +154,7 @@ class AsyncNoReqBodyClient:
             await client.no_req_body.post_with_no_request_body()
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "no-req-body", method="POST", request_options=request_options

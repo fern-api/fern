@@ -12,7 +12,7 @@
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedUndiscriminatedUnions\n\nclient = SeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.get(\n    request=\"string\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedUndiscriminatedUnions\n\nclient = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.get(\n        request=\"string\",\n    )\n\n\nasyncio.run(\n    main(),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedUndiscriminatedUnions\n\nclient = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.get(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -25,7 +25,7 @@
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedUndiscriminatedUnions\n\nclient = SeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.get_metadata()\n",
-                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedUndiscriminatedUnions\n\nclient = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.get_metadata()\n\n\nasyncio.run(\n    main(),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedUndiscriminatedUnions\n\nclient = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.get_metadata()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

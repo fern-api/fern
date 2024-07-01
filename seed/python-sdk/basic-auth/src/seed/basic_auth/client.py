@@ -140,9 +140,7 @@ class AsyncBasicAuthClient:
             await client.basic_auth.get_with_basic_auth()
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "basic-auth", method="GET", request_options=request_options
@@ -195,9 +193,7 @@ class AsyncBasicAuthClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "basic-auth", method="POST", json=request, request_options=request_options, omit=OMIT

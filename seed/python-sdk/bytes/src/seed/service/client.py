@@ -91,9 +91,7 @@ class AsyncServiceClient:
             await client.service.upload()
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "upload-content", method="POST", content=request, request_options=request_options, omit=OMIT

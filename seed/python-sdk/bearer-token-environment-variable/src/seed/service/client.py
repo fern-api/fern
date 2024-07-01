@@ -79,9 +79,7 @@ class AsyncServiceClient:
             await client.service.get_with_bearer_token()
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "apiKey", method="GET", request_options=request_options
