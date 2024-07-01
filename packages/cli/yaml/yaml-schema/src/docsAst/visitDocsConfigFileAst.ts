@@ -91,7 +91,8 @@ export async function visitDocsConfigFileYamlAst(
                         absoluteFilepathToConfiguration,
                         rawUnresolvedFilepath: stylesheet,
                         visitor,
-                        nodePath: ["css", `${idx}`]
+                        nodePath: ["css", `${idx}`],
+                        willBeUploaded: false
                     })
                 )
             );
@@ -100,7 +101,8 @@ export async function visitDocsConfigFileYamlAst(
                 absoluteFilepathToConfiguration,
                 rawUnresolvedFilepath: contents.css,
                 visitor,
-                nodePath: ["css"]
+                nodePath: ["css"],
+                willBeUploaded: false
             });
         }
     }
