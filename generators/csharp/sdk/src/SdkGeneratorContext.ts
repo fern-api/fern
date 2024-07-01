@@ -137,6 +137,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return `${endpoint.name.pascalCase.safeName}Async`;
     }
 
+    public getExtraDependencies(): Record<string, string> {
+        return this.customConfig["extra-dependencies"] ?? {};
+    }
+
     private getNamespaceFromFernFilepath(fernFilepath: FernFilepath): string {
         return [this.getNamespace(), ...fernFilepath.packagePath.map((path) => path.pascalCase.safeName)].join(".");
     }

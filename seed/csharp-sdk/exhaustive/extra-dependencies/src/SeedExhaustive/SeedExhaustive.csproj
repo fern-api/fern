@@ -1,0 +1,25 @@
+
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>net8.0;net7.0;net6.0;</TargetFrameworks>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <NuGetAudit>false</NuGetAudit>
+        <Version>0.0.1</Version>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageProjectUrl>https://github.com/exhaustive/fern</PackageProjectUrl>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="OneOf" Version="3.0.263" />
+        <PackageReference Include="System.Text.Json" Version="8.0.3" />
+        <PackageReference Include="Moq" Version="4.20.70" />
+        <PackageReference Include="Moq.Contrib.HttpClient" Version="1.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\..\README.md" Pack="true" PackagePath=""/>
+    </ItemGroup>
+
+
+</Project>

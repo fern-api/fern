@@ -14,6 +14,15 @@ local:
   buildCommand: 
     - yarn workspace @fern-api/fern-csharp-sdk dist:cli
   runCommand: node sdk/dist/bundle.cjs
+fixtures: 
+  exhaustive:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        extra-dependencies:
+          Moq: 4.20.70
+          Moq.Contrib.HttpClient: "1.4.0"
+      outputFolder: extra-dependencies
 allowedFailures:
   - alias
   - auth-environment-variables

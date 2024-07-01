@@ -172,6 +172,8 @@ export abstract class AbstractCsharpGeneratorContext<
 
     public abstract getNamespaceForTypeId(typeId: TypeId): string;
 
+    public abstract getExtraDependencies(): Record<string, string>;
+
     // STOLEN FROM: ruby/TypesGenerator.ts
     // We need a better way to share this sort of ir-processing logic.
     //
