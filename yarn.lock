@@ -4686,7 +4686,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-fern/docs-config": 0.0.80
+    "@fern-fern/docs-config": 0.23.6
     "@fern-fern/legacy-docs-config": 0.0.58
     "@types/inquirer": ^9.0.7
     "@types/jest": ^29.0.3
@@ -4734,10 +4734,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-fern/docs-config@npm:0.0.80":
-  version: 0.0.80
-  resolution: "@fern-fern/docs-config@npm:0.0.80"
-  checksum: 8b3501c55ba321c5e838c07364d68a9ad78114f7b11985c1fcc87bbb2de12bb8805f70fc2bef8a4e9ef375cd4d82f4e89462a33532cc7c22650f04ab7d810480
+"@fern-fern/docs-config@npm:0.23.6":
+  version: 0.23.6
+  resolution: "@fern-fern/docs-config@npm:0.23.6"
+  checksum: dcdc84dd606ba4d223b54ab899da20d502a3383458d8575e8afa273482785deef73fbd828fc88022d59a4c6ff498e79ed0ee862cc154dcd68006e483c9914a25
   languageName: node
   linkType: hard
 

@@ -7801,7 +7801,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/semver-utils", "workspace:packages/cli/semver-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
-            ["@fern-fern/docs-config", "npm:0.0.80"],\
+            ["@fern-fern/docs-config", "npm:0.23.6"],\
             ["@fern-fern/legacy-docs-config", "npm:0.0.58"],\
             ["@types/inquirer", "npm:9.0.7"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -7853,10 +7853,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/docs-config", [\
-        ["npm:0.0.80", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-docs-config-npm-0.0.80-936bb80e98-8b3501c55b.zip/node_modules/@fern-fern/docs-config/",\
+        ["npm:0.23.6", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-docs-config-npm-0.23.6-ba8003ac49-dcdc84dd60.zip/node_modules/@fern-fern/docs-config/",\
           "packageDependencies": [\
-            ["@fern-fern/docs-config", "npm:0.0.80"]\
+            ["@fern-fern/docs-config", "npm:0.23.6"]\
           ],\
           "linkType": "HARD"\
         }]\
