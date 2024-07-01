@@ -187,6 +187,8 @@ class AsyncBaseSeedExhaustive:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 
@@ -194,8 +196,16 @@ class AsyncBaseSeedExhaustive:
             token="YOUR_TOKEN",
             environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
-        await client.echo(
-            request="Hello world!\\n\\nwith\\n\\tnewlines",
+
+
+        async def main() -> None:
+            await client.echo(
+                request="Hello world!\\n\\nwith\\n\\tnewlines",
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

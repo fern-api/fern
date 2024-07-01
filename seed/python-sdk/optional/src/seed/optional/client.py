@@ -83,13 +83,23 @@ class AsyncOptionalClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedObjectsWithImports
 
         client = AsyncSeedObjectsWithImports(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.optional.send_optional_body(
-            request={"string": {"key": "value"}},
+
+
+        async def main() -> None:
+            await client.optional.send_optional_body(
+                request={"string": {"key": "value"}},
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

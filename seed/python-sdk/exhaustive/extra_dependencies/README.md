@@ -32,14 +32,24 @@ client.endpoints.container.get_and_return_list_of_primitives(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedExhaustive
 
 client = AsyncSeedExhaustive(
     token="YOUR_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
-await client.endpoints.container.get_and_return_list_of_primitives(
-    request=["string"],
+
+
+async def main() -> None:
+    await client.endpoints.container.get_and_return_list_of_primitives(
+        request=["string"],
+    )
+
+
+asyncio.run(
+    main(),
 )
 ```
 

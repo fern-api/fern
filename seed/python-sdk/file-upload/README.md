@@ -29,12 +29,22 @@ client.service.post()
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedFileUpload
 
 client = AsyncSeedFileUpload(
     base_url="https://yourhost.com/path/to/api",
 )
-await client.service.post()
+
+
+async def main() -> None:
+    await client.service.post()
+
+
+asyncio.run(
+    main(),
+)
 ```
 
 ## Contributing

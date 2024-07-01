@@ -187,6 +187,8 @@ class AsyncSeedExamples:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
 
@@ -194,8 +196,16 @@ class AsyncSeedExamples:
             token="YOUR_TOKEN",
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
-        await client.echo(
-            request="Hello world!\\n\\nwith\\n\\tnewlines",
+
+
+        async def main() -> None:
+            await client.echo(
+                request="Hello world!\\n\\nwith\\n\\tnewlines",
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

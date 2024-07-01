@@ -32,14 +32,24 @@ client.inlined_request.send(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedEnum
 
 client = AsyncSeedEnum(
     base_url="https://yourhost.com/path/to/api",
 )
-await client.inlined_request.send(
-    operand=">",
-    operand_or_color="red",
+
+
+async def main() -> None:
+    await client.inlined_request.send(
+        operand=">",
+        operand_or_color="red",
+    )
+
+
+asyncio.run(
+    main(),
 )
 ```
 

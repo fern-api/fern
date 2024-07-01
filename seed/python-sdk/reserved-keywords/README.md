@@ -31,13 +31,23 @@ client.package.test(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedNurseryApi
 
 client = AsyncSeedNurseryApi(
     base_url="https://yourhost.com/path/to/api",
 )
-await client.package.test(
-    for_="string",
+
+
+async def main() -> None:
+    await client.package.test(
+        for_="string",
+    )
+
+
+asyncio.run(
+    main(),
 )
 ```
 

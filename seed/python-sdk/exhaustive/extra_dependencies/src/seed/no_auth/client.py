@@ -84,14 +84,24 @@ class AsyncNoAuthClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.no_auth.post_with_no_auth(
-            request={"key": "value"},
+
+
+        async def main() -> None:
+            await client.no_auth.post_with_no_auth(
+                request={"key": "value"},
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

@@ -31,13 +31,23 @@ client.optional.send_optional_body(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedObjectsWithImports
 
 client = AsyncSeedObjectsWithImports(
     base_url="https://yourhost.com/path/to/api",
 )
-await client.optional.send_optional_body(
-    request={"string": {"key": "value"}},
+
+
+async def main() -> None:
+    await client.optional.send_optional_body(
+        request={"string": {"key": "value"}},
+    )
+
+
+asyncio.run(
+    main(),
 )
 ```
 

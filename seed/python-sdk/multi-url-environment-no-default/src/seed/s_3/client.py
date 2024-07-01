@@ -78,6 +78,8 @@ class AsyncS3Client:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedMultiUrlEnvironmentNoDefault
         from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
 
@@ -85,8 +87,16 @@ class AsyncS3Client:
             token="YOUR_TOKEN",
             environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
         )
-        await client.s_3.get_presigned_url(
-            s_3_key="string",
+
+
+        async def main() -> None:
+            await client.s_3.get_presigned_url(
+                s_3_key="string",
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

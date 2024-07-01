@@ -76,6 +76,8 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
 
@@ -83,8 +85,16 @@ class AsyncServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
-        await client.file.notification.service.get_exception(
-            notification_id="notification-hsy129x",
+
+
+        async def main() -> None:
+            await client.file.notification.service.get_exception(
+                notification_id="notification-hsy129x",
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

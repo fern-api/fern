@@ -14,7 +14,7 @@
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.inlined_request.send(\n    operand=\">\",\n    operand_or_color=\"red\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.inlined_request.send(\n    operand=\">\",\n    operand_or_color=\"red\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.inlined_request.send(\n        operand=\">\",\n        operand_or_color=\"red\",\n    )\n\n\nasyncio.run(\n    main(),\n)\n",
                 "type": "python"
             }
         },
@@ -27,7 +27,7 @@
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.path_param.send(\n    operand=\">\",\n    maybe_operand=\"less_than\",\n    operand_or_color=\"red\",\n    maybe_operand_or_color=\"red\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.path_param.send(\n    operand=\">\",\n    maybe_operand=\"less_than\",\n    operand_or_color=\"red\",\n    maybe_operand_or_color=\"red\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.path_param.send(\n        operand=\">\",\n        maybe_operand=\"less_than\",\n        operand_or_color=\"red\",\n        maybe_operand_or_color=\"red\",\n    )\n\n\nasyncio.run(\n    main(),\n)\n",
                 "type": "python"
             }
         },
@@ -40,7 +40,7 @@
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.query_param.send(\n    operand=\">\",\n    operand_or_color=\"red\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.query_param.send(\n    operand=\">\",\n    operand_or_color=\"red\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.query_param.send(\n        operand=\">\",\n        operand_or_color=\"red\",\n    )\n\n\nasyncio.run(\n    main(),\n)\n",
                 "type": "python"
             }
         },
@@ -53,7 +53,7 @@
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.query_param.send_list(\n    operand=\">\",\n    maybe_operand=\">\",\n    operand_or_color=\"red\",\n    maybe_operand_or_color=\"red\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.query_param.send_list(\n    operand=\">\",\n    maybe_operand=\">\",\n    operand_or_color=\"red\",\n    maybe_operand_or_color=\"red\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.query_param.send_list(\n        operand=\">\",\n        maybe_operand=\">\",\n        operand_or_color=\"red\",\n        maybe_operand_or_color=\"red\",\n    )\n\n\nasyncio.run(\n    main(),\n)\n",
                 "type": "python"
             }
         }

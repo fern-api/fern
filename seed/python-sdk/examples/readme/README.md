@@ -49,6 +49,8 @@ client.service.create_movie(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedExamples
 from seed.environment import SeedExamplesEnvironment
 
@@ -56,12 +58,22 @@ client = AsyncSeedExamples(
     token="YOUR_TOKEN",
     environment=SeedExamplesEnvironment.PRODUCTION,
 )
-await client.service.get_movie(
-    movie_id="movie-c06a4ad7",
+
+
+async def main() -> None:
+    await client.service.get_movie(
+        movie_id="movie-c06a4ad7",
+    )
+
+
+asyncio.run(
+    main(),
 )
 ```
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedExamples
 from seed.environment import SeedExamplesEnvironment
 
@@ -69,18 +81,26 @@ client = AsyncSeedExamples(
     token="YOUR_TOKEN",
     environment=SeedExamplesEnvironment.PRODUCTION,
 )
-await client.service.create_movie(
-    id="movie-c06a4ad7",
-    prequel="movie-cv9b914f",
-    title="The Boy and the Heron",
-    from_="Hayao Miyazaki",
-    rating=8.0,
-    tag="tag-wf9as23d",
-    metadata={
-        "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
-        "releaseDate": "2023-12-08",
-        "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
-    },
+
+
+async def main() -> None:
+    await client.service.create_movie(
+        id="movie-c06a4ad7",
+        prequel="movie-cv9b914f",
+        title="The Boy and the Heron",
+        from_="Hayao Miyazaki",
+        rating=8.0,
+        tag="tag-wf9as23d",
+        metadata={
+            "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+            "releaseDate": "2023-12-08",
+            "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
+        },
+    )
+
+
+asyncio.run(
+    main(),
 )
 ```
 
