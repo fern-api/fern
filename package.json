@@ -104,7 +104,7 @@
   },
   "dependencies": {
     "@fern-api/logging-execa": "workspace:^",
-    "@fern-fern/generator-exec-sdk": "^0.0.816",
+    "@fern-fern/generator-exec-sdk": "^0.0.920",
     "@fern-fern/ir-v39-sdk": "^0.0.1",
     "terminal-link": "^3.0.0",
     "workspace": "^0.0.1-preview.1"
