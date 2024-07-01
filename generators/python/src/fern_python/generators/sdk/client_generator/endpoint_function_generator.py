@@ -2,12 +2,12 @@ from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, Tuple, Union
 
 import fern.ir.resources as ir_types
-from fern_python.external_dependencies.asyncio import Asyncio
 from typing_extensions import Never
 
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies import HttpX
+from fern_python.external_dependencies.asyncio import Asyncio
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadata,
     EndpointMetadataCollector,
@@ -583,7 +583,6 @@ class EndpointFunctionGenerator:
 
         writer.write_newline_if_last_line_not()
 
-
     def _get_snippet_writer(
         self,
         is_async: bool,
@@ -611,7 +610,7 @@ class EndpointFunctionGenerator:
                         response_name=response_name,
                         package=package,
                     )
-                
+
                 writer.write_node(Asyncio.run(AST.Expression("main()")))
             else:
                 self._get_snippet_writer_function_body(
