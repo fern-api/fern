@@ -31,7 +31,8 @@ const ALLOWED_FILE_TYPES = new Set<MimeType>([
     "font/ttf"
 ]);
 
-const ALLOWED_UTF8_EXTENSIONS = new Set(["js", "css"]);
+const ALLOWED_EXTENSIONS = new Set(["js", "css"]);
+const ALLOWED_ENCODINGS = new Set(["UTF-8", "ISO-8859-1"]);
 
 export const ValidFileTypes: Rule = {
     name: "valid-file-types",
@@ -71,13 +72,16 @@ export const isValidFileType = async (absoluteFilepath: string): Promise<boolean
 
     // otherwise, check the file type
     const fileType = await fileTypeFromBuffer(file);
-    if (fileType) {
+    if (fileType != null) {
         return ALLOWED_FILE_TYPES.has(fileType.mime);
     }
 
+    let extension = path.extname(absoluteFilepath).toLowerCase();
+    if (extension.startsWith(".")) {
+        extension = extension.substring(1);
+    }
     // if `fileType` is undefined, its type can't be parsed because it's likely a text file
-    if (ALLOWED_UTF8_EXTENSIONS.has(path.extname(absoluteFilepath).toLowerCase()) && chardet.detect(file) === "UTF-8") {
-        // let JS files with UTF-8 encoding through
+    if (ALLOWED_EXTENSIONS.has(extension) && ALLOWED_ENCODINGS.has(chardet.detect(file) ?? "")) {
         return true;
     }
 
