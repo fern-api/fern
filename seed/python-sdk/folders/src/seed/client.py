@@ -164,9 +164,7 @@ class AsyncSeedApi:
             await client.foo()
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(method="POST", request_options=request_options)
         try:

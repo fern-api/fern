@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Sequence, Tuple
+from typing import TYPE_CHECKING, Optional, Sequence, Tuple
 
 from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 
@@ -19,7 +19,7 @@ class DictionaryInstantiation(AstNode):
             metadata.update(value.get_metadata())
         return metadata
 
-    def write(self, writer: NodeWriter) -> None:
+    def write(self, writer: NodeWriter, should_write_as_snippet: Optional[bool] = None) -> None:
         writer.write("{")
         for index, (key, value) in enumerate(self.entries):
             if index > 0:

@@ -86,9 +86,7 @@ class AsyncPropertyBasedErrorClient:
             await client.property_based_error.throw_error()
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "property-based-error", method="GET", request_options=request_options

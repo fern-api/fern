@@ -50,9 +50,7 @@ async def main() -> None:
         yield chunk
 
 
-asyncio.run(
-    main(),
-)
+asyncio.run(main())
 ```
 
 ## Exception Handling
@@ -132,7 +130,13 @@ and transports.
 import httpx
 from seed.client import SeedStreaming
 
-client = SeedStreaming(..., http_client=httpx.Client(proxies=http://my.test.proxy.example.com, transport=httpx.HTTPTransport(local_address="0.0.0.0"), ), )
+client = SeedStreaming(
+    ...,
+    http_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
 ```
 
 ## Contributing

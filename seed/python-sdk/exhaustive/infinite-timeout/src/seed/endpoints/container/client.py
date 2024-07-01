@@ -351,9 +351,7 @@ class AsyncContainerClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "container/list-of-primitives", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -407,9 +405,7 @@ class AsyncContainerClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "container/list-of-objects", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -455,9 +451,7 @@ class AsyncContainerClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "container/set-of-primitives", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -511,9 +505,7 @@ class AsyncContainerClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "container/set-of-objects", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -559,9 +551,7 @@ class AsyncContainerClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "container/map-prim-to-prim", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -615,9 +605,7 @@ class AsyncContainerClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "container/map-prim-to-object", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -669,9 +657,7 @@ class AsyncContainerClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "container/opt-objects", method="POST", json=request, request_options=request_options, omit=OMIT

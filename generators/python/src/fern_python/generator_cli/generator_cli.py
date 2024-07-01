@@ -1,15 +1,14 @@
-from math import e
 import os
 import subprocess
 import tempfile
+from math import e
 from typing import Dict, List, Optional, Union
 
 import fern.generator_exec.resources as generator_exec
 import fern.ir.resources as ir_types
-from fern_python.generators.sdk.client_generator.generated_root_client import GeneratedRootClient
 import generatorcli
 import yaml  # type: ignore
-from fern_python.codegen import AST
+
 from fern_python.codegen import ProjectConfig
 from fern_python.codegen.project import Project
 from fern_python.generator_cli.readme_snippet_builder import ReadmeSnippetBuilder
@@ -17,6 +16,9 @@ from fern_python.generator_cli.reference_config_builder import ReferenceConfigBu
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadataCollector,
+)
+from fern_python.generators.sdk.client_generator.generated_root_client import (
+    GeneratedRootClient,
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 
@@ -64,11 +66,13 @@ class GeneratorCli:
             return False
         return True
 
-    def generate_reference(
-        self, snippets: generator_exec.Snippets, project: Project
-    ) -> Optional[str]:
+    def generate_reference(self, snippets: generator_exec.Snippets, project: Project) -> Optional[str]:
         reference_config_builder = ReferenceConfigBuilder(
-            ir=self._ir, snippets=snippets, endpoint_metadata=self._endpoint_metadata, context=self._context, project=project
+            ir=self._ir,
+            snippets=snippets,
+            endpoint_metadata=self._endpoint_metadata,
+            context=self._context,
+            project=project,
         )
 
         reference_config = reference_config_builder.generate_reference_config()

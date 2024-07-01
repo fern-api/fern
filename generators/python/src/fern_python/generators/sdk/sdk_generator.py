@@ -567,9 +567,7 @@ __version__ = metadata.version("{project._project_config.package_name}")
         snippets: Snippets,
         project: Project,
     ) -> None:
-        contents = generator_cli.generate_reference(
-            snippets=snippets, project=project
-        )
+        contents = generator_cli.generate_reference(snippets=snippets, project=project)
         if contents is not None:
             project.add_file(
                 os.path.join(

@@ -165,9 +165,7 @@ class AsyncPaymentClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "payment",
@@ -219,9 +217,7 @@ class AsyncPaymentClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"payment/{jsonable_encoder(payment_id)}", method="DELETE", request_options=request_options

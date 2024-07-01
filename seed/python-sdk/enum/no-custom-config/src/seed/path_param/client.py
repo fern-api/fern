@@ -121,9 +121,7 @@ class AsyncPathParamClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"path/{jsonable_encoder(operand)}/{jsonable_encoder(maybe_operand)}/{jsonable_encoder(operand_or_color)}/{jsonable_encoder(maybe_operand_or_color)}",

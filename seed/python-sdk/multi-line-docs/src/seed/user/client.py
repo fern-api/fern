@@ -147,9 +147,7 @@ class AsyncUserClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"users/{jsonable_encoder(user_id)}", method="GET", request_options=request_options
@@ -206,9 +204,7 @@ class AsyncUserClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users", method="POST", json={"name": name, "age": age}, request_options=request_options, omit=OMIT

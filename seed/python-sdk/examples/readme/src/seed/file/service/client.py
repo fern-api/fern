@@ -111,9 +111,7 @@ class AsyncServiceClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"file/{jsonable_encoder(filename)}",

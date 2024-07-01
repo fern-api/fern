@@ -271,9 +271,7 @@ class AsyncServiceClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"movie/{jsonable_encoder(movie_id)}", method="GET", request_options=request_options
@@ -355,9 +353,7 @@ class AsyncServiceClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "movie",
@@ -429,9 +425,7 @@ class AsyncServiceClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "metadata",
@@ -476,9 +470,7 @@ class AsyncServiceClient:
             await client.service.get_response()
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "response", method="POST", request_options=request_options

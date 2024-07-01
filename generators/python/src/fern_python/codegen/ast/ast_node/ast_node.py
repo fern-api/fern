@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from typing import Optional
 
 from .ast_node_metadata import AstNodeMetadata
 
@@ -11,7 +12,7 @@ class AstNode(ABC):
         ...
 
     @abstractmethod
-    def write(self, writer: NodeWriter) -> None:
+    def write(self, writer: NodeWriter, should_write_as_snippet: Optional[bool] = None) -> None:
         ...
 
 

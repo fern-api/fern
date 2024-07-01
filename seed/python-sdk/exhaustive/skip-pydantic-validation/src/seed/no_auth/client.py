@@ -102,9 +102,7 @@ class AsyncNoAuthClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "no-auth", method="POST", json=request, request_options=request_options, omit=OMIT

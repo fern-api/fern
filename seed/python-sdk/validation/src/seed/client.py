@@ -236,9 +236,7 @@ class AsyncSeedValidation:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "create",
@@ -293,9 +291,7 @@ class AsyncSeedValidation:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="GET", params={"decimal": decimal, "even": even, "name": name}, request_options=request_options

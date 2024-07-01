@@ -42,9 +42,7 @@ async def main() -> None:
     await client.dummy.get_dummy()
 
 
-asyncio.run(
-    main(),
-)
+asyncio.run(main())
 ```
 
 ## Exception Handling
@@ -107,7 +105,13 @@ and transports.
 import httpx
 from seed.client import SeedSingleUrlEnvironmentDefault
 
-client = SeedSingleUrlEnvironmentDefault(..., http_client=httpx.Client(proxies=http://my.test.proxy.example.com, transport=httpx.HTTPTransport(local_address="0.0.0.0"), ), )
+client = SeedSingleUrlEnvironmentDefault(
+    ...,
+    http_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
 ```
 
 ## Contributing

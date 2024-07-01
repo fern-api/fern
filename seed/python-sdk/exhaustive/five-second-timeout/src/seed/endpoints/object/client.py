@@ -545,9 +545,7 @@ class AsyncObjectClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "object/get-and-return-with-optional-field",
@@ -611,9 +609,7 @@ class AsyncObjectClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "object/get-and-return-with-required-field",
@@ -663,9 +659,7 @@ class AsyncObjectClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "object/get-and-return-with-map-of-map",
@@ -745,9 +739,7 @@ class AsyncObjectClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "object/get-and-return-nested-with-optional-field",
@@ -831,9 +823,7 @@ class AsyncObjectClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"object/get-and-return-nested-with-required-field/{jsonable_encoder(string_)}",
@@ -914,9 +904,7 @@ class AsyncObjectClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "object/get-and-return-nested-with-required-field-list",

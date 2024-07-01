@@ -147,9 +147,7 @@ class AsyncDummyClient:
                 yield chunk
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         async with self._client_wrapper.httpx_client.stream(
             "generate-stream",
@@ -206,9 +204,7 @@ class AsyncDummyClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "generate",

@@ -107,9 +107,7 @@ class AsyncCompletionsClient:
                 yield chunk
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         async with self._client_wrapper.httpx_client.stream(
             "stream", method="POST", json={"query": query}, request_options=request_options, omit=OMIT

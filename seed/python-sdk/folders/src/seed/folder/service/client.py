@@ -114,9 +114,7 @@ class AsyncServiceClient:
             await client.folder.service.endpoint()
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "service", method="GET", request_options=request_options
@@ -161,9 +159,7 @@ class AsyncServiceClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "service", method="POST", json=request, request_options=request_options, omit=OMIT
