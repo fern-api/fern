@@ -103,16 +103,26 @@ class AsyncReqWithHeadersClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.req_with_headers.get_with_custom_header(
-            x_test_service_header="string",
-            x_test_endpoint_header="string",
-            request="string",
+
+
+        async def main() -> None:
+            await client.req_with_headers.get_with_custom_header(
+                x_test_service_header="string",
+                x_test_endpoint_header="string",
+                request="string",
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

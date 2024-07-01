@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedErrorProperty\n\nclient = SeedErrorProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.property_based_error.throw_error()\n",
-                "async_client": "from seed.client import AsyncSeedErrorProperty\n\nclient = AsyncSeedErrorProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.property_based_error.throw_error()\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedErrorProperty\n\nclient = AsyncSeedErrorProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.property_based_error.throw_error()\n\n\nasyncio.run(\n    main(),\n)\n",
                 "type": "python"
             }
         }

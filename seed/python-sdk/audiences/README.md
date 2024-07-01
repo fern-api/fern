@@ -33,15 +33,25 @@ client.foo.find(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedAudiences
 
 client = AsyncSeedAudiences(
     base_url="https://yourhost.com/path/to/api",
 )
-await client.foo.find(
-    optional_string="string",
-    public_property="string",
-    private_property=1,
+
+
+async def main() -> None:
+    await client.foo.find(
+        optional_string="string",
+        public_property="string",
+        private_property=1,
+    )
+
+
+asyncio.run(
+    main(),
 )
 ```
 

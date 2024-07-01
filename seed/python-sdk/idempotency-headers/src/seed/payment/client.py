@@ -148,15 +148,25 @@ class AsyncPaymentClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedIdempotencyHeaders
 
         client = AsyncSeedIdempotencyHeaders(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.payment.create(
-            amount=1,
-            currency="USD",
+
+
+        async def main() -> None:
+            await client.payment.create(
+                amount=1,
+                currency="USD",
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -193,14 +203,24 @@ class AsyncPaymentClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedIdempotencyHeaders
 
         client = AsyncSeedIdempotencyHeaders(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.payment.delete(
-            payment_id="string",
+
+
+        async def main() -> None:
+            await client.payment.delete(
+                payment_id="string",
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

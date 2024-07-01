@@ -30,13 +30,23 @@ client.service.get_with_bearer_token()
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedBearerTokenEnvironmentVariable
 
 client = AsyncSeedBearerTokenEnvironmentVariable(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-await client.service.get_with_bearer_token()
+
+
+async def main() -> None:
+    await client.service.get_with_bearer_token()
+
+
+asyncio.run(
+    main(),
+)
 ```
 
 ## Contributing

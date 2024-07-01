@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedUnknownAsAny\n\nclient = SeedUnknownAsAny(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.unknown.post(\n    request={\"key\": \"value\"},\n)\n",
-                "async_client": "from seed.client import AsyncSeedUnknownAsAny\n\nclient = AsyncSeedUnknownAsAny(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.unknown.post(\n    request={\"key\": \"value\"},\n)\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedUnknownAsAny\n\nclient = AsyncSeedUnknownAsAny(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.unknown.post(\n        request={\"key\": \"value\"},\n    )\n\n\nasyncio.run(\n    main(),\n)\n",
                 "type": "python"
             }
         }

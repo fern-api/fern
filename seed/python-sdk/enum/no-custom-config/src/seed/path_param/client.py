@@ -103,16 +103,26 @@ class AsyncPathParamClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedEnum
 
         client = AsyncSeedEnum(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.path_param.send(
-            operand=">",
-            maybe_operand="less_than",
-            operand_or_color="red",
-            maybe_operand_or_color="red",
+
+
+        async def main() -> None:
+            await client.path_param.send(
+                operand=">",
+                maybe_operand="less_than",
+                operand_or_color="red",
+                maybe_operand_or_color="red",
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

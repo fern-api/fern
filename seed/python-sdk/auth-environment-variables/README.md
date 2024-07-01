@@ -31,6 +31,8 @@ client.service.get_with_api_key()
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedAuthEnvironmentVariables
 
 client = AsyncSeedAuthEnvironmentVariables(
@@ -38,7 +40,15 @@ client = AsyncSeedAuthEnvironmentVariables(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-await client.service.get_with_api_key()
+
+
+async def main() -> None:
+    await client.service.get_with_api_key()
+
+
+asyncio.run(
+    main(),
+)
 ```
 
 ## Contributing

@@ -64,12 +64,22 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedFileDownload
 
         client = AsyncSeedFileDownload(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.service.download_file()
+
+
+        async def main() -> None:
+            await client.service.download_file()
+
+
+        asyncio.run(
+            main(),
+        )
         """
         async with self._client_wrapper.httpx_client.stream(
             method="POST", request_options=request_options

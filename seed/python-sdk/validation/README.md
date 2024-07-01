@@ -33,15 +33,25 @@ client.create(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedValidation
 
 client = AsyncSeedValidation(
     base_url="https://yourhost.com/path/to/api",
 )
-await client.create(
-    decimal=1.1,
-    even=1,
-    name="string",
+
+
+async def main() -> None:
+    await client.create(
+        decimal=1.1,
+        even=1,
+        name="string",
+    )
+
+
+asyncio.run(
+    main(),
 )
 ```
 

@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedMultiUrlEnvironmentNoDefault\nfrom seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment\n\nclient = SeedMultiUrlEnvironmentNoDefault(\n    token=\"YOUR_TOKEN\",\n    environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,\n)\nclient.ec_2.boot_instance(\n    size=\"string\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedMultiUrlEnvironmentNoDefault\nfrom seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment\n\nclient = AsyncSeedMultiUrlEnvironmentNoDefault(\n    token=\"YOUR_TOKEN\",\n    environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,\n)\nawait client.ec_2.boot_instance(\n    size=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedMultiUrlEnvironmentNoDefault\nfrom seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment\n\nclient = AsyncSeedMultiUrlEnvironmentNoDefault(\n    token=\"YOUR_TOKEN\",\n    environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.ec_2.boot_instance(\n        size=\"string\",\n    )\n\n\nasyncio.run(\n    main(),\n)\n",
                 "type": "python"
             }
         },
@@ -23,7 +23,7 @@
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedMultiUrlEnvironmentNoDefault\nfrom seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment\n\nclient = SeedMultiUrlEnvironmentNoDefault(\n    token=\"YOUR_TOKEN\",\n    environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,\n)\nclient.s_3.get_presigned_url(\n    s_3_key=\"string\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedMultiUrlEnvironmentNoDefault\nfrom seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment\n\nclient = AsyncSeedMultiUrlEnvironmentNoDefault(\n    token=\"YOUR_TOKEN\",\n    environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,\n)\nawait client.s_3.get_presigned_url(\n    s_3_key=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedMultiUrlEnvironmentNoDefault\nfrom seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment\n\nclient = AsyncSeedMultiUrlEnvironmentNoDefault(\n    token=\"YOUR_TOKEN\",\n    environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.s_3.get_presigned_url(\n        s_3_key=\"string\",\n    )\n\n\nasyncio.run(\n    main(),\n)\n",
                 "type": "python"
             }
         }

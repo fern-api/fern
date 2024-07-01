@@ -509,6 +509,7 @@ class AsyncObjectClient:
 
         Examples
         --------
+        import asyncio
         import datetime
         import uuid
 
@@ -518,26 +519,34 @@ class AsyncObjectClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.object.get_and_return_with_optional_field(
-            string="string",
-            integer=1,
-            long_=1000000,
-            double=1.1,
-            bool_=True,
-            datetime=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            date=datetime.date.fromisoformat(
-                "2023-01-15",
-            ),
-            uuid_=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            base_64="SGVsbG8gd29ybGQh",
-            list_=["string"],
-            set_={"string"},
-            map_={1: "string"},
-            bigint="123456789123456789",
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_with_optional_field(
+                string="string",
+                integer=1,
+                long_=1000000,
+                double=1.1,
+                bool_=True,
+                datetime=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                date=datetime.date.fromisoformat(
+                    "2023-01-15",
+                ),
+                uuid_=uuid.UUID(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+                base_64="SGVsbG8gd29ybGQh",
+                list_=["string"],
+                set_={"string"},
+                map_={1: "string"},
+                bigint="123456789123456789",
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -586,14 +595,24 @@ class AsyncObjectClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.object.get_and_return_with_required_field(
-            string="string",
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_with_required_field(
+                string="string",
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -628,14 +647,24 @@ class AsyncObjectClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.object.get_and_return_with_map_of_map(
-            map_={"string": {"string": "string"}},
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_with_map_of_map(
+                map_={"string": {"string": "string"}},
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -676,6 +705,7 @@ class AsyncObjectClient:
 
         Examples
         --------
+        import asyncio
         import datetime
         import uuid
 
@@ -686,29 +716,37 @@ class AsyncObjectClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.object.get_and_return_nested_with_optional_field(
-            string="string",
-            nested_object=ObjectWithOptionalField(
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_nested_with_optional_field(
                 string="string",
-                integer=1,
-                long_=1000000,
-                double=1.1,
-                bool_=True,
-                datetime=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
+                nested_object=ObjectWithOptionalField(
+                    string="string",
+                    integer=1,
+                    long_=1000000,
+                    double=1.1,
+                    bool_=True,
+                    datetime=datetime.datetime.fromisoformat(
+                        "2024-01-15 09:30:00+00:00",
+                    ),
+                    date=datetime.date.fromisoformat(
+                        "2023-01-15",
+                    ),
+                    uuid_=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    base_64="SGVsbG8gd29ybGQh",
+                    list_=["string"],
+                    set_={"string"},
+                    map_={1: "string"},
+                    bigint="123456789123456789",
                 ),
-                date=datetime.date.fromisoformat(
-                    "2023-01-15",
-                ),
-                uuid_=uuid.UUID(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-                base_64="SGVsbG8gd29ybGQh",
-                list_=["string"],
-                set_={"string"},
-                map_={1: "string"},
-                bigint="123456789123456789",
-            ),
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -752,6 +790,7 @@ class AsyncObjectClient:
 
         Examples
         --------
+        import asyncio
         import datetime
         import uuid
 
@@ -762,30 +801,38 @@ class AsyncObjectClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.object.get_and_return_nested_with_required_field(
-            string_="string",
-            string="string",
-            nested_object=ObjectWithOptionalField(
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_nested_with_required_field(
+                string_="string",
                 string="string",
-                integer=1,
-                long_=1000000,
-                double=1.1,
-                bool_=True,
-                datetime=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
+                nested_object=ObjectWithOptionalField(
+                    string="string",
+                    integer=1,
+                    long_=1000000,
+                    double=1.1,
+                    bool_=True,
+                    datetime=datetime.datetime.fromisoformat(
+                        "2024-01-15 09:30:00+00:00",
+                    ),
+                    date=datetime.date.fromisoformat(
+                        "2023-01-15",
+                    ),
+                    uuid_=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    base_64="SGVsbG8gd29ybGQh",
+                    list_=["string"],
+                    set_={"string"},
+                    map_={1: "string"},
+                    bigint="123456789123456789",
                 ),
-                date=datetime.date.fromisoformat(
-                    "2023-01-15",
-                ),
-                uuid_=uuid.UUID(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-                base_64="SGVsbG8gd29ybGQh",
-                list_=["string"],
-                set_={"string"},
-                map_={1: "string"},
-                bigint="123456789123456789",
-            ),
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -823,6 +870,7 @@ class AsyncObjectClient:
 
         Examples
         --------
+        import asyncio
         import datetime
         import uuid
 
@@ -833,33 +881,41 @@ class AsyncObjectClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.object.get_and_return_nested_with_required_field_as_list(
-            request=[
-                NestedObjectWithRequiredField(
-                    string="string",
-                    nested_object=ObjectWithOptionalField(
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_nested_with_required_field_as_list(
+                request=[
+                    NestedObjectWithRequiredField(
                         string="string",
-                        integer=1,
-                        long_=1000000,
-                        double=1.1,
-                        bool_=True,
-                        datetime=datetime.datetime.fromisoformat(
-                            "2024-01-15 09:30:00+00:00",
+                        nested_object=ObjectWithOptionalField(
+                            string="string",
+                            integer=1,
+                            long_=1000000,
+                            double=1.1,
+                            bool_=True,
+                            datetime=datetime.datetime.fromisoformat(
+                                "2024-01-15 09:30:00+00:00",
+                            ),
+                            date=datetime.date.fromisoformat(
+                                "2023-01-15",
+                            ),
+                            uuid_=uuid.UUID(
+                                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                            ),
+                            base_64="SGVsbG8gd29ybGQh",
+                            list_=["string"],
+                            set_={"string"},
+                            map_={1: "string"},
+                            bigint="123456789123456789",
                         ),
-                        date=datetime.date.fromisoformat(
-                            "2023-01-15",
-                        ),
-                        uuid_=uuid.UUID(
-                            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                        ),
-                        base_64="SGVsbG8gd29ybGQh",
-                        list_=["string"],
-                        set_={"string"},
-                        map_={1: "string"},
-                        bigint="123456789123456789",
-                    ),
-                )
-            ],
+                    )
+                ],
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

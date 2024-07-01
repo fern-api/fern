@@ -151,12 +151,22 @@ class AsyncSeedApi:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedApi
 
         client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.foo()
+
+
+        async def main() -> None:
+            await client.foo()
+
+
+        asyncio.run(
+            main(),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(method="POST", request_options=request_options)
         try:

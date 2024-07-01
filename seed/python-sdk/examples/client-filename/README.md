@@ -33,6 +33,8 @@ client.echo(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
 
@@ -40,8 +42,16 @@ client = AsyncSeedExhaustive(
     token="YOUR_TOKEN",
     environment=SeedExhaustiveEnvironment.PRODUCTION,
 )
-await client.echo(
-    request="Hello world!\\n\\nwith\\n\\tnewlines",
+
+
+async def main() -> None:
+    await client.echo(
+        request="Hello world!\\n\\nwith\\n\\tnewlines",
+    )
+
+
+asyncio.run(
+    main(),
 )
 ```
 

@@ -29,12 +29,22 @@ client.foo()
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedApi
 
 client = AsyncSeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
-await client.foo()
+
+
+async def main() -> None:
+    await client.foo()
+
+
+asyncio.run(
+    main(),
+)
 ```
 
 ## Contributing
