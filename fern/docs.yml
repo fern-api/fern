@@ -51,12 +51,10 @@ navigation:
             path: ./pages/api-definition/openapi/openapi-overview.mdx
           - page: OpenAPI Extensions
             path: ./pages/api-definition/openapi/extensions.mdx
-            slug: extensions
           - page: OpenAPI Examples
             path: ./pages/api-definition/openapi/examples.mdx
           - page: OpenAPI Overrides
             path: ./pages/api-definition/openapi/overrides.mdx
-            slug: examples
           - section: Server Frameworks
             slug: frameworks
             contents:
