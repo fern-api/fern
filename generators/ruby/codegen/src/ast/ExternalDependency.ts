@@ -1,3 +1,4 @@
+import { ExtraDependenciesSchema } from "@fern-api/generator-commons";
 import { AstNode } from "./core/AstNode";
 
 interface Version {
@@ -23,9 +24,47 @@ export class ExternalDependency extends AstNode {
         this.packageName = packageName;
     }
 
+    public static convertDependencies(dependency: ExtraDependenciesSchema): ExternalDependency[] {
+        const dependencies = [];
+        for (const [key, value] of Object.entries(dependency)) {
+            if (typeof value === "string") {
+                dependencies.push(
+                    new ExternalDependency({
+                        packageName: key,
+                        lowerBound: {
+                            version: value,
+                            specifier: "~>"
+                        }
+                    })
+                );
+            } else {
+                dependencies.push(
+                    new ExternalDependency({
+                        packageName: key,
+                        lowerBound:
+                            value.lowerBound != null
+                                ? {
+                                      version: value.lowerBound.version,
+                                      specifier: value.lowerBound.specifier ?? ">="
+                                  }
+                                : undefined,
+                        upperBound:
+                            value.upperBound != null
+                                ? {
+                                      version: value.upperBound.version,
+                                      specifier: value.upperBound.specifier ?? "<="
+                                  }
+                                : undefined
+                    })
+                );
+            }
+        }
+        return dependencies;
+    }
+
     public writeInternal(startingTabSpaces: number): void {
         this.addText({
-            stringContent: `spec.add_dependency "${this.packageName}"`,
+            stringContent: `"${this.packageName}"`,
             startingTabSpaces
         });
         this.addText({

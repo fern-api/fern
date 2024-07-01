@@ -238,8 +238,8 @@ Metrics/PerceivedComplexity:
 }
 
 // TODO: this should probably be codified in a more intentional way
-export function generateGemfile(): GeneratedFile {
-    const gemfileContent = `# frozen_string_literal: true
+export function generateGemfile(extraDevDependencies: ExternalDependency[]): GeneratedFile {
+    let gemfileContent = `# frozen_string_literal: true
 
 source "https://rubygems.org"
 
@@ -249,6 +249,13 @@ gem "minitest", "~> 5.0"
 gem "rake", "~> 13.0"
 gem "rubocop", "~> 1.21"
 `;
+
+    if (extraDevDependencies.length > 0) {
+        gemfileContent += "\n";
+        for (const dep of extraDevDependencies) {
+            gemfileContent += `gem ${dep.write({})}\n`;
+        }
+    }
     return new GeneratedFile("Gemfile", RelativeFilePath.of("."), gemfileContent);
 }
 

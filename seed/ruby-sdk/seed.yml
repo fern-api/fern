@@ -9,6 +9,24 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
+        extraDependencies:
+          faraday-multipart:
+            upperBound:
+              version: "1.0.4"
+              specifier: ">="
+            lowerBound:
+              version: "1.0"
+              specifier: "~>"
+        extraDevDependencies:
+          dotenv: "0.0.1"
+          faraday:
+            upperBound:
+              version: "0.17.3"
+              specifier: ">"
+            lowerBound:
+              version: "0.20.0"
+      outputFolder: extra-deps
+    - customConfig:
         flattenModuleStructure: true
       outputFolder: flattened-module-structure
 allowedFailures:
