@@ -30,13 +30,23 @@ client.dummy.get_dummy()
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedNoEnvironment
 
 client = AsyncSeedNoEnvironment(
     token="YOUR_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
-await client.dummy.get_dummy()
+
+
+async def main() -> None:
+    await client.dummy.get_dummy()
+
+
+asyncio.run(
+    main(),
+)
 ```
 
 ## Exception Handling

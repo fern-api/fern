@@ -101,12 +101,22 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedApi
 
         client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.folder.service.endpoint()
+
+
+        async def main() -> None:
+            await client.folder.service.endpoint()
+
+
+        asyncio.run(
+            main(),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "service", method="GET", request_options=request_options
@@ -136,13 +146,23 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedApi
 
         client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.folder.service.unknown_request(
-            request={"key": "value"},
+
+
+        async def main() -> None:
+            await client.folder.service.unknown_request(
+                request={"key": "value"},
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

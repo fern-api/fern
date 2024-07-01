@@ -32,14 +32,24 @@ client.custom_auth.post_with_custom_auth(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedCustomAuth
 
 client = AsyncSeedCustomAuth(
     custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME",
     base_url="https://yourhost.com/path/to/api",
 )
-await client.custom_auth.post_with_custom_auth(
-    request={"key": "value"},
+
+
+async def main() -> None:
+    await client.custom_auth.post_with_custom_auth(
+        request={"key": "value"},
+    )
+
+
+asyncio.run(
+    main(),
 )
 ```
 

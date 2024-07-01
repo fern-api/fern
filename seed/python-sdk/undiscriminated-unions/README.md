@@ -31,13 +31,23 @@ client.union.get(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedUndiscriminatedUnions
 
 client = AsyncSeedUndiscriminatedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
-await client.union.get(
-    request="string",
+
+
+async def main() -> None:
+    await client.union.get(
+        request="string",
+    )
+
+
+asyncio.run(
+    main(),
 )
 ```
 

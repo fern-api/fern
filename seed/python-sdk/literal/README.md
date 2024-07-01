@@ -31,13 +31,23 @@ client.headers.send(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedLiteral
 
 client = AsyncSeedLiteral(
     base_url="https://yourhost.com/path/to/api",
 )
-await client.headers.send(
-    query="What is the weather today",
+
+
+async def main() -> None:
+    await client.headers.send(
+        query="What is the weather today",
+    )
+
+
+asyncio.run(
+    main(),
 )
 ```
 

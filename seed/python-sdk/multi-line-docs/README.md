@@ -32,14 +32,24 @@ client.user.create_user(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedMultiLineDocs
 
 client = AsyncSeedMultiLineDocs(
     base_url="https://yourhost.com/path/to/api",
 )
-await client.user.create_user(
-    name="string",
-    age=1,
+
+
+async def main() -> None:
+    await client.user.create_user(
+        name="string",
+        age=1,
+    )
+
+
+asyncio.run(
+    main(),
 )
 ```
 

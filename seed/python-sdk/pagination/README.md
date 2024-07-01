@@ -40,23 +40,33 @@ for page in response.iter_pages():
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedPagination
 
 client = AsyncSeedPagination(
     token="YOUR_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
-response = await client.users.list_with_cursor_pagination(
-    page=1,
-    per_page=1,
-    order="asc",
-    starting_after="string",
+
+
+async def main() -> None:
+    response = await client.users.list_with_cursor_pagination(
+        page=1,
+        per_page=1,
+        order="asc",
+        starting_after="string",
+    )
+    async for item in response:
+        yield item
+    # alternatively, you can paginate page-by-page
+    async for page in response.iter_pages():
+        yield page
+
+
+asyncio.run(
+    main(),
 )
-async for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-async for page in response.iter_pages():
-    yield page
 ```
 
 ## Exception Handling

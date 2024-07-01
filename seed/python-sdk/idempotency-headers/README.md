@@ -33,15 +33,25 @@ client.payment.create(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedIdempotencyHeaders
 
 client = AsyncSeedIdempotencyHeaders(
     token="YOUR_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
-await client.payment.create(
-    amount=1,
-    currency="USD",
+
+
+async def main() -> None:
+    await client.payment.create(
+        amount=1,
+        currency="USD",
+    )
+
+
+asyncio.run(
+    main(),
 )
 ```
 

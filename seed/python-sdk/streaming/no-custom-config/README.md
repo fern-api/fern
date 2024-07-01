@@ -33,16 +33,26 @@ for chunk in response:
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedStreaming
 
 client = AsyncSeedStreaming(
     base_url="https://yourhost.com/path/to/api",
 )
-response = await client.dummy.generate_stream(
-    num_events=1,
+
+
+async def main() -> None:
+    response = await client.dummy.generate_stream(
+        num_events=1,
+    )
+    async for chunk in response:
+        yield chunk
+
+
+asyncio.run(
+    main(),
 )
-async for chunk in response:
-    yield chunk
 ```
 
 ## Exception Handling

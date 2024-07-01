@@ -7,6 +7,7 @@ from typing_extensions import Never
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies import HttpX
+from fern_python.external_dependencies.asyncio import Asyncio
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadata,
     EndpointMetadataCollector,
@@ -557,6 +558,31 @@ class EndpointFunctionGenerator:
 
         return snippets
 
+    def _get_snippet_writer_function_body(
+        self,
+        is_async: bool,
+        writer: AST.NodeWriter,
+        endpoint_usage: Optional[AST.Expression],
+        endpoint_snippet: AST.Expression,
+        response_name: str,
+        package: ir_types.Package,
+    ) -> None:
+        if endpoint_usage is not None:
+            writer.write(f"{response_name} = ")
+        if is_async:
+            writer.write("await ")
+
+        writer.write("client.")
+        writer.write(self._get_subpackage_client_accessor(package))
+
+        writer.write_node(endpoint_snippet)
+
+        if endpoint_usage is not None:
+            writer.write_line()
+            writer.write_node(endpoint_usage)
+
+        writer.write_newline_if_last_line_not()
+
     def _get_snippet_writer(
         self,
         is_async: bool,
@@ -573,21 +599,28 @@ class EndpointFunctionGenerator:
                 writer.write_node(generated_root_client.sync_instantiation)
             writer.write_line()
 
-            if endpoint_usage is not None:
-                writer.write(f"{response_name} = ")
             if is_async:
-                writer.write("await ")
+                writer.write_line("async def main() -> None:")
+                with writer.indent():
+                    self._get_snippet_writer_function_body(
+                        is_async=is_async,
+                        writer=writer,
+                        endpoint_usage=endpoint_usage,
+                        endpoint_snippet=endpoint_snippet,
+                        response_name=response_name,
+                        package=package,
+                    )
 
-            writer.write("client.")
-            writer.write(self._get_subpackage_client_accessor(package))
-
-            writer.write_node(endpoint_snippet)
-
-            if endpoint_usage is not None:
-                writer.write_line()
-                writer.write_node(endpoint_usage)
-
-            writer.write_newline_if_last_line_not()
+                writer.write_node(Asyncio.run(AST.Expression("main()")))
+            else:
+                self._get_snippet_writer_function_body(
+                    is_async=is_async,
+                    writer=writer,
+                    endpoint_usage=endpoint_usage,
+                    endpoint_snippet=endpoint_snippet,
+                    response_name=response_name,
+                    package=package,
+                )
 
         return AST.CodeWriter(write)
 

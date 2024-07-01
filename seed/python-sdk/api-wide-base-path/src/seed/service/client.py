@@ -101,16 +101,26 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedApiWideBasePath
 
         client = AsyncSeedApiWideBasePath(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.service.post(
-            path_param="string",
-            service_param="string",
-            resource_param="string",
-            endpoint_param=1,
+
+
+        async def main() -> None:
+            await client.service.post(
+                path_param="string",
+                service_param="string",
+                resource_param="string",
+                endpoint_param=1,
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

@@ -131,15 +131,25 @@ class AsyncImdbClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedApi
 
         client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.imdb.create_movie(
-            title="string",
-            rating=1.1,
+
+
+        async def main() -> None:
+            await client.imdb.create_movie(
+                title="string",
+                rating=1.1,
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -172,14 +182,24 @@ class AsyncImdbClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedApi
 
         client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.imdb.get_movie(
-            movie_id="string",
+
+
+        async def main() -> None:
+            await client.imdb.get_movie(
+                movie_id="string",
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

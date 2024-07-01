@@ -120,13 +120,23 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedMixedCase
 
         client = AsyncSeedMixedCase(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.service.get_resource(
-            resource_id="rsc-xyz",
+
+
+        async def main() -> None:
+            await client.service.get_resource(
+                resource_id="rsc-xyz",
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -159,6 +169,7 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
         import datetime
 
         from seed.client import AsyncSeedMixedCase
@@ -166,11 +177,19 @@ class AsyncServiceClient:
         client = AsyncSeedMixedCase(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.service.list_resources(
-            page_limit=10,
-            before_date=datetime.date.fromisoformat(
-                "2023-01-01",
-            ),
+
+
+        async def main() -> None:
+            await client.service.list_resources(
+                page_limit=10,
+                before_date=datetime.date.fromisoformat(
+                    "2023-01-01",
+                ),
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

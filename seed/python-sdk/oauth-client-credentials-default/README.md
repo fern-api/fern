@@ -34,6 +34,8 @@ client.auth.get_token(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedOauthClientCredentialsDefault
 
 client = AsyncSeedOauthClientCredentialsDefault(
@@ -41,9 +43,17 @@ client = AsyncSeedOauthClientCredentialsDefault(
     client_id="YOUR_CLIENT_ID",
     client_secret="YOUR_CLIENT_SECRET",
 )
-await client.auth.get_token(
-    client_id="string",
-    client_secret="string",
+
+
+async def main() -> None:
+    await client.auth.get_token(
+        client_id="string",
+        client_secret="string",
+    )
+
+
+asyncio.run(
+    main(),
 )
 ```
 

@@ -200,7 +200,12 @@ export class Gemspec extends FunctionInvocation {
                         isAssignment: true
                     }),
                     new Expression({ leftSide: "spec.require_paths", rightSide: '["lib"]', isAssignment: true }),
-                    ...dependencies.concat(globalDependencies)
+                    ...dependencies
+                        .concat(globalDependencies)
+                        .map(
+                            (dep) =>
+                                new Expression({ leftSide: "spec.add_dependency", rightSide: dep, isAssignment: false })
+                        )
                 ]
             },
             writeImports: true

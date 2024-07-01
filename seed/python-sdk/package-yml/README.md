@@ -32,14 +32,24 @@ client.echo(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedPackageYml
 
 client = AsyncSeedPackageYml(
     base_url="https://yourhost.com/path/to/api",
 )
-await client.echo(
-    id="id-ksfd9c1",
-    request="Hello world!",
+
+
+async def main() -> None:
+    await client.echo(
+        id="id-ksfd9c1",
+        request="Hello world!",
+    )
+
+
+asyncio.run(
+    main(),
 )
 ```
 

@@ -130,16 +130,26 @@ class AsyncDummyClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedStreaming
 
         client = AsyncSeedStreaming(
             base_url="https://yourhost.com/path/to/api",
         )
-        response = await client.dummy.generate_stream(
-            num_events=1,
+
+
+        async def main() -> None:
+            response = await client.dummy.generate_stream(
+                num_events=1,
+            )
+            async for chunk in response:
+                yield chunk
+
+
+        asyncio.run(
+            main(),
         )
-        async for chunk in response:
-            yield chunk
         """
         async with self._client_wrapper.httpx_client.stream(
             "generate-stream",
@@ -181,13 +191,23 @@ class AsyncDummyClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedStreaming
 
         client = AsyncSeedStreaming(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.dummy.generate(
-            num_events=5,
+
+
+        async def main() -> None:
+            await client.dummy.generate(
+                num_events=5,
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

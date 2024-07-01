@@ -65,13 +65,23 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedBearerTokenEnvironmentVariable
 
         client = AsyncSeedBearerTokenEnvironmentVariable(
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.service.get_with_bearer_token()
+
+
+        async def main() -> None:
+            await client.service.get_with_bearer_token()
+
+
+        asyncio.run(
+            main(),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "apiKey", method="GET", request_options=request_options

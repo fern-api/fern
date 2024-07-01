@@ -75,13 +75,23 @@ class AsyncUnknownClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedUnknownAsAny
 
         client = AsyncSeedUnknownAsAny(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.unknown.post(
-            request={"key": "value"},
+
+
+        async def main() -> None:
+            await client.unknown.post(
+                request={"key": "value"},
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

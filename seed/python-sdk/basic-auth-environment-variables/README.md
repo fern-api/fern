@@ -33,6 +33,8 @@ client.basic_auth.post_with_basic_auth(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedBasicAuthEnvironmentVariables
 
 client = AsyncSeedBasicAuthEnvironmentVariables(
@@ -40,8 +42,16 @@ client = AsyncSeedBasicAuthEnvironmentVariables(
     password="YOUR_PASSWORD",
     base_url="https://yourhost.com/path/to/api",
 )
-await client.basic_auth.post_with_basic_auth(
-    request={"key": "value"},
+
+
+async def main() -> None:
+    await client.basic_auth.post_with_basic_auth(
+        request={"key": "value"},
+    )
+
+
+asyncio.run(
+    main(),
 )
 ```
 

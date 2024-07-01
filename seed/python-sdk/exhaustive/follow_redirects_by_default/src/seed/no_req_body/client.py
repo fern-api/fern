@@ -100,13 +100,23 @@ class AsyncNoReqBodyClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.no_req_body.get_with_no_request_body()
+
+
+        async def main() -> None:
+            await client.no_req_body.get_with_no_request_body()
+
+
+        asyncio.run(
+            main(),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "no-req-body", method="GET", request_options=request_options
@@ -132,13 +142,23 @@ class AsyncNoReqBodyClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.no_req_body.post_with_no_request_body()
+
+
+        async def main() -> None:
+            await client.no_req_body.post_with_no_request_body()
+
+
+        asyncio.run(
+            main(),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "no-req-body", method="POST", request_options=request_options

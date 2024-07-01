@@ -31,13 +31,23 @@ client.ec_2.boot_instance(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedMultiUrlEnvironment
 
 client = AsyncSeedMultiUrlEnvironment(
     token="YOUR_TOKEN",
 )
-await client.ec_2.boot_instance(
-    size="string",
+
+
+async def main() -> None:
+    await client.ec_2.boot_instance(
+        size="string",
+    )
+
+
+asyncio.run(
+    main(),
 )
 ```
 

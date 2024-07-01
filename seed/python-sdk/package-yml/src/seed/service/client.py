@@ -73,14 +73,24 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedPackageYml
 
         client = AsyncSeedPackageYml(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.service.nop(
-            id="id-a2ijs82",
-            nested_id="id-219xca8",
+
+
+        async def main() -> None:
+            await client.service.nop(
+                id="id-a2ijs82",
+                nested_id="id-219xca8",
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
