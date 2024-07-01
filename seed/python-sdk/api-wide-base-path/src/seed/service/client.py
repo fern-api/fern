@@ -119,9 +119,7 @@ class AsyncServiceClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"test/{jsonable_encoder(path_param)}/{jsonable_encoder(service_param)}/{jsonable_encoder(endpoint_param)}/{jsonable_encoder(resource_param)}",

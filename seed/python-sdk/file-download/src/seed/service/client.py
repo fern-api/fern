@@ -77,9 +77,7 @@ class AsyncServiceClient:
             await client.service.download_file()
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         async with self._client_wrapper.httpx_client.stream(
             method="POST", request_options=request_options

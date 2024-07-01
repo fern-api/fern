@@ -611,7 +611,7 @@ class EndpointFunctionGenerator:
                         package=package,
                     )
 
-                writer.write_node(Asyncio.run(AST.Expression("main()")))
+                writer.write_node(Asyncio.run(AST.Expression("main()")), should_write_as_snippet=False)
             else:
                 self._get_snippet_writer_function_body(
                     is_async=is_async,

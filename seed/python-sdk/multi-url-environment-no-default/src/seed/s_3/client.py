@@ -95,9 +95,7 @@ class AsyncS3Client:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "s3/presigned-url",

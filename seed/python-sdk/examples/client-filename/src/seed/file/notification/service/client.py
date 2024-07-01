@@ -93,9 +93,7 @@ class AsyncServiceClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"file/notification/{jsonable_encoder(notification_id)}", method="GET", request_options=request_options

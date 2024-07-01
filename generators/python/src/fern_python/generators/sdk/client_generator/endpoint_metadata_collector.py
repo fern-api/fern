@@ -33,6 +33,10 @@ class EndpointMetadataCollector:
         self.endpoint_parameters = {}
         self.endpoint_metadata = {}
 
+    def has_parameters(self, endpoint_id: ir_types.EndpointId) -> bool:
+        endpoint = self.get_endpoint_metadata(endpoint_id)
+        return endpoint is not None and len(self.endpoint_parameters) > 1
+
     def register_endpoint(self, endpoint_id: ir_types.EndpointId, metadata: EndpointMetadata) -> None:
         self.endpoint_metadata[endpoint_id] = metadata
 

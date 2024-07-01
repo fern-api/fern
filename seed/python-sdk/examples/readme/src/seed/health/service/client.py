@@ -127,9 +127,7 @@ class AsyncServiceClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"check/{jsonable_encoder(id)}", method="GET", request_options=request_options
@@ -172,9 +170,7 @@ class AsyncServiceClient:
             await client.health.service.ping()
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "ping", method="GET", request_options=request_options

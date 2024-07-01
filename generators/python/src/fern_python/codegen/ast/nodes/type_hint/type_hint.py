@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Sequence, Union
+from typing import Optional, Sequence, Union
 
 from fern_python.codegen.ast.nodes.expressions.function_invocation.function_invocation import (
     FunctionInvocation,
@@ -206,7 +206,7 @@ class TypeHint(AstNode):
             metadata.update(type_parameter.get_metadata())
         return metadata
 
-    def write(self, writer: NodeWriter) -> None:
+    def write(self, writer: NodeWriter, should_write_as_snippet: Optional[bool] = None) -> None:
         if isinstance(self._type, GenericTypeVar):
             writer.write(self._type.name)
         else:

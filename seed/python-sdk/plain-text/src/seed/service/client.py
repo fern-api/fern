@@ -72,9 +72,7 @@ class AsyncServiceClient:
             await client.service.get_text()
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "text", method="POST", request_options=request_options

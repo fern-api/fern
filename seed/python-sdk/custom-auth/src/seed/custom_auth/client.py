@@ -137,9 +137,7 @@ class AsyncCustomAuthClient:
             await client.custom_auth.get_with_custom_auth()
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "custom-auth", method="GET", request_options=request_options
@@ -191,9 +189,7 @@ class AsyncCustomAuthClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "custom-auth", method="POST", json=request, request_options=request_options, omit=OMIT

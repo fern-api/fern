@@ -468,9 +468,7 @@ class AsyncUsersClient:
                 yield page
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -557,9 +555,7 @@ class AsyncUsersClient:
                 yield page
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         page = page or 1
         _response = await self._client_wrapper.httpx_client.request(
@@ -639,9 +635,7 @@ class AsyncUsersClient:
                 yield page
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         page = page or 1
         _response = await self._client_wrapper.httpx_client.request(
@@ -705,9 +699,7 @@ class AsyncUsersClient:
                 yield page
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users", method="GET", params={"cursor": jsonable_encoder(cursor)}, request_options=request_options
@@ -769,9 +761,7 @@ class AsyncUsersClient:
                 yield page
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users", method="GET", params={"starting_after": starting_after}, request_options=request_options
@@ -834,9 +824,7 @@ class AsyncUsersClient:
                 yield page
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         offset = offset or 1
         _response = await self._client_wrapper.httpx_client.request(

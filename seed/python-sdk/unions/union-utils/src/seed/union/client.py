@@ -127,9 +127,7 @@ class AsyncUnionClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"{jsonable_encoder(id)}", method="GET", request_options=request_options
@@ -176,9 +174,7 @@ class AsyncUnionClient:
             )
 
 
-        asyncio.run(
-            main(),
-        )
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="PATCH", json=request, request_options=request_options, omit=OMIT
