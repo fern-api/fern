@@ -1,12 +1,12 @@
 import { doesPathExist } from "@fern-api/fs-utils";
 import chardet from "chardet";
-import { fileTypeFromBuffer } from "file-type";
+import { fileTypeFromBuffer, type MimeType } from "file-type";
 import { readFile } from "fs/promises";
 import isSvg from "is-svg";
 import path from "path";
 import { Rule } from "../../Rule";
 
-const ALLOWED_FILE_TYPES = [
+const ALLOWED_FILE_TYPES = new Set<MimeType>([
     // image files
     "image/jpeg",
     "image/png",
@@ -29,7 +29,9 @@ const ALLOWED_FILE_TYPES = [
     "font/woff2",
     "font/otf",
     "font/ttf"
-];
+]);
+
+const ALLOWED_UTF8_EXTENSIONS = new Set(["js", "css"]);
 
 export const ValidFileTypes: Rule = {
     name: "valid-file-types",
@@ -70,11 +72,11 @@ export const isValidFileType = async (absoluteFilepath: string): Promise<boolean
     // otherwise, check the file type
     const fileType = await fileTypeFromBuffer(file);
     if (fileType) {
-        return ALLOWED_FILE_TYPES.includes(fileType.mime);
+        return ALLOWED_FILE_TYPES.has(fileType.mime);
     }
 
     // if `fileType` is undefined, its type can't be parsed because it's likely a text file
-    if (path.extname(absoluteFilepath) === "js" && chardet.detect(file) === "UTF-8") {
+    if (ALLOWED_UTF8_EXTENSIONS.has(path.extname(absoluteFilepath).toLowerCase()) && chardet.detect(file) === "UTF-8") {
         // let JS files with UTF-8 encoding through
         return true;
     }
