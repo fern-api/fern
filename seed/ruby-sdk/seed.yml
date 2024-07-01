@@ -18,7 +18,7 @@ fixtures:
               version: "1.0"
               specifier: "~>"
         extraDevDependencies:
-          dotenv: "0.0.1"
+          dotenv: "2.1"
           faraday:
             upperBound:
               version: "0.17.3"
