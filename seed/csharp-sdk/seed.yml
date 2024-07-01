@@ -15,7 +15,7 @@ local:
     - yarn workspace @fern-api/fern-csharp-sdk dist:cli
   runCommand: node sdk/dist/bundle.cjs
 fixtures: 
-  exhaustive:
+  imdb:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
