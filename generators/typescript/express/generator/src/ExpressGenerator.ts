@@ -210,7 +210,7 @@ export class ExpressGenerator {
             includeSerdeLayer: config.includeSerdeLayer,
             skipRequestValidation: config.skipRequestValidation,
             skipResponseValidation: config.skipResponseValidation,
-            requestValidationStatusCode: config.requestValidationStatusCode,
+            requestValidationStatusCode: config.requestValidationStatusCode
         });
         this.expressRegisterGenerator = new ExpressRegisterGenerator({
             packageResolver: this.packageResolver,
