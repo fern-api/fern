@@ -7633,7 +7633,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/yargs", "npm:17.0.28"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:b567308d600cc49ad0dcf5ee9f761adc5572b914144f87bbc3284c71fbc29382723507bb61a8e531e29275684fd9c09310bc363ee648e9b47f4ea2c53497d2c8#npm:3.0.0-rc.14"],\
             ["chalk", "npm:5.0.1"],\
-            ["console-table-printer", "npm:2.12.0"],\
+            ["console-table-printer", "npm:2.12.1"],\
             ["depcheck", "npm:1.4.6"],\
             ["env-cmd", "https://github.com/toddbluhm/env-cmd.git#commit=8f35b71651f6a78710308ff38ab30896ea72ee8b"],\
             ["esbuild", "npm:0.15.7"],\
@@ -14449,10 +14449,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["console-table-printer", [\
-        ["npm:2.12.0", {\
-          "packageLocation": "./.yarn/cache/console-table-printer-npm-2.12.0-1c3b2705ca-2cd826da50.zip/node_modules/console-table-printer/",\
+        ["npm:2.12.1", {\
+          "packageLocation": "./.yarn/cache/console-table-printer-npm-2.12.1-a4f4d866aa-4d58fd4f18.zip/node_modules/console-table-printer/",\
           "packageDependencies": [\
-            ["console-table-printer", "npm:2.12.0"],\
+            ["console-table-printer", "npm:2.12.1"],\
             ["simple-wcswidth", "npm:1.0.1"]\
           ],\
           "linkType": "HARD"\

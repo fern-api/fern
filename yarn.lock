@@ -4529,7 +4529,7 @@ __metadata:
     "@types/yargs": ^17.0.28
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     chalk: ^5.0.1
-    console-table-printer: ^2.12.0
+    console-table-printer: ^2.12.1
     depcheck: ^1.4.6
     env-cmd: toddbluhm/env-cmd
     esbuild: ^0.15.7
@@ -10370,12 +10370,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"console-table-printer@npm:^2.12.0":
-  version: 2.12.0
-  resolution: "console-table-printer@npm:2.12.0"
+"console-table-printer@npm:^2.12.1":
+  version: 2.12.1
+  resolution: "console-table-printer@npm:2.12.1"
   dependencies:
     simple-wcswidth: ^1.0.1
-  checksum: 2cd826da503186e939f760d4f821a967944c2d111d73aec36d252e99af0f0b17c1e2722782278508deff83b77207ab872b9400fa5c524ed273586ac32762b318
+  checksum: 4d58fd4f18d3a69f421c9b0ffd44e5b0542677423491199e92c3e5ca0c023a06304a94bcc60f0d2b480a06cdf0720d2f228807f2af127abc8c905e73fcf64363
   languageName: node
   linkType: hard
 
