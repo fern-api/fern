@@ -62,6 +62,8 @@ class AsyncDummyClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedSingleUrlEnvironmentNoDefault
         from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
 
@@ -69,7 +71,15 @@ class AsyncDummyClient:
             token="YOUR_TOKEN",
             environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
         )
-        await client.dummy.get_dummy()
+
+
+        async def main() -> None:
+            await client.dummy.get_dummy()
+
+
+        asyncio.run(
+            main(),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "dummy", method="GET", request_options=request_options

@@ -101,15 +101,25 @@ class AsyncFooClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedAudiences
 
         client = AsyncSeedAudiences(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.foo.find(
-            optional_string="string",
-            public_property="string",
-            private_property=1,
+
+
+        async def main() -> None:
+            await client.foo.find(
+                optional_string="string",
+                public_property="string",
+                private_property=1,
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

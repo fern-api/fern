@@ -173,6 +173,8 @@ class AsyncAuthClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedOauthClientCredentials
 
         client = AsyncSeedOauthClientCredentials(
@@ -180,10 +182,18 @@ class AsyncAuthClient:
             client_id="YOUR_CLIENT_ID",
             client_secret="YOUR_CLIENT_SECRET",
         )
-        await client.auth.get_token_with_client_credentials(
-            client_id="string",
-            client_secret="string",
-            scope="string",
+
+
+        async def main() -> None:
+            await client.auth.get_token_with_client_credentials(
+                client_id="string",
+                client_secret="string",
+                scope="string",
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -236,6 +246,8 @@ class AsyncAuthClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedOauthClientCredentials
 
         client = AsyncSeedOauthClientCredentials(
@@ -243,11 +255,19 @@ class AsyncAuthClient:
             client_id="YOUR_CLIENT_ID",
             client_secret="YOUR_CLIENT_SECRET",
         )
-        await client.auth.refresh_token(
-            client_id="string",
-            client_secret="string",
-            refresh_token="string",
-            scope="string",
+
+
+        async def main() -> None:
+            await client.auth.refresh_token(
+                client_id="string",
+                client_secret="string",
+                refresh_token="string",
+                scope="string",
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

@@ -110,6 +110,8 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
 
@@ -117,8 +119,16 @@ class AsyncServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
-        await client.health.service.check(
-            id="id-2sdx82h",
+
+
+        async def main() -> None:
+            await client.health.service.check(
+                id="id-2sdx82h",
+            )
+
+
+        asyncio.run(
+            main(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -147,6 +157,8 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
 
@@ -154,7 +166,15 @@ class AsyncServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
-        await client.health.service.ping()
+
+
+        async def main() -> None:
+            await client.health.service.ping()
+
+
+        asyncio.run(
+            main(),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "ping", method="GET", request_options=request_options

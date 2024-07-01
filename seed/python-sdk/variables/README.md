@@ -31,13 +31,23 @@ client.service.post(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedVariables
 
 client = AsyncSeedVariables(
     base_url="https://yourhost.com/path/to/api",
 )
-await client.service.post(
-    endpoint_param="string",
+
+
+async def main() -> None:
+    await client.service.post(
+        endpoint_param="string",
+    )
+
+
+asyncio.run(
+    main(),
 )
 ```
 
