@@ -170,7 +170,7 @@ scripts:
       - mkdir cache
       - cp -r /yarn-cache-template ./cache
       - yarn install --cache-folder ./cache
-      - yarn build 
+      - yarn build
 allowedFailures:
   - response-property
   - bytes

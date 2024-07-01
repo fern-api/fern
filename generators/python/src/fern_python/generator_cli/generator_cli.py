@@ -1,3 +1,4 @@
+from math import e
 import os
 import subprocess
 import tempfile
@@ -5,9 +6,10 @@ from typing import Dict, List, Optional, Union
 
 import fern.generator_exec.resources as generator_exec
 import fern.ir.resources as ir_types
+from fern_python.generators.sdk.client_generator.generated_root_client import GeneratedRootClient
 import generatorcli
 import yaml  # type: ignore
-
+from fern_python.codegen import AST
 from fern_python.codegen import ProjectConfig
 from fern_python.codegen.project import Project
 from fern_python.generator_cli.readme_snippet_builder import ReadmeSnippetBuilder
@@ -34,6 +36,7 @@ class GeneratorCli:
         ir: ir_types.IntermediateRepresentation,
         generator_exec_wrapper: GeneratorExecWrapper,
         context: SdkGeneratorContext,
+        endpoint_metadata: EndpointMetadataCollector,
         skip_install: bool = False,
     ):
         self._organization = organization
@@ -41,6 +44,7 @@ class GeneratorCli:
         self._ir = ir
         self._generator_exec_wrapper = generator_exec_wrapper
         self._context = context
+        self._endpoint_metadata = endpoint_metadata
 
         if not skip_install:
             self._install()
@@ -61,10 +65,10 @@ class GeneratorCli:
         return True
 
     def generate_reference(
-        self, snippets: generator_exec.Snippets, endpoint_metadata: EndpointMetadataCollector, project: Project
+        self, snippets: generator_exec.Snippets, project: Project
     ) -> Optional[str]:
         reference_config_builder = ReferenceConfigBuilder(
-            ir=self._ir, snippets=snippets, endpoint_metadata=endpoint_metadata, context=self._context, project=project
+            ir=self._ir, snippets=snippets, endpoint_metadata=self._endpoint_metadata, context=self._context, project=project
         )
 
         reference_config = reference_config_builder.generate_reference_config()
@@ -79,6 +83,7 @@ class GeneratorCli:
     def generate_readme(
         self,
         snippets: generator_exec.Snippets,
+        generated_root_client: GeneratedRootClient,
         github_repo_url: Optional[str] = None,
         github_installation_token: Optional[str] = None,
         pagination_enabled: Union[bool, None] = False,
@@ -88,6 +93,9 @@ class GeneratorCli:
             package_name=self._package_name,
             snippets=snippets,
             pagination_enabled=pagination_enabled,
+            generated_root_client=generated_root_client,
+            api_error_reference=self._context.core_utilities.get_reference_to_api_error(),
+            endpoint_metadata=self._endpoint_metadata,
         )
         readme_config_filepath = self._write_readme_config(
             snippets=readme_snippet_builder.build_readme_snippets(),

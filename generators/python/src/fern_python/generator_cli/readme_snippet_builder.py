@@ -1,7 +1,14 @@
+from ast import arg
 from typing import Dict, List, Optional, Union
 
+from fern_python.codegen import AST
 import fern.generator_exec.resources as generator_exec
 import fern.ir.resources as ir_types
+from fern_python.codegen.ast.references import class_reference
+from fern_python.external_dependencies.httpx import HttpX
+from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import EndpointMetadata, EndpointMetadataCollector
+from fern_python.generators.sdk.client_generator.generated_root_client import GeneratedRootClient
+from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 import generatorcli
 
 
@@ -15,6 +22,8 @@ class ReadmeSnippetBuilder:
 
     # TODO: Fill in the snippets for these sections, and add more as needed.
     EXCEPTION_HANDLING_FEATURE_ID: generatorcli.FeatureId = "EXCEPTION_HANDLING"
+    RETRIES_FEATURE_ID: generatorcli.FeatureId = "RETRIES"
+    TIMEOUTS_FEATURE_ID: generatorcli.FeatureId = "TIMEOUTS"
     CUSTOM_CLIENT_FEATURE_ID: generatorcli.FeatureId = "CUSTOM_CLIENT"
 
     def __init__(
@@ -22,6 +31,9 @@ class ReadmeSnippetBuilder:
         ir: ir_types.IntermediateRepresentation,
         package_name: str,
         snippets: generator_exec.Snippets,
+        endpoint_metadata: EndpointMetadataCollector,
+        generated_root_client: GeneratedRootClient,
+        api_error_reference: AST.ClassReference,
         pagination_enabled: Union[bool, None] = False,
     ):
         self._ir = ir
@@ -31,6 +43,10 @@ class ReadmeSnippetBuilder:
         # is a recipe of disaster given how easy it is to forget to check these
         # flags and how many places need this context.
         self._pagination_enabled = pagination_enabled
+
+        self._root_client = generated_root_client
+        self._endpoint_metadata = endpoint_metadata
+        self._api_error_reference = api_error_reference
 
         self._endpoint_map = self._build_endpoints(ir)
         self._endpoint_snippet_map = self._build_endpoint_snippet_map(snippets=snippets)
@@ -46,6 +62,11 @@ class ReadmeSnippetBuilder:
 
         if self._pagination_enabled:
             snippets[ReadmeSnippetBuilder.PAGINATION_FEATURE_ID] = self._build_pagination_snippets()
+
+        snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = self._build_exception_handling_snippets()
+        snippets[ReadmeSnippetBuilder.RETRIES_FEATURE_ID] = self._build_retries_snippets()
+        snippets[ReadmeSnippetBuilder.TIMEOUTS_FEATURE_ID] = self._build_timeout_snippets()
+        snippets[ReadmeSnippetBuilder.CUSTOM_CLIENT_FEATURE_ID] = [self._build_custom_client_snippets()]
 
         return snippets
 
@@ -68,6 +89,129 @@ class ReadmeSnippetBuilder:
             return [self._endpoint_snippet_map[endpoints_with_feature[0]].sync_client]
 
         return []
+    
+    # Stolen from SnippetRegistry
+    def _expression_to_snippet_str(
+        self,
+        expr: AST.Expression,
+    ) -> str:
+        snippet = SourceFileFactory.create_snippet()
+        snippet.add_expression(expr)
+        # For some reason we're appending newlines to snippets, so we need to strip them for tempaltes
+        return snippet.to_str()
+
+
+    def _build_timeout_snippets(self) -> List[str]:
+        retries_endpoint_ids = self._get_user_specified_endpoint_ids_for_feature(
+            feature_id=ReadmeSnippetBuilder.TIMEOUTS_FEATURE_ID
+        ) or [self._default_endpoint_id]
+        
+        retry_snippets = []
+        for endpoint_id in retries_endpoint_ids:
+            endpoint = self._endpoint_metadata.get_endpoint_metadata(endpoint_id)
+            if endpoint is not None:
+                has_parameters = self._endpoint_metadata.has_parameters(endpoint_id)
+
+                client_instantiation = AST.ClassInstantiation(
+                    class_=self._root_client.sync_client.class_reference,
+                    args=[AST.Expression("..."), AST.Expression("{ timeout=20.0 }")],
+                )
+                def _client_writer(writer: AST.NodeWriter) -> None:
+                    writer.write("client = ")
+                    writer.write_node(client_instantiation)
+
+                client_instantiation_str = self._expression_to_snippet_str(
+                    AST.Expression(AST.CodeWriter(_client_writer))
+                )
+
+                retry_snippets.append(
+                    f"""
+{client_instantiation_str}
+
+# Override timeout for a specific method
+client.{endpoint.endpoint_package_path}{endpoint.method_name}({"...," if has_parameters else ""}{{
+    timeout_in_seconds=1
+}})
+"""
+                )
+
+        return retry_snippets
+    
+    def _build_exception_handling_snippets(self) -> List[str]:
+        retries_endpoint_ids = self._get_user_specified_endpoint_ids_for_feature(
+            feature_id=ReadmeSnippetBuilder.RETRIES_FEATURE_ID
+        ) or [self._default_endpoint_id]
+        
+        retry_snippets = []
+        for endpoint_id in retries_endpoint_ids:
+            endpoint = self._endpoint_metadata.get_endpoint_metadata(endpoint_id)
+            if endpoint is not None:
+                has_parameters = self._endpoint_metadata.has_parameters(endpoint_id)
+                def _get_error_writer(current_endpoint: EndpointMetadata) -> AST.CodeWriterFunction:
+                    def _error_writer(writer: AST.NodeWriter) -> None:
+                        writer.write_line("try:")
+                        with writer.indent():
+                            writer.write_line(f"client.{current_endpoint.endpoint_package_path}{current_endpoint.method_name}({'...' if has_parameters else ''})")
+                        writer.write("except ")
+                        writer.write_node(AST.TypeHint(self._api_error_reference))
+                        writer.write_line(" as e:")
+                        with writer.indent():
+                            writer.write_line("print(e.status_code)")
+                            writer.write_line("print(e.body)")
+                    return _error_writer
+                
+                error_exception_str = self._expression_to_snippet_str(
+                    AST.Expression(AST.CodeWriter(_get_error_writer(endpoint)))
+                )
+
+                retry_snippets.append(error_exception_str)
+
+        return retry_snippets
+
+    def _build_retries_snippets(self) -> List[str]:
+        retries_endpoint_ids = self._get_user_specified_endpoint_ids_for_feature(
+            feature_id=ReadmeSnippetBuilder.RETRIES_FEATURE_ID
+        ) or [self._default_endpoint_id]
+        
+        retry_snippets = []
+        for endpoint_id in retries_endpoint_ids:
+            endpoint = self._endpoint_metadata.get_endpoint_metadata(endpoint_id)
+            if endpoint is not None:
+                has_parameters = self._endpoint_metadata.has_parameters(endpoint_id)
+                retry_snippets.append(
+                    f"""client.{endpoint.endpoint_package_path}{endpoint.method_name}({"...," if has_parameters else ""}{{
+    max_retries=1
+}})
+"""
+                )
+
+        return retry_snippets
+    
+    def _build_custom_client_snippets(self) -> str:
+        client_instantiation = AST.ClassInstantiation(
+            class_=self._root_client.sync_client.class_reference,
+            args=[AST.Expression("...")],
+            kwargs=[("http_client", 
+                     AST.Expression(
+                         AST.ClassInstantiation(
+                             class_=HttpX.CLIENT,
+                             kwargs=[
+                                 ("proxies", AST.Expression("http://my.test.proxy.example.com")),
+                                 ("transport", AST.Expression('httpx.HTTPTransport(local_address="0.0.0.0")')),
+                             ],
+                         )
+                    )
+            )],
+        )
+        def _client_writer(writer: AST.NodeWriter) -> None:
+            writer.write("client = ")
+            writer.write_node(client_instantiation)
+
+        client_instantiation_str = self._expression_to_snippet_str(
+            AST.Expression(AST.CodeWriter(_client_writer))
+        )
+
+        return client_instantiation_str
 
     def _build_streaming_snippets(self) -> List[str]:
         return self._build_snippets_for_feature(ReadmeSnippetBuilder.STREAMING_FEATURE_ID)
