@@ -60,7 +60,9 @@ except ApiError as e:
     print(e.body)
 ```
 
-## Retries
+## Advanced
+
+### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
 as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
@@ -80,7 +82,29 @@ client.service.post(...,{
 })
 ```
 
-## Timeouts
+## Advanced
+
+### Retries
+
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
+
+A request is deemed retriable when any of the following HTTP status codes is returned:
+
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+Use the `max_retries` request option to configure this behavior.
+
+```python
+client.service.post(...,{
+    max_retries=1
+})
+```
+
+### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
@@ -97,7 +121,46 @@ client.service.post(...,{
 })
 ```
 
-## Custom Client
+## Advanced
+
+### Retries
+
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
+
+A request is deemed retriable when any of the following HTTP status codes is returned:
+
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+Use the `max_retries` request option to configure this behavior.
+
+```python
+client.service.post(...,{
+    max_retries=1
+})
+```
+
+### Timeouts
+
+The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
+
+```python
+
+from seed.client import SeedFileUpload
+
+client = SeedFileUpload(..., { timeout=20.0 }, )
+
+
+# Override timeout for a specific method
+client.service.post(...,{
+    timeout_in_seconds=1
+})
+```
+
+### Custom Client
 
 You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
 and transports.
