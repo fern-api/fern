@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using OneOf;
 
-namespace SeedUnions;
+namespace SeedUnions.Core;
 
 public class OneOfSerializer<TOneOf> : JsonConverter<TOneOf>
     where TOneOf : IOneOf

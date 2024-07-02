@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace SeedPagination;
+namespace SeedPagination.Core;
 
 /// <summary>
 /// Json collection converter.
