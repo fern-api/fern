@@ -7,6 +7,7 @@ from pydantic_core import PydanticUndefined
 import typing_extensions
 
 import pydantic
+from pydantic.fields import FieldInfo
 
 from .datetime_utils import serialize_datetime
 
@@ -35,16 +36,18 @@ Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
 
 class UncheckedBaseModel(UniversalBaseModel):
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        # Note: `smart_union` is on by defautl in Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="allow",
+            populate_by_name=True,
+            json_encoders={dt.datetime: serialize_datetime}
+        )
 
     # Allow extra fields
     class Config:
         extra = pydantic.Extra.allow
         smart_union = True
-        # Pydantic v1 configuration
         allow_population_by_field_name = True
-        # Pydantic v2 configuration
-        populate_by_name = True
         json_encoders = {dt.datetime: serialize_datetime}
 
     @classmethod
@@ -65,6 +68,18 @@ class UncheckedBaseModel(UniversalBaseModel):
             return cls.model_fields
         return cls.__fields__
     
+    @classmethod
+    def get_field_default(cls: typing.Type["Model"], field: FieldInfo) -> typing.Any:
+        value = field.get_default()
+        if IS_PYDANTIC_V2:
+            from pydantic_core import PydanticUndefined
+
+            if value == PydanticUndefined:
+                return None
+            return value
+        return value
+
+
     @classmethod
     def model_construct(
         cls: typing.Type["Model"], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
@@ -103,7 +118,7 @@ class UncheckedBaseModel(UniversalBaseModel):
                 fields_values[name] = construct_type(object_=values[key], type_=type_)
                 _fields_set.add(name)
             else:
-                default = field.get_default()
+                default = UncheckedBaseModel.get_field_default(field)
 
                 # If the default values are non-null act like they've been set
                 # This effectively allows exclude_unset to work like exclude_none where
@@ -198,7 +213,7 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
         if not isinstance(object_, typing.Mapping):
             return object_
 
-        key_type, items_type = pydantic_v1.typing.get_args(type_)
+        key_type, items_type = get_args(type_)
         d = {
             construct_type(object_=key, type_=key_type): construct_type(object_=item, type_=items_type)
             for key, item in object_.items()

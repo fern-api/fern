@@ -68,14 +68,15 @@ def to_jsonable_with_fallback(obj: typing.Any, fallback_serializer: typing.Calla
 
 class UniversalBaseModel(pydantic.BaseModel):
     if IS_PYDANTIC_V2:
+        # Note: `smart_union` is on by defautl in Pydantic v2
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            populate_by_name=True,
             json_encoders={dt.datetime: serialize_datetime}
         )
 
     class Config:
         smart_union = True
         allow_population_by_field_name = True
-        populate_by_name = True
         json_encoders = {dt.datetime: serialize_datetime}
 
     def json(self, **kwargs: typing.Any) -> str:
