@@ -15,8 +15,12 @@ export declare namespace Imdb {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -30,7 +34,7 @@ export class Imdb {
      * @param {Imdb.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedApi.imdb.createMovie({
+     *     await client.imdb.createMovie({
      *         title: "string",
      *         rating: 1.1
      *     })
@@ -54,6 +58,7 @@ export class Imdb {
             body: await serializers.CreateMovieRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.MovieId.parseOrThrow(_response.body, {
@@ -93,7 +98,7 @@ export class Imdb {
      * @throws {@link SeedApi.MovieDoesNotExistError}
      *
      * @example
-     *     await seedApi.imdb.getMovie("string")
+     *     await client.imdb.getMovie("string")
      */
     public async getMovie(movieId: SeedApi.MovieId, requestOptions?: Imdb.RequestOptions): Promise<SeedApi.Movie> {
         const _response = await core.fetcher({
@@ -113,6 +118,7 @@ export class Imdb {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.Movie.parseOrThrow(_response.body, {

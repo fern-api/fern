@@ -7,10 +7,20 @@
         },
         "endpointId": {
             "path": "/",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_union.get"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedUndiscriminatedUnions\n\nclient = SeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed.client import SeedUndiscriminatedUnions"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -23,11 +33,76 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedUndiscriminatedUnions\n\nclient = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed.client import AsyncSeedUndiscriminatedUnions"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
                     "templateString": "await client.union.get(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_undiscriminated-unions",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/metadata",
+            "method": "GET",
+            "identifierOverride": "endpoint_union.getMetadata"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "from seed.client import SeedUndiscriminatedUnions"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.union.get_metadata(\n\t$FERN_INPUT\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed.client import AsyncSeedUndiscriminatedUnions"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.union.get_metadata(\n\t$FERN_INPUT\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"

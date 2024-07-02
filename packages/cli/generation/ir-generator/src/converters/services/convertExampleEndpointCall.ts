@@ -1,6 +1,5 @@
 import { isNonNullish, isPlainObject } from "@fern-api/core-utils";
 import {
-    ExampleCodeSample,
     ExampleEndpointCall,
     ExampleEndpointSuccessResponse,
     ExampleHeader,
@@ -8,7 +7,6 @@ import {
     ExamplePathParameter,
     ExampleRequestBody,
     ExampleResponse,
-    HttpEndpointExample,
     Name,
     SupportedSdkLanguage
 } from "@fern-api/ir-sdk";
@@ -18,7 +16,6 @@ import {
     parseBytesRequest,
     parseRawFileType,
     RawSchemas,
-    visitExampleCodeSampleSchema,
     visitExampleResponseSchema
 } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../../FernFileContext";
@@ -55,7 +52,7 @@ export function convertExampleEndpointCall({
     variableResolver: VariableResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): HttpEndpointExample {
+}): ExampleEndpointCall {
     const convertedPathParameters = convertPathParameters({
         service,
         endpoint,
@@ -66,7 +63,8 @@ export function convertExampleEndpointCall({
         file,
         workspace
     });
-    return HttpEndpointExample.userProvided({
+    return {
+        id: example.id,
         name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
         docs: example.docs,
         url: buildUrl({ service, endpoint, example, pathParams: convertedPathParameters }),
@@ -114,53 +112,8 @@ export function convertExampleEndpointCall({
             exampleResolver,
             file,
             workspace
-        }),
-        codeSamples: example["code-samples"]?.map((codeSample) => {
-            return visitExampleCodeSampleSchema<ExampleCodeSample>(codeSample, {
-                language: (languageScheme) =>
-                    ExampleCodeSample.language({
-                        name:
-                            languageScheme.name != null
-                                ? file.casingsGenerator.generateName(languageScheme.name)
-                                : undefined,
-                        docs: languageScheme.docs,
-                        language: languageScheme.language,
-                        code: languageScheme.code,
-                        install: languageScheme.install
-                    }),
-                sdk: (sdkScheme) =>
-                    ExampleCodeSample.sdk({
-                        name: sdkScheme.name != null ? file.casingsGenerator.generateName(sdkScheme.name) : undefined,
-                        docs: sdkScheme.docs,
-                        sdk: removeSdkAlias(sdkScheme.sdk),
-                        code: sdkScheme.code
-                    })
-            });
         })
-    });
-}
-
-function removeSdkAlias(sdk: RawSchemas.SupportedSdkLanguageSchema): SupportedSdkLanguage {
-    switch (sdk) {
-        case "js":
-            return "javascript";
-        case "node":
-            return "javascript";
-        case "ts":
-            return "typescript";
-        case "nodets":
-            return "typescript";
-        case "golang":
-            return "go";
-        case "dotnet":
-            return "csharp";
-        case "c#":
-            return "csharp";
-        case "jvm":
-            return "java";
-        default:
-            return sdk;
-    }
+    };
 }
 
 function convertPathParameters({

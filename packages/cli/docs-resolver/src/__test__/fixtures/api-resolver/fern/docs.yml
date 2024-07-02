@@ -1,0 +1,12 @@
+instances: []
+navigation:
+  - api: API Reference
+    layout:
+      - testing:
+          title: Testing
+          contents:
+            - DELETE /movies/{id}
+            - GET /movies/{id}
+      - imdb:
+          contents:
+            - trailers

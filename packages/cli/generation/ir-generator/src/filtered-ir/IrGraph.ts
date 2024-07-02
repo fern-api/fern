@@ -9,12 +9,15 @@ import {
     FileUploadRequestProperty,
     HttpEndpoint,
     HttpRequestBody,
-    HttpResponse,
     HttpResponseBody,
     HttpService,
-    TypeReference
+    TypeReference,
+    Webhook,
+    WebhookPayload
 } from "@fern-api/ir-sdk";
 import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
+import { isReferencedWebhookPayloadSchema } from "../converters/convertWebhookGroup";
+import { FernFileContext } from "../FernFileContext";
 import { IdGenerator } from "../IdGenerator";
 import { getPropertiesForAudience } from "../utils/getPropertiesForAudience";
 import { FilteredIr, FilteredIrImpl } from "./FilteredIr";
@@ -25,24 +28,30 @@ import {
     ErrorId,
     ErrorNode,
     InlinedRequestPropertiesNode,
+    InlinedWebhookPayloadProperiesNode,
     ServiceId,
     SubpackageId,
     TypeId,
     TypeNode,
-    TypePropertiesNode
+    TypePropertiesNode,
+    WebhookId,
+    WebhookNode
 } from "./ids";
 
 export class IrGraph {
     private types: Record<TypeId, TypeNode> = {};
     private properties: Record<TypeId, TypePropertiesNode> = {};
     private requestProperties: Record<EndpointId, InlinedRequestPropertiesNode> = {};
+    private webhookProperties: Record<WebhookId, InlinedWebhookPayloadProperiesNode> = {};
     private errors: Record<TypeId, ErrorNode> = {};
     private endpoints: Record<EndpointId, EndpointNode> = {};
+    private webhooks: Record<WebhookId, WebhookNode> = {};
     private audiences: Audiences;
     private typesReferencedByService: Record<TypeId, Set<ServiceId>> = {};
     private typesNeededForAudience: Set<TypeId> = new Set();
     private servicesNeededForAudience: Set<ServiceId> = new Set();
     private endpointsNeededForAudience: Set<EndpointId> = new Set();
+    private webhooksNeededForAudience: Set<WebhookId> = new Set();
     private subpackagesNeededForAudience: Set<SubpackageId> = new Set();
 
     public constructor(audiences: ConfigAudiences) {
@@ -198,6 +207,25 @@ export class IrGraph {
                         }
                     });
                 },
+                streamParameter: (response) => {
+                    response.streamResponse._visit({
+                        sse: (sse) =>
+                            populateReferencesFromTypeReference(sse.payload, referencedTypes, referencedSubpackages),
+                        json: (json) =>
+                            populateReferencesFromTypeReference(json.payload, referencedTypes, referencedSubpackages),
+                        text: noop,
+                        _other: () => {
+                            throw new Error("Unknown streamingResponse type: " + response.streamResponse.type);
+                        }
+                    });
+                    if (response.nonStreamResponse.type === "json") {
+                        populateReferencesFromTypeReference(
+                            response.nonStreamResponse.value.responseBodyType,
+                            referencedTypes,
+                            referencedSubpackages
+                        );
+                    }
+                },
                 text: noop,
                 _other: () => {
                     throw new Error("Unknown HttpResponse: " + httpEndpoint.response?.body?.type);
@@ -239,9 +267,67 @@ export class IrGraph {
         }
     }
 
+    public addWebhook(file: FernFileContext, webhook: Webhook, rawWebhook?: RawSchemas.WebhookSchema): void {
+        const webhookId = webhook.id;
+        if (webhookId == null) {
+            return;
+        }
+        const referencedTypes = new Set<TypeId>();
+        const referencedSubpackages = new Set<FernFilepath>();
+
+        if (webhook.payload != null) {
+            WebhookPayload._visit(webhook.payload, {
+                inlinedPayload: (inlinedPayload) => {
+                    for (const extension of inlinedPayload.extends) {
+                        populateReferencesFromTypeName(extension, referencedTypes, referencedSubpackages);
+                    }
+                    for (const property of inlinedPayload.properties) {
+                        populateReferencesFromTypeReference(property.valueType, referencedTypes, referencedSubpackages);
+                    }
+                    if (
+                        rawWebhook?.payload != null &&
+                        typeof rawWebhook.payload === "object" &&
+                        !isReferencedWebhookPayloadSchema(rawWebhook.payload)
+                    ) {
+                        const propertiesByAudience = getPropertiesForAudience(rawWebhook.payload.properties ?? {});
+                        this.webhookProperties[webhookId] = {
+                            webhookId,
+                            propertiesByAudience
+                        };
+                    }
+                },
+                reference: ({ payloadType }) => {
+                    populateReferencesFromTypeReference(payloadType, referencedTypes, referencedSubpackages);
+                },
+                _other: () => {
+                    throw new Error("Unknown WebhookPayload: " + webhook.payload?.type);
+                }
+            });
+        }
+        referencedSubpackages.add(file.fernFilepath);
+        this.webhooks[webhookId] = {
+            webhookId,
+            referencedTypes,
+            referencedSubpackages
+        };
+    }
+
+    public markWebhookForAudiences(file: FernFileContext, webhook: Webhook, audiences: AudienceId[]): void {
+        const webhookId = webhook.id;
+        if (webhookId == null) {
+            return;
+        }
+
+        if (this.hasAudience(audiences)) {
+            this.webhooksNeededForAudience.add(webhookId);
+            this.addSubpackages(file.fernFilepath);
+        }
+    }
+
     public build(): FilteredIr {
         const typeIds = new Set<TypeId>();
         const errorIds = new Set<ErrorId>();
+
         for (const endpointId of this.endpointsNeededForAudience.keys()) {
             const endpointNode = this.getEndpointNode(endpointId);
             for (const errorId of endpointNode.referencedErrors) {
@@ -256,8 +342,14 @@ export class IrGraph {
         }
         this.addReferencedTypes(typeIds, this.typesNeededForAudience);
 
+        for (const webhookId of this.webhooksNeededForAudience.keys()) {
+            const webhookNode = this.getWebhookNode(webhookId);
+            this.addReferencedTypes(typeIds, webhookNode.referencedTypes);
+        }
+
         const properties: Record<TypeId, Set<string>> = {};
         const requestProperties: Record<EndpointId, Set<string>> = {};
+        const webhookPayloadProperties: Record<WebhookId, Set<string>> = {};
 
         if (this.audiences.type === "filtered") {
             for (const [typeId, typePropertiesNode] of Object.entries(this.properties)) {
@@ -295,6 +387,24 @@ export class IrGraph {
                     requestProperties[endpointId] = propertiesForEndpoint;
                 }
             }
+
+            for (const [webhookId, webhookPaylodPropertiesNode] of Object.entries(this.webhookProperties)) {
+                if (!this.webhooksNeededForAudience.has(webhookId)) {
+                    continue;
+                }
+                const propertiesForWebhook = new Set<string>();
+                for (const audience of this.audiences.audiences) {
+                    const propertiesForAudience = webhookPaylodPropertiesNode.propertiesByAudience[audience];
+                    if (propertiesForAudience != null) {
+                        propertiesForAudience.forEach((property) => {
+                            propertiesForWebhook.add(property);
+                        });
+                    }
+                }
+                if (propertiesForWebhook.size > 0) {
+                    requestProperties[webhookId] = propertiesForWebhook;
+                }
+            }
         }
 
         return new FilteredIrImpl({
@@ -304,6 +414,8 @@ export class IrGraph {
             requestProperties,
             services: this.servicesNeededForAudience,
             endpoints: this.endpointsNeededForAudience,
+            webhooks: this.webhooksNeededForAudience,
+            webhookPayloadProperties,
             subpackages: this.subpackagesNeededForAudience
         });
     }
@@ -369,6 +481,14 @@ export class IrGraph {
             throw new Error(`Failed to find endpoint node with id ${endpointId}`);
         }
         return endpointNode;
+    }
+
+    private getWebhookNode(webhookId: WebhookId): WebhookNode {
+        const webhookNode = this.webhooks[webhookId];
+        if (webhookNode == null) {
+            throw new Error(`Failed to find webhook node with id ${webhookId}`);
+        }
+        return webhookNode;
     }
 
     public hasNoAudiences(): boolean {

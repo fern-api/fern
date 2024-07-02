@@ -1,4 +1,7 @@
+using System.Text.Json;
 using SeedEnum;
+
+#nullable enable
 
 namespace SeedEnum;
 
@@ -15,22 +18,22 @@ public class QueryParamClient
     {
         var _query = new Dictionary<string, object>()
         {
-            { "operand", request.Operand.ToString() },
+            { "operand", JsonSerializer.Serialize(request.Operand) },
             { "operandOrColor", request.OperandOrColor.ToString() },
         };
         if (request.MaybeOperand != null)
         {
-            _query["maybeOperand"] = request.MaybeOperand;
+            _query["maybeOperand"] = JsonSerializer.Serialize(request.MaybeOperand.Value);
         }
         if (request.MaybeOperandOrColor != null)
         {
-            _query["maybeOperandOrColor"] = request.MaybeOperandOrColor;
+            _query["maybeOperandOrColor"] = request.MaybeOperandOrColor.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/query",
+                Path = "query",
                 Query = _query
             }
         );
@@ -40,22 +43,22 @@ public class QueryParamClient
     {
         var _query = new Dictionary<string, object>()
         {
-            { "operand", request.Operand.ToString() },
+            { "operand", JsonSerializer.Serialize(request.Operand) },
             { "operandOrColor", request.OperandOrColor.ToString() },
         };
         if (request.MaybeOperand != null)
         {
-            _query["maybeOperand"] = request.MaybeOperand;
+            _query["maybeOperand"] = JsonSerializer.Serialize(request.MaybeOperand.Value);
         }
         if (request.MaybeOperandOrColor != null)
         {
-            _query["maybeOperandOrColor"] = request.MaybeOperandOrColor;
+            _query["maybeOperandOrColor"] = request.MaybeOperandOrColor.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/query-list",
+                Path = "query-list",
                 Query = _query
             }
         );

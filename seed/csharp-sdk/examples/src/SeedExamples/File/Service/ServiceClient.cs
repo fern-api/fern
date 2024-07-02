@@ -2,6 +2,8 @@ using System.Text.Json;
 using SeedExamples;
 using SeedExamples.File;
 
+#nullable enable
+
 namespace SeedExamples.File;
 
 public class ServiceClient
@@ -19,13 +21,13 @@ public class ServiceClient
     public async Task<File> GetFileAsync(string filename, GetFileRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/{filename}" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"/file/{filename}" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<File>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

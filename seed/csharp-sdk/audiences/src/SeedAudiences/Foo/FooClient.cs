@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedAudiences;
 
+#nullable enable
+
 namespace SeedAudiences;
 
 public class FooClient
@@ -20,7 +22,7 @@ public class FooClient
             _query["optionalString"] = request.OptionalString;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "",
@@ -32,6 +34,6 @@ public class FooClient
         {
             return JsonSerializer.Deserialize<ImportingType>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

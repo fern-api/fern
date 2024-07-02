@@ -1,5 +1,7 @@
 using SeedCodeSamples;
 
+#nullable enable
+
 namespace SeedCodeSamples;
 
 public partial class SeedCodeSamplesClient
@@ -19,7 +21,7 @@ public partial class SeedCodeSamplesClient
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);

@@ -17,6 +17,9 @@ export const HttpResponseBody: core.serialization.Schema<serializers.HttpRespons
             streaming: core.serialization.object({
                 value: core.serialization.lazy(async () => (await import("../../..")).StreamingResponse),
             }),
+            streamParameter: core.serialization.lazyObject(
+                async () => (await import("../../..")).StreamParameterResponse
+            ),
         })
         .transform<FernIr.HttpResponseBody>({
             transform: (value) => {
@@ -29,6 +32,8 @@ export const HttpResponseBody: core.serialization.Schema<serializers.HttpRespons
                         return FernIr.HttpResponseBody.text(value);
                     case "streaming":
                         return FernIr.HttpResponseBody.streaming(value.value);
+                    case "streamParameter":
+                        return FernIr.HttpResponseBody.streamParameter(value);
                     default:
                         return value as FernIr.HttpResponseBody;
                 }
@@ -41,7 +46,8 @@ export declare namespace HttpResponseBody {
         | HttpResponseBody.Json
         | HttpResponseBody.FileDownload
         | HttpResponseBody.Text
-        | HttpResponseBody.Streaming;
+        | HttpResponseBody.Streaming
+        | HttpResponseBody.StreamParameter;
 
     interface Json {
         type: "json";
@@ -59,5 +65,9 @@ export declare namespace HttpResponseBody {
     interface Streaming {
         type: "streaming";
         value: serializers.StreamingResponse.Raw;
+    }
+
+    interface StreamParameter extends serializers.StreamParameterResponse.Raw {
+        type: "streamParameter";
     }
 }

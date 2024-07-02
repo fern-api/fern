@@ -1,6 +1,7 @@
 import { Logger } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
+import { ParseOpenAPIOptions } from "../options";
 import { SCHEMA_REFERENCE_PREFIX } from "../schema/convertSchemas";
 import { SchemaParserContext } from "../schema/SchemaParserContext";
 import { isReferenceObject } from "../schema/utils/isReferenceObject";
@@ -13,22 +14,22 @@ export abstract class AbstractAsyncAPIV2ParserContext implements SchemaParserCon
     public document: AsyncAPIV2.Document;
     public taskContext: TaskContext;
     public DUMMY: SchemaParserContext;
-    public shouldUseTitleAsName: boolean;
+    public options: ParseOpenAPIOptions;
 
     constructor({
         document,
         taskContext,
-        shouldUseTitleAsName
+        options
     }: {
         document: AsyncAPIV2.Document;
         taskContext: TaskContext;
-        shouldUseTitleAsName: boolean;
+        options: ParseOpenAPIOptions;
     }) {
         this.document = document;
         this.taskContext = taskContext;
         this.logger = taskContext.logger;
         this.DUMMY = this;
-        this.shouldUseTitleAsName = shouldUseTitleAsName;
+        this.options = options;
     }
 
     public resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject {
@@ -109,19 +110,29 @@ export abstract class AbstractAsyncAPIV2ParserContext implements SchemaParserCon
         discrminant: string,
         times: number
     ): void;
+
+    public abstract markSchemaWithDiscriminantValue(
+        schema: OpenAPIV3.ReferenceObject,
+        discrminant: string,
+        discriminantValue: string
+    ): void;
 }
 
 export class AsyncAPIV2ParserContext extends AbstractAsyncAPIV2ParserContext {
     constructor({
         document,
         taskContext,
-        shouldUseTitleAsName
+        options
     }: {
         document: AsyncAPIV2.Document;
         taskContext: TaskContext;
-        shouldUseTitleAsName: boolean;
+        options: ParseOpenAPIOptions;
     }) {
-        super({ document, taskContext, shouldUseTitleAsName });
+        super({
+            document,
+            taskContext,
+            options
+        });
     }
 
     markSchemaAsReferencedByNonRequest(schemaId: string): void {
@@ -133,6 +144,14 @@ export class AsyncAPIV2ParserContext extends AbstractAsyncAPIV2ParserContext {
     }
 
     markReferencedByDiscriminatedUnion(schema: OpenAPIV3.ReferenceObject, discrminant: string, times: number): void {
+        return;
+    }
+
+    markSchemaWithDiscriminantValue(
+        schema: OpenAPIV3.ReferenceObject,
+        discrminant: string,
+        discriminantValue: string
+    ): void {
         return;
     }
 }

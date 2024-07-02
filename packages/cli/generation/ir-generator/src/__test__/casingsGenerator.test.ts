@@ -4,6 +4,7 @@ import { constructCasingsGenerator } from "../casings/CasingsGenerator";
 describe("casingsGenerator", () => {
     const casingsGenerator = constructCasingsGenerator({
         generationLanguage: undefined,
+        keywords: undefined,
         smartCasing: true
     });
     it("simple", () => {
@@ -216,6 +217,30 @@ describe("casingsGenerator", () => {
             screamingSnakeCase: {
                 safeName: "APPLICATION_V1",
                 unsafeName: "APPLICATION_V1"
+            }
+        };
+        const actual = casingsGenerator.generateName(expected.originalName);
+        expect(actual).toEqual(expected);
+    });
+
+    it("saml", () => {
+        const expected: Name = {
+            originalName: "get_saml_code_request",
+            camelCase: {
+                safeName: "getSAMLCodeRequest",
+                unsafeName: "getSAMLCodeRequest"
+            },
+            pascalCase: {
+                safeName: "GetSAMLCodeRequest",
+                unsafeName: "GetSAMLCodeRequest"
+            },
+            snakeCase: {
+                safeName: "get_saml_code_request",
+                unsafeName: "get_saml_code_request"
+            },
+            screamingSnakeCase: {
+                safeName: "GET_SAML_CODE_REQUEST",
+                unsafeName: "GET_SAML_CODE_REQUEST"
             }
         };
         const actual = casingsGenerator.generateName(expected.originalName);

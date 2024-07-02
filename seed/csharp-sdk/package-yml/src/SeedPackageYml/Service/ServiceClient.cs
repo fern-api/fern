@@ -1,5 +1,7 @@
 using SeedPackageYml;
 
+#nullable enable
+
 namespace SeedPackageYml;
 
 public class ServiceClient
@@ -11,10 +13,10 @@ public class ServiceClient
         _client = client;
     }
 
-    public async void NopAsync(string nestedId)
+    public async void NopAsync(string id, string nestedId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/{nestedId}" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"/{id}//{nestedId}" }
         );
     }
 }

@@ -16,8 +16,12 @@ export declare namespace BasicAuth {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -32,7 +36,7 @@ export class BasicAuth {
      * @throws {@link SeedBasicAuthEnvironmentVariables.UnauthorizedRequest}
      *
      * @example
-     *     await seedBasicAuthEnvironmentVariables.basicAuth.getWithBasicAuth()
+     *     await client.basicAuth.getWithBasicAuth()
      */
     public async getWithBasicAuth(requestOptions?: BasicAuth.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
@@ -49,6 +53,7 @@ export class BasicAuth {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.basicAuth.getWithBasicAuth.Response.parseOrThrow(_response.body, {
@@ -103,7 +108,7 @@ export class BasicAuth {
      * @throws {@link SeedBasicAuthEnvironmentVariables.BadRequest}
      *
      * @example
-     *     await seedBasicAuthEnvironmentVariables.basicAuth.postWithBasicAuth({
+     *     await client.basicAuth.postWithBasicAuth({
      *         "key": "value"
      *     })
      */
@@ -123,6 +128,7 @@ export class BasicAuth {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.basicAuth.postWithBasicAuth.Response.parseOrThrow(_response.body, {

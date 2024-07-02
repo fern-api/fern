@@ -14,7 +14,7 @@ from fern_python.generator_exec_wrapper.generator_exec_wrapper import (
     GeneratorExecWrapper,
 )
 from fern_python.generators.sdk.client_generator.endpoint_function_generator import (
-    EndpointFunctionSnippetGenerator,
+    EndpointFunctionGenerator,
 )
 from fern_python.generators.sdk.client_generator.generated_root_client import (
     GeneratedRootClient,
@@ -128,22 +128,36 @@ class SnippetTestFactory:
                 param.constructor_parameter_name,
             )
             for param in client.parameters
-            if param.constructor_parameter_name != "base_url" and param.constructor_parameter_name != "environment"
+            if param.constructor_parameter_name != "base_url"
+            and param.constructor_parameter_name != "environment"
+            and param.constructor_parameter_name != "_token_getter_override"
         ]
+
+        _kwargs = []
+        param_names = [param.constructor_parameter_name for param in client.parameters]
+        if "_token_getter_override" in param_names:
+            _kwargs.append(
+                (
+                    "_token_getter_override",
+                    AST.Expression('lambda: os.getenv("ENV_TOKEN", "token")'),
+                )
+            )
+
         if self._generated_environment is None:
             non_url_params.append(self._write_envvar_parameter("base_url", self.TEST_URL_ENVVAR, "base_url"))
-        return AST.ClassInstantiation(
-            class_=client.class_reference,
-            # TODO: how can we do this in a more connected + typesafe way
-            args=non_url_params,
-            kwargs=[
+        else:
+            _kwargs.append(
                 (
                     "environment",
                     AST.Expression(self._enviroment(self._generated_environment)),
                 )
-            ]
-            if self._generated_environment is not None
-            else None,
+            )
+
+        return AST.ClassInstantiation(
+            class_=client.class_reference,
+            # TODO: how can we do this in a more connected + typesafe way
+            args=non_url_params,
+            kwargs=_kwargs,
         )
 
     def _generate_client_fixture(self) -> None:
@@ -214,11 +228,11 @@ class SnippetTestFactory:
         for pathpart in fern_filepath.package_path:
             directories += (
                 Filepath.DirectoryFilepathPart(
-                    module_name=pathpart.snake_case.unsafe_name,
+                    module_name=pathpart.snake_case.safe_name,
                 ),
             )
 
-        module_name = fern_filepath.file.snake_case.unsafe_name if fern_filepath.file is not None else "root"
+        module_name = fern_filepath.file.snake_case.safe_name if fern_filepath.file is not None else "root"
         return Filepath(
             directories=directories,
             file=Filepath.FilepathPart(module_name=f"test_{module_name}"),
@@ -274,6 +288,7 @@ class SnippetTestFactory:
                         ]
                     ),
                 ),
+                literal=lambda _: None,
             ),
             named=lambda named: named.shape.visit(
                 alias=lambda alias: self._generate_type_expectations_for_type_reference(alias.value),
@@ -305,22 +320,27 @@ class SnippetTestFactory:
         response_name = "response"
         async_response_name = "async_response"
 
-        response_body = example_response.get_as_union().body if example_response is not None else None
+        response_body = self.maybe_get_response_body(example_response)
         response_json = response_body.json_example if response_body is not None else None
-        response_body = example_response.get_as_union().body if example_response is not None else None
 
         def writer(writer: AST.NodeWriter) -> None:
             if response_json is not None:
                 maybe_stringify_response_json = repr(response_json) if type(response_json) is str else response_json
-                writer.write_line(f"{expectation_name} = {maybe_stringify_response_json}")
+
+                writer.write(f"{expectation_name}: ")
+                writer.write_node(AST.Expression(AST.TypeHint.any()))
+                writer.write_line(f" = {maybe_stringify_response_json}")
+
                 expectations = (
                     self._generate_type_expectations_for_type_reference(response_body)
                     if response_body is not None
                     else None
                 )
-                if expectations is not None:
-                    maybe_stringify_expectations = f"'{expectations}'" if type(expectations) is str else expectations
-                    writer.write_line(f"{type_expectation_name} = {maybe_stringify_expectations}")
+                maybe_stringify_expectations = f"'{expectations}'" if type(expectations) is str else expectations
+
+                writer.write(f"{type_expectation_name}: ")
+                writer.write_node(AST.Expression(AST.TypeHint.any()))
+                writer.write_line(f" = {maybe_stringify_expectations}")
             if sync_expression:
                 if response_json is not None:
                     writer.write(f"{response_name} = ")
@@ -366,6 +386,20 @@ class SnippetTestFactory:
 
         return AST.CodeWriter(writer)
 
+    def maybe_get_response_body(
+        self, example_response: Optional[ir_types.ExampleResponse]
+    ) -> Optional[ir_types.ExampleTypeReference]:
+        return (
+            example_response.visit(
+                ok=lambda res: res.visit(
+                    body=lambda body: body if body else None, stream=lambda _: None, sse=lambda _: None
+                ),
+                error=lambda _: None,
+            )
+            if example_response
+            else None
+        )
+
     def _client_snippet(self, is_async: bool, package_path: str, function_invocation: AST.Expression) -> AST.Expression:
         def client_writer(writer: AST.NodeWriter) -> None:
             if is_async:
@@ -386,7 +420,7 @@ class SnippetTestFactory:
             components += [fern_filepath.file]
         if len(components) == 0:
             return ""
-        return ".".join([component.snake_case.unsafe_name for component in components]) + "."
+        return ".".join([component.snake_case.safe_name for component in components]) + "."
 
     def _generate_service_test(self, service: ir_types.HttpService, snippet_writer: SnippetWriter) -> None:
         fern_filepath = service.name.fern_filepath
@@ -401,9 +435,10 @@ class SnippetTestFactory:
                 or endpoint.pagination is not None
                 or (
                     endpoint.response is not None
+                    and endpoint.response.body
                     and (
-                        endpoint.response.get_as_union().type == "streaming"
-                        or endpoint.response.get_as_union().type == "fileDownload"
+                        endpoint.response.body.get_as_union().type == "streaming"
+                        or endpoint.response.body.get_as_union().type == "fileDownload"
                     )
                 )
                 or (
@@ -415,31 +450,34 @@ class SnippetTestFactory:
                 )
             ):
                 continue
-            endpoint_name = endpoint.name.get_as_name().snake_case.unsafe_name
+            endpoint_name = endpoint.name.get_as_name().snake_case.safe_name
 
-            # TODO: We should make the mock server return the specified error response
-            # if we want to test that as well, then we can test each example, but that seems less pressing.
+            examples = [ex.example for ex in endpoint.user_specified_examples if ex.example is not None]
+            if len(endpoint.user_specified_examples) == 0:
+                examples = [ex.example for ex in endpoint.autogenerated_examples]
             successful_examples = list(
                 filter(
                     lambda ex: ir_types.ExampleResponse.visit(
-                        ex.get_as_union().response,
+                        ex.response,
                         ok=lambda _: True,
                         error=lambda _: False,
                     ),
-                    endpoint.examples,
+                    examples,
                 )
             )
-            if len(successful_examples) == 0:
+
+            if successful_examples is None or len(successful_examples) == 0:
                 continue
 
             example = successful_examples[0]
-            endpoint_snippet = EndpointFunctionSnippetGenerator(
-                context=self._context,
+            _path_parameter_names = dict()
+            for path_parameter in endpoint.all_path_parameters:
+                _path_parameter_names[path_parameter.name] = path_parameter.name.snake_case.safe_name
+            endpoint_snippet = self._function_generator(
                 snippet_writer=snippet_writer,
                 service=service,
                 endpoint=endpoint,
-                example=example,
-            ).generate_snippet()
+            )._generate_endpoint_snippet_raw(example=example)
 
             sync_snippet = self._client_snippet(False, package_path, endpoint_snippet)
             async_snippet = self._client_snippet(True, package_path, endpoint_snippet)
@@ -448,8 +486,8 @@ class SnippetTestFactory:
                 continue
 
             response = ir_types.ExampleResponse.visit(
-                example.get_as_union().response,
-                ok=lambda _: example.get_as_union().response,
+                example.response,
+                ok=lambda _: example.response,
                 error=lambda _: None,
             )
             # Add functions to a test function
@@ -487,6 +525,30 @@ class SnippetTestFactory:
 
         if source_file:
             self._service_test_files[filepath] = source_file
+
+    def _function_generator(
+        self, service: ir_types.HttpService, endpoint: ir_types.HttpEndpoint, snippet_writer: SnippetWriter
+    ) -> EndpointFunctionGenerator:
+        return EndpointFunctionGenerator(
+            context=self._context,
+            service=service,
+            endpoint=endpoint,
+            idempotency_headers=[],
+            client_wrapper_member_name="client",
+            generated_root_client=self._generated_root_client,
+            snippet_writer=snippet_writer,
+            # Package doesn't matter here
+            package=ir_types.Package(
+                fern_filepath=service.name.fern_filepath,
+                types=[],
+                errors=[],
+                subpackages=[],
+                has_endpoints_in_tree=True,
+            ),
+            # This doesn't matter here either
+            is_async=False,
+            endpoint_metadata_collector=None,
+        )
 
     def _write_test_files(self) -> None:
         for filepath, test_file in self._service_test_files.items():

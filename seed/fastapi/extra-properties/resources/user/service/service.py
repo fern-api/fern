@@ -67,7 +67,7 @@ class AbstractUserService(AbstractFernService):
         wrapper.__globals__.update(cls.create_user.__globals__)
 
         router.post(
-            path="//user",
+            path="/user",
             response_model=User,
             description=AbstractUserService.create_user.__doc__,
             **get_route_args(cls.create_user, default_tag="user"),

@@ -15,7 +15,8 @@ export function getGeneratorInvocation({
     outputMode,
     fixtureName,
     irVersion,
-    publishMetadata
+    publishMetadata,
+    readme
 }: {
     absolutePathToOutput: AbsoluteFilePath;
     docker: ParsedDockerName;
@@ -26,6 +27,7 @@ export function getGeneratorInvocation({
     fixtureName: string;
     irVersion: string;
     publishMetadata: unknown;
+    readme: generatorsYml.ReadmeSchema | undefined;
 }): generatorsYml.GeneratorInvocation {
     return {
         name: docker.name,
@@ -35,10 +37,13 @@ export function getGeneratorInvocation({
         absolutePathToLocalOutput: absolutePathToOutput,
         absolutePathToLocalSnippets: undefined,
         language,
+        keywords: undefined,
         smartCasing: false,
         disableExamples: false,
         irVersionOverride: irVersion,
-        publishMetadata: publishMetadata != null ? (publishMetadata as FernFiddle.PublishingMetadata) : undefined
+        publishMetadata: publishMetadata != null ? (publishMetadata as FernFiddle.PublishingMetadata) : undefined,
+        readme,
+        settings: undefined
     };
 }
 
@@ -95,7 +100,12 @@ function getGithubPublishInfo({
         case "python":
             return FernFiddle.GithubPublishInfo.pypi({
                 packageName: `fern_${fixtureName}`,
-                registryUrl: ""
+                registryUrl: "",
+                pypiMetadata: {
+                    keywords: ["fern", "test"],
+                    documentationLink: "https://buildwithfern.com/learn",
+                    homepageLink: "https://buildwithfern.com/"
+                }
             });
         case "typescript":
             return FernFiddle.GithubPublishInfo.npm({

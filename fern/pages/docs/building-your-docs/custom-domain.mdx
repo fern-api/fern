@@ -1,0 +1,99 @@
+---
+title: Bring your custom domain
+description: Learn how to set up your Fern-generated documentation site to use a custom subdomain or subpath.
+---
+
+Bring Fern Docs to your custom domain.
+
+You can use:
+- A subdomain on your custom domain, such as `docs.example.com`
+- A subpath on your custom domain, such as `example.com/docs`
+
+<Tip>This feature is available on the Starter plan and above. [Contact us](https://buildwithfern.com/contact) to get set up.</Tip>
+
+<AccordionGroup>
+<Accordion title = "Subdomain">
+
+To host your documentation on a subdomain, i.e. `docs.mydomain.com`, you need to create a CNAME record in your DNS settings.
+
+<Steps>
+
+### Update the domain in `docs.yml`
+
+```yaml
+instances:
+ - url: example.docs.buildwithfern.com
+   custom-domain: docs.mydomain.com
+```
+
+Merge your changes into `main`. [Here's an example](https://github.com/octoml/fern-config/blob/389b67679953856ba0716537981a6d749635556f/fern/docs.yml#L1-L3 ).
+
+
+### Create a CNAME record
+
+1. Log in to your domain registrar's dashboard.
+2. Navigate to the DNS settings for your domain.
+3. Add a new CNAME record with the following details:
+   - **Type**: `CNAME`
+   - **Name**: `docs` (or any subdomain you want to use)
+   - **Value**: `cname.vercel-dns.com.`
+
+### Reach out to us
+
+Once you've completed the steps above, reach out via your dedicated Slack channel or [email](mailto:support@buildwithfern.com).
+
+You may need to create a TXT record to verify your domain. If you do, we'll provide you with the record to add.
+
+### Verify the setup
+
+Once we've completed the setup on our end, you should be able to access your documentation at `docs.mydomain.com`. SSL will be automatically provisioned for your domain, but it may take a few minutes to propagate globally.
+
+<Tip>It's helpful to check that you can acces your new docs site from a mobile device or incognito browser.</Tip>
+
+</Steps>
+</Accordion>
+
+<Accordion title = "Subpath">
+
+To host your documentation on a subpath, i.e. `mydomain.com/docs`, you need to edit your `docs.yml` configuration and then get provider-specific instructions for setting up the subpath. Common providers include Cloudflare, AWS Route53 and Cloudfront, Netlify, and Vercel.
+
+<Steps>
+
+### Configure the `url` in `docs.yml`
+
+Append that subpath to the end of the `url`. This example use `docs` for the subpath, but you can use any word you like, such as `reference` or `developer`.
+
+<CodeBlock title="docs.yml example for subpath">
+```yaml
+instances: 
+  - url: example.docs.buildwithfern.com/docs
+```
+</CodeBlock>
+
+### Configure the `custom-domain`
+
+Below the `url`, add a `custom-domain` key as shown in the examples below.
+
+<CodeBlock title="Custom subpath">
+```yaml 
+instances: 
+  - url: example.docs.buildwithfern.com/docs
+    custom-domain: example.com/docs
+```
+</CodeBlock>
+
+[Here's an example.](https://github.com/fern-api/fern/blob/7d8631c6119787a8aaccb4ba49837e73c985db28/fern/docs.yml#L1-L3)
+
+### Update the Fern Docs site
+
+If you created your Fern Docs site using one of our [Docs Quickstarts](/learn/docs/getting-started/quickstart), push the changes you made to your GitHub repository. This runs a GitHub Action to update the site with your new configuration.
+
+If you need to update your Fern Docs site manually, run `fern generate --docs`.
+
+### Create DNS records to point at Fern Docs
+
+This feature is available on the Fern Docs Starter plan and above. Reach out to [sales@buildwithfern.com](mailto:sales@buildwithfern.com) to set up your subscription and obtain DNS records information for your domain registrar. 
+
+</Steps>
+</Accordion>
+</AccordionGroup>

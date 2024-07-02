@@ -1,5 +1,7 @@
 using SeedPlainText;
 
+#nullable enable
+
 namespace SeedPlainText;
 
 public partial class SeedPlainTextClient
@@ -19,7 +21,7 @@ public partial class SeedPlainTextClient
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);

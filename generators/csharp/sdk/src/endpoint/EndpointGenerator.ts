@@ -73,6 +73,7 @@ export class EndpointGenerator {
                 writer.write(`var ${RESPONSE_VARIABLE_NAME} = `);
                 writer.writeNodeStatement(
                     this.rawClient.makeRequest({
+                        requestType: request?.getRequestType(),
                         clientReference: rawClientReference,
                         endpoint,
                         bodyReference: requestBodyCodeBlock?.requestBodyReference,
@@ -112,8 +113,13 @@ export class EndpointGenerator {
         pathParameterReferences: Record<string, string>;
     } {
         const parameters: csharp.Parameter[] = [];
+        const service = this.context.getHttpServiceOrThrow(serviceId);
         const pathParameterReferences: Record<string, string> = {};
-        for (const pathParam of endpoint.pathParameters) {
+        for (const pathParam of [
+            ...this.context.ir.pathParameters,
+            ...service.pathParameters,
+            ...endpoint.pathParameters
+        ]) {
             const parameterName = pathParam.name.camelCase.safeName;
             pathParameterReferences[pathParam.name.originalName] = parameterName;
             parameters.push(
@@ -178,7 +184,7 @@ export class EndpointGenerator {
                     writer.writeLine("}");
                     writer.dedent();
 
-                    writer.writeLine("throw new Exception();");
+                    writer.writeLine(`throw new Exception(${RESPONSE_BODY_VARIABLE_NAME});`);
                 });
             },
             streaming: () => undefined,

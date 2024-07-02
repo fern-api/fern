@@ -2,6 +2,8 @@ using System.Text.Json.Serialization;
 using SeedTrace;
 using SeedTrace.V2.V3;
 
+#nullable enable
+
 namespace SeedTrace.V2.V3;
 
 public class ProblemInfoV2
@@ -22,16 +24,16 @@ public class ProblemInfoV2
     public HashSet<Language> SupportedLanguages { get; init; }
 
     [JsonPropertyName("customFiles")]
-    public CustomFiles CustomFiles { get; init; }
+    public object CustomFiles { get; init; }
 
     [JsonPropertyName("generatedFiles")]
     public GeneratedFiles GeneratedFiles { get; init; }
 
     [JsonPropertyName("customTestCaseTemplates")]
-    public List<TestCaseTemplate> CustomTestCaseTemplates { get; init; }
+    public IEnumerable<TestCaseTemplate> CustomTestCaseTemplates { get; init; }
 
     [JsonPropertyName("testcases")]
-    public List<TestCaseV2> Testcases { get; init; }
+    public IEnumerable<TestCaseV2> Testcases { get; init; }
 
     [JsonPropertyName("isPublic")]
     public bool IsPublic { get; init; }

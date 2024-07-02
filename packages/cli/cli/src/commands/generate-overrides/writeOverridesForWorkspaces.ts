@@ -20,7 +20,7 @@ export async function writeOverridesForWorkspaces({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                if (workspace.type === "oss") {
+                if (workspace instanceof OSSWorkspace) {
                     await writeDefinitionForOpenAPIWorkspace({
                         workspace,
                         context,
@@ -60,9 +60,7 @@ async function writeDefinitionForOpenAPIWorkspace({
 }): Promise<void> {
     for (const spec of workspace.specs) {
         const ir = await parse({
-            workspace: {
-                specs: [spec]
-            },
+            specs: [spec],
             taskContext: context
         });
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

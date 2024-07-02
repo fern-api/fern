@@ -15,8 +15,12 @@ export declare namespace NoReqBody {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -27,7 +31,7 @@ export class NoReqBody {
      * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.noReqBody.getWithNoRequestBody()
+     *     await client.noReqBody.getWithNoRequestBody()
      */
     public async getWithNoRequestBody(
         requestOptions?: NoReqBody.RequestOptions
@@ -46,6 +50,7 @@ export class NoReqBody {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
@@ -82,7 +87,7 @@ export class NoReqBody {
      * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.noReqBody.postWithNoRequestBody()
+     *     await client.noReqBody.postWithNoRequestBody()
      */
     public async postWithNoRequestBody(requestOptions?: NoReqBody.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
@@ -99,6 +104,7 @@ export class NoReqBody {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.noReqBody.postWithNoRequestBody.Response.parseOrThrow(_response.body, {

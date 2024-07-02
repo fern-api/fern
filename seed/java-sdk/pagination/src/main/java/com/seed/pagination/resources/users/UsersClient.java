@@ -3,20 +3,29 @@
  */
 package com.seed.pagination.resources.users;
 
-import com.seed.pagination.core.ApiError;
 import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.ObjectMappers;
 import com.seed.pagination.core.RequestOptions;
+import com.seed.pagination.core.SeedPaginationApiException;
+import com.seed.pagination.core.SeedPaginationException;
+import com.seed.pagination.core.pagination.SyncPagingIterable;
 import com.seed.pagination.resources.users.requests.ListUsernamesRequest;
 import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersExtendedRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetPaginationRequest;
+import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
 import com.seed.pagination.resources.users.types.ListUsersExtendedResponse;
 import com.seed.pagination.resources.users.types.ListUsersPaginationResponse;
+import com.seed.pagination.resources.users.types.NextPage;
+import com.seed.pagination.resources.users.types.Page;
+import com.seed.pagination.resources.users.types.User;
 import com.seed.pagination.resources.users.types.UsernameContainer;
 import com.seed.pagination.types.UsernameCursor;
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -31,16 +40,16 @@ public class UsersClient {
         this.clientOptions = clientOptions;
     }
 
-    public ListUsersPaginationResponse listWithCursorPagination() {
+    public SyncPagingIterable<User> listWithCursorPagination() {
         return listWithCursorPagination(
                 ListUsersCursorPaginationRequest.builder().build());
     }
 
-    public ListUsersPaginationResponse listWithCursorPagination(ListUsersCursorPaginationRequest request) {
+    public SyncPagingIterable<User> listWithCursorPagination(ListUsersCursorPaginationRequest request) {
         return listWithCursorPagination(request, null);
     }
 
-    public ListUsersPaginationResponse listWithCursorPagination(
+    public SyncPagingIterable<User> listWithCursorPagination(
             ListUsersCursorPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -64,35 +73,45 @@ public class UsersClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
-            Response response = client.newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
+                ListUsersPaginationResponse parsedResponse =
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
+                Optional<String> startingAfter =
+                        parsedResponse.getPage().flatMap(Page::getNext).map(NextPage::getStartingAfter);
+                ListUsersCursorPaginationRequest nextRequest = ListUsersCursorPaginationRequest.builder()
+                        .from(request)
+                        .startingAfter(startingAfter)
+                        .build();
+                List<User> result = parsedResponse.getData();
+                return new SyncPagingIterable<>(
+                        startingAfter.isPresent(), result, () -> listWithCursorPagination(nextRequest, requestOptions));
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedPaginationApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(
-                            responseBody != null ? responseBody.string() : "{}", Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SeedPaginationException("Network error executing HTTP request", e);
         }
     }
 
-    public ListUsersPaginationResponse listWithOffsetPagination() {
+    public SyncPagingIterable<User> listWithOffsetPagination() {
         return listWithOffsetPagination(
                 ListUsersOffsetPaginationRequest.builder().build());
     }
 
-    public ListUsersPaginationResponse listWithOffsetPagination(ListUsersOffsetPaginationRequest request) {
+    public SyncPagingIterable<User> listWithOffsetPagination(ListUsersOffsetPaginationRequest request) {
         return listWithOffsetPagination(request, null);
     }
 
-    public ListUsersPaginationResponse listWithOffsetPagination(
+    public SyncPagingIterable<User> listWithOffsetPagination(
             ListUsersOffsetPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -116,34 +135,91 @@ public class UsersClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                client = clientOptions.httpClientWithTimeout(requestOptions);
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                ListUsersPaginationResponse parsedResponse =
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
+                int newPageNumber = request.getPage().map(page -> page + 1).orElse(1);
+                ListUsersOffsetPaginationRequest nextRequest = ListUsersOffsetPaginationRequest.builder()
+                        .from(request)
+                        .page(newPageNumber)
+                        .build();
+                List<User> result = parsedResponse.getData();
+                return new SyncPagingIterable<>(
+                        true, result, () -> listWithOffsetPagination(nextRequest, requestOptions));
             }
-            Response response = client.newCall(okhttpRequest).execute();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedPaginationApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new SeedPaginationException("Network error executing HTTP request", e);
+        }
+    }
+
+    public ListUsersPaginationResponse listWithOffsetStepPagination() {
+        return listWithOffsetStepPagination(
+                ListUsersOffsetStepPaginationRequest.builder().build());
+    }
+
+    public ListUsersPaginationResponse listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest request) {
+        return listWithOffsetStepPagination(request, null);
+    }
+
+    public ListUsersPaginationResponse listWithOffsetStepPagination(
+            ListUsersOffsetStepPaginationRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users");
+        if (request.getPage().isPresent()) {
+            httpUrl.addQueryParameter("page", request.getPage().get().toString());
+        }
+        if (request.getLimit().isPresent()) {
+            httpUrl.addQueryParameter("limit", request.getLimit().get().toString());
+        }
+        if (request.getOrder().isPresent()) {
+            httpUrl.addQueryParameter("order", request.getOrder().get().toString());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedPaginationApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(
-                            responseBody != null ? responseBody.string() : "{}", Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SeedPaginationException("Network error executing HTTP request", e);
         }
     }
 
-    public ListUsersExtendedResponse listWithExtendedResults() {
+    public SyncPagingIterable<User> listWithExtendedResults() {
         return listWithExtendedResults(ListUsersExtendedRequest.builder().build());
     }
 
-    public ListUsersExtendedResponse listWithExtendedResults(ListUsersExtendedRequest request) {
+    public SyncPagingIterable<User> listWithExtendedResults(ListUsersExtendedRequest request) {
         return listWithExtendedResults(request, null);
     }
 
-    public ListUsersExtendedResponse listWithExtendedResults(
+    public SyncPagingIterable<User> listWithExtendedResults(
             ListUsersExtendedRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -157,34 +233,43 @@ public class UsersClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
-            Response response = client.newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersExtendedResponse.class);
+                ListUsersExtendedResponse parsedResponse =
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersExtendedResponse.class);
+                Optional<UUID> startingAfter = parsedResponse.getNext();
+                ListUsersExtendedRequest nextRequest = ListUsersExtendedRequest.builder()
+                        .from(request)
+                        .cursor(startingAfter)
+                        .build();
+                List<User> result = parsedResponse.getData().getUsers();
+                return new SyncPagingIterable<>(
+                        startingAfter.isPresent(), result, () -> listWithExtendedResults(nextRequest, requestOptions));
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedPaginationApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(
-                            responseBody != null ? responseBody.string() : "{}", Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SeedPaginationException("Network error executing HTTP request", e);
         }
     }
 
-    public UsernameCursor listUsernames() {
+    public SyncPagingIterable<String> listUsernames() {
         return listUsernames(ListUsernamesRequest.builder().build());
     }
 
-    public UsernameCursor listUsernames(ListUsernamesRequest request) {
+    public SyncPagingIterable<String> listUsernames(ListUsernamesRequest request) {
         return listUsernames(request, null);
     }
 
-    public UsernameCursor listUsernames(ListUsernamesRequest request, RequestOptions requestOptions) {
+    public SyncPagingIterable<String> listUsernames(ListUsernamesRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users");
@@ -198,34 +283,44 @@ public class UsersClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
-            Response response = client.newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UsernameCursor.class);
+                UsernameCursor parsedResponse =
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UsernameCursor.class);
+                Optional<String> startingAfter = parsedResponse.getCursor().getAfter();
+                ListUsernamesRequest nextRequest = ListUsernamesRequest.builder()
+                        .from(request)
+                        .startingAfter(startingAfter)
+                        .build();
+                List<String> result = parsedResponse.getCursor().getData();
+                return new SyncPagingIterable<>(
+                        startingAfter.isPresent(), result, () -> listUsernames(nextRequest, requestOptions));
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedPaginationApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(
-                            responseBody != null ? responseBody.string() : "{}", Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SeedPaginationException("Network error executing HTTP request", e);
         }
     }
 
-    public UsernameContainer listWithGlobalConfig() {
+    public SyncPagingIterable<String> listWithGlobalConfig() {
         return listWithGlobalConfig(ListWithGlobalConfigRequest.builder().build());
     }
 
-    public UsernameContainer listWithGlobalConfig(ListWithGlobalConfigRequest request) {
+    public SyncPagingIterable<String> listWithGlobalConfig(ListWithGlobalConfigRequest request) {
         return listWithGlobalConfig(request, null);
     }
 
-    public UsernameContainer listWithGlobalConfig(ListWithGlobalConfigRequest request, RequestOptions requestOptions) {
+    public SyncPagingIterable<String> listWithGlobalConfig(
+            ListWithGlobalConfigRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users");
@@ -238,22 +333,30 @@ public class UsersClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
-            Response response = client.newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UsernameContainer.class);
+                UsernameContainer parsedResponse =
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UsernameContainer.class);
+                int newPageNumber = request.getOffset().map(page -> page + 1).orElse(1);
+                ListWithGlobalConfigRequest nextRequest = ListWithGlobalConfigRequest.builder()
+                        .from(request)
+                        .offset(newPageNumber)
+                        .build();
+                List<String> result = parsedResponse.getResults();
+                return new SyncPagingIterable<>(true, result, () -> listWithGlobalConfig(nextRequest, requestOptions));
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedPaginationApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(
-                            responseBody != null ? responseBody.string() : "{}", Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SeedPaginationException("Network error executing HTTP request", e);
         }
     }
 }

@@ -3,6 +3,8 @@ import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export declare namespace RawClient {
+    export type RequestBodyType = "json" | "bytes";
+
     export interface MakeRequestArgs {
         /** the reference to the client */
         clientReference: string;
@@ -16,6 +18,8 @@ export declare namespace RawClient {
         headerBagReference?: string;
         /** the query parameters to pass to the endpoint */
         queryBagReference?: string;
+        /** the request type, defaults to Json if none */
+        requestType: RequestBodyType | undefined;
     }
 }
 
@@ -38,7 +42,8 @@ export class RawClient {
         clientReference,
         pathParameterReferences,
         headerBagReference,
-        queryBagReference
+        queryBagReference,
+        requestType
     }: RawClient.MakeRequestArgs): csharp.MethodInvocation {
         const arguments_: csharp.ClassInstantiation.Arguments = [
             {
@@ -48,7 +53,10 @@ export class RawClient {
             {
                 name: "Path",
                 assignment: csharp.codeblock(
-                    `${this.getPathString({ endpoint, pathParameterReferences: pathParameterReferences ?? {} })}`
+                    `${this.getPathString({
+                        endpoint,
+                        pathParameterReferences: pathParameterReferences ?? {}
+                    })}`
                 )
             }
         ];
@@ -70,13 +78,22 @@ export class RawClient {
                 assignment: csharp.codeblock(headerBagReference)
             });
         }
-        const apiRequest = csharp.instantiateClass({
+        let apiRequest = csharp.instantiateClass({
             arguments_,
             classReference: csharp.classReference({
-                name: "RawClient.ApiRequest",
+                name: "RawClient.JsonApiRequest",
                 namespace: this.context.getCoreNamespace()
             })
         });
+        if (requestType === "bytes") {
+            apiRequest = csharp.instantiateClass({
+                arguments_,
+                classReference: csharp.classReference({
+                    name: "RawClient.StreamApiRequest",
+                    namespace: this.context.getCoreNamespace()
+                })
+            });
+        }
         return csharp.invokeMethod({
             arguments_: [apiRequest],
             method: "MakeRequestAsync",
@@ -114,14 +131,14 @@ export class RawClient {
         endpoint: HttpEndpoint;
         pathParameterReferences: Record<string, string>;
     }): string {
-        let path = endpoint.path.head;
+        let path = endpoint.fullPath.head;
         let pathParametersPresent = false;
-        for (const part of endpoint.path.parts) {
+        for (const part of endpoint.fullPath.parts) {
             pathParametersPresent = true;
             const reference = pathParameterReferences[part.pathParameter];
             if (reference == null) {
                 throw new Error(
-                    `Failed to find request parameter for the endpointt ${endpoint.id} with path parameter ${part.pathParameter}`
+                    `Failed to find request parameter for the endpoint ${endpoint.id} with path parameter ${part.pathParameter}`
                 );
             }
             path += `{${reference}}${part.tail}`;

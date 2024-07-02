@@ -16,8 +16,14 @@ export declare namespace Problem {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Random-Header header */
+        xRandomHeader?: string | undefined;
     }
 }
 
@@ -31,7 +37,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.problem.createProblem({
+     *     await client.problem.createProblem({
      *         problemName: "string",
      *         problemDescription: {
      *             boards: [SeedTrace.ProblemDescriptionBoard.html("string")]
@@ -90,6 +96,7 @@ export class Problem {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -117,7 +124,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.problem.updateProblem(SeedTrace.ProblemId("string"), {
+     *     await client.problem.updateProblem(SeedTrace.ProblemId("string"), {
      *         problemName: "string",
      *         problemDescription: {
      *             boards: [SeedTrace.ProblemDescriptionBoard.html("string")]
@@ -177,6 +184,7 @@ export class Problem {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -203,7 +211,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.problem.deleteProblem(SeedTrace.ProblemId("string"))
+     *     await client.problem.deleteProblem(SeedTrace.ProblemId("string"))
      */
     public async deleteProblem(
         problemId: SeedTrace.ProblemId,
@@ -231,6 +239,7 @@ export class Problem {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -252,7 +261,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.problem.getDefaultStarterFiles({
+     *     await client.problem.getDefaultStarterFiles({
      *         inputParams: [{
      *                 variableType: SeedTrace.VariableType.integerType(),
      *                 name: "string"
@@ -292,6 +301,7 @@ export class Problem {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {

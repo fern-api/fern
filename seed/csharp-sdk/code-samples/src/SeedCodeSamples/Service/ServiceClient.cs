@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedCodeSamples;
 
+#nullable enable
+
 namespace SeedCodeSamples;
 
 public class ServiceClient
@@ -15,10 +17,10 @@ public class ServiceClient
     public async Task<MyResponse> HelloAsync(MyRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/hello",
+                Path = "hello",
                 Body = request
             }
         );
@@ -27,6 +29,6 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<MyResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

@@ -1,8 +1,11 @@
 import { ROOT_API_FILENAME } from "@fern-api/configuration";
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { GlobalHeader } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { buildHeader } from "./buildHeader";
+import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional";
 
 class HeaderWithCount {
@@ -24,7 +27,9 @@ const GLOBAL_HEADER_PERCENTAGE_THRESHOLD = 0.75;
 const HEADERS_TO_IGNORE = new Set(...["Authorization"]);
 
 export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
-    const predefinedGlobalHeaders = new Map(context.ir.globalHeaders?.map((header) => [header.header, header]));
+    const predefinedGlobalHeaders: Record<string, GlobalHeader> = Object.fromEntries(
+        (context.ir.globalHeaders ?? []).map((header) => [header.header, header])
+    );
 
     const globalHeaders: Record<string, HeaderWithCount> = {};
     for (const endpoint of context.ir.endpoints) {
@@ -34,7 +39,7 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
             }
             let headerWithCount = globalHeaders[header.name];
             if (headerWithCount == null) {
-                const predefinedHeader = predefinedGlobalHeaders.get(header.name);
+                const predefinedHeader = predefinedGlobalHeaders[header.name];
                 const convertedHeader = buildHeader({
                     header: {
                         ...header,
@@ -53,25 +58,39 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
 
     const globalHeaderThreshold = context.ir.endpoints.length * GLOBAL_HEADER_PERCENTAGE_THRESHOLD;
 
+    for (const [headerName, header] of Object.entries(predefinedGlobalHeaders)) {
+        let schema: RawSchemas.HttpHeaderSchema = "optional<string>";
+
+        if (header.name == null && header.env == null && typeof header.schema === "string") {
+            schema = header.schema;
+        } else if (header != null) {
+            schema = {
+                name: header.name,
+                env: header.env,
+                type:
+                    header.schema != null
+                        ? getTypeFromTypeReference(
+                              buildTypeReference({
+                                  schema: header.schema,
+                                  context,
+                                  fileContainingReference: RelativeFilePath.of("api.yml")
+                              })
+                          ) ?? "optional<string>"
+                        : "optional<string>"
+            };
+        }
+        context.builder.addGlobalHeader({
+            name: headerName,
+            schema
+        });
+    }
+
     for (const [headerName, header] of Object.entries(globalHeaders)) {
-        const predefinedHeader = predefinedGlobalHeaders.get(headerName);
-        let isRequired = header.count === context.ir.endpoints.length;
+        const predefinedHeader = predefinedGlobalHeaders[headerName];
+        const isRequired = header.count === context.ir.endpoints.length;
         const isOptional = header.count >= globalHeaderThreshold;
         if (predefinedHeader != null) {
-            isRequired = (isRequired && predefinedHeader.optional !== true) || predefinedHeader.optional === false;
-            let schema: RawSchemas.HttpHeaderSchema;
-            if (typeof header.schema === "string") {
-                schema = header.schema;
-            } else {
-                schema = {
-                    ...header.schema,
-                    env: predefinedHeader.env ?? header.schema.env
-                };
-            }
-            context.builder.addGlobalHeader({
-                name: headerName,
-                schema: isRequired ? schema : wrapTypeReferenceAsOptional(schema)
-            });
+            continue; // already added
         } else if (isRequired) {
             context.builder.addGlobalHeader({
                 name: headerName,

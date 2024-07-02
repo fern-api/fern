@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/custom-auth",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_custom-auth.getWithCustomAuth"
             },
             "snippet": {
                 "type": "go",
@@ -13,7 +14,8 @@
         {
             "id": {
                 "path": "/custom-auth",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_custom-auth.postWithCustomAuth"
             },
             "snippet": {
                 "type": "go",

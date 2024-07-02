@@ -5,6 +5,314 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.26.0-rc3] - 2024-06-30
+
+- Fix: The typesript generator now returns all `FormData` headers and Fetcher no longer stringifies stream.Readable type.
+
+## [0.26.0-rc2] - 2024-06-27
+
+- Improvement: `RequestOptions` now supports overriding global headers like authentication 
+  and version. 
+
+## [0.26.0-rc1] - 2024-06-27
+
+- Fix: The generator was skipping auto pagination for item arrays that were optional. Now, 
+  those are safely handled as well. 
+
+## [0.26.0-rc0] - 2024-06-27
+
+- Feature: The TypeScript generator now supports cursor-based auto pagination. With 
+  auto pagination, a user can simply iterate over the results automatically: 
+
+  ```ts
+  for (const user of client.users.list()) {
+    consoler.log(user);
+  }
+  ```
+  
+  Users can also paginate over data manually 
+
+  ```ts
+  const page = client.users.list();
+  for (const user of page.data) {
+    consoler.log(user);
+  }
+
+  // Helper methods for manually paginating:
+  while (page.hasNextPage()) {
+    page = page.getNextPage();
+    // ...
+  }
+  ```
+
+## [0.25.3] - 2024-06-26
+
+- Internal: The generator is now upgraded to `v46.2.0` of the IR.
+
+## [0.25.2] - 2024-06-20
+
+- Fix: The generator now removes `fs`, `path`, and `os` depdencencies from the browser
+  runtime.
+
+## [0.25.1] - 2024-06-20
+
+- Fix: The generator now removes `fs`, `path`, and `os` depdencencies from the browser
+  runtime.
+
+## [0.25.0] - 2024-06-19
+
+- Fix: The generator now generates snippets for streaming endpoints. There is also a
+  fix where literals are excluded from inlined requests.
+
+## [0.25.0-rc0] - 2024-06-19
+
+- Feature: The generator now merges the user's original `README.md` file (if any).
+
+## [0.24.4] - 2024-06-19
+
+- Fix: APIs that specify a default environment no longer include an unused environment import
+  in their generated snippets.
+
+## [0.24.3] - 2024-06-18
+
+- Fix: The generator only adds a publish step in github actions if credentials are specified.
+
+## [0.24.2] - 2024-06-19
+
+- Improvement: Remove the unnecessary client call from the request/response README.md section.
+- Fix: The generated README.md snippets now correctly referenced nested methods. For example,
+  `client.users.create` (instead of `client.create`) in the following:
+
+  ```ts
+  import { AcmeClient } from "acme";
+
+  const client = new AcmeClient({ apiKey: "YOUR_API_KEY" });
+  await client.users.create({
+    firstName: "john",
+    lastName: "doe"
+  });
+  ```
+
+## [0.24.1] - 2024-06-19
+
+- Fix: Dynamic snippets now support importing the client directly from the package.
+
+  ```typescript
+  import { MyClient } from "@org/sdk";
+
+  const client = new MyClient({ ... });
+  ```
+
+## [0.24.0-rc0] - 2024-06-18
+
+- Feature: Dynamic client instantiation snippets are now generated. Note this only affects
+  enteprise users that are using Fern's Snippets API.
+
+## [0.23.3] - 2024-06-17
+
+- Fix: The NPM publish job is _not_ generated if the token environment variable is not specified.
+- Improvement: The snippets now use the `client` variable name like so:
+
+  ```ts
+  import { AcmeClient } from "acme";
+
+  const client = new AcmeClient({ apiKey: "YOUR_API_KEY" });
+  await client.users.create({
+    firstName: "john",
+    lastName: "doe"
+  });
+  ```
+
+## [0.23.2] - 2024-06-14
+
+- Fix: Client constructor snippets now include an `environment` property whenever it's required.
+- Fix: The import paths included in the `README.md` exclusively use double quotes.
+- Fix: When an NPM package name is not specified, the generated `README.md` will default to using
+  the namespace export.
+
+## [0.23.1] - 2024-06-13
+
+- Fix: Undiscriminated unions used as map keys examples no longer return an error.
+
+## [0.23.0] - 2024-06-12
+
+- Fix: The latest version of the `generator-cli` (used to generate `README.md` files) is
+  always installed.
+
+## [0.23.0-rc1] - 2024-06-11
+
+- Feature: Introduce a custom configuration for arbitrary package json field. Now you can specify
+  arbitrary key, value pairs that you want to be merged in the generated `package.json`.
+
+  ```yml
+  config:
+    packageJson:
+      dependencies:
+        my-dep: "2.0.0"
+      bin: "./index.js"
+  ```
+
+## [0.23.0-rc0] - 2024-06-07
+
+- Fix: Union snippet templates are fixed in 2 ways:
+  1. The templates do not have a leading single quote (a typo from before)
+  2. The templates now inline union properties (in certain cases)
+
+## [0.22.0] - 2024-06-07
+
+- Feature: Add support for higher quality `README.md` generation.
+
+## [0.21.1] - 2024-06-05
+
+- Improvement: Detect `workerd` (Cloudflare) environments in `Runtime.ts`. The `Stream` class which is
+  used for Server-Sent Events now prefers `TextDecoder` if it is present in the environment, to
+  work in Cloudflare environments.
+
+## [0.21.0] - 2024-06-05
+
+- Feature: The generator now supports `bigint` types.
+- Internal: Bump to IRv46.
+
+## [0.20.9] - 2024-06-02
+
+- Fix: TypeScript generator outputs code snippets that have `example-identifier` embedded.
+
+## [0.20.8] - 2024-06-02
+
+- Improvement: TypeScript projects were skipping added peer dependencies in certain cases,
+  now those are fixed.
+
+## [0.20.7] - 2024-05-31
+
+- Fix: Simplify the error handling introduced in `0.20.6` so that it more easily
+  handles endpoints that include structured errors.
+
+## [0.20.6] - 2024-05-31
+
+- Fix: This updates the behavior of the failure condition introduced in `0.20.2`; the SDK
+  now throws an error whenever we fail to refresh an access token even if `neverThrowErrors`
+  is set. We treat this failure as a systematic exception, so it's OK to throw in this case.
+
+## [0.20.5] - 2024-05-30
+
+- Improvement: Support setting `extraPeerDependencies` and `extraPeerDependenciesMeta` as
+  configuration arguments. For example:
+
+  ```yaml
+  extraPeerDependencies:
+    "openai": "^4.47.1"
+  extraPeerDependenciesMeta:
+    "openai":
+      optional: true
+  ```
+
+## [0.20.4] - 2024-05-29
+
+- Fix: Functionality to generate integration tests against a mock server has been disabled.
+
+## [0.20.2] - 2024-05-29
+
+- Fix: The OAuth token provider supports SDKs that enable the `neverThrowErrors` setting.
+  If the OAuth token provider fails to retrieve and/or refresh an access token, an error
+  will _not_ be thrown. Instead, the original access token will be used and the user will be
+  able to act upon an error available on the response. For example,
+
+  ```ts
+  const response = await client.user.get(...)
+  if (!response.ok) {
+    // Handle the response.error ...
+  }
+  ```
+
+## [0.20.1] - 2024-05-29
+
+- Fix: Remove instances of `node:stream` so that the generated SDK is Webpack + Next.js compatible.
+
+## [0.20.1-rc0] - 2024-05-29
+
+- (Pre-emptive) Fix: URL encoded bodies are now appropriately encoded within the fetcher.
+
+## [0.20.0-rc1] - 2024-05-24
+
+- Fix: Pass `abortSignal` to `Stream` for server-sent-events and JSON streams so that the user
+  can opt out and break from a stream.
+
+## [0.20.0-rc0] - 2024-05-24
+
+- Feature: Add `abortSignal` to `RequestOptions`. SDK consumers can now specify an
+  an arbitrary abort signal that can interrupt the API call.
+
+  ```ts
+  const controller = new AbortController();
+  client.endpoint.call(..., {
+    abortSignal: controller.signal,
+  })
+  ```
+
+## [0.19.0] - 2024-05-20
+
+- Feature: Add `inlineFileProperties` configuration to support generating file upload properties
+  as in-lined request properties (instead of positional parameters). Simply configure the following:
+
+  ```yaml
+  - name: fernapi/fern-typscript-node-sdk
+    version: 0.19.0
+    ...
+    config:
+      inlineFileProperties: true
+  ```
+
+  **Before**:
+
+  ```ts
+  /**
+    * @param {File | fs.ReadStream} file
+    * @param {File[] | fs.ReadStream[]} fileList
+    * @param {File | fs.ReadStream | undefined} maybeFile
+    * @param {File[] | fs.ReadStream[] | undefined} maybeFileList
+    * @param {Acme.MyRequest} request
+    * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+    *
+    * @example
+    *     await client.service.post(fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], {})
+    */
+  public async post(
+      file: File | fs.ReadStream,
+      fileList: File[] | fs.ReadStream[],
+      maybeFile: File | fs.ReadStream | undefined,
+      maybeFileList: File[] | fs.ReadStream[] | undefined,
+      request: Acme.MyRequest,
+      requestOptions?: Acme.RequestOptions
+  ): Promise<void> {
+    ...
+  }
+  ```
+
+  **After**:
+
+  ```ts
+  /**
+    * @param {Acme.MyRequest} request
+    * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+    *
+    * @example
+    *     await client.service.post({
+    *        file: fs.createReadStream("/path/to/your/file"),
+    *        fileList: [fs.createReadStream("/path/to/your/file")]
+    *     })
+    */
+  public async post(
+      request: Acme.MyRequest,
+      requestOptions?: Service.RequestOptions
+  ): Promise<void> {
+    ...
+  }
+  ```
+
+## [0.18.3] - 2024-05-17
+
+- Internal: The generator now uses the latest FDR SDK.
+
 ## [0.18.2] - 2024-05-15
 
 - Fix: If OAuth is configured, the generated `getAuthorizationHeader` helper now treats the

@@ -12,7 +12,7 @@ class TypeDeclarationReferencer(AbstractDeclarationReferencer[ir_types.DeclaredT
             directories=self._get_directories_for_fern_filepath(
                 fern_filepath=name.fern_filepath,
             ),
-            file=Filepath.FilepathPart(module_name=name.name.snake_case.unsafe_name),
+            file=Filepath.FilepathPart(module_name=name.name.snake_case.safe_name),
         )
 
     def _get_directories_for_fern_filepath_part(
@@ -27,10 +27,10 @@ class TypeDeclarationReferencer(AbstractDeclarationReferencer[ir_types.DeclaredT
                 export_strategy=ExportStrategy(export_all=True),
             ),
             Filepath.DirectoryFilepathPart(
-                module_name=fern_filepath_part.snake_case.unsafe_name,
+                module_name=fern_filepath_part.snake_case.safe_name,
                 export_strategy=export_strategy,
             ),
         )
 
     def get_class_name(self, *, name: ir_types.DeclaredTypeName) -> str:
-        return name.name.pascal_case.unsafe_name
+        return name.name.pascal_case.safe_name

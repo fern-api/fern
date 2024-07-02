@@ -11,25 +11,32 @@ import (
 )
 
 type GetUsersRequest struct {
-	Limit          int               `json:"-" url:"limit"`
-	Id             uuid.UUID         `json:"-" url:"id"`
-	Date           time.Time         `json:"-" url:"date" format:"date"`
-	Deadline       time.Time         `json:"-" url:"deadline"`
-	Bytes          []byte            `json:"-" url:"bytes"`
-	User           *User             `json:"-" url:"user,omitempty"`
-	KeyValue       map[string]string `json:"-" url:"keyValue,omitempty"`
-	OptionalString *string           `json:"-" url:"optionalString,omitempty"`
-	NestedUser     *NestedUser       `json:"-" url:"nestedUser,omitempty"`
-	OptionalUser   *User             `json:"-" url:"optionalUser,omitempty"`
-	ExcludeUser    []*User           `json:"-" url:"excludeUser,omitempty"`
-	Filter         []string          `json:"-" url:"filter"`
+	Limit            int               `json:"-" url:"limit"`
+	Id               uuid.UUID         `json:"-" url:"id"`
+	Date             time.Time         `json:"-" url:"date" format:"date"`
+	Deadline         time.Time         `json:"-" url:"deadline"`
+	Bytes            []byte            `json:"-" url:"bytes"`
+	User             *User             `json:"-" url:"user,omitempty"`
+	UserList         []*User           `json:"-" url:"userList,omitempty"`
+	OptionalDeadline *time.Time        `json:"-" url:"optionalDeadline,omitempty"`
+	KeyValue         map[string]string `json:"-" url:"keyValue,omitempty"`
+	OptionalString   *string           `json:"-" url:"optionalString,omitempty"`
+	NestedUser       *NestedUser       `json:"-" url:"nestedUser,omitempty"`
+	OptionalUser     *User             `json:"-" url:"optionalUser,omitempty"`
+	ExcludeUser      []*User           `json:"-" url:"excludeUser,omitempty"`
+	Filter           []string          `json:"-" url:"filter"`
 }
 
 type NestedUser struct {
 	Name string `json:"name" url:"name"`
 	User *User  `json:"user,omitempty" url:"user,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (n *NestedUser) GetExtraProperties() map[string]interface{} {
+	return n.extraProperties
 }
 
 func (n *NestedUser) UnmarshalJSON(data []byte) error {
@@ -39,6 +46,13 @@ func (n *NestedUser) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = NestedUser(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+
 	n._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -59,7 +73,12 @@ type User struct {
 	Name string   `json:"name" url:"name"`
 	Tags []string `json:"tags,omitempty" url:"tags,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (u *User) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
 }
 
 func (u *User) UnmarshalJSON(data []byte) error {
@@ -69,6 +88,13 @@ func (u *User) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = User(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
 	u._rawJSON = json.RawMessage(data)
 	return nil
 }

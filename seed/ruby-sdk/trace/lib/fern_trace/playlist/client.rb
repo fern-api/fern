@@ -29,12 +29,28 @@ module SeedTraceClient
     #   * :problems (Array<String>)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [SeedTraceClient::Playlist::Playlist]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.playlist.create_playlist(
+    #    service_param: 1,
+    #    datetime: DateTime.parse(2024-01-15T09:30:00.000Z),
+    #    optional_datetime: DateTime.parse(2024-01-15T09:30:00.000Z),
+    #    request: { name: "string", problems: ["string"] }
+    #  )
     def create_playlist(service_param:, datetime:, request:, optional_datetime: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.params = {
           **(request_options&.additional_query_parameters || {}),
           "datetime": datetime,
@@ -57,13 +73,31 @@ module SeedTraceClient
     # @param multiple_field [String]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Array<SeedTraceClient::Playlist::Playlist>]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.playlist.get_playlists(
+    #    service_param: 1,
+    #    limit: 1,
+    #    other_field: "string",
+    #    multi_line_docs: "string",
+    #    optional_multiple_field: "string",
+    #    multiple_field: "string"
+    #  )
     def get_playlists(service_param:, other_field:, multi_line_docs:, multiple_field:, limit: nil,
                       optional_multiple_field: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.params = {
           **(request_options&.additional_query_parameters || {}),
           "limit": limit,
@@ -75,9 +109,9 @@ module SeedTraceClient
         req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/all"
       end
       parsed_json = JSON.parse(response.body)
-      parsed_json&.map do |v|
-        v = v.to_json
-        SeedTraceClient::Playlist::Playlist.from_json(json_object: v)
+      parsed_json&.map do |item|
+        item = item.to_json
+        SeedTraceClient::Playlist::Playlist.from_json(json_object: item)
       end
     end
 
@@ -87,12 +121,23 @@ module SeedTraceClient
     # @param playlist_id [String]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [SeedTraceClient::Playlist::Playlist]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.playlist.get_playlist(service_param: 1, playlist_id: "string")
     def get_playlist(service_param:, playlist_id:, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/#{playlist_id}"
       end
       SeedTraceClient::Playlist::Playlist.from_json(json_object: response.body)
@@ -107,12 +152,27 @@ module SeedTraceClient
     #   * :problems (Array<String>)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [SeedTraceClient::Playlist::Playlist]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.playlist.update_playlist(
+    #    service_param: 1,
+    #    playlist_id: "string",
+    #    request: { name: "string", problems: ["string"] }
+    #  )
     def update_playlist(service_param:, playlist_id:, request: nil, request_options: nil)
       response = @request_client.conn.put do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/#{playlist_id}"
       end
@@ -125,12 +185,23 @@ module SeedTraceClient
     # @param playlist_id [String]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.playlist.delete_playlist(service_param: 1, playlist_id: "string")
     def delete_playlist(service_param:, playlist_id:, request_options: nil)
       @request_client.conn.delete do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/#{playlist_id}"
       end
     end
@@ -156,13 +227,29 @@ module SeedTraceClient
     #   * :problems (Array<String>)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [SeedTraceClient::Playlist::Playlist]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.playlist.create_playlist(
+    #    service_param: 1,
+    #    datetime: DateTime.parse(2024-01-15T09:30:00.000Z),
+    #    optional_datetime: DateTime.parse(2024-01-15T09:30:00.000Z),
+    #    request: { name: "string", problems: ["string"] }
+    #  )
     def create_playlist(service_param:, datetime:, request:, optional_datetime: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.params = {
             **(request_options&.additional_query_parameters || {}),
             "datetime": datetime,
@@ -186,6 +273,20 @@ module SeedTraceClient
     # @param multiple_field [String]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Array<SeedTraceClient::Playlist::Playlist>]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.playlist.get_playlists(
+    #    service_param: 1,
+    #    limit: 1,
+    #    other_field: "string",
+    #    multi_line_docs: "string",
+    #    optional_multiple_field: "string",
+    #    multiple_field: "string"
+    #  )
     def get_playlists(service_param:, other_field:, multi_line_docs:, multiple_field:, limit: nil,
                       optional_multiple_field: nil, request_options: nil)
       Async do
@@ -193,7 +294,11 @@ module SeedTraceClient
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.params = {
             **(request_options&.additional_query_parameters || {}),
             "limit": limit,
@@ -205,9 +310,9 @@ module SeedTraceClient
           req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/all"
         end
         parsed_json = JSON.parse(response.body)
-        parsed_json&.map do |v|
-          v = v.to_json
-          SeedTraceClient::Playlist::Playlist.from_json(json_object: v)
+        parsed_json&.map do |item|
+          item = item.to_json
+          SeedTraceClient::Playlist::Playlist.from_json(json_object: item)
         end
       end
     end
@@ -218,13 +323,24 @@ module SeedTraceClient
     # @param playlist_id [String]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [SeedTraceClient::Playlist::Playlist]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.playlist.get_playlist(service_param: 1, playlist_id: "string")
     def get_playlist(service_param:, playlist_id:, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/#{playlist_id}"
         end
         SeedTraceClient::Playlist::Playlist.from_json(json_object: response.body)
@@ -240,13 +356,28 @@ module SeedTraceClient
     #   * :problems (Array<String>)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [SeedTraceClient::Playlist::Playlist]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.playlist.update_playlist(
+    #    service_param: 1,
+    #    playlist_id: "string",
+    #    request: { name: "string", problems: ["string"] }
+    #  )
     def update_playlist(service_param:, playlist_id:, request: nil, request_options: nil)
       Async do
         response = @request_client.conn.put do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/#{playlist_id}"
         end
@@ -260,13 +391,24 @@ module SeedTraceClient
     # @param playlist_id [String]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.playlist.delete_playlist(service_param: 1, playlist_id: "string")
     def delete_playlist(service_param:, playlist_id:, request_options: nil)
       Async do
         @request_client.conn.delete do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/#{playlist_id}"
         end
       end

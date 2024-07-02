@@ -1,5 +1,7 @@
 using SeedBearerTokenEnvironmentVariable;
 
+#nullable enable
+
 namespace SeedBearerTokenEnvironmentVariable;
 
 public partial class SeedBearerTokenEnvironmentVariableClient
@@ -24,7 +26,7 @@ public partial class SeedBearerTokenEnvironmentVariableClient
     public ServiceClient Service { get; }
 
     private string GetFromEnvironmentOrThrow(string env, string message) {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null) {
             throw new Exception(message);
         }

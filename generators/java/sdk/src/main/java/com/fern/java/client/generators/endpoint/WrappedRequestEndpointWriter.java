@@ -16,12 +16,13 @@
 
 package com.fern.java.client.generators.endpoint;
 
-import com.fern.irV42.model.commons.NameAndWireValue;
-import com.fern.irV42.model.http.FileProperty;
-import com.fern.irV42.model.http.HttpEndpoint;
-import com.fern.irV42.model.http.HttpMethod;
-import com.fern.irV42.model.http.HttpService;
-import com.fern.irV42.model.http.SdkRequest;
+import com.fern.ir.model.commons.ErrorId;
+import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.http.FileProperty;
+import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.HttpMethod;
+import com.fern.ir.model.http.HttpService;
+import com.fern.ir.model.http.SdkRequest;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
@@ -37,6 +38,7 @@ import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.client.generators.visitors.FilePropertyIsOptional;
 import com.fern.java.client.generators.visitors.GetFilePropertyKey;
 import com.fern.java.generators.object.EnrichedObjectProperty;
+import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
@@ -75,7 +77,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             ClientGeneratorContext clientGeneratorContext,
             SdkRequest sdkRequest,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
-            GeneratedWrappedRequest generatedWrappedRequest) {
+            GeneratedWrappedRequest generatedWrappedRequest,
+            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         super(
                 httpService,
                 httpEndpoint,
@@ -83,7 +86,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 clientGeneratorContext,
                 clientOptionsField,
                 generatedClientOptions,
-                generatedEnvironmentsClass);
+                generatedEnvironmentsClass,
+                generatedErrors);
         this.httpEndpoint = httpEndpoint;
         this.clientGeneratorContext = clientGeneratorContext;
         this.generatedWrappedRequest = generatedWrappedRequest;
@@ -119,9 +123,14 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 parameterSpecs.add(fileParameter);
             });
         }
-        parameterSpecs.add(ParameterSpec.builder(generatedWrappedRequest.getClassName(), requestParameterName)
-                .build());
+        parameterSpecs.add(requestParameterSpec().get());
         return parameterSpecs;
+    }
+
+    @Override
+    public Optional<ParameterSpec> requestParameterSpec() {
+        return Optional.of(ParameterSpec.builder(generatedWrappedRequest.getClassName(), requestParameterName)
+                .build());
     }
 
     @SuppressWarnings("checkstyle:CyclomaticComplexity")

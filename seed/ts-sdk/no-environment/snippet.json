@@ -3,11 +3,12 @@
         {
             "id": {
                 "path": "/dummy",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_dummy.getDummy"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedNoEnvironmentClient } from \"@fern/no-environment\";\n\nconst seedNoEnvironment = new SeedNoEnvironmentClient({ token: \"YOUR_TOKEN\" });\nawait seedNoEnvironment.dummy.getDummy();\n"
+                "client": "import { SeedNoEnvironmentClient } from \"@fern/no-environment\";\n\nconst client = new SeedNoEnvironmentClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.dummy.getDummy();\n"
             }
         }
     ],

@@ -1,0 +1,40 @@
+---
+title: Hosting with GitLab
+---
+
+To host your Fern docs using GitLab, you will need to [add a Fern token to your repository variables](/learn/docs/developer-tools/gitlab#add-a-token-to-gitlab). 
+
+## Add a token to GitLab
+<Steps>
+### Log In
+Log into [GitLab](https://gitlab.com/users/sign_in).
+### Navigate to CI/CD in Settings
+Click on the **Settings** tab in your repository. Then, click on **CI/CD**. 
+### Add Variable
+Scroll to the **Variables** section and select **Expand** > **Add variable**. Add your key and value, _deselect_ **Protect variable**, and then click **Save changes**. 
+</Steps>
+
+## Preview docs with GitLab
+
+<Steps>
+### Contact Us
+To get set up with a GitLab pipeline to preview your docs automatically, reach out via your dedicated Slack channel or [email](support@buildwithfern.com). 
+### Log In
+Log into [GitLab](https://gitlab.com/users/sign_in).
+### Navigate to Access Tokens
+Click on the **Settings** tab in your repository. Then, click on **Access Tokens**. 
+### Generate Project Access Token
+Click on **Add new token**. You then need to: 
+- Add your token name
+- Select an expiry date (note: once the token expires, you will need to generate a new one)
+- Set role to **Reporter**
+- Set scope to **api**
+
+When finished, click **Create project access token**. 
+
+<Note title='Save your token'>
+Be sure to save the generated token - it won't be displayed after you leave the page. 
+</Note>
+### Add Token to Repository Variables
+You can do this using [the steps listed above](/learn/docs/developer-tools/gitlab#add-a-token-to-gitlab). 
+</Steps>

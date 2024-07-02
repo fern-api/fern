@@ -18,8 +18,12 @@ export declare namespace S3 {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -31,7 +35,7 @@ export class S3 {
      * @param {S3.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedMultiUrlEnvironment.s3.getPresignedUrl({
+     *     await client.s3.getPresignedUrl({
      *         s3Key: "string"
      *     })
      */
@@ -60,6 +64,7 @@ export class S3 {
             body: await serializers.GetPresignedUrlRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.s3.getPresignedUrl.Response.parseOrThrow(_response.body, {

@@ -14,8 +14,12 @@ export declare namespace PropertyBasedError {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -30,7 +34,7 @@ export class PropertyBasedError {
      * @throws {@link SeedErrorProperty.PropertyBasedErrorTest}
      *
      * @example
-     *     await seedErrorProperty.propertyBasedError.throwError()
+     *     await client.propertyBasedError.throwError()
      */
     public async throwError(requestOptions?: PropertyBasedError.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
@@ -46,6 +50,7 @@ export class PropertyBasedError {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.propertyBasedError.throwError.Response.parseOrThrow(_response.body, {

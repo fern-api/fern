@@ -3,6 +3,8 @@ using SeedAudiences.FolderA;
 using SeedAudiences.FolderB;
 using SeedAudiences.FolderC;
 
+#nullable enable
+
 namespace SeedAudiences;
 
 public partial class SeedAudiencesClient
@@ -34,7 +36,7 @@ public partial class SeedAudiencesClient
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);

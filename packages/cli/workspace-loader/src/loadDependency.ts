@@ -1,6 +1,6 @@
+import { dependenciesYml } from "@fern-api/configuration";
 import { createFiddleService } from "@fern-api/core";
 import { assertNever, noop, visitObject } from "@fern-api/core-utils";
-import { dependenciesYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { parseVersion } from "@fern-api/semver-utils";
 import { TaskContext } from "@fern-api/task-context";
@@ -15,8 +15,8 @@ import tar from "tar";
 import tmp from "tmp-promise";
 import { loadAPIWorkspace } from "./loadAPIWorkspace";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
-import { FernDefinition, FernWorkspace } from "./types/Workspace";
-import { convertToFernWorkspace } from "./utils/convertOpenApiWorkspaceToFernWorkspace";
+import { FernDefinition } from "./types/Workspace";
+import { FernWorkspace } from "./workspaces";
 
 const FIDDLE = createFiddleService();
 
@@ -115,12 +115,7 @@ async function validateLocalDependencyAndGetDefinition({
         return undefined;
     }
 
-    const workspaceOfDependency =
-        loadDependencyWorkspaceResult.workspace.type === "fern"
-            ? loadDependencyWorkspaceResult.workspace
-            : await convertToFernWorkspace(loadDependencyWorkspaceResult.workspace, context);
-
-    return workspaceOfDependency.definition;
+    return await loadDependencyWorkspaceResult.workspace.getDefinition({ context });
 }
 
 async function validateVersionedDependencyAndGetDefinition({
@@ -223,7 +218,7 @@ async function validateVersionedDependencyAndGetDefinition({
         return undefined;
     }
 
-    return workspaceOfDependency.definition;
+    return await loadDependencyWorkspaceResult.workspace.getDefinition({ context });
 }
 
 async function getAreRootApiFilesEquivalent(

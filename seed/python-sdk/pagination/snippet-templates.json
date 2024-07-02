@@ -7,10 +7,37 @@
         },
         "endpointId": {
             "path": "/users",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_users.listWithCursorPagination"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedPagination\n\nclient = SeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed.client import SeedPagination"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": false,
+                            "templateString": "token=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "AUTH",
+                                    "path": "token",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -89,7 +116,33 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedPagination\n\nclient = AsyncSeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed.client import AsyncSeedPagination"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": false,
+                                "templateString": "token=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "AUTH",
+                                        "path": "token",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
@@ -176,10 +229,37 @@
         },
         "endpointId": {
             "path": "/users",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_users.listWithOffsetPagination"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedPagination\n\nclient = SeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed.client import SeedPagination"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": false,
+                            "templateString": "token=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "AUTH",
+                                    "path": "token",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -258,7 +338,33 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedPagination\n\nclient = AsyncSeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed.client import AsyncSeedPagination"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": false,
+                                "templateString": "token=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "AUTH",
+                                        "path": "token",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
@@ -345,10 +451,227 @@
         },
         "endpointId": {
             "path": "/users",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_users.listWithOffsetStepPagination"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedPagination\n\nclient = SeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed.client import SeedPagination"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": false,
+                            "templateString": "token=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "AUTH",
+                                    "path": "token",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.users.list_with_offset_step_pagination(\n\t$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "page=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "QUERY",
+                                    "path": "page",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "limit=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "QUERY",
+                                    "path": "limit",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "order=$FERN_INPUT",
+                            "values": {
+                                "asc": "\"asc\"",
+                                "desc": "\"desc\""
+                            },
+                            "templateInput": {
+                                "location": "QUERY",
+                                "path": "order"
+                            },
+                            "type": "enum"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed.client import AsyncSeedPagination"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": false,
+                                "templateString": "token=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "AUTH",
+                                        "path": "token",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.users.list_with_offset_step_pagination(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "page=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "QUERY",
+                                        "path": "page",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "limit=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "QUERY",
+                                        "path": "limit",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "order=$FERN_INPUT",
+                                "values": {
+                                    "asc": "\"asc\"",
+                                    "desc": "\"desc\""
+                                },
+                                "templateInput": {
+                                    "location": "QUERY",
+                                    "path": "order"
+                                },
+                                "type": "enum"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_pagination",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/users",
+            "method": "GET",
+            "identifierOverride": "endpoint_users.listWithExtendedResults"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "from seed.client import SeedPagination"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": false,
+                            "templateString": "token=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "AUTH",
+                                    "path": "token",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -378,7 +701,33 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedPagination\n\nclient = AsyncSeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed.client import AsyncSeedPagination"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": false,
+                                "templateString": "token=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "AUTH",
+                                        "path": "token",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
@@ -416,10 +765,37 @@
         },
         "endpointId": {
             "path": "/users",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_users.listUsernames"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedPagination\n\nclient = SeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed.client import SeedPagination"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": false,
+                            "templateString": "token=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "AUTH",
+                                    "path": "token",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -449,7 +825,33 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedPagination\n\nclient = AsyncSeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed.client import AsyncSeedPagination"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": false,
+                                "templateString": "token=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "AUTH",
+                                        "path": "token",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
@@ -487,10 +889,37 @@
         },
         "endpointId": {
             "path": "/users",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_users.listWithGlobalConfig"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedPagination\n\nclient = SeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed.client import SeedPagination"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": false,
+                            "templateString": "token=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "AUTH",
+                                    "path": "token",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -520,7 +949,33 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedPagination\n\nclient = AsyncSeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed.client import AsyncSeedPagination"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": false,
+                                "templateString": "token=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "AUTH",
+                                        "path": "token",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,

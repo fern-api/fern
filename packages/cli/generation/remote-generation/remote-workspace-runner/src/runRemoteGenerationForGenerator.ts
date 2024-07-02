@@ -1,5 +1,5 @@
 import { FernToken } from "@fern-api/auth";
-import { Audiences, generatorsYml } from "@fern-api/configuration";
+import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { InteractiveTaskContext } from "@fern-api/task-context";
@@ -10,6 +10,7 @@ import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
 import { RemoteTaskHandler } from "./RemoteTaskHandler";
 
 export async function runRemoteGenerationForGenerator({
+    projectConfig,
     organization,
     workspace,
     interactiveTaskContext,
@@ -20,8 +21,10 @@ export async function runRemoteGenerationForGenerator({
     token,
     whitelabel,
     irVersionOverride,
-    absolutePathToPreview
+    absolutePathToPreview,
+    readme
 }: {
+    projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
     workspace: FernWorkspace;
     interactiveTaskContext: InteractiveTaskContext;
@@ -33,16 +36,20 @@ export async function runRemoteGenerationForGenerator({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    readme: generatorsYml.ReadmeSchema | undefined;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const intermediateRepresentation = await generateIntermediateRepresentation({
         workspace,
         generationLanguage: generatorInvocation.language,
+        keywords: generatorInvocation.keywords,
         smartCasing: generatorInvocation.smartCasing,
         disableExamples: generatorInvocation.disableExamples,
-        audiences
+        audiences,
+        readme
     });
 
     const job = await createAndStartJob({
+        projectConfig,
         workspace,
         organization,
         generatorInvocation,

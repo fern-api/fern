@@ -3,13 +3,14 @@ import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Endpoint, EndpointAvailability, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { buildEndpointExample, convertFullExample } from "./buildEndpointExample";
+import { buildEndpointExample } from "./buildEndpointExample";
 import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition";
 import { buildHeader } from "./buildHeader";
 import { buildPathParameter } from "./buildPathParameter";
 import { buildQueryParameter } from "./buildQueryParameter";
 import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { convertFullExample } from "./utils/convertFullExample";
 import { convertToHttpMethod } from "./utils/convertToHttpMethod";
 import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
@@ -207,6 +208,10 @@ export function buildEndpoint({
         } else {
             convertedEndpoint.url = serverOverride.name ?? undefined;
         }
+    }
+
+    if (endpoint.idempotent) {
+        convertedEndpoint.idempotent = true;
     }
 
     if (endpoint.availability === EndpointAvailability.Beta) {
@@ -423,6 +428,9 @@ function getRequest({
         };
         if (extendedSchemas.length > 0) {
             requestBodySchema.extends = extendedSchemas;
+        }
+        if (request.additionalProperties) {
+            requestBodySchema["extra-properties"] = true;
         }
 
         const convertedRequestValue: RawSchemas.HttpRequestSchema = {

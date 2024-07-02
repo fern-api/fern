@@ -46,11 +46,15 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             treatUnknownAsAny: parsed?.treatUnknownAsAny ?? false,
             includeContentHeadersOnFileDownloadResponse: parsed?.includeContentHeadersOnFileDownloadResponse ?? false,
             noSerdeLayer,
+            extraPeerDependencies: parsed?.extraPeerDependencies ?? {},
+            extraPeerDependenciesMeta: parsed?.extraPeerDependenciesMeta ?? {},
             noOptionalProperties: parsed?.noOptionalProperties ?? false,
             includeApiReference: parsed?.includeApiReference ?? false,
             tolerateRepublish: parsed?.tolerateRepublish ?? false,
             retainOriginalCasing: parsed?.retainOriginalCasing ?? false,
-            allowExtraFields: parsed?.allowExtraFields ?? false
+            allowExtraFields: parsed?.allowExtraFields ?? false,
+            inlineFileProperties: parsed?.inlineFileProperties ?? false,
+            packageJson: parsed?.packageJson
         };
     }
 
@@ -71,6 +75,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             customConfig.namespaceExport ??
             `${upperFirst(camelCase(config.organization))}${upperFirst(camelCase(config.workspaceName))}`;
 
+        const maybeGithubOutputMode = config.output.mode.type === "github" ? config.output.mode : undefined;
+
         const sdkGenerator = new SdkGenerator({
             namespaceExport,
             intermediateRepresentation,
@@ -82,6 +88,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 apiName: intermediateRepresentation.apiName.originalName,
                 whitelabel: config.whitelabel,
                 generateOAuthClients: config.generateOauthClients,
+                originalReadmeFilepath:
+                    config.originalReadmeFilepath != null
+                        ? AbsoluteFilePath.of(config.originalReadmeFilepath)
+                        : undefined,
                 snippetFilepath:
                     config.output.snippetFilepath != null
                         ? AbsoluteFilePath.of(config.output.snippetFilepath)
@@ -105,6 +115,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 targetRuntime: this.targetRuntime,
                 extraDevDependencies: customConfig.extraDevDependencies,
                 extraDependencies: customConfig.extraDependencies,
+                extraPeerDependencies: customConfig.extraPeerDependencies ?? {},
+                extraPeerDependenciesMeta: customConfig.extraPeerDependenciesMeta ?? {},
                 treatUnknownAsAny: customConfig.treatUnknownAsAny,
                 includeContentHeadersOnFileDownloadResponse: customConfig.includeContentHeadersOnFileDownloadResponse,
                 includeSerdeLayer: !customConfig.noSerdeLayer,
@@ -113,8 +125,12 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 includeApiReference: customConfig.includeApiReference ?? false,
                 tolerateRepublish: customConfig.tolerateRepublish,
                 allowExtraFields: customConfig.allowExtraFields ?? false,
-                writeUnitTests: config.writeUnitTests,
-                executionEnvironment: this.exectuionEnvironment(config)
+                inlineFileProperties: customConfig.inlineFileProperties ?? false,
+                writeUnitTests: false,
+                executionEnvironment: this.exectuionEnvironment(config),
+                packageJson: customConfig.packageJson,
+                githubRepoUrl: maybeGithubOutputMode?.repoUrl,
+                githubInstallationToken: maybeGithubOutputMode?.installationToken
             }
         });
         const typescriptProject = await sdkGenerator.generate();

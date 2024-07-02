@@ -29,8 +29,10 @@
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
+    "@fern-api/docs-markdown-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
     "js-yaml": "^4.1.0",
     "zod": "^3.22.3"
   },

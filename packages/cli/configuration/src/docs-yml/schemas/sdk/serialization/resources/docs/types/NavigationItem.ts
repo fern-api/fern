@@ -10,14 +10,16 @@ export const NavigationItem: core.serialization.Schema<serializers.NavigationIte
     core.serialization.undiscriminatedUnion([
         core.serialization.lazyObject(async () => (await import("../../..")).PageConfiguration),
         core.serialization.lazyObject(async () => (await import("../../..")).SectionConfiguration),
-        core.serialization.lazyObject(async () => (await import("../../..")).ApiSectionConfiguration),
+        core.serialization.lazyObject(async () => (await import("../../..")).ApiReferenceConfiguration),
         core.serialization.lazyObject(async () => (await import("../../..")).LinkConfiguration),
+        core.serialization.lazyObject(async () => (await import("../../..")).ChangelogConfiguration),
     ]);
 
 export declare namespace NavigationItem {
     type Raw =
         | serializers.PageConfiguration.Raw
         | serializers.SectionConfiguration.Raw
-        | serializers.ApiSectionConfiguration.Raw
-        | serializers.LinkConfiguration.Raw;
+        | serializers.ApiReferenceConfiguration.Raw
+        | serializers.LinkConfiguration.Raw
+        | serializers.ChangelogConfiguration.Raw;
 }

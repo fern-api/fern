@@ -13,6 +13,7 @@ import { OpenAPIExtension } from "../openapi/v3/extensions/extensions";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
 import { getFernEnum } from "../openapi/v3/extensions/getFernEnum";
 import { getFernTypeExtension } from "../openapi/v3/extensions/getFernTypeExtension";
+import { getValueIfBoolean } from "../utils/getValue";
 import { convertAdditionalProperties, wrapMap } from "./convertAdditionalProperties";
 import { convertArray } from "./convertArray";
 import { convertDiscriminatedOneOf, convertDiscriminatedOneOfWithVariants } from "./convertDiscriminatedOneOf";
@@ -20,7 +21,11 @@ import { convertEnum } from "./convertEnum";
 import { convertLiteral } from "./convertLiteral";
 import { convertNumber } from "./convertNumber";
 import { convertObject } from "./convertObject";
-import { convertUndiscriminatedOneOf } from "./convertUndiscriminatedOneOf";
+import {
+    convertUndiscriminatedOneOf,
+    convertUndiscriminatedOneOfWithDiscriminant
+} from "./convertUndiscriminatedOneOf";
+import { getDefaultAsNumber, getDefaultAsString } from "./defaults/getDefault";
 import { getExampleAsArray, getExampleAsBoolean, getExampleAsNumber, getExamplesString } from "./examples/getExample";
 import { SchemaParserContext } from "./SchemaParserContext";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
@@ -116,7 +121,7 @@ export function convertSchemaObject(
 ): SchemaWithExample {
     const nameOverride =
         getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ??
-        (context.shouldUseTitleAsName ? getTitleAsName(schema.title) : undefined);
+        (context.options.useTitlesAsName ? getTitleAsName(schema.title) : undefined);
     const mixedGroupName =
         getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME) ??
         getExtension<string[]>(schema, OpenAPIExtension.TAGS)?.[0];
@@ -156,10 +161,12 @@ export function convertSchemaObject(
                 nameOverride,
                 generatedName,
                 primitive: PrimitiveSchemaValueWithExample.string({
-                    minLength: undefined,
-                    maxLength: undefined,
-                    example: getExamplesString(schema),
-                    format: schema.format
+                    default: getDefaultAsString(schema),
+                    minLength: schema.minLength,
+                    maxLength: schema.maxLength,
+                    pattern: schema.pattern,
+                    format: schema.format,
+                    example: getExamplesString(schema)
                 }),
                 groupName,
                 wrapAsNullable,
@@ -287,6 +294,12 @@ export function convertSchemaObject(
             nameOverride,
             generatedName,
             format: schema.format,
+            _default: schema.default,
+            minimum: schema.minimum,
+            maximum: schema.maximum,
+            exclusiveMinimum: getValueIfBoolean(schema.exclusiveMinimum),
+            exclusiveMaximum: getValueIfBoolean(schema.exclusiveMaximum),
+            multipleOf: schema.multipleOf,
             description,
             wrapAsNullable,
             example: getExampleAsNumber(schema),
@@ -298,6 +311,12 @@ export function convertSchemaObject(
             nameOverride,
             generatedName,
             primitive: PrimitiveSchemaValueWithExample.int({
+                default: getDefaultAsNumber(schema),
+                minimum: schema.minimum,
+                maximum: schema.maximum,
+                exclusiveMinimum: getValueIfBoolean(schema.exclusiveMinimum),
+                exclusiveMaximum: getValueIfBoolean(schema.exclusiveMaximum),
+                multipleOf: schema.multipleOf,
                 example: getExampleAsNumber(schema)
             }),
             wrapAsNullable,
@@ -310,6 +329,12 @@ export function convertSchemaObject(
             nameOverride,
             generatedName,
             format: "float",
+            _default: schema.default,
+            minimum: schema.minimum,
+            maximum: schema.maximum,
+            exclusiveMinimum: getValueIfBoolean(schema.exclusiveMinimum),
+            exclusiveMaximum: getValueIfBoolean(schema.exclusiveMaximum),
+            multipleOf: schema.multipleOf,
             description,
             wrapAsNullable,
             example: getExampleAsNumber(schema),
@@ -354,10 +379,12 @@ export function convertSchemaObject(
             nameOverride,
             generatedName,
             primitive: PrimitiveSchemaValueWithExample.string({
-                maxLength: schema.maxLength,
+                default: getDefaultAsString(schema),
+                pattern: schema.pattern,
+                format: schema.format,
                 minLength: schema.minLength,
-                example: getExamplesString(schema),
-                format: schema.format
+                maxLength: schema.maxLength,
+                example: getExamplesString(schema)
             }),
             groupName,
             wrapAsNullable,
@@ -395,29 +422,8 @@ export function convertSchemaObject(
         });
     }
 
-    // handle object with discriminant
     if (schema.type === "object" && schema.discriminator != null && schema.discriminator.mapping != null) {
-        return convertDiscriminatedOneOf({
-            nameOverride,
-            generatedName,
-            breadcrumbs,
-            description,
-            discriminator: schema.discriminator,
-            properties: schema.properties ?? {},
-            required: schema.required,
-            wrapAsNullable,
-            context,
-            groupName
-        });
-    }
-
-    // handle oneOf
-    if (schema.oneOf != null && schema.oneOf.length > 0) {
-        if (
-            schema.discriminator != null &&
-            schema.discriminator.mapping != null &&
-            Object.keys(schema.discriminator.mapping).length > 0
-        ) {
+        if (!context.options.discriminatedUnionV2) {
             return convertDiscriminatedOneOf({
                 nameOverride,
                 generatedName,
@@ -430,6 +436,50 @@ export function convertSchemaObject(
                 context,
                 groupName
             });
+        } else {
+            return convertUndiscriminatedOneOfWithDiscriminant({
+                nameOverride,
+                generatedName,
+                description,
+                wrapAsNullable,
+                context,
+                groupName,
+                discriminator: schema.discriminator
+            });
+        }
+    }
+
+    // handle oneOf
+    if (schema.oneOf != null && schema.oneOf.length > 0) {
+        if (
+            schema.discriminator != null &&
+            schema.discriminator.mapping != null &&
+            Object.keys(schema.discriminator.mapping).length > 0
+        ) {
+            if (!context.options.discriminatedUnionV2) {
+                return convertDiscriminatedOneOf({
+                    nameOverride,
+                    generatedName,
+                    breadcrumbs,
+                    description,
+                    discriminator: schema.discriminator,
+                    properties: schema.properties ?? {},
+                    required: schema.required,
+                    wrapAsNullable,
+                    context,
+                    groupName
+                });
+            } else {
+                return convertUndiscriminatedOneOfWithDiscriminant({
+                    nameOverride,
+                    generatedName,
+                    description,
+                    wrapAsNullable,
+                    context,
+                    groupName,
+                    discriminator: schema.discriminator
+                });
+            }
         } else if (schema.oneOf.length === 1 && schema.oneOf[0] != null) {
             const convertedSchema = convertSchema(
                 schema.oneOf[0],
@@ -466,7 +516,7 @@ export function convertSchemaObject(
             }
 
             const maybeDiscriminant = getDiscriminant({ schemas: schema.oneOf, context });
-            if (maybeDiscriminant != null) {
+            if (maybeDiscriminant != null && !context.options.discriminatedUnionV2) {
                 return convertDiscriminatedOneOfWithVariants({
                     nameOverride,
                     generatedName,
@@ -518,9 +568,11 @@ export function convertSchemaObject(
             const [firstSchema, secondSchema] = schema.anyOf;
             if (firstSchema != null && secondSchema != null) {
                 if (!isReferenceObject(firstSchema) && (firstSchema.type as unknown) === "null") {
-                    return convertSchema(secondSchema, true, context, breadcrumbs);
+                    const convertedSchema = convertSchema(secondSchema, true, context, breadcrumbs);
+                    return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
                 } else if (!isReferenceObject(secondSchema) && (secondSchema.type as unknown) === "null") {
-                    return convertSchema(firstSchema, true, context, breadcrumbs);
+                    const convertedSchema = convertSchema(firstSchema, true, context, breadcrumbs);
+                    return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
                 }
             }
         }
@@ -529,7 +581,7 @@ export function convertSchemaObject(
             schemas: schema.anyOf,
             context
         });
-        if (maybeDiscriminant != null) {
+        if (maybeDiscriminant != null && !context.options.discriminatedUnionV2) {
             return convertDiscriminatedOneOfWithVariants({
                 nameOverride,
                 generatedName,
@@ -601,7 +653,8 @@ export function convertSchemaObject(
             context,
             propertiesToExclude,
             groupName,
-            fullExamples
+            fullExamples,
+            additionalProperties: schema.additionalProperties
         });
     }
 
@@ -617,10 +670,12 @@ export function convertSchemaObject(
                 generatedName: `${generatedName}Key`,
                 description: undefined,
                 schema: PrimitiveSchemaValueWithExample.string({
-                    minLength: undefined,
-                    maxLength: undefined,
-                    example: undefined,
-                    format: schema.format
+                    default: getDefaultAsString(schema),
+                    pattern: schema.pattern,
+                    format: schema.format,
+                    minLength: schema.minLength,
+                    maxLength: schema.maxLength,
+                    example: getExamplesString(schema)
                 }),
                 groupName
             },
@@ -707,23 +762,19 @@ function maybeInjectDescriptionOrGroupName(
             description,
             groupName
         });
-    } else if (schema.type === "optional" && schema.value.type === "reference") {
+    } else if (schema.type === "optional") {
         return SchemaWithExample.optional({
             nameOverride: schema.nameOverride,
             generatedName: schema.generatedName,
-            value: SchemaWithExample.reference({
-                ...schema.value
-            }),
+            value: schema.value,
             description,
             groupName
         });
-    } else if (schema.type === "nullable" && schema.value.type === "reference") {
+    } else if (schema.type === "nullable") {
         return SchemaWithExample.nullable({
             nameOverride: schema.nameOverride,
             generatedName: schema.generatedName,
-            value: SchemaWithExample.reference({
-                ...schema.value
-            }),
+            value: schema.value,
             description,
             groupName
         });

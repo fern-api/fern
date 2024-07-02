@@ -71,11 +71,12 @@ export const Types = Type;
 export {
     Annotation,
     Class,
-    ClassReference,
     ClassInstantiation,
+    ClassReference,
     CodeBlock,
     Dictionary,
     Enum,
+    Field,
     Method,
     MethodInvocation,
     Parameter,

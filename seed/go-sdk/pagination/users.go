@@ -45,10 +45,25 @@ type ListUsersOffsetPaginationRequest struct {
 	StartingAfter *string `json:"-" url:"starting_after,omitempty"`
 }
 
+type ListUsersOffsetStepPaginationRequest struct {
+	// Defaults to first page
+	Page *int `json:"-" url:"page,omitempty"`
+	// The maxiumum number of elements to return.
+	// This is also used as the step size in this
+	// paginated endpoint.
+	Limit *int   `json:"-" url:"limit,omitempty"`
+	Order *Order `json:"-" url:"order,omitempty"`
+}
+
 type UsernameCursor struct {
 	Cursor *UsernamePage `json:"cursor,omitempty" url:"cursor,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (u *UsernameCursor) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
 }
 
 func (u *UsernameCursor) UnmarshalJSON(data []byte) error {
@@ -58,6 +73,13 @@ func (u *UsernameCursor) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UsernameCursor(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
 	u._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -80,7 +102,12 @@ type ListUsersExtendedResponse struct {
 	// The totall number of /users
 	TotalCount int `json:"total_count" url:"total_count"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (l *ListUsersExtendedResponse) GetExtraProperties() map[string]interface{} {
+	return l.extraProperties
 }
 
 func (l *ListUsersExtendedResponse) UnmarshalJSON(data []byte) error {
@@ -90,6 +117,13 @@ func (l *ListUsersExtendedResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*l = ListUsersExtendedResponse(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+
 	l._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -112,7 +146,12 @@ type ListUsersPaginationResponse struct {
 	TotalCount int     `json:"total_count" url:"total_count"`
 	Data       []*User `json:"data,omitempty" url:"data,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (l *ListUsersPaginationResponse) GetExtraProperties() map[string]interface{} {
+	return l.extraProperties
 }
 
 func (l *ListUsersPaginationResponse) UnmarshalJSON(data []byte) error {
@@ -122,6 +161,13 @@ func (l *ListUsersPaginationResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*l = ListUsersPaginationResponse(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+
 	l._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -163,7 +209,12 @@ func (o Order) Ptr() *Order {
 type UsernameContainer struct {
 	Results []string `json:"results,omitempty" url:"results,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (u *UsernameContainer) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
 }
 
 func (u *UsernameContainer) UnmarshalJSON(data []byte) error {
@@ -173,6 +224,13 @@ func (u *UsernameContainer) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UsernameContainer(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
 	u._rawJSON = json.RawMessage(data)
 	return nil
 }

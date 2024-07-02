@@ -14,8 +14,12 @@ export declare namespace HttpMethods {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -27,7 +31,7 @@ export class HttpMethods {
      * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.httpMethods.testGet("string")
+     *     await client.endpoints.httpMethods.testGet("string")
      */
     public async testGet(
         id: string,
@@ -47,6 +51,7 @@ export class HttpMethods {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -71,7 +76,7 @@ export class HttpMethods {
      * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.httpMethods.testPost({
+     *     await client.endpoints.httpMethods.testPost({
      *         string: "string"
      *     })
      */
@@ -96,6 +101,7 @@ export class HttpMethods {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -121,7 +127,7 @@ export class HttpMethods {
      * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.httpMethods.testPut("string", {
+     *     await client.endpoints.httpMethods.testPut("string", {
      *         string: "string"
      *     })
      */
@@ -147,6 +153,7 @@ export class HttpMethods {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -172,7 +179,7 @@ export class HttpMethods {
      * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.httpMethods.testPatch("string", {
+     *     await client.endpoints.httpMethods.testPatch("string", {
      *         string: "string",
      *         integer: 1,
      *         long: 1000000,
@@ -186,7 +193,8 @@ export class HttpMethods {
      *         set: new Set(["string"]),
      *         map: {
      *             1: "string"
-     *         }
+     *         },
+     *         bigint: "123456789123456789"
      *     })
      */
     public async testPatch(
@@ -211,6 +219,7 @@ export class HttpMethods {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -235,7 +244,7 @@ export class HttpMethods {
      * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.httpMethods.testDelete("string")
+     *     await client.endpoints.httpMethods.testDelete("string")
      */
     public async testDelete(
         id: string,
@@ -255,6 +264,7 @@ export class HttpMethods {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {

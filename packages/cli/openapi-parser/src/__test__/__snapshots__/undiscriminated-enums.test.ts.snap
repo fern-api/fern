@@ -15,6 +15,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
       "examples": [],
       "generatedRequestName": "GetExampleRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": null,
@@ -46,6 +47,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [
     "ExampleResponse",
     "GreetingEnum",
@@ -83,6 +85,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
       },
     },
     "Farewell": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -108,8 +111,11 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -153,6 +159,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
       ],
     },
     "Greeting": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -178,8 +185,11 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",

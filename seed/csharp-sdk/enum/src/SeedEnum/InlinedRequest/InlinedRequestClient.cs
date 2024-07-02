@@ -1,5 +1,7 @@
 using SeedEnum;
 
+#nullable enable
+
 namespace SeedEnum;
 
 public class InlinedRequestClient
@@ -14,10 +16,10 @@ public class InlinedRequestClient
     public async void SendAsync(SendEnumInlinedRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/inlined",
+                Path = "inlined",
                 Body = request
             }
         );

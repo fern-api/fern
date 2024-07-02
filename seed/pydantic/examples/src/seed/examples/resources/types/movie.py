@@ -21,7 +21,6 @@ class Movie(pydantic_v1.BaseModel):
         title="The Boy and the Heron",
         from_="Hayao Miyazaki",
         rating=8.0,
-        type="movie",
         tag="tag-wf9as23d",
         metadata={
             "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
@@ -40,7 +39,7 @@ class Movie(pydantic_v1.BaseModel):
     The rating scale is one to five stars
     """
 
-    type: typing.Literal["movie"]
+    type: typing.Literal["movie"] = "movie"
     tag: Tag
     book: typing.Optional[str] = None
     metadata: typing.Dict[str, typing.Any]

@@ -15,8 +15,12 @@ export declare namespace Container {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -28,7 +32,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.container.getAndReturnListOfPrimitives(["string"])
+     *     await client.endpoints.container.getAndReturnListOfPrimitives(["string"])
      */
     public async getAndReturnListOfPrimitives(
         request: string[],
@@ -53,6 +57,7 @@ export class Container {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.endpoints.container.getAndReturnListOfPrimitives.Response.parseOrThrow(
@@ -93,7 +98,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.container.getAndReturnListOfObjects([{
+     *     await client.endpoints.container.getAndReturnListOfObjects([{
      *             string: "string"
      *         }])
      */
@@ -120,6 +125,7 @@ export class Container {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.endpoints.container.getAndReturnListOfObjects.Response.parseOrThrow(
@@ -160,7 +166,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]))
+     *     await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]))
      */
     public async getAndReturnSetOfPrimitives(
         request: Set<string>,
@@ -185,6 +191,7 @@ export class Container {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.endpoints.container.getAndReturnSetOfPrimitives.Response.parseOrThrow(
@@ -225,7 +232,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.container.getAndReturnSetOfObjects(new Set([{
+     *     await client.endpoints.container.getAndReturnSetOfObjects(new Set([{
      *             string: "string"
      *         }]))
      */
@@ -252,6 +259,7 @@ export class Container {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.endpoints.container.getAndReturnSetOfObjects.Response.parseOrThrow(
@@ -292,7 +300,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.container.getAndReturnMapPrimToPrim({
+     *     await client.endpoints.container.getAndReturnMapPrimToPrim({
      *         "string": "string"
      *     })
      */
@@ -319,6 +327,7 @@ export class Container {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.parseOrThrow(
@@ -359,7 +368,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.container.getAndReturnMapOfPrimToObject({
+     *     await client.endpoints.container.getAndReturnMapOfPrimToObject({
      *         "string": {
      *             string: "string"
      *         }
@@ -388,6 +397,7 @@ export class Container {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.parseOrThrow(
@@ -428,7 +438,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.container.getAndReturnOptional({
+     *     await client.endpoints.container.getAndReturnOptional({
      *         string: "string"
      *     })
      */
@@ -458,6 +468,7 @@ export class Container {
                     : undefined,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.endpoints.container.getAndReturnOptional.Response.parseOrThrow(_response.body, {

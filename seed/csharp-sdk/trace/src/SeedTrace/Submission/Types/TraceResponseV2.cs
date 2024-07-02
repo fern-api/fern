@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class TraceResponseV2
@@ -15,7 +17,7 @@ public class TraceResponseV2
     public TracedFile File { get; init; }
 
     [JsonPropertyName("returnValue")]
-    public DebugVariableValue? ReturnValue { get; init; }
+    public object? ReturnValue { get; init; }
 
     [JsonPropertyName("expressionLocation")]
     public ExpressionLocation? ExpressionLocation { get; init; }

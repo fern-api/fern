@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedOauthClientCredentialsDefault;
 
+#nullable enable
+
 namespace SeedOauthClientCredentialsDefault;
 
 public class AuthClient
@@ -15,7 +17,7 @@ public class AuthClient
     public async Task<TokenResponse> GetTokenAsync(GetTokenRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/token",
@@ -27,6 +29,6 @@ public class AuthClient
         {
             return JsonSerializer.Deserialize<TokenResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

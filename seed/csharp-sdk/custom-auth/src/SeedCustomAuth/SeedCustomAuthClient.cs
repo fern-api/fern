@@ -1,5 +1,7 @@
 using SeedCustomAuth;
 
+#nullable enable
+
 namespace SeedCustomAuth;
 
 public partial class SeedCustomAuthClient
@@ -26,7 +28,7 @@ public partial class SeedCustomAuthClient
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);

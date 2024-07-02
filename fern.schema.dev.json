@@ -65,6 +65,32 @@
                               "type": "object",
                               "properties": {
                                 "type": { "type": "string" },
+                                "default": {},
+                                "validation": {
+                                  "anyOf": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "minLength": { "type": "number" },
+                                        "maxLength": { "type": "number" },
+                                        "pattern": { "type": "string" },
+                                        "format": { "type": "string" }
+                                      },
+                                      "additionalProperties": false
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "min": { "type": "number" },
+                                        "max": { "type": "number" },
+                                        "exclusiveMin": { "type": "boolean" },
+                                        "exclusiveMax": { "type": "boolean" },
+                                        "multipleOf": { "type": "number" }
+                                      },
+                                      "additionalProperties": false
+                                    }
+                                  ]
+                                },
                                 "docs": {
                                   "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                                 },
@@ -210,7 +236,10 @@
                     "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                   },
                   "examples": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples" },
-                  "type": { "type": "string" }
+                  "type": { "type": "string" },
+                  "validation": {
+                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
+                  }
                 },
                 "required": ["type"],
                 "additionalProperties": false
@@ -322,6 +351,10 @@
                         "type": "object",
                         "properties": {
                           "type": { "type": "string" },
+                          "default": {},
+                          "validation": {
+                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
+                          },
                           "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" }
                         },
                         "required": ["type"],
@@ -352,6 +385,10 @@
                     "type": "object",
                     "properties": {
                       "type": { "type": "string" },
+                      "default": {},
+                      "validation": {
+                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
+                      },
                       "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
                       "availability": {
                         "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
@@ -394,6 +431,7 @@
                   },
                   "auth": { "type": "boolean" },
                   "idempotent": { "type": "boolean" },
+                  "stream-condition": { "type": "string" },
                   "request": {
                     "anyOf": [
                       { "type": "string" },
@@ -413,6 +451,10 @@
                                   "type": "object",
                                   "properties": {
                                     "type": { "type": "string" },
+                                    "default": {},
+                                    "validation": {
+                                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
+                                    },
                                     "docs": {
                                       "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                                     },
@@ -558,6 +600,7 @@
                           "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
                         },
                         "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                        "id": { "type": "string" },
                         "path-parameters": { "type": "object", "additionalProperties": {} },
                         "query-parameters": {
                           "type": "object",
@@ -717,6 +760,10 @@
                               "results": {
                                 "type": "string",
                                 "description": "The path to the response property for the page elements."
+                              },
+                              "step": {
+                                "type": "string",
+                                "description": "The path to the request property for the page step."
                               }
                             },
                             "required": ["offset", "results"],
@@ -803,6 +850,23 @@
                     ]
                   }
                 ]
+              },
+              "examples": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                    },
+                    "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                    "id": { "type": "string" },
+                    "payload": {
+                      "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
+                    }
+                  },
+                  "additionalProperties": false
+                }
               }
             },
             "required": ["method", "payload"],

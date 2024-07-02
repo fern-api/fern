@@ -1,5 +1,5 @@
 export { DEFAULT_GROUP_NAME } from "../constants";
-export { addGenerator, getLatestGeneratorVersion, upgradeGenerator } from "./addGenerator";
+export { addGenerator, upgradeGenerator } from "./addGenerator";
 export { GENERATOR_INVOCATIONS } from "./generatorInvocations";
 export { GeneratorName } from "./GeneratorName";
 export {
@@ -8,6 +8,8 @@ export {
     type GeneratorInvocation,
     type GeneratorsConfiguration
 } from "./GeneratorsConfiguration";
+export { getGeneratorNameOrThrow } from "./getGeneratorName";
+export { getLatestGeneratorVersion } from "./getGeneratorVersions";
 export {
     getPathToGeneratorsConfiguration,
     loadGeneratorsConfiguration,
@@ -23,4 +25,7 @@ export {
     OPENAPI_LOCATION_KEY,
     type GeneratorsConfigurationSchema
 } from "./schemas/GeneratorsConfigurationSchema";
+export { type ReadmeEndpointObjectSchema } from "./schemas/ReadmeEndpointObjectSchema";
+export { type ReadmeEndpointSchema } from "./schemas/ReadmeEndpointSchema";
+export { type ReadmeSchema } from "./schemas/ReadmeSchema";
 export { updateGeneratorGroup } from "./updateGeneratorGroup";

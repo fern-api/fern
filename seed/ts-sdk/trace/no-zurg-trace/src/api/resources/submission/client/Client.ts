@@ -16,8 +16,14 @@ export declare namespace Submission {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Random-Header header */
+        xRandomHeader?: string | undefined;
     }
 }
 
@@ -34,7 +40,7 @@ export class Submission {
      * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.submission.createExecutionSession(SeedTrace.Language.Java)
+     *     await client.submission.createExecutionSession(SeedTrace.Language.Java)
      */
     public async createExecutionSession(
         language: SeedTrace.Language,
@@ -61,6 +67,7 @@ export class Submission {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as SeedTrace.ExecutionSessionResponse;
@@ -95,7 +102,7 @@ export class Submission {
      * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.submission.getExecutionSession("string")
+     *     await client.submission.getExecutionSession("string")
      */
     public async getExecutionSession(
         sessionId: string,
@@ -122,6 +129,7 @@ export class Submission {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as SeedTrace.ExecutionSessionResponse | undefined;
@@ -156,7 +164,7 @@ export class Submission {
      * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.submission.stopExecutionSession("string")
+     *     await client.submission.stopExecutionSession("string")
      */
     public async stopExecutionSession(sessionId: string, requestOptions?: Submission.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
@@ -180,6 +188,7 @@ export class Submission {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -211,7 +220,7 @@ export class Submission {
      * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.submission.getExecutionSessionsState()
+     *     await client.submission.getExecutionSessionsState()
      */
     public async getExecutionSessionsState(
         requestOptions?: Submission.RequestOptions
@@ -237,6 +246,7 @@ export class Submission {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as SeedTrace.GetExecutionSessionStateResponse;

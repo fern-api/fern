@@ -7,10 +7,20 @@
         },
         "endpointId": {
             "path": "/{id}",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_.echo"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedPackageYml\n\nclient = SeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed.client import SeedPackageYml"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -40,7 +50,16 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedPackageYml\n\nclient = AsyncSeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed.client import AsyncSeedPackageYml"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
@@ -78,10 +97,20 @@
         },
         "endpointId": {
             "path": "/{id}/{nestedId}",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_service.nop"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedPackageYml\n\nclient = SeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed.client import SeedPackageYml"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -111,7 +140,16 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedPackageYml\n\nclient = AsyncSeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed.client import AsyncSeedPackageYml"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,

@@ -1,4 +1,4 @@
-irVersion: v43
+irVersion: v46
 docker: fernapi/fern-typescript-node-sdk:local
 dockerCommand: yarn workspace @fern-typescript/sdk-generator-cli dockerTagLocal:node
 language: typescript
@@ -39,6 +39,27 @@ fixtures:
             lodash-es: "^4.17.21"
       outputFolder: bundle
     - customConfig:
+        useBrandedStringAliases: true
+        neverThrowErrors: true
+        namespaceExport: "Fiddle"
+        bundle: true
+        includeUtilsOnUnionMembers: true
+        includeOtherInUnionTypes: true
+        extraDependencies:
+            lodash-es: "^4.17.21"
+        packageJson:
+          version: "0.0.2"
+          dependencies:
+            stream: "^0.0.2"
+            qs: "^6.11.2"
+          files:
+            - exampleFile
+            - dist
+          browser:
+            command-exists: false
+            execa: false
+      outputFolder: custom-package-json
+    - customConfig:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
     - customConfig:
@@ -55,6 +76,11 @@ fixtures:
           lodash-es: "^4.17.21"
         extraDevDependencies:
           jest: "^29.7.0"
+        extraPeerDependencies:
+          "openai": "^4.47.1"
+        extraPeerDependenciesMeta:
+          "openai":
+            optional: true
       outputFolder: dev-dependencies
   error-property:
     - customConfig:
@@ -74,6 +100,12 @@ fixtures:
     - customConfig:
         includeContentHeadersOnFileDownloadResponse: true
       outputFolder: file-download-reponse-headers
+  file-upload:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        inlineFileProperties: true
+      outputFolder: wrap-file-properties
   unknown:
     - customConfig: null
       outputFolder: no-custom-config
@@ -107,10 +139,25 @@ fixtures:
   examples:
     - customConfig:
         includeApiReference: true
+      readmeConfig:
+        bannerLink: https://www.fernapi.com
+        apiReferenceLink: https://www.docs.fernapi.com
+        defaultEndpoint: POST /movie
+        features:
+          timeouts:
+            - GET /movie/{movieId}
+            - method: POST
+              path: /movie
       outputFolder: examples-with-api-reference
     - customConfig:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
+  oauth-client-credentials-nested-root:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        neverThrowErrors: true
+      outputFolder: never-throw-errors
   mixed-case:
     - customConfig: null
       outputFolder: no-custom-config
@@ -123,7 +170,7 @@ scripts:
       - mkdir cache
       - cp -r /yarn-cache-template ./cache
       - yarn install --cache-folder ./cache
-      - yarn build 
+      - yarn build
 allowedFailures:
   - response-property
   - bytes
@@ -136,6 +183,3 @@ allowedFailures:
   - exhaustive:dev-dependencies
   - audiences
   - enum # throws b/c of undiscriminated union examples
-  - oauth-client-credentials
-  - oauth-client-credentials-default
-  - oauth-client-credentials-environment-variables

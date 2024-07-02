@@ -1,5 +1,7 @@
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class CommonsClient

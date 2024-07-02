@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedIdempotencyHeaders;
 
+#nullable enable
+
 namespace SeedIdempotencyHeaders;
 
 public class PaymentClient
@@ -15,10 +17,10 @@ public class PaymentClient
     public async Task<Guid> CreateAsync(CreatePaymentRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "",
+                Path = "/payment",
                 Body = request
             }
         );
@@ -27,13 +29,17 @@ public class PaymentClient
         {
             return JsonSerializer.Deserialize<Guid>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async void DeleteAsync(string paymentId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Delete, Path = $"/{paymentId}" }
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Delete,
+                Path = $"/payment/{paymentId}"
+            }
         );
     }
 }

@@ -2,6 +2,8 @@ using System.Text.Json;
 using SeedExhaustive;
 using SeedExhaustive.Types;
 
+#nullable enable
+
 namespace SeedExhaustive.Endpoints;
 
 public class HttpMethodsClient
@@ -16,23 +18,23 @@ public class HttpMethodsClient
     public async Task<string> TestGetAsync(string id)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/{id}" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"/http-methods/{id}" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<ObjectWithOptionalField> TestPostAsync(ObjectWithRequiredField request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "",
+                Path = "/http-methods",
                 Body = request
             }
         );
@@ -41,7 +43,7 @@ public class HttpMethodsClient
         {
             return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<ObjectWithOptionalField> TestPutAsync(
@@ -50,10 +52,10 @@ public class HttpMethodsClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Put,
-                Path = $"/{id}",
+                Path = $"/http-methods/{id}",
                 Body = request
             }
         );
@@ -62,7 +64,7 @@ public class HttpMethodsClient
         {
             return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<ObjectWithOptionalField> TestPatchAsync(
@@ -71,10 +73,10 @@ public class HttpMethodsClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Patch,
-                Path = $"/{id}",
+                Path = $"/http-methods/{id}",
                 Body = request
             }
         );
@@ -83,19 +85,23 @@ public class HttpMethodsClient
         {
             return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<bool> TestDeleteAsync(string id)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Delete, Path = $"/{id}" }
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Delete,
+                Path = $"/http-methods/{id}"
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<bool>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

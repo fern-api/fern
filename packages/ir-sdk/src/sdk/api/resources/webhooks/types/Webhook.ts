@@ -5,9 +5,11 @@
 import * as FernIr from "../../..";
 
 export interface Webhook extends FernIr.Declaration {
+    id: FernIr.WebhookId;
     name: FernIr.WebhookName;
     displayName: string | undefined;
     method: FernIr.WebhookHttpMethod;
     headers: FernIr.HttpHeader[];
     payload: FernIr.WebhookPayload;
+    examples: FernIr.ExampleWebhookCall[] | undefined;
 }

@@ -1,11 +1,21 @@
-#!/usr/bin/env bash
+# Specify files that shouldn't be modified by Fern
 
-set -e
+README.md
+CITATIONS.md
+LICENSE
 
-version="$CIRCLE_TAG"
+# URL Encoded
+src/core/fetcher/Fetcher.ts
 
-if [[ -z "$version" ]]; then
-	exit 1
-fi
+# Wrapper client
+src/wrapper
+src/index.ts
 
-./is-release-candidate || [[ "$version" =~ ^^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]
+# EVI WebSocket
+src/api/resources/empathicVoice/client/StreamSocket.ts
+src/api/resources/empathicVoice/client/index.ts
+src/core/websocket
+
+# Tests
+tests/empathicVoice
+tests/expressionMeasurement

@@ -63,8 +63,12 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getAsIsFiles(): string[] {
-        return [AsIsFiles.RawClient];
-        // return [AsIsFiles.StringEnum, AsIsFiles.OneOfJsonConverter, AsIsFiles.EnumConverter];
+        return [
+            AsIsFiles.RawClient,
+            AsIsFiles.StringEnumSerializer,
+            AsIsFiles.OneOfSerializer,
+            AsIsFiles.CollectionItemSerializer
+        ];
     }
 
     public getNamespaceForServiceId(serviceId: ServiceId): string {
@@ -106,6 +110,13 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         });
     }
 
+    public getEnvironmentsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "Environments",
+            namespace: this.getCoreNamespace()
+        });
+    }
+
     public getClientOptionsClassReference(): csharp.ClassReference {
         return csharp.classReference({
             name: CLIENT_OPTIONS_CLASS_NAME,
@@ -124,6 +135,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     public getEndpointMethodName(endpoint: HttpEndpoint): string {
         return `${endpoint.name.pascalCase.safeName}Async`;
+    }
+
+    public getExtraDependencies(): Record<string, string> {
+        return this.customConfig["extra-dependencies"] ?? {};
     }
 
     private getNamespaceFromFernFilepath(fernFilepath: FernFilepath): string {

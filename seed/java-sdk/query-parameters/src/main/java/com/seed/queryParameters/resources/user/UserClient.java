@@ -3,10 +3,11 @@
  */
 package com.seed.queryParameters.resources.user;
 
-import com.seed.queryParameters.core.ApiError;
 import com.seed.queryParameters.core.ClientOptions;
 import com.seed.queryParameters.core.ObjectMappers;
 import com.seed.queryParameters.core.RequestOptions;
+import com.seed.queryParameters.core.SeedQueryParametersApiException;
+import com.seed.queryParameters.core.SeedQueryParametersException;
 import com.seed.queryParameters.resources.user.requests.GetUsersRequest;
 import com.seed.queryParameters.resources.user.types.User;
 import java.io.IOException;
@@ -38,6 +39,11 @@ public class UserClient {
         httpUrl.addQueryParameter("deadline", request.getDeadline().toString());
         httpUrl.addQueryParameter("bytes", request.getBytes().toString());
         httpUrl.addQueryParameter("user", request.getUser().toString());
+        httpUrl.addQueryParameter("userList", request.getUserList().toString());
+        if (request.getOptionalDeadline().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "optionalDeadline", request.getOptionalDeadline().get().toString());
+        }
         httpUrl.addQueryParameter("keyValue", request.getKeyValue());
         if (request.getOptionalString().isPresent()) {
             httpUrl.addQueryParameter(
@@ -56,22 +62,22 @@ public class UserClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
-            Response response = client.newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), User.class);
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedQueryParametersApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(
-                            responseBody != null ? responseBody.string() : "{}", Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SeedQueryParametersException("Network error executing HTTP request", e);
         }
     }
 }

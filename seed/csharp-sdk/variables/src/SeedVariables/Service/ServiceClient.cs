@@ -1,5 +1,7 @@
 using SeedVariables;
 
+#nullable enable
+
 namespace SeedVariables;
 
 public class ServiceClient
@@ -14,7 +16,7 @@ public class ServiceClient
     public async void PostAsync(string endpointParam)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = $"/{endpointParam}" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = $"/{endpointParam}" }
         );
     }
 }

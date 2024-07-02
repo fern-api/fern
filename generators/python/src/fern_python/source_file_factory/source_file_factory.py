@@ -45,12 +45,14 @@ class SourceFileFactory:
         filepath_in_project: Filepath,
         exports: Set[str],
         include_src_root: Optional[bool] = True,
+        string_replacements: Optional[dict[str, str]] = None,
     ) -> None:
         project.add_source_file_from_disk(
             path_on_disk=path_on_disk,
             filepath_in_project=filepath_in_project,
             exports=exports,
             include_src_root=include_src_root,
+            string_replacements=string_replacements,
         )
 
     @staticmethod

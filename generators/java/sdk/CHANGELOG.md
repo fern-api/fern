@@ -5,8 +5,129 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2024-06-26
+
+- Break: The Java SDK is now on major version 1. To take this upgrade without any breaks, please add the below 
+  configuration to your `generators.yml` file:
+  ```yaml
+  generators:
+  - name: fernapi/fern-java-sdk
+    config:
+      base-api-exception-class-name: ApiError
+      base-exception-class-name: CompanyException # Optional: This should only be set if default naming is undesirable
+  ```
+- Improvement: We now generate Exception types for all errors that are defined in the IR. Generated clients with an
+  error discrimination strategy of "status code" will throw one of these typed Exceptions based on the status code of
+  error responses. Example error type:
+  ```java
+  public final class BadRequest extends MyCompanyApiError {
+    public BadRequest(Object body) {
+        super("BadRequest", 400, body);
+    }
+  }
+  ```
+
+## [0.10.1] - 2024-06-13
+
+- Feature: Add support for cursor and offset pagination. 
+
+  For example, consider the following endpoint `/users` endpoint:
+
+  ```yaml
+  types:
+    User:
+      properties:
+        name: string
+
+    ListUserResponse:
+      properties:
+        next: optional<string>
+        data: list<User>
+
+  service:
+    auth: false
+    base-path: /users
+    endpoints:
+      list:
+        path: ""
+        method: GET
+        pagination:
+          cursor: $request.starting_after
+          next_cursor: $response.next
+          results: $response.data
+        request:
+          name: ListUsersRequest
+          query-parameters:
+            starting_after: optional<string>
+        response: ListUsersResponse
+  ```
+  
+  The generated `SyncPagingIterable<User>` can then be used to traverse through the `User` objects:
+  ```java
+  for (User user : client.users.list(...)) {
+      System.out.println(user);
+  }
+  ```
+  
+  Or stream them:
+  ```java
+  client.users.list(...).streamItems().map(user -> ...);
+  ```
+  
+  Or statically calling `nextPage()` to perform the pagination manually:
+  ```java
+  SyncPagingIterable<User> pager = client.users.list(...);
+  // First page
+  System.out.println(pager.getItems());
+  // Second page
+  pager = pager.nextPage();
+  System.out.println(pager.getItems());
+  ```
+
+## [0.10.0] - 2024-06-07
+
+- Feature: The generator now supports BigInteger types.
+- Chore: Bump intermediate representation to v46
+
+## [0.9.8] - 2024-06-06
+
+- Fix: `RequestOptions` are now generated with the `timeout` field initialized to `Optional.empty()` instead of `null` 
+  to avoid NPEs if `timeout` is not set in the builder.
+
+## [0.9.7] - 2024-06-06
+
+- Feature: The SDK generator now generates `@java.lang.Override` over `@Override` in all files to avoid clashes with any
+  `Override.java` class that may have been generated in the same package. The former was used most places, but not all, 
+  until this release.
+
+## [0.9.6] - 2024-06-05
+
+- Feature: The SDK generator now supports returning response properties from client methods rather than just the 
+  responses themselves.
+
+## [0.9.5] - 2024-05-30
+
+- Fix: Types without fields are now generated with builders. Previously, they were not, which made them impossible to
+  initialize.
+
+## [0.9.4] - 2024-05-28
+
+- Fix: The SDK now generates undiscriminated unions with de-conflicted method signatures. Previously, certain
+  undiscriminated unions would have failed to compile due to Java's type erasure causing conflicts.
+
+## [0.9.3] - 2024-05-23
+
+- Feature: Generated SDK clients with an OAuth security scheme will now automatically refresh access tokens before they
+  expire.
+
+## [0.9.2] - 2024-05-21
+
+- Fix: Java 8 Compatibility.
+
 ## [0.9.1] - 2024-05-14
+
 - Feature: Support OAuth without token refresh. Example of initializing a client with OAuth:
+
 ```java
 ExampleApiClient client = ExampleApiClient
     .builder()
@@ -16,11 +137,13 @@ ExampleApiClient client = ExampleApiClient
 ```
 
 ## [0.9.0-rc0] - 2024-05-13
+
 - Chore: Bump intermediate representation to v42
 
 ## [0.8.11] - 2024-05-08
 
-- Fix: Corrects the fix in 0.8.10 to check null value as opposed to a .isPresent check, given the header is not `Optional`, it's always `String`
+- Fix: Corrects the fix in 0.8.10 to check null value as opposed to a .isPresent check, given the header is
+  not `Optional`, it's always `String`
 
 ## [0.8.10] - 2024-05-08
 
@@ -32,7 +155,8 @@ ExampleApiClient client = ExampleApiClient
 
 ## [0.8.8] - 2024-05-07
 
-- Fix: The generated SDKs no longer require global headers that are not directly related to auth if auth is mandatory within the SDK. Previously, the generator would require all global headers if auth was mandatory.
+- Fix: The generated SDKs no longer require global headers that are not directly related to auth if auth is mandatory
+  within the SDK. Previously, the generator would require all global headers if auth was mandatory.
 
 ## [0.8.7] - 2024-03-21
 
@@ -54,11 +178,15 @@ ExampleApiClient client = ExampleApiClient
 
 ## [0.8.6] - 2024-03-20
 
-- Fix: the SDK now generates RequestOptions functions for timeouts with IdempotentRequestOptions correctly, previously timeout functions were only taking in regular RequestOptions. This also addresses a JavaPoet issue where fields were being initialized twice across RequestOptions and IdempotentRequestOptions classes, preventing the SDK from generating at all.
+- Fix: the SDK now generates RequestOptions functions for timeouts with IdempotentRequestOptions correctly, previously
+  timeout functions were only taking in regular RequestOptions. This also addresses a JavaPoet issue where fields were
+  being initialized twice across RequestOptions and IdempotentRequestOptions classes, preventing the SDK from generating
+  at all.
 
 ## [0.8.5] - 2024-03-18
 
-- Feat: add in publishing config that allows for signing published artifacts, this is required for publishing to Maven Central.
+- Feat: add in publishing config that allows for signing published artifacts, this is required for publishing to Maven
+  Central.
   To sign your artifacts, you must add the below to your publishing config:
   ```yaml
   generators:
@@ -94,7 +222,8 @@ ExampleApiClient client = ExampleApiClient
 
 ## [0.8.4] - 2024-02-23
 
-- Improvement: The timeout specified on the RequestOptions object now sets the timeout on the entire call, not just the read timeout of the request.
+- Improvement: The timeout specified on the RequestOptions object now sets the timeout on the entire call, not just the
+  read timeout of the request.
   As a refresher, a timeout can be added per request like so:
   ```java
   RequestOptions ro = RequestOptions.builder().timeout(90).build(); // Creates a timeout of 90 seconds for the request

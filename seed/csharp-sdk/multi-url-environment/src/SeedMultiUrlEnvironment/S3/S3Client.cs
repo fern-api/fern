@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedMultiUrlEnvironment;
 
+#nullable enable
+
 namespace SeedMultiUrlEnvironment;
 
 public class S3Client
@@ -15,10 +17,10 @@ public class S3Client
     public async Task<string> GetPresignedUrlAsync(GetPresignedUrlRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/presigned-url",
+                Path = "/s3/presigned-url",
                 Body = request
             }
         );
@@ -27,6 +29,6 @@ public class S3Client
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

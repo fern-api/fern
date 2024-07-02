@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedExtraProperties;
 
+#nullable enable
+
 namespace SeedExtraProperties;
 
 public class UserClient
@@ -15,7 +17,7 @@ public class UserClient
     public async Task<User> CreateUserAsync(CreateUserRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/user",
@@ -27,6 +29,6 @@ public class UserClient
         {
             return JsonSerializer.Deserialize<User>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

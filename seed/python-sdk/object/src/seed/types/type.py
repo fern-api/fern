@@ -51,7 +51,6 @@ class Type(pydantic_v1.BaseModel):
                 "07791987-dec3-43b5-8dc4-250ab5dc0478",
             ),
         ],
-        eighteen="eighteen",
         nineteen=Name(
             id="name-129fsdj9",
             value="nineteen",
@@ -76,7 +75,7 @@ class Type(pydantic_v1.BaseModel):
     fifteen: typing.List[typing.List[int]]
     sixteen: typing.List[typing.Dict[str, int]]
     seventeen: typing.List[typing.Optional[uuid.UUID]]
-    eighteen: typing.Literal["eighteen"]
+    eighteen: typing.Literal["eighteen"] = "eighteen"
     nineteen: Name
 
     def json(self, **kwargs: typing.Any) -> str:

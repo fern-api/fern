@@ -14,8 +14,12 @@ export declare namespace Service {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -26,7 +30,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedApi.folder.service.endpoint()
+     *     await client.folder.service.endpoint()
      */
     public async endpoint(requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
@@ -42,6 +46,7 @@ export class Service {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -76,7 +81,7 @@ export class Service {
      * @throws {@link SeedApi.folder.NotFoundError}
      *
      * @example
-     *     await seedApi.folder.service.unknownRequest({
+     *     await client.folder.service.unknownRequest({
      *         "key": "value"
      *     })
      */
@@ -95,6 +100,7 @@ export class Service {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;

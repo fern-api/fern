@@ -1,0 +1,531 @@
+[
+    {
+        "sdk": {
+            "package": "@fern/file-upload",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/",
+            "method": "POST",
+            "identifierOverride": "endpoint_service.post"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedFileUploadClient } from \"@fern/file-upload\";"
+                ],
+                "templateString": "const client = new SeedFileUploadClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.service.post(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "$FERN_INPUT",
+                            "isOptional": false,
+                            "inputDelimiter": ",\n\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "maybeString: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "maybeString",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "integer: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "integer",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [
+                                            "import fs from \"fs\";"
+                                        ],
+                                        "templateString": "fs.createReadStream('$FERN_INPUT')",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "file",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "isOptional": true,
+                                        "containerTemplateString": "[\n\t\t$FERN_INPUT\n\t]",
+                                        "delimiter": ",\n\t\t",
+                                        "innerTemplate": {
+                                            "imports": [
+                                                "import fs from \"fs\";"
+                                            ],
+                                            "templateString": "fs.createReadStream('$FERN_INPUT')",
+                                            "isOptional": false,
+                                            "templateInputs": [],
+                                            "type": "generic"
+                                        },
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "fileList",
+                                            "type": "payload"
+                                        },
+                                        "type": "iterable"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [
+                                            "import fs from \"fs\";"
+                                        ],
+                                        "templateString": "fs.createReadStream('$FERN_INPUT')",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "maybeFile",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "isOptional": true,
+                                        "containerTemplateString": "[\n\t\t$FERN_INPUT\n\t]",
+                                        "delimiter": ",\n\t\t",
+                                        "innerTemplate": {
+                                            "imports": [
+                                                "import fs from \"fs\";"
+                                            ],
+                                            "templateString": "fs.createReadStream('$FERN_INPUT')",
+                                            "isOptional": false,
+                                            "templateInputs": [],
+                                            "type": "generic"
+                                        },
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "maybeFileList",
+                                            "type": "payload"
+                                        },
+                                        "type": "iterable"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "maybeInteger: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "maybeInteger",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "optionalListOfStrings: [\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "delimiter": ",\n\t\t\t",
+                                        "innerTemplate": {
+                                            "imports": [],
+                                            "templateString": "$FERN_INPUT",
+                                            "isOptional": true,
+                                            "templateInputs": [
+                                                {
+                                                    "location": "RELATIVE",
+                                                    "type": "payload"
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "optionalListOfStrings",
+                                            "type": "payload"
+                                        },
+                                        "type": "iterable"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "listOfObjects: [\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "delimiter": ",\n\t\t\t",
+                                        "innerTemplate": {
+                                            "imports": [],
+                                            "templateString": "{\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                            "isOptional": true,
+                                            "inputDelimiter": ",\n\t\t\t\t",
+                                            "templateInputs": [
+                                                {
+                                                    "value": {
+                                                        "imports": [],
+                                                        "templateString": "foo: $FERN_INPUT",
+                                                        "isOptional": true,
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "RELATIVE",
+                                                                "path": "foo",
+                                                                "type": "payload"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "type": "template"
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "listOfObjects",
+                                            "type": "payload"
+                                        },
+                                        "type": "iterable"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/file-upload",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/just-file",
+            "method": "POST",
+            "identifierOverride": "endpoint_service.justFile"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedFileUploadClient } from \"@fern/file-upload\";"
+                ],
+                "templateString": "const client = new SeedFileUploadClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.service.justFile(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "$FERN_INPUT",
+                            "isOptional": false,
+                            "inputDelimiter": ",\n\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [
+                                            "import fs from \"fs\";"
+                                        ],
+                                        "templateString": "fs.createReadStream('$FERN_INPUT')",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "file",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/file-upload",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/just-file-with-query-params",
+            "method": "POST",
+            "identifierOverride": "endpoint_service.justFileWithQueryParams"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedFileUploadClient } from \"@fern/file-upload\";"
+                ],
+                "templateString": "const client = new SeedFileUploadClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.service.justFileWithQueryParams(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "$FERN_INPUT",
+                            "isOptional": false,
+                            "inputDelimiter": ",\n\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [
+                                            "import fs from \"fs\";"
+                                        ],
+                                        "templateString": "fs.createReadStream('$FERN_INPUT')",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "file",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    },
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "maybeString: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "maybeString",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "integer: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "integer",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "maybeInteger: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "maybeInteger",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "listOfStrings: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "listOfStrings",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "optionalListOfStrings: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "optionalListOfStrings",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

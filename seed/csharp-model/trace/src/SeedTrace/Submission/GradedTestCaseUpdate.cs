@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+
+#nullable enable
 
 namespace SeedTrace;
 
@@ -9,5 +10,5 @@ public class GradedTestCaseUpdate
     public string TestCaseId { get; init; }
 
     [JsonPropertyName("grade")]
-    public TestCaseGrade Grade { get; init; }
+    public object Grade { get; init; }
 }

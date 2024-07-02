@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class Playlist
@@ -14,5 +16,5 @@ public class Playlist
     public string Name { get; init; }
 
     [JsonPropertyName("problems")]
-    public List<string> Problems { get; init; }
+    public IEnumerable<string> Problems { get; init; }
 }

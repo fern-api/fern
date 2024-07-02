@@ -2,8 +2,8 @@
 
 exports[`migrateFromV42ToV41 snapshot 1`] = `
 {
-  "apiDisplayName": undefined,
-  "apiDocs": undefined,
+  "apiDisplayName": null,
+  "apiDocs": null,
   "apiName": {
     "camelCase": {
       "safeName": "simpleAPI",
@@ -24,23 +24,21 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
     },
   },
   "auth": {
-    "docs": undefined,
+    "docs": null,
     "requirement": "ALL",
     "schemes": [
       {
-        "_visit": [Function],
+        "_type": "oauth",
         "configuration": {
-          "_visit": [Function],
-          "clientIdEnvVar": undefined,
-          "clientSecretEnvVar": undefined,
+          "clientIdEnvVar": null,
+          "clientSecretEnvVar": null,
           "refreshEndpoint": {
             "endpointReference": "endpoint_auth.refreshToken",
             "requestProperties": {
               "refreshToken": {
                 "property": {
-                  "_visit": [Function],
-                  "availability": undefined,
-                  "docs": undefined,
+                  "availability": null,
+                  "docs": null,
                   "name": {
                     "name": {
                       "camelCase": {
@@ -65,9 +63,8 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   },
                   "type": "body",
                   "valueType": {
-                    "_visit": [Function],
+                    "_type": "primitive",
                     "primitive": "STRING",
-                    "type": "primitive",
                   },
                 },
                 "propertyPath": [],
@@ -76,8 +73,8 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
             "responseProperties": {
               "accessToken": {
                 "property": {
-                  "availability": undefined,
-                  "docs": undefined,
+                  "availability": null,
+                  "docs": null,
                   "name": {
                     "name": {
                       "camelCase": {
@@ -101,17 +98,16 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     "wireValue": "access_token",
                   },
                   "valueType": {
-                    "_visit": [Function],
+                    "_type": "primitive",
                     "primitive": "STRING",
-                    "type": "primitive",
                   },
                 },
                 "propertyPath": [],
               },
               "expiresIn": {
                 "property": {
-                  "availability": undefined,
-                  "docs": undefined,
+                  "availability": null,
+                  "docs": null,
                   "name": {
                     "name": {
                       "camelCase": {
@@ -135,17 +131,16 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     "wireValue": "expires_in",
                   },
                   "valueType": {
-                    "_visit": [Function],
+                    "_type": "primitive",
                     "primitive": "INTEGER",
-                    "type": "primitive",
                   },
                 },
                 "propertyPath": [],
               },
               "refreshToken": {
                 "property": {
-                  "availability": undefined,
-                  "docs": undefined,
+                  "availability": null,
+                  "docs": null,
                   "name": {
                     "name": {
                       "camelCase": {
@@ -169,17 +164,14 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     "wireValue": "refresh_token",
                   },
                   "valueType": {
-                    "_visit": [Function],
+                    "_type": "container",
                     "container": {
-                      "_visit": [Function],
+                      "_type": "optional",
                       "optional": {
-                        "_visit": [Function],
+                        "_type": "primitive",
                         "primitive": "STRING",
-                        "type": "primitive",
                       },
-                      "type": "optional",
                     },
-                    "type": "container",
                   },
                 },
                 "propertyPath": [],
@@ -191,86 +183,11 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
           ],
           "tokenEndpoint": {
             "endpointReference": "endpoint_auth.getToken",
-            "requestProperties": {
-              "clientId": {
-                "property": {
-                  "_visit": [Function],
-                  "availability": undefined,
-                  "docs": undefined,
-                  "name": {
-                    "name": {
-                      "camelCase": {
-                        "safeName": "clientID",
-                        "unsafeName": "clientID",
-                      },
-                      "originalName": "client_id",
-                      "pascalCase": {
-                        "safeName": "ClientID",
-                        "unsafeName": "ClientID",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "CLIENT_ID",
-                        "unsafeName": "CLIENT_ID",
-                      },
-                      "snakeCase": {
-                        "safeName": "client_id",
-                        "unsafeName": "client_id",
-                      },
-                    },
-                    "wireValue": "client_id",
-                  },
-                  "type": "body",
-                  "valueType": {
-                    "_visit": [Function],
-                    "primitive": "STRING",
-                    "type": "primitive",
-                  },
-                },
-                "propertyPath": [],
-              },
-              "clientSecret": {
-                "property": {
-                  "_visit": [Function],
-                  "availability": undefined,
-                  "docs": undefined,
-                  "name": {
-                    "name": {
-                      "camelCase": {
-                        "safeName": "clientSecret",
-                        "unsafeName": "clientSecret",
-                      },
-                      "originalName": "client_secret",
-                      "pascalCase": {
-                        "safeName": "ClientSecret",
-                        "unsafeName": "ClientSecret",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "CLIENT_SECRET",
-                        "unsafeName": "CLIENT_SECRET",
-                      },
-                      "snakeCase": {
-                        "safeName": "client_secret",
-                        "unsafeName": "client_secret",
-                      },
-                    },
-                    "wireValue": "client_secret",
-                  },
-                  "type": "body",
-                  "valueType": {
-                    "_visit": [Function],
-                    "primitive": "STRING",
-                    "type": "primitive",
-                  },
-                },
-                "propertyPath": [],
-              },
-              "scopes": undefined,
-            },
             "responseProperties": {
               "accessToken": {
                 "property": {
-                  "availability": undefined,
-                  "docs": undefined,
+                  "availability": null,
+                  "docs": null,
                   "name": {
                     "name": {
                       "camelCase": {
@@ -294,17 +211,16 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     "wireValue": "access_token",
                   },
                   "valueType": {
-                    "_visit": [Function],
+                    "_type": "primitive",
                     "primitive": "STRING",
-                    "type": "primitive",
                   },
                 },
                 "propertyPath": [],
               },
               "expiresIn": {
                 "property": {
-                  "availability": undefined,
-                  "docs": undefined,
+                  "availability": null,
+                  "docs": null,
                   "name": {
                     "name": {
                       "camelCase": {
@@ -328,17 +244,16 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     "wireValue": "expires_in",
                   },
                   "valueType": {
-                    "_visit": [Function],
+                    "_type": "primitive",
                     "primitive": "INTEGER",
-                    "type": "primitive",
                   },
                 },
                 "propertyPath": [],
               },
               "refreshToken": {
                 "property": {
-                  "availability": undefined,
-                  "docs": undefined,
+                  "availability": null,
+                  "docs": null,
                   "name": {
                     "name": {
                       "camelCase": {
@@ -362,32 +277,28 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     "wireValue": "refresh_token",
                   },
                   "valueType": {
-                    "_visit": [Function],
+                    "_type": "container",
                     "container": {
-                      "_visit": [Function],
+                      "_type": "optional",
                       "optional": {
-                        "_visit": [Function],
+                        "_type": "primitive",
                         "primitive": "STRING",
-                        "type": "primitive",
                       },
-                      "type": "optional",
                     },
-                    "type": "container",
                   },
                 },
                 "propertyPath": [],
               },
             },
           },
-          "tokenPrefix": undefined,
+          "tokenPrefix": null,
           "type": "clientCredentials",
         },
-        "docs": undefined,
-        "type": "oauth",
+        "docs": null,
       },
     ],
   },
-  "basePath": undefined,
+  "basePath": null,
   "constants": {
     "errorInstanceIdKey": {
       "name": {
@@ -412,9 +323,8 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
       "wireValue": "errorInstanceId",
     },
   },
-  "environments": undefined,
+  "environments": null,
   "errorDiscriminationStrategy": {
-    "_visit": [Function],
     "type": "statusCode",
   },
   "errors": {},
@@ -422,27 +332,26 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
   "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
-    "docs": undefined,
+    "docs": null,
     "errors": [],
     "fernFilepath": {
       "allParts": [],
-      "file": undefined,
+      "file": null,
       "packagePath": [],
     },
     "hasEndpointsInTree": true,
-    "navigationConfig": undefined,
-    "service": undefined,
+    "navigationConfig": null,
+    "service": null,
     "subpackages": [
       "subpackage_auth",
       "subpackage_service",
     ],
     "types": [],
-    "webhooks": undefined,
-    "websocket": undefined,
+    "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
-    "hasPaginatedEndpoints": true,
     "hasStreamingEndpoints": false,
     "isAuthMandatory": false,
     "platformHeaders": {
@@ -465,38 +374,36 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
   },
   "services": {
     "service_auth": {
-      "availability": undefined,
+      "availability": null,
       "basePath": {
         "head": "/",
         "parts": [],
       },
-      "displayName": undefined,
+      "displayName": null,
       "endpoints": [
         {
           "allPathParameters": [],
           "auth": false,
-          "availability": undefined,
-          "baseUrl": undefined,
-          "displayName": undefined,
-          "docs": undefined,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
           "errors": [],
           "examples": [
             {
-              "_visit": [Function],
-              "codeSamples": undefined,
-              "docs": undefined,
+              "codeSamples": null,
+              "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "name": undefined,
+              "name": null,
               "queryParameters": [],
               "request": {
-                "_visit": [Function],
                 "jsonExample": {
-                  "audience": ""https://api.example.com"",
+                  "audience": "https://api.example.com",
                   "client_id": "string",
                   "client_secret": "string",
-                  "grant_type": ""client_credentials"",
+                  "grant_type": "client_credentials",
                   "scope": "string",
                 },
                 "properties": [
@@ -523,13 +430,11 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       },
                       "wireValue": "client_id",
                     },
-                    "originalTypeDeclaration": undefined,
+                    "originalTypeDeclaration": null,
                     "value": {
                       "jsonExample": "string",
                       "shape": {
-                        "_visit": [Function],
                         "primitive": {
-                          "_visit": [Function],
                           "string": {
                             "original": "string",
                           },
@@ -562,13 +467,11 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       },
                       "wireValue": "client_secret",
                     },
-                    "originalTypeDeclaration": undefined,
+                    "originalTypeDeclaration": null,
                     "value": {
                       "jsonExample": "string",
                       "shape": {
-                        "_visit": [Function],
                         "primitive": {
-                          "_visit": [Function],
                           "string": {
                             "original": "string",
                           },
@@ -601,13 +504,11 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       },
                       "wireValue": "audience",
                     },
-                    "originalTypeDeclaration": undefined,
+                    "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": ""https://api.example.com"",
+                      "jsonExample": "https://api.example.com",
                       "shape": {
-                        "_visit": [Function],
                         "primitive": {
-                          "_visit": [Function],
                           "string": {
                             "original": "https://api.example.com",
                           },
@@ -640,13 +541,11 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       },
                       "wireValue": "grant_type",
                     },
-                    "originalTypeDeclaration": undefined,
+                    "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": ""client_credentials"",
+                      "jsonExample": "client_credentials",
                       "shape": {
-                        "_visit": [Function],
                         "primitive": {
-                          "_visit": [Function],
                           "string": {
                             "original": "client_credentials",
                           },
@@ -679,19 +578,26 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       },
                       "wireValue": "scope",
                     },
-                    "originalTypeDeclaration": undefined,
+                    "originalTypeDeclaration": null,
                     "value": {
                       "jsonExample": "string",
                       "shape": {
-                        "_visit": [Function],
-                        "primitive": {
-                          "_visit": [Function],
-                          "string": {
-                            "original": "string",
+                        "container": {
+                          "optional": {
+                            "jsonExample": "string",
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "string",
+                                },
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
                           },
-                          "type": "string",
+                          "type": "optional",
                         },
-                        "type": "primitive",
+                        "type": "container",
                       },
                     },
                   },
@@ -699,7 +605,6 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                 "type": "inlinedRequestBody",
               },
               "response": {
-                "_visit": [Function],
                 "body": {
                   "jsonExample": {
                     "access_token": "string",
@@ -707,9 +612,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     "refresh_token": "string",
                   },
                   "shape": {
-                    "_visit": [Function],
                     "shape": {
-                      "_visit": [Function],
                       "properties": [
                         {
                           "name": {
@@ -802,9 +705,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                           "value": {
                             "jsonExample": "string",
                             "shape": {
-                              "_visit": [Function],
                               "primitive": {
-                                "_visit": [Function],
                                 "string": {
                                   "original": "string",
                                 },
@@ -905,9 +806,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                           "value": {
                             "jsonExample": 1,
                             "shape": {
-                              "_visit": [Function],
                               "primitive": {
-                                "_visit": [Function],
                                 "integer": 1,
                                 "type": "integer",
                               },
@@ -1006,15 +905,22 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                           "value": {
                             "jsonExample": "string",
                             "shape": {
-                              "_visit": [Function],
-                              "primitive": {
-                                "_visit": [Function],
-                                "string": {
-                                  "original": "string",
+                              "container": {
+                                "optional": {
+                                  "jsonExample": "string",
+                                  "shape": {
+                                    "primitive": {
+                                      "string": {
+                                        "original": "string",
+                                      },
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
                                 },
-                                "type": "string",
+                                "type": "optional",
                               },
-                              "type": "primitive",
+                              "type": "container",
                             },
                           },
                         },
@@ -1023,7 +929,6 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     },
                     "type": "named",
                     "typeName": {
-                      "_visit": [Function],
                       "fernFilepath": {
                         "allParts": [
                           {
@@ -1086,7 +991,6 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                           "unsafeName": "token_response",
                         },
                       },
-                      "type": "named",
                       "typeId": "type_auth:TokenResponse",
                     },
                   },
@@ -1126,7 +1030,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
               "unsafeName": "get_token",
             },
           },
-          "pagination": undefined,
+          "pagination": null,
           "path": {
             "head": "/token",
             "parts": [],
@@ -1134,10 +1038,9 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "requestBody": {
-            "_visit": [Function],
-            "contentType": undefined,
+            "contentType": null,
             "extends": [],
-            "extraProperties": false,
+            "extra-properties": false,
             "name": {
               "camelCase": {
                 "safeName": "getTokenRequest",
@@ -1159,7 +1062,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
             },
             "properties": [
               {
-                "docs": undefined,
+                "docs": null,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -1183,13 +1086,12 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   "wireValue": "client_id",
                 },
                 "valueType": {
-                  "_visit": [Function],
+                  "_type": "primitive",
                   "primitive": "STRING",
-                  "type": "primitive",
                 },
               },
               {
-                "docs": undefined,
+                "docs": null,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -1213,13 +1115,12 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   "wireValue": "client_secret",
                 },
                 "valueType": {
-                  "_visit": [Function],
+                  "_type": "primitive",
                   "primitive": "STRING",
-                  "type": "primitive",
                 },
               },
               {
-                "docs": undefined,
+                "docs": null,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -1243,21 +1144,18 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   "wireValue": "audience",
                 },
                 "valueType": {
-                  "_visit": [Function],
+                  "_type": "container",
                   "container": {
-                    "_visit": [Function],
+                    "_type": "literal",
                     "literal": {
-                      "_visit": [Function],
                       "string": "https://api.example.com",
                       "type": "string",
                     },
-                    "type": "literal",
                   },
-                  "type": "container",
                 },
               },
               {
-                "docs": undefined,
+                "docs": null,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -1281,21 +1179,18 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   "wireValue": "grant_type",
                 },
                 "valueType": {
-                  "_visit": [Function],
+                  "_type": "container",
                   "container": {
-                    "_visit": [Function],
+                    "_type": "literal",
                     "literal": {
-                      "_visit": [Function],
                       "string": "client_credentials",
                       "type": "string",
                     },
-                    "type": "literal",
                   },
-                  "type": "container",
                 },
               },
               {
-                "docs": undefined,
+                "docs": null,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -1319,30 +1214,25 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   "wireValue": "scope",
                 },
                 "valueType": {
-                  "_visit": [Function],
+                  "_type": "container",
                   "container": {
-                    "_visit": [Function],
+                    "_type": "optional",
                     "optional": {
-                      "_visit": [Function],
+                      "_type": "primitive",
                       "primitive": "STRING",
-                      "type": "primitive",
                     },
-                    "type": "optional",
                   },
-                  "type": "container",
                 },
               },
             ],
             "type": "inlinedRequestBody",
           },
           "response": {
-            "_visit": [Function],
             "type": "json",
             "value": {
-              "_visit": [Function],
-              "docs": undefined,
+              "docs": null,
               "responseBodyType": {
-                "_visit": [Function],
+                "_type": "named",
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -1405,7 +1295,6 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     "unsafeName": "token_response",
                   },
                 },
-                "type": "named",
                 "typeId": "type_auth:TokenResponse",
               },
               "type": "response",
@@ -1432,7 +1321,6 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
               },
             },
             "shape": {
-              "_visit": [Function],
               "bodyKey": {
                 "camelCase": {
                   "safeName": "body",
@@ -1478,28 +1366,26 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
         {
           "allPathParameters": [],
           "auth": false,
-          "availability": undefined,
-          "baseUrl": undefined,
-          "displayName": undefined,
-          "docs": undefined,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
           "errors": [],
           "examples": [
             {
-              "_visit": [Function],
-              "codeSamples": undefined,
-              "docs": undefined,
+              "codeSamples": null,
+              "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "name": undefined,
+              "name": null,
               "queryParameters": [],
               "request": {
-                "_visit": [Function],
                 "jsonExample": {
-                  "audience": ""https://api.example.com"",
+                  "audience": "https://api.example.com",
                   "client_id": "string",
                   "client_secret": "string",
-                  "grant_type": ""refresh_token"",
+                  "grant_type": "refresh_token",
                   "refresh_token": "string",
                   "scope": "string",
                 },
@@ -1527,13 +1413,11 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       },
                       "wireValue": "client_id",
                     },
-                    "originalTypeDeclaration": undefined,
+                    "originalTypeDeclaration": null,
                     "value": {
                       "jsonExample": "string",
                       "shape": {
-                        "_visit": [Function],
                         "primitive": {
-                          "_visit": [Function],
                           "string": {
                             "original": "string",
                           },
@@ -1566,13 +1450,11 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       },
                       "wireValue": "client_secret",
                     },
-                    "originalTypeDeclaration": undefined,
+                    "originalTypeDeclaration": null,
                     "value": {
                       "jsonExample": "string",
                       "shape": {
-                        "_visit": [Function],
                         "primitive": {
-                          "_visit": [Function],
                           "string": {
                             "original": "string",
                           },
@@ -1605,13 +1487,11 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       },
                       "wireValue": "refresh_token",
                     },
-                    "originalTypeDeclaration": undefined,
+                    "originalTypeDeclaration": null,
                     "value": {
                       "jsonExample": "string",
                       "shape": {
-                        "_visit": [Function],
                         "primitive": {
-                          "_visit": [Function],
                           "string": {
                             "original": "string",
                           },
@@ -1644,13 +1524,11 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       },
                       "wireValue": "audience",
                     },
-                    "originalTypeDeclaration": undefined,
+                    "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": ""https://api.example.com"",
+                      "jsonExample": "https://api.example.com",
                       "shape": {
-                        "_visit": [Function],
                         "primitive": {
-                          "_visit": [Function],
                           "string": {
                             "original": "https://api.example.com",
                           },
@@ -1683,13 +1561,11 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       },
                       "wireValue": "grant_type",
                     },
-                    "originalTypeDeclaration": undefined,
+                    "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": ""refresh_token"",
+                      "jsonExample": "refresh_token",
                       "shape": {
-                        "_visit": [Function],
                         "primitive": {
-                          "_visit": [Function],
                           "string": {
                             "original": "refresh_token",
                           },
@@ -1722,19 +1598,26 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       },
                       "wireValue": "scope",
                     },
-                    "originalTypeDeclaration": undefined,
+                    "originalTypeDeclaration": null,
                     "value": {
                       "jsonExample": "string",
                       "shape": {
-                        "_visit": [Function],
-                        "primitive": {
-                          "_visit": [Function],
-                          "string": {
-                            "original": "string",
+                        "container": {
+                          "optional": {
+                            "jsonExample": "string",
+                            "shape": {
+                              "primitive": {
+                                "string": {
+                                  "original": "string",
+                                },
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
                           },
-                          "type": "string",
+                          "type": "optional",
                         },
-                        "type": "primitive",
+                        "type": "container",
                       },
                     },
                   },
@@ -1742,7 +1625,6 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                 "type": "inlinedRequestBody",
               },
               "response": {
-                "_visit": [Function],
                 "body": {
                   "jsonExample": {
                     "access_token": "string",
@@ -1750,9 +1632,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     "refresh_token": "string",
                   },
                   "shape": {
-                    "_visit": [Function],
                     "shape": {
-                      "_visit": [Function],
                       "properties": [
                         {
                           "name": {
@@ -1845,9 +1725,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                           "value": {
                             "jsonExample": "string",
                             "shape": {
-                              "_visit": [Function],
                               "primitive": {
-                                "_visit": [Function],
                                 "string": {
                                   "original": "string",
                                 },
@@ -1948,9 +1826,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                           "value": {
                             "jsonExample": 1,
                             "shape": {
-                              "_visit": [Function],
                               "primitive": {
-                                "_visit": [Function],
                                 "integer": 1,
                                 "type": "integer",
                               },
@@ -2049,15 +1925,22 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                           "value": {
                             "jsonExample": "string",
                             "shape": {
-                              "_visit": [Function],
-                              "primitive": {
-                                "_visit": [Function],
-                                "string": {
-                                  "original": "string",
+                              "container": {
+                                "optional": {
+                                  "jsonExample": "string",
+                                  "shape": {
+                                    "primitive": {
+                                      "string": {
+                                        "original": "string",
+                                      },
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
                                 },
-                                "type": "string",
+                                "type": "optional",
                               },
-                              "type": "primitive",
+                              "type": "container",
                             },
                           },
                         },
@@ -2066,7 +1949,6 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     },
                     "type": "named",
                     "typeName": {
-                      "_visit": [Function],
                       "fernFilepath": {
                         "allParts": [
                           {
@@ -2129,7 +2011,6 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                           "unsafeName": "token_response",
                         },
                       },
-                      "type": "named",
                       "typeId": "type_auth:TokenResponse",
                     },
                   },
@@ -2169,7 +2050,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
               "unsafeName": "refresh_token",
             },
           },
-          "pagination": undefined,
+          "pagination": null,
           "path": {
             "head": "/token",
             "parts": [],
@@ -2177,10 +2058,9 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "requestBody": {
-            "_visit": [Function],
-            "contentType": undefined,
+            "contentType": null,
             "extends": [],
-            "extraProperties": false,
+            "extra-properties": false,
             "name": {
               "camelCase": {
                 "safeName": "refreshTokenRequest",
@@ -2202,7 +2082,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
             },
             "properties": [
               {
-                "docs": undefined,
+                "docs": null,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -2226,13 +2106,12 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   "wireValue": "client_id",
                 },
                 "valueType": {
-                  "_visit": [Function],
+                  "_type": "primitive",
                   "primitive": "STRING",
-                  "type": "primitive",
                 },
               },
               {
-                "docs": undefined,
+                "docs": null,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -2256,13 +2135,12 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   "wireValue": "client_secret",
                 },
                 "valueType": {
-                  "_visit": [Function],
+                  "_type": "primitive",
                   "primitive": "STRING",
-                  "type": "primitive",
                 },
               },
               {
-                "docs": undefined,
+                "docs": null,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -2286,13 +2164,12 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   "wireValue": "refresh_token",
                 },
                 "valueType": {
-                  "_visit": [Function],
+                  "_type": "primitive",
                   "primitive": "STRING",
-                  "type": "primitive",
                 },
               },
               {
-                "docs": undefined,
+                "docs": null,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -2316,21 +2193,18 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   "wireValue": "audience",
                 },
                 "valueType": {
-                  "_visit": [Function],
+                  "_type": "container",
                   "container": {
-                    "_visit": [Function],
+                    "_type": "literal",
                     "literal": {
-                      "_visit": [Function],
                       "string": "https://api.example.com",
                       "type": "string",
                     },
-                    "type": "literal",
                   },
-                  "type": "container",
                 },
               },
               {
-                "docs": undefined,
+                "docs": null,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -2354,21 +2228,18 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   "wireValue": "grant_type",
                 },
                 "valueType": {
-                  "_visit": [Function],
+                  "_type": "container",
                   "container": {
-                    "_visit": [Function],
+                    "_type": "literal",
                     "literal": {
-                      "_visit": [Function],
                       "string": "refresh_token",
                       "type": "string",
                     },
-                    "type": "literal",
                   },
-                  "type": "container",
                 },
               },
               {
-                "docs": undefined,
+                "docs": null,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -2392,30 +2263,25 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   "wireValue": "scope",
                 },
                 "valueType": {
-                  "_visit": [Function],
+                  "_type": "container",
                   "container": {
-                    "_visit": [Function],
+                    "_type": "optional",
                     "optional": {
-                      "_visit": [Function],
+                      "_type": "primitive",
                       "primitive": "STRING",
-                      "type": "primitive",
                     },
-                    "type": "optional",
                   },
-                  "type": "container",
                 },
               },
             ],
             "type": "inlinedRequestBody",
           },
           "response": {
-            "_visit": [Function],
             "type": "json",
             "value": {
-              "_visit": [Function],
-              "docs": undefined,
+              "docs": null,
               "responseBodyType": {
-                "_visit": [Function],
+                "_type": "named",
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -2478,7 +2344,6 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     "unsafeName": "token_response",
                   },
                 },
-                "type": "named",
                 "typeId": "type_auth:TokenResponse",
               },
               "type": "response",
@@ -2505,7 +2370,6 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
               },
             },
             "shape": {
-              "_visit": [Function],
               "bodyKey": {
                 "camelCase": {
                   "safeName": "body",
@@ -2598,18 +2462,17 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
       "pathParameters": [],
     },
     "service_service": {
-      "availability": undefined,
+      "availability": null,
       "basePath": {
         "head": "/",
         "parts": [],
       },
-      "displayName": undefined,
+      "displayName": null,
       "endpoints": [
         {
           "allPathParameters": [
             {
-              "availability": undefined,
-              "docs": undefined,
+              "docs": null,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -2631,24 +2494,22 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                 },
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "STRING",
-                "type": "primitive",
               },
-              "variable": undefined,
+              "variable": null,
             },
           ],
           "auth": false,
-          "availability": undefined,
-          "baseUrl": undefined,
-          "displayName": undefined,
-          "docs": undefined,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
           "errors": [],
           "examples": [
             {
-              "_visit": [Function],
-              "codeSamples": undefined,
-              "docs": undefined,
+              "codeSamples": null,
+              "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [
                 {
@@ -2674,9 +2535,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   "value": {
                     "jsonExample": "id-2sdx82h",
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "string": {
                           "original": "id-2sdx82h",
                         },
@@ -2688,7 +2547,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                 },
               ],
               "exampleType": "userProvided",
-              "name": undefined,
+              "name": null,
               "queryParameters": [
                 {
                   "name": {
@@ -2716,9 +2575,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   "value": {
                     "jsonExample": "4956d3f3-f4c6-43fc-a037-9ad991933993",
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "type": "uuid",
                         "uuid": "4956d3f3-f4c6-43fc-a037-9ad991933993",
                       },
@@ -2752,9 +2609,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   "value": {
                     "jsonExample": 10,
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "integer": 10,
                         "type": "integer",
                       },
@@ -2790,9 +2645,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       "name": "username",
                     },
                     "shape": {
-                      "_visit": [Function],
                       "shape": {
-                        "_visit": [Function],
                         "properties": [
                           {
                             "name": {
@@ -2885,9 +2738,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                             "value": {
                               "jsonExample": "username",
                               "shape": {
-                                "_visit": [Function],
                                 "primitive": {
-                                  "_visit": [Function],
                                   "string": {
                                     "original": "username",
                                   },
@@ -2997,17 +2848,13 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       "key": "value",
                     },
                     "shape": {
-                      "_visit": [Function],
                       "container": {
-                        "_visit": [Function],
                         "map": [
                           {
                             "key": {
                               "jsonExample": "key",
                               "shape": {
-                                "_visit": [Function],
                                 "primitive": {
-                                  "_visit": [Function],
                                   "string": {
                                     "original": "key",
                                   },
@@ -3019,9 +2866,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                             "value": {
                               "jsonExample": "value",
                               "shape": {
-                                "_visit": [Function],
                                 "primitive": {
-                                  "_visit": [Function],
                                   "string": {
                                     "original": "value",
                                   },
@@ -3066,9 +2911,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       "name": "multiUsername",
                     },
                     "shape": {
-                      "_visit": [Function],
                       "shape": {
-                        "_visit": [Function],
                         "properties": [
                           {
                             "name": {
@@ -3161,9 +3004,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                             "value": {
                               "jsonExample": "multiUsername",
                               "shape": {
-                                "_visit": [Function],
                                 "primitive": {
-                                  "_visit": [Function],
                                   "string": {
                                     "original": "multiUsername",
                                   },
@@ -3271,9 +3112,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   "value": {
                     "jsonExample": "reverse",
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "string": {
                           "original": "reverse",
                         },
@@ -3284,10 +3123,9 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   },
                 },
               ],
-              "request": undefined,
+              "request": null,
               "response": {
-                "_visit": [Function],
-                "body": undefined,
+                "body": null,
                 "type": "ok",
               },
               "rootPathParameters": [],
@@ -3296,9 +3134,8 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
               "url": "//check/id-2sdx82h",
             },
             {
-              "_visit": [Function],
-              "codeSamples": undefined,
-              "docs": undefined,
+              "codeSamples": null,
+              "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [
                 {
@@ -3324,9 +3161,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   "value": {
                     "jsonExample": "string",
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "string": {
                           "original": "string",
                         },
@@ -3338,7 +3173,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                 },
               ],
               "exampleType": "generated",
-              "name": undefined,
+              "name": null,
               "queryParameters": [
                 {
                   "name": {
@@ -3366,9 +3201,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   "value": {
                     "jsonExample": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "type": "uuid",
                         "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                       },
@@ -3402,9 +3235,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   "value": {
                     "jsonExample": 1,
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "integer": 1,
                         "type": "integer",
                       },
@@ -3440,9 +3271,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       "name": "string",
                     },
                     "shape": {
-                      "_visit": [Function],
                       "shape": {
-                        "_visit": [Function],
                         "properties": [
                           {
                             "name": {
@@ -3535,9 +3364,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                             "value": {
                               "jsonExample": "string",
                               "shape": {
-                                "_visit": [Function],
                                 "primitive": {
-                                  "_visit": [Function],
                                   "string": {
                                     "original": "string",
                                   },
@@ -3552,7 +3379,6 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       },
                       "type": "named",
                       "typeName": {
-                        "_visit": [Function],
                         "fernFilepath": {
                           "allParts": [
                             {
@@ -3615,7 +3441,6 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                             "unsafeName": "user",
                           },
                         },
-                        "type": "named",
                         "typeId": "type_service:User",
                       },
                     },
@@ -3649,17 +3474,13 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       "string": "string",
                     },
                     "shape": {
-                      "_visit": [Function],
                       "container": {
-                        "_visit": [Function],
                         "map": [
                           {
                             "key": {
                               "jsonExample": "string",
                               "shape": {
-                                "_visit": [Function],
                                 "primitive": {
-                                  "_visit": [Function],
                                   "string": {
                                     "original": "string",
                                   },
@@ -3671,9 +3492,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                             "value": {
                               "jsonExample": "string",
                               "shape": {
-                                "_visit": [Function],
                                 "primitive": {
-                                  "_visit": [Function],
                                   "string": {
                                     "original": "string",
                                   },
@@ -3716,15 +3535,22 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   "value": {
                     "jsonExample": "string",
                     "shape": {
-                      "_visit": [Function],
-                      "primitive": {
-                        "_visit": [Function],
-                        "string": {
-                          "original": "string",
+                      "container": {
+                        "optional": {
+                          "jsonExample": "string",
+                          "shape": {
+                            "primitive": {
+                              "string": {
+                                "original": "string",
+                              },
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                         },
-                        "type": "string",
+                        "type": "optional",
                       },
-                      "type": "primitive",
+                      "type": "container",
                     },
                   },
                 },
@@ -3756,9 +3582,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       "name": "string",
                     },
                     "shape": {
-                      "_visit": [Function],
                       "shape": {
-                        "_visit": [Function],
                         "properties": [
                           {
                             "name": {
@@ -3851,9 +3675,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                             "value": {
                               "jsonExample": "string",
                               "shape": {
-                                "_visit": [Function],
                                 "primitive": {
-                                  "_visit": [Function],
                                   "string": {
                                     "original": "string",
                                   },
@@ -3868,7 +3690,6 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       },
                       "type": "named",
                       "typeName": {
-                        "_visit": [Function],
                         "fernFilepath": {
                           "allParts": [
                             {
@@ -3931,7 +3752,6 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                             "unsafeName": "user",
                           },
                         },
-                        "type": "named",
                         "typeId": "type_service:User",
                       },
                     },
@@ -3963,9 +3783,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   "value": {
                     "jsonExample": "string",
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "string": {
                           "original": "string",
                         },
@@ -4003,19 +3821,28 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       "key": "value",
                     },
                     "shape": {
-                      "_visit": [Function],
-                      "type": "unknown",
-                      "unknown": {
-                        "key": "value",
+                      "container": {
+                        "optional": {
+                          "jsonExample": {
+                            "key": "value",
+                          },
+                          "shape": {
+                            "type": "unknown",
+                            "unknown": {
+                              "key": "value",
+                            },
+                          },
+                        },
+                        "type": "optional",
                       },
+                      "type": "container",
                     },
                   },
                 },
               ],
-              "request": undefined,
+              "request": null,
               "response": {
-                "_visit": [Function],
-                "body": undefined,
+                "body": null,
                 "type": "ok",
               },
               "rootPathParameters": [],
@@ -4056,7 +3883,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
               "unsafeName": "check",
             },
           },
-          "pagination": undefined,
+          "pagination": null,
           "path": {
             "head": "/check/",
             "parts": [
@@ -4068,8 +3895,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
           },
           "pathParameters": [
             {
-              "availability": undefined,
-              "docs": undefined,
+              "docs": null,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -4091,18 +3917,17 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                 },
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "STRING",
-                "type": "primitive",
               },
-              "variable": undefined,
+              "variable": null,
             },
           ],
           "queryParameters": [
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -4126,15 +3951,14 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                 "wireValue": "id",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "UUID",
-                "type": "primitive",
               },
             },
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -4158,15 +3982,14 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                 "wireValue": "limit",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "INTEGER",
-                "type": "primitive",
               },
             },
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -4190,7 +4013,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                 "wireValue": "user",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "named",
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -4253,14 +4076,13 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     "unsafeName": "user",
                   },
                 },
-                "type": "named",
                 "typeId": "type_service:User",
               },
             },
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -4284,28 +4106,24 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                 "wireValue": "map",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "container",
                 "container": {
-                  "_visit": [Function],
+                  "_type": "map",
                   "keyType": {
-                    "_visit": [Function],
+                    "_type": "primitive",
                     "primitive": "STRING",
-                    "type": "primitive",
                   },
-                  "type": "map",
                   "valueType": {
-                    "_visit": [Function],
+                    "_type": "primitive",
                     "primitive": "STRING",
-                    "type": "primitive",
                   },
                 },
-                "type": "container",
               },
             },
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -4329,23 +4147,20 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                 "wireValue": "optionalString",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "container",
                 "container": {
-                  "_visit": [Function],
+                  "_type": "optional",
                   "optional": {
-                    "_visit": [Function],
+                    "_type": "primitive",
                     "primitive": "STRING",
-                    "type": "primitive",
                   },
-                  "type": "optional",
                 },
-                "type": "container",
               },
             },
             {
               "allowMultiple": true,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -4369,7 +4184,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                 "wireValue": "multipleUser",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "named",
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -4432,14 +4247,13 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     "unsafeName": "user",
                   },
                 },
-                "type": "named",
                 "typeId": "type_service:User",
               },
             },
             {
               "allowMultiple": true,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -4463,15 +4277,14 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                 "wireValue": "filter",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "STRING",
-                "type": "primitive",
               },
             },
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -4495,21 +4308,18 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                 "wireValue": "any",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "container",
                 "container": {
-                  "_visit": [Function],
+                  "_type": "optional",
                   "optional": {
-                    "_visit": [Function],
-                    "type": "unknown",
+                    "_type": "unknown",
                   },
-                  "type": "optional",
                 },
-                "type": "container",
               },
             },
           ],
-          "requestBody": undefined,
-          "response": undefined,
+          "requestBody": null,
+          "response": null,
           "sdkRequest": {
             "requestParameterName": {
               "camelCase": {
@@ -4531,7 +4341,6 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
               },
             },
             "shape": {
-              "_visit": [Function],
               "bodyKey": {
                 "camelCase": {
                   "safeName": "body",
@@ -4577,20 +4386,19 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
         {
           "allPathParameters": [],
           "auth": false,
-          "availability": undefined,
-          "baseUrl": undefined,
-          "displayName": undefined,
-          "docs": undefined,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
           "errors": [],
           "examples": [
             {
-              "_visit": [Function],
-              "codeSamples": undefined,
-              "docs": undefined,
+              "codeSamples": null,
+              "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "name": undefined,
+              "name": null,
               "queryParameters": [
                 {
                   "name": {
@@ -4618,9 +4426,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   "value": {
                     "jsonExample": 1,
                     "shape": {
-                      "_visit": [Function],
                       "primitive": {
-                        "_visit": [Function],
                         "integer": 1,
                         "type": "integer",
                       },
@@ -4629,9 +4435,8 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   },
                 },
               ],
-              "request": undefined,
+              "request": null,
               "response": {
-                "_visit": [Function],
                 "body": {
                   "jsonExample": {
                     "users": [
@@ -4641,9 +4446,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     ],
                   },
                   "shape": {
-                    "_visit": [Function],
                     "shape": {
-                      "_visit": [Function],
                       "properties": [
                         {
                           "name": {
@@ -4740,18 +4543,14 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                               },
                             ],
                             "shape": {
-                              "_visit": [Function],
                               "container": {
-                                "_visit": [Function],
                                 "list": [
                                   {
                                     "jsonExample": {
                                       "name": "string",
                                     },
                                     "shape": {
-                                      "_visit": [Function],
                                       "shape": {
-                                        "_visit": [Function],
                                         "properties": [
                                           {
                                             "name": {
@@ -4844,9 +4643,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                                             "value": {
                                               "jsonExample": "string",
                                               "shape": {
-                                                "_visit": [Function],
                                                 "primitive": {
-                                                  "_visit": [Function],
                                                   "string": {
                                                     "original": "string",
                                                   },
@@ -4861,7 +4658,6 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                                       },
                                       "type": "named",
                                       "typeName": {
-                                        "_visit": [Function],
                                         "fernFilepath": {
                                           "allParts": [
                                             {
@@ -4924,7 +4720,6 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                                             "unsafeName": "user",
                                           },
                                         },
-                                        "type": "named",
                                         "typeId": "type_service:User",
                                       },
                                     },
@@ -4941,7 +4736,6 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     },
                     "type": "named",
                     "typeName": {
-                      "_visit": [Function],
                       "fernFilepath": {
                         "allParts": [
                           {
@@ -5004,7 +4798,6 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                           "unsafeName": "list_users_response",
                         },
                       },
-                      "type": "named",
                       "typeId": "type_service:ListUsersResponse",
                     },
                   },
@@ -5045,11 +4838,10 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
             },
           },
           "pagination": {
-            "_visit": [Function],
             "page": {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -5073,15 +4865,14 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                 "wireValue": "pageNum",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "INTEGER",
-                "type": "primitive",
               },
             },
             "results": {
               "property": {
-                "availability": undefined,
-                "docs": undefined,
+                "availability": null,
+                "docs": null,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -5105,11 +4896,11 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                   "wireValue": "users",
                 },
                 "valueType": {
-                  "_visit": [Function],
+                  "_type": "container",
                   "container": {
-                    "_visit": [Function],
+                    "_type": "list",
                     "list": {
-                      "_visit": [Function],
+                      "_type": "named",
                       "fernFilepath": {
                         "allParts": [
                           {
@@ -5172,12 +4963,9 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                           "unsafeName": "user",
                         },
                       },
-                      "type": "named",
                       "typeId": "type_service:User",
                     },
-                    "type": "list",
                   },
-                  "type": "container",
                 },
               },
               "propertyPath": [],
@@ -5192,8 +4980,8 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
           "queryParameters": [
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -5217,21 +5005,18 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                 "wireValue": "pageNum",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "INTEGER",
-                "type": "primitive",
               },
             },
           ],
-          "requestBody": undefined,
+          "requestBody": null,
           "response": {
-            "_visit": [Function],
             "type": "json",
             "value": {
-              "_visit": [Function],
-              "docs": undefined,
+              "docs": null,
               "responseBodyType": {
-                "_visit": [Function],
+                "_type": "named",
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -5294,7 +5079,6 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                     "unsafeName": "list_users_response",
                   },
                 },
-                "type": "named",
                 "typeId": "type_service:ListUsersResponse",
               },
               "type": "response",
@@ -5321,7 +5105,6 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
               },
             },
             "shape": {
-              "_visit": [Function],
               "bodyKey": {
                 "camelCase": {
                   "safeName": "body",
@@ -5416,7 +5199,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
   },
   "subpackages": {
     "subpackage_auth": {
-      "docs": undefined,
+      "docs": null,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -5481,17 +5264,17 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
           "unsafeName": "auth",
         },
       },
-      "navigationConfig": undefined,
+      "navigationConfig": null,
       "service": "service_auth",
       "subpackages": [],
       "types": [
         "type_auth:TokenResponse",
       ],
-      "webhooks": undefined,
-      "websocket": undefined,
+      "webhooks": null,
+      "websocket": null,
     },
     "subpackage_service": {
-      "docs": undefined,
+      "docs": null,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -5556,20 +5339,20 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
           "unsafeName": "service",
         },
       },
-      "navigationConfig": undefined,
+      "navigationConfig": null,
       "service": "service_service",
       "subpackages": [],
       "types": [
         "type_service:User",
         "type_service:ListUsersResponse",
       ],
-      "webhooks": undefined,
-      "websocket": undefined,
+      "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
     "type_auth:TokenResponse": {
-      "availability": undefined,
+      "availability": null,
       "docs": "An OAuth token response.",
       "examples": [],
       "name": {
@@ -5637,15 +5420,15 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
         },
         "typeId": "type_auth:TokenResponse",
       },
-      "referencedTypes": Set {},
+      "referencedTypes": [],
       "shape": {
-        "_visit": [Function],
+        "_type": "object",
         "extends": [],
-        "extraProperties": false,
+        "extra-properties": false,
         "properties": [
           {
-            "availability": undefined,
-            "docs": undefined,
+            "availability": null,
+            "docs": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -5669,14 +5452,13 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
               "wireValue": "access_token",
             },
             "valueType": {
-              "_visit": [Function],
+              "_type": "primitive",
               "primitive": "STRING",
-              "type": "primitive",
             },
           },
           {
-            "availability": undefined,
-            "docs": undefined,
+            "availability": null,
+            "docs": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -5700,14 +5482,13 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
               "wireValue": "expires_in",
             },
             "valueType": {
-              "_visit": [Function],
+              "_type": "primitive",
               "primitive": "INTEGER",
-              "type": "primitive",
             },
           },
           {
-            "availability": undefined,
-            "docs": undefined,
+            "availability": null,
+            "docs": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -5731,26 +5512,22 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
               "wireValue": "refresh_token",
             },
             "valueType": {
-              "_visit": [Function],
+              "_type": "container",
               "container": {
-                "_visit": [Function],
+                "_type": "optional",
                 "optional": {
-                  "_visit": [Function],
+                  "_type": "primitive",
                   "primitive": "STRING",
-                  "type": "primitive",
                 },
-                "type": "optional",
               },
-              "type": "container",
             },
           },
         ],
-        "type": "object",
       },
     },
     "type_service:ListUsersResponse": {
-      "availability": undefined,
-      "docs": undefined,
+      "availability": null,
+      "docs": null,
       "examples": [],
       "name": {
         "fernFilepath": {
@@ -5817,17 +5594,17 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
         },
         "typeId": "type_service:ListUsersResponse",
       },
-      "referencedTypes": Set {
+      "referencedTypes": [
         "type_service:User",
-      },
+      ],
       "shape": {
-        "_visit": [Function],
+        "_type": "object",
         "extends": [],
-        "extraProperties": false,
+        "extra-properties": false,
         "properties": [
           {
-            "availability": undefined,
-            "docs": undefined,
+            "availability": null,
+            "docs": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -5851,11 +5628,11 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
               "wireValue": "users",
             },
             "valueType": {
-              "_visit": [Function],
+              "_type": "container",
               "container": {
-                "_visit": [Function],
+                "_type": "list",
                 "list": {
-                  "_visit": [Function],
+                  "_type": "named",
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -5918,21 +5695,17 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                       "unsafeName": "user",
                     },
                   },
-                  "type": "named",
                   "typeId": "type_service:User",
                 },
-                "type": "list",
               },
-              "type": "container",
             },
           },
         ],
-        "type": "object",
       },
     },
     "type_service:User": {
-      "availability": undefined,
-      "docs": undefined,
+      "availability": null,
+      "docs": null,
       "examples": [],
       "name": {
         "fernFilepath": {
@@ -5999,15 +5772,15 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
         },
         "typeId": "type_service:User",
       },
-      "referencedTypes": Set {},
+      "referencedTypes": [],
       "shape": {
-        "_visit": [Function],
+        "_type": "object",
         "extends": [],
-        "extraProperties": false,
+        "extra-properties": false,
         "properties": [
           {
-            "availability": undefined,
-            "docs": undefined,
+            "availability": null,
+            "docs": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -6031,13 +5804,11 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
               "wireValue": "name",
             },
             "valueType": {
-              "_visit": [Function],
+              "_type": "primitive",
               "primitive": "STRING",
-              "type": "primitive",
             },
           },
         ],
-        "type": "object",
       },
     },
   },

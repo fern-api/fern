@@ -2,6 +2,8 @@ using System.Text.Json;
 using SeedExhaustive;
 using SeedExhaustive.Types;
 
+#nullable enable
+
 namespace SeedExhaustive.Endpoints;
 
 public class ContainerClient
@@ -13,51 +15,53 @@ public class ContainerClient
         _client = client;
     }
 
-    public async Task<List<string>> GetAndReturnListOfPrimitivesAsync(List<string> request)
-    {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
-            {
-                Method = HttpMethod.Post,
-                Path = "/list-of-primitives",
-                Body = request
-            }
-        );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
-        {
-            return JsonSerializer.Deserialize<List<string>>(responseBody);
-        }
-        throw new Exception();
-    }
-
-    public async Task<List<ObjectWithRequiredField>> GetAndReturnListOfObjectsAsync(
-        List<ObjectWithRequiredField> request
+    public async Task<IEnumerable<string>> GetAndReturnListOfPrimitivesAsync(
+        IEnumerable<string> request
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/list-of-objects",
+                Path = "/container/list-of-primitives",
                 Body = request
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<ObjectWithRequiredField>>(responseBody);
+            return JsonSerializer.Deserialize<IEnumerable<string>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
+    }
+
+    public async Task<IEnumerable<ObjectWithRequiredField>> GetAndReturnListOfObjectsAsync(
+        IEnumerable<ObjectWithRequiredField> request
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "/container/list-of-objects",
+                Body = request
+            }
+        );
+        string responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        {
+            return JsonSerializer.Deserialize<IEnumerable<ObjectWithRequiredField>>(responseBody);
+        }
+        throw new Exception(responseBody);
     }
 
     public async Task<HashSet<string>> GetAndReturnSetOfPrimitivesAsync(HashSet<string> request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/set-of-primitives",
+                Path = "/container/set-of-primitives",
                 Body = request
             }
         );
@@ -66,7 +70,7 @@ public class ContainerClient
         {
             return JsonSerializer.Deserialize<HashSet<string>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<HashSet<ObjectWithRequiredField>> GetAndReturnSetOfObjectsAsync(
@@ -74,10 +78,10 @@ public class ContainerClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/set-of-objects",
+                Path = "/container/set-of-objects",
                 Body = request
             }
         );
@@ -86,7 +90,7 @@ public class ContainerClient
         {
             return JsonSerializer.Deserialize<HashSet<ObjectWithRequiredField>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<Dictionary<string, string>> GetAndReturnMapPrimToPrimAsync(
@@ -94,10 +98,10 @@ public class ContainerClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/map-prim-to-prim",
+                Path = "/container/map-prim-to-prim",
                 Body = request
             }
         );
@@ -106,7 +110,7 @@ public class ContainerClient
         {
             return JsonSerializer.Deserialize<Dictionary<string, string>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<
@@ -114,10 +118,10 @@ public class ContainerClient
     > GetAndReturnMapOfPrimToObjectAsync(Dictionary<string, ObjectWithRequiredField> request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/map-prim-to-object",
+                Path = "/container/map-prim-to-object",
                 Body = request
             }
         );
@@ -128,7 +132,7 @@ public class ContainerClient
                 responseBody
             );
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<ObjectWithRequiredField?> GetAndReturnOptionalAsync(
@@ -136,10 +140,10 @@ public class ContainerClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/opt-objects",
+                Path = "/container/opt-objects",
                 Body = request
             }
         );
@@ -148,6 +152,6 @@ public class ContainerClient
         {
             return JsonSerializer.Deserialize<ObjectWithRequiredField?>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

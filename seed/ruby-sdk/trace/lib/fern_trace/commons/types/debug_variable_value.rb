@@ -46,9 +46,9 @@ module SeedTraceClient
                  when "mapValue"
                    SeedTraceClient::Commons::DebugMapValue.from_json(json_object: json_object)
                  when "listValue"
-                   json_object.value&.map do |v|
-                     v = v.to_json
-                     SeedTraceClient::Commons::DebugVariableValue.from_json(json_object: v)
+                   json_object.value&.map do |item|
+                     item = item.to_json
+                     SeedTraceClient::Commons::DebugVariableValue.from_json(json_object: item)
                    end
                  when "binaryTreeNodeValue"
                    SeedTraceClient::Commons::BinaryTreeNodeAndTreeValue.from_json(json_object: json_object)

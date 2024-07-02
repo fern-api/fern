@@ -15,8 +15,12 @@ export declare namespace InlinedRequests {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -32,7 +36,7 @@ export class InlinedRequests {
      * @throws {@link SeedExhaustive.BadRequestBody}
      *
      * @example
-     *     await seedExhaustive.inlinedRequests.postWithObjectBodyandResponse({
+     *     await client.inlinedRequests.postWithObjectBodyandResponse({
      *         string: "string",
      *         integer: 1,
      *         nestedObject: {
@@ -49,7 +53,8 @@ export class InlinedRequests {
      *             set: new Set(["string"]),
      *             map: {
      *                 1: "string"
-     *             }
+     *             },
+     *             bigint: "123456789123456789"
      *         }
      *     })
      */
@@ -76,6 +81,7 @@ export class InlinedRequests {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {

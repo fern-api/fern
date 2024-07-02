@@ -3,10 +3,11 @@
  */
 package com.seed.nurseryApi.resources.package_;
 
-import com.seed.nurseryApi.core.ApiError;
 import com.seed.nurseryApi.core.ClientOptions;
 import com.seed.nurseryApi.core.ObjectMappers;
 import com.seed.nurseryApi.core.RequestOptions;
+import com.seed.nurseryApi.core.SeedNurseryApiApiException;
+import com.seed.nurseryApi.core.SeedNurseryApiException;
 import com.seed.nurseryApi.resources.package_.requests.TestRequest;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -38,22 +39,22 @@ public class PackageClient {
                 .method("POST", RequestBody.create("", null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
-            Response response = client.newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return;
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedNurseryApiApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(
-                            responseBody != null ? responseBody.string() : "{}", Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SeedNurseryApiException("Network error executing HTTP request", e);
         }
     }
 }

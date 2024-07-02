@@ -1,6 +1,7 @@
 import { isNonNullish } from "@fern-api/core-utils";
 import {
     ExampleContainer,
+    ExampleEndpointCall,
     ExampleEndpointSuccessResponse,
     ExampleInlinedRequestBodyProperty,
     ExampleKeyValuePair,
@@ -14,7 +15,6 @@ import {
     ExampleTypeReference,
     ExampleTypeReferenceShape,
     ExampleTypeShape,
-    HttpEndpointExample,
     NameAndWireValue
 } from "@fern-api/ir-sdk";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
@@ -122,6 +122,8 @@ function filterExampleTypeReference({
                         )
                     )
                 }),
+                // This is just a primitive, don't do anything
+                literal: () => exampleTypeReference,
                 _other: () => {
                     throw new Error("Received unknown type for example.");
                 }
@@ -366,8 +368,8 @@ export function filterEndpointExample({
     example
 }: {
     filteredIr: FilteredIr;
-    example: HttpEndpointExample;
-}): HttpEndpointExample {
+    example: ExampleEndpointCall;
+}): ExampleEndpointCall {
     return {
         ...example,
         rootPathParameters: filterExamplePathParameters({ filteredIr, pathParameters: example.rootPathParameters }),

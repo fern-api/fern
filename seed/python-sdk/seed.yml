@@ -1,9 +1,19 @@
-irVersion: v39
+irVersion: v49
 docker: fernapi/fern-python-sdk:latest
 dockerCommand: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest ./generators/python
 language: python
 generatorType: sdk
 defaultOutputMode: github
+local:
+  workingDirectory: generators/python
+  buildCommand:
+    - chmod +x setup-python.sh && ./setup-python.sh
+    - poetry config virtualenvs.in-project true
+    - poetry install
+  # The envvar is needed to trick the generator to look in the right place for the core_utils files
+  runCommand: poetry run python -m src.fern_python.generators.sdk.cli
+  env: 
+    PYTEST_CURRENT_TEST: "some value"
 fixtures:
   examples: 
     - customConfig: null
@@ -15,6 +25,17 @@ fixtures:
           exported_filename: client.py
           exported_class_name: SeedExhaustive
       outputFolder: client-filename
+    - customConfig: null
+      readmeConfig:
+        bannerLink: https://www.fernapi.com
+        apiReferenceLink: https://www.docs.fernapi.com
+        defaultEndpoint: POST /movie
+        features:
+          asyncClient:
+            - GET /movie/{movieId}
+            - method: POST
+              path: /movie
+      outputFolder: readme
   enum:
     - customConfig: null
       outputFolder: no-custom-config
@@ -44,8 +65,14 @@ fixtures:
           extra_fields: "allow"
       outputFolder: pydantic-extra-fields
     - customConfig:
+        pyproject_python_version: "^3.8.1"
         extra_dependencies:
           boto3: 1.28.57
+          langchain: 
+            version: "^0.1.20"
+            optional: true
+        extras: 
+          telemetry: ["langchain", "boto3"]
       outputFolder: extra_dependencies
     - customConfig:
         pyproject_python_version: "^3.8.1"
@@ -82,6 +109,13 @@ fixtures:
     - customConfig:
         inline_request_params: true
       outputFolder: inline_request_params
+  unions:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        pydantic_config:
+          include_union_utils: true
+      outputFolder: union-utils 
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
@@ -90,21 +124,30 @@ fixtures:
           skip_validation: true
       outputFolder: skip-pydantic-validation
 scripts:
-  # Tests now run a mock server, you can always run seed with --skip-scripts to save time
   - docker: fernapi/python-seed
     commands:
+      # - poetry run mypy .
       # The global python version is 3.8
+      # Tests now run a mock server, you can always run seed with --skip-scripts to save time
+      - export NPM_CONFIG_CACHE="$(pwd)/.cache"
+      - export HOME="$(pwd)/"
+      - poetry config virtualenvs.path .
       - poetry install
-      # Remove mypy for now given the issue where it falsely flags the use of field aliases.
       - poetry run mypy .
-      # TODO(FER-1142): Add back soon
-      # - fern test --command "poetry run pytest -rP ."
+      - fern test --command "poetry run pytest -rP ."
 allowedFailures: 
+  # This is the only one that should always fail
+  - exhaustive:additional_init_exports
+  # TODO(FER-1837): Address this list
   - response-property
   - websocket
   - exhaustive:union-utils
-  - exhaustive:additional_init_exports
   - extra-properties
   - trace
   - circular-references-advanced
   - oauth-client-credentials-default
+  - unions:union-utils
+  - multi-url-environment-no-default
+  # === Allowed failures due to unit testing ===
+  - pagination
+  # ===========================================

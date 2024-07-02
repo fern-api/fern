@@ -3,6 +3,8 @@ using SeedExamples.Commons;
 using SeedExamples.File;
 using SeedExamples.Health;
 
+#nullable enable
+
 namespace SeedExamples;
 
 public partial class SeedExamplesClient
@@ -36,7 +38,7 @@ public partial class SeedExamplesClient
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);

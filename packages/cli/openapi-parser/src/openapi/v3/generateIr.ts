@@ -5,6 +5,8 @@ import {
     EndpointWithExample,
     ErrorExample,
     HttpError,
+    LiteralSchemaValue,
+    ObjectPropertyWithExample,
     ObjectSchema,
     OpenApiIntermediateRepresentation,
     Schema,
@@ -17,12 +19,14 @@ import { TaskContext } from "@fern-api/task-context";
 import { mapValues } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../getExtension";
+import { ParseOpenAPIOptions } from "../../options";
 import { convertSchema } from "../../schema/convertSchemas";
 import { convertToFullExample } from "../../schema/examples/convertToFullExample";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
+import { getGeneratedTypeName } from "../../schema/utils/getSchemaName";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext";
-import { convertPathItem } from "./converters/convertPathItem";
+import { convertPathItem, convertPathItemToWebhooks } from "./converters/convertPathItem";
 import { convertSecurityScheme } from "./converters/convertSecurityScheme";
 import { convertServer } from "./converters/convertServer";
 import { ERROR_NAMES } from "./converters/convertToHttpError";
@@ -32,7 +36,9 @@ import { FernOpenAPIExtension } from "./extensions/fernExtensions";
 import { getFernBasePath } from "./extensions/getFernBasePath";
 import { getFernGroups } from "./extensions/getFernGroups";
 import { getGlobalHeaders } from "./extensions/getGlobalHeaders";
+import { getIdempotencyHeaders } from "./extensions/getIdempotencyHeaders";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
+import { getWebhooksPathsObject } from "./getWebhookPathsObject";
 import { hasIncompleteExample } from "./hasIncompleteExample";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 import { runResolutions } from "./runResolutions";
@@ -40,15 +46,11 @@ import { runResolutions } from "./runResolutions";
 export function generateIr({
     openApi,
     taskContext,
-    disableExamples,
-    audiences,
-    shouldUseTitleAsName
+    options
 }: {
     openApi: OpenAPIV3.Document;
     taskContext: TaskContext;
-    disableExamples: boolean | undefined;
-    audiences: string[];
-    shouldUseTitleAsName: boolean;
+    options: ParseOpenAPIOptions;
 }): OpenApiIntermediateRepresentation {
     openApi = runResolutions({ openapi: openApi });
 
@@ -71,13 +73,21 @@ export function generateIr({
             return null;
         })
     );
-    const context = new OpenAPIV3ParserContext({ document: openApi, taskContext, authHeaders, shouldUseTitleAsName });
+    const context = new OpenAPIV3ParserContext({
+        document: openApi,
+        taskContext,
+        authHeaders,
+        options
+    });
     const variables = getVariableDefinitions(openApi);
     const globalHeaders = getGlobalHeaders(openApi);
+    const idempotencyHeaders = getIdempotencyHeaders(openApi);
+
+    const audiences = options.audiences ?? [];
 
     const endpointsWithExample: EndpointWithExample[] = [];
     const webhooks: Webhook[] = [];
-    Object.entries(openApi.paths).forEach(([path, pathItem]) => {
+    Object.entries(openApi.paths ?? {}).forEach(([path, pathItem]) => {
         if (pathItem == null) {
             return;
         }
@@ -111,6 +121,20 @@ export function generateIr({
             }
         }
     });
+    Object.entries(getWebhooksPathsObject(openApi)).forEach(([path, pathItem]) => {
+        if (pathItem == null) {
+            return;
+        }
+        taskContext.logger.debug(`Converting path ${path}`);
+        const convertedWebhooks = convertPathItemToWebhooks(path, pathItem, openApi, context);
+        for (const webhook of convertedWebhooks) {
+            const webhookAudiences = getAudiences({ operation: webhook });
+            if (audiences.length > 0 && !audiences.some((audience) => webhookAudiences.includes(audience))) {
+                continue;
+            }
+            webhooks.push(webhook.value);
+        }
+    });
 
     const schemasWithExample: Record<string, SchemaWithExample> = Object.fromEntries(
         Object.entries(openApi.components?.schemas ?? {})
@@ -138,9 +162,12 @@ export function generateIr({
             .filter((entry) => entry.length > 0)
     );
 
+    // Remove discriminants from discriminated unions since Fern handles this in the IR.
     const schemasWithoutDiscriminants = maybeRemoveDiscriminantsFromSchemas(schemasWithExample, context);
+    // Add them back when declared as union metadata, as that means we're treating discriminated unions as undiscriminated unions.
+    const schemasWithDiscriminants = maybeAddBackDiscriminantsFromSchemas(schemasWithoutDiscriminants, context);
     const schemas: Record<string, Schema> = {};
-    for (const [key, schemaWithExample] of Object.entries(schemasWithoutDiscriminants)) {
+    for (const [key, schemaWithExample] of Object.entries(schemasWithDiscriminants)) {
         const schema = convertSchemaWithExampleToSchema(schemaWithExample);
         if (context.isSchemaExcluded(key)) {
             continue;
@@ -154,7 +181,10 @@ export function generateIr({
         // if x-fern-examples is not present, generate an example
         const extensionExamples = endpointWithExample.examples;
         let examples: EndpointExample[] = extensionExamples;
-        if (!disableExamples && (extensionExamples.length === 0 || extensionExamples.every(hasIncompleteExample))) {
+        if (
+            !options.disableExamples &&
+            (extensionExamples.length === 0 || extensionExamples.every(hasIncompleteExample))
+        ) {
             const endpointExample = exampleEndpointFactory.buildEndpointExample(endpointWithExample);
             if (endpointExample.length > 0) {
                 examples = [
@@ -264,7 +294,8 @@ export function generateIr({
         hasEndpointsMarkedInternal: endpoints.some((endpoint) => endpoint.internal),
         nonRequestReferencedSchemas: context.getReferencedSchemas(),
         variables,
-        globalHeaders
+        globalHeaders,
+        idempotencyHeaders
     };
 
     return ir;
@@ -318,6 +349,56 @@ function maybeRemoveDiscriminantsFromSchemas(
                 })
             };
         }
+    }
+    return result;
+}
+
+function maybeAddBackDiscriminantsFromSchemas(
+    schemas: Record<string, SchemaWithExample>,
+    context: AbstractOpenAPIV3ParserContext
+): Record<string, SchemaWithExample> {
+    const result: Record<string, SchemaWithExample> = {};
+    for (const [schemaId, schema] of Object.entries(schemas)) {
+        if (schema.type !== "object") {
+            result[schemaId] = schema;
+            continue;
+        }
+        const referenceToSchema: OpenAPIV3.ReferenceObject = {
+            $ref: `#/components/schemas/${schemaId}`
+        };
+        const metadata = context.getDiscriminatedUnionMetadata(referenceToSchema);
+        if (metadata == null) {
+            result[schemaId] = schema;
+            continue;
+        }
+
+        const propertiesWithDiscriminants: ObjectPropertyWithExample[] = [];
+        for (const property of schema.properties) {
+            if (metadata.discriminants.has(property.key)) {
+                const discriminantValue = metadata.discriminants.get(property.key);
+                if (discriminantValue != null) {
+                    propertiesWithDiscriminants.push({
+                        ...property,
+                        schema: SchemaWithExample.literal({
+                            nameOverride: undefined,
+                            generatedName: getGeneratedTypeName([schema.generatedName, discriminantValue]),
+                            value: LiteralSchemaValue.string(discriminantValue),
+                            groupName: undefined,
+                            description: undefined
+                        })
+                    });
+                }
+            } else {
+                propertiesWithDiscriminants.push(property);
+            }
+        }
+
+        const schemaWithoutDiscriminants: SchemaWithExample.Object_ = {
+            ...schema,
+            type: "object",
+            properties: propertiesWithDiscriminants
+        };
+        result[schemaId] = schemaWithoutDiscriminants;
     }
     return result;
 }

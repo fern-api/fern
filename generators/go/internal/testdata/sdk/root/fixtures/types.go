@@ -16,7 +16,12 @@ type Bar struct {
 	Request *Request `json:"request,omitempty" url:"request,omitempty"`
 	Delay   *string  `json:"delay,omitempty" url:"delay,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (b *Bar) GetExtraProperties() map[string]interface{} {
+	return b.extraProperties
 }
 
 func (b *Bar) UnmarshalJSON(data []byte) error {
@@ -26,6 +31,13 @@ func (b *Bar) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*b = Bar(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+
 	b._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -52,7 +64,12 @@ type Baz struct {
 	// Note: Newlines should be preserved.
 	HasDocs *string `json:"hasDocs,omitempty" url:"hasDocs,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (b *Baz) GetExtraProperties() map[string]interface{} {
+	return b.extraProperties
 }
 
 func (b *Baz) UnmarshalJSON(data []byte) error {
@@ -62,6 +79,13 @@ func (b *Baz) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*b = Baz(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+
 	b._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -82,7 +106,12 @@ type Error struct {
 	Message   *string  `json:"message,omitempty" url:"message,omitempty"`
 	Recursive []*Error `json:"recursive,omitempty" url:"recursive,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (e *Error) GetExtraProperties() map[string]interface{} {
+	return e.extraProperties
 }
 
 func (e *Error) UnmarshalJSON(data []byte) error {
@@ -92,6 +121,13 @@ func (e *Error) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = Error(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+
 	e._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -116,7 +152,12 @@ type Foo struct {
 	Request *Request `json:"request,omitempty" url:"request,omitempty"`
 	Delay   *string  `json:"delay,omitempty" url:"delay,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (f *Foo) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
 }
 
 func (f *Foo) UnmarshalJSON(data []byte) error {
@@ -126,6 +167,13 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*f = Foo(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+
 	f._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -177,7 +225,12 @@ type Request struct {
 	Platform *string                `json:"platform,omitempty" url:"platform,omitempty"`
 	Unknown  interface{}            `json:"unknown,omitempty" url:"unknown,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (r *Request) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
 }
 
 func (r *Request) UnmarshalJSON(data []byte) error {
@@ -187,6 +240,13 @@ func (r *Request) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*r = Request(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+
 	r._rawJSON = json.RawMessage(data)
 	return nil
 }

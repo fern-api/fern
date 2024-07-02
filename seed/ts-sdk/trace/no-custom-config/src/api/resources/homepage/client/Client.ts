@@ -17,8 +17,14 @@ export declare namespace Homepage {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Random-Header header */
+        xRandomHeader?: string | undefined;
     }
 }
 
@@ -29,7 +35,7 @@ export class Homepage {
      * @param {Homepage.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.homepage.getHomepageProblems()
+     *     await client.homepage.getHomepageProblems()
      */
     public async getHomepageProblems(requestOptions?: Homepage.RequestOptions): Promise<SeedTrace.ProblemId[]> {
         const _response = await core.fetcher({
@@ -53,6 +59,7 @@ export class Homepage {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.homepage.getHomepageProblems.Response.parseOrThrow(_response.body, {
@@ -90,7 +97,7 @@ export class Homepage {
      * @param {Homepage.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.homepage.setHomepageProblems(["string"])
+     *     await client.homepage.setHomepageProblems(["string"])
      */
     public async setHomepageProblems(
         request: SeedTrace.ProblemId[],
@@ -120,6 +127,7 @@ export class Homepage {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;

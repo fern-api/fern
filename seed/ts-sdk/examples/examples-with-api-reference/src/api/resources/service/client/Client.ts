@@ -16,8 +16,12 @@ export declare namespace Service {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -29,7 +33,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExamples.service.getMovie("movie-c06a4ad7")
+     *     await client.service.getMovie("movie-c06a4ad7")
      */
     public async getMovie(
         movieId: SeedExamples.MovieId,
@@ -52,6 +56,7 @@ export class Service {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.Movie.parseOrThrow(_response.body, {
@@ -89,7 +94,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExamples.service.createMovie({
+     *     await client.service.createMovie({
      *         id: "movie-c06a4ad7",
      *         prequel: "movie-cv9b914f",
      *         title: "The Boy and the Heron",
@@ -130,6 +135,7 @@ export class Service {
             body: await serializers.Movie.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.MovieId.parseOrThrow(_response.body, {
@@ -167,7 +173,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExamples.service.getMetadata({
+     *     await client.service.getMetadata({
      *         xApiVersion: "0.0.1",
      *         shallow: false,
      *         tag: "development"
@@ -207,6 +213,7 @@ export class Service {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.Metadata.parseOrThrow(_response.body, {
@@ -243,7 +250,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExamples.service.getResponse()
+     *     await client.service.getResponse()
      */
     public async getResponse(requestOptions?: Service.RequestOptions): Promise<SeedExamples.Response> {
         const _response = await core.fetcher({
@@ -260,6 +267,7 @@ export class Service {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.Response.parseOrThrow(_response.body, {

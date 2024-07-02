@@ -15,8 +15,12 @@ export declare namespace Auth {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -28,11 +32,9 @@ export class Auth {
      * @param {Auth.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedOauthClientCredentialsEnvironmentVariables.auth.getTokenWithClientCredentials({
+     *     await client.auth.getTokenWithClientCredentials({
      *         clientId: "string",
      *         clientSecret: "string",
-     *         audience: "https://api.example.com",
-     *         grantType: "client_credentials",
      *         scope: "string"
      *     })
      */
@@ -59,6 +61,7 @@ export class Auth {
             },
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.TokenResponse.parseOrThrow(_response.body, {
@@ -96,12 +99,10 @@ export class Auth {
      * @param {Auth.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedOauthClientCredentialsEnvironmentVariables.auth.refreshToken({
+     *     await client.auth.refreshToken({
      *         clientId: "string",
      *         clientSecret: "string",
      *         refreshToken: "string",
-     *         audience: "https://api.example.com",
-     *         grantType: "refresh_token",
      *         scope: "string"
      *     })
      */
@@ -128,6 +129,7 @@ export class Auth {
             },
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.TokenResponse.parseOrThrow(_response.body, {

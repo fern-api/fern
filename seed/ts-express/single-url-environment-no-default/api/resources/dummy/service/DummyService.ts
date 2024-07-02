@@ -13,7 +13,8 @@ export interface DummyServiceMethods {
             send: (responseBody: string) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -37,17 +38,21 @@ export class DummyService {
     public toRouter(): express.Router {
         this.router.get("/dummy", async (req, res, next) => {
             try {
-                await this.methods.getDummy(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.dummy.getDummy.Response.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.getDummy(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.dummy.getDummy.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedSingleUrlEnvironmentNoDefaultError) {

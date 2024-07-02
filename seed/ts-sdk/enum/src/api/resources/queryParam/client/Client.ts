@@ -13,8 +13,12 @@ export declare namespace QueryParam {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -26,7 +30,7 @@ export class QueryParam {
      * @param {QueryParam.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedEnum.queryParam.send({
+     *     await client.queryParam.send({
      *         operand: SeedEnum.Operand.GreaterThan,
      *         operandOrColor: SeedEnum.Color.Red
      *     })
@@ -63,6 +67,7 @@ export class QueryParam {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -95,7 +100,7 @@ export class QueryParam {
      * @param {QueryParam.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedEnum.queryParam.sendList({
+     *     await client.queryParam.sendList({
      *         operand: SeedEnum.Operand.GreaterThan,
      *         maybeOperand: SeedEnum.Operand.GreaterThan,
      *         operandOrColor: SeedEnum.Color.Red,
@@ -156,6 +161,7 @@ export class QueryParam {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;

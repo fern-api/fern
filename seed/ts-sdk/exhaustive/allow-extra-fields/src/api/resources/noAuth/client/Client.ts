@@ -15,8 +15,12 @@ export declare namespace NoAuth {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -32,7 +36,7 @@ export class NoAuth {
      * @throws {@link SeedExhaustive.BadRequestBody}
      *
      * @example
-     *     await seedExhaustive.noAuth.postWithNoAuth({
+     *     await client.noAuth.postWithNoAuth({
      *         "key": "value"
      *     })
      */
@@ -52,6 +56,7 @@ export class NoAuth {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.noAuth.postWithNoAuth.Response.parseOrThrow(_response.body, {

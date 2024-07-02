@@ -15,8 +15,12 @@ export declare namespace Completions {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -42,6 +46,7 @@ export class Completions {
             responseType: "streaming",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return new core.Stream({
@@ -54,6 +59,7 @@ export class Completions {
                         breadcrumbsPrefix: ["response"],
                     });
                 },
+                signal: requestOptions?.abortSignal,
                 eventShape: {
                     type: "sse",
                     streamTerminator: "[[DONE]]",

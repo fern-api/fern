@@ -1,3 +1,5 @@
 name: ir
 docs: |
- Add status codes to http responses. 
+ - The unique webhook id is now required.
+ - Pagination endpoints not support request body properties.
+ - Offset pagination now supports a configurable `step` size request property.

@@ -11,14 +11,14 @@ export const FontConfigVariant: core.serialization.ObjectSchema<
     FernDocsConfig.FontConfigVariant
 > = core.serialization.object({
     path: core.serialization.string(),
-    weight: core.serialization.string().optional(),
+    weight: core.serialization.lazy(async () => (await import("../../..")).FontWeight).optional(),
     style: core.serialization.lazy(async () => (await import("../../..")).FontStyle).optional(),
 });
 
 export declare namespace FontConfigVariant {
     interface Raw {
         path: string;
-        weight?: string | null;
+        weight?: serializers.FontWeight.Raw | null;
         style?: serializers.FontStyle.Raw | null;
     }
 }

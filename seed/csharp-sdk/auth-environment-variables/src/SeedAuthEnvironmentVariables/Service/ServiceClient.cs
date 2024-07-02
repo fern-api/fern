@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedAuthEnvironmentVariables;
 
+#nullable enable
+
 namespace SeedAuthEnvironmentVariables;
 
 public class ServiceClient
@@ -18,14 +20,14 @@ public class ServiceClient
     public async Task<string> GetWithApiKeyAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/apiKey" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "apiKey" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -38,10 +40,10 @@ public class ServiceClient
             { "X-Endpoint-Header", request.XEndpointHeader },
         };
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/apiKeyInHeader",
+                Path = "apiKeyInHeader",
                 Headers = _headers
             }
         );
@@ -50,6 +52,6 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

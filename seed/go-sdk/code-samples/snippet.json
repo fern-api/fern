@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/hello",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_service.hello"
             },
             "snippet": {
                 "type": "go",

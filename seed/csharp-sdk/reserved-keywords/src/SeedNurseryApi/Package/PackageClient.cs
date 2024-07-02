@@ -1,5 +1,7 @@
 using SeedNurseryApi;
 
+#nullable enable
+
 namespace SeedNurseryApi;
 
 public class PackageClient
@@ -15,7 +17,7 @@ public class PackageClient
     {
         var _query = new Dictionary<string, object>() { { "for", request.For }, };
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "",

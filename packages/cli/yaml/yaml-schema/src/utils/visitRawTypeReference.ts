@@ -1,4 +1,7 @@
-import { Literal, PrimitiveType, PrimitiveTypeV1 } from "@fern-api/ir-sdk";
+import { Literal, PrimitiveType, PrimitiveTypeV1, PrimitiveTypeV2 } from "@fern-api/ir-sdk";
+import { NumberValidationSchema } from "../schemas/NumberValidationSchema";
+import { StringValidationSchema } from "../schemas/StringValidationSchema";
+import { ValidationSchema } from "../schemas/ValidationSchema";
 import { RawPrimitiveType } from "./RawPrimitiveType";
 
 export const FernContainerRegex = {
@@ -20,27 +23,78 @@ export interface RawTypeReferenceVisitor<R> {
     unknown: () => R;
 }
 
-export function visitRawTypeReference<R>(type: string, visitor: RawTypeReferenceVisitor<R>): R {
+export function visitRawTypeReference<R>({
+    type,
+    _default,
+    validation,
+    visitor
+}: {
+    type: string;
+    _default?: unknown;
+    validation?: ValidationSchema;
+    visitor: RawTypeReferenceVisitor<R>;
+}): R {
     switch (type) {
-        case RawPrimitiveType.integer:
+        case RawPrimitiveType.integer: {
+            const maybeNumberValidation = validation != null ? (validation as NumberValidationSchema) : undefined;
             return visitor.primitive({
                 v1: PrimitiveTypeV1.Integer,
-                v2: undefined // TODO: Add rules for integer.
+                v2: PrimitiveTypeV2.integer({
+                    default: _default != null ? (_default as number) : undefined,
+                    validation:
+                        maybeNumberValidation != null
+                            ? {
+                                  min: maybeNumberValidation.min,
+                                  max: maybeNumberValidation.max,
+                                  exclusiveMin: maybeNumberValidation.exclusiveMin,
+                                  exclusiveMax: maybeNumberValidation.exclusiveMax,
+                                  multipleOf: maybeNumberValidation.multipleOf
+                              }
+                            : undefined
+                })
             });
-        case RawPrimitiveType.double:
+        }
+        case RawPrimitiveType.double: {
+            const maybeNumberValidation = validation != null ? (validation as NumberValidationSchema) : undefined;
             return visitor.primitive({
                 v1: PrimitiveTypeV1.Double,
-                v2: undefined // TODO: Add rules for double.
+                v2: PrimitiveTypeV2.double({
+                    default: _default != null ? (_default as number) : undefined,
+                    validation:
+                        maybeNumberValidation != null
+                            ? {
+                                  min: maybeNumberValidation.min,
+                                  max: maybeNumberValidation.max,
+                                  exclusiveMin: maybeNumberValidation.exclusiveMin,
+                                  exclusiveMax: maybeNumberValidation.exclusiveMax,
+                                  multipleOf: maybeNumberValidation.multipleOf
+                              }
+                            : undefined
+                })
             });
+        }
+        case RawPrimitiveType.string: {
+            const maybeStringValidation = validation != null ? (validation as StringValidationSchema) : undefined;
+            return visitor.primitive({
+                v1: PrimitiveTypeV1.String,
+                v2: PrimitiveTypeV2.string({
+                    default: _default != null ? (_default as string) : undefined,
+                    validation:
+                        maybeStringValidation != null
+                            ? {
+                                  format: maybeStringValidation.format,
+                                  pattern: maybeStringValidation.pattern,
+                                  minLength: maybeStringValidation.minLength,
+                                  maxLength: maybeStringValidation.maxLength
+                              }
+                            : undefined
+                })
+            });
+        }
         case RawPrimitiveType.long:
             return visitor.primitive({
                 v1: PrimitiveTypeV1.Long,
                 v2: undefined
-            });
-        case RawPrimitiveType.string:
-            return visitor.primitive({
-                v1: PrimitiveTypeV1.String,
-                v2: undefined // TODO: Add rules for string.
             });
         case RawPrimitiveType.boolean:
             return visitor.primitive({

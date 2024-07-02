@@ -1,4 +1,4 @@
-irVersion: v38
+irVersion: v49
 docker: fernapi/fern-fastapi-server:latest
 dockerCommand: docker build -f ./generators/python/fastapi/Dockerfile -t fernapi/fern-fastapi-server:latest ./generators/python
 language: python
@@ -19,6 +19,13 @@ fixtures:
         pydantic_config: 
           version: v2
       outputFolder: pydantic-v2
+  imdb:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        pydantic_config:
+          extra_fields: allow
+      outputFolder: includes-extra-fields
 allowedFailures: 
   - bytes
   - file-download

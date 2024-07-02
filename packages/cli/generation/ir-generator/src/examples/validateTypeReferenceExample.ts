@@ -31,7 +31,8 @@ export function validateTypeReferenceExample({
     typeResolver,
     exampleResolver,
     file,
-    workspace
+    workspace,
+    breadcrumbs
 }: {
     rawTypeReference: string;
     example: RawSchemas.ExampleTypeReferenceSchema;
@@ -39,6 +40,7 @@ export function validateTypeReferenceExample({
     exampleResolver: ExampleResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
+    breadcrumbs: string[];
 }): ExampleViolation[] {
     if (typeof example === "string" && example.startsWith(EXAMPLE_REFERENCE_PREFIX)) {
         // if it's a reference to another example, we just need to compare the
@@ -78,122 +80,136 @@ export function validateTypeReferenceExample({
         }
     }
 
-    return visitRawTypeReference(rawTypeReference, {
-        primitive: (primitiveType) => validatePrimitiveExample({ primitiveType, example }),
-        named: (referenceToNamedType) => {
-            const declaration = typeResolver.getDeclarationOfNamedType({
-                referenceToNamedType,
-                file
-            });
+    return visitRawTypeReference({
+        type: rawTypeReference,
+        _default: undefined,
+        validation: undefined,
+        visitor: {
+            primitive: (primitiveType) => validatePrimitiveExample({ primitiveType, example }),
+            named: (referenceToNamedType) => {
+                const declaration = typeResolver.getDeclarationOfNamedType({
+                    referenceToNamedType,
+                    file
+                });
 
-            // type doesn't exist. this will be caught by other rules.
-            if (declaration == null) {
-                return [];
-            }
+                // type doesn't exist. this will be caught by other rules.
+                if (declaration == null) {
+                    return [];
+                }
 
-            return validateTypeExample({
-                typeName: declaration.typeName,
-                typeDeclaration: declaration.declaration,
-                file: declaration.file,
-                example,
-                typeResolver,
-                exampleResolver,
-                workspace
-            });
-        },
-        map: ({ keyType, valueType }) => {
-            if (!isPlainObject(example)) {
-                return getViolationsForMisshapenExample(example, "a map");
-            }
-            return Object.entries(example).flatMap(([exampleKey, exampleValue]) => [
-                ...validateTypeReferenceExample({
-                    rawTypeReference: keyType,
-                    example: exampleKey,
+                return validateTypeExample({
+                    typeName: declaration.typeName,
+                    typeDeclaration: declaration.declaration,
+                    file: declaration.file,
+                    example,
                     typeResolver,
                     exampleResolver,
-                    file,
-                    workspace
-                }),
-                ...validateTypeReferenceExample({
-                    rawTypeReference: valueType,
-                    example: exampleValue,
-                    typeResolver,
-                    exampleResolver,
-                    file,
-                    workspace
-                })
-            ]);
-        },
-        list: (itemType) => {
-            if (!Array.isArray(example)) {
-                return getViolationsForMisshapenExample(example, "a list");
-            }
-            return example.flatMap((exampleItem) =>
-                validateTypeReferenceExample({
+                    workspace,
+                    breadcrumbs
+                });
+            },
+            map: ({ keyType, valueType }) => {
+                if (!isPlainObject(example)) {
+                    return getViolationsForMisshapenExample(example, "a map");
+                }
+                return Object.entries(example).flatMap(([exampleKey, exampleValue]) => [
+                    ...validateTypeReferenceExample({
+                        rawTypeReference: keyType,
+                        example: exampleKey,
+                        typeResolver,
+                        exampleResolver,
+                        file,
+                        workspace,
+                        breadcrumbs: [...breadcrumbs, exampleKey]
+                    }),
+                    ...validateTypeReferenceExample({
+                        rawTypeReference: valueType,
+                        example: exampleValue,
+                        typeResolver,
+                        exampleResolver,
+                        file,
+                        workspace,
+                        breadcrumbs: [...breadcrumbs, exampleKey]
+                    })
+                ]);
+            },
+            list: (itemType) => {
+                if (!Array.isArray(example)) {
+                    return getViolationsForMisshapenExample(example, "a list");
+                }
+                return example.flatMap((exampleItem, idx) =>
+                    validateTypeReferenceExample({
+                        rawTypeReference: itemType,
+                        example: exampleItem,
+                        typeResolver,
+                        exampleResolver,
+                        file,
+                        workspace,
+                        breadcrumbs: [...breadcrumbs, `${idx}`]
+                    })
+                );
+            },
+            set: (itemType) => {
+                if (!Array.isArray(example)) {
+                    return getViolationsForMisshapenExample(example, "a list");
+                }
+
+                const duplicates = getDuplicates(example);
+                if (duplicates.length > 0) {
+                    return [
+                        {
+                            severity: "error",
+                            message:
+                                "Set has duplicate elements:\n" +
+                                duplicates.map((item) => `  - ${JSON.stringify(item)}`).join("\n")
+                        }
+                    ];
+                }
+
+                return example.flatMap((exampleItem, idx) =>
+                    validateTypeReferenceExample({
+                        rawTypeReference: itemType,
+                        example: exampleItem,
+                        typeResolver,
+                        exampleResolver,
+                        file,
+                        workspace,
+                        breadcrumbs: [...breadcrumbs, `${idx}`]
+                    })
+                );
+            },
+            optional: (itemType) => {
+                if (example == null) {
+                    return [];
+                }
+                return validateTypeReferenceExample({
                     rawTypeReference: itemType,
-                    example: exampleItem,
+                    example,
                     typeResolver,
                     exampleResolver,
                     file,
-                    workspace
-                })
-            );
-        },
-        set: (itemType) => {
-            if (!Array.isArray(example)) {
-                return getViolationsForMisshapenExample(example, "a list");
-            }
-
-            const duplicates = getDuplicates(example);
-            if (duplicates.length > 0) {
-                return [
-                    {
-                        severity: "error",
-                        message:
-                            "Set has duplicate elements:\n" +
-                            duplicates.map((item) => `  - ${JSON.stringify(item)}`).join("\n")
-                    }
-                ];
-            }
-
-            return example.flatMap((exampleItem) =>
-                validateTypeReferenceExample({
-                    rawTypeReference: itemType,
-                    example: exampleItem,
-                    typeResolver,
-                    exampleResolver,
-                    file,
-                    workspace
-                })
-            );
-        },
-        optional: (itemType) => {
-            if (example == null) {
+                    workspace,
+                    breadcrumbs
+                });
+            },
+            unknown: () => {
                 return [];
-            }
-            return validateTypeReferenceExample({
-                rawTypeReference: itemType,
-                example,
-                typeResolver,
-                exampleResolver,
-                file,
-                workspace
-            });
-        },
-        unknown: () => {
-            return [];
-        },
-        literal: (expectedLiteral) => {
-            switch (expectedLiteral.type) {
-                case "boolean":
-                    return createValidator(
-                        (e) => e === expectedLiteral.boolean,
-                        expectedLiteral.boolean.toString()
-                    )(example);
-                case "string":
-                    return createValidator((e) => e === expectedLiteral.string, `"${expectedLiteral.string}"`)(example);
-                default:
-                    assertNever(expectedLiteral);
+            },
+            literal: (expectedLiteral) => {
+                switch (expectedLiteral.type) {
+                    case "boolean":
+                        return createValidator(
+                            (e) => e === expectedLiteral.boolean,
+                            expectedLiteral.boolean.toString()
+                        )(example);
+                    case "string":
+                        return createValidator(
+                            (e) => e === expectedLiteral.string,
+                            `"${expectedLiteral.string}"`
+                        )(example);
+                    default:
+                        assertNever(expectedLiteral);
+                }
             }
         }
     });
@@ -336,7 +352,7 @@ function validateStringWithRules({
     example: RawSchemas.ExampleTypeReferenceSchema;
     rules: StringValidationRules | undefined;
 }): ExampleViolation[] {
-    const violations = validateInteger(example);
+    const violations = validateString(example);
     if (violations.length > 0 || rules == null) {
         return violations;
     }

@@ -15,8 +15,14 @@ export declare namespace Sysprop {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Random-Header header */
+        xRandomHeader?: string | undefined;
     }
 }
 
@@ -29,7 +35,7 @@ export class Sysprop {
      * @param {Sysprop.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.sysprop.setNumWarmInstances(SeedTrace.Language.Java, 1)
+     *     await client.sysprop.setNumWarmInstances(SeedTrace.Language.Java, 1)
      */
     public async setNumWarmInstances(
         language: SeedTrace.Language,
@@ -57,6 +63,7 @@ export class Sysprop {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -75,7 +82,7 @@ export class Sysprop {
      * @param {Sysprop.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.sysprop.getNumWarmInstances()
+     *     await client.sysprop.getNumWarmInstances()
      */
     public async getNumWarmInstances(
         requestOptions?: Sysprop.RequestOptions
@@ -103,6 +110,7 @@ export class Sysprop {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {

@@ -14,8 +14,12 @@ export declare namespace User {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -27,7 +31,7 @@ export class User {
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedQueryParameters.user.getUsername({
+     *     await client.user.getUsername({
      *         limit: 1,
      *         id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *         date: "2023-01-15",
@@ -37,6 +41,11 @@ export class User {
      *             name: "string",
      *             tags: ["string"]
      *         },
+     *         userList: [{
+     *                 name: "string",
+     *                 tags: ["string"]
+     *             }],
+     *         optionalDeadline: new Date("2024-01-15T09:30:00.000Z"),
      *         keyValue: {
      *             "string": "string"
      *         },
@@ -70,6 +79,8 @@ export class User {
             deadline,
             bytes,
             user,
+            userList,
+            optionalDeadline,
             keyValue,
             optionalString,
             nestedUser,
@@ -89,6 +100,11 @@ export class User {
             allowUnrecognizedEnumValues: true,
             breadcrumbsPrefix: ["request", "user"],
         });
+        _queryParams["userList"] = JSON.stringify(userList);
+        if (optionalDeadline != null) {
+            _queryParams["optionalDeadline"] = optionalDeadline.toISOString();
+        }
+
         _queryParams["keyValue"] = JSON.stringify(keyValue);
         if (optionalString != null) {
             _queryParams["optionalString"] = optionalString;
@@ -150,6 +166,7 @@ export class User {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.User.parseOrThrow(_response.body, {

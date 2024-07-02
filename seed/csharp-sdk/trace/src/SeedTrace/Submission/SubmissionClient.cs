@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class SubmissionClient
@@ -18,10 +20,10 @@ public class SubmissionClient
     public async Task<ExecutionSessionResponse> CreateExecutionSessionAsync(Language language)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/create-session/{language}"
+                Path = $"/sessions/create-session/{language}"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -29,7 +31,7 @@ public class SubmissionClient
         {
             return JsonSerializer.Deserialize<ExecutionSessionResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -38,14 +40,18 @@ public class SubmissionClient
     public async Task<ExecutionSessionResponse?> GetExecutionSessionAsync(string sessionId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/{sessionId}" }
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = $"/sessions/{sessionId}"
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<ExecutionSessionResponse?>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -54,20 +60,28 @@ public class SubmissionClient
     public async void StopExecutionSessionAsync(string sessionId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Delete, Path = $"/stop/{sessionId}" }
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Delete,
+                Path = $"/sessions/stop/{sessionId}"
+            }
         );
     }
 
     public async Task<GetExecutionSessionStateResponse> GetExecutionSessionsStateAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/execution-sessions-state" }
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = "/sessions/execution-sessions-state"
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<GetExecutionSessionStateResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

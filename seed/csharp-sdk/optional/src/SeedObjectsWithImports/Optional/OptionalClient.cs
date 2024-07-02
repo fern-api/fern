@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedObjectsWithImports;
 
+#nullable enable
+
 namespace SeedObjectsWithImports;
 
 public class OptionalClient
@@ -15,10 +17,10 @@ public class OptionalClient
     public async Task<string> SendOptionalBodyAsync(Dictionary<string, object>? request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/send-optional-body",
+                Path = "send-optional-body",
                 Body = request
             }
         );
@@ -27,6 +29,6 @@ public class OptionalClient
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

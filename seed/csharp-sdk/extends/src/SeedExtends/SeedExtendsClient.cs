@@ -1,5 +1,7 @@
 using SeedExtends;
 
+#nullable enable
+
 namespace SeedExtends;
 
 public partial class SeedExtendsClient
@@ -16,7 +18,7 @@ public partial class SeedExtendsClient
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);

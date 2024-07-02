@@ -1,5 +1,7 @@
 using SeedBytes;
 
+#nullable enable
+
 namespace SeedBytes;
 
 public partial class SeedBytesClient
@@ -19,7 +21,7 @@ public partial class SeedBytesClient
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);

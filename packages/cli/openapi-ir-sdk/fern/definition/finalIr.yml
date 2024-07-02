@@ -25,6 +25,7 @@ types:
         docs: Whether the schema is directly referenced from a response, parameters, or other schemas
       securitySchemes: map<commons.SecuritySchemeId, commons.SecurityScheme>
       globalHeaders: optional<list<GlobalHeader>>
+      idempotencyHeaders: optional<list<IdempotencyHeader>>
 
   SdkGroupInfo:
     properties:
@@ -36,6 +37,13 @@ types:
       header: string
       name: optional<string>
       optional: optional<boolean>
+      env: optional<string>
+      schema: optional<Schema>
+  
+  IdempotencyHeader:
+    properties:
+      header: string
+      name: optional<string>
       env: optional<string>
       schema: optional<Schema>
 
@@ -66,6 +74,13 @@ types:
         docs: |
           Populated as ${operationId}Payload
       payload: Schema
+      examples: list<WebhookExampleCall>
+
+  WebhookExampleCall:
+    extends: commons.WithDescription
+    properties:
+      name: optional<string>
+      payload: example.FullExample
 
   WebsocketChannel:
     extends: commons.WithDescription
@@ -116,6 +131,7 @@ types:
     properties:
       authed: boolean
       internal: optional<boolean>
+      idempotent: optional<boolean>
       method: HttpMethod
       availability: optional<EndpointAvailability>
       audiences: list<string>
@@ -165,6 +181,7 @@ types:
     properties:
       offset: string
       results: string
+      step: optional<string>
 
   CustomCodeSample:
     availability: in-development
@@ -324,6 +341,7 @@ types:
     properties:
       schema: Schema
       contentType: optional<string>
+      additionalProperties: boolean
 
   MultipartRequest:
     extends: commons.WithDescription
@@ -396,18 +414,39 @@ types:
 
   PrimitiveSchemaValue:
     union:
-      int: {}
+      int: IntSchema
       int64: {}
       float: {}
-      double: {}
+      double: DoubleSchema
       string: StringSchema
       datetime: {}
       date: {}
       base64: {}
       boolean: {}
 
+  IntSchema:
+    properties:
+      default: optional<integer>
+      minimum: optional<integer>
+      maximum: optional<integer>
+      exclusiveMinimum: optional<boolean>
+      exclusiveMaximum: optional<boolean>
+      multipleOf: optional<integer>
+
+  DoubleSchema:
+    properties:
+      default: optional<double>
+      minimum: optional<double>
+      maximum: optional<double>
+      exclusiveMinimum: optional<boolean>
+      exclusiveMaximum: optional<boolean>
+      multipleOf: optional<double>
+
   StringSchema:
     properties:
+      default: optional<string>
+      pattern: optional<string>
+      format: optional<string>
       minLength: optional<integer>
       maxLength: optional<integer>
 
@@ -433,6 +472,7 @@ types:
       allOf: list<ReferencedSchema>
       properties: list<ObjectProperty>
       allOfPropertyConflicts: list<AllOfPropertyConflict>
+      additionalProperties: boolean
 
   # OpenAPI IR to Fern:
   # For every allOfPropertyConflict, we will inline the SchemaIds that conflict.

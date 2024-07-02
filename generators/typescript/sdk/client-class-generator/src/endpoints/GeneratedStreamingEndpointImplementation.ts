@@ -1,5 +1,5 @@
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { Fetcher, PackageId } from "@fern-typescript/commons";
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { Fetcher, GetReferenceOpts, PackageId } from "@fern-typescript/commons";
 import { EndpointSignature, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
@@ -7,6 +7,7 @@ import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
 import { buildUrl } from "./utils/buildUrl";
 import {
+    getAbortSignalExpression,
     getMaxRetriesExpression,
     getRequestOptionsParameter,
     getTimeoutExpression
@@ -59,8 +60,32 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         this.retainOriginalCasing = retainOriginalCasing;
     }
 
-    public getExample(): ts.Expression | undefined {
-        return undefined;
+    public getExample(args: {
+        context: SdkContext;
+        example: ExampleEndpointCall;
+        opts: GetReferenceOpts;
+        clientReference: ts.Identifier;
+    }): ts.Expression | undefined {
+        const exampleParameters = this.request.getExampleEndpointParameters({
+            context: args.context,
+            example: args.example,
+            opts: args.opts
+        });
+        if (exampleParameters == null) {
+            return undefined;
+        }
+        return ts.factory.createAwaitExpression(
+            ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(
+                    this.generatedSdkClientClass.accessFromRootClient({
+                        referenceToRootClient: args.clientReference
+                    }),
+                    ts.factory.createIdentifier(this.endpoint.name.camelCase.unsafeName)
+                ),
+                undefined,
+                exampleParameters
+            )
+        );
     }
 
     public getOverloads(): EndpointSignature[] {
@@ -128,6 +153,11 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             }),
             maxRetries: getMaxRetriesExpression({
                 maxRetriesReference: this.generatedSdkClientClass.getReferenceToMaxRetries.bind(
+                    this.generatedSdkClientClass
+                )
+            }),
+            abortSignal: getAbortSignalExpression({
+                abortSignalReference: this.generatedSdkClientClass.getReferenceToAbortSignal.bind(
                     this.generatedSdkClientClass
                 )
             }),

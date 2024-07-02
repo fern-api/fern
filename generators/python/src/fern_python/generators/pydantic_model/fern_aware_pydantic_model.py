@@ -39,11 +39,11 @@ class FernAwarePydanticModel:
         custom_config: PydanticModelCustomConfig,
         class_name: str,
         type_name: Optional[ir_types.DeclaredTypeName],
-        should_export: bool = None,
-        extends: Sequence[ir_types.DeclaredTypeName] = None,
+        should_export: bool = True,
+        extends: Sequence[ir_types.DeclaredTypeName] = [],
+        base_models: Sequence[AST.ClassReference] = [],
         docstring: Optional[str] = None,
         snippet: Optional[str] = None,
-        base_models: Sequence[AST.ClassReference] = None,
     ):
         self._class_name = class_name
         self._type_name = type_name
@@ -51,14 +51,20 @@ class FernAwarePydanticModel:
         self._custom_config = custom_config
         self._source_file = source_file
         self._extends = extends
+
+        models_to_extend = [item for item in base_models] if base_models is not None else []
+        extends_crs = (
+            [context.get_class_reference_for_type_id(extended.type_id) for extended in extends]
+            if extends is not None
+            else []
+        )
+        models_to_extend.extend(extends_crs)
         self._pydantic_model = PydanticModel(
             version=self._custom_config.version,
             name=class_name,
             source_file=source_file,
             should_export=should_export,
-            base_models=base_models if base_models is not None else [context.get_class_reference_for_type_id(extended.type_id) for extended in extends]
-            if extends is not None
-            else [],
+            base_models=models_to_extend,
             docstring=docstring,
             snippet=snippet,
             extra_fields="forbid" if custom_config.forbid_extra_fields else custom_config.extra_fields,
@@ -90,6 +96,16 @@ class FernAwarePydanticModel:
         description: Optional[str] = None,
         default_value: Optional[AST.Expression] = None,
     ) -> PydanticField:
+        union = type_reference.get_as_union()
+        if default_value is None and union.type == "container" and union.container.get_as_union().type == "literal":
+            container = union.container.get_as_union()
+            if container is not None and container.type == "literal":
+                literal = container.literal.get_as_union()
+                if literal.type == "string":
+                    default_value = AST.Expression(f'"{literal.string}"')
+                else:
+                    default_value = AST.Expression(f"{literal.boolean}")
+
         field = self._create_pydantic_field(
             name=name,
             pascal_case_field_name=pascal_case_field_name,
@@ -102,11 +118,15 @@ class FernAwarePydanticModel:
         return field
 
     def add_private_instance_field_unsafe(
-        self, name: str, type_hint: AST.TypeHint, default_factory: AST.Expression = None
+        self, name: str, type_hint: AST.TypeHint, default_factory: AST.Expression
     ) -> None:
+        if default_factory is None:
+            return None
         self._pydantic_model.add_private_instance_field(name=name, type_hint=type_hint, default_factory=default_factory)
 
-    def add_class_var_unsafe(self, name: str, type_hint: AST.TypeHint, initializer: AST.Expression = None) -> None:
+    def add_class_var_unsafe(self, name: str, type_hint: AST.TypeHint, initializer: AST.Expression) -> None:
+        if initializer is None:
+            return None
         self._pydantic_model.add_class_var(name, type_hint, initializer=initializer)
 
     def get_type_hint_for_type_reference(self, type_reference: ir_types.TypeReference) -> AST.TypeHint:
@@ -141,7 +161,7 @@ class FernAwarePydanticModel:
         parameters: Sequence[Tuple[str, ir_types.TypeReference]],
         return_type: ir_types.TypeReference,
         body: AST.CodeWriter,
-        decorator: AST.ClassMethodDecorator = None,
+        decorator: Optional[AST.ClassMethodDecorator] = None,
     ) -> AST.FunctionDeclaration:
         return self.add_method_unsafe(
             declaration=AST.FunctionDeclaration(
@@ -163,7 +183,7 @@ class FernAwarePydanticModel:
     def add_method_unsafe(
         self,
         declaration: AST.FunctionDeclaration,
-        decorator: AST.ClassMethodDecorator = None,
+        decorator: Optional[AST.ClassMethodDecorator] = None,
     ) -> AST.FunctionDeclaration:
         return self._pydantic_model.add_method(declaration=declaration, decorator=decorator)
 
@@ -199,8 +219,8 @@ class FernAwarePydanticModel:
             if shape_union.type == "object":
                 for property in shape_union.properties:
                     field = self._create_pydantic_field(
-                        name=property.name.name.snake_case.unsafe_name,
-                        pascal_case_field_name=property.name.name.pascal_case.unsafe_name,
+                        name=property.name.name.snake_case.safe_name,
+                        pascal_case_field_name=property.name.name.pascal_case.safe_name,
                         json_field_name=property.name.wire_value,
                         type_reference=property.value_type,
                         description=property.docs,

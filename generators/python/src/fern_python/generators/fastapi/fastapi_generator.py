@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Literal, Tuple
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources import GeneratorConfig
@@ -25,6 +25,9 @@ from .service_generator import ServiceGenerator
 
 
 class FastApiGenerator(AbstractGenerator):
+    def project_type(self) -> Literal["sdk", "pydantic", "fastapi"]:
+        return "fastapi"
+
     def should_format_files(
         self,
         *,
@@ -41,7 +44,7 @@ class FastApiGenerator(AbstractGenerator):
     ) -> Tuple[str, ...]:
         return (
             generator_config.organization,
-            ir.api_name.snake_case.unsafe_name,
+            ir.api_name.snake_case.safe_name,
         )
 
     def run(
@@ -54,8 +57,6 @@ class FastApiGenerator(AbstractGenerator):
     ) -> None:
         custom_config = FastAPICustomConfig.parse_obj(generator_config.custom_config or {})
         self._pydantic_model_custom_config = PydanticModelCustomConfig(
-            forbid_extra_fields=True,
-            extra_fields="forbid",
             include_union_utils=True,
             include_validators=custom_config.include_validators,
             skip_formatting=custom_config.skip_formatting,

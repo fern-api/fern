@@ -9,7 +9,7 @@ export declare namespace Parameter {
         name: string;
         type: ClassReference | ClassReference[];
         wireValue?: string;
-        defaultValue?: Variable | string;
+        defaultValue?: AstNode | string;
         isOptional?: boolean;
         shouldOmitOptional?: boolean;
         isNamed?: boolean;
@@ -24,7 +24,7 @@ export class Parameter extends AstNode {
     public wireValue: string | undefined;
     public type: ClassReference[];
     // TODO: deal with constants in a more structured way.
-    public defaultValue: Variable | string | undefined;
+    public defaultValue: AstNode | string | undefined;
     public isNamed: boolean;
     public isBlock: boolean;
     public describeAsHashInYardoc: boolean;
@@ -59,7 +59,7 @@ export class Parameter extends AstNode {
     }
 
     public writeInternal(): void {
-        const defaultString = this.defaultValue instanceof Variable ? this.defaultValue.write({}) : this.defaultValue;
+        const defaultString = this.defaultValue instanceof AstNode ? this.defaultValue.write({}) : this.defaultValue;
         this.addText({
             stringContent: this.name,
             templateString: this.isBlock ? "&%s" : this.isNamed ? "%s:" : undefined

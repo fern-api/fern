@@ -1,5 +1,7 @@
 using SeedExtraProperties;
 
+#nullable enable
+
 namespace SeedExtraProperties;
 
 public partial class SeedExtraPropertiesClient
@@ -19,7 +21,7 @@ public partial class SeedExtraPropertiesClient
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);

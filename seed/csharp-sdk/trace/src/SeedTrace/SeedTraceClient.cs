@@ -1,6 +1,8 @@
 using SeedTrace;
 using SeedTrace.V2;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public partial class SeedTraceClient
@@ -55,7 +57,7 @@ public partial class SeedTraceClient
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);

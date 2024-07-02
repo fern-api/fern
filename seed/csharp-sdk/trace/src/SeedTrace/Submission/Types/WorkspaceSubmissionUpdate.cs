@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+
+#nullable enable
 
 namespace SeedTrace;
 
@@ -9,5 +10,5 @@ public class WorkspaceSubmissionUpdate
     public DateTime UpdateTime { get; init; }
 
     [JsonPropertyName("updateInfo")]
-    public WorkspaceSubmissionUpdateInfo UpdateInfo { get; init; }
+    public object UpdateInfo { get; init; }
 }

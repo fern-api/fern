@@ -22,14 +22,14 @@ class _Factory:
 class CreateProblemError(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get_as_union(self) -> typing.Union[_CreateProblemError.Generic]:
+    def get_as_union(self) -> _CreateProblemError.Generic:
         return self.__root__
 
     def visit(self, generic: typing.Callable[[GenericCreateProblemError], T_Result]) -> T_Result:
         if self.__root__.error_type == "generic":
             return generic(GenericCreateProblemError(**self.__root__.dict(exclude_unset=True, exclude={"_type"})))
 
-    __root__: typing.Union[_CreateProblemError.Generic]
+    __root__: _CreateProblemError.Generic
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

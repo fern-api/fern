@@ -7,10 +7,7 @@ import httpx
 
 from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .core.jsonable_encoder import jsonable_encoder
 from .core.pydantic_utilities import pydantic_v1
-from .core.query_encoder import encode_query
-from .core.remove_none_from_dict import remove_none_from_dict
 from .core.request_options import RequestOptions
 from .environment import SeedExhaustiveEnvironment
 from .file.client import AsyncFileClient, FileClient
@@ -23,7 +20,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class BaseSeedExhaustive:
     """
-    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
     Parameters
     ----------
@@ -35,7 +32,7 @@ class BaseSeedExhaustive:
 
     token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     timeout : typing.Optional[float]
-        The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
+        The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
     follow_redirects : typing.Optional[bool]
         Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
@@ -106,31 +103,11 @@ class BaseSeedExhaustive:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            method="POST",
-            url=self._client_wrapper.get_base_url(),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(request),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(str, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(str, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -139,7 +116,7 @@ class BaseSeedExhaustive:
 
 class AsyncBaseSeedExhaustive:
     """
-    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
     Parameters
     ----------
@@ -151,7 +128,7 @@ class AsyncBaseSeedExhaustive:
 
     token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     timeout : typing.Optional[float]
-        The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
+        The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
     follow_redirects : typing.Optional[bool]
         Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
@@ -210,6 +187,8 @@ class AsyncBaseSeedExhaustive:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 
@@ -217,36 +196,22 @@ class AsyncBaseSeedExhaustive:
             token="YOUR_TOKEN",
             environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
-        await client.echo(
-            request="Hello world!\\n\\nwith\\n\\tnewlines",
-        )
+
+
+        async def main() -> None:
+            await client.echo(
+                request="Hello world!\\n\\nwith\\n\\tnewlines",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            method="POST",
-            url=self._client_wrapper.get_base_url(),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(request),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            method="POST", json=request, request_options=request_options, omit=OMIT
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(str, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(str, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

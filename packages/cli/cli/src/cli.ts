@@ -11,6 +11,7 @@ import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
 import { loadProject, Project } from "@fern-api/project-loader";
 import { FernCliError } from "@fern-api/task-context";
+import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -18,15 +19,15 @@ import { loadOpenAPIFromUrl, LoadOpenAPIStatus } from "../../init/src/utils/load
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
+import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
 import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces";
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces";
-import { generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
+import { generateAPIWorkspaces, GenerationMode } from "./commands/generate/generateAPIWorkspaces";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
 import { mockServer } from "./commands/mock/mockServer";
-import { previewDocsWorkspace } from "./commands/preview/previewDocsWorkspace";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
 import { testOutput } from "./commands/test/testOutput";
@@ -39,6 +40,7 @@ import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeD
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { isURL } from "./utils/isUrl";
+
 interface GlobalCliOptions {
     "log-level": LogLevel;
 }
@@ -51,6 +53,7 @@ async function runCli() {
     const exit = async () => {
         await cliContext.exit();
     };
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     process.on("SIGINT", async () => {
         cliContext.suppressUpgradeMessage();
         await exit();
@@ -141,7 +144,7 @@ async function tryRunCli(cliContext: CliContext) {
     addLoginCommand(cli, cliContext);
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
-    addPreviewCommand(cli, cliContext);
+    addDocsPreviewCommand(cli, cliContext);
     addMockCommand(cli, cliContext);
     addWriteOverridesCommand(cli, cliContext);
     addTestCommand(cli, cliContext);
@@ -334,6 +337,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     type: "string",
                     description: "The group to generate"
                 })
+                .option("mode", {
+                    choices: Object.values(GenerationMode),
+                    description: "Defaults to the mode specified in generators.yml"
+                })
                 .option("version", {
                     type: "string",
                     description: "The version for the generated packages"
@@ -372,7 +379,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     shouldLogS3Url: argv.printZipUrl,
                     keepDocker: argv.keepDocker,
                     useLocalDocker: argv.local,
-                    preview: argv.preview
+                    preview: argv.preview,
+                    mode: argv.mode
                 });
             }
             if (argv.docs != null) {
@@ -408,7 +416,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 shouldLogS3Url: argv.printZipUrl,
                 keepDocker: argv.keepDocker,
                 useLocalDocker: argv.local,
-                preview: argv.preview
+                preview: argv.preview,
+                mode: argv.mode
             });
         }
     );
@@ -447,14 +456,17 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             await generateIrForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
-                    defaultToAllApiWorkspaces: false
+                    defaultToAllApiWorkspaces: false,
+                    sdkLanguage: argv.language
                 }),
                 irFilepath: resolve(cwd(), argv.pathToOutput),
                 cliContext,
                 generationLanguage: argv.language,
                 audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" },
                 version: argv.version,
-                smartCasing: false
+                keywords: undefined,
+                smartCasing: false,
+                readme: undefined
             });
         }
     );
@@ -471,6 +483,10 @@ function addOpenAPIIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                     description: "Path to write intermediate representation (IR)",
                     demandOption: true
                 })
+                .option("language", {
+                    choices: Object.values(generatorsYml.GenerationLanguage),
+                    description: "Generate IR for a particular language"
+                })
                 .option("api", {
                     string: true,
                     description: "Only run the command on the provided API"
@@ -479,10 +495,12 @@ function addOpenAPIIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
             await generateOpenAPIIrForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
-                    defaultToAllApiWorkspaces: false
+                    defaultToAllApiWorkspaces: false,
+                    sdkLanguage: argv.language
                 }),
                 irFilepath: resolve(cwd(), argv.pathToOutput),
-                cliContext
+                cliContext,
+                sdkLanguage: argv.language
             });
         }
     );
@@ -664,6 +682,12 @@ function addUpgradeGeneratorCommand(cli: Argv<GlobalCliOptions>, cliContext: Cli
                     string: true,
                     description:
                         "The API to upgrade the generator for. If not specified, the generator will be upgraded for all APIs."
+                })
+                .option("include-major", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Whether or not to include major versions within the upgrade. Defaults to false, meaning major versions will be skipped."
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
@@ -672,7 +696,8 @@ function addUpgradeGeneratorCommand(cli: Argv<GlobalCliOptions>, cliContext: Cli
                     generator: argv.generator,
                     version: argv.version,
                     api: argv.api,
-                    group: argv.group
+                    group: argv.group,
+                    includeMajor: argv.includeMajor
                 }
             });
             await upgradeGenerator({
@@ -682,7 +707,8 @@ function addUpgradeGeneratorCommand(cli: Argv<GlobalCliOptions>, cliContext: Cli
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: true
-                })
+                }),
+                includeMajor: argv.includeMajor
             });
         }
     );
@@ -778,6 +804,10 @@ function addTestCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("command", {
                     string: true,
                     description: "The command to run to test your SDK."
+                })
+                .option("language", {
+                    choices: Object.values(generatorsYml.GenerationLanguage),
+                    description: "Run the tests configured to a specific language"
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
@@ -788,9 +818,11 @@ function addTestCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: false,
-                    nameOverride: ".mock"
+                    nameOverride: ".mock",
+                    sdkLanguage: argv.language
                 }),
-                testCommand: argv.command
+                testCommand: argv.command,
+                generationLanguage: argv.language
             });
         }
     );
@@ -863,10 +895,15 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
         "write-definition",
         "Write underlying Fern Definition for OpenAPI specs and API Dependencies.",
         (yargs) =>
-            yargs.option("api", {
-                string: true,
-                description: "Only run the command on the provided API"
-            }),
+            yargs
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API"
+                })
+                .option("language", {
+                    choices: Object.values(generatorsYml.GenerationLanguage),
+                    description: "Write the definition for a particular SDK language"
+                }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
                 command: "fern write-definition"
@@ -874,26 +911,40 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
             await writeDefinitionForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
-                    defaultToAllApiWorkspaces: true
+                    defaultToAllApiWorkspaces: true,
+                    sdkLanguage: argv.language
                 }),
-                cliContext
+                cliContext,
+                sdkLanguage: argv.language
             });
         }
     );
 }
 
-function addPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "preview",
-        false, // hide from help message
-        (yargs) => yargs,
-        async () => {
+        "docs dev",
+        "Run a local development server to preview your docs",
+        (yargs) =>
+            yargs.option("port", {
+                number: true,
+                description: "Run the development server on the following port"
+            }),
+        async (argv) => {
+            let port: number;
+            if (argv.port != null) {
+                port = argv.port;
+            } else {
+                port = await getPort({ port: [3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009, 3010] });
+            }
             await previewDocsWorkspace({
-                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    defaultToAllApiWorkspaces: true,
-                    commandLineApiWorkspace: undefined
-                }),
-                cliContext
+                loadProject: () =>
+                    loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        defaultToAllApiWorkspaces: true,
+                        commandLineApiWorkspace: undefined
+                    }),
+                cliContext,
+                port
             });
         }
     );

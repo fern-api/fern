@@ -16,8 +16,14 @@ export declare namespace Playlist {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Random-Header header */
+        xRandomHeader?: string | undefined;
     }
 }
 
@@ -32,7 +38,7 @@ export class Playlist {
      * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.playlist.createPlaylist(1, {
+     *     await client.playlist.createPlaylist(1, {
      *         datetime: new Date("2024-01-15T09:30:00.000Z"),
      *         optionalDatetime: new Date("2024-01-15T09:30:00.000Z"),
      *         body: {
@@ -77,6 +83,7 @@ export class Playlist {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -104,7 +111,7 @@ export class Playlist {
      * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.playlist.getPlaylists(1, {
+     *     await client.playlist.getPlaylists(1, {
      *         limit: 1,
      *         otherField: "string",
      *         multiLineDocs: "string",
@@ -162,6 +169,7 @@ export class Playlist {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -189,7 +197,7 @@ export class Playlist {
      * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.playlist.getPlaylist(1, SeedTrace.PlaylistId("string"))
+     *     await client.playlist.getPlaylist(1, SeedTrace.PlaylistId("string"))
      */
     public async getPlaylist(
         serviceParam: number,
@@ -220,6 +228,7 @@ export class Playlist {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -267,7 +276,7 @@ export class Playlist {
      * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.playlist.updatePlaylist(1, SeedTrace.PlaylistId("string"), {
+     *     await client.playlist.updatePlaylist(1, SeedTrace.PlaylistId("string"), {
      *         name: "string",
      *         problems: [SeedTrace.ProblemId("string")]
      *     })
@@ -308,6 +317,7 @@ export class Playlist {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -353,7 +363,7 @@ export class Playlist {
      * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.playlist.deletePlaylist(1, SeedTrace.PlaylistId("string"))
+     *     await client.playlist.deletePlaylist(1, SeedTrace.PlaylistId("string"))
      */
     public async deletePlaylist(
         serviceParam: number,
@@ -384,6 +394,7 @@ export class Playlist {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {

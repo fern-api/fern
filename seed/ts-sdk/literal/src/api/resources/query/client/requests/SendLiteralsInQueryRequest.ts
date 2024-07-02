@@ -5,8 +5,6 @@
 /**
  * @example
  *     {
- *         prompt: "You are a helpful assistant",
- *         stream: false,
  *         query: "What is the weather today"
  *     }
  */

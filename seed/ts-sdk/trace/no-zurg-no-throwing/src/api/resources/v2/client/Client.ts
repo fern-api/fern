@@ -16,8 +16,14 @@ export declare namespace V2 {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Random-Header header */
+        xRandomHeader?: string | undefined;
     }
 }
 
@@ -28,7 +34,7 @@ export class V2 {
      * @param {V2.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.v2.test()
+     *     await client.v2.test()
      */
     public async test(requestOptions?: V2.RequestOptions): Promise<core.APIResponse<void, SeedTrace.v2.test.Error>> {
         const _response = await core.fetcher({
@@ -49,6 +55,7 @@ export class V2 {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {

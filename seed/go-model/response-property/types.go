@@ -3,12 +3,36 @@
 package responseproperty
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 	core "github.com/response-property/fern/core"
 )
 
 type WithMetadata struct {
 	Metadata map[string]string `json:"metadata,omitempty" url:"metadata,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (w *WithMetadata) GetExtraProperties() map[string]interface{} {
+	return w.extraProperties
+}
+
+func (w *WithMetadata) UnmarshalJSON(data []byte) error {
+	type unmarshaler WithMetadata
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*w = WithMetadata(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+
+	return nil
 }
 
 func (w *WithMetadata) String() string {
@@ -21,6 +45,29 @@ func (w *WithMetadata) String() string {
 type Movie struct {
 	Id   string `json:"id" url:"id"`
 	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]interface{}
+}
+
+func (m *Movie) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
+}
+
+func (m *Movie) UnmarshalJSON(data []byte) error {
+	type unmarshaler Movie
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = Movie(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+
+	return nil
 }
 
 func (m *Movie) String() string {
@@ -32,6 +79,29 @@ func (m *Movie) String() string {
 
 type WithDocs struct {
 	Docs string `json:"docs" url:"docs"`
+
+	extraProperties map[string]interface{}
+}
+
+func (w *WithDocs) GetExtraProperties() map[string]interface{} {
+	return w.extraProperties
+}
+
+func (w *WithDocs) UnmarshalJSON(data []byte) error {
+	type unmarshaler WithDocs
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*w = WithDocs(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+
+	return nil
 }
 
 func (w *WithDocs) String() string {

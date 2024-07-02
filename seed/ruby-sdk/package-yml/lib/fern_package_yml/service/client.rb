@@ -20,11 +20,15 @@ module SeedPackageYmlClient
     # @return [Void]
     # @example
     #  package_yml = SeedPackageYmlClient::Client.new(base_url: "https://api.example.com")
-    #  package_yml.nop(id: "id-a2ijs82", nested_id: "id-219xca8")
+    #  package_yml.service.nop(id: "id-a2ijs82", nested_id: "id-219xca8")
     def nop(id:, nested_id:, request_options: nil)
       @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/#{id}/#{nested_id}"
       end
     end
@@ -46,12 +50,16 @@ module SeedPackageYmlClient
     # @return [Void]
     # @example
     #  package_yml = SeedPackageYmlClient::Client.new(base_url: "https://api.example.com")
-    #  package_yml.nop(id: "id-a2ijs82", nested_id: "id-219xca8")
+    #  package_yml.service.nop(id: "id-a2ijs82", nested_id: "id-219xca8")
     def nop(id:, nested_id:, request_options: nil)
       Async do
         @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/#{id}/#{nested_id}"
         end
       end

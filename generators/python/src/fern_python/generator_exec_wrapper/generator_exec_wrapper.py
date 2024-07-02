@@ -22,7 +22,7 @@ class GeneratorExecWrapper:
         self.generator_exec_client = FernGeneratorExec(environment=env.coordinator_url_v_2)
         self.task_id = env.id
         if self._is_in_development(env):
-            self.fdr_client = FdrClient(environment=FdrClientEnvironment.DEV)
+            self.fdr_client = FdrClient(base_url="https://registry-dev2.buildwithfern.com")
         else:
             self.fdr_client = FdrClient(environment=FdrClientEnvironment.PROD)
 

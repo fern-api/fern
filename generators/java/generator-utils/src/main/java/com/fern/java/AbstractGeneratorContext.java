@@ -1,17 +1,18 @@
 package com.fern.java;
 
 import com.fern.generator.exec.model.config.GeneratorConfig;
-import com.fern.irV42.model.commons.ErrorId;
-import com.fern.irV42.model.commons.TypeId;
-import com.fern.irV42.model.errors.ErrorDeclaration;
-import com.fern.irV42.model.http.HttpEndpoint;
-import com.fern.irV42.model.http.HttpRequestBody;
-import com.fern.irV42.model.http.InlinedRequestBody;
-import com.fern.irV42.model.ir.IntermediateRepresentation;
-import com.fern.irV42.model.types.DeclaredTypeName;
-import com.fern.irV42.model.types.ObjectTypeDeclaration;
-import com.fern.irV42.model.types.Type;
-import com.fern.irV42.model.types.TypeDeclaration;
+import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.commons.ErrorId;
+import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.errors.ErrorDeclaration;
+import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.HttpRequestBody;
+import com.fern.ir.model.http.InlinedRequestBody;
+import com.fern.ir.model.ir.IntermediateRepresentation;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
+import com.fern.ir.model.types.Type;
+import com.fern.ir.model.types.TypeDeclaration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -30,14 +31,20 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
     private final GlobalHeaders globalHeaders;
     private final Set<TypeId> interfaces;
     private final U customConfig;
+    private final List<AuthScheme> resolvedAuthSchemes;
 
     public AbstractGeneratorContext(
-            IntermediateRepresentation ir, GeneratorConfig generatorConfig, U customConfig, T poetClassNameFactory) {
+            IntermediateRepresentation ir,
+            GeneratorConfig generatorConfig,
+            U customConfig,
+            T poetClassNameFactory,
+            List<AuthScheme> resolvedAuthSchemes) {
         this.ir = ir;
         this.generatorConfig = generatorConfig;
         this.customConfig = customConfig;
         this.poetClassNameFactory = poetClassNameFactory;
         this.typeDefinitionsByName = ir.getTypes();
+        this.resolvedAuthSchemes = resolvedAuthSchemes;
         this.poetTypeNameMapper = new PoetTypeNameMapper(poetClassNameFactory, customConfig, typeDefinitionsByName);
         this.errorDefinitionsByName = ir.getErrors();
         this.globalHeaders = new GlobalHeaders(ir, poetTypeNameMapper);
@@ -80,6 +87,10 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
 
     public final GlobalHeaders getGlobalHeaders() {
         return globalHeaders;
+    }
+
+    public List<AuthScheme> getResolvedAuthSchemes() {
+        return resolvedAuthSchemes;
     }
 
     private static Set<TypeId> getInterfaceTypeIds(IntermediateRepresentation ir) {

@@ -170,8 +170,8 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                         same_properties_as_object=lambda type_name: [
                             self._context.get_class_reference_for_type_id(type_name.type_id)
                         ],
-                        single_property=lambda _: None,
-                        no_properties=lambda: None,
+                        single_property=lambda _: [],
+                        no_properties=lambda: [],
                     ),
                     parent=internal_union,
                     frozen=self._custom_config.frozen,
@@ -180,6 +180,8 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     pydantic_base_model=self._context.core_utilities.get_unchecked_pydantic_base_model(),
                     require_optional_fields=self._custom_config.require_optional_fields,
                     is_pydantic_v2=self._context.core_utilities.get_is_pydantic_v2(),
+                    universal_field_validator=self._context.core_utilities.universal_field_validator,
+                    universal_root_validator=self._context.core_utilities.universal_root_validator,
                 ) as internal_pydantic_model_for_single_union_type:
                     internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()
                     internal_single_union_types.append(internal_single_union_type)
@@ -194,8 +196,8 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     if shape.properties_type == "singleProperty":
                         internal_pydantic_model_for_single_union_type.add_field(
                             PydanticField(
-                                name=shape.name.name.snake_case.unsafe_name,
-                                pascal_case_field_name=shape.name.name.pascal_case.unsafe_name,
+                                name=shape.name.name.snake_case.safe_name,
+                                pascal_case_field_name=shape.name.name.pascal_case.safe_name,
                                 json_field_name=shape.name.wire_value,
                                 type_hint=self._context.get_type_hint_for_type_reference(type_reference=shape.type),
                             )
@@ -369,14 +371,14 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
         discriminant_value = self._get_discriminant_value_for_single_union_type(single_union_type)
         return PydanticField(
             name=self._get_discriminant_attr_name(),
-            pascal_case_field_name=self._union.discriminant.name.pascal_case.unsafe_name,
+            pascal_case_field_name=self._union.discriminant.name.pascal_case.safe_name,
             type_hint=AST.TypeHint.literal(discriminant_value),
             json_field_name=self._union.discriminant.wire_value,
             default_value=discriminant_value,
         )
 
     def _get_discriminant_attr_name(self) -> str:
-        return self._union.discriminant.name.snake_case.unsafe_name
+        return self._union.discriminant.name.snake_case.safe_name
 
     def _get_discriminant_value_for_single_union_type(
         self,
@@ -390,4 +392,4 @@ def assert_never(arg: Never) -> Never:
 
 
 def get_field_name_for_single_property(property: ir_types.SingleUnionTypeProperty) -> str:
-    return property.name.name.snake_case.unsafe_name
+    return property.name.name.snake_case.safe_name

@@ -20,10 +20,17 @@ module SeedFileDownloadClient
     #  response environment. The latter will allow access to the response status,
     #  headers and reason, as well as the request info.
     # @return [Void]
+    # @example
+    #  file_download = SeedFileDownloadClient::Client.new(base_url: "https://api.example.com")
+    #  file_download.service.download_file
     def download_file(request_options: nil, &on_data)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.options.on_data = on_data
         req.url "#{@request_client.get_url(request_options: request_options)}/"
       end
@@ -46,11 +53,18 @@ module SeedFileDownloadClient
     #  response environment. The latter will allow access to the response status,
     #  headers and reason, as well as the request info.
     # @return [Void]
+    # @example
+    #  file_download = SeedFileDownloadClient::Client.new(base_url: "https://api.example.com")
+    #  file_download.service.download_file
     def download_file(request_options: nil, &on_data)
       Async do
         @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.options.on_data = on_data
           req.url "#{@request_client.get_url(request_options: request_options)}/"
         end

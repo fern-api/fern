@@ -15,8 +15,12 @@ export declare namespace Auth {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -28,10 +32,9 @@ export class Auth {
      * @param {Auth.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedOauthClientCredentialsDefault.auth.getToken({
+     *     await client.auth.getToken({
      *         clientId: "string",
-     *         clientSecret: "string",
-     *         grantType: "client_credentials"
+     *         clientSecret: "string"
      *     })
      */
     public async getToken(
@@ -56,6 +59,7 @@ export class Auth {
             },
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.TokenResponse.parseOrThrow(_response.body, {

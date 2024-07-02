@@ -11,8 +11,12 @@ export declare namespace C {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -23,7 +27,7 @@ export class C {
      * @param {C.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedApi.a.c.foo()
+     *     await client.a.c.foo()
      */
     public async foo(requestOptions?: C.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
@@ -39,6 +43,7 @@ export class C {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;

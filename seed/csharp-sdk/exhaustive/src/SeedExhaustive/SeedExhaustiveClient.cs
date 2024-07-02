@@ -2,6 +2,8 @@ using SeedExhaustive;
 using SeedExhaustive.Endpoints;
 using SeedExhaustive.Types;
 
+#nullable enable
+
 namespace SeedExhaustive;
 
 public partial class SeedExhaustiveClient
@@ -39,7 +41,7 @@ public partial class SeedExhaustiveClient
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);

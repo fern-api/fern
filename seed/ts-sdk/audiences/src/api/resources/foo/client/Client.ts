@@ -13,8 +13,12 @@ export declare namespace Foo {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -26,7 +30,7 @@ export class Foo {
      * @param {Foo.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedAudiences.foo.find({
+     *     await client.foo.find({
      *         optionalString: "string",
      *         publicProperty: "string",
      *         privateProperty: 1
@@ -57,6 +61,7 @@ export class Foo {
             body: await serializers.FindRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.ImportingType.parseOrThrow(_response.body, {

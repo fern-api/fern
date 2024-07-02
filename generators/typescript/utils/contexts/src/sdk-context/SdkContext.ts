@@ -1,3 +1,4 @@
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { JavaScriptRuntime } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { ModelContext } from "../model-context/ModelContext";
@@ -13,8 +14,9 @@ import { SdkInlinedRequestBodySchemaContext } from "./sdk-inlined-request-body-s
 import { TimeoutSdkErrorContext } from "./timeout-sdk-error";
 
 export interface SdkContext extends ModelContext {
+    ir: IntermediateRepresentation;
     sdkInstanceReferenceForSnippet: ts.Identifier;
-    namespaceExport: string | undefined;
+    namespaceExport: string;
     endpointErrorUnion: EndpointErrorUnionContext;
     environments: EnvironmentsContext;
     genericAPISdkError: GenericAPISdkErrorContext;
@@ -29,4 +31,5 @@ export interface SdkContext extends ModelContext {
     includeSerdeLayer: boolean;
     retainOriginalCasing: boolean;
     generateOAuthClients: boolean;
+    inlineFileProperties: boolean;
 }

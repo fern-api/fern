@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/payment",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_payment.create"
             },
             "snippet": {
                 "type": "go",
@@ -13,7 +14,8 @@
         {
             "id": {
                 "path": "/payment/{paymentId}",
-                "method": "DELETE"
+                "method": "DELETE",
+                "identifier_override": "endpoint_payment.delete"
             },
             "snippet": {
                 "type": "go",

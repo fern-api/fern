@@ -22,6 +22,25 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/MyUnion'
+  /metadata:
+    get:
+      operationId: union_getMetadata
+      tags:
+        - Union
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metadata'
+              examples:
+                Example1:
+                  value:
+                    name: exampleName
+                    value: exampleValue
+                    default: exampleDefault
 components:
   schemas:
     MyUnion:
@@ -40,5 +59,30 @@ components:
             type: array
             items:
               type: integer
+        - type: array
+          items:
+            type: string
       description: Several different types are accepted.
+    Metadata:
+      title: Metadata
+      type: object
+      additionalProperties:
+        type: string
+      description: |-
+        Undiscriminated unions can act as a map key
+        as long as all of their values are valid keys
+        (i.e. do they have a valid string representation).
+    Key:
+      title: Key
+      oneOf:
+        - $ref: '#/components/schemas/KeyType'
+        - type: string
+          enum:
+            - default
+    KeyType:
+      title: KeyType
+      type: string
+      enum:
+        - name
+        - value
   securitySchemes: {}

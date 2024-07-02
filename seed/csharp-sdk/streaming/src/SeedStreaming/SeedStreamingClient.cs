@@ -1,5 +1,7 @@
 using SeedStreaming;
 
+#nullable enable
+
 namespace SeedStreaming;
 
 public partial class SeedStreamingClient
@@ -19,7 +21,7 @@ public partial class SeedStreamingClient
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);

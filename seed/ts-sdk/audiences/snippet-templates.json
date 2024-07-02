@@ -7,13 +7,45 @@
         },
         "endpointId": {
             "path": "/",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_folder-a/service.getDirectThread"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedAudiences = new SeedAudiencesClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedAudiencesClient } from \"@fern/audiences\";"
+                ],
+                "templateString": "const client = new SeedAudiencesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedAudiences.folderA.service.getDirectThread()",
+                "templateString": "await client.folderA.service.getDirectThread()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [],
@@ -30,13 +62,45 @@
         },
         "endpointId": {
             "path": "/",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_foo.find"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedAudiences = new SeedAudiencesClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedAudiencesClient } from \"@fern/audiences\";"
+                ],
+                "templateString": "const client = new SeedAudiencesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedAudiences.foo.find(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.foo.find(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

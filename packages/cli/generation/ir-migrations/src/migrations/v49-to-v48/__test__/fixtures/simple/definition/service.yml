@@ -1,0 +1,26 @@
+types:
+  User:
+    properties:
+      name: string
+
+  ListUsersResponse:
+    properties:
+      users: list<User>
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    listUsers:
+      method: GET
+      path: /users
+      stream-condition: $request.stream
+      request:
+        name: ListUsersRequest
+        query-parameters:
+          page: integer
+        body:
+          properties: 
+            stream: optional<boolean>
+      response: ListUsersResponse
+      response-stream: User

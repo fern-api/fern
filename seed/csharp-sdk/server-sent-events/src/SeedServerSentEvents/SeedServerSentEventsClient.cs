@@ -1,5 +1,7 @@
 using SeedServerSentEvents;
 
+#nullable enable
+
 namespace SeedServerSentEvents;
 
 public partial class SeedServerSentEventsClient
@@ -19,7 +21,7 @@ public partial class SeedServerSentEventsClient
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);

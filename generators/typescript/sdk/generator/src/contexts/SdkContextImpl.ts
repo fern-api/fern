@@ -30,7 +30,6 @@ import { SdkInlinedRequestBodySchemaGenerator } from "@fern-typescript/sdk-inlin
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
-import { camelCase } from "lodash-es";
 import { SourceFile, ts } from "ts-morph";
 import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer";
 import { EnvironmentsDeclarationReferencer } from "../declaration-referencers/EnvironmentsDeclarationReferencer";
@@ -54,8 +53,11 @@ import { TimeoutSdkErrorContextImpl } from "./timeout-sdk-error/TimeoutSdkErrorC
 import { TypeSchemaContextImpl } from "./type-schema/TypeSchemaContextImpl";
 import { TypeContextImpl } from "./type/TypeContextImpl";
 
+const ROOT_CLIENT_VARIABLE_NAME = "client";
+
 export declare namespace SdkContextImpl {
     export interface Init {
+        ir: IntermediateRepresentation;
         sourceFile: SourceFile;
         importsManager: ImportsManager;
         dependencyManager: DependencyManager;
@@ -97,10 +99,12 @@ export declare namespace SdkContextImpl {
         targetRuntime: JavaScriptRuntime;
         retainOriginalCasing: boolean;
         generateOAuthClients: boolean;
+        inlineFileProperties: boolean;
     }
 }
 
 export class SdkContextImpl implements SdkContext {
+    public readonly ir: IntermediateRepresentation;
     public readonly sourceFile: SourceFile;
     public readonly externalDependencies: ExternalDependencies;
     public readonly coreUtilities: CoreUtilities;
@@ -109,7 +113,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly npmPackage: NpmPackage | undefined;
     public readonly type: TypeContextImpl;
     public readonly typeSchema: TypeSchemaContextImpl;
-    public readonly namespaceExport: string | undefined;
+    public readonly namespaceExport: string;
     public readonly rootClientVariableName: string;
     public readonly sdkInstanceReferenceForSnippet: ts.Identifier;
 
@@ -126,9 +130,11 @@ export class SdkContextImpl implements SdkContext {
     public readonly targetRuntime: JavaScriptRuntime;
     public readonly includeSerdeLayer: boolean;
     public readonly retainOriginalCasing: boolean;
+    public readonly inlineFileProperties: boolean;
     public readonly generateOAuthClients: boolean;
 
     constructor({
+        ir,
         npmPackage,
         isForSnippet,
         intermediateRepresentation,
@@ -169,14 +175,17 @@ export class SdkContextImpl implements SdkContext {
         includeSerdeLayer,
         retainOriginalCasing,
         targetRuntime,
+        inlineFileProperties,
         generateOAuthClients
     }: SdkContextImpl.Init) {
+        this.ir = ir;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.inlineFileProperties = inlineFileProperties;
         this.targetRuntime = targetRuntime;
         this.generateOAuthClients = generateOAuthClients;
         this.namespaceExport = typeDeclarationReferencer.namespaceExport;
-        this.rootClientVariableName = camelCase(this.namespaceExport);
+        this.rootClientVariableName = ROOT_CLIENT_VARIABLE_NAME;
         this.sdkInstanceReferenceForSnippet = ts.factory.createIdentifier(this.rootClientVariableName);
         this.sourceFile = sourceFile;
         this.npmPackage = npmPackage;
@@ -245,7 +254,8 @@ export class SdkContextImpl implements SdkContext {
             sourceFile: this.sourceFile,
             importsManager,
             includeSerdeLayer,
-            retainOriginalCasing
+            retainOriginalCasing,
+            inlineFileProperties
         });
         this.sdkInlinedRequestBodySchema = new SdkInlinedRequestBodySchemaContextImpl({
             importsManager,

@@ -5,5 +5,9 @@ import { readFile } from "fs/promises";
 export async function loadIntermediateRepresentation(pathToFile: string): Promise<IntermediateRepresentation> {
     const irString = (await readFile(pathToFile)).toString();
     const irJson = JSON.parse(irString);
-    return IrSerialization.IntermediateRepresentation.parseOrThrow(irJson);
+    return IrSerialization.IntermediateRepresentation.parseOrThrow(irJson, {
+        unrecognizedObjectKeys: "passthrough",
+        allowUnrecognizedEnumValues: true,
+        allowUnrecognizedUnionMembers: true
+    });
 }

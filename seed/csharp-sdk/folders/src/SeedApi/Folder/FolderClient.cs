@@ -1,6 +1,8 @@
 using SeedApi;
 using SeedApi.Folder;
 
+#nullable enable
+
 namespace SeedApi.Folder;
 
 public class FolderClient
@@ -18,7 +20,7 @@ public class FolderClient
     public async void FooAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = "" }
         );
     }
 }

@@ -153,7 +153,7 @@ class TypeReferenceToTypeHintConverter:
         )
 
     def _get_type_hint_for_primitive(self, primitive: ir_types.PrimitiveType) -> AST.TypeHint:
-        to_return = primitive.visit(
+        to_return = primitive.v_1.visit(
             integer=AST.TypeHint.int_,
             double=AST.TypeHint.float_,
             string=AST.TypeHint.str_,
@@ -163,5 +163,6 @@ class TypeReferenceToTypeHintConverter:
             uuid_=AST.TypeHint.uuid,
             date=AST.TypeHint.date,
             base_64=AST.TypeHint.str_,
+            big_integer=AST.TypeHint.str_,
         )
         return to_return

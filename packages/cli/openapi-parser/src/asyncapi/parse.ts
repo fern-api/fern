@@ -12,6 +12,7 @@ import {
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../getExtension";
+import { ParseOpenAPIOptions } from "../options";
 import { convertSchema } from "../schema/convertSchemas";
 import { convertUndiscriminatedOneOf } from "../schema/convertUndiscriminatedOneOf";
 import { convertSchemaWithExampleToSchema } from "../schema/utils/convertSchemaWithExampleToSchema";
@@ -25,16 +26,17 @@ import { AsyncAPIV2 } from "./v2";
 export interface AsyncAPIIntermediateRepresentation {
     schemas: Record<SchemaId, Schema>;
     channel: WebsocketChannel | undefined;
+    basePath: string | undefined;
 }
 
 export function parseAsyncAPI({
     document,
     taskContext,
-    shouldUseTitleAsName
+    options
 }: {
     document: AsyncAPIV2.Document;
     taskContext: TaskContext;
-    shouldUseTitleAsName: boolean;
+    options: ParseOpenAPIOptions;
 }): AsyncAPIIntermediateRepresentation {
     const breadcrumbs: string[] = [];
     if (document.tags?.[0] != null) {
@@ -43,7 +45,11 @@ export function parseAsyncAPI({
         breadcrumbs.push("websocket");
     }
 
-    const context = new AsyncAPIV2ParserContext({ document, taskContext, shouldUseTitleAsName });
+    const context = new AsyncAPIV2ParserContext({
+        document,
+        taskContext,
+        options
+    });
 
     const schemas: Record<SchemaId, SchemaWithExample> = {};
     let parsedChannel: WebsocketChannel | undefined = undefined;
@@ -72,10 +78,12 @@ export function parseAsyncAPI({
                             ? convertSchema(parameter.schema, false, context, breadcrumbs)
                             : SchemaWithExample.primitive({
                                   schema: PrimitiveSchemaValueWithExample.string({
-                                      example: undefined,
+                                      default: undefined,
+                                      pattern: undefined,
                                       format: undefined,
                                       maxLength: undefined,
-                                      minLength: undefined
+                                      minLength: undefined,
+                                      example: undefined
                                   }),
                                   description: undefined,
                                   generatedName: "",
@@ -207,7 +215,8 @@ export function parseAsyncAPI({
         schemas: Object.fromEntries(
             Object.entries(schemas).map(([id, schema]) => [id, convertSchemaWithExampleToSchema(schema)])
         ),
-        channel: parsedChannel
+        channel: parsedChannel,
+        basePath: getExtension<string | undefined>(document, FernAsyncAPIExtension.BASE_PATH)
     };
 }
 

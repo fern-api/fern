@@ -2,7 +2,6 @@
 
 import datetime as dt
 import typing
-import urllib.parse
 import uuid
 from json.decoder import JSONDecodeError
 
@@ -10,8 +9,6 @@ from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.pydantic_utilities import pydantic_v1
-from ...core.query_encoder import encode_query
-from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
 from ...types.object.types.nested_object_with_optional_field import NestedObjectWithOptionalField
 from ...types.object.types.nested_object_with_required_field import NestedObjectWithRequiredField
@@ -42,6 +39,7 @@ class ObjectClient:
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
         set_: typing.Optional[typing.Set[str]] = OMIT,
         map_: typing.Optional[typing.Dict[int, str]] = OMIT,
+        bigint: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
@@ -70,6 +68,8 @@ class ObjectClient:
         set_ : typing.Optional[typing.Set[str]]
 
         map_ : typing.Optional[typing.Dict[int, str]]
+
+        bigint : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -108,66 +108,33 @@ class ObjectClient:
             list_=["string"],
             set_={"string"},
             map_={1: "string"},
+            bigint="123456789123456789",
         )
         """
-        _request: typing.Dict[str, typing.Any] = {}
-        if string is not OMIT:
-            _request["string"] = string
-        if integer is not OMIT:
-            _request["integer"] = integer
-        if long_ is not OMIT:
-            _request["long"] = long_
-        if double is not OMIT:
-            _request["double"] = double
-        if bool_ is not OMIT:
-            _request["bool"] = bool_
-        if datetime is not OMIT:
-            _request["datetime"] = datetime
-        if date is not OMIT:
-            _request["date"] = date
-        if uuid_ is not OMIT:
-            _request["uuid"] = uuid_
-        if base_64 is not OMIT:
-            _request["base64"] = base_64
-        if list_ is not OMIT:
-            _request["list"] = list_
-        if set_ is not OMIT:
-            _request["set"] = set_
-        if map_ is not OMIT:
-            _request["map"] = map_
         _response = self._client_wrapper.httpx_client.request(
+            "object/get-and-return-with-optional-field",
             method="POST",
-            url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-optional-field"
-            ),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(_request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(_request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            json={
+                "string": string,
+                "integer": integer,
+                "long": long_,
+                "double": double,
+                "bool": bool_,
+                "datetime": datetime,
+                "date": date,
+                "uuid": uuid_,
+                "base64": base_64,
+                "list": list_,
+                "set": set_,
+                "map": map_,
+                "bigint": bigint,
             },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            request_options=request_options,
+            omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ObjectWithOptionalField, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(ObjectWithOptionalField, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -200,40 +167,16 @@ class ObjectClient:
             string="string",
         )
         """
-        _request: typing.Dict[str, typing.Any] = {"string": string}
         _response = self._client_wrapper.httpx_client.request(
+            "object/get-and-return-with-required-field",
             method="POST",
-            url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-required-field"
-            ),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(_request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(_request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            json={"string": string},
+            request_options=request_options,
+            omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ObjectWithRequiredField, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(ObjectWithRequiredField, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -266,40 +209,16 @@ class ObjectClient:
             map_={"string": {"string": "string"}},
         )
         """
-        _request: typing.Dict[str, typing.Any] = {"map": map_}
         _response = self._client_wrapper.httpx_client.request(
+            "object/get-and-return-with-map-of-map",
             method="POST",
-            url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-map-of-map"
-            ),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(_request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(_request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            json={"map": map_},
+            request_options=request_options,
+            omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ObjectWithMapOfMap, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(ObjectWithMapOfMap, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -359,47 +278,20 @@ class ObjectClient:
                 list_=["string"],
                 set_={"string"},
                 map_={1: "string"},
+                bigint="123456789123456789",
             ),
         )
         """
-        _request: typing.Dict[str, typing.Any] = {}
-        if string is not OMIT:
-            _request["string"] = string
-        if nested_object is not OMIT:
-            _request["NestedObject"] = nested_object
         _response = self._client_wrapper.httpx_client.request(
+            "object/get-and-return-nested-with-optional-field",
             method="POST",
-            url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-optional-field"
-            ),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(_request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(_request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            json={"string": string, "NestedObject": nested_object},
+            request_options=request_options,
+            omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(NestedObjectWithOptionalField, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(NestedObjectWithOptionalField, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -407,6 +299,7 @@ class ObjectClient:
 
     def get_and_return_nested_with_required_field(
         self,
+        string_: str,
         *,
         string: str,
         nested_object: ObjectWithOptionalField,
@@ -415,6 +308,8 @@ class ObjectClient:
         """
         Parameters
         ----------
+        string_ : str
+
         string : str
 
         nested_object : ObjectWithOptionalField
@@ -439,6 +334,7 @@ class ObjectClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.object.get_and_return_nested_with_required_field(
+            string_="string",
             string="string",
             nested_object=ObjectWithOptionalField(
                 string="string",
@@ -459,43 +355,20 @@ class ObjectClient:
                 list_=["string"],
                 set_={"string"},
                 map_={1: "string"},
+                bigint="123456789123456789",
             ),
         )
         """
-        _request: typing.Dict[str, typing.Any] = {"string": string, "NestedObject": nested_object}
         _response = self._client_wrapper.httpx_client.request(
+            f"object/get-and-return-nested-with-required-field/{jsonable_encoder(string_)}",
             method="POST",
-            url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-required-field"
-            ),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(_request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(_request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            json={"string": string, "NestedObject": nested_object},
+            request_options=request_options,
+            omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(NestedObjectWithRequiredField, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(NestedObjectWithRequiredField, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -554,44 +427,22 @@ class ObjectClient:
                         list_=["string"],
                         set_={"string"},
                         map_={1: "string"},
+                        bigint="123456789123456789",
                     ),
                 )
             ],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
+            "object/get-and-return-nested-with-required-field-list",
             method="POST",
-            url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-required-field-list"
-            ),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            json=request,
+            request_options=request_options,
+            omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(NestedObjectWithRequiredField, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(NestedObjectWithRequiredField, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -617,6 +468,7 @@ class AsyncObjectClient:
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
         set_: typing.Optional[typing.Set[str]] = OMIT,
         map_: typing.Optional[typing.Dict[int, str]] = OMIT,
+        bigint: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
@@ -646,6 +498,8 @@ class AsyncObjectClient:
 
         map_ : typing.Optional[typing.Dict[int, str]]
 
+        bigint : typing.Optional[str]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -655,6 +509,7 @@ class AsyncObjectClient:
 
         Examples
         --------
+        import asyncio
         import datetime
         import uuid
 
@@ -664,85 +519,58 @@ class AsyncObjectClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.object.get_and_return_with_optional_field(
-            string="string",
-            integer=1,
-            long_=1000000,
-            double=1.1,
-            bool_=True,
-            datetime=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            date=datetime.date.fromisoformat(
-                "2023-01-15",
-            ),
-            uuid_=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            base_64="SGVsbG8gd29ybGQh",
-            list_=["string"],
-            set_={"string"},
-            map_={1: "string"},
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_with_optional_field(
+                string="string",
+                integer=1,
+                long_=1000000,
+                double=1.1,
+                bool_=True,
+                datetime=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                date=datetime.date.fromisoformat(
+                    "2023-01-15",
+                ),
+                uuid_=uuid.UUID(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+                base_64="SGVsbG8gd29ybGQh",
+                list_=["string"],
+                set_={"string"},
+                map_={1: "string"},
+                bigint="123456789123456789",
+            )
+
+
+        asyncio.run(main())
         """
-        _request: typing.Dict[str, typing.Any] = {}
-        if string is not OMIT:
-            _request["string"] = string
-        if integer is not OMIT:
-            _request["integer"] = integer
-        if long_ is not OMIT:
-            _request["long"] = long_
-        if double is not OMIT:
-            _request["double"] = double
-        if bool_ is not OMIT:
-            _request["bool"] = bool_
-        if datetime is not OMIT:
-            _request["datetime"] = datetime
-        if date is not OMIT:
-            _request["date"] = date
-        if uuid_ is not OMIT:
-            _request["uuid"] = uuid_
-        if base_64 is not OMIT:
-            _request["base64"] = base_64
-        if list_ is not OMIT:
-            _request["list"] = list_
-        if set_ is not OMIT:
-            _request["set"] = set_
-        if map_ is not OMIT:
-            _request["map"] = map_
         _response = await self._client_wrapper.httpx_client.request(
+            "object/get-and-return-with-optional-field",
             method="POST",
-            url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-optional-field"
-            ),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(_request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(_request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            json={
+                "string": string,
+                "integer": integer,
+                "long": long_,
+                "double": double,
+                "bool": bool_,
+                "datetime": datetime,
+                "date": date,
+                "uuid": uuid_,
+                "base64": base_64,
+                "list": list_,
+                "set": set_,
+                "map": map_,
+                "bigint": bigint,
             },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            request_options=request_options,
+            omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ObjectWithOptionalField, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(ObjectWithOptionalField, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -765,50 +593,34 @@ class AsyncObjectClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.object.get_and_return_with_required_field(
-            string="string",
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_with_required_field(
+                string="string",
+            )
+
+
+        asyncio.run(main())
         """
-        _request: typing.Dict[str, typing.Any] = {"string": string}
         _response = await self._client_wrapper.httpx_client.request(
+            "object/get-and-return-with-required-field",
             method="POST",
-            url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-required-field"
-            ),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(_request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(_request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            json={"string": string},
+            request_options=request_options,
+            omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ObjectWithRequiredField, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(ObjectWithRequiredField, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -831,50 +643,34 @@ class AsyncObjectClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.object.get_and_return_with_map_of_map(
-            map_={"string": {"string": "string"}},
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_with_map_of_map(
+                map_={"string": {"string": "string"}},
+            )
+
+
+        asyncio.run(main())
         """
-        _request: typing.Dict[str, typing.Any] = {"map": map_}
         _response = await self._client_wrapper.httpx_client.request(
+            "object/get-and-return-with-map-of-map",
             method="POST",
-            url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-map-of-map"
-            ),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(_request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(_request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            json={"map": map_},
+            request_options=request_options,
+            omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ObjectWithMapOfMap, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(ObjectWithMapOfMap, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -903,6 +699,7 @@ class AsyncObjectClient:
 
         Examples
         --------
+        import asyncio
         import datetime
         import uuid
 
@@ -913,68 +710,47 @@ class AsyncObjectClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.object.get_and_return_nested_with_optional_field(
-            string="string",
-            nested_object=ObjectWithOptionalField(
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_nested_with_optional_field(
                 string="string",
-                integer=1,
-                long_=1000000,
-                double=1.1,
-                bool_=True,
-                datetime=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
+                nested_object=ObjectWithOptionalField(
+                    string="string",
+                    integer=1,
+                    long_=1000000,
+                    double=1.1,
+                    bool_=True,
+                    datetime=datetime.datetime.fromisoformat(
+                        "2024-01-15 09:30:00+00:00",
+                    ),
+                    date=datetime.date.fromisoformat(
+                        "2023-01-15",
+                    ),
+                    uuid_=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    base_64="SGVsbG8gd29ybGQh",
+                    list_=["string"],
+                    set_={"string"},
+                    map_={1: "string"},
+                    bigint="123456789123456789",
                 ),
-                date=datetime.date.fromisoformat(
-                    "2023-01-15",
-                ),
-                uuid_=uuid.UUID(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-                base_64="SGVsbG8gd29ybGQh",
-                list_=["string"],
-                set_={"string"},
-                map_={1: "string"},
-            ),
-        )
+            )
+
+
+        asyncio.run(main())
         """
-        _request: typing.Dict[str, typing.Any] = {}
-        if string is not OMIT:
-            _request["string"] = string
-        if nested_object is not OMIT:
-            _request["NestedObject"] = nested_object
         _response = await self._client_wrapper.httpx_client.request(
+            "object/get-and-return-nested-with-optional-field",
             method="POST",
-            url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-optional-field"
-            ),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(_request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(_request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            json={"string": string, "NestedObject": nested_object},
+            request_options=request_options,
+            omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(NestedObjectWithOptionalField, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(NestedObjectWithOptionalField, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -982,6 +758,7 @@ class AsyncObjectClient:
 
     async def get_and_return_nested_with_required_field(
         self,
+        string_: str,
         *,
         string: str,
         nested_object: ObjectWithOptionalField,
@@ -990,6 +767,8 @@ class AsyncObjectClient:
         """
         Parameters
         ----------
+        string_ : str
+
         string : str
 
         nested_object : ObjectWithOptionalField
@@ -1003,6 +782,7 @@ class AsyncObjectClient:
 
         Examples
         --------
+        import asyncio
         import datetime
         import uuid
 
@@ -1013,64 +793,48 @@ class AsyncObjectClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.object.get_and_return_nested_with_required_field(
-            string="string",
-            nested_object=ObjectWithOptionalField(
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_nested_with_required_field(
+                string_="string",
                 string="string",
-                integer=1,
-                long_=1000000,
-                double=1.1,
-                bool_=True,
-                datetime=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
+                nested_object=ObjectWithOptionalField(
+                    string="string",
+                    integer=1,
+                    long_=1000000,
+                    double=1.1,
+                    bool_=True,
+                    datetime=datetime.datetime.fromisoformat(
+                        "2024-01-15 09:30:00+00:00",
+                    ),
+                    date=datetime.date.fromisoformat(
+                        "2023-01-15",
+                    ),
+                    uuid_=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    base_64="SGVsbG8gd29ybGQh",
+                    list_=["string"],
+                    set_={"string"},
+                    map_={1: "string"},
+                    bigint="123456789123456789",
                 ),
-                date=datetime.date.fromisoformat(
-                    "2023-01-15",
-                ),
-                uuid_=uuid.UUID(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-                base_64="SGVsbG8gd29ybGQh",
-                list_=["string"],
-                set_={"string"},
-                map_={1: "string"},
-            ),
-        )
+            )
+
+
+        asyncio.run(main())
         """
-        _request: typing.Dict[str, typing.Any] = {"string": string, "NestedObject": nested_object}
         _response = await self._client_wrapper.httpx_client.request(
+            f"object/get-and-return-nested-with-required-field/{jsonable_encoder(string_)}",
             method="POST",
-            url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-required-field"
-            ),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(_request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(_request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            json={"string": string, "NestedObject": nested_object},
+            request_options=request_options,
+            omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(NestedObjectWithRequiredField, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(NestedObjectWithRequiredField, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -1096,6 +860,7 @@ class AsyncObjectClient:
 
         Examples
         --------
+        import asyncio
         import datetime
         import uuid
 
@@ -1106,67 +871,51 @@ class AsyncObjectClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.object.get_and_return_nested_with_required_field_as_list(
-            request=[
-                NestedObjectWithRequiredField(
-                    string="string",
-                    nested_object=ObjectWithOptionalField(
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_nested_with_required_field_as_list(
+                request=[
+                    NestedObjectWithRequiredField(
                         string="string",
-                        integer=1,
-                        long_=1000000,
-                        double=1.1,
-                        bool_=True,
-                        datetime=datetime.datetime.fromisoformat(
-                            "2024-01-15 09:30:00+00:00",
+                        nested_object=ObjectWithOptionalField(
+                            string="string",
+                            integer=1,
+                            long_=1000000,
+                            double=1.1,
+                            bool_=True,
+                            datetime=datetime.datetime.fromisoformat(
+                                "2024-01-15 09:30:00+00:00",
+                            ),
+                            date=datetime.date.fromisoformat(
+                                "2023-01-15",
+                            ),
+                            uuid_=uuid.UUID(
+                                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                            ),
+                            base_64="SGVsbG8gd29ybGQh",
+                            list_=["string"],
+                            set_={"string"},
+                            map_={1: "string"},
+                            bigint="123456789123456789",
                         ),
-                        date=datetime.date.fromisoformat(
-                            "2023-01-15",
-                        ),
-                        uuid_=uuid.UUID(
-                            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                        ),
-                        base_64="SGVsbG8gd29ybGQh",
-                        list_=["string"],
-                        set_={"string"},
-                        map_={1: "string"},
-                    ),
-                )
-            ],
-        )
+                    )
+                ],
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
+            "object/get-and-return-nested-with-required-field-list",
             method="POST",
-            url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-required-field-list"
-            ),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            json=request,
+            request_options=request_options,
+            omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(NestedObjectWithRequiredField, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(NestedObjectWithRequiredField, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

@@ -11,7 +11,8 @@ import {
     HttpPathParameterSchema,
     HttpQueryParameterSchema,
     HttpServiceSchema,
-    TypeDeclarationSchema
+    TypeDeclarationSchema,
+    ValidationSchema
 } from "../schemas";
 import { ExampleCodeSampleSchema } from "../schemas/ExampleCodeSampleSchema";
 
@@ -28,12 +29,18 @@ export interface DefinitionFileAstNodeTypes {
     };
     exampleType: { typeName: string; typeDeclaration: TypeDeclarationSchema; example: ExampleTypeSchema };
     exampleTypeReference: string;
-    typeReference: { typeReference: string; location?: TypeReferenceLocation };
+    typeReference: {
+        typeReference: string;
+        _default?: unknown;
+        validation?: ValidationSchema;
+        location?: TypeReferenceLocation;
+    };
     typeName: string;
     httpService: HttpServiceSchema;
     httpEndpoint: { endpointId: string; endpoint: HttpEndpointSchema; service: HttpServiceSchema };
     serviceBaseUrl: string | undefined;
     endpointBaseUrl: { baseUrl: string | undefined; service: HttpServiceSchema };
+    streamCondition: { streamCondition: string | undefined; endpoint: HttpEndpointSchema };
     exampleHttpEndpointCall: {
         example: ExampleEndpointCallSchema;
         endpoint: HttpEndpointSchema;

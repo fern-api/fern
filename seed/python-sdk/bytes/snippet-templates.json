@@ -7,10 +7,20 @@
         },
         "endpointId": {
             "path": "/upload-content",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_service.upload"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedBytes\n\nclient = SeedBytes(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed.client import SeedBytes"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedBytes(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -40,7 +50,16 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedBytes\n\nclient = AsyncSeedBytes(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed.client import AsyncSeedBytes"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedBytes(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,

@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedMultiLineDocs;
 
+#nullable enable
+
 namespace SeedMultiLineDocs;
 
 public class UserClient
@@ -19,7 +21,7 @@ public class UserClient
     public async void GetUserAsync(string userId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/users/{userId}" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"users/{userId}" }
         );
     }
 
@@ -30,10 +32,10 @@ public class UserClient
     public async Task<User> CreateUserAsync(CreateUserRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/users",
+                Path = "users",
                 Body = request
             }
         );
@@ -42,6 +44,6 @@ public class UserClient
         {
             return JsonSerializer.Deserialize<User>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

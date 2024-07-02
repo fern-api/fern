@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Union
+from typing import List, Optional, Union
 
 from ...ast_node import AstNode, AstNodeMetadata, GenericTypeVar, NodeWriter
 
@@ -23,7 +23,7 @@ class TypeParameter(AstNode):
                 metadata.update(type_parameter.get_metadata())
         return metadata
 
-    def write(self, writer: NodeWriter) -> None:
+    def write(self, writer: NodeWriter, should_write_as_snippet: Optional[bool] = None) -> None:
         if isinstance(self._type_parameter, AstNode):
             self._type_parameter.write(writer=writer)
         elif isinstance(self._type_parameter, GenericTypeVar):

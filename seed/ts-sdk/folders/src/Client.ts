@@ -13,8 +13,12 @@ export declare namespace SeedApiClient {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -25,7 +29,7 @@ export class SeedApiClient {
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedApi.foo()
+     *     await client.foo()
      */
     public async foo(requestOptions?: SeedApiClient.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
@@ -41,6 +45,7 @@ export class SeedApiClient {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;

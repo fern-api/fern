@@ -1,0 +1,38 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_service.post"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedFileUploadClient } from \"@fern/file-upload\";\nimport * as fs from \"fs\";\n\nconst client = new SeedFileUploadClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.post({\n    file: fs.createReadStream(\"/path/to/your/file\"),\n    fileList: [fs.createReadStream(\"/path/to/your/file\")]\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/just-file",
+                "method": "POST",
+                "identifier_override": "endpoint_service.justFile"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedFileUploadClient } from \"@fern/file-upload\";\nimport * as fs from \"fs\";\n\nconst client = new SeedFileUploadClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.justFile({\n    file: fs.createReadStream(\"/path/to/your/file\")\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/just-file-with-query-params",
+                "method": "POST",
+                "identifier_override": "endpoint_service.justFileWithQueryParams"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedFileUploadClient } from \"@fern/file-upload\";\nimport * as fs from \"fs\";\n\nconst client = new SeedFileUploadClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.justFileWithQueryParams({\n    file: fs.createReadStream(\"/path/to/your/file\"),\n    maybeString: \"string\",\n    integer: 1,\n    maybeInteger: 1,\n    listOfStrings: \"string\",\n    optionalListOfStrings: \"string\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

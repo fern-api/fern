@@ -14,8 +14,16 @@ export declare namespace Path {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-API-Version header */
+        version?: "02-02-2024";
+        /** Override the X-API-Enable-Audit-Logging header */
+        auditLogging?: true;
     }
 }
 
@@ -27,15 +35,15 @@ export class Path {
      * @param {Path.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedLiteral.path.send("123")
+     *     await client.path.send("123")
      */
     public async send(id: "123", requestOptions?: Path.RequestOptions): Promise<SeedLiteral.SendResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), `path/${encodeURIComponent(id)}`),
             method: "POST",
             headers: {
-                "X-API-Version": "02-02-2024",
-                "X-API-Enable-Audit-Logging": "true",
+                "X-API-Version": requestOptions?.version ?? "02-02-2024",
+                "X-API-Enable-Audit-Logging": requestOptions?.auditLogging ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/literal",
                 "X-Fern-SDK-Version": "0.0.1",
@@ -45,6 +53,7 @@ export class Path {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.SendResponse.parseOrThrow(_response.body, {

@@ -1,5 +1,7 @@
 using SeedOauthClientCredentialsEnvironmentVariables;
 
+#nullable enable
+
 namespace SeedOauthClientCredentialsEnvironmentVariables;
 
 public partial class SeedOauthClientCredentialsEnvironmentVariablesClient
@@ -22,7 +24,7 @@ public partial class SeedOauthClientCredentialsEnvironmentVariablesClient
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);

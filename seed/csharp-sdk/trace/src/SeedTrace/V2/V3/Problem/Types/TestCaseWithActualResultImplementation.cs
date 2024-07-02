@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using SeedTrace.V2.V3;
 
+#nullable enable
+
 namespace SeedTrace.V2.V3;
 
 public class TestCaseWithActualResultImplementation
@@ -9,5 +11,5 @@ public class TestCaseWithActualResultImplementation
     public NonVoidFunctionDefinition GetActualResult { get; init; }
 
     [JsonPropertyName("assertCorrectnessCheck")]
-    public AssertCorrectnessCheck AssertCorrectnessCheck { get; init; }
+    public object AssertCorrectnessCheck { get; init; }
 }

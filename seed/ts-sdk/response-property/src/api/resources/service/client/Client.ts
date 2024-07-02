@@ -14,8 +14,12 @@ export declare namespace Service {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -27,7 +31,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedResponseProperty.service.getMovie("string")
+     *     await client.service.getMovie("string")
      */
     public async getMovie(
         request: string,
@@ -47,6 +51,7 @@ export class Service {
             body: await serializers.service.getMovie.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.Response.parseOrThrow(_response.body, {
@@ -84,7 +89,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedResponseProperty.service.getMovieDocs("string")
+     *     await client.service.getMovieDocs("string")
      */
     public async getMovieDocs(
         request: string,
@@ -106,6 +111,7 @@ export class Service {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.Response.parseOrThrow(_response.body, {
@@ -143,7 +149,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedResponseProperty.service.getMovieName("string")
+     *     await client.service.getMovieName("string")
      */
     public async getMovieName(
         request: string,
@@ -165,6 +171,7 @@ export class Service {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.StringResponse.parseOrThrow(_response.body, {
@@ -202,7 +209,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedResponseProperty.service.getMovieMetadata("string")
+     *     await client.service.getMovieMetadata("string")
      */
     public async getMovieMetadata(
         request: string,
@@ -224,6 +231,7 @@ export class Service {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.Response.parseOrThrow(_response.body, {
@@ -261,7 +269,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedResponseProperty.service.getOptionalMovie("string")
+     *     await client.service.getOptionalMovie("string")
      */
     public async getOptionalMovie(
         request: string,
@@ -283,6 +291,7 @@ export class Service {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.service.getOptionalMovie.Response.parseOrThrow(_response.body, {
@@ -320,7 +329,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedResponseProperty.service.getOptionalMovieDocs("string")
+     *     await client.service.getOptionalMovieDocs("string")
      */
     public async getOptionalMovieDocs(
         request: string,
@@ -342,6 +351,7 @@ export class Service {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.OptionalWithDocs.parseOrThrow(_response.body, {
@@ -379,7 +389,7 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedResponseProperty.service.getOptionalMovieName("string")
+     *     await client.service.getOptionalMovieName("string")
      */
     public async getOptionalMovieName(
         request: string,
@@ -401,6 +411,7 @@ export class Service {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.OptionalStringResponse.parseOrThrow(_response.body, {

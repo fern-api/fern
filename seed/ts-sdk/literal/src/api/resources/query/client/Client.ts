@@ -14,8 +14,16 @@ export declare namespace Query {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-API-Version header */
+        version?: "02-02-2024";
+        /** Override the X-API-Enable-Audit-Logging header */
+        auditLogging?: true;
     }
 }
 
@@ -27,9 +35,7 @@ export class Query {
      * @param {Query.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedLiteral.query.send({
-     *         prompt: "You are a helpful assistant",
-     *         stream: false,
+     *     await client.query.send({
      *         query: "What is the weather today"
      *     })
      */
@@ -46,8 +52,8 @@ export class Query {
             url: urlJoin(await core.Supplier.get(this._options.environment), "query"),
             method: "POST",
             headers: {
-                "X-API-Version": "02-02-2024",
-                "X-API-Enable-Audit-Logging": "true",
+                "X-API-Version": requestOptions?.version ?? "02-02-2024",
+                "X-API-Enable-Audit-Logging": requestOptions?.auditLogging ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/literal",
                 "X-Fern-SDK-Version": "0.0.1",
@@ -58,6 +64,7 @@ export class Query {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.SendResponse.parseOrThrow(_response.body, {

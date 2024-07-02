@@ -1,4 +1,4 @@
-import { AbstractCsharpGeneratorContext } from "@fern-api/csharp-codegen";
+import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { TypeId } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
@@ -27,6 +27,10 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
     }
 
     public getAsIsFiles(): string[] {
-        return [];
+        return [AsIsFiles.StringEnumSerializer, AsIsFiles.OneOfSerializer, AsIsFiles.CollectionItemSerializer];
+    }
+
+    public getExtraDependencies(): Record<string, string> {
+        return {};
     }
 }

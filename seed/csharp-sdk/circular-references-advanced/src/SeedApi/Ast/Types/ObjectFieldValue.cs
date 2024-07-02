@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
-using SeedApi;
+
+#nullable enable
 
 namespace SeedApi;
 
@@ -9,5 +10,5 @@ public class ObjectFieldValue
     public string Name { get; init; }
 
     [JsonPropertyName("value")]
-    public FieldValue Value { get; init; }
+    public object Value { get; init; }
 }

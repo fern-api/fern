@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class ProblemClient
@@ -15,22 +17,22 @@ public class ProblemClient
     /// <summary>
     /// Creates a problem
     /// </summary>
-    public async Task<CreateProblemResponse> CreateProblemAsync(CreateProblemRequest request)
+    public async Task<object> CreateProblemAsync(CreateProblemRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/create",
+                Path = "/problem-crud/create",
                 Body = request
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<CreateProblemResponse>(responseBody);
+            return JsonSerializer.Deserialize<object>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -42,10 +44,10 @@ public class ProblemClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/update/{problemId}",
+                Path = $"/problem-crud/update/{problemId}",
                 Body = request
             }
         );
@@ -54,7 +56,7 @@ public class ProblemClient
         {
             return JsonSerializer.Deserialize<UpdateProblemResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -63,7 +65,11 @@ public class ProblemClient
     public async void DeleteProblemAsync(string problemId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Delete, Path = $"/delete/{problemId}" }
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Delete,
+                Path = $"/problem-crud/delete/{problemId}"
+            }
         );
     }
 
@@ -75,10 +81,10 @@ public class ProblemClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/default-starter-files",
+                Path = "/problem-crud/default-starter-files",
                 Body = request
             }
         );
@@ -87,6 +93,6 @@ public class ProblemClient
         {
             return JsonSerializer.Deserialize<GetDefaultStarterFilesResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

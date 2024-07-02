@@ -19,6 +19,7 @@ const FIXTURES: Fixture[] = [
 
 describe("validateFernWorkspace", () => {
     for (const fixture of FIXTURES) {
+        const context = createMockTaskContext();
         // eslint-disable-next-line jest/valid-title
         it(fixture.name, async () => {
             const parseResult = await loadAPIWorkspace({
@@ -26,18 +27,16 @@ describe("validateFernWorkspace", () => {
                     AbsoluteFilePath.of(__dirname),
                     RelativeFilePath.of(`fixtures/${fixture.name}/fern/api`)
                 ),
-                context: createMockTaskContext(),
+                context,
                 cliVersion: "0.0.0",
                 workspaceName: undefined
             });
             if (!parseResult.didSucceed) {
                 throw new Error("Failed to parse workspace: " + JSON.stringify(parseResult));
             }
-            if (parseResult.workspace.type === "oss") {
-                throw new Error("Expected fern workspace, but received openapi");
-            }
+            const fernWorkspace = await parseResult.workspace.toFernWorkspace({ context });
 
-            const violations = await validateFernWorkspace(parseResult.workspace, CONSOLE_LOGGER);
+            const violations = await validateFernWorkspace(fernWorkspace, CONSOLE_LOGGER);
             expect(violations).toEqual(fixture.expectedViolations);
         });
     }

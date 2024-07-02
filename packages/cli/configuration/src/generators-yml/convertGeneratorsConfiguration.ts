@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { PublishingMetadata } from "@fern-fern/fiddle-sdk/api";
+import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
 import { readFile } from "fs/promises";
 import path from "path";
 import {
@@ -24,7 +24,12 @@ import {
     OPENAPI_OVERRIDES_LOCATION_KEY
 } from "./schemas/GeneratorsConfigurationSchema";
 import { GithubLicenseSchema } from "./schemas/GithubLicenseSchema";
+import { GithubPullRequestSchema } from "./schemas/GithubPullRequestSchema";
 import { MavenOutputLocationSchema } from "./schemas/MavenOutputLocationSchema";
+import { OutputMetadataSchema } from "./schemas/OutputMetadataSchema";
+import { PypiOutputMetadataSchema } from "./schemas/PypiOutputMetadataSchema";
+import { ReadmeSchema } from "./schemas/ReadmeSchema";
+import { ReviewersSchema } from "./schemas/ReviewersSchema";
 
 export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
@@ -33,11 +38,15 @@ export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     rawGeneratorsConfiguration: GeneratorsConfigurationSchema;
 }): Promise<GeneratorsConfiguration> {
+    const maybeTopLevelMetadata = getOutputMetadata(rawGeneratorsConfiguration.metadata);
+    const readme = rawGeneratorsConfiguration.readme;
+    const parsedApiConfiguration = await parseAPIConfiguration(rawGeneratorsConfiguration);
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
-        api: await parseAPIConfiguration(rawGeneratorsConfiguration),
+        api: parsedApiConfiguration,
         rawConfiguration: rawGeneratorsConfiguration,
         defaultGroup: rawGeneratorsConfiguration["default-group"],
+        reviewers: rawGeneratorsConfiguration.reviewers,
         groups:
             rawGeneratorsConfiguration.groups != null
                 ? await Promise.all(
@@ -45,7 +54,10 @@ export async function convertGeneratorsConfiguration({
                           convertGroup({
                               absolutePathToGeneratorsConfiguration,
                               groupName,
-                              group
+                              group,
+                              maybeTopLevelMetadata,
+                              maybeTopLevelReviewers: rawGeneratorsConfiguration.reviewers,
+                              readme
                           })
                       )
                   )
@@ -71,7 +83,7 @@ async function parseAPIConfiguration(
                 origin: undefined,
                 overrides: undefined,
                 audiences: [],
-                shouldUseTitleAsName: undefined
+                settings: { shouldUseTitleAsName: undefined, shouldUseUndiscriminatedUnionsWithLiterals: undefined }
             });
         } else if (Array.isArray(apiConfiguration)) {
             for (const definition of apiConfiguration) {
@@ -81,7 +93,10 @@ async function parseAPIConfiguration(
                         origin: undefined,
                         overrides: undefined,
                         audiences: [],
-                        shouldUseTitleAsName: undefined
+                        settings: {
+                            shouldUseTitleAsName: undefined,
+                            shouldUseUndiscriminatedUnionsWithLiterals: undefined
+                        }
                     });
                 } else {
                     apiDefinitions.push({
@@ -89,7 +104,10 @@ async function parseAPIConfiguration(
                         origin: definition.origin,
                         overrides: definition.overrides,
                         audiences: definition.audiences,
-                        shouldUseTitleAsName: definition.settings?.["use-title"]
+                        settings: {
+                            shouldUseTitleAsName: definition.settings?.["use-title"],
+                            shouldUseUndiscriminatedUnionsWithLiterals: definition.settings?.unions === "v1"
+                        }
                     });
                 }
             }
@@ -99,7 +117,10 @@ async function parseAPIConfiguration(
                 origin: apiConfiguration.origin,
                 overrides: apiConfiguration.overrides,
                 audiences: apiConfiguration.audiences,
-                shouldUseTitleAsName: apiConfiguration.settings?.["use-title"]
+                settings: {
+                    shouldUseTitleAsName: apiConfiguration.settings?.["use-title"],
+                    shouldUseUndiscriminatedUnionsWithLiterals: apiConfiguration.settings?.unions === "v1"
+                }
             });
         }
     } else {
@@ -115,7 +136,10 @@ async function parseAPIConfiguration(
                 origin: apiOrigin,
                 overrides: openapiOverrides,
                 audiences: [],
-                shouldUseTitleAsName: settings?.["use-title"]
+                settings: {
+                    shouldUseTitleAsName: settings?.["use-title"],
+                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1"
+                }
             });
         } else if (openapi != null) {
             apiDefinitions.push({
@@ -123,7 +147,10 @@ async function parseAPIConfiguration(
                 origin: openapi.origin,
                 overrides: openapi.overrides,
                 audiences: [],
-                shouldUseTitleAsName: openapi.settings?.["use-title"]
+                settings: {
+                    shouldUseTitleAsName: openapi.settings?.["use-title"],
+                    shouldUseUndiscriminatedUnionsWithLiterals: openapi.settings?.unions === "v1"
+                }
             });
         }
 
@@ -133,7 +160,10 @@ async function parseAPIConfiguration(
                 origin: apiOrigin,
                 overrides: undefined,
                 audiences: [],
-                shouldUseTitleAsName: settings?.["use-title"]
+                settings: {
+                    shouldUseTitleAsName: settings?.["use-title"],
+                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1"
+                }
             });
         }
     }
@@ -147,33 +177,69 @@ async function parseAPIConfiguration(
 async function convertGroup({
     absolutePathToGeneratorsConfiguration,
     groupName,
-    group
+    group,
+    maybeTopLevelMetadata,
+    maybeTopLevelReviewers,
+    readme
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     groupName: string;
     group: GeneratorGroupSchema;
+    maybeTopLevelMetadata: OutputMetadata | undefined;
+    maybeTopLevelReviewers: ReviewersSchema | undefined;
+    readme: ReadmeSchema | undefined;
 }): Promise<GeneratorGroup> {
+    const maybeGroupLevelMetadata = getOutputMetadata(group.metadata);
     return {
         groupName,
+        reviewers: group.reviewers,
         audiences: group.audiences == null ? { type: "all" } : { type: "select", audiences: group.audiences },
         generators: await Promise.all(
-            group.generators.map((generator) => convertGenerator({ absolutePathToGeneratorsConfiguration, generator }))
+            group.generators.map((generator) =>
+                convertGenerator({
+                    absolutePathToGeneratorsConfiguration,
+                    generator,
+                    maybeTopLevelMetadata,
+                    maybeGroupLevelMetadata,
+                    maybeTopLevelReviewers,
+                    maybeGroupLevelReviewers: group.reviewers,
+                    readme
+                })
+            )
         )
     };
 }
 
 async function convertGenerator({
     absolutePathToGeneratorsConfiguration,
-    generator
+    generator,
+    maybeGroupLevelMetadata,
+    maybeTopLevelMetadata,
+    maybeGroupLevelReviewers,
+    maybeTopLevelReviewers,
+    readme
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: GeneratorInvocationSchema;
+    maybeGroupLevelMetadata: OutputMetadata | undefined;
+    maybeTopLevelMetadata: OutputMetadata | undefined;
+    maybeGroupLevelReviewers: ReviewersSchema | undefined;
+    maybeTopLevelReviewers: ReviewersSchema | undefined;
+    readme: ReadmeSchema | undefined;
 }): Promise<GeneratorInvocation> {
     return {
         name: generator.name,
         version: generator.version,
         config: generator.config,
-        outputMode: await convertOutputMode({ absolutePathToGeneratorsConfiguration, generator }),
+        outputMode: await convertOutputMode({
+            absolutePathToGeneratorsConfiguration,
+            generator,
+            maybeGroupLevelMetadata,
+            maybeTopLevelMetadata,
+            maybeGroupLevelReviewers,
+            maybeTopLevelReviewers
+        }),
+        keywords: generator.keywords,
         smartCasing: generator["smart-casing"] ?? false,
         disableExamples: generator["disable-examples"] ?? false,
         absolutePathToLocalOutput:
@@ -186,7 +252,9 @@ async function convertGenerator({
                 : undefined,
         language: getLanguageFromGeneratorName(generator.name),
         irVersionOverride: generator["ir-version"] ?? undefined,
-        publishMetadata: getPublishMetadata({ generatorInvocation: generator })
+        publishMetadata: getPublishMetadata({ generatorInvocation: generator }),
+        readme,
+        settings: generator.api?.settings ?? undefined
     };
 }
 
@@ -214,19 +282,89 @@ function getPublishMetadata({
     return undefined;
 }
 
+function _getPypiMetadata({
+    pypiOutputMetadata,
+    maybeGroupLevelMetadata,
+    maybeTopLevelMetadata
+}: {
+    pypiOutputMetadata: PypiOutputMetadataSchema | undefined;
+    maybeGroupLevelMetadata: OutputMetadata | undefined;
+    maybeTopLevelMetadata: OutputMetadata | undefined;
+}): PypiMetadata | undefined {
+    let maybePyPiMetadata: PypiMetadata | undefined;
+    if (pypiOutputMetadata != null) {
+        maybePyPiMetadata = getPyPiMetadata(pypiOutputMetadata);
+        maybePyPiMetadata = { ...maybeTopLevelMetadata, ...maybeGroupLevelMetadata, ...maybePyPiMetadata };
+    }
+    return maybePyPiMetadata;
+}
+
+function _getReviewers({
+    topLevelReviewers,
+    groupLevelReviewers,
+    outputModeReviewers
+}: {
+    topLevelReviewers: ReviewersSchema | undefined;
+    groupLevelReviewers: ReviewersSchema | undefined;
+    outputModeReviewers: ReviewersSchema | undefined;
+}): GithubPullRequestReviewer[] {
+    const teamNames = new Set<string>();
+    const userNames = new Set<string>();
+
+    const reviewers: GithubPullRequestReviewer[] = [];
+
+    const allTeamReviewers = [
+        ...(topLevelReviewers?.teams ?? []),
+        ...(groupLevelReviewers?.teams ?? []),
+        ...(outputModeReviewers?.teams ?? [])
+    ];
+    const allUserReviewers = [
+        ...(topLevelReviewers?.users ?? []),
+        ...(groupLevelReviewers?.users ?? []),
+        ...(outputModeReviewers?.users ?? [])
+    ];
+
+    for (const team of allTeamReviewers) {
+        if (!teamNames.has(team.name)) {
+            reviewers.push(GithubPullRequestReviewer.team({ name: team.name }));
+            teamNames.add(team.name);
+        }
+    }
+
+    for (const user of allUserReviewers) {
+        if (!userNames.has(user.name)) {
+            reviewers.push(GithubPullRequestReviewer.user({ name: user.name }));
+            userNames.add(user.name);
+        }
+    }
+
+    return reviewers;
+}
+
 async function convertOutputMode({
     absolutePathToGeneratorsConfiguration,
-    generator
+    generator,
+    maybeGroupLevelMetadata = {},
+    maybeTopLevelMetadata = {},
+    maybeGroupLevelReviewers,
+    maybeTopLevelReviewers
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: GeneratorInvocationSchema;
+    maybeGroupLevelMetadata: OutputMetadata | undefined;
+    maybeTopLevelMetadata: OutputMetadata | undefined;
+    maybeGroupLevelReviewers: ReviewersSchema | undefined;
+    maybeTopLevelReviewers: ReviewersSchema | undefined;
 }): Promise<FernFiddle.OutputMode> {
     const downloadSnippets = generator.snippets != null && generator.snippets.path !== "";
     if (generator.github != null) {
         const indexOfFirstSlash = generator.github.repository.indexOf("/");
         const owner = generator.github.repository.slice(0, indexOfFirstSlash);
         const repo = generator.github.repository.slice(indexOfFirstSlash + 1);
-        const publishInfo = generator.output != null ? getGithubPublishInfo(generator.output) : undefined;
+        const publishInfo =
+            generator.output != null
+                ? getGithubPublishInfo(generator.output, maybeGroupLevelMetadata, maybeTopLevelMetadata)
+                : undefined;
         const licenseSchema = getGithubLicenseSchema(generator);
         const license =
             licenseSchema != null
@@ -248,16 +386,23 @@ async function convertOutputMode({
                         downloadSnippets
                     })
                 );
-            case "pull-request":
+            case "pull-request": {
+                const reviewers = _getReviewers({
+                    topLevelReviewers: maybeTopLevelReviewers,
+                    groupLevelReviewers: maybeGroupLevelReviewers,
+                    outputModeReviewers: (generator.github as GithubPullRequestSchema).reviewers
+                });
                 return FernFiddle.OutputMode.githubV2(
                     FernFiddle.GithubOutputModeV2.pullRequest({
                         owner,
                         repo,
                         license,
                         publishInfo,
-                        downloadSnippets
+                        downloadSnippets,
+                        reviewers
                     })
                 );
+            }
             case "push":
                 return FernFiddle.OutputMode.githubV2(
                     FernFiddle.GithubOutputModeV2.push({
@@ -323,7 +468,12 @@ async function convertOutputMode({
                     username: generator.output.token != null ? "__token__" : generator.output.password ?? "",
                     password: generator.output.token ?? generator.output.password ?? "",
                     coordinate: generator.output["package-name"],
-                    downloadSnippets
+                    downloadSnippets,
+                    pypiMetadata: _getPypiMetadata({
+                        pypiOutputMetadata: generator.output.metadata,
+                        maybeGroupLevelMetadata,
+                        maybeTopLevelMetadata
+                    })
                 })
             );
         case "nuget":
@@ -364,7 +514,7 @@ async function getGithubLicense({
                 });
             case "Apache-2.0":
                 return FernFiddle.GithubLicense.basic({
-                    id: FernFiddle.GithubLicenseId.Apache2
+                    id: FernFiddle.GithubLicenseId.Apache
                 });
             default:
                 assertNever(githubLicense);
@@ -380,7 +530,11 @@ async function getGithubLicense({
     });
 }
 
-function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubPublishInfo {
+function getGithubPublishInfo(
+    output: GeneratorOutputSchema,
+    maybeGroupLevelMetadata: OutputMetadata | undefined,
+    maybeTopLevelMetadata: OutputMetadata | undefined
+): FernFiddle.GithubPublishInfo {
     switch (output.location) {
         case "local-file-system":
             throw new Error("Cannot use local-file-system with github publishing");
@@ -428,7 +582,12 @@ function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubP
                         : {
                               username: output.username ?? "",
                               password: output.password ?? ""
-                          }
+                          },
+                pypiMetadata: _getPypiMetadata({
+                    pypiOutputMetadata: output.metadata,
+                    maybeGroupLevelMetadata,
+                    maybeTopLevelMetadata
+                })
             });
         case "nuget":
             return FernFiddle.GithubPublishInfo.nuget({
@@ -485,4 +644,25 @@ function getGithubLicenseSchema(generator: GeneratorInvocationSchema): GithubLic
         return generator.metadata.license;
     }
     return generator.github?.license;
+}
+
+function getOutputMetadata(metadata: OutputMetadataSchema | undefined): OutputMetadata | undefined {
+    return metadata != null
+        ? {
+              description: metadata.description,
+              authors: metadata.authors?.map((author) => ({ name: author.name, email: author.email }))
+          }
+        : undefined;
+}
+
+function getPyPiMetadata(metadata: PypiOutputMetadataSchema | undefined): PypiMetadata | undefined {
+    return metadata != null
+        ? {
+              description: metadata.description,
+              authors: metadata.authors?.map((author) => ({ name: author.name, email: author.email })),
+              keywords: metadata.keywords,
+              documentationLink: metadata["documentation-link"],
+              homepageLink: metadata["homepage-link"]
+          }
+        : undefined;
 }

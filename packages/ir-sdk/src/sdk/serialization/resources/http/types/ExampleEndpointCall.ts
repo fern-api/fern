@@ -11,6 +11,7 @@ export const ExampleEndpointCall: core.serialization.ObjectSchema<
     FernIr.ExampleEndpointCall
 > = core.serialization
     .objectWithoutOptionalProperties({
+        id: core.serialization.string().optional(),
         name: core.serialization.lazyObject(async () => (await import("../../..")).Name).optional(),
         url: core.serialization.string(),
         rootPathParameters: core.serialization.list(
@@ -33,14 +34,12 @@ export const ExampleEndpointCall: core.serialization.ObjectSchema<
         ),
         request: core.serialization.lazy(async () => (await import("../../..")).ExampleRequestBody).optional(),
         response: core.serialization.lazy(async () => (await import("../../..")).ExampleResponse),
-        codeSamples: core.serialization
-            .list(core.serialization.lazy(async () => (await import("../../..")).ExampleCodeSample))
-            .optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDocs));
 
 export declare namespace ExampleEndpointCall {
     interface Raw extends serializers.WithDocs.Raw {
+        id?: string | null;
         name?: serializers.Name.Raw | null;
         url: string;
         rootPathParameters: serializers.ExamplePathParameter.Raw[];
@@ -51,6 +50,5 @@ export declare namespace ExampleEndpointCall {
         queryParameters: serializers.ExampleQueryParameter.Raw[];
         request?: serializers.ExampleRequestBody.Raw | null;
         response: serializers.ExampleResponse.Raw;
-        codeSamples?: serializers.ExampleCodeSample.Raw[] | null;
     }
 }

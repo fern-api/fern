@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedExhaustive;
 
+#nullable enable
+
 namespace SeedExhaustive.Endpoints;
 
 public class PrimitiveClient
@@ -15,10 +17,10 @@ public class PrimitiveClient
     public async Task<string> GetAndReturnStringAsync(string request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/string",
+                Path = "/primitive/string",
                 Body = request
             }
         );
@@ -27,16 +29,16 @@ public class PrimitiveClient
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<int> GetAndReturnIntAsync(int request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/integer",
+                Path = "/primitive/integer",
                 Body = request
             }
         );
@@ -45,16 +47,16 @@ public class PrimitiveClient
         {
             return JsonSerializer.Deserialize<int>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<long> GetAndReturnLongAsync(long request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/long",
+                Path = "/primitive/long",
                 Body = request
             }
         );
@@ -63,16 +65,16 @@ public class PrimitiveClient
         {
             return JsonSerializer.Deserialize<long>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<double> GetAndReturnDoubleAsync(double request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/double",
+                Path = "/primitive/double",
                 Body = request
             }
         );
@@ -81,16 +83,16 @@ public class PrimitiveClient
         {
             return JsonSerializer.Deserialize<double>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<bool> GetAndReturnBoolAsync(bool request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/boolean",
+                Path = "/primitive/boolean",
                 Body = request
             }
         );
@@ -99,16 +101,16 @@ public class PrimitiveClient
         {
             return JsonSerializer.Deserialize<bool>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<DateTime> GetAndReturnDatetimeAsync(DateTime request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/datetime",
+                Path = "/primitive/datetime",
                 Body = request
             }
         );
@@ -117,16 +119,16 @@ public class PrimitiveClient
         {
             return JsonSerializer.Deserialize<DateTime>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<DateOnly> GetAndReturnDateAsync(DateOnly request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/date",
+                Path = "/primitive/date",
                 Body = request
             }
         );
@@ -135,16 +137,16 @@ public class PrimitiveClient
         {
             return JsonSerializer.Deserialize<DateOnly>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<Guid> GetAndReturnUuidAsync(Guid request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/uuid",
+                Path = "/primitive/uuid",
                 Body = request
             }
         );
@@ -153,16 +155,16 @@ public class PrimitiveClient
         {
             return JsonSerializer.Deserialize<Guid>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<string> GetAndReturnBase64Async(string request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/base64",
+                Path = "/primitive/base64",
                 Body = request
             }
         );
@@ -171,6 +173,6 @@ public class PrimitiveClient
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

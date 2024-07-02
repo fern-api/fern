@@ -1,5 +1,7 @@
 using SeedFileDownload;
 
+#nullable enable
+
 namespace SeedFileDownload;
 
 public partial class SeedFileDownloadClient
@@ -19,7 +21,7 @@ public partial class SeedFileDownloadClient
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);

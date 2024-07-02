@@ -21,7 +21,7 @@ export function convertAliasTypeDeclaration({
 }): Type {
     const aliasOfStr = typeof alias === "string" ? alias : alias.type;
     return Type.alias({
-        aliasOf: file.parseTypeReference(aliasOfStr),
+        aliasOf: file.parseTypeReference(alias),
         resolvedType: constructResolvedTypeReference({ aliasOf: aliasOfStr, file, typeResolver })
     });
 }

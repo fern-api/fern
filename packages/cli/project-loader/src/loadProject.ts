@@ -1,4 +1,10 @@
-import { APIS_DIRECTORY, fernConfigJson, FERN_DIRECTORY, getFernDirectory } from "@fern-api/configuration";
+import {
+    APIS_DIRECTORY,
+    fernConfigJson,
+    FERN_DIRECTORY,
+    generatorsYml,
+    getFernDirectory
+} from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { APIWorkspace, loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader";
@@ -19,6 +25,7 @@ export declare namespace loadProject {
         defaultToAllApiWorkspaces: boolean;
         context: TaskContext;
         nameOverride?: string;
+        sdkLanguage?: generatorsYml.GenerationLanguage;
     }
 }
 

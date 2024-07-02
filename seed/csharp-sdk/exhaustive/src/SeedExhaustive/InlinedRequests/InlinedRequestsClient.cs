@@ -2,6 +2,8 @@ using System.Text.Json;
 using SeedExhaustive;
 using SeedExhaustive.Types;
 
+#nullable enable
+
 namespace SeedExhaustive;
 
 public class InlinedRequestsClient
@@ -21,10 +23,10 @@ public class InlinedRequestsClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/object",
+                Path = "/req-bodies/object",
                 Body = request
             }
         );
@@ -33,6 +35,6 @@ public class InlinedRequestsClient
         {
             return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

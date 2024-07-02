@@ -65,6 +65,10 @@ type User struct {
 	_rawJSON json.RawMessage
 }
 
+func (u *User) GetExtraProperties() map[string]interface{} {
+	return u.ExtraProperties
+}
+
 func (u *User) UnmarshalJSON(data []byte) error {
 	type embed User
 	var unmarshaler = struct {

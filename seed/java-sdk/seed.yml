@@ -1,4 +1,4 @@
-irVersion: v42
+irVersion: v46
 docker: fernapi/fern-java-sdk:latest
 dockerCommand: 
   - cd generators/java
@@ -7,6 +7,15 @@ dockerCommand:
 language: java
 generatorType: SDK
 defaultOutputMode: github
+local:
+  workingDirectory: generators/java
+  buildCommand:
+    - ./gradlew :sdk:distTar
+    - chmod +x install-gradle.sh && ./install-gradle.sh
+    - cd sdk
+    - tar -xvf build/distributions/sdk.tar -C .
+  runCommand: cd sdk/sdk && java -cp sdk.jar:lib/* com.fern.java.client.Cli
+  env: {}
 fixtures:
   exhaustive:
     - customConfig: null
@@ -18,6 +27,13 @@ fixtures:
     - customConfig:
         enable-forward-compatible-enums: true
       outputFolder: forward-compatible-enums
+    - customConfig:
+        base-api-exception-class-name: CustomApiException
+        base-exception-class-name: CustomException
+      outputFolder: custom-error-names
+    - customConfig:
+        client-class-name: Best
+      outputFolder: custom-client-class-name
     - customConfig:
         package-prefix: com.fern.sdk
       outputMode: local_files
@@ -41,14 +57,12 @@ scripts:
     commands:
       - source ~/.bash_profile 
       - ./gradlew compileJava
-      # - jenv shell 1.8 && ./gradlew compileJava
+      - jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava
 allowedFailures:
   - enum
   - extends
-  - response-property
   - examples
   - exhaustive:local-files
   - trace
-  - undiscriminated-unions
   - unions
   - query-parameters

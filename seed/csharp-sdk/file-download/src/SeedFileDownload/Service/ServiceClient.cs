@@ -1,5 +1,7 @@
 using SeedFileDownload;
 
+#nullable enable
+
 namespace SeedFileDownload;
 
 public class ServiceClient
@@ -14,7 +16,7 @@ public class ServiceClient
     public async void DownloadFileAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = "" }
         );
     }
 }

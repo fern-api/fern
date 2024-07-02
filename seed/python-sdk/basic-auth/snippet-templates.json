@@ -7,10 +7,53 @@
         },
         "endpointId": {
             "path": "/basic-auth",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_basic-auth.getWithBasicAuth"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedBasicAuth\n\nclient = SeedBasicAuth(\n    username=\"YOUR_USERNAME\",\n    password=\"YOUR_PASSWORD\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed.client import SeedBasicAuth"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedBasicAuth(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": false,
+                            "templateString": "username=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "AUTH",
+                                    "path": "username",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": false,
+                            "templateString": "password=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "AUTH",
+                                    "path": "password",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -23,7 +66,49 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedBasicAuth\n\nclient = AsyncSeedBasicAuth(\n    username=\"YOUR_USERNAME\",\n    password=\"YOUR_PASSWORD\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed.client import AsyncSeedBasicAuth"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedBasicAuth(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": false,
+                                "templateString": "username=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "AUTH",
+                                        "path": "username",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": false,
+                                "templateString": "password=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "AUTH",
+                                        "path": "password",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
@@ -44,10 +129,53 @@
         },
         "endpointId": {
             "path": "/basic-auth",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_basic-auth.postWithBasicAuth"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedBasicAuth\n\nclient = SeedBasicAuth(\n    username=\"YOUR_USERNAME\",\n    password=\"YOUR_PASSWORD\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed.client import SeedBasicAuth"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedBasicAuth(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": false,
+                            "templateString": "username=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "AUTH",
+                                    "path": "username",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": false,
+                            "templateString": "password=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "AUTH",
+                                    "path": "password",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -77,7 +205,49 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedBasicAuth\n\nclient = AsyncSeedBasicAuth(\n    username=\"YOUR_USERNAME\",\n    password=\"YOUR_PASSWORD\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed.client import AsyncSeedBasicAuth"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedBasicAuth(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": false,
+                                "templateString": "username=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "AUTH",
+                                        "path": "username",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": false,
+                                "templateString": "password=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "AUTH",
+                                        "path": "password",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,

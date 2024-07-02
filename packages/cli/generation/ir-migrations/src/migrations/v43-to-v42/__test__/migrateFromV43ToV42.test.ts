@@ -10,6 +10,6 @@ describe("migrateFromV43ToV42", () => {
         const migrated = await runMigration({
             pathToFixture
         });
-        expect(migrated).toMatchSnapshot();
+        expect(await migrated.jsonify()).toMatchSnapshot();
     });
 });

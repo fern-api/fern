@@ -44,6 +44,19 @@ paths:
           schema:
             type: string
             nullable: true
+        - name: userList
+          in: query
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: optionalDeadline
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+            nullable: true
         - name: keyValue
           in: query
           required: false

@@ -7,6 +7,7 @@ package resources.user;
 import java.lang.Integer;
 import java.lang.String;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -27,6 +28,8 @@ public interface UserService {
   User getUsername(@RequestParam("limit") Integer limit, @RequestParam("id") UUID id,
       @RequestParam("date") String date, @RequestParam("deadline") OffsetDateTime deadline,
       @RequestParam("bytes") byte[] bytes, @RequestParam("user") User user,
+      @RequestParam("userList") List<User> userList,
+      @RequestParam("optionalDeadline") Optional<OffsetDateTime> optionalDeadline,
       @RequestParam("keyValue") Map<String, String> keyValue,
       @RequestParam("optionalString") Optional<String> optionalString,
       @RequestParam("nestedUser") NestedUser nestedUser,

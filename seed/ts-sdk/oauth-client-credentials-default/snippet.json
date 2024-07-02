@@ -3,11 +3,12 @@
         {
             "id": {
                 "path": "/token",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getToken"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedOauthClientCredentialsDefaultClient } from \"@fern/oauth-client-credentials-default\";\n\nconst seedOauthClientCredentialsDefault = new SeedOauthClientCredentialsDefaultClient({ clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait seedOauthClientCredentialsDefault.auth.getToken({\n    clientId: \"string\",\n    clientSecret: \"string\",\n    grantType: \"client_credentials\"\n});\n"
+                "client": "import { SeedOauthClientCredentialsDefaultClient } from \"@fern/oauth-client-credentials-default\";\n\nconst client = new SeedOauthClientCredentialsDefaultClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.getToken({\n    clientId: \"string\",\n    clientSecret: \"string\"\n});\n"
             }
         }
     ],

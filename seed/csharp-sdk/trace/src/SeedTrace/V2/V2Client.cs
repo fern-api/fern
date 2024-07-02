@@ -2,6 +2,8 @@ using SeedTrace;
 using SeedTrace.V2;
 using SeedTrace.V2.V3;
 
+#nullable enable
+
 namespace SeedTrace.V2;
 
 public class V2Client
@@ -22,7 +24,7 @@ public class V2Client
     public async void TestAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "" }
         );
     }
 }

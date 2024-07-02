@@ -7,13 +7,45 @@
         },
         "endpointId": {
             "path": "/{id}",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_union.get"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedUnions = new SeedUnionsClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedUnionsClient } from \"@fern/unions\";"
+                ],
+                "templateString": "const client = new SeedUnionsClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedUnions.union.get(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.union.get(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -59,13 +91,45 @@
         },
         "endpointId": {
             "path": "/",
-            "method": "PATCH"
+            "method": "PATCH",
+            "identifierOverride": "endpoint_union.update"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedUnions = new SeedUnionsClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedUnionsClient } from \"@fern/unions\";"
+                ],
+                "templateString": "const client = new SeedUnionsClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedUnions.union.update(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.union.update(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -80,7 +144,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "templateString": "'$FERN_INPUT'",
+                                        "templateString": "$FERN_INPUT",
                                         "discriminantField": "type",
                                         "members": {
                                             "circle": {
@@ -91,9 +155,9 @@
                                                     {
                                                         "value": {
                                                             "imports": [],
-                                                            "templateString": "{\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                                            "templateString": "$FERN_INPUT",
                                                             "isOptional": true,
-                                                            "inputDelimiter": ",\n\t\t\t\t",
+                                                            "inputDelimiter": ",\n\t\t\t",
                                                             "templateInputs": [
                                                                 {
                                                                     "value": {
@@ -127,9 +191,9 @@
                                                     {
                                                         "value": {
                                                             "imports": [],
-                                                            "templateString": "{\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                                            "templateString": "$FERN_INPUT",
                                                             "isOptional": true,
-                                                            "inputDelimiter": ",\n\t\t\t\t",
+                                                            "inputDelimiter": ",\n\t\t\t",
                                                             "templateInputs": [
                                                                 {
                                                                     "value": {

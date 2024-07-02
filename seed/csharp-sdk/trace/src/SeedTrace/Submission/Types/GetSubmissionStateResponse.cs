@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class GetSubmissionStateResponse
@@ -15,5 +17,5 @@ public class GetSubmissionStateResponse
     public Language Language { get; init; }
 
     [JsonPropertyName("submissionTypeState")]
-    public SubmissionTypeState SubmissionTypeState { get; init; }
+    public object SubmissionTypeState { get; init; }
 }

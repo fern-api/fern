@@ -2,6 +2,8 @@ using System.Text.Json;
 using SeedExhaustive;
 using SeedExhaustive.Types;
 
+#nullable enable
+
 namespace SeedExhaustive.Endpoints;
 
 public class EnumClient
@@ -16,10 +18,10 @@ public class EnumClient
     public async Task<WeatherReport> GetAndReturnEnumAsync(WeatherReport request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "",
+                Path = "/enum",
                 Body = request
             }
         );
@@ -28,6 +30,6 @@ public class EnumClient
         {
             return JsonSerializer.Deserialize<WeatherReport>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

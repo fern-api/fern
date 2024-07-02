@@ -1,11 +1,17 @@
+---
+title: Comparison with OpenAPI
+description: The Fern Definition is easy to read and write, generates quality code, and supports WebSockets.
+---
+
+
 We built the Fern Definition because the OpenAPI Specification can be difficult to use. Here's how we're different.
 
 <Info>
-Despite being a different format for describing APIs, **you are never locked in to using the Fern Definition.** It's a simple command to convert a Fern Definition to an OpenAPI spec.
+Despite being a different format for describing APIs, _you are never locked in to using the Fern Definition._ It's a simple command to convert a Fern Definition to an OpenAPI spec.
 </Info>
 
-**TL;DR: The Fern Definition differs from the OpenAPI spec in these areas:**
-
+### The Fern Definition differs from the OpenAPI spec in these areas:
+ 
 - [Simplicity](#simplicity)
   - [Example: Map](#example-map)
   - [Example: Discriminated union](#example-discriminated-union)
@@ -17,7 +23,7 @@ Despite being a different format for describing APIs, **you are never locked in 
 
 ## Simplicity
 
-The Fern Definition was built to be **easy to read and write.** Here are some
+The Fern Definition was built to be easy to read and write. Here are some
 examples.
 
 ### Example: Map
@@ -112,8 +118,8 @@ For example, we're adding support for asynchronous / bi-directional protocols
 
 ## Quality of code generation
 
-We built Fern from first principles to ensure that **we always generate
-idiomatic code.** There are a number of [footguns](https://en.wiktionary.org/wiki/footgun) in OpenAPI: if you use them,
+We built Fern from first principles to ensure that _we always generate
+idiomatic code._ There are a number of [footguns](https://en.wiktionary.org/wiki/footgun) in OpenAPI: if you use them,
 it's impossible to generate high-quality code. Here are examples:
 
 - Using inline (anonymous) types in an OpenAPI spec makes it impossible to generate idiomatic
@@ -137,7 +143,7 @@ Beyond the format, we've built Fern based on best practices in compiling. This i
 - **Producing an intermediate representation** so that different generators don't
   have to implement duplicative logic. Beyond saving time, this reduces errors and
   increases consistency among outputs.
-- **Using abstract syntax tree (AST) representations ** rather than templates, to enable more complex and
+- **Using abstract syntax tree (AST) representations** rather than templates, to enable more complex and
   idiomatic code generation.
 
 ## Focus on server-side API development

@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedLiteral;
 
+#nullable enable
+
 namespace SeedLiteral;
 
 public class ReferenceClient
@@ -15,10 +17,10 @@ public class ReferenceClient
     public async Task<SendResponse> SendAsync(SendRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/reference",
+                Path = "reference",
                 Body = request
             }
         );
@@ -27,6 +29,6 @@ public class ReferenceClient
         {
             return JsonSerializer.Deserialize<SendResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

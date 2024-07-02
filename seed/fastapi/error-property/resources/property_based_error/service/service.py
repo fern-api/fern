@@ -69,7 +69,7 @@ class AbstractPropertyBasedErrorService(AbstractFernService):
         wrapper.__globals__.update(cls.throw_error.__globals__)
 
         router.get(
-            path="//property-based-error",
+            path="/property-based-error",
             response_model=str,
             description=AbstractPropertyBasedErrorService.throw_error.__doc__,
             **get_route_args(cls.throw_error, default_tag="property_based_error"),

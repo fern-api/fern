@@ -2,17 +2,13 @@
 
 import json
 import typing
-import urllib.parse
 from json.decoder import JSONDecodeError
 
 import httpx_sse
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import pydantic_v1
-from ..core.query_encoder import encode_query
-from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from .types.streamed_completion import StreamedCompletion
 
@@ -53,40 +49,20 @@ class CompletionsClient:
             yield chunk
         """
         with self._client_wrapper.httpx_client.stream(
-            method="POST",
-            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "stream"),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder({"query": query})
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder({"query": query}),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            "stream", method="POST", json={"query": query}, request_options=request_options, omit=OMIT
         ) as _response:
-            if 200 <= _response.status_code < 300:
-                _event_source = httpx_sse.EventSource(_response)
-                for _sse in _event_source.iter_sse():
-                    yield pydantic_v1.parse_obj_as(StreamedCompletion, json.loads(_sse.data))  # type: ignore
-                return
-            _response.read()
             try:
+                if 200 <= _response.status_code < 300:
+                    _event_source = httpx_sse.EventSource(_response)
+                    for _sse in _event_source.iter_sse():
+                        if _sse.data == "[[DONE]]":
+                            return
+                        try:
+                            yield pydantic_v1.parse_obj_as(StreamedCompletion, json.loads(_sse.data))  # type: ignore
+                        except:
+                            pass
+                    return
+                _response.read()
                 _response_json = _response.json()
             except JSONDecodeError:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -114,52 +90,40 @@ class AsyncCompletionsClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedServerSentEvents
 
         client = AsyncSeedServerSentEvents(
             base_url="https://yourhost.com/path/to/api",
         )
-        response = await client.completions.stream(
-            query="string",
-        )
-        async for chunk in response:
-            yield chunk
+
+
+        async def main() -> None:
+            response = await client.completions.stream(
+                query="string",
+            )
+            async for chunk in response:
+                yield chunk
+
+
+        asyncio.run(main())
         """
         async with self._client_wrapper.httpx_client.stream(
-            method="POST",
-            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "stream"),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder({"query": query})
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder({"query": query}),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            "stream", method="POST", json={"query": query}, request_options=request_options, omit=OMIT
         ) as _response:
-            if 200 <= _response.status_code < 300:
-                _event_source = httpx_sse.EventSource(_response)
-                async for _sse in _event_source.aiter_sse():
-                    yield pydantic_v1.parse_obj_as(StreamedCompletion, json.loads(_sse.data))  # type: ignore
-                return
-            await _response.aread()
             try:
+                if 200 <= _response.status_code < 300:
+                    _event_source = httpx_sse.EventSource(_response)
+                    async for _sse in _event_source.aiter_sse():
+                        if _sse.data == "[[DONE]]":
+                            return
+                        try:
+                            yield pydantic_v1.parse_obj_as(StreamedCompletion, json.loads(_sse.data))  # type: ignore
+                        except:
+                            pass
+                    return
+                await _response.aread()
                 _response_json = _response.json()
             except JSONDecodeError:
                 raise ApiError(status_code=_response.status_code, body=_response.text)

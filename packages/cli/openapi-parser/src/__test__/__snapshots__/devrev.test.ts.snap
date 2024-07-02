@@ -155,6 +155,7 @@ exports[`open api parser devrev parse open api 1`] = `
       ],
       "generatedRequestName": "ArtifactsLocateRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "artifacts-locate",
@@ -172,8 +173,11 @@ exports[`open api parser devrev parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -362,6 +366,7 @@ exports[`open api parser devrev parse open api 1`] = `
       ],
       "generatedRequestName": "ArtifactsPrepareRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "artifacts-prepare",
@@ -370,6 +375,7 @@ exports[`open api parser devrev parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -560,6 +566,7 @@ authenticated user.
       ],
       "generatedRequestName": "AuthTokensCreateRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "auth-tokens-create",
@@ -568,6 +575,7 @@ authenticated user.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -726,6 +734,7 @@ given Dev organization.
       ],
       "generatedRequestName": "AuthTokensDeleteRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "auth-tokens-delete",
@@ -734,6 +743,7 @@ given Dev organization.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -980,6 +990,7 @@ given Dev organization.
       ],
       "generatedRequestName": "AuthTokensGetRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "auth-tokens-get",
@@ -998,8 +1009,11 @@ given Dev organization.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -1247,6 +1261,7 @@ token type issued for a given subject.
       ],
       "generatedRequestName": "AuthTokensListRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "auth-tokens-list",
@@ -1272,8 +1287,11 @@ token. Only relevant for application access tokens.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -1321,8 +1339,11 @@ subject.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -1477,6 +1498,7 @@ authenticated user.
       ],
       "generatedRequestName": "AuthTokensSelfDeleteRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "auth-tokens-self-delete",
@@ -1485,6 +1507,7 @@ authenticated user.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -1738,6 +1761,7 @@ organization.
       ],
       "generatedRequestName": "AuthTokensUpdateRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "auth-tokens-update",
@@ -1746,6 +1770,7 @@ organization.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -1879,6 +1904,7 @@ enterprise connections can be created by an organization.
       "examples": [],
       "generatedRequestName": "DevOrgAuthConnectionsCreateRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "dev-org-auth-connections-create",
@@ -1887,6 +1913,7 @@ enterprise connections can be created by an organization.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -2055,6 +2082,7 @@ connections can not be deleted using this method.
       ],
       "generatedRequestName": "DevOrgAuthConnectionsDeleteRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "dev-org-auth-connections-delete",
@@ -2063,6 +2091,7 @@ connections can not be deleted using this method.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -2193,6 +2222,7 @@ connections can not be deleted using this method.
       "examples": [],
       "generatedRequestName": "DevOrgAuthConnectionsGetRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "dev-org-auth-connections-get",
@@ -2210,8 +2240,11 @@ connections can not be deleted using this method.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -2359,6 +2392,7 @@ created by the user.
       ],
       "generatedRequestName": "DevOrgAuthConnectionsListRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "dev-org-auth-connections-list",
@@ -2525,6 +2559,7 @@ disabled.
       ],
       "generatedRequestName": "DevOrgAuthConnectionsToggleRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "dev-org-auth-connections-toggle",
@@ -2533,6 +2568,7 @@ disabled.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -2663,6 +2699,7 @@ disabled.
       "examples": [],
       "generatedRequestName": "DevOrgAuthConnectionsUpdateRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "dev-org-auth-connections-update",
@@ -2671,6 +2708,7 @@ disabled.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -2925,6 +2963,7 @@ disabled.
       ],
       "generatedRequestName": "DevUsersListRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "dev-users-list",
@@ -2950,8 +2989,11 @@ starts from the beginning.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -2980,8 +3022,11 @@ starts from the beginning.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3006,6 +3051,12 @@ starts from the beginning.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -3057,8 +3108,11 @@ used.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3324,6 +3378,7 @@ used.
       ],
       "generatedRequestName": "DevUsersSelfRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "dev-users-self",
@@ -3447,6 +3502,7 @@ used.
       "examples": [],
       "generatedRequestName": "PartsCreateRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "parts-create",
@@ -3455,6 +3511,7 @@ used.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -3647,6 +3704,7 @@ used.
       ],
       "generatedRequestName": "PartsDeleteRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "parts-delete",
@@ -3655,6 +3713,7 @@ used.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -3797,6 +3856,7 @@ used.
       "examples": [],
       "generatedRequestName": "PartsGetRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "parts-get",
@@ -3814,8 +3874,11 @@ used.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -3973,6 +4036,7 @@ used.
       ],
       "generatedRequestName": "PartsListRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "parts-list",
@@ -4002,8 +4066,11 @@ used.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4029,8 +4096,11 @@ starts from the beginning.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -4054,6 +4124,12 @@ starts from the beginning.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -4104,8 +4180,11 @@ used.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4135,8 +4214,11 @@ used.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4303,6 +4385,7 @@ used.
       "examples": [],
       "generatedRequestName": "PartsUpdateRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "parts-update",
@@ -4311,6 +4394,7 @@ used.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -4528,6 +4612,7 @@ organization.
       ],
       "generatedRequestName": "RevOrgsCreateRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "rev-orgs-create",
@@ -4536,6 +4621,7 @@ organization.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -4728,6 +4814,7 @@ organization.
       ],
       "generatedRequestName": "RevOrgsDeleteRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "rev-orgs-delete",
@@ -4736,6 +4823,7 @@ organization.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -4965,6 +5053,7 @@ organization.
       ],
       "generatedRequestName": "RevOrgsGetRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "rev-orgs-get",
@@ -4982,8 +5071,11 @@ organization.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -5219,6 +5311,7 @@ to access.
       ],
       "generatedRequestName": "RevOrgsListRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "rev-orgs-list",
@@ -5248,8 +5341,11 @@ to access.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5322,8 +5418,11 @@ starts from the beginning.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -5352,8 +5451,11 @@ starts from the beginning.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5378,6 +5480,12 @@ starts from the beginning.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -5477,8 +5585,11 @@ them.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5705,6 +5816,7 @@ them.
       ],
       "generatedRequestName": "RevOrgsUpdateRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "rev-orgs-update",
@@ -5713,6 +5825,7 @@ them.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -5928,6 +6041,7 @@ and a logical concept denoted by the tag's name.
       ],
       "generatedRequestName": "TagsCreateRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "tags-create",
@@ -5936,6 +6050,7 @@ and a logical concept denoted by the tag's name.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -6128,6 +6243,7 @@ and a logical concept denoted by the tag's name.
       ],
       "generatedRequestName": "TagsDeleteRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "tags-delete",
@@ -6136,6 +6252,7 @@ and a logical concept denoted by the tag's name.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -6363,6 +6480,7 @@ and a logical concept denoted by the tag's name.
       ],
       "generatedRequestName": "TagsGetRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "tags-get",
@@ -6380,8 +6498,11 @@ and a logical concept denoted by the tag's name.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -6598,6 +6719,7 @@ and a logical concept denoted by the tag's name.
       ],
       "generatedRequestName": "TagsListRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "tags-list",
@@ -6623,8 +6745,11 @@ starts from the beginning.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -6647,6 +6772,12 @@ starts from the beginning.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -6892,6 +7023,7 @@ used.
       ],
       "generatedRequestName": "TagsUpdateRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "tags-update",
@@ -6900,6 +7032,7 @@ used.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -7027,6 +7160,7 @@ used.
       "examples": [],
       "generatedRequestName": "TimelineEntriesCreateRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "timeline-entries-create",
@@ -7035,6 +7169,7 @@ used.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -7176,6 +7311,7 @@ used.
       "examples": [],
       "generatedRequestName": "TimelineEntriesGetRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "timeline-entries-get",
@@ -7193,8 +7329,11 @@ used.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -7376,6 +7515,7 @@ used.
       ],
       "generatedRequestName": "TimelineEntriesListRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "timeline-entries-list",
@@ -7393,8 +7533,11 @@ used.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -7418,8 +7561,11 @@ starts from the beginning.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -7444,6 +7590,12 @@ defaults to \`50\`.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -7589,6 +7741,7 @@ used.
       "examples": [],
       "generatedRequestName": "TimelineEntriesUpdateRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "timeline-entries-update",
@@ -7597,6 +7750,7 @@ used.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -7811,6 +7965,7 @@ used.
       ],
       "generatedRequestName": "WebhooksCreateRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "webhooks-create",
@@ -7819,6 +7974,7 @@ used.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -8011,6 +8167,7 @@ used.
       ],
       "generatedRequestName": "WebhooksDeleteRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "webhooks-delete",
@@ -8019,6 +8176,7 @@ used.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -8247,6 +8405,7 @@ used.
       ],
       "generatedRequestName": "WebhooksGetRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "webhooks-get",
@@ -8264,8 +8423,11 @@ used.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -8469,6 +8631,7 @@ used.
       ],
       "generatedRequestName": "WebhooksListRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "webhooks-list",
@@ -8693,6 +8856,7 @@ used.
       ],
       "generatedRequestName": "WebhooksUpdateRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "webhooks-update",
@@ -8701,6 +8865,7 @@ used.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -8830,6 +8995,7 @@ used.
       "examples": [],
       "generatedRequestName": "WorksCreateRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "works-create",
@@ -8838,6 +9004,7 @@ used.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -9030,6 +9197,7 @@ used.
       ],
       "generatedRequestName": "WorksDeleteRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "works-delete",
@@ -9038,6 +9206,7 @@ used.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -9185,6 +9354,7 @@ used.
       ],
       "generatedRequestName": "WorksExportRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "works-export",
@@ -9214,8 +9384,11 @@ used.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -9245,8 +9418,11 @@ used.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -9272,6 +9448,12 @@ is '5000'.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -9328,8 +9510,11 @@ is '5000'.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -9359,8 +9544,11 @@ is '5000'.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -9390,8 +9578,11 @@ is '5000'.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -9423,8 +9614,11 @@ organizations.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -9617,6 +9811,7 @@ organizations.
       "examples": [],
       "generatedRequestName": "WorksGetRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "works-get",
@@ -9634,8 +9829,11 @@ organizations.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -9792,6 +9990,7 @@ organizations.
       ],
       "generatedRequestName": "WorksListRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "GET",
       "operationId": "works-list",
@@ -9821,8 +10020,11 @@ organizations.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -9852,8 +10054,11 @@ organizations.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -9879,8 +10084,11 @@ starts from the beginning.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -9937,8 +10145,11 @@ starts from the beginning.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -9963,6 +10174,12 @@ starts from the beginning.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -10013,8 +10230,11 @@ used.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -10044,8 +10264,11 @@ used.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -10077,8 +10300,11 @@ organizations.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -10271,6 +10497,7 @@ organizations.
       "examples": [],
       "generatedRequestName": "WorksUpdateRequest",
       "headers": [],
+      "idempotent": null,
       "internal": null,
       "method": "POST",
       "operationId": "works-update",
@@ -10279,6 +10506,7 @@ organizations.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -10316,6 +10544,7 @@ organizations.
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [
     "error-bad-request",
     "error-unauthorized",
@@ -10458,6 +10687,7 @@ organizations.
       "type": "reference",
     },
     "artifacts-locate-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The response to getting an artifact's download URL.",
@@ -10501,8 +10731,11 @@ organizations.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -10512,6 +10745,7 @@ organizations.
       "type": "object",
     },
     "artifacts-prepare-request": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The request to prepare a URL to upload a file.",
@@ -10531,8 +10765,11 @@ organizations.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -10542,6 +10779,7 @@ organizations.
       "type": "object",
     },
     "artifacts-prepare-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The response to preparing a URL to upload a file.",
@@ -10583,8 +10821,11 @@ organizations.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -10602,8 +10843,11 @@ organizations.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -10613,6 +10857,7 @@ organizations.
       "type": "object",
     },
     "artifacts-prepare-response-form-data": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -10632,8 +10877,11 @@ organizations.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -10651,8 +10899,11 @@ organizations.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -10662,6 +10913,7 @@ organizations.
       "type": "object",
     },
     "atom-base": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -10733,8 +10985,11 @@ organizations.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -10753,8 +11008,11 @@ organizations.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -10810,6 +11068,7 @@ organizations.
       "type": "object",
     },
     "atom-base-summary": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -10835,8 +11094,11 @@ organizations.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -10855,8 +11117,11 @@ organizations.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -10891,8 +11156,11 @@ it would appear on the login button as 'Log in to abclogin'.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -10933,8 +11201,11 @@ login screen as a login option.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -10994,6 +11265,7 @@ authentication connection that is set up for a Dev organization.
       },
     },
     "auth-connection-options-azure-ad": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Object encapsulating the configuration parameters for an Azure AD
@@ -11021,8 +11293,11 @@ authentication connection.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -11047,8 +11322,11 @@ authentication connection.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -11073,8 +11351,11 @@ authentication connection.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -11085,6 +11366,7 @@ authentication connection.
       "type": "object",
     },
     "auth-connection-options-google-apps": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Object encapsulating the configuration parameters for a Google Apps
@@ -11112,8 +11394,11 @@ authentication connection.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -11139,8 +11424,11 @@ authentication connection.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -11166,8 +11454,11 @@ authentication connection.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -11178,6 +11469,7 @@ authentication connection.
       "type": "object",
     },
     "auth-connection-options-oidc": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Object encapsulating the configuration parameters for an OIDC
@@ -11205,8 +11497,11 @@ authentication connection.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -11231,8 +11526,11 @@ authentication connection.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -11257,8 +11555,11 @@ authentication connection.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -11269,6 +11570,7 @@ authentication connection.
       "type": "object",
     },
     "auth-connection-options-saml": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Object encapsulating the configuration parameters for a SAML
@@ -11296,8 +11598,11 @@ authentication connection.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -11323,8 +11628,11 @@ authentication connection.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -11344,8 +11652,11 @@ authentication connection.
         "groupName": null,
         "nameOverride": null,
         "schema": {
+          "default": null,
+          "format": null,
           "maxLength": null,
           "minLength": null,
+          "pattern": null,
           "type": "string",
         },
       },
@@ -11462,6 +11773,7 @@ for each authentication connection will depend on the type value.
       ],
     },
     "auth-token": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -11497,8 +11809,11 @@ token. Only applicable for application access tokens.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -11599,8 +11914,11 @@ token. Only applicable for application access tokens.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -11648,8 +11966,11 @@ token. Only applicable for application access tokens.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -11674,8 +11995,11 @@ token. Only applicable for application access tokens.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -11986,6 +12310,7 @@ token. Only applicable for application access tokens.
       },
     },
     "auth-tokens-create-request": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "A request to create a new token corresponding to the requested token
@@ -12019,8 +12344,11 @@ type.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -12050,8 +12378,11 @@ This client_id is only associated with an AAT.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -12077,6 +12408,12 @@ This client_id is only associated with an AAT.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -12170,8 +12507,11 @@ not matter.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -12198,8 +12538,11 @@ requesting an application access token (AAT).
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -12246,8 +12589,11 @@ requesting an application access token (AAT).
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -12258,6 +12604,7 @@ requesting an application access token (AAT).
       "type": "object",
     },
     "auth-tokens-create-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Response for the request to create a new token corresponding to the
@@ -12281,8 +12628,11 @@ token type.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -12309,8 +12659,11 @@ application access token (AAT).
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -12331,6 +12684,12 @@ epoch.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "exclusiveMaximum": null,
+              "exclusiveMinimum": null,
+              "maximum": null,
+              "minimum": null,
+              "multipleOf": null,
               "type": "int",
             },
             "type": "primitive",
@@ -12354,8 +12713,11 @@ epoch.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -12382,8 +12744,11 @@ of values in which the order of values does not matter.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -12409,6 +12774,7 @@ of values in which the order of values does not matter.
       "type": "object",
     },
     "auth-tokens-delete-request": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The request to revoke the token.",
@@ -12437,8 +12803,11 @@ JTI claim of the token in the authorization header.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -12449,6 +12818,7 @@ JTI claim of the token in the authorization header.
       "type": "object",
     },
     "auth-tokens-get-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The response to get the token metadata.",
@@ -12475,6 +12845,7 @@ JTI claim of the token in the authorization header.
       "type": "object",
     },
     "auth-tokens-list-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The response to list the token metadata.",
@@ -12508,6 +12879,7 @@ JTI claim of the token in the authorization header.
       "type": "object",
     },
     "auth-tokens-org-traits": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Carries Rev org info.",
@@ -12533,8 +12905,11 @@ JTI claim of the token in the authorization header.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -12559,8 +12934,11 @@ JTI claim of the token in the authorization header.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -12571,6 +12949,7 @@ JTI claim of the token in the authorization header.
       "type": "object",
     },
     "auth-tokens-rev-info": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Carries info corresponding to the Rev user to be provisioned and/or
@@ -12598,8 +12977,11 @@ issue a Rev session token.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -12646,8 +13028,11 @@ issue a Rev session token.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -12666,8 +13051,11 @@ issue a Rev session token.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -12699,6 +13087,7 @@ issue a Rev session token.
       "type": "object",
     },
     "auth-tokens-self-delete-request": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The request to delete all the tokens created by the authenticated user,
@@ -12734,6 +13123,7 @@ that match with the provided token type.
       "type": "object",
     },
     "auth-tokens-update-request": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "A request to update the token metadata.",
@@ -12753,8 +13143,11 @@ that match with the provided token type.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -12773,8 +13166,11 @@ that match with the provided token type.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -12784,6 +13180,7 @@ that match with the provided token type.
       "type": "object",
     },
     "auth-tokens-update-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Response for the request to update the token metadata.",
@@ -12810,6 +13207,7 @@ that match with the provided token type.
       "type": "object",
     },
     "auth-tokens-user-traits": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Carries Rev user info.",
@@ -12835,8 +13233,11 @@ that match with the provided token type.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -12861,8 +13262,11 @@ that match with the provided token type.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -12887,8 +13291,11 @@ that match with the provided token type.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -12940,8 +13347,11 @@ it would appear on the login button as 'Log in to abclogin'.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -13052,6 +13462,7 @@ authentication connections have different configuration parameters.
       ],
     },
     "dev-org-auth-connections-create-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Response for the request to create a new enterprise authentication
@@ -13080,6 +13491,7 @@ connection.
       "type": "object",
     },
     "dev-org-auth-connections-delete-request": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Request to delete an enterprise authentication connection for a Dev
@@ -13102,8 +13514,11 @@ enabled cannot be deleted.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -13113,6 +13528,7 @@ enabled cannot be deleted.
       "type": "object",
     },
     "dev-org-auth-connections-get-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Response object encapsulating the configuration details of an
@@ -13141,6 +13557,7 @@ authentication connection.
       "type": "object",
     },
     "dev-org-auth-connections-list-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Response object for the request to list all the social and enterprise
@@ -13178,6 +13595,7 @@ a Dev organization.
       "type": "object",
     },
     "dev-org-auth-connections-toggle-request": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Request to enable or disable an authentication connection for a Dev
@@ -13199,8 +13617,11 @@ organization.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -13257,8 +13678,11 @@ it would appear on the login button as 'Log in to abclogin'.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -13274,8 +13698,11 @@ it would appear on the login button as 'Log in to abclogin'.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -13407,6 +13834,7 @@ that can be updated.
       ],
     },
     "dev-org-auth-connections-update-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Response for the request to update an enterprise authentication
@@ -13435,6 +13863,7 @@ connection.
       "type": "object",
     },
     "dev-user": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -13491,6 +13920,7 @@ connection.
       "type": "reference",
     },
     "dev-users-list-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The response to listing the Dev users.",
@@ -13540,8 +13970,11 @@ sort order. If not set, then no later elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -13568,8 +14001,11 @@ sort order. If not set, then no prior elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -13580,6 +14016,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "dev-users-self-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The response to getting the information for the authenticated user.
@@ -13616,8 +14053,11 @@ sort order. If not set, then no prior elements exist.
         "groupName": null,
         "nameOverride": null,
         "schema": {
+          "default": null,
+          "format": null,
           "maxLength": null,
           "minLength": null,
+          "pattern": null,
           "type": "string",
         },
       },
@@ -13630,6 +14070,7 @@ sort order. If not set, then no prior elements exist.
       },
     },
     "enhancement": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -13681,6 +14122,7 @@ sort order. If not set, then no prior elements exist.
       "type": "reference",
     },
     "error-bad-request": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -13708,8 +14150,11 @@ sort order. If not set, then no prior elements exist.
         "groupName": null,
         "nameOverride": null,
         "schema": {
+          "default": null,
+          "format": null,
           "maxLength": null,
           "minLength": null,
+          "pattern": null,
           "type": "string",
         },
       },
@@ -13722,6 +14167,7 @@ sort order. If not set, then no prior elements exist.
       },
     },
     "error-bad-request-invalid-enum-value": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -13747,8 +14193,11 @@ sort order. If not set, then no prior elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -13767,8 +14216,11 @@ sort order. If not set, then no prior elements exist.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -13786,8 +14238,11 @@ sort order. If not set, then no prior elements exist.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -13797,6 +14252,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "error-bad-request-missing-required-field": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -13816,8 +14272,11 @@ sort order. If not set, then no prior elements exist.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -13836,8 +14295,11 @@ sort order. If not set, then no prior elements exist.
         "groupName": null,
         "nameOverride": null,
         "schema": {
+          "default": null,
+          "format": null,
           "maxLength": null,
           "minLength": null,
+          "pattern": null,
           "type": "string",
         },
       },
@@ -13919,6 +14381,7 @@ sort order. If not set, then no prior elements exist.
       ],
     },
     "error-bad-request-value-not-permitted": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -13938,8 +14401,11 @@ sort order. If not set, then no prior elements exist.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -13963,8 +14429,11 @@ sort order. If not set, then no prior elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -13975,6 +14444,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "error-base": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -14000,8 +14470,11 @@ sort order. If not set, then no prior elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -14012,6 +14485,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "error-forbidden": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -14039,8 +14513,11 @@ sort order. If not set, then no prior elements exist.
         "groupName": null,
         "nameOverride": null,
         "schema": {
+          "default": null,
+          "format": null,
           "maxLength": null,
           "minLength": null,
+          "pattern": null,
           "type": "string",
         },
       },
@@ -14064,6 +14541,7 @@ sort order. If not set, then no prior elements exist.
       },
     },
     "error-internal-server-error": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -14091,8 +14569,11 @@ sort order. If not set, then no prior elements exist.
         "groupName": null,
         "nameOverride": null,
         "schema": {
+          "default": null,
+          "format": null,
           "maxLength": null,
           "minLength": null,
+          "pattern": null,
           "type": "string",
         },
       },
@@ -14116,6 +14597,7 @@ sort order. If not set, then no prior elements exist.
       },
     },
     "error-not-found": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -14143,8 +14625,11 @@ sort order. If not set, then no prior elements exist.
         "groupName": null,
         "nameOverride": null,
         "schema": {
+          "default": null,
+          "format": null,
           "maxLength": null,
           "minLength": null,
+          "pattern": null,
           "type": "string",
         },
       },
@@ -14168,6 +14653,7 @@ sort order. If not set, then no prior elements exist.
       },
     },
     "error-service-unavailable": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -14195,8 +14681,11 @@ sort order. If not set, then no prior elements exist.
         "groupName": null,
         "nameOverride": null,
         "schema": {
+          "default": null,
+          "format": null,
           "maxLength": null,
           "minLength": null,
+          "pattern": null,
           "type": "string",
         },
       },
@@ -14220,6 +14709,7 @@ sort order. If not set, then no prior elements exist.
       },
     },
     "error-too-many-requests": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -14247,8 +14737,11 @@ sort order. If not set, then no prior elements exist.
         "groupName": null,
         "nameOverride": null,
         "schema": {
+          "default": null,
+          "format": null,
           "maxLength": null,
           "minLength": null,
+          "pattern": null,
           "type": "string",
         },
       },
@@ -14272,6 +14765,7 @@ sort order. If not set, then no prior elements exist.
       },
     },
     "error-unauthorized": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -14310,8 +14804,11 @@ sort order. If not set, then no prior elements exist.
         "groupName": null,
         "nameOverride": null,
         "schema": {
+          "default": null,
+          "format": null,
           "maxLength": null,
           "minLength": null,
+          "pattern": null,
           "type": "string",
         },
       },
@@ -14324,6 +14821,7 @@ sort order. If not set, then no prior elements exist.
       },
     },
     "event-part-created": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -14350,6 +14848,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "event-part-deleted": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -14369,8 +14868,11 @@ sort order. If not set, then no prior elements exist.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -14380,6 +14882,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "event-part-updated": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -14406,6 +14909,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "event-rev-org-created": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -14432,6 +14936,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "event-rev-org-deleted": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -14451,8 +14956,11 @@ sort order. If not set, then no prior elements exist.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -14462,6 +14970,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "event-rev-org-updated": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -14488,6 +14997,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "event-tag-created": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -14514,6 +15024,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "event-tag-deleted": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -14533,8 +15044,11 @@ sort order. If not set, then no prior elements exist.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -14544,6 +15058,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "event-tag-updated": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -14570,6 +15085,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "event-timeline-entry-created": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -14596,6 +15112,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "event-timeline-entry-deleted": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -14615,8 +15132,11 @@ sort order. If not set, then no prior elements exist.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -14626,6 +15146,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "event-timeline-entry-updated": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -14652,6 +15173,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "event-webhook-created": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -14678,6 +15200,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "event-webhook-deleted": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -14697,8 +15220,11 @@ sort order. If not set, then no prior elements exist.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -14708,6 +15234,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "event-webhook-updated": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -14734,6 +15261,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "event-work-created": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -14760,6 +15288,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "event-work-deleted": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -14779,8 +15308,11 @@ sort order. If not set, then no prior elements exist.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -14790,6 +15322,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "event-work-updated": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -14825,8 +15358,11 @@ sort order. If not set, then no prior elements exist.
         "groupName": null,
         "nameOverride": null,
         "schema": {
+          "default": null,
+          "format": null,
           "maxLength": null,
           "minLength": null,
+          "pattern": null,
           "type": "string",
         },
       },
@@ -14863,6 +15399,7 @@ sort order. If not set, then no prior elements exist.
       "type": "reference",
     },
     "issue": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -14999,6 +15536,7 @@ always be returned in the specified sort-by order.
       ],
     },
     "org-base": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -15032,8 +15570,11 @@ always be returned in the specified sort-by order.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -15044,6 +15585,7 @@ always be returned in the specified sort-by order.
       "type": "object",
     },
     "org-base-summary": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -15077,8 +15619,11 @@ always be returned in the specified sort-by order.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -15214,6 +15759,7 @@ always be returned in the specified sort-by order.
       },
     },
     "part-base": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -15276,8 +15822,11 @@ always be returned in the specified sort-by order.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -15296,8 +15845,11 @@ always be returned in the specified sort-by order.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -15358,6 +15910,7 @@ always be returned in the specified sort-by order.
       "type": "object",
     },
     "part-base-summary": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -15385,8 +15938,11 @@ always be returned in the specified sort-by order.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -15516,8 +16072,11 @@ always be returned in the specified sort-by order.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -15532,8 +16091,11 @@ always be returned in the specified sort-by order.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -15553,8 +16115,11 @@ always be returned in the specified sort-by order.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -15605,6 +16170,7 @@ always be returned in the specified sort-by order.
       },
     },
     "parts-create-request-capability": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -15630,8 +16196,11 @@ always be returned in the specified sort-by order.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -15642,6 +16211,7 @@ always be returned in the specified sort-by order.
       "type": "object",
     },
     "parts-create-request-enhancement": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -15668,8 +16238,11 @@ always be returned in the specified sort-by order.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -15705,6 +16278,7 @@ always be returned in the specified sort-by order.
       "type": "object",
     },
     "parts-create-request-feature": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -15730,8 +16304,11 @@ always be returned in the specified sort-by order.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -15751,8 +16328,11 @@ always be returned in the specified sort-by order.
         "groupName": null,
         "nameOverride": null,
         "schema": {
+          "default": null,
+          "format": null,
           "maxLength": null,
           "minLength": null,
+          "pattern": null,
           "type": "string",
         },
       },
@@ -15765,6 +16345,7 @@ always be returned in the specified sort-by order.
       },
     },
     "parts-create-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -15791,6 +16372,7 @@ always be returned in the specified sort-by order.
       "type": "object",
     },
     "parts-delete-request": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -15810,8 +16392,11 @@ always be returned in the specified sort-by order.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -15830,8 +16415,11 @@ always be returned in the specified sort-by order.
         "groupName": null,
         "nameOverride": null,
         "schema": {
+          "default": null,
+          "format": null,
           "maxLength": null,
           "minLength": null,
+          "pattern": null,
           "type": "string",
         },
       },
@@ -15844,6 +16432,7 @@ always be returned in the specified sort-by order.
       },
     },
     "parts-get-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -15870,6 +16459,7 @@ always be returned in the specified sort-by order.
       "type": "object",
     },
     "parts-list-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -15897,8 +16487,11 @@ sort order. If not set, then no later elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -15947,8 +16540,11 @@ sort order. If not set, then no prior elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -15976,8 +16572,11 @@ sort order. If not set, then no prior elements exist.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -15992,8 +16591,11 @@ sort order. If not set, then no prior elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -16013,8 +16615,11 @@ sort order. If not set, then no prior elements exist.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -16100,8 +16705,11 @@ sort order. If not set, then no prior elements exist.
         "groupName": null,
         "nameOverride": null,
         "schema": {
+          "default": null,
+          "format": null,
           "maxLength": null,
           "minLength": null,
+          "pattern": null,
           "type": "string",
         },
       },
@@ -16114,6 +16722,7 @@ sort order. If not set, then no prior elements exist.
       },
     },
     "parts-update-request-enhancement": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -16158,8 +16767,11 @@ sort order. If not set, then no prior elements exist.
         "groupName": null,
         "nameOverride": null,
         "schema": {
+          "default": null,
+          "format": null,
           "maxLength": null,
           "minLength": null,
+          "pattern": null,
           "type": "string",
         },
       },
@@ -16172,6 +16784,7 @@ sort order. If not set, then no prior elements exist.
       },
     },
     "parts-update-request-owned-by": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -16205,8 +16818,11 @@ empty.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -16227,8 +16843,11 @@ empty.
         "groupName": null,
         "nameOverride": null,
         "schema": {
+          "default": null,
+          "format": null,
           "maxLength": null,
           "minLength": null,
+          "pattern": null,
           "type": "string",
         },
       },
@@ -16241,6 +16860,7 @@ empty.
       },
     },
     "parts-update-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -16283,6 +16903,7 @@ empty.
       "type": "reference",
     },
     "rev-org": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -16316,8 +16937,11 @@ empty.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -16342,8 +16966,11 @@ empty.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -16372,8 +16999,11 @@ organization.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -16392,6 +17022,7 @@ organization.
       "type": "reference",
     },
     "rev-orgs-create-request": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Request object to create a new Rev organization in the Dev
@@ -16419,8 +17050,11 @@ organization.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -16439,8 +17073,11 @@ organization.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -16464,8 +17101,11 @@ organization.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -16515,8 +17155,11 @@ records.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -16541,8 +17184,11 @@ records.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -16553,6 +17199,7 @@ records.
       "type": "object",
     },
     "rev-orgs-create-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Response object for request to create a new Rev organization.
@@ -16580,6 +17227,7 @@ records.
       "type": "object",
     },
     "rev-orgs-delete-request": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Request object to delete a Rev organization.",
@@ -16599,8 +17247,11 @@ records.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -16619,8 +17270,11 @@ records.
         "groupName": null,
         "nameOverride": null,
         "schema": {
+          "default": null,
+          "format": null,
           "maxLength": null,
           "minLength": null,
+          "pattern": null,
           "type": "string",
         },
       },
@@ -16633,6 +17287,7 @@ records.
       },
     },
     "rev-orgs-get-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The response to getting a Rev organization's information.",
@@ -16659,6 +17314,7 @@ records.
       "type": "object",
     },
     "rev-orgs-list-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The response to getting a list of Rev organizations' information.
@@ -16687,8 +17343,11 @@ sort order. If not set, then no later elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -16715,8 +17374,11 @@ sort order. If not set, then no prior elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -16749,6 +17411,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "rev-orgs-update-request": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Request object to update information of the Rev organization.
@@ -16775,8 +17438,11 @@ sort order. If not set, then no prior elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -16801,8 +17467,11 @@ sort order. If not set, then no prior elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -16827,8 +17496,11 @@ sort order. If not set, then no prior elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -16878,8 +17550,11 @@ records.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -16898,8 +17573,11 @@ records.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -16923,8 +17601,11 @@ records.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -16935,6 +17616,7 @@ records.
       "type": "object",
     },
     "rev-orgs-update-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Response object to updating Rev organization's information.",
@@ -16961,6 +17643,7 @@ records.
       "type": "object",
     },
     "rev-user-summary": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -16999,8 +17682,11 @@ system-generated identifier will be assigned to the user.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -17033,6 +17719,7 @@ system-generated identifier will be assigned to the user.
       "type": "object",
     },
     "set-tag-with-value": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -17052,8 +17739,11 @@ system-generated identifier will be assigned to the user.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -17079,8 +17769,11 @@ the value must be one that's specified in the tag's allowed values.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -17091,6 +17784,7 @@ the value must be one that's specified in the tag's allowed values.
       "type": "object",
     },
     "stage": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Describes the current stage of a work item.",
@@ -17110,8 +17804,11 @@ the value must be one that's specified in the tag's allowed values.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -17121,6 +17818,7 @@ the value must be one that's specified in the tag's allowed values.
       "type": "object",
     },
     "stage-init": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Sets an object's initial stage.",
@@ -17146,8 +17844,11 @@ the value must be one that's specified in the tag's allowed values.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -17158,6 +17859,7 @@ the value must be one that's specified in the tag's allowed values.
       "type": "object",
     },
     "stage-update": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Updates an object's stage.",
@@ -17184,8 +17886,11 @@ the value must be one that's specified in the tag's allowed values.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -17204,6 +17909,7 @@ the value must be one that's specified in the tag's allowed values.
       "type": "reference",
     },
     "tag": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -17246,8 +17952,11 @@ provided when the association is made.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -17275,8 +17984,11 @@ on the tag's purpose and usage.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -17298,8 +18010,11 @@ unique.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -17309,6 +18024,7 @@ unique.
       "type": "object",
     },
     "tag-summary": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -17339,8 +18055,11 @@ unique.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -17350,6 +18069,7 @@ unique.
       "type": "object",
     },
     "tag-with-value": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -17390,8 +18110,11 @@ unique.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -17402,6 +18125,7 @@ unique.
       "type": "object",
     },
     "tags-create-request": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The request to create a new tag.",
@@ -17435,8 +18159,11 @@ permitted.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -17462,8 +18189,11 @@ permitted.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -17483,8 +18213,11 @@ permitted.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -17494,6 +18227,7 @@ permitted.
       "type": "object",
     },
     "tags-create-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The response to creating a new tag.",
@@ -17520,6 +18254,7 @@ permitted.
       "type": "object",
     },
     "tags-delete-request": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The request to delete a tag.",
@@ -17539,8 +18274,11 @@ permitted.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -17559,8 +18297,11 @@ permitted.
         "groupName": null,
         "nameOverride": null,
         "schema": {
+          "default": null,
+          "format": null,
           "maxLength": null,
           "minLength": null,
+          "pattern": null,
           "type": "string",
         },
       },
@@ -17573,6 +18314,7 @@ permitted.
       },
     },
     "tags-get-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The response to getting a tag's information.",
@@ -17599,6 +18341,7 @@ permitted.
       "type": "object",
     },
     "tags-list-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The response to listing the tags.",
@@ -17626,8 +18369,11 @@ sort order. If not set, then no later elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -17654,8 +18400,11 @@ sort order. If not set, then no prior elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -17688,6 +18437,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "tags-update-allowed-values": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Specifies an update to a tag's allowed values.",
@@ -17719,8 +18469,11 @@ sort order. If not set, then no prior elements exist.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -17732,6 +18485,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "tags-update-request": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The request to update a tag.",
@@ -17779,8 +18533,11 @@ sort order. If not set, then no prior elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -17799,8 +18556,11 @@ sort order. If not set, then no prior elements exist.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -17826,8 +18586,11 @@ tags.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -17838,6 +18601,7 @@ tags.
       "type": "object",
     },
     "tags-update-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The response for updating a tag.",
@@ -17864,6 +18628,7 @@ tags.
       "type": "object",
     },
     "ticket": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -18006,6 +18771,7 @@ tags.
       ],
     },
     "timeline-comment": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -18070,8 +18836,11 @@ will appear in the response.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -18122,8 +18891,11 @@ will appear in the response.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
               },
@@ -18185,8 +18957,11 @@ will appear in the response.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -18230,6 +19005,7 @@ will appear in the response.
       },
     },
     "timeline-entries-create-request-timeline-comment": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -18261,8 +19037,11 @@ will appear in the response.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -18288,8 +19067,11 @@ will appear in the response.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -18340,8 +19122,11 @@ will appear in the response.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
               },
@@ -18370,6 +19155,7 @@ will appear in the response.
       },
     },
     "timeline-entries-create-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The response to creating a timeline entry for an object.",
@@ -18396,6 +19182,7 @@ will appear in the response.
       "type": "object",
     },
     "timeline-entries-get-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The request to getting a timeline entry.",
@@ -18422,6 +19209,7 @@ will appear in the response.
       "type": "object",
     },
     "timeline-entries-list-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The response to listing timeline entries for an object.",
@@ -18449,8 +19237,11 @@ sort order. If not set, then no later elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -18477,8 +19268,11 @@ sort order. If not set, then no prior elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -18522,8 +19316,11 @@ sort order. If not set, then no prior elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -18549,6 +19346,7 @@ sort order. If not set, then no prior elements exist.
       },
     },
     "timeline-entries-update-request-timeline-comment": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -18596,8 +19394,11 @@ sort order. If not set, then no prior elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -18648,8 +19449,11 @@ sort order. If not set, then no prior elements exist.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
               },
@@ -18667,6 +19471,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "timeline-entries-update-request-timeline-comment-artifacts": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -18701,8 +19506,11 @@ already attached. Mutually exclusive with \`set\`.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -18736,8 +19544,11 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -18769,8 +19580,11 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -18793,6 +19607,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
       },
     },
     "timeline-entries-update-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The response to updating a timeline entry.",
@@ -18874,6 +19689,7 @@ default visibility.
       },
     },
     "user-base": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -18908,8 +19724,11 @@ default visibility.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -18956,8 +19775,11 @@ default visibility.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -18982,8 +19804,11 @@ default visibility.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -19014,8 +19839,11 @@ default visibility.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -19049,6 +19877,7 @@ default visibility.
       "type": "object",
     },
     "user-base-summary": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -19083,8 +19912,11 @@ default visibility.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -19131,8 +19963,11 @@ default visibility.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -19157,8 +19992,11 @@ default visibility.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -19343,6 +20181,7 @@ default visibility.
       ],
     },
     "webhook": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -19399,8 +20238,11 @@ default visibility.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": "byte",
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -19433,8 +20275,11 @@ default visibility.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -19444,6 +20289,7 @@ default visibility.
       "type": "object",
     },
     "webhook-event-request": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -19463,8 +20309,11 @@ default visibility.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -19862,8 +20711,11 @@ seconds.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -19961,6 +20813,7 @@ seconds.
       "type": "object",
     },
     "webhook-event-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -19988,8 +20841,11 @@ be set for other request types.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "byte",
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -20237,6 +21093,7 @@ be set for other request types.
       ],
     },
     "webhook-event-verify": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -20256,8 +21113,11 @@ be set for other request types.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": "byte",
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -20312,6 +21172,7 @@ be set for other request types.
       ],
     },
     "webhooks-create-request": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The request to create a new webhook.",
@@ -20370,8 +21231,11 @@ response.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "byte",
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -20390,8 +21254,11 @@ response.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -20401,6 +21268,7 @@ response.
       "type": "object",
     },
     "webhooks-create-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The response to creating a new webhook.",
@@ -20427,6 +21295,7 @@ response.
       "type": "object",
     },
     "webhooks-delete-request": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The request to delete a webhook.",
@@ -20446,8 +21315,11 @@ response.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -20466,8 +21338,11 @@ response.
         "groupName": null,
         "nameOverride": null,
         "schema": {
+          "default": null,
+          "format": null,
           "maxLength": null,
           "minLength": null,
+          "pattern": null,
           "type": "string",
         },
       },
@@ -20480,6 +21355,7 @@ response.
       },
     },
     "webhooks-get-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The response to getting the information for the webhook.",
@@ -20506,6 +21382,7 @@ response.
       "type": "object",
     },
     "webhooks-list-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The response to listing the webhooks.",
@@ -20572,6 +21449,7 @@ response.
       ],
     },
     "webhooks-update-request": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The request to update a webhook.",
@@ -20635,8 +21513,11 @@ response.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -20665,8 +21546,11 @@ won't receive any object events until successfully verified.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "byte",
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -20694,8 +21578,11 @@ won't receive any object events until successfully verified.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -20706,6 +21593,7 @@ won't receive any object events until successfully verified.
       "type": "object",
     },
     "webhooks-update-request-event-types": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -20813,6 +21701,7 @@ event types. Note this is mutually exclusive with 'add' and
       "type": "object",
     },
     "webhooks-update-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The response to updating the webhook.",
@@ -20869,6 +21758,7 @@ event types. Note this is mutually exclusive with 'add' and
       },
     },
     "work-base": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -20953,8 +21843,11 @@ event types. Note this is mutually exclusive with 'add' and
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -21099,8 +21992,11 @@ event types. Note this is mutually exclusive with 'add' and
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -21157,8 +22053,11 @@ issues.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -21186,8 +22085,11 @@ issues.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
+                    "format": null,
                     "maxLength": null,
                     "minLength": null,
+                    "pattern": null,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -21209,8 +22111,11 @@ issues.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -21231,8 +22136,11 @@ issues.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -21259,8 +22167,11 @@ issues.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
+                    "format": null,
                     "maxLength": null,
                     "minLength": null,
+                    "pattern": null,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -21339,8 +22250,11 @@ issues.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -21374,6 +22288,7 @@ issues.
       },
     },
     "works-create-request-issue": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -21421,8 +22336,11 @@ issues.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -21433,6 +22351,7 @@ issues.
       "type": "object",
     },
     "works-create-request-ticket": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -21458,8 +22377,11 @@ issues.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -21484,8 +22406,11 @@ issues.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -21518,6 +22443,7 @@ issues.
       "type": "object",
     },
     "works-create-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -21544,6 +22470,7 @@ issues.
       "type": "object",
     },
     "works-delete-request": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -21563,8 +22490,11 @@ issues.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -21583,8 +22513,11 @@ issues.
         "groupName": null,
         "nameOverride": null,
         "schema": {
+          "default": null,
+          "format": null,
           "maxLength": null,
           "minLength": null,
+          "pattern": null,
           "type": "string",
         },
       },
@@ -21597,6 +22530,7 @@ issues.
       },
     },
     "works-export-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -21630,6 +22564,7 @@ issues.
       "type": "object",
     },
     "works-get-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -21656,6 +22591,7 @@ issues.
       "type": "object",
     },
     "works-list-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -21683,8 +22619,11 @@ sort order. If not set, then no later elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -21711,8 +22650,11 @@ sort order. If not set, then no prior elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -21762,8 +22704,11 @@ sort order. If not set, then no prior elements exist.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -21804,8 +22749,11 @@ sort order. If not set, then no prior elements exist.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -21820,8 +22768,11 @@ sort order. If not set, then no prior elements exist.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -21937,8 +22888,11 @@ sort order. If not set, then no prior elements exist.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -21981,6 +22935,7 @@ sort order. If not set, then no prior elements exist.
       },
     },
     "works-update-request-artifact-ids": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -22012,8 +22967,11 @@ sort order. If not set, then no prior elements exist.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -22025,6 +22983,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "works-update-request-issue": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -22078,8 +23037,11 @@ sort order. If not set, then no prior elements exist.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -22091,6 +23053,7 @@ sort order. If not set, then no prior elements exist.
       "type": "object",
     },
     "works-update-request-owned-by": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -22124,8 +23087,11 @@ empty.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -22137,6 +23103,7 @@ empty.
       "type": "object",
     },
     "works-update-request-reported-by": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -22169,8 +23136,11 @@ empty.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -22182,6 +23152,7 @@ empty.
       "type": "object",
     },
     "works-update-request-tags": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -22222,6 +23193,7 @@ empty.
       "type": "object",
     },
     "works-update-request-ticket": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -22247,8 +23219,11 @@ empty.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -22281,8 +23256,11 @@ empty.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -22316,6 +23294,7 @@ empty.
       "type": "object",
     },
     "works-update-response": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,

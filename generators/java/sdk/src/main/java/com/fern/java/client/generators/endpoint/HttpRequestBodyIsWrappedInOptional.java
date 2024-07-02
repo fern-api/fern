@@ -16,14 +16,14 @@
 
 package com.fern.java.client.generators.endpoint;
 
-import com.fern.irV42.model.http.BytesRequest;
-import com.fern.irV42.model.http.FileUploadRequest;
-import com.fern.irV42.model.http.HttpRequestBody;
-import com.fern.irV42.model.http.HttpRequestBodyReference;
-import com.fern.irV42.model.http.InlinedRequestBody;
-import com.fern.irV42.model.types.ContainerType;
-import com.fern.irV42.model.types.DeclaredTypeName;
-import com.fern.irV42.model.types.PrimitiveType;
+import com.fern.ir.model.http.BytesRequest;
+import com.fern.ir.model.http.FileUploadRequest;
+import com.fern.ir.model.http.HttpRequestBody;
+import com.fern.ir.model.http.HttpRequestBodyReference;
+import com.fern.ir.model.http.InlinedRequestBody;
+import com.fern.ir.model.types.ContainerType;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.PrimitiveType;
 
 public class HttpRequestBodyIsWrappedInOptional {
 
@@ -64,7 +64,7 @@ public class HttpRequestBodyIsWrappedInOptional {
     }
 
     private static class TypeReferenceIsWrappedInOptional
-            implements com.fern.irV42.model.types.TypeReference.Visitor<Boolean> {
+            implements com.fern.ir.model.types.TypeReference.Visitor<Boolean> {
 
         @Override
         public Boolean visitContainer(ContainerType container) {

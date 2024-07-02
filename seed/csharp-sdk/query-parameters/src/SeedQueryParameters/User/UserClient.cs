@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedQueryParameters;
 
+#nullable enable
+
 namespace SeedQueryParameters;
 
 public class UserClient
@@ -19,27 +21,32 @@ public class UserClient
             { "limit", request.Limit.ToString() },
             { "id", request.Id.ToString() },
             { "date", request.Date.ToString() },
-            { "deadline", request.Deadline.ToString() },
+            { "deadline", request.Deadline.ToString("o0") },
             { "bytes", request.Bytes.ToString() },
             { "user", request.User.ToString() },
+            { "userList", request.UserList.ToString() },
             { "keyValue", request.KeyValue.ToString() },
             { "nestedUser", request.NestedUser.ToString() },
             { "excludeUser", request.ExcludeUser.ToString() },
             { "filter", request.Filter },
         };
+        if (request.OptionalDeadline != null)
+        {
+            _query["optionalDeadline"] = request.OptionalDeadline.Value.ToString("o0");
+        }
         if (request.OptionalString != null)
         {
             _query["optionalString"] = request.OptionalString;
         }
         if (request.OptionalUser != null)
         {
-            _query["optionalUser"] = request.OptionalUser;
+            _query["optionalUser"] = request.OptionalUser.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "",
+                Path = "/user",
                 Query = _query
             }
         );
@@ -48,6 +55,6 @@ public class UserClient
         {
             return JsonSerializer.Deserialize<User>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

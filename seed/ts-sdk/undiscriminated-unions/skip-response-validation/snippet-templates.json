@@ -7,13 +7,100 @@
         },
         "endpointId": {
             "path": "/",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_union.get"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";"
+                ],
+                "templateString": "const client = new SeedUndiscriminatedUnionsClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedUndiscriminatedUnions.union.get()",
+                "templateString": "await client.union.get()",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/undiscriminated-unions",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/metadata",
+            "method": "GET",
+            "identifierOverride": "endpoint_union.getMetadata"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";"
+                ],
+                "templateString": "const client = new SeedUndiscriminatedUnionsClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.union.getMetadata()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [],

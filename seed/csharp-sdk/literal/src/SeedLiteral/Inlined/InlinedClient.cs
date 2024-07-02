@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedLiteral;
 
+#nullable enable
+
 namespace SeedLiteral;
 
 public class InlinedClient
@@ -15,10 +17,10 @@ public class InlinedClient
     public async Task<SendResponse> SendAsync(SendLiteralsInlinedRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/inlined",
+                Path = "inlined",
                 Body = request
             }
         );
@@ -27,6 +29,6 @@ public class InlinedClient
         {
             return JsonSerializer.Deserialize<SendResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

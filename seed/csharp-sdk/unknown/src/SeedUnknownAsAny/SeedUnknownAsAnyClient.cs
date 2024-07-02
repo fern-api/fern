@@ -1,5 +1,7 @@
 using SeedUnknownAsAny;
 
+#nullable enable
+
 namespace SeedUnknownAsAny;
 
 public partial class SeedUnknownAsAnyClient
@@ -19,7 +21,7 @@ public partial class SeedUnknownAsAnyClient
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);

@@ -7,12 +7,12 @@ import * as FernIr from "../../..";
 /**
  * If set, the endpoint will be generated with auto-pagination features.
  *
- * The page must be defined as a query parameter included in the request,
- * whereas the next page and results are resolved from properties defined
- * on the response.
+ * The page must be defined as a property defined on the request, whereas
+ * the next page and results are resolved from properties defined on the
+ * response.
  */
 export interface CursorPagination {
-    page: FernIr.QueryParameter;
+    page: FernIr.RequestProperty;
     next: FernIr.ResponseProperty;
     results: FernIr.ResponseProperty;
 }

@@ -12,8 +12,12 @@ export declare namespace Folder {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -24,7 +28,7 @@ export class Folder {
      * @param {Folder.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedApi.folder.foo()
+     *     await client.folder.foo()
      */
     public async foo(requestOptions?: Folder.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
@@ -40,6 +44,7 @@ export class Folder {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;

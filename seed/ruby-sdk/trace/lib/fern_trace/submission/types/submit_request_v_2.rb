@@ -66,9 +66,9 @@ module SeedTraceClient
         parsed_json = JSON.parse(json_object)
         submission_id = struct["submissionId"]
         language = struct["language"]
-        submission_files = parsed_json["submissionFiles"]&.map do |v|
-          v = v.to_json
-          SeedTraceClient::Submission::SubmissionFileInfo.from_json(json_object: v)
+        submission_files = parsed_json["submissionFiles"]&.map do |item|
+          item = item.to_json
+          SeedTraceClient::Submission::SubmissionFileInfo.from_json(json_object: item)
         end
         problem_id = struct["problemId"]
         problem_version = struct["problemVersion"]

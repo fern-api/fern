@@ -1,4 +1,4 @@
-from typing import Sequence
+from typing import Optional, Sequence
 
 from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ...type_hint import TypeHint
@@ -35,7 +35,7 @@ class FunctionSignature(AstNode):
             metadata.update(self.return_type.get_metadata())
         return metadata
 
-    def write(self, writer: NodeWriter) -> None:
+    def write(self, writer: NodeWriter, should_write_as_snippet: Optional[bool] = None) -> None:
         writer.write("(")
         just_wrote_parameter = False
 

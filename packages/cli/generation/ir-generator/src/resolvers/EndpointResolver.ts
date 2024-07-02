@@ -4,6 +4,7 @@ import { parseReferenceToEndpointName } from "../utils/parseReferenceToEndpointN
 import { ResolvedEndpoint } from "./ResolvedEndpoint";
 
 export interface EndpointResolver {
+    // Resolves an endpoint reference specified in a Fern definition (e.g. "auth.getToken").
     resolveEndpoint: (args: { endpoint: string; file: FernFileContext }) => ResolvedEndpoint | undefined;
     resolveEndpointOrThrow: (args: { endpoint: string; file: FernFileContext }) => ResolvedEndpoint;
 }

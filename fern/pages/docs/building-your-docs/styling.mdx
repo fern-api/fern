@@ -1,0 +1,236 @@
+---
+title: Style your docs to match your brand
+description: Configure your site's primary accent color, background image, logo, favicon, light and dark mode, and fonts.
+---
+
+Every Fern Docs website has a configuration file called `docs.yml`. Use this file to set the theme for your docs, including the primary accent color, background image, logo, favicon, light & dark mode, and fonts.
+
+## Colors
+
+### Primary accent
+
+You can specify a primary accent color using the [hexadecimal color](https://www.w3schools.com/colors/colors_hexadecimal.asp). The primary accent color is used for several purposes, including:
+
+- to indicate the page a user is on within the navigation
+- as the background of a primary link button
+- to underline hyperlinks
+- the next and previous page navigation buttons
+
+In `docs.yml`, you can set a single primary accent color or specify different colors for light and dark modes:
+
+<CodeBlocks>
+    <CodeBlock title="single color">
+    ```yaml
+    colors:
+        accentPrimary: "#ADFF8C"
+    ```
+    </CodeBlock>
+    <CodeBlock title="light and dark mode colors">
+    ```yaml
+    colors:
+        accentPrimary:
+            light: "#418326"
+            dark: "#ADFF8C"
+    ```
+    </CodeBlock>
+</CodeBlocks>
+
+### Background color
+
+Just like `accentPrimary`, you can specify the background color in `docs.yml` using the [hexadecimal color](https://www.w3schools.com/colors/colors_hexadecimal.asp).
+
+<CodeBlocks>
+    <CodeBlock title="single color">
+    ```yaml
+    colors:
+        accentPrimary: "#a6d388"
+        background: "#0d0e11"
+    ```
+    </CodeBlock>
+    <CodeBlock title="light and dark mode">
+    ```yaml
+    colors:
+        accentPrimary:
+            light: "#418326"
+            dark: "#ADFF8C"
+        background:
+            light: "#ffffff"
+            dark: "#0d0e11"
+    ```
+    </CodeBlock>
+</CodeBlocks>
+
+## Images 
+
+### Background image
+
+Customize the background image by including the image(s) in your `fern/` project and specifying the path in `docs.yml`. The PNG, SVG, and JPG image formats are supported.
+
+<CodeBlock title="Add the images">
+```diff {4-6}
+  fern/
+  ├─ openapi/
+  ├─ pages/
++ ├─ images/
++   ├─ background-light.svg
++   └─ background-dark.svg
+  ├─ docs.yml
+  └─ fern.config.json
+```
+</CodeBlock>
+
+In `docs.yml`, you can set a single background image or specify different images for light and dark modes:
+
+<CodeBlocks>
+    <CodeBlock title="single image">
+    ```yaml
+    background-image: ./images/background.svg
+    ```
+    </CodeBlock>
+    <CodeBlock title="light and dark mode images">
+    ```yaml
+    background-image: 
+        light: ./images/background-light.svg
+        dark: ./images/background-dark.svg
+    ```
+    </CodeBlock>
+</CodeBlocks>
+
+### Logo
+
+Specify a logo in `docs.yml` which gets displayed in the top left of your docs.
+
+<CodeBlocks>
+    <CodeBlock title="single color">
+    ```yaml
+    logo: ./images/logo.png
+    ```
+    </CodeBlock>
+    <CodeBlock title="light and dark mode">
+    ```yaml
+    logo: 
+        light: ./images/logo-light.png
+        dark: ./images/logo-dark.png
+    ```
+    </CodeBlock>
+</CodeBlocks>
+
+#### Logo properties
+`light` or `dark` specifies the image file location. The supported file types are `.png` or `.svg`.
+
+`height` is optional and sets the logo's height in pixels.
+
+`href` is optional and provides a link for the logo, often used to point to the website's homepage. When the logo is clicked, the user is directed to this link.
+
+<CodeBlock title="docs.yml">
+```yaml
+logo:
+    light: ./images/logo-light.png
+    dark: ./images/logo-dark.png
+    height: 60
+    href: https://example.com
+```
+</CodeBlock>
+
+### Favicon image
+
+Add a `favicon` image that displays in the browser tab. Supported file types are `.png` and `.ico`.
+
+## Fonts
+
+You can specify custom fonts for your documentation website. The supported file types are `.woff` and `.woff2`.
+
+Include the custom fonts in your `fern/` project:
+
+<CodeBlock title="Example custom fonts">
+```diff {6-9}
+  fern/
+  ├─ fern.config.json
+  ├─ generators.yml
+  ├─ openapi/
+    ├─ openapi.yml
++ ├─ fonts/
++   ├─ your-font-regular.woff2
++   ├─ your-font-bold.woff2
++   └─ another-font-regular.woff2
+```
+</CodeBlock>
+
+Fern has three font types:
+- `headingsFont`: affects page and section titles; if not supplied, defaults to the body font
+- `bodyFont`: affects paragraph text and other body text
+- `codeFont`: affects code blocks and inline code snippets
+
+To customize the font used for each font type, add a top-level `typography` list to `docs.yml`. Then in it, specify the path of your font file for one or more of the font types.
+
+A font has two properties:
+- `name`: the name of the font; defaults to a generated name that will be used to reference your custom font in the eventually injected CSS
+- `path`: the path to the font file
+
+<CodeBlock title="Example of specifying custom fonts in docs.yml">
+```yaml
+typography:
+  bodyFont:
+    name: Inter-Regular
+    path: ./fonts/Inter-Regular.woff2
+  headingsFont:
+    name: Inter-Bold
+    path: ./fonts/Inter-Bold.woff2
+  codeFont: 
+    name: Roboto-Mono-Regular
+    path:  ./fonts/Roboto-Mono-Regular.woff2
+```
+</CodeBlock>
+
+If the font file is not variable, you can specify font weights.
+
+A font path has three properties:
+- `path`: indicate that there are multiple font files
+- `weight`: a string of weights that are supported by this font file
+- `style`: the style of the font file, either `normal` or `italic`
+
+<CodeBlock title="Example of specifying font weights in docs.yml">
+```yaml
+typography:
+  bodyFont:
+    name: Inter-Regular
+    paths:
+      - path: ./fonts/Inter-Regular.woff2
+        weight: "400"
+        style: normal
+      - path: ./fonts/Inter-Bold.woff2
+        weight: 500 900 # <-- indicates a range of weights
+        style: normal
+```        
+</CodeBlock>
+
+## Layout
+
+There are several layout options you can configure in `docs.yml`. All of the layout properties are optional and give you more control over the presentation of your docs.
+
+- `header-height`: the height of the header in pixels; the default is `4rem (64px)`
+
+- `page-width`: the maximum width of the page content, including the sidebar and content; the default is `88rem (1408px)`
+
+- `content-width`: the maximum width of the markdown content; the default is `44rem (704px)`
+
+- `sidebar-width`: the width of the sidebar in desktop mode; the default is `18rem (288px)`
+
+- `searchbar-placement`: the placement of the search bar; the options are `sidebar` (default) or `header`
+
+- `tabs-placement`: the placement of the tabs; the options are `sidebar` (default) or `header`
+
+- `content-alignment`: the alignment of the markdown content; the options are `center` (default) and `left`
+
+<Tab title="Example specifying layout in docs.yml">
+```yaml
+layout:
+  header-height: 70px
+  page-width: 1344px
+  content-width: 672px
+  sidebar-width: 336px
+  searchbar-placement: header
+  tabs-placement: header
+  content-alignment: left
+```
+</Tab>

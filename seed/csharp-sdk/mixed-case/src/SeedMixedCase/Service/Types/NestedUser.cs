@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using SeedMixedCase;
 
+#nullable enable
+
 namespace SeedMixedCase;
 
 public class NestedUser

@@ -6,12 +6,12 @@ require "async/http/faraday"
 
 module SeedCustomAuthClient
   class RequestClient
-    # @return [Hash{String => String}]
-    attr_reader :headers
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
     attr_reader :base_url
+    # @return [String]
+    attr_reader :custom_auth_scheme
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -20,13 +20,8 @@ module SeedCustomAuthClient
     # @return [SeedCustomAuthClient::RequestClient]
     def initialize(custom_auth_scheme:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
       @base_url = base_url
-      @headers = {
-        "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_custom_auth",
-        "X-Fern-SDK-Version": "0.0.1",
-        "X-API-KEY": custom_auth_scheme.to_s
-      }
-      @conn = Faraday.new(headers: @headers) do |faraday|
+      @custom_auth_scheme = custom_auth_scheme
+      @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
         faraday.request :retry, { max: max_retries } unless max_retries.nil?
@@ -39,15 +34,25 @@ module SeedCustomAuthClient
     def get_url(request_options: nil)
       request_options&.base_url || @base_url
     end
+
+    # @return [Hash{String => String}]
+    def get_headers
+      headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_custom_auth", "X-Fern-SDK-Version": "0.0.1" }
+      unless @custom_auth_scheme.nil?
+        headers["X-API-KEY"] =
+          ((@custom_auth_scheme.is_a? Method) ? @custom_auth_scheme.call : @custom_auth_scheme)
+      end
+      headers
+    end
   end
 
   class AsyncRequestClient
-    # @return [Hash{String => String}]
-    attr_reader :headers
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
     attr_reader :base_url
+    # @return [String]
+    attr_reader :custom_auth_scheme
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -56,13 +61,8 @@ module SeedCustomAuthClient
     # @return [SeedCustomAuthClient::AsyncRequestClient]
     def initialize(custom_auth_scheme:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
       @base_url = base_url
-      @headers = {
-        "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_custom_auth",
-        "X-Fern-SDK-Version": "0.0.1",
-        "X-API-KEY": custom_auth_scheme.to_s
-      }
-      @conn = Faraday.new(headers: @headers) do |faraday|
+      @custom_auth_scheme = custom_auth_scheme
+      @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
         faraday.adapter :async_http
@@ -75,6 +75,16 @@ module SeedCustomAuthClient
     # @return [String]
     def get_url(request_options: nil)
       request_options&.base_url || @base_url
+    end
+
+    # @return [Hash{String => String}]
+    def get_headers
+      headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_custom_auth", "X-Fern-SDK-Version": "0.0.1" }
+      unless @custom_auth_scheme.nil?
+        headers["X-API-KEY"] =
+          ((@custom_auth_scheme.is_a? Method) ? @custom_auth_scheme.call : @custom_auth_scheme)
+      end
+      headers
     end
   end
 

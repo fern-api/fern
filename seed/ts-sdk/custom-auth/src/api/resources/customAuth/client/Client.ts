@@ -15,8 +15,12 @@ export declare namespace CustomAuth {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -31,7 +35,7 @@ export class CustomAuth {
      * @throws {@link SeedCustomAuth.UnauthorizedRequest}
      *
      * @example
-     *     await seedCustomAuth.customAuth.getWithCustomAuth()
+     *     await client.customAuth.getWithCustomAuth()
      */
     public async getWithCustomAuth(requestOptions?: CustomAuth.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
@@ -48,6 +52,7 @@ export class CustomAuth {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.customAuth.getWithCustomAuth.Response.parseOrThrow(_response.body, {
@@ -102,7 +107,7 @@ export class CustomAuth {
      * @throws {@link SeedCustomAuth.BadRequest}
      *
      * @example
-     *     await seedCustomAuth.customAuth.postWithCustomAuth({
+     *     await client.customAuth.postWithCustomAuth({
      *         "key": "value"
      *     })
      */
@@ -122,6 +127,7 @@ export class CustomAuth {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.customAuth.postWithCustomAuth.Response.parseOrThrow(_response.body, {

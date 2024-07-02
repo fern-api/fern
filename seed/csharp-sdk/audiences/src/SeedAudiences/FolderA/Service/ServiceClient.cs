@@ -2,6 +2,8 @@ using System.Text.Json;
 using SeedAudiences;
 using SeedAudiences.FolderA;
 
+#nullable enable
+
 namespace SeedAudiences.FolderA;
 
 public class ServiceClient
@@ -16,13 +18,13 @@ public class ServiceClient
     public async Task<Response> GetDirectThreadAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<Response>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

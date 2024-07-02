@@ -37,6 +37,7 @@ import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedS
 import { getNonVariablePathParameters } from "./endpoints/utils/getNonVariablePathParameters";
 import { getParameterNameForPathParameter } from "./endpoints/utils/getParameterNameForPathParameter";
 import { getLiteralValueForHeader, isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
+import { REQUEST_OPTIONS_PARAMETER_NAME } from "./endpoints/utils/requestOptionsParameter";
 import { GeneratedHeader } from "./GeneratedHeader";
 import { GeneratedWrappedService } from "./GeneratedWrappedService";
 import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
@@ -60,6 +61,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
+        inlineFileProperties: boolean;
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     }
 }
@@ -68,6 +70,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private static REQUEST_OPTIONS_INTERFACE_NAME = "RequestOptions";
     private static IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME = "IdempotentRequestOptions";
     private static TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME = "timeoutInSeconds";
+    private static ABORT_SIGNAL_PROPERTY_NAME = "abortSignal";
     private static MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME = "maxRetries";
     private static OPTIONS_INTERFACE_NAME = "Options";
     private static OPTIONS_PRIVATE_MEMBER = "_options";
@@ -93,6 +96,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private targetRuntime: JavaScriptRuntime;
     private packageId: PackageId;
     private retainOriginalCasing: boolean;
+    private inlineFileProperties: boolean;
     private importsManager: ImportsManager;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
 
@@ -113,6 +117,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         includeContentHeadersOnFileDownloadResponse,
         includeSerdeLayer,
         retainOriginalCasing,
+        inlineFileProperties,
         importsManager,
         oauthTokenProviderGenerator
     }: GeneratedSdkClientClassImpl.Init) {
@@ -126,6 +131,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.npmPackage = npmPackage;
         this.targetRuntime = targetRuntime;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.inlineFileProperties = inlineFileProperties;
         this.importsManager = importsManager;
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
 
@@ -154,7 +160,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             requestBody,
                             generatedSdkClientClass: this,
                             targetRuntime: this.targetRuntime,
-                            retainOriginalCasing: this.retainOriginalCasing
+                            retainOriginalCasing: this.retainOriginalCasing,
+                            inlineFileProperties: this.inlineFileProperties
                         });
                     } else {
                         return new GeneratedDefaultEndpointRequest({
@@ -196,7 +203,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
                             errorResolver,
                             response,
-                            includeContentHeadersOnResponse: includeContentHeadersOnFileDownloadResponse
+                            includeContentHeadersOnResponse: includeContentHeadersOnFileDownloadResponse,
+                            clientClass: this
                         });
                     }
                 };
@@ -367,7 +375,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         });
 
         const optionsInterface = serviceModule.addInterface(this.generateOptionsInterface(context));
-        serviceModule.addInterface(this.generateRequestOptionsInterface());
+        serviceModule.addInterface(this.generateRequestOptionsInterface(context));
 
         const serviceClass = context.sourceFile.addClass({
             name: this.serviceClassName,
@@ -691,18 +699,31 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 .filter((header) => !this.isAuthorizationHeader(header))
                 .map((header) => {
                     const literalValue = getLiteralValueForHeader(header, context);
+
+                    let value: ts.Expression;
+                    if (literalValue != null) {
+                        value = ts.factory.createBinaryExpression(
+                            ts.factory.createPropertyAccessChain(
+                                ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                ts.factory.createIdentifier(header.name.name.camelCase.safeName)
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                            ts.factory.createStringLiteral(literalValue.toString())
+                        );
+                    } else {
+                        value = context.type.stringify(
+                            context.coreUtilities.fetcher.Supplier.get(
+                                this.getReferenceToOption(this.getOptionKeyForNonLiteralHeader(header))
+                            ),
+                            header.valueType,
+                            { includeNullCheckIfOptional: true }
+                        );
+                    }
+
                     return {
                         header: header.name.wireValue,
-                        value:
-                            literalValue != null
-                                ? ts.factory.createStringLiteral(literalValue.toString())
-                                : context.type.stringify(
-                                      context.coreUtilities.fetcher.Supplier.get(
-                                          this.getReferenceToOption(this.getOptionKeyForNonLiteralHeader(header))
-                                      ),
-                                      header.valueType,
-                                      { includeNullCheckIfOptional: true }
-                                  )
+                        value
                     };
                 }),
             {
@@ -748,20 +769,36 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             : `${this.serviceClassName}.${GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME}`;
     }
 
-    private generateRequestOptionsInterface(): OptionalKind<InterfaceDeclarationStructure> {
+    private generateRequestOptionsInterface(context: SdkContext): OptionalKind<InterfaceDeclarationStructure> {
         return {
             name: GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME,
             properties: [
                 {
                     name: GeneratedSdkClientClassImpl.TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME,
                     type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
-                    hasQuestionToken: true
+                    hasQuestionToken: true,
+                    docs: ["The maximum time to wait for a response in seconds."]
                 },
                 {
                     name: GeneratedSdkClientClassImpl.MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME,
                     type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
-                    hasQuestionToken: true
-                }
+                    hasQuestionToken: true,
+                    docs: ["The number of times to retry the request. Defaults to 2."]
+                },
+                {
+                    name: GeneratedSdkClientClassImpl.ABORT_SIGNAL_PROPERTY_NAME,
+                    type: getTextOfTsNode(ts.factory.createIdentifier("AbortSignal")),
+                    hasQuestionToken: true,
+                    docs: ["A hook to abort the request."]
+                },
+                ...this.intermediateRepresentation.headers.map((header) => {
+                    return {
+                        name: header.name.name.camelCase.safeName,
+                        type: getTextOfTsNode(context.type.getReferenceToType(header.valueType).typeNode),
+                        hasQuestionToken: true,
+                        docs: [`Override the ${header.name.wireValue} header`]
+                    };
+                })
             ]
         };
     }
@@ -797,6 +834,20 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
     public getOptionsPropertiesForSnippet(context: SdkContext): ts.ObjectLiteralElementLike[] {
         const properties: ts.ObjectLiteralElementLike[] = [];
+
+        if (!this.requireDefaultEnvironment && context.ir.environments?.defaultEnvironment == null) {
+            const firstEnvironment = context.environments.getReferenceToFirstEnvironmentEnum();
+            const environment =
+                firstEnvironment != null
+                    ? firstEnvironment.getExpression()
+                    : ts.factory.createStringLiteral("YOUR_BASE_URL");
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME,
+                    environment
+                )
+            );
+        }
 
         if (this.oauthAuthScheme != null && context.generateOAuthClients) {
             properties.push(
@@ -1118,6 +1169,18 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                   referenceToRequestOptions,
                   ts.factory.createIdentifier(GeneratedSdkClientClassImpl.MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME)
               );
+    }
+
+    public getReferenceToAbortSignal({
+        referenceToRequestOptions
+    }: {
+        referenceToRequestOptions: ts.Expression;
+    }): ts.Expression {
+        return ts.factory.createPropertyAccessChain(
+            referenceToRequestOptions,
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.ABORT_SIGNAL_PROPERTY_NAME)
+        );
     }
 
     public getReferenceToOptions(): ts.Expression {

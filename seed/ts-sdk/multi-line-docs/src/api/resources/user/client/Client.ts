@@ -14,8 +14,12 @@ export declare namespace User {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -31,7 +35,7 @@ export class User {
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedMultiLineDocs.user.getUser("string")
+     *     await client.user.getUser("string")
      */
     public async getUser(userId: string, requestOptions?: User.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
@@ -47,6 +51,7 @@ export class User {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -82,7 +87,7 @@ export class User {
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedMultiLineDocs.user.createUser({
+     *     await client.user.createUser({
      *         name: "string",
      *         age: 1
      *     })
@@ -105,6 +110,7 @@ export class User {
             body: await serializers.CreateUserRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.User.parseOrThrow(_response.body, {

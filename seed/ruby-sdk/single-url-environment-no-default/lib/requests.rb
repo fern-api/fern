@@ -7,31 +7,26 @@ require "async/http/faraday"
 
 module SeedSingleUrlEnvironmentNoDefaultClient
   class RequestClient
-    # @return [Hash{String => String}]
-    attr_reader :headers
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
     attr_reader :base_url
     # @return [String]
+    attr_reader :token
+    # @return [String]
     attr_reader :default_environment
 
-    # @param environment [SeedSingleUrlEnvironmentNoDefaultClient::Environment]
     # @param base_url [String]
+    # @param environment [SeedSingleUrlEnvironmentNoDefaultClient::Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @return [SeedSingleUrlEnvironmentNoDefaultClient::RequestClient]
-    def initialize(token:, environment: nil, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+    def initialize(token:, base_url: nil, environment: nil, max_retries: nil, timeout_in_seconds: nil)
       @default_environment = environment
       @base_url = environment || base_url
-      @headers = {
-        "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_single_url_environment_no_default",
-        "X-Fern-SDK-Version": "0.0.1",
-        "Authorization": "Bearer #{token}"
-      }
-      @conn = Faraday.new(headers: @headers) do |faraday|
+      @token = "Bearer #{token}"
+      @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
         faraday.request :retry, { max: max_retries } unless max_retries.nil?
@@ -44,34 +39,40 @@ module SeedSingleUrlEnvironmentNoDefaultClient
     def get_url(request_options: nil)
       request_options&.base_url || @default_environment || @base_url
     end
+
+    # @return [Hash{String => String}]
+    def get_headers
+      headers = {
+        "X-Fern-Language": "Ruby",
+        "X-Fern-SDK-Name": "fern_single_url_environment_no_default",
+        "X-Fern-SDK-Version": "0.0.1"
+      }
+      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless @token.nil?
+      headers
+    end
   end
 
   class AsyncRequestClient
-    # @return [Hash{String => String}]
-    attr_reader :headers
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
     attr_reader :base_url
     # @return [String]
+    attr_reader :token
+    # @return [String]
     attr_reader :default_environment
 
-    # @param environment [SeedSingleUrlEnvironmentNoDefaultClient::Environment]
     # @param base_url [String]
+    # @param environment [SeedSingleUrlEnvironmentNoDefaultClient::Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @return [SeedSingleUrlEnvironmentNoDefaultClient::AsyncRequestClient]
-    def initialize(token:, environment: nil, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+    def initialize(token:, base_url: nil, environment: nil, max_retries: nil, timeout_in_seconds: nil)
       @default_environment = environment
       @base_url = environment || base_url
-      @headers = {
-        "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_single_url_environment_no_default",
-        "X-Fern-SDK-Version": "0.0.1",
-        "Authorization": "Bearer #{token}"
-      }
-      @conn = Faraday.new(headers: @headers) do |faraday|
+      @token = "Bearer #{token}"
+      @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
         faraday.adapter :async_http
@@ -84,6 +85,17 @@ module SeedSingleUrlEnvironmentNoDefaultClient
     # @return [String]
     def get_url(request_options: nil)
       request_options&.base_url || @default_environment || @base_url
+    end
+
+    # @return [Hash{String => String}]
+    def get_headers
+      headers = {
+        "X-Fern-Language": "Ruby",
+        "X-Fern-SDK-Name": "fern_single_url_environment_no_default",
+        "X-Fern-SDK-Version": "0.0.1"
+      }
+      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless @token.nil?
+      headers
     end
   end
 

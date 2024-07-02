@@ -1,5 +1,7 @@
 using SeedQueryParameters;
 
+#nullable enable
+
 namespace SeedQueryParameters;
 
 public partial class SeedQueryParametersClient
@@ -19,7 +21,7 @@ public partial class SeedQueryParametersClient
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);

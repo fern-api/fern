@@ -8,6 +8,8 @@ import typing_extensions
 
 import pydantic
 
+from .datetime_utils import serialize_datetime
+
 from .pydantic_utilities import (
     IS_PYDANTIC_V2,
     UniversalBaseModel,
@@ -87,8 +89,11 @@ class UncheckedBaseModel(UniversalBaseModel):
         populate_by_name = UncheckedBaseModel.get_is_populate_by_name()
 
         for name, field in fields.items():
+            # Key here is only used to pull data from the values dict
+            # you should always use the NAME of the field to for field_values, etc.
+            # because that's how the object is constructed from a pydantic perspective
             key = field.alias
-            if (
+            if key is None or (
                 key not in values and populate_by_name
             ):  # Added this to allow population by field name
                 key = name
@@ -96,7 +101,7 @@ class UncheckedBaseModel(UniversalBaseModel):
             if key in values:
                 type_ = typing.cast(typing.Type, field.outer_type_)  # type: ignore
                 fields_values[name] = construct_type(object_=values[key], type_=type_)
-                _fields_set.add(key)
+                _fields_set.add(name)
             else:
                 default = field.get_default()
 
@@ -104,13 +109,15 @@ class UncheckedBaseModel(UniversalBaseModel):
                 # This effectively allows exclude_unset to work like exclude_none where
                 # the latter passes through intentionally set none values.
                 if default != None and default != PydanticUndefined:
-                    fields_values[name] = default
                     _fields_set.add(name)            
 
         # Add extras back in
         extras = {}
+        # for key, value in values.items():
+        #     if key not in fields:
+        alias_fields = [field.alias for field in fields.values()]
         for key, value in values.items():
-            if key not in fields:
+            if key not in alias_fields and key not in fields:
                 if IS_PYDANTIC_V2:
                     extras[key] = value
                 else:
@@ -161,9 +168,11 @@ def _convert_union_type(type_: typing.Type[typing.Any], object_: typing.Any) -> 
                 try:
                     # Cast to the correct type, based on the discriminant
                     for inner_type in get_args(union_type):
-                        if inner_type.__fields__[metadata.discriminant].default == getattr(
-                            object_, metadata.discriminant
-                        ):
+                        try:
+                            objects_discriminant = getattr(object_, metadata.discriminant)
+                        except:
+                            objects_discriminant = object_[metadata.discriminant]
+                        if inner_type.__fields__[metadata.discriminant].default == objects_discriminant:
                             return construct_type(object_=object_, type_=inner_type)
                 except Exception:
                     # Allow to fall through to our regular union handling
@@ -189,8 +198,12 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
         if not isinstance(object_, typing.Mapping):
             return object_
 
-        _, items_type = get_args(type_)
-        return {key: construct_type(object_=item, type_=items_type) for key, item in object_.items()}
+        key_type, items_type = pydantic_v1.typing.get_args(type_)
+        d = {
+            construct_type(object_=key, type_=key_type): construct_type(object_=item, type_=items_type)
+            for key, item in object_.items()
+        }
+        return d
 
     if base_type == list:
         if not isinstance(object_, list):
@@ -235,6 +248,22 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
     if base_type == uuid.UUID:
         try:
             return uuid.UUID(object_)
+        except Exception:
+            return object_
+
+    if base_type == int:
+        try:
+            return int(object_)
+        except Exception:
+            return object_
+
+    if base_type == bool:
+        try:
+            if isinstance(object_, str):
+                stringified_object = object_.lower()
+                return stringified_object == "true" or stringified_object == "1"
+
+            return bool(object_)
         except Exception:
             return object_
 

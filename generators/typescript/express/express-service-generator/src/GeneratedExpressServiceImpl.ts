@@ -21,6 +21,7 @@ export declare namespace GeneratedExpressServiceImpl {
         includeSerdeLayer: boolean;
         skipRequestValidation: boolean;
         skipResponseValidation: boolean;
+        requestValidationStatusCode: number;
     }
 }
 
@@ -43,6 +44,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     private includeSerdeLayer: boolean;
     private skipRequestValidation: boolean;
     private skipResponseValidation: boolean;
+    private requestValidationStatusCode: number;
 
     constructor({
         packageId,
@@ -52,7 +54,8 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         doNotHandleUnrecognizedErrors,
         includeSerdeLayer,
         skipRequestValidation,
-        skipResponseValidation
+        skipResponseValidation,
+        requestValidationStatusCode
     }: GeneratedExpressServiceImpl.Init) {
         this.serviceClassName = serviceClassName;
         this.service = service;
@@ -62,6 +65,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         this.includeSerdeLayer = includeSerdeLayer;
         this.skipRequestValidation = skipRequestValidation;
         this.skipResponseValidation = skipResponseValidation;
+        this.requestValidationStatusCode = requestValidationStatusCode;
     }
 
     public writeToFile(context: ExpressContext): void {
@@ -168,6 +172,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     }) {
         const REQUEST_PARAMETER_NAME = "req";
         const RESPONSE_PARAMETER_NAME = "res";
+        const NEXT_PARAMETER_NAME = "next";
 
         const COOKIE_PARAMETER_NAME = "cookie";
         const COOKIE_VALUE_PARAMETER_NAME = "value";
@@ -303,6 +308,10 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                             )
                         ])
                     )
+                },
+                {
+                    name: NEXT_PARAMETER_NAME,
+                    type: getTextOfTsNode(context.externalDependencies.express.NextFunction._getReferenceToType())
                 }
             ],
             returnType: getTextOfTsNode(
@@ -478,7 +487,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                 context.externalDependencies.express.Response.json({
                                     referenceToExpressResponse: context.externalDependencies.express.Response.status({
                                         referenceToExpressResponse: expressResponse,
-                                        status: 422
+                                        status: this.requestValidationStatusCode
                                     }),
                                     valueToSend: ts.factory.createObjectLiteralExpression([
                                         ts.factory.createPropertyAssignment(
@@ -673,7 +682,8 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                     )
                                 ],
                                 true
-                            )
+                            ),
+                            next
                         ]
                     )
                 )

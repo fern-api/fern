@@ -52,7 +52,10 @@ export function getSchemaMediaObject(
     return undefined;
 }
 
-function getExamples(mediaObject: OpenAPIV3.MediaTypeObject, context: AbstractOpenAPIV3ParserContext) {
+function getExamples(
+    mediaObject: OpenAPIV3.MediaTypeObject,
+    context: AbstractOpenAPIV3ParserContext
+): NamedFullExample[] {
     const fullExamples: NamedFullExample[] = [];
     if (mediaObject.example != null) {
         fullExamples.push({ name: undefined, value: mediaObject.example, description: undefined });

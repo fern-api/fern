@@ -11,7 +11,7 @@ from .core.oauth_token_provider import OAuthTokenProvider
 
 class SeedOauthClientCredentialsDefault:
     """
-    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
     Parameters
     ----------
@@ -20,8 +20,9 @@ class SeedOauthClientCredentialsDefault:
 
     client_id : str
     client_secret : str
+    _token_getter_override : typing.Optional[typing.Callable[[], str]]
     timeout : typing.Optional[float]
-        The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
+        The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
     follow_redirects : typing.Optional[bool]
         Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
@@ -46,6 +47,7 @@ class SeedOauthClientCredentialsDefault:
         base_url: str,
         client_id: str,
         client_secret: str,
+        _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None
@@ -64,7 +66,7 @@ class SeedOauthClientCredentialsDefault:
         )
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
-            token=oauth_token_provider.get_token,
+            token=_token_getter_override if _token_getter_override is not None else oauth_token_provider.get_token,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
@@ -77,7 +79,7 @@ class SeedOauthClientCredentialsDefault:
 
 class AsyncSeedOauthClientCredentialsDefault:
     """
-    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
     Parameters
     ----------
@@ -86,8 +88,9 @@ class AsyncSeedOauthClientCredentialsDefault:
 
     client_id : str
     client_secret : str
+    _token_getter_override : typing.Optional[typing.Callable[[], str]]
     timeout : typing.Optional[float]
-        The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
+        The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
     follow_redirects : typing.Optional[bool]
         Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
@@ -112,6 +115,7 @@ class AsyncSeedOauthClientCredentialsDefault:
         base_url: str,
         client_id: str,
         client_secret: str,
+        _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None
@@ -130,7 +134,7 @@ class AsyncSeedOauthClientCredentialsDefault:
         )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
-            token=oauth_token_provider.get_token,
+            token=_token_getter_override if _token_getter_override is not None else oauth_token_provider.get_token,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)

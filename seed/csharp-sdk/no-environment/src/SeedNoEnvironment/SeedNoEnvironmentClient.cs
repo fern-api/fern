@@ -1,5 +1,7 @@
 using SeedNoEnvironment;
 
+#nullable enable
+
 namespace SeedNoEnvironment;
 
 public partial class SeedNoEnvironmentClient
@@ -23,7 +25,7 @@ public partial class SeedNoEnvironmentClient
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);

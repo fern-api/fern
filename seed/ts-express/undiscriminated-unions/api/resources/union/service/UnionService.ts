@@ -14,7 +14,17 @@ export interface UnionServiceMethods {
             send: (responseBody: SeedUndiscriminatedUnions.MyUnion) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
+    ): void | Promise<void>;
+    getMetadata(
+        req: express.Request<never, SeedUndiscriminatedUnions.Metadata, never, never>,
+        res: {
+            send: (responseBody: SeedUndiscriminatedUnions.Metadata) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -41,15 +51,21 @@ export class UnionService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.get(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.MyUnion.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
-                            );
+                    await this.methods.get(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.MyUnion.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedUndiscriminatedUnionsError) {
@@ -71,6 +87,38 @@ export class UnionService {
                     ),
                 });
                 next(request.errors);
+            }
+        });
+        this.router.get("/metadata", async (req, res, next) => {
+            try {
+                await this.methods.getMetadata(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.Metadata.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next
+                );
+                next();
+            } catch (error) {
+                if (error instanceof errors.SeedUndiscriminatedUnionsError) {
+                    console.warn(
+                        `Endpoint 'getMetadata' unexpectedly threw ${error.constructor.name}.` +
+                            ` If this was intentional, please add ${error.constructor.name} to` +
+                            " the endpoint's errors list in your Fern Definition."
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
             }
         });
         return this.router;

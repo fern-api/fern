@@ -8,6 +8,8 @@ import { AbstractCsharpGeneratorContext } from "./AbstractCsharpGeneratorContext
 export declare namespace CsharpTypeMapper {
     interface Args {
         reference: TypeReference;
+        /* Defaults to false */
+        unboxOptionals?: boolean;
     }
 }
 
@@ -18,10 +20,13 @@ export class CsharpTypeMapper {
         this.context = context;
     }
 
-    public convert({ reference }: CsharpTypeMapper.Args): Type {
+    public convert({ reference, unboxOptionals }: CsharpTypeMapper.Args): Type {
         switch (reference.type) {
             case "container":
-                return this.convertContainer({ container: reference.container });
+                return this.convertContainer({
+                    container: reference.container,
+                    unboxOptionals: unboxOptionals ?? false
+                });
             case "named":
                 return this.convertNamed({ named: reference });
             case "primitive":
@@ -41,19 +46,27 @@ export class CsharpTypeMapper {
         });
     }
 
-    private convertContainer({ container }: { container: ContainerType }): Type {
+    private convertContainer({
+        container,
+        unboxOptionals
+    }: {
+        container: ContainerType;
+        unboxOptionals: boolean;
+    }): Type {
         switch (container.type) {
             case "list":
-                return Type.list(this.convert({ reference: container.list }));
+                return Type.list(this.convert({ reference: container.list, unboxOptionals: true }));
             case "map":
                 return Type.map(
                     this.convert({ reference: container.keyType }),
                     this.convert({ reference: container.valueType })
                 );
             case "set":
-                return Type.set(this.convert({ reference: container.set }));
+                return Type.set(this.convert({ reference: container.set, unboxOptionals: true }));
             case "optional":
-                return Type.optional(this.convert({ reference: container.optional }));
+                return unboxOptionals
+                    ? this.convert({ reference: container.optional, unboxOptionals })
+                    : Type.optional(this.convert({ reference: container.optional }));
             case "literal":
                 return this.convertLiteral({ literal: container.literal });
             default:
@@ -97,7 +110,7 @@ export class CsharpTypeMapper {
             case "object":
                 return csharp.Type.reference(objectClassReference);
             case "union":
-                return csharp.Type.reference(objectClassReference);
+                return csharp.Type.object();
             case "undiscriminatedUnion": {
                 return csharp.Type.oneOf(
                     typeDeclaration.shape.members.map((member) => {

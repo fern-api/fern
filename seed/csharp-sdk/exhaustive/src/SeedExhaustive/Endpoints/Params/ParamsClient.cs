@@ -2,6 +2,8 @@ using System.Text.Json;
 using SeedExhaustive;
 using SeedExhaustive.Endpoints;
 
+#nullable enable
+
 namespace SeedExhaustive.Endpoints;
 
 public class ParamsClient
@@ -19,14 +21,14 @@ public class ParamsClient
     public async Task<string> GetWithPathAsync(string param)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/path/{param}" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"/params/path/{param}" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -40,10 +42,10 @@ public class ParamsClient
             { "number", request.Number.ToString() },
         };
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "",
+                Path = "/params",
                 Query = _query
             }
         );
@@ -60,10 +62,10 @@ public class ParamsClient
             { "numer", request.Numer.ToString() },
         };
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "",
+                Path = "/params",
                 Query = _query
             }
         );
@@ -76,10 +78,10 @@ public class ParamsClient
     {
         var _query = new Dictionary<string, object>() { { "query", request.Query }, };
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/path-query/{param}",
+                Path = $"/params/path-query/{param}",
                 Query = _query
             }
         );
@@ -91,10 +93,10 @@ public class ParamsClient
     public async Task<string> ModifyWithPathAsync(string param, string request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Put,
-                Path = $"/path/{param}",
+                Path = $"/params/path/{param}",
                 Body = request
             }
         );
@@ -103,6 +105,6 @@ public class ParamsClient
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

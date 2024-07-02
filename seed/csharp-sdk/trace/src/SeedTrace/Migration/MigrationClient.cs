@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class MigrationClient
@@ -12,7 +14,7 @@ public class MigrationClient
         _client = client;
     }
 
-    public async Task<List<Migration>> GetAttemptedMigrationsAsync(
+    public async Task<IEnumerable<Migration>> GetAttemptedMigrationsAsync(
         GetAttemptedMigrationsRequest request
     )
     {
@@ -21,18 +23,18 @@ public class MigrationClient
             { "admin-key-header", request.AdminKeyHeader },
         };
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/all",
+                Path = "/migration-info/all",
                 Headers = _headers
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<Migration>>(responseBody);
+            return JsonSerializer.Deserialize<IEnumerable<Migration>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

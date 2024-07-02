@@ -25,7 +25,6 @@ import { Expression } from "../expressions/Expression";
 import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
 import { Import } from "../Import";
-import { Module_ } from "../Module_";
 import { Property } from "../Property";
 import { Variable } from "../Variable";
 
@@ -35,6 +34,7 @@ enum RubyClass {
     STRING = "String",
     BOOLEAN = "Boolean",
     LONG = "Long",
+    TIME = "Time",
     DATETIME = "DateTime",
     DATE = "Date",
     // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
@@ -45,7 +45,8 @@ enum RubyClass {
     JSON = "JSON",
     OPENSTRUCT = "OpenStruct",
     VOID = "Void",
-    FILE = "IO"
+    FILE = "IO",
+    METHOD = "Method"
 }
 
 export declare namespace ClassReference {
@@ -133,11 +134,34 @@ export const JsonClassReference = new ClassReference({
 export const VoidClassReference = new ClassReference({ name: RubyClass.VOID });
 export const BooleanClassReference = new ClassReference({ name: RubyClass.BOOLEAN });
 export const StringClassReference = new ClassReference({ name: RubyClass.STRING });
+export const MethodClassReference = new ClassReference({ name: RubyClass.METHOD });
 export const LongClassReference = new ClassReference({ name: RubyClass.LONG });
 export const FileClassReference = new ClassReference({ name: RubyClass.FILE });
 export const B64StringClassReference = new ClassReference({ name: RubyClass.BASE64 });
+export const TimeClassReference = new ClassReference({ name: RubyClass.TIME });
 export const NilValue = "nil";
 export const OmittedValue = "OMIT";
+
+export class LiteralClassReference extends ClassReference {
+    innerType: ClassReference;
+    value: string;
+
+    constructor(innerType: ClassReference, lit: Literal) {
+        super({ ...innerType });
+        this.innerType = innerType;
+        this.value = lit._visit<string>({
+            string: (s) => `"${s}"`,
+            boolean: (b) => (b ? "true" : "false"),
+            _other: () => {
+                throw new Error("Unexpected literal type");
+            }
+        });
+    }
+
+    public getLiteralValue(): string {
+        return this.value;
+    }
+}
 
 // Extended class references
 export declare namespace SerializableObjectReference {
@@ -190,11 +214,11 @@ export class SerializableObjectReference extends ClassReference {
         properties: Map<string, TypeReference>
     ): ClassReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
-        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(
-            declaredTypeName.fernFilepath,
-            true,
-            locationGenerator.rootModule
-        );
+        const moduleBreadcrumbs = locationGenerator.getModuleBreadcrumbs({
+            path: declaredTypeName.fernFilepath,
+            includeFilename: true,
+            isType: true
+        });
         return new SerializableObjectReference({
             name: declaredTypeName.name.pascalCase.safeName,
             import_: new Import({ from: location }),
@@ -219,11 +243,11 @@ export class DiscriminatedUnionClassReference extends SerializableObjectReferenc
         properties: Map<string, TypeReference>
     ): ClassReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
-        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(
-            declaredTypeName.fernFilepath,
-            true,
-            locationGenerator.rootModule
-        );
+        const moduleBreadcrumbs = locationGenerator.getModuleBreadcrumbs({
+            path: declaredTypeName.fernFilepath,
+            includeFilename: true,
+            isType: true
+        });
         return new DiscriminatedUnionClassReference({
             name: declaredTypeName.name.pascalCase.safeName,
             import_: new Import({ from: location }),
@@ -261,11 +285,11 @@ export class AliasReference extends ClassReference {
         locationGenerator: LocationGenerator
     ): ClassReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
-        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(
-            declaredTypeName.fernFilepath,
-            true,
-            locationGenerator.rootModule
-        );
+        const moduleBreadcrumbs = locationGenerator.getModuleBreadcrumbs({
+            path: declaredTypeName.fernFilepath,
+            includeFilename: true,
+            isType: true
+        });
         return new AliasReference({
             aliasOf,
             name: declaredTypeName.name.screamingSnakeCase.safeName,
@@ -300,25 +324,34 @@ export class ArrayReference extends ClassReference {
 
     public fromJson(variable: string | Variable): AstNode | undefined {
         const valueFromJsonFunction =
-            this.innerType instanceof ClassReference ? this.innerType.fromJson("v") : undefined;
+            this.innerType instanceof ClassReference ? this.innerType.fromJson("item") : undefined;
+
+        // If the nested value is iterable, then you should not cast the item back to JSON, but rather allow it to
+        // remain iterable and the nested value will be responsible for casting itself back to JSON
+        const valueIsIterable = this.innerType instanceof ArrayReference || this.innerType instanceof HashReference;
+        const expressions = [];
+        if (!valueIsIterable) {
+            expressions.push(
+                new Expression({
+                    leftSide: "item",
+                    rightSide: new FunctionInvocation({
+                        onObject: "item",
+                        baseFunction: new Function_({ name: "to_json", functionBody: [] })
+                    }),
+                    isAssignment: true
+                })
+            );
+        }
+        expressions.push(new Expression({ rightSide: valueFromJsonFunction, isAssignment: false }));
+
         return valueFromJsonFunction !== undefined
             ? new FunctionInvocation({
                   baseFunction: new Function_({ name: "map", functionBody: [] }),
                   onObject: variable,
                   optionalSafeCall: true,
                   block: {
-                      arguments: "v",
-                      expressions: [
-                          new Expression({
-                              leftSide: "v",
-                              rightSide: new FunctionInvocation({
-                                  onObject: "v",
-                                  baseFunction: new Function_({ name: "to_json", functionBody: [] })
-                              }),
-                              isAssignment: true
-                          }),
-                          new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
-                      ]
+                      arguments: "item",
+                      expressions
                   }
               })
             : undefined;
@@ -372,25 +405,34 @@ export class HashReference extends ClassReference {
     }
     public fromJson(variable: string | Variable): AstNode | undefined {
         const valueFromJsonFunction =
-            this.valueType instanceof ClassReference ? this.valueType.fromJson("v") : undefined;
+            this.valueType instanceof ClassReference ? this.valueType.fromJson("value") : undefined;
+
+        // If the nested value is iterable, then you should not cast the item back to JSON, but rather allow it to
+        // remain iterable and the nested value will be responsible for casting itself back to JSON
+        const valueIsIterable = this.valueType instanceof ArrayReference || this.valueType instanceof HashReference;
+        const expressions = [];
+        if (!valueIsIterable) {
+            expressions.push(
+                new Expression({
+                    leftSide: "value",
+                    rightSide: new FunctionInvocation({
+                        onObject: "value",
+                        baseFunction: new Function_({ name: "to_json", functionBody: [] })
+                    }),
+                    isAssignment: true
+                })
+            );
+        }
+        expressions.push(new Expression({ rightSide: valueFromJsonFunction, isAssignment: false }));
+
         return valueFromJsonFunction !== undefined
             ? new FunctionInvocation({
                   baseFunction: new Function_({ name: "transform_values", functionBody: [] }),
                   onObject: variable,
                   optionalSafeCall: true,
                   block: {
-                      arguments: "v",
-                      expressions: [
-                          new Expression({
-                              leftSide: "v",
-                              rightSide: new FunctionInvocation({
-                                  onObject: "v",
-                                  baseFunction: new Function_({ name: "to_json", functionBody: [] })
-                              }),
-                              isAssignment: true
-                          }),
-                          new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
-                      ]
+                      arguments: "value",
+                      expressions
                   }
               })
             : undefined;
@@ -489,11 +531,11 @@ export class EnumReference extends ClassReference {
         enumValues: EnumValue[]
     ): EnumReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
-        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(
-            declaredTypeName.fernFilepath,
-            true,
-            locationGenerator.rootModule
-        );
+        const moduleBreadcrumbs = locationGenerator.getModuleBreadcrumbs({
+            path: declaredTypeName.fernFilepath,
+            includeFilename: true,
+            isType: true
+        });
         return new EnumReference({
             name: declaredTypeName.name.pascalCase.safeName,
             import_: new Import({ from: location }),
@@ -740,11 +782,14 @@ export class ClassReferenceFactory {
             optional: (tr: TypeReference) => this.fromTypeReference(tr),
             set: (tr: TypeReference) => new SetReference({ innerType: this.fromTypeReference(tr) }),
             literal: (lit: Literal) =>
-                Literal._visit<ClassReference>(lit, {
-                    string: () => StringClassReference,
-                    boolean: () => BooleanClassReference,
-                    _other: (value: { type: string }) => new ClassReference({ name: value.type })
-                }),
+                new LiteralClassReference(
+                    Literal._visit<ClassReference>(lit, {
+                        string: () => StringClassReference,
+                        boolean: () => BooleanClassReference,
+                        _other: (value: { type: string }) => new ClassReference({ name: value.type })
+                    }),
+                    lit
+                ),
             _other: () => {
                 throw new Error("Unexpected primitive type: " + containerType.type);
             }

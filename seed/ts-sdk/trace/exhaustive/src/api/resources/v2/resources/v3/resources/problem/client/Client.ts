@@ -16,8 +16,14 @@ export declare namespace Problem {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Random-Header header */
+        xRandomHeader?: string | undefined;
     }
 }
 
@@ -30,7 +36,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.v2.v3.problem.getLightweightProblems()
+     *     await client.v2.v3.problem.getLightweightProblems()
      */
     public async getLightweightProblems(
         requestOptions?: Problem.RequestOptions
@@ -62,6 +68,7 @@ export class Problem {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -87,7 +94,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.v2.v3.problem.getProblems()
+     *     await client.v2.v3.problem.getProblems()
      */
     public async getProblems(
         requestOptions?: Problem.RequestOptions
@@ -114,6 +121,7 @@ export class Problem {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -140,7 +148,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.v2.v3.problem.getLatestProblem(SeedTrace.ProblemId("string"))
+     *     await client.v2.v3.problem.getLatestProblem(SeedTrace.ProblemId("string"))
      */
     public async getLatestProblem(
         problemId: SeedTrace.ProblemId,
@@ -168,6 +176,7 @@ export class Problem {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -195,7 +204,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.v2.v3.problem.getProblemVersion(SeedTrace.ProblemId("string"), 1)
+     *     await client.v2.v3.problem.getProblemVersion(SeedTrace.ProblemId("string"), 1)
      */
     public async getProblemVersion(
         problemId: SeedTrace.ProblemId,
@@ -226,6 +235,7 @@ export class Problem {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {

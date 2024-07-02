@@ -11,6 +11,8 @@ import * as FernIr from "../../..";
  * The page index is auto-incremented between every additional page request.
  */
 export interface OffsetPagination {
-    page: FernIr.QueryParameter;
+    page: FernIr.RequestProperty;
     results: FernIr.ResponseProperty;
+    /** The step size used to increment the page offset between every new page. */
+    step: FernIr.RequestProperty | undefined;
 }

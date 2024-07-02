@@ -3,10 +3,11 @@
  */
 package com.seed.noEnvironment.resources.dummy;
 
-import com.seed.noEnvironment.core.ApiError;
 import com.seed.noEnvironment.core.ClientOptions;
 import com.seed.noEnvironment.core.ObjectMappers;
 import com.seed.noEnvironment.core.RequestOptions;
+import com.seed.noEnvironment.core.SeedNoEnvironmentApiException;
+import com.seed.noEnvironment.core.SeedNoEnvironmentException;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -37,22 +38,22 @@ public class DummyClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
-            Response response = client.newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedNoEnvironmentApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(
-                            responseBody != null ? responseBody.string() : "{}", Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SeedNoEnvironmentException("Network error executing HTTP request", e);
         }
     }
 }

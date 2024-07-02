@@ -7,5 +7,6 @@ import * as FernDocsConfig from "../../..";
 export type NavigationItem =
     | FernDocsConfig.PageConfiguration
     | FernDocsConfig.SectionConfiguration
-    | FernDocsConfig.ApiSectionConfiguration
-    | FernDocsConfig.LinkConfiguration;
+    | FernDocsConfig.ApiReferenceConfiguration
+    | FernDocsConfig.LinkConfiguration
+    | FernDocsConfig.ChangelogConfiguration;

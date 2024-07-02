@@ -5,6 +5,7 @@ import {
     getNestedObjectPropertyFromResolvedType,
     maybeFileFromResolvedType
 } from "../converters/services/convertProperty";
+import { convertQueryParameter } from "../converters/services/convertQueryParameter";
 import { FernFileContext } from "../FernFileContext";
 import { EndpointResolver } from "./EndpointResolver";
 import { TypeResolver } from "./TypeResolver";
@@ -73,7 +74,7 @@ export class PropertyResolverImpl implements PropertyResolver {
             return undefined;
         }
         if (typeof resolvedEndpoint.endpoint.request !== "string") {
-            return this.resolveRequestPropertyFromInlinedRequestBody({
+            return this.resolveRequestPropertyFromInlinedRequest({
                 typeResolver: this.typeResolver,
                 file: resolvedEndpoint.file,
                 requestType: resolvedEndpoint.endpoint.request,
@@ -146,6 +147,45 @@ export class PropertyResolverImpl implements PropertyResolver {
             }),
             property: objectProperty
         };
+    }
+
+    private async resolveRequestPropertyFromInlinedRequest({
+        typeResolver,
+        file,
+        requestType,
+        propertyComponents
+    }: {
+        typeResolver: TypeResolver;
+        file: FernFileContext;
+        requestType: RawSchemas.HttpRequestSchema;
+        propertyComponents: string[];
+    }): Promise<RequestProperty | undefined> {
+        if (propertyComponents.length === 1) {
+            // Query parameters can only be defined on the root level of the request.
+            const queryParameterKey = propertyComponents[0] ?? "";
+            const queryParameter =
+                typeof requestType["query-parameters"] != null
+                    ? requestType["query-parameters"]?.[queryParameterKey]
+                    : undefined;
+            if (queryParameter != null) {
+                return {
+                    property: RequestPropertyValue.query(
+                        await convertQueryParameter({
+                            file,
+                            queryParameterKey,
+                            queryParameter
+                        })
+                    ),
+                    propertyPath: undefined
+                };
+            }
+        }
+        return this.resolveRequestPropertyFromInlinedRequestBody({
+            typeResolver,
+            file,
+            requestType,
+            propertyComponents
+        });
     }
 
     private async resolveRequestPropertyFromInlinedRequestBody({

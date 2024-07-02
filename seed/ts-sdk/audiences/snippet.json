@@ -3,21 +3,23 @@
         {
             "id": {
                 "path": "/",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_folder-a/service.getDirectThread"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedAudiencesClient } from \"@fern/audiences\";\n\nconst seedAudiences = new SeedAudiencesClient;\nawait seedAudiences.folderA.service.getDirectThread();\n"
+                "client": "import { SeedAudiencesClient } from \"@fern/audiences\";\n\nconst client = new SeedAudiencesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.folderA.service.getDirectThread();\n"
             }
         },
         {
             "id": {
                 "path": "/",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_foo.find"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedAudiencesClient } from \"@fern/audiences\";\n\nconst seedAudiences = new SeedAudiencesClient;\nawait seedAudiences.foo.find({\n    optionalString: \"string\",\n    publicProperty: \"string\",\n    privateProperty: 1\n});\n"
+                "client": "import { SeedAudiencesClient } from \"@fern/audiences\";\n\nconst client = new SeedAudiencesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.foo.find({\n    optionalString: \"string\",\n    publicProperty: \"string\",\n    privateProperty: 1\n});\n"
             }
         }
     ],

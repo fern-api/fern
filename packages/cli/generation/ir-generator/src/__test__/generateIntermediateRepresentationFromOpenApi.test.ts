@@ -3,7 +3,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { loadApis } from "@fern-api/project-loader";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { APIWorkspace, convertOpenApiWorkspaceToFernWorkspace } from "@fern-api/workspace-loader";
+import { APIWorkspace } from "@fern-api/workspace-loader";
 import path from "path";
 import { generateIntermediateRepresentation } from "../generateIntermediateRepresentation";
 
@@ -34,18 +34,20 @@ it("generate IR from OpenAPI", async () => {
         defaultToAllApiWorkspaces: true
     });
 
-    for (let workspace of apiWorkspaces) {
-        const name = workspace.absoluteFilepath.split("/").pop();
-        if (workspace.type === "oss") {
-            workspace = await convertOpenApiWorkspaceToFernWorkspace(workspace, taskContext);
+    for (const workspace of apiWorkspaces) {
+        const fernWorkspace = await workspace.toFernWorkspace({ context: taskContext });
+        if (fernWorkspace.workspaceName == null) {
+            continue;
         }
 
         const intermediateRepresentation = await generateIntermediateRepresentation({
-            workspace,
+            workspace: fernWorkspace,
             generationLanguage: undefined,
-            audiences: TEST_DEFINITION_CONFIG[workspace.name]?.audiences ?? { type: "all" },
+            audiences: TEST_DEFINITION_CONFIG[fernWorkspace.workspaceName]?.audiences ?? { type: "all" },
+            keywords: undefined,
             smartCasing: true, // Verify the special casing convention in tests.
-            disableExamples: false
+            disableExamples: false,
+            readme: undefined
         });
 
         const intermediateRepresentationJson = await IrSerialization.IntermediateRepresentation.jsonOrThrow(
@@ -54,6 +56,8 @@ it("generate IR from OpenAPI", async () => {
                 unrecognizedObjectKeys: "strip"
             }
         );
-        expect(intermediateRepresentationJson).toMatchSpecificSnapshot(`__snapshots__/openapi/${name}.txt`);
+        expect(intermediateRepresentationJson).toMatchSpecificSnapshot(
+            `__snapshots__/openapi/${fernWorkspace.workspaceName}.txt`
+        );
     }
 });

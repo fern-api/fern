@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedExhaustive;
 
+#nullable enable
+
 namespace SeedExhaustive;
 
 public class NoAuthClient
@@ -18,10 +20,10 @@ public class NoAuthClient
     public async Task<bool> PostWithNoAuthAsync(object request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "",
+                Path = "/no-auth",
                 Body = request
             }
         );
@@ -30,6 +32,6 @@ public class NoAuthClient
         {
             return JsonSerializer.Deserialize<bool>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

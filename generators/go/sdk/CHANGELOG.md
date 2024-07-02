@@ -7,6 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.22.1 - 2024-06-11]
+
+- Fix: Array of `deepObject` query parameters are correctly serialized. An array of objects
+  are encoded like so:
+
+  ```go
+  user, err := client.Users.Get(
+    ...,
+    acme.GetUserRequest{
+      Filters: []*acme.Filter{
+        {
+          Key: "age",
+          Value: "42",
+        },
+        {
+          Key: "firstName",
+          Value: "john",
+        },
+      },
+    },
+  )
+  // The query string is serialized as: ?filters[key]=age&filters[key]=firstName&filters[value]=42&filters[value]=john
+  ```
+
+## [0.22.0 - 2024-05-21]
+
+- Feature: Extra properties decoded from response objects are retained and accessible via the
+  `GetExtraProperties` method like so:
+
+  ```go
+  user, err := client.Users.Get(...)
+  if err != nil {
+    return nil, err
+  }
+  for key, value := range user.GetExtraProperties() {
+    fmt.Printf("Got extra property; key: %s, value: %v\n", key, value)
+  }
+  ```
+
+## [0.21.3 - 2024-05-17]
+
+- Internal: The generator now uses the latest FDR SDK.
+
 ## [0.21.2 - 2024-05-07]
 
 - Fix: In-lined request body properties no longer include a non-empty `url` struct tag. This previously caused

@@ -1,5 +1,7 @@
 using SeedErrorProperty;
 
+#nullable enable
+
 namespace SeedErrorProperty;
 
 public partial class SeedErrorPropertyClient
@@ -22,7 +24,7 @@ public partial class SeedErrorPropertyClient
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);

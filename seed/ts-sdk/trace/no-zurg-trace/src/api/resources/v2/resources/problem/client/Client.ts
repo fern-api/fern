@@ -16,8 +16,14 @@ export declare namespace Problem {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Random-Header header */
+        xRandomHeader?: string | undefined;
     }
 }
 
@@ -30,7 +36,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.v2.problem.getLightweightProblems()
+     *     await client.v2.problem.getLightweightProblems()
      */
     public async getLightweightProblems(
         requestOptions?: Problem.RequestOptions
@@ -56,6 +62,7 @@ export class Problem {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as SeedTrace.v2.LightweightProblemInfoV2[];
@@ -89,7 +96,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.v2.problem.getProblems()
+     *     await client.v2.problem.getProblems()
      */
     public async getProblems(requestOptions?: Problem.RequestOptions): Promise<SeedTrace.v2.ProblemInfoV2[]> {
         const _response = await core.fetcher({
@@ -113,6 +120,7 @@ export class Problem {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as SeedTrace.v2.ProblemInfoV2[];
@@ -147,7 +155,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.v2.problem.getLatestProblem("string")
+     *     await client.v2.problem.getLatestProblem("string")
      */
     public async getLatestProblem(
         problemId: SeedTrace.ProblemId,
@@ -174,6 +182,7 @@ export class Problem {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as SeedTrace.v2.ProblemInfoV2;
@@ -209,7 +218,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.v2.problem.getProblemVersion("string", 1)
+     *     await client.v2.problem.getProblemVersion("string", 1)
      */
     public async getProblemVersion(
         problemId: SeedTrace.ProblemId,
@@ -239,6 +248,7 @@ export class Problem {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as SeedTrace.v2.ProblemInfoV2;

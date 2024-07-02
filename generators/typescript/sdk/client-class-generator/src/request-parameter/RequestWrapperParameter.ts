@@ -26,6 +26,10 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         };
     }
 
+    public getType(context: SdkContext): ts.TypeNode {
+        return context.requestWrapper.getReferenceToRequestWrapper(this.packageId, this.endpoint.name);
+    }
+
     public getInitialStatements(
         context: SdkContext,
         { variablesInScope }: { variablesInScope: string[] }

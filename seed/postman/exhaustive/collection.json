@@ -433,7 +433,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"string\": \"example\",\n    \"integer\": 0,\n    \"long\": 10000000,\n    \"double\": 0,\n    \"bool\": true,\n    \"datetime\": \"1994-11-05T13:15:30Z\",\n    \"date\": \"1994-11-05\",\n    \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n    \"base64\": \"SGVsbG8gV29ybGQ=\",\n    \"list\": [\n        \"example\"\n    ],\n    \"set\": [\n        \"example\"\n    ],\n    \"map\": {\n        \"0\": \"example\"\n    }\n}",
+                  "raw": "{\n    \"string\": \"example\",\n    \"integer\": 0,\n    \"long\": 10000000,\n    \"double\": 0,\n    \"bool\": true,\n    \"datetime\": \"1994-11-05T13:15:30Z\",\n    \"date\": \"1994-11-05\",\n    \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n    \"base64\": \"SGVsbG8gV29ybGQ=\",\n    \"list\": [\n        \"example\"\n    ],\n    \"set\": [\n        \"example\"\n    ],\n    \"map\": {\n        \"0\": \"example\"\n    },\n    \"bigint\": \"example\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -502,7 +502,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"string\": \"example\",\n    \"integer\": 0,\n    \"long\": 10000000,\n    \"double\": 0,\n    \"bool\": true,\n    \"datetime\": \"1994-11-05T13:15:30Z\",\n    \"date\": \"1994-11-05\",\n    \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n    \"base64\": \"SGVsbG8gV29ybGQ=\",\n    \"list\": [\n        \"example\"\n    ],\n    \"set\": [\n        \"example\"\n    ],\n    \"map\": {\n        \"0\": \"example\"\n    }\n}",
+                  "raw": "{\n    \"string\": \"example\",\n    \"integer\": 0,\n    \"long\": 10000000,\n    \"double\": 0,\n    \"bool\": true,\n    \"datetime\": \"1994-11-05T13:15:30Z\",\n    \"date\": \"1994-11-05\",\n    \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n    \"base64\": \"SGVsbG8gV29ybGQ=\",\n    \"list\": [\n        \"example\"\n    ],\n    \"set\": [\n        \"example\"\n    ],\n    \"map\": {\n        \"0\": \"example\"\n    },\n    \"bigint\": \"example\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -598,7 +598,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"string\": \"example\",\n    \"NestedObject\": {\n        \"string\": \"example\",\n        \"integer\": 0,\n        \"long\": 10000000,\n        \"double\": 0,\n        \"bool\": true,\n        \"datetime\": \"1994-11-05T13:15:30Z\",\n        \"date\": \"1994-11-05\",\n        \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n        \"base64\": \"SGVsbG8gV29ybGQ=\",\n        \"list\": [\n            \"example\"\n        ],\n        \"set\": [\n            \"example\"\n        ],\n        \"map\": {\n            \"0\": \"example\"\n        }\n    }\n}",
+                  "raw": "{\n    \"string\": \"example\",\n    \"NestedObject\": {\n        \"string\": \"example\",\n        \"integer\": 0,\n        \"long\": 10000000,\n        \"double\": 0,\n        \"bool\": true,\n        \"datetime\": \"1994-11-05T13:15:30Z\",\n        \"date\": \"1994-11-05\",\n        \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n        \"base64\": \"SGVsbG8gV29ybGQ=\",\n        \"list\": [\n            \"example\"\n        ],\n        \"set\": [\n            \"example\"\n        ],\n        \"map\": {\n            \"0\": \"example\"\n        },\n        \"bigint\": \"example\"\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -614,23 +614,30 @@
               "request": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/object/get-and-return-nested-with-required-field",
+                  "raw": "{{baseUrl}}/object/get-and-return-nested-with-required-field/:string",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "object",
-                    "get-and-return-nested-with-required-field"
+                    "get-and-return-nested-with-required-field",
+                    ":string"
                   ],
                   "query": [],
-                  "variable": []
+                  "variable": [
+                    {
+                      "key": "string",
+                      "value": "",
+                      "description": null
+                    }
+                  ]
                 },
                 "header": [],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"string\": \"example\",\n    \"NestedObject\": {\n        \"string\": \"example\",\n        \"integer\": 0,\n        \"long\": 10000000,\n        \"double\": 0,\n        \"bool\": true,\n        \"datetime\": \"1994-11-05T13:15:30Z\",\n        \"date\": \"1994-11-05\",\n        \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n        \"base64\": \"SGVsbG8gV29ybGQ=\",\n        \"list\": [\n            \"example\"\n        ],\n        \"set\": [\n            \"example\"\n        ],\n        \"map\": {\n            \"0\": \"example\"\n        }\n    }\n}",
+                  "raw": "{\n    \"string\": \"example\",\n    \"NestedObject\": {\n        \"string\": \"example\",\n        \"integer\": 0,\n        \"long\": 10000000,\n        \"double\": 0,\n        \"bool\": true,\n        \"datetime\": \"1994-11-05T13:15:30Z\",\n        \"date\": \"1994-11-05\",\n        \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n        \"base64\": \"SGVsbG8gV29ybGQ=\",\n        \"list\": [\n            \"example\"\n        ],\n        \"set\": [\n            \"example\"\n        ],\n        \"map\": {\n            \"0\": \"example\"\n        },\n        \"bigint\": \"example\"\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -662,7 +669,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "[\n    {\n        \"string\": \"example\",\n        \"NestedObject\": {\n            \"string\": \"example\",\n            \"integer\": 0,\n            \"long\": 10000000,\n            \"double\": 0,\n            \"bool\": true,\n            \"datetime\": \"1994-11-05T13:15:30Z\",\n            \"date\": \"1994-11-05\",\n            \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n            \"base64\": \"SGVsbG8gV29ybGQ=\",\n            \"list\": [\n                \"example\"\n            ],\n            \"set\": [\n                \"example\"\n            ],\n            \"map\": {\n                \"0\": \"example\"\n            }\n        }\n    }\n]",
+                  "raw": "[\n    {\n        \"string\": \"example\",\n        \"NestedObject\": {\n            \"string\": \"example\",\n            \"integer\": 0,\n            \"long\": 10000000,\n            \"double\": 0,\n            \"bool\": true,\n            \"datetime\": \"1994-11-05T13:15:30Z\",\n            \"date\": \"1994-11-05\",\n            \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n            \"base64\": \"SGVsbG8gV29ybGQ=\",\n            \"list\": [\n                \"example\"\n            ],\n            \"set\": [\n                \"example\"\n            ],\n            \"map\": {\n                \"0\": \"example\"\n            },\n            \"bigint\": \"example\"\n        }\n    }\n]",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1218,7 +1225,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"string\": \"example\",\n    \"integer\": 0,\n    \"NestedObject\": {\n        \"string\": \"example\",\n        \"integer\": 0,\n        \"long\": 10000000,\n        \"double\": 0,\n        \"bool\": true,\n        \"datetime\": \"1994-11-05T13:15:30Z\",\n        \"date\": \"1994-11-05\",\n        \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n        \"base64\": \"SGVsbG8gV29ybGQ=\",\n        \"list\": [\n            \"example\"\n        ],\n        \"set\": [\n            \"example\"\n        ],\n        \"map\": {\n            \"0\": \"example\"\n        }\n    }\n}",
+              "raw": "{\n    \"string\": \"example\",\n    \"integer\": 0,\n    \"NestedObject\": {\n        \"string\": \"example\",\n        \"integer\": 0,\n        \"long\": 10000000,\n        \"double\": 0,\n        \"bool\": true,\n        \"datetime\": \"1994-11-05T13:15:30Z\",\n        \"date\": \"1994-11-05\",\n        \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n        \"base64\": \"SGVsbG8gV29ybGQ=\",\n        \"list\": [\n            \"example\"\n        ],\n        \"set\": [\n            \"example\"\n        ],\n        \"map\": {\n            \"0\": \"example\"\n        },\n        \"bigint\": \"example\"\n    }\n}",
               "options": {
                 "raw": {
                   "language": "json"

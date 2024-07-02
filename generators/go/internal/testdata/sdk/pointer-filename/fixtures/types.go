@@ -11,7 +11,12 @@ import (
 type Pointer struct {
 	Name string `json:"name" url:"name"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (p *Pointer) GetExtraProperties() map[string]interface{} {
+	return p.extraProperties
 }
 
 func (p *Pointer) UnmarshalJSON(data []byte) error {
@@ -21,6 +26,13 @@ func (p *Pointer) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*p = Pointer(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+
 	p._rawJSON = json.RawMessage(data)
 	return nil
 }

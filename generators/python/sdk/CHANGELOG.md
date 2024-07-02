@@ -5,6 +5,300 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.14.1] - 2024-07-01
+
+- Fix: Sync and AsyncPage now pass through the generic type to BasePage, allowing the use of `.items`, etc. to be appropriately typed within your type checking system.
+
+## [2.14.0] - 2024-07-01
+
+- Fix: offset page now allows for the usage of 0 as a page start, previously the use of `page or 1` made Python coerce booleans and become 1, ignoring the user-provided 0.
+
+## [2.14.0-rc3] - 2024-07-01
+
+- Improvement: Generated readmes now include an "advanced" section, outlining usage of retries, timeouts, error handling and usage of a custom client.
+
+## [2.14.0-rc2] - 2024-07-01
+
+- Improvement: Async snippets now run the async function leveraging asyncio.run to be more copy-pastable.
+
+## [2.14.0-rc1] - 2024-06-27
+
+- Fix: the fix from 2.5.2 is now case-insentitive
+  Recap of 2.5.2: `Fix: Support `list`SDK method names instead of defaulting to`list\_`.`
+
+## [2.14.0-rc0] - 2024-06-26
+
+- Feat: the Python SDK now generates an accompanying SDK reference (`reference.md`) for users to review the SDK methods at a glance within the SDK's GitHub repository.
+
+## [2.13.1-rc0] - 2024-06-20
+
+- Fix: the Python SDK now does not send additional properties via JSON or data if the request is leveraging the other field.
+- Improvement: the Python SDK now copies unit tests over to the generated SDK for additional unit testing (separate from wire-format testing).
+
+## [2.13.0-rc0] - 2024-06-20
+
+- Upgrade: The Python SDK generator is now upgraded to IR V49.
+
+## [2.12.0-rc0] - 2024-06-25
+
+- Feature: README generation now supports a section dedicated to streaming usage, as well as one for paginated endpoints.
+- Improvement: Paginated endpoint snippets now show using an iterator:
+
+  Before:
+
+  ```python
+  from seed.client import SeedPagination
+
+  client = SeedPagination(
+      token="YOUR_TOKEN",
+      base_url="https://yourhost.com/path/to/api",
+  )
+  client.users.list_with_cursor_pagination(
+      page=1,
+      per_page=1,
+      order="asc",
+      starting_after="string",
+  )
+  ```
+
+  After:
+
+  ```python
+  from seed.client import SeedPagination
+
+  client = SeedPagination(
+      token="YOUR_TOKEN",
+      base_url="https://yourhost.com/path/to/api",
+  )
+  response = client.users.list_with_cursor_pagination(
+      page=1,
+      per_page=1,
+      order="asc",
+      starting_after="string",
+  )
+  for item in response:
+      yield item
+  # alternatively, you can paginate page-by-page
+  for page in response.iter_pages():
+      yield page
+  ```
+
+## [2.11.0-rc0] - 2024-06-25
+
+- Improvement: The SDK now produces templates for the root clients within snippet-template.json. This allows users of the Templates API to pass in data for the auth variables present within the root client.
+
+## [2.10.2] - 2024-06-20
+
+- Fix: The SDK now handles stream termination sequences like `[DONE]`. This is a typical way for LLM
+  providers to communicate when the stream has ended.
+
+## [2.10.1] - 2024-06-20
+
+- Fix: Improve the SDK to not leak `JSONDecodeError` to SDK users. Instead, an `ApiError` will be thrown
+  with the text content of the response.
+
+## [2.10.0] - 2024-06-20
+
+- Feature: Add support for higher quality `README.md` generation.
+
+## [2.9.10] - 2024-06-20
+
+- Fix: the generator now only specifies the readme location within pyproject.toml if one was successfully created.
+
+## [2.9.9] - 2024-06-19
+
+- Internal: The generator now consumes IRv46.
+
+## [2.9.8] - 2024-06-18
+
+- Fix: The python generator only adds a publish step in github actions if credentials are specified.
+
+## [2.9.7] - 2024-06-12
+
+- Fix: The unchecked base model stops special casing defaults and pydantic v2.
+
+## [2.9.6] - 2024-06-11
+
+- Fix: Offset based pagination is now 1-based, as opposed to 0 based
+- Fix: The HTTP client now passes in additional body properties from the request options, even if the body is empty (regression from the client migration in 2.8.0)
+
+## [2.9.5] - 2024-06-10
+
+- Fix: Unions with elements that specify no properties are generated correctly.
+- Fix: Unions with a single type now have a valid type alias (rather than an invalid `typing.Union`).
+
+## [2.9.4] - 2024-06-07
+
+- Fix: The unchecked base model now handles pulling the discriminant from a dict, not just a model/object.
+
+## [2.9.3] - 2024-06-06
+
+- Fix: Snippet templates for discrminated unions now specify the `template_input` property which is
+  required to actually see snippets of instantiating discrminated unions.
+
+## [2.9.2] - 2024-06-06
+
+- Fix: downgrades mypy so we can run it over all our files without concern for their pydantic bug
+- Fix: adds typehint to the response variable
+
+## [2.9.1] - 2024-06-06
+
+- Fix: The SDK removes unset query parameters from requests (regression from the client migration in 2.8.0)
+- Fix: The SDK fixes it's type for `files` parameters to the http client (regression from the client migration in 2.8.0)
+
+## [2.9.0] - 2024-06-05
+
+- Fix: Snippets preserve trailing slashes
+
+## [2.9.0-rc1] - 2024-06-05
+
+- Fix: The new http client abstraction ensures a slash is postfixed to the baseurl
+- Fix: Snippets preserve trailing slashes
+
+## [2.9.0-rc0] - 2024-06-04
+
+- Improvement: The Python generator now runs custom unit tests in CI if configured.
+
+## [2.8.2] - 2024-06-04
+
+- Fix: The none-filtering function now supports mypy's invariance check.
+
+## [2.8.1] - 2024-06-04
+
+- Fix: The parameter comment/documentation for timeouts on the root client now reflects the custom timeout passed through within configuration.
+
+## [2.8.0] - 2024-06-03
+
+- Improvement: Endpoint function request logic has been abstracted into the request function of the wrapped httpx client.
+
+## [2.7.0] - 2024-05-30
+
+- Improvement: The generator now outputs an `exampleId` alongside each generated snippet so that
+  we can correlate snippets with the relevant examples. This is useful for retrieving examples from
+  Fern's API and making sure that you can show multiple snippets in the generated docs.
+
+## [2.6.1] - 2024-05-31
+
+- Fix: this adds a back door token getter function to OAuth clients to better test the functionality.
+
+## [2.6.0] - 2024-05-30
+
+- Improvement: Support adding optional dependencies and extras to your generated `pyproject.toml`. To
+  use this configuration, please add the following:
+
+  ```yaml
+  extra_dependencies:
+    boto3: 1.28.57
+    langchain:
+      version: "^0.1.20"
+      optional: true
+  extras:
+    telemetry: ["langchain", "boto3"]
+  ```
+
+## [2.5.7] - 2024-05-30
+
+- Fix: tests now carry a type annotation for `expected_types` variable.
+
+## [2.5.6] - 2024-05-29
+
+- Improvement: literal values are now all defaulted such that users are not required to plug in a redundant value.
+
+## [2.5.5] - 2024-05-29
+
+- Fix: Optional lists returned from pagination endpoints are now appropriately flattened such that the `Pager` return types are correctly `Pager[ListItem]` as opposed to `Pager[List[ListItem]]`.
+
+## [2.5.4] - 2024-05-28
+
+- Fix: Add typing library for dateutils in testing lib to satisfy mypy errors.
+
+## [2.5.3] - 2024-05-24
+
+- Fix: Stop specifying custom licenses manually, let poetry handle adding them.
+
+## [2.5.2] - 2024-05-23
+
+- Fix: Support `list` SDK method names instead of defaulting to `list_`.
+
+## [2.5.1-rc0] - 2024-05-23
+
+- Fix: Literal parameters are added back to the request body.
+
+## [2.5.0-rc2] - 2024-05-23
+
+- Fix: Do not attempt to run `fern test` in CI until the command is more widely rolled out.
+
+## [2.5.0-rc1] - 2024-05-22
+
+- Fix: Address `propogate` -> `propagate` typo in python codegen.
+
+## [2.5.0-rc0] - 2024-05-22
+
+- Fix: This version addresses issues in unit test generation and reenables the creation of unit tests.
+
+## [2.4.0-rc0] - 2024-05-21
+
+- Fix: The Python SDK generator now uses safe names wherever string concat is not used (like in client generation naming), so this will update module and parameter names.
+
+## [2.3.4] - 2024-05-21
+
+- Fix: Snippets and unit tests now correctly write optional request bodies when `inline_request_params` is set to `True`. Previously the generator wrote snippets that inlined these parameters, which does not match the generated SDK itself.
+
+## [2.3.3] - 2024-05-21
+
+- Fix: Inlined body parameters now deconflict in naming with header and query parameters by prefixing the request objects name.
+
+## [2.3.2] - 2024-05-21
+
+- Fix: The `pyproject.toml` generator now writes authors in a valid format for `tool.poetry`, not just `project`
+
+- Fix: The query encoder now correctly handles none values
+
+## [2.3.1] - 2024-05-21
+
+- Fix: The `pyproject.toml` generator now includes project URLs when specified.
+
+## [2.3.0] - 2024-05-21
+
+- Improvement: Users can now specify information that will appear in their pypi record.
+
+```yaml
+generators:
+  - name: fernapi/fern-python-sdk
+    metadata:
+      description: this is the desc for my package
+      keywords:
+        - science
+        - data analysis
+      documentationLink: "https://buildwithfern.com/learn"
+      homepageLink: "https://buildwithfern.com/"
+      authors:
+        - email: support@buildwithfern.com
+          name: Armando
+```
+
+## [2.2.2] - 2024-05-20
+
+- Fix: Inline request parameters now deconflict in naming with the unnamed path parameter arguments. Previously, when inlining request parameters into the method signature, we would not deconflict naming with the unnamed args preceeding them. Now, conflicting unnamed parameters are post-fixed with an "\_".
+
+Before:
+
+```python
+def method_name(id: str, *, id: str) -> None:
+  ...
+```
+
+After:
+
+```python
+def method_name(id_: str, *, id: str) -> None:
+  ...
+```
+
+## [2.2.1] - 2024-05-17
+
+- Internal: The generator now uses the latest FDR SDK.
+
 ## [2.2.0] - 2024-05-16
 
 - Improvement: The generated SDK will now correctly encode deep object query parameters.

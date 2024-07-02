@@ -4,12 +4,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
-import com.fern.irV42.core.ObjectMappers;
-import com.fern.irV42.model.commons.ErrorId;
-import com.fern.irV42.model.ir.ErrorDiscriminationByPropertyStrategy;
-import com.fern.irV42.model.ir.IntermediateRepresentation;
+import com.fern.ir.core.ObjectMappers;
+import com.fern.ir.model.commons.ErrorId;
+import com.fern.ir.model.ir.ErrorDiscriminationByPropertyStrategy;
+import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.DefaultGeneratorExecClient;
+import com.fern.java.FeatureResolver;
 import com.fern.java.generators.AuthGenerator;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
@@ -50,7 +51,8 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringDo
                 SpringCustomConfig.builder()
                         .wrappedAliases(customConfig.wrappedAliases())
                         .build(),
-                customConfig);
+                customConfig,
+                new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes());
         generateClient(context, ir);
     }
 

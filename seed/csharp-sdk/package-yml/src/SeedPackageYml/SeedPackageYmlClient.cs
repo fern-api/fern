@@ -1,5 +1,7 @@
 using SeedPackageYml;
 
+#nullable enable
+
 namespace SeedPackageYml;
 
 public partial class SeedPackageYmlClient
@@ -21,7 +23,7 @@ public partial class SeedPackageYmlClient
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);

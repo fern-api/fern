@@ -18,7 +18,7 @@ export function convertUndiscriminatedUnionTypeDeclaration({
                 };
             }
             return {
-                type: file.parseTypeReference(unionMember.type),
+                type: file.parseTypeReference(unionMember),
                 docs: unionMember.docs
             };
         })

@@ -16,8 +16,12 @@ export declare namespace Service {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -34,7 +38,7 @@ export class Service {
      * @throws {@link SeedExamples.NotFoundError}
      *
      * @example
-     *     await seedExamples.file.service.getFile("file.txt", {
+     *     await client.file.service.getFile("file.txt", {
      *         "X-File-API-Version": "0.0.2"
      *     })
      */
@@ -59,6 +63,7 @@ export class Service {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.File_.parseOrThrow(_response.body, {

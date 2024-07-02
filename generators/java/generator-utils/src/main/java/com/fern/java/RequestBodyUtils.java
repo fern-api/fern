@@ -16,12 +16,12 @@
 
 package com.fern.java;
 
-import com.fern.irV42.model.commons.Name;
-import com.fern.irV42.model.commons.NameAndWireValue;
-import com.fern.irV42.model.http.FileUploadRequest;
-import com.fern.irV42.model.http.FileUploadRequestProperty;
-import com.fern.irV42.model.http.InlinedRequestBody;
-import com.fern.irV42.model.types.ObjectProperty;
+import com.fern.ir.model.commons.Name;
+import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.http.FileUploadRequest;
+import com.fern.ir.model.http.FileUploadRequestProperty;
+import com.fern.ir.model.http.InlinedRequestBody;
+import com.fern.ir.model.types.ObjectProperty;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

@@ -39,9 +39,9 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         head = struct["head"]
-        nodes = parsed_json["nodes"]&.transform_values do |v|
-          v = v.to_json
-          SeedTraceClient::Commons::DoublyLinkedListNodeValue.from_json(json_object: v)
+        nodes = parsed_json["nodes"]&.transform_values do |value|
+          value = value.to_json
+          SeedTraceClient::Commons::DoublyLinkedListNodeValue.from_json(json_object: value)
         end
         new(
           head: head,

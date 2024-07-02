@@ -4,7 +4,6 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { cp, mkdir, writeFile } from "fs/promises";
 import path from "path";
-import { writeInputs } from "../../../commands/rewrite-inputs/rewriteInputsForWorkspace";
 import { FixtureConfigurations, OutputMode } from "../../../config/api";
 import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces";
 import { Semaphore } from "../../../Semaphore";
@@ -49,6 +48,7 @@ export declare namespace TestRunner {
         outputFolder: string;
         keepDocker: boolean | undefined;
         publishMetadata: unknown;
+        readme: generatorsYml.ReadmeSchema | undefined;
     }
 
     type TestResult = TestSuccess | TestFailure;
@@ -104,7 +104,7 @@ export abstract class TestRunner {
      * Runs the generator.
      */
     public async run({ fixture, configuration }: TestRunner.RunArgs): Promise<TestRunner.TestResult> {
-        if (this.buildInvocation == undefined) {
+        if (this.buildInvocation == null) {
             this.buildInvocation = this.build();
         }
         await this.buildInvocation;
@@ -138,6 +138,7 @@ export abstract class TestRunner {
         const outputMode = configuration?.outputMode ?? this.generator.workspaceConfig.defaultOutputMode;
         const irVersion = this.generator.workspaceConfig.irVersion;
         const publishMetadata = configuration?.publishMetadata ?? undefined;
+        const readme = configuration?.readmeConfig ?? undefined;
         const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
             absolutePathToAPIDefinition,
             taskContext,
@@ -178,7 +179,8 @@ export abstract class TestRunner {
                     outputMode,
                     outputFolder,
                     keepDocker: this.keepDocker,
-                    publishMetadata
+                    publishMetadata,
+                    readme
                 });
                 generationStopwatch.stop();
                 metrics.generationTime = generationStopwatch.duration();
@@ -197,22 +199,6 @@ export abstract class TestRunner {
                     outputFolder,
                     metrics
                 };
-            } finally {
-                writeInputs({
-                    absolutePathToOutput: outputDir,
-                    fernWorkspace,
-                    taskContext,
-                    docker: this.getParsedDockerName(),
-                    language,
-                    customConfig,
-                    publishConfig,
-                    outputMode,
-                    fixtureName: fixture,
-                    irVersion,
-                    publishMetadata,
-                    workspaceName: fernWorkspace.name,
-                    context: taskContext
-                });
             }
 
             if (this.skipScripts) {
@@ -255,7 +241,7 @@ export abstract class TestRunner {
     /**
      *
      */
-    public abstract runGenerator({}: TestRunner.DoRunArgs): Promise<void>;
+    public abstract runGenerator(args: TestRunner.DoRunArgs): Promise<void>;
 
     protected getParsedDockerName(): ParsedDockerName {
         return parseDockerOrThrow(this.generator.workspaceConfig.docker);

@@ -29,6 +29,7 @@ export {
 export { ExampleTypeReferenceSchema } from "./ExampleTypeReferenceSchema";
 export { ExampleTypeSchema } from "./ExampleTypeSchema";
 export { ExampleTypeValueSchema } from "./ExampleTypeValueSchema";
+export { ExampleWebhookCallSchema } from "./ExampleWebhookCallSchema";
 export { ExampleWebSocketSession } from "./ExampleWebSocketSession";
 export * from "./file-schemas";
 export { HeaderAuthSchemeSchema } from "./HeaderAuthSchemeSchema";
@@ -44,6 +45,7 @@ export { HttpResponseSchema } from "./HttpResponseSchema";
 export { HttpResponseStreamSchema } from "./HttpResponseStreamSchema";
 export { HttpServiceSchema } from "./HttpServiceSchema";
 export { MultipleBaseUrlsEnvironmentSchema } from "./MultipleBaseUrlsEnvironmentSchema";
+export { NumberValidationSchema } from "./NumberValidationSchema";
 export { OAuthAccessTokenRequestPropertiesSchema } from "./OAuthAccessTokenRequestPropertiesSchema";
 export { OAuthAccessTokenResponsePropertiesSchema } from "./OAuthAccessTokenResponsePropertiesSchema";
 export { OAuthClientCredentialsSchema } from "./OAuthClientCredentialsSchema";
@@ -61,9 +63,11 @@ export { SingleBaseUrlEnvironmentSchema } from "./SingleBaseUrlEnvironmentSchema
 export { SingleUnionTypeKeySchema } from "./SingleUnionTypeKeySchema";
 export { SingleUnionTypeSchema } from "./SingleUnionTypeSchema";
 export { StatusCodeErrorDiscriminationSchema } from "./StatusCodeErrorDiscriminationSchema";
+export { StringValidationSchema } from "./StringValidationSchema";
 export { TypeDeclarationSchema } from "./TypeDeclarationSchema";
 export { TypeReferenceSchema, TypeReferenceWithDocsSchema } from "./TypeReferenceSchema";
 export { UndiscriminatedUnionSchema } from "./UndiscriminatedUnionSchema";
+export { ValidationSchema } from "./ValidationSchema";
 export { VariableDeclarationSchema } from "./VariableDeclarationSchema";
 export { WebhookInlinedPayloadSchema } from "./WebhookInlinedPayloadSchema";
 export { WebhookPayloadSchema } from "./WebhookPayloadSchema";

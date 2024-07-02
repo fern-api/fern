@@ -10,10 +10,11 @@ import { generateIntermediateRepresentation } from "../generateIntermediateRepre
 require("jest-specific-snapshot");
 
 const FHIR_DIR = path.join(__dirname, "../../../../../../fern/apis/fhir");
+const AUDIENCES_DIR = path.join(__dirname, "fixtures/audiences/fern");
 
 const TEST_DEFINITION_CONFIG: Record<string, TestConfig> = {
     audiences: {
-        audiences: { type: "select", audiences: ["public"] }
+        audiences: { type: "select", audiences: ["external"] }
     }
 };
 
@@ -23,10 +24,8 @@ interface TestConfig {
 
 it("generate IR", async () => {
     const apiWorkspaces: APIWorkspace[] = [];
-    // FHIR
-    // The FHIR API definition is huge and we previously encountered issues with serializing it.
-    // Here we add the FHIR spec to the list of API definitions to test. If this test doesn't
-    // error out, we know that the FHIR spec can be serialized.
+
+    // Test for scale
     const fhirWorkspace = await loadAPIWorkspace({
         absolutePathToWorkspace: AbsoluteFilePath.of(FHIR_DIR),
         context: createMockTaskContext(),
@@ -37,17 +36,33 @@ it("generate IR", async () => {
         apiWorkspaces.push(fhirWorkspace.workspace);
     }
 
+    // Test for audiences
+    const context = createMockTaskContext();
+    const audiences = await loadAPIWorkspace({
+        absolutePathToWorkspace: AbsoluteFilePath.of(AUDIENCES_DIR),
+        context,
+        cliVersion: "0.0.0",
+        workspaceName: "audiences"
+    });
+    if (audiences.didSucceed) {
+        apiWorkspaces.push(audiences.workspace);
+    }
+
     for (const workspace of apiWorkspaces) {
-        if (workspace.type === "oss") {
-            throw new Error("Convert OpenAPI to Fern workspace before generating IR");
-        }
+        const fernWorkspace = await workspace.toFernWorkspace({
+            context
+        });
 
         const intermediateRepresentation = await generateIntermediateRepresentation({
-            workspace,
+            workspace: fernWorkspace,
             generationLanguage: undefined,
-            audiences: TEST_DEFINITION_CONFIG[workspace.name]?.audiences ?? { type: "all" },
+            audiences: TEST_DEFINITION_CONFIG[fernWorkspace.definition.rootApiFile.contents.name]?.audiences ?? {
+                type: "all"
+            },
+            keywords: undefined,
             smartCasing: true, // Verify the special casing convention in tests.
-            disableExamples: false
+            disableExamples: false,
+            readme: undefined
         });
 
         const intermediateRepresentationJson = await IrSerialization.IntermediateRepresentation.jsonOrThrow(
@@ -56,6 +71,8 @@ it("generate IR", async () => {
                 unrecognizedObjectKeys: "strip"
             }
         );
-        expect(intermediateRepresentationJson).toMatchSpecificSnapshot(`__snapshots__/${workspace.name}.txt`);
+        expect(intermediateRepresentationJson).toMatchSpecificSnapshot(
+            `__snapshots__/${fernWorkspace.workspaceName}.txt`
+        );
     }
 });

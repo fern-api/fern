@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class TestCaseWithExpectedResult
@@ -9,5 +11,5 @@ public class TestCaseWithExpectedResult
     public TestCase TestCase { get; init; }
 
     [JsonPropertyName("expectedResult")]
-    public VariableValue ExpectedResult { get; init; }
+    public object ExpectedResult { get; init; }
 }

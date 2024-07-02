@@ -15,10 +15,8 @@ module SeedLiteralClient
       @request_client = request_client
     end
 
-    # @param prompt [String]
     # @param query [String]
     # @param temperature [Float]
-    # @param stream [Boolean]
     # @param request_options [SeedLiteralClient::RequestOptions]
     # @return [SeedLiteralClient::SendResponse]
     # @example
@@ -27,13 +25,8 @@ module SeedLiteralClient
     #    version: "Version",
     #    audit_logging: "AuditLogging"
     #  )
-    #  literal.send(
-    #    prompt: "You are a helpful assistant",
-    #    query: "What is the weather today",
-    #    temperature: 10.1,
-    #    stream: false
-    #  )
-    def send(prompt:, query:, stream:, temperature: nil, request_options: nil)
+    #  literal.inlined.send(query: "What is the weather today", temperature: 10.1)
+    def send(query:, temperature: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["X-API-Version"] = request_options.version unless request_options&.version.nil?
@@ -41,13 +34,17 @@ module SeedLiteralClient
           req.headers["X-API-Enable-Audit-Logging"] =
             request_options.audit_logging
         end
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.body = {
           **(request_options&.additional_body_parameters || {}),
-          prompt: prompt,
+          "prompt": "You are a helpful assistant",
+          "stream": false,
           query: query,
-          temperature: temperature,
-          stream: stream
+          temperature: temperature
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/inlined"
       end
@@ -65,10 +62,8 @@ module SeedLiteralClient
       @request_client = request_client
     end
 
-    # @param prompt [String]
     # @param query [String]
     # @param temperature [Float]
-    # @param stream [Boolean]
     # @param request_options [SeedLiteralClient::RequestOptions]
     # @return [SeedLiteralClient::SendResponse]
     # @example
@@ -77,13 +72,8 @@ module SeedLiteralClient
     #    version: "Version",
     #    audit_logging: "AuditLogging"
     #  )
-    #  literal.send(
-    #    prompt: "You are a helpful assistant",
-    #    query: "What is the weather today",
-    #    temperature: 10.1,
-    #    stream: false
-    #  )
-    def send(prompt:, query:, stream:, temperature: nil, request_options: nil)
+    #  literal.inlined.send(query: "What is the weather today", temperature: 10.1)
+    def send(query:, temperature: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -92,13 +82,17 @@ module SeedLiteralClient
             req.headers["X-API-Enable-Audit-Logging"] =
               request_options.audit_logging
           end
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.body = {
             **(request_options&.additional_body_parameters || {}),
-            prompt: prompt,
+            "prompt": "You are a helpful assistant",
+            "stream": false,
             query: query,
-            temperature: temperature,
-            stream: stream
+            temperature: temperature
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/inlined"
         end

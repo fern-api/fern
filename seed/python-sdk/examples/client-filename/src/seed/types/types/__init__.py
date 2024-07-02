@@ -5,7 +5,7 @@ from .actress import Actress
 from .cast_member import CastMember
 from .directory import Directory
 from .entity import Entity
-from .exception import Exception, Exception_Generic
+from .exception import Exception, Exception_Generic, Exception_Timeout
 from .exception_info import ExceptionInfo
 from .extended_movie import ExtendedMovie
 from .file import File
@@ -32,6 +32,7 @@ __all__ = [
     "Exception",
     "ExceptionInfo",
     "Exception_Generic",
+    "Exception_Timeout",
     "ExtendedMovie",
     "File",
     "Metadata",

@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedLiteral;
 
+#nullable enable
+
 namespace SeedLiteral;
 
 public class QueryClient
@@ -21,10 +23,10 @@ public class QueryClient
             { "stream", request.Stream.ToString() },
         };
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/query",
+                Path = "query",
                 Query = _query
             }
         );
@@ -33,6 +35,6 @@ public class QueryClient
         {
             return JsonSerializer.Deserialize<SendResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }
