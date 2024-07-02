@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedPackageYml;
+namespace SeedPackageYml.Core;
 
 #nullable enable
 
