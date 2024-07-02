@@ -60,10 +60,12 @@ export async function getResponseBody(response: Response, responseType?: string)
                     error: {
                         reason: "non-json",
                         statusCode: response.status,
-                        rawBody: text,
-                    },
+                        rawBody: text
+                    }
                 };
             }
+        } else {
+            return undefined;
         }
     }
 }

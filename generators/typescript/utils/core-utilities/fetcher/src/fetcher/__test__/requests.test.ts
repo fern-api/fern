@@ -79,7 +79,7 @@ describe("Test exponential backoff", () => {
 
         const responsePromise = requestWithRetries(() => mockFetch(), 10);
 
-        await jest.advanceTimersByTimeAsync(10000);
+        await jest.advanceTimersByTime(10000);
         const response = await responsePromise;
 
         expect(mockFetch).toHaveBeenCalledTimes(6);
@@ -94,7 +94,7 @@ describe("Test exponential backoff", () => {
 
         const responsePromise = requestWithRetries(() => mockFetch(), 3);
 
-        await jest.advanceTimersByTimeAsync(10000);
+        await jest.advanceTimersByTime(10000);
         const response = await responsePromise;
 
         expect(mockFetch).toHaveBeenCalledTimes(3);
@@ -107,7 +107,7 @@ describe("Test exponential backoff", () => {
 
         const responsePromise = requestWithRetries(() => mockFetch(), 3);
 
-        await jest.advanceTimersByTimeAsync(10000);
+        await jest.advanceTimersByTime(10000);
         const response = await responsePromise;
 
         expect(mockFetch).toHaveBeenCalledTimes(1);
@@ -121,7 +121,7 @@ describe("Test exponential backoff", () => {
         expect(mockFetch).toHaveBeenCalledTimes(1);
         const delays = [1, 2, 4, 8, 16, 32, 64];
         for (let i = 0; i < delays.length; i++) {
-            await jest.advanceTimersByTimeAsync(delays[i]);
+            await jest.advanceTimersByTime(delays[i] as number);
             expect(mockFetch).toHaveBeenCalledTimes(Math.min(i + 2, maxRetries));
         }
         const response = await responsePromise;
