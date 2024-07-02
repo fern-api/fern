@@ -1,5 +1,6 @@
 using System.Text.Json;
 using SeedPagination;
+using SeedPagination.Core;
 
 #nullable enable
 

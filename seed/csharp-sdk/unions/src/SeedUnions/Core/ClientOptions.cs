@@ -1,4 +1,4 @@
-namespace SeedUnions;
+namespace SeedUnions.Core;
 
 public partial class ClientOptions
 {

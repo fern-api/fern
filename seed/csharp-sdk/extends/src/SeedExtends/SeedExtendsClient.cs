@@ -1,4 +1,4 @@
-using SeedExtends;
+using SeedExtends.Core;
 
 #nullable enable
 

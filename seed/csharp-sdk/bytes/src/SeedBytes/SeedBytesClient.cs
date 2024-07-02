@@ -1,4 +1,5 @@
 using SeedBytes;
+using SeedBytes.Core;
 
 #nullable enable
 

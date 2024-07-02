@@ -1,5 +1,6 @@
 using System.Text.Json;
 using SeedQueryParameters;
+using SeedQueryParameters.Core;
 
 #nullable enable
 

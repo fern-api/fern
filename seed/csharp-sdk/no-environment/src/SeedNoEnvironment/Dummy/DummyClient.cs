@@ -1,5 +1,5 @@
 using System.Text.Json;
-using SeedNoEnvironment;
+using SeedNoEnvironment.Core;
 
 #nullable enable
 

@@ -1,4 +1,4 @@
-namespace SeedNurseryApi;
+namespace SeedNurseryApi.Core;
 
 public partial class ClientOptions
 {

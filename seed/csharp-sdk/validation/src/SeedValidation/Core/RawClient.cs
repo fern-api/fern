@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedValidation;
+namespace SeedValidation.Core;
 
 #nullable enable
 

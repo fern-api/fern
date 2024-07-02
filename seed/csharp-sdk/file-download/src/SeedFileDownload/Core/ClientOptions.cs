@@ -1,4 +1,4 @@
-namespace SeedFileDownload;
+namespace SeedFileDownload.Core;
 
 public partial class ClientOptions
 {

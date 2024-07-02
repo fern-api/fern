@@ -1,5 +1,5 @@
 using System.Text.Json;
-using SeedCustomAuth;
+using SeedCustomAuth.Core;
 
 #nullable enable
 

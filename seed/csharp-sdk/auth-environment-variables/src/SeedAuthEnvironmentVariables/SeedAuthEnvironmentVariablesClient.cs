@@ -1,3 +1,4 @@
+using SeedAuthEnvironmentVariables.Core;
 using SeedAuthEnvironmentVariables;
 
 #nullable enable

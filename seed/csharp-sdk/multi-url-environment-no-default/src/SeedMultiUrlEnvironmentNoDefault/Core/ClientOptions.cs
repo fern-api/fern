@@ -1,4 +1,4 @@
-namespace SeedMultiUrlEnvironmentNoDefault;
+namespace SeedMultiUrlEnvironmentNoDefault.Core;
 
 public partial class ClientOptions
 {

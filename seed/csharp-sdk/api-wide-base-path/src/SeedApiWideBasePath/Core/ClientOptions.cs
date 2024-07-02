@@ -1,4 +1,4 @@
-namespace SeedApiWideBasePath;
+namespace SeedApiWideBasePath.Core;
 
 public partial class ClientOptions
 {

@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedMultiUrlEnvironment;
+namespace SeedMultiUrlEnvironment.Core;
 
 #nullable enable
 

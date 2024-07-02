@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedFileDownload;
+namespace SeedFileDownload.Core;
 
 #nullable enable
 

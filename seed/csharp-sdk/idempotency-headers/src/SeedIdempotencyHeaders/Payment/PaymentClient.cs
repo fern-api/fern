@@ -1,5 +1,6 @@
 using System.Text.Json;
 using SeedIdempotencyHeaders;
+using SeedIdempotencyHeaders.Core;
 
 #nullable enable
 

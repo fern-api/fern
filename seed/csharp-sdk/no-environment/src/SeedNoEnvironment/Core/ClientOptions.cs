@@ -1,4 +1,4 @@
-namespace SeedNoEnvironment;
+namespace SeedNoEnvironment.Core;
 
 public partial class ClientOptions
 {

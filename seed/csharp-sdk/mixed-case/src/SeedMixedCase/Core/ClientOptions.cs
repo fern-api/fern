@@ -1,4 +1,4 @@
-namespace SeedMixedCase;
+namespace SeedMixedCase.Core;
 
 public partial class ClientOptions
 {

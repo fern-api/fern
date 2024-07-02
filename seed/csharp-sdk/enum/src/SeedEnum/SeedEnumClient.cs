@@ -1,4 +1,5 @@
 using SeedEnum;
+using SeedEnum.Core;
 
 #nullable enable
 

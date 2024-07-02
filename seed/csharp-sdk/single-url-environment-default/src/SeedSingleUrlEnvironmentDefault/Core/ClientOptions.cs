@@ -2,7 +2,7 @@ using SeedSingleUrlEnvironmentDefault.Core;
 
 #nullable enable
 
-namespace SeedSingleUrlEnvironmentDefault;
+namespace SeedSingleUrlEnvironmentDefault.Core;
 
 public partial class ClientOptions
 {

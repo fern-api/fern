@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedSingleUrlEnvironmentDefault;
+namespace SeedSingleUrlEnvironmentDefault.Core;
 
 #nullable enable
 

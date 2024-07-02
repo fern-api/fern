@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedFileUpload;
+namespace SeedFileUpload.Core;
 
 #nullable enable
 

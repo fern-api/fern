@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedEnum;
+namespace SeedEnum.Core;
 
 #nullable enable
 

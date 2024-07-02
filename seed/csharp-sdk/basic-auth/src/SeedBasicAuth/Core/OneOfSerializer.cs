@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using OneOf;
 
-namespace SeedBasicAuth;
+namespace SeedBasicAuth.Core;
 
 public class OneOfSerializer<TOneOf> : JsonConverter<TOneOf>
     where TOneOf : IOneOf

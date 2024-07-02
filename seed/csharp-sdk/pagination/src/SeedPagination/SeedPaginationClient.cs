@@ -1,4 +1,5 @@
 using SeedPagination;
+using SeedPagination.Core;
 
 #nullable enable
 

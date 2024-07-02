@@ -1,5 +1,5 @@
-using SeedApi;
 using SeedApi.A;
+using SeedApi.Core;
 using SeedApi.Folder;
 
 #nullable enable
@@ -24,7 +24,12 @@ public partial class SeedApiClient
 
     public FolderClient Folder { get; }
 
-    public async void FooAsync() { }
+    public async void FooAsync()
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = "" }
+        );
+    }
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {

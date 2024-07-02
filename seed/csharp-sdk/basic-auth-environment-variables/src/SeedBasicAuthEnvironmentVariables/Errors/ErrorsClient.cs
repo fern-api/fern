@@ -1,4 +1,4 @@
-using SeedBasicAuthEnvironmentVariables;
+using SeedBasicAuthEnvironmentVariables.Core;
 
 #nullable enable
 

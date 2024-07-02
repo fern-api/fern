@@ -1,4 +1,4 @@
-namespace SeedBytes;
+namespace SeedBytes.Core;
 
 public partial class ClientOptions
 {

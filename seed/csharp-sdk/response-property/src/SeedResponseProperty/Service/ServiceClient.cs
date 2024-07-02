@@ -1,5 +1,6 @@
 using System.Text.Json;
 using SeedResponseProperty;
+using SeedResponseProperty.Core;
 
 #nullable enable
 

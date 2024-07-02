@@ -1,4 +1,5 @@
 using SeedPlainText;
+using SeedPlainText.Core;
 
 #nullable enable
 

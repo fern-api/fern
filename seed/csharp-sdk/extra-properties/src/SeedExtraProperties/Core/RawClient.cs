@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedExtraProperties;
+namespace SeedExtraProperties.Core;
 
 #nullable enable
 

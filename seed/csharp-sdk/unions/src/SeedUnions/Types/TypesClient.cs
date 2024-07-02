@@ -1,4 +1,4 @@
-using SeedUnions;
+using SeedUnions.Core;
 
 #nullable enable
 

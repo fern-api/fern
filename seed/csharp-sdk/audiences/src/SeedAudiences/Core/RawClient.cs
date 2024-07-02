@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedAudiences;
+namespace SeedAudiences.Core;
 
 #nullable enable
 

@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedMultiLineDocs;
+namespace SeedMultiLineDocs.Core;
 
 #nullable enable
 

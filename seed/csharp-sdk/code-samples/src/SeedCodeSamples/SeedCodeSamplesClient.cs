@@ -1,4 +1,5 @@
 using SeedCodeSamples;
+using SeedCodeSamples.Core;
 
 #nullable enable
 

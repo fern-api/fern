@@ -1,6 +1,6 @@
 using System.Text.Json;
-using SeedOauthClientCredentials;
 using SeedOauthClientCredentials.Auth;
+using SeedOauthClientCredentials.Core;
 
 #nullable enable
 

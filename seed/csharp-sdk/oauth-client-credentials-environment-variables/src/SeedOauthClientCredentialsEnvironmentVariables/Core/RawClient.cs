@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedOauthClientCredentialsEnvironmentVariables;
+namespace SeedOauthClientCredentialsEnvironmentVariables.Core;
 
 #nullable enable
 

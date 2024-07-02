@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedExtends;
+namespace SeedExtends.Core;
 
 #nullable enable
 

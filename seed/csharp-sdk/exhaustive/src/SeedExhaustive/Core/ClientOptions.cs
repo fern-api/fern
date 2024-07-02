@@ -1,4 +1,4 @@
-namespace SeedExhaustive;
+namespace SeedExhaustive.Core;
 
 public partial class ClientOptions
 {

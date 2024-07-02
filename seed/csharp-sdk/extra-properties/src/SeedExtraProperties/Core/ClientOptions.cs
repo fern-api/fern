@@ -1,4 +1,4 @@
-namespace SeedExtraProperties;
+namespace SeedExtraProperties.Core;
 
 public partial class ClientOptions
 {

@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedCustomAuth;
+namespace SeedCustomAuth.Core;
 
 #nullable enable
 

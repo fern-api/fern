@@ -1,4 +1,4 @@
-namespace SeedErrorProperty;
+namespace SeedErrorProperty.Core;
 
 public partial class ClientOptions
 {

@@ -1,4 +1,4 @@
-using SeedExamples;
+using SeedExamples.Core;
 using SeedExamples.File;
 using SeedExamples.File.Notification;
 

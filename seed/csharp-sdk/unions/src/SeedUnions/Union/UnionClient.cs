@@ -1,5 +1,5 @@
 using System.Text.Json;
-using SeedUnions;
+using SeedUnions.Core;
 
 #nullable enable
 

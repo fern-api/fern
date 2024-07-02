@@ -1,4 +1,4 @@
-namespace SeedFileUpload;
+namespace SeedFileUpload.Core;
 
 public partial class ClientOptions
 {

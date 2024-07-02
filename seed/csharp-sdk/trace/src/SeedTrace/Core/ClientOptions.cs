@@ -2,7 +2,7 @@ using SeedTrace.Core;
 
 #nullable enable
 
-namespace SeedTrace;
+namespace SeedTrace.Core;
 
 public partial class ClientOptions
 {

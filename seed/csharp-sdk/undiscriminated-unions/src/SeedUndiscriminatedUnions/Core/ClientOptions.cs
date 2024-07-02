@@ -1,4 +1,4 @@
-namespace SeedUndiscriminatedUnions;
+namespace SeedUndiscriminatedUnions.Core;
 
 public partial class ClientOptions
 {

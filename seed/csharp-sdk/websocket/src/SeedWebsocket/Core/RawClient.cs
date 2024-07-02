@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedWebsocket;
+namespace SeedWebsocket.Core;
 
 #nullable enable
 

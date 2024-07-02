@@ -1,4 +1,4 @@
-namespace SeedIdempotencyHeaders;
+namespace SeedIdempotencyHeaders.Core;
 
 public partial class ClientOptions
 {

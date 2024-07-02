@@ -1,4 +1,4 @@
-namespace SeedBearerTokenEnvironmentVariable;
+namespace SeedBearerTokenEnvironmentVariable.Core;
 
 public partial class ClientOptions
 {

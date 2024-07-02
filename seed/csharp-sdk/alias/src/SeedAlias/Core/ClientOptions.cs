@@ -1,4 +1,4 @@
-namespace SeedAlias;
+namespace SeedAlias.Core;
 
 public partial class ClientOptions
 {

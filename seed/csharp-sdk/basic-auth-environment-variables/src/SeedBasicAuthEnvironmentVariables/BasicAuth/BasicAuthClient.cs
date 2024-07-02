@@ -1,5 +1,5 @@
 using System.Text.Json;
-using SeedBasicAuthEnvironmentVariables;
+using SeedBasicAuthEnvironmentVariables.Core;
 
 #nullable enable
 

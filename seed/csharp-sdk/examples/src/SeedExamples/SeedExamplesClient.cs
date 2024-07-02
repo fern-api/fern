@@ -1,5 +1,7 @@
+using System.Text.Json;
 using SeedExamples;
 using SeedExamples.Commons;
+using SeedExamples.Core;
 using SeedExamples.File;
 using SeedExamples.Health;
 
@@ -34,7 +36,23 @@ public partial class SeedExamplesClient
 
     public TypesClient Types { get; }
 
-    public async void EchoAsync() { }
+    public async Task<string> EchoAsync(string request)
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "",
+                Body = request
+            }
+        );
+        string responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        {
+            return JsonSerializer.Deserialize<string>(responseBody);
+        }
+        throw new Exception(responseBody);
+    }
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {

@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedServerSentEvents;
+namespace SeedServerSentEvents.Core;
 
 #nullable enable
 

@@ -1,4 +1,5 @@
 using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 

@@ -1,4 +1,4 @@
-namespace SeedVariables;
+namespace SeedVariables.Core;
 
 public partial class ClientOptions
 {

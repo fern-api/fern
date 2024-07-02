@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedBearerTokenEnvironmentVariable;
+namespace SeedBearerTokenEnvironmentVariable.Core;
 
 #nullable enable
 

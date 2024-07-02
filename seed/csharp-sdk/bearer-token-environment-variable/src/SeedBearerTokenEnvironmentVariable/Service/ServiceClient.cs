@@ -1,5 +1,5 @@
 using System.Text.Json;
-using SeedBearerTokenEnvironmentVariable;
+using SeedBearerTokenEnvironmentVariable.Core;
 
 #nullable enable
 

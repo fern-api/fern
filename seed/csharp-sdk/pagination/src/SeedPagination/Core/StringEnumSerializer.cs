@@ -2,7 +2,7 @@ using System.Runtime.Serialization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace SeedPagination;
+namespace SeedPagination.Core;
 
 public class StringEnumSerializer<TEnum> : JsonConverter<TEnum>
     where TEnum : struct, System.Enum

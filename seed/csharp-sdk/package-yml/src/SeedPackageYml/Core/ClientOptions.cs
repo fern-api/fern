@@ -1,4 +1,4 @@
-namespace SeedPackageYml;
+namespace SeedPackageYml.Core;
 
 public partial class ClientOptions
 {

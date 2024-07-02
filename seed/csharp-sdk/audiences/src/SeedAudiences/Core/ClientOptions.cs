@@ -1,4 +1,4 @@
-namespace SeedAudiences;
+namespace SeedAudiences.Core;
 
 public partial class ClientOptions
 {

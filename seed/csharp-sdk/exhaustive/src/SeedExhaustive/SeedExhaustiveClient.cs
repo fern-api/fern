@@ -1,4 +1,5 @@
 using SeedExhaustive;
+using SeedExhaustive.Core;
 using SeedExhaustive.Endpoints;
 using SeedExhaustive.Types;
 
