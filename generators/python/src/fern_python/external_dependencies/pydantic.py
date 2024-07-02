@@ -1,4 +1,3 @@
-
 import enum
 
 from fern_python.codegen import AST
@@ -25,6 +24,7 @@ def _export(*export: str) -> AST.ClassReference:
         qualified_name_excluding_import=export,
     )
 
+
 class Pydantic:
     @staticmethod
     def Field() -> AST.ClassReference:
@@ -33,7 +33,7 @@ class Pydantic:
     @staticmethod
     def BaseModel() -> AST.ClassReference:
         return _export("BaseModel")
-    
+
     @staticmethod
     def ConfigDict() -> AST.ClassReference:
         return _export("ConfigDict")
@@ -41,6 +41,10 @@ class Pydantic:
     @staticmethod
     def PrivateAttr() -> AST.ClassReference:
         return _export("PrivateAttr")
+    
+    @staticmethod
+    def RootModel() -> AST.ClassReference:
+        return _export("RootModel")
 
     class Extra:
         @staticmethod

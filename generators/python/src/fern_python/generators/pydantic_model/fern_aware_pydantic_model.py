@@ -10,10 +10,7 @@ from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
 from ..context import PydanticGeneratorContext
 from .custom_config import PydanticModelCustomConfig
-from .validators import (
-    PydanticValidatorsGenerator,
-    ValidatorsGenerator,
-)
+from .validators import PydanticValidatorsGenerator, ValidatorsGenerator
 
 
 class FernAwarePydanticModel:
@@ -44,6 +41,7 @@ class FernAwarePydanticModel:
         base_models: Sequence[AST.ClassReference] = [],
         docstring: Optional[str] = None,
         snippet: Optional[str] = None,
+        include_model_config: Optional[bool] = True,
     ):
         self._class_name = class_name
         self._type_name = type_name
@@ -76,6 +74,7 @@ class FernAwarePydanticModel:
             is_pydantic_v2=self._context.core_utilities.get_is_pydantic_v2(),
             universal_field_validator=self._context.core_utilities.universal_field_validator,
             universal_root_validator=self._context.core_utilities.universal_root_validator,
+            include_model_config=include_model_config,
         )
 
         self._model_contains_forward_refs = False

@@ -7,7 +7,6 @@ from fern_python.snippet import SnippetWriter
 
 from ...context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig
-from ..fern_aware_pydantic_model import FernAwarePydanticModel
 from .abstract_type_generator import AbstractTypeGenerator
 
 
@@ -39,6 +38,7 @@ class AliasGenerator(AbstractTypeGenerator):
             ),
             should_export=True,
         )
+
 
 class AliasSnippetGenerator:
     def __init__(

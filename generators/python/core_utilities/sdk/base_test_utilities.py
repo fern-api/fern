@@ -5,6 +5,7 @@ from dateutil import parser
 
 import pydantic
 
+
 def cast_field(json_expectation: typing.Any, type_expectation: typing.Any) -> typing.Any:
     # Cast these specific types which come through as string and expect our
     # models to cast to the correct type.

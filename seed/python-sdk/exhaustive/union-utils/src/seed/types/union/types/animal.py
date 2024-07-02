@@ -2,17 +2,12 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
+import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
-
-from ....core.datetime_utils import serialize_datetime
-from ....core.pydantic_utilities import deep_union_pydantic_dicts
-
-import pydantic
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .cat import Cat as types_union_types_cat_Cat
 from .dog import Dog as types_union_types_dog_Dog
 
@@ -28,25 +23,29 @@ class _Factory:
 
 
 if IS_PYDANTIC_V2:
-    class AnimalBase(pydantic.RootModel):  # type: ignore
+
+    class _AnimalBase(pydantic.RootModel, UniversalBaseModel):
+
         root: typing_extensions.Annotated[
             typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")
         ]
+
         def get_as_union(self) -> typing.Union[_Animal.Dog, _Animal.Cat]:
             return self.root
+
 else:
-    class AnimalBase(pydantic.BaseModel):  # type: ignore
+
+    class _AnimalBase(UniversalBaseModel):
+
         __root__: typing_extensions.Annotated[
             typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")
         ]
+
         def get_as_union(self) -> typing.Union[_Animal.Dog, _Animal.Cat]:
             return self.__root__
 
 
-class Animal(AnimalBase):  # type: ignore
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
-
+class Animal(_AnimalBase):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def visit(
@@ -58,45 +57,25 @@ class Animal(AnimalBase):  # type: ignore
             return dog(types_union_types_dog_Dog(**self.get_as_union().dict(exclude_unset=True, exclude={"animal"})))
         if self.get_as_union().animal == "cat":
             return cat(types_union_types_cat_Cat(**self.get_as_union().dict(exclude_unset=True, exclude={"animal"})))
-        return cat(types_union_types_cat_Cat(**self.get_as_union().dict(exclude_unset=True, exclude={"animal"})))
-
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
-
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-    
-    class Config:
-        frozen = True
-        smart_union = True
-        extra = pydantic.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _Animal:
     class Dog(types_union_types_dog_Dog):
         animal: typing.Literal["dog"] = "dog"
 
-        class Config:
-            frozen = True
-            smart_union = True
-            allow_population_by_field_name = True
-            populate_by_name = True
+        if IS_PYDANTIC_V2:
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(populate_by_name=True, frozen=True)
+        else:
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+                allow_population_by_field_name=True, frozen=True, smart_union=True
+            )
 
     class Cat(types_union_types_cat_Cat):
         animal: typing.Literal["cat"] = "cat"
 
-        class Config:
-            frozen = True
-            smart_union = True
-            allow_population_by_field_name = True
-            populate_by_name = True
-
-
-Animal.update_forward_refs()
+        if IS_PYDANTIC_V2:
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(populate_by_name=True, frozen=True)
+        else:
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+                allow_population_by_field_name=True, frozen=True, smart_union=True
+            )

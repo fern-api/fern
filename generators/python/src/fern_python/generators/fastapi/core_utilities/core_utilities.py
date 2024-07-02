@@ -248,22 +248,19 @@ class CoreUtilities:
 
     def get_universal_base_model(self) -> AST.ClassReference:
         return AST.ClassReference(
-                qualified_name_excluding_import=(),
-                import_=AST.ReferenceImport(
-                    module=AST.Module.local(*self._module_path, "unchecked_base_model"),
-                    named_import="UncheckedBaseModel",
-                ),
-            )
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "unchecked_base_model"),
+                named_import="UncheckedBaseModel",
+            ),
+        )
 
     def get_is_pydantic_v2(self) -> AST.Expression:
         return AST.Expression(
-            AST.FunctionInvocation(
-                function_definition=AST.Reference(
-                    qualified_name_excluding_import=(),
-                    import_=AST.ReferenceImport(
-                        module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="IS_PYDANTIC_V2"
-                    ),
+            AST.Reference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="IS_PYDANTIC_V2"
                 ),
-                args=[],
             )
         )

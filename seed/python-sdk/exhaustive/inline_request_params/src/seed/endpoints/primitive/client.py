@@ -7,7 +7,7 @@ from json.decoder import JSONDecodeError
 
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ...core.pydantic_utilities import pydantic_v1
+from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
 
 # this is used as the default value for optional parameters
@@ -48,7 +48,7 @@ class PrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(str, _response.json())  # type: ignore
+                return parse_obj_as(str, _response.json())
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -84,7 +84,7 @@ class PrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(int, _response.json())  # type: ignore
+                return parse_obj_as(int, _response.json())
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -120,7 +120,7 @@ class PrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(int, _response.json())  # type: ignore
+                return parse_obj_as(int, _response.json())
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -158,7 +158,7 @@ class PrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(float, _response.json())  # type: ignore
+                return parse_obj_as(float, _response.json())
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -194,7 +194,7 @@ class PrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(bool, _response.json())  # type: ignore
+                return parse_obj_as(bool, _response.json())
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -236,7 +236,7 @@ class PrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(dt.datetime, _response.json())  # type: ignore
+                return parse_obj_as(dt.datetime, _response.json())
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -278,7 +278,7 @@ class PrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(dt.date, _response.json())  # type: ignore
+                return parse_obj_as(dt.date, _response.json())
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -320,7 +320,7 @@ class PrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(uuid.UUID, _response.json())  # type: ignore
+                return parse_obj_as(uuid.UUID, _response.json())
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -356,7 +356,7 @@ class PrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(str, _response.json())  # type: ignore
+                return parse_obj_as(str, _response.json())
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -407,7 +407,7 @@ class AsyncPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(str, _response.json())  # type: ignore
+                return parse_obj_as(str, _response.json())
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -451,7 +451,7 @@ class AsyncPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(int, _response.json())  # type: ignore
+                return parse_obj_as(int, _response.json())
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -497,7 +497,7 @@ class AsyncPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(int, _response.json())  # type: ignore
+                return parse_obj_as(int, _response.json())
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -543,7 +543,7 @@ class AsyncPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(float, _response.json())  # type: ignore
+                return parse_obj_as(float, _response.json())
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -589,7 +589,7 @@ class AsyncPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(bool, _response.json())  # type: ignore
+                return parse_obj_as(bool, _response.json())
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -638,7 +638,7 @@ class AsyncPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(dt.datetime, _response.json())  # type: ignore
+                return parse_obj_as(dt.datetime, _response.json())
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -687,7 +687,7 @@ class AsyncPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(dt.date, _response.json())  # type: ignore
+                return parse_obj_as(dt.date, _response.json())
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -736,7 +736,7 @@ class AsyncPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(uuid.UUID, _response.json())  # type: ignore
+                return parse_obj_as(uuid.UUID, _response.json())
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -782,7 +782,7 @@ class AsyncPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(str, _response.json())  # type: ignore
+                return parse_obj_as(str, _response.json())
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

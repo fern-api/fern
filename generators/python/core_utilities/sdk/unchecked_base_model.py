@@ -3,25 +3,20 @@ import inspect
 import typing
 import uuid
 
-from pydantic_core import PydanticUndefined
 import typing_extensions
+from pydantic.fields import FieldInfo
+from pydantic_core import PydanticUndefined
 
 import pydantic
-from pydantic.fields import FieldInfo
 
 from .datetime_utils import serialize_datetime
-
-from .pydantic_utilities import (
-    IS_PYDANTIC_V2,
-    UniversalBaseModel,
-    get_args,  # type: ignore
-    get_origin,  # type: ignore
-    is_literal_type,  # type: ignore
-    is_union,  # type: ignore
-    parse_date,  # type: ignore
-    parse_datetime,  # type: ignore
-    parse_obj_as,
-)
+from .pydantic_utilities import get_args  # type: ignore
+from .pydantic_utilities import get_origin  # type: ignore
+from .pydantic_utilities import is_literal_type  # type: ignore
+from .pydantic_utilities import is_union  # type: ignore
+from .pydantic_utilities import parse_date  # type: ignore
+from .pydantic_utilities import parse_datetime  # type: ignore
+from .pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, parse_obj_as
 
 
 class UnionMetadata:
@@ -38,17 +33,15 @@ class UncheckedBaseModel(UniversalBaseModel):
     if IS_PYDANTIC_V2:
         # Note: `smart_union` is on by defautl in Pydantic v2
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow",
-            populate_by_name=True,
-            json_encoders={dt.datetime: serialize_datetime}
+            extra="allow", populate_by_name=True, json_encoders={dt.datetime: serialize_datetime}
         )
-
-    # Allow extra fields
-    class Config:
-        extra = pydantic.Extra.allow
-        smart_union = True
-        allow_population_by_field_name = True
-        json_encoders = {dt.datetime: serialize_datetime}
+    else:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra=pydantic.Extra.allow,
+            smart_union=True,
+            allow_population_by_field_name=True,
+            json_encoders={dt.datetime: serialize_datetime},
+        )
 
     @classmethod
     def get_is_populate_by_name(cls: typing.Type["Model"]) -> bool:
@@ -61,13 +54,13 @@ class UncheckedBaseModel(UniversalBaseModel):
         if IS_PYDANTIC_V2:
             return cls.model_config
         return cls.__config__  # type: ignore
-    
+
     @classmethod
     def get_model_fields(cls: typing.Type["Model"]) -> typing.Dict[str, pydantic.fields.FieldInfo]:
         if IS_PYDANTIC_V2:
             return cls.model_fields
         return cls.__fields__
-    
+
     @classmethod
     def get_field_default(cls: typing.Type["Model"], field: FieldInfo) -> typing.Any:
         value = field.get_default()
@@ -78,7 +71,6 @@ class UncheckedBaseModel(UniversalBaseModel):
                 return None
             return value
         return value
-
 
     @classmethod
     def model_construct(
@@ -108,9 +100,7 @@ class UncheckedBaseModel(UniversalBaseModel):
             # you should always use the NAME of the field to for field_values, etc.
             # because that's how the object is constructed from a pydantic perspective
             key = field.alias
-            if key is None or (
-                key not in values and populate_by_name
-            ):  # Added this to allow population by field name
+            if key is None or (key not in values and populate_by_name):  # Added this to allow population by field name
                 key = name
 
             if key in values:
@@ -124,7 +114,7 @@ class UncheckedBaseModel(UniversalBaseModel):
                 # This effectively allows exclude_unset to work like exclude_none where
                 # the latter passes through intentionally set none values.
                 if default != None and default != PydanticUndefined:
-                    _fields_set.add(name)            
+                    _fields_set.add(name)
 
         # Add extras back in
         extras = {}

@@ -1,13 +1,21 @@
 from __future__ import annotations
 
 import dataclasses
-from tkinter import W
 from types import TracebackType
-from typing import Callable, Iterable, List, Literal, Optional, Sequence, Tuple, Type, Union
+from typing import (
+    Callable,
+    Iterable,
+    List,
+    Literal,
+    Optional,
+    Sequence,
+    Tuple,
+    Type,
+    Union,
+)
 
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
 from fern_python.external_dependencies import Pydantic, PydanticVersionCompatibility
-from fern_python.generators.core_utilities.core_utilities import CoreUtilities
 from pydantic import BaseModel
 
 from .pydantic_field import PydanticField
@@ -41,6 +49,7 @@ class PydanticModel:
         snippet: Optional[str] = None,
         extra_fields: Optional[Literal["allow", "forbid"]] = None,
         pydantic_base_model: Optional[AST.ClassReference] = None,
+        include_model_config: Optional[bool] = True,
     ):
         self._source_file = source_file
 
@@ -69,6 +78,8 @@ class PydanticModel:
 
         self._universal_root_validator = universal_root_validator
         self._universal_field_validator = universal_field_validator
+
+        self._include_model_config = include_model_config
 
     def to_reference(self) -> LocalClassReference:
         return self._local_class_reference
@@ -211,7 +222,7 @@ class PydanticModel:
         self._class_declaration.add_class(declaration=inner_class)
 
     def finish(self) -> None:
-        self._add_config_class()
+        self._maybe_model_config()
 
     def add_partial_class(self) -> None:
         partial_class = AST.ClassDeclaration(
@@ -248,21 +259,50 @@ class PydanticModel:
             qualified_name_excluding_import=(self.name, PydanticModel._PARTIAL_CLASS_NAME),
             is_forward_reference=True,
         )
-    
-    def maybe_extras_config(self) -> Optional[AST.Expression]:
+
+    def _maybe_model_config(self) -> Optional[AST.Expression]:
         extra_fields = self._extra_fields
+        config_kwargs: List[Tuple[str, AST.Expression]] = [("populate_by_name", AST.Expression("True"))]
+        v1_config_kwargs: List[Tuple[str, AST.Expression]] = [
+            ("allow_population_by_field_name", AST.Expression("True"))
+        ]
         if extra_fields == "allow" or extra_fields == "forbid":
-            def write_extras(writer: AST.NodeWriter) -> None:
-                writer.write("if ")
-                # TODO: this class needs a context, then we can call get_is_pydantic_v2
-                writer.write_node(self._is_pydantic_v2)
-                writer.write_line(":")
-                with writer.indent():
-                    writer.write("model_config: ")
-                    writer.write_node(AST.TypeHint.class_var(AST.TypeHint(type=Pydantic.ConfigDict())))
-                    writer.write(" = ")
-                    writer.write_node(AST.Expression(AST.ClassInstantiation(Pydantic.ConfigDict(), kwargs=[("extra", AST.Expression(extra_fields))])))
-            self._source_file.add_expression(AST.Expression(AST.CodeWriter(write_extras)))
+            config_kwargs.append(("extra", AST.Expression(f'"{extra_fields}"')))
+            if self._extra_fields == "forbid":
+                v1_config_kwargs.append(("extra", Pydantic.Extra.forbid()))
+            elif self._extra_fields == "allow":
+                v1_config_kwargs.append(("extra", Pydantic.Extra.allow()))
+
+        if self._frozen:
+            config_kwargs.append(("frozen", AST.Expression("True")))
+            v1_config_kwargs.append(("frozen", AST.Expression("True")))
+        if self._orm_mode:
+            config_kwargs.append(("from_attributes", AST.Expression("True")))
+            v1_config_kwargs.append(("from_orm", AST.Expression("True")))
+        if self._smart_union:
+            v1_config_kwargs.append(("smart_union", AST.Expression("True")))
+
+        def write_extras(writer: AST.NodeWriter) -> None:
+            writer.write("if ")
+            # TODO: this class needs a context, then we can call get_is_pydantic_v2
+            writer.write_node(self._is_pydantic_v2)
+            writer.write_line(":")
+            with writer.indent():
+                writer.write("model_config: ")
+                writer.write_node(AST.TypeHint.class_var(AST.TypeHint(type=Pydantic.ConfigDict())))
+                writer.write(" = ")
+                writer.write_node(AST.Expression(AST.ClassInstantiation(Pydantic.ConfigDict(), kwargs=config_kwargs)))
+            writer.write_newline_if_last_line_not()
+            writer.write_line("else:")
+            with writer.indent():
+                writer.write("model_config: ")
+                writer.write_node(AST.TypeHint.class_var(AST.TypeHint(type=Pydantic.ConfigDict())))
+                writer.write(" = ")
+                writer.write_node(
+                    AST.Expression(AST.ClassInstantiation(Pydantic.ConfigDict(), kwargs=v1_config_kwargs))
+                )
+        if self._include_model_config:
+            self._class_declaration.add_expression(AST.Expression(AST.CodeWriter(write_extras)))
 
     def update_forward_refs(self, localns: Iterable[AST.ClassReference] = []) -> None:
         self._source_file.add_footer_expression(
@@ -283,65 +323,6 @@ class PydanticModel:
                 )
             )
         )
-
-    def _add_config_class(self) -> None:
-        config = AST.ClassDeclaration(name="Config")
-
-        if self._frozen:
-            config.add_class_var(
-                AST.VariableDeclaration(
-                    name="frozen",
-                    initializer=AST.Expression("True"),
-                )
-            )
-
-        if self._orm_mode:
-            config.add_class_var(
-                AST.VariableDeclaration(
-                    name="orm_mode",
-                    initializer=AST.Expression("True"),
-                )
-            )
-
-        if self._smart_union:
-            config.add_class_var(
-                AST.VariableDeclaration(
-                    name="smart_union",
-                    initializer=AST.Expression("True"),
-                )
-            )
-
-        if self._has_aliases or len(self._base_models) > 0:
-            config.add_class_var(
-                AST.VariableDeclaration(
-                    name="allow_population_by_field_name",
-                    initializer=AST.Expression("True"),
-                )
-            )
-            config.add_class_var(
-                AST.VariableDeclaration(
-                    name="populate_by_name",
-                    initializer=AST.Expression("True"),
-                )
-            )
-
-        if self._extra_fields == "forbid":
-            config.add_class_var(
-                AST.VariableDeclaration(
-                    name="extra",
-                    initializer=Pydantic.Extra.forbid(),
-                )
-            )
-        elif self._extra_fields == "allow":
-            config.add_class_var(
-                AST.VariableDeclaration(
-                    name="extra",
-                    initializer=Pydantic.Extra.allow(),
-                )
-            )
-
-        if len(config.class_vars) > 0:
-            self._class_declaration.add_class(declaration=config)
 
     def __enter__(self) -> PydanticModel:
         return self
