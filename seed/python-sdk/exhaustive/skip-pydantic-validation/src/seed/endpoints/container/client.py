@@ -335,15 +335,23 @@ class AsyncContainerClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.container.get_and_return_list_of_primitives(
-            request=["string"],
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.container.get_and_return_list_of_primitives(
+                request=["string"],
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "container/list-of-primitives", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -376,6 +384,8 @@ class AsyncContainerClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
         from seed.types import ObjectWithRequiredField
 
@@ -383,13 +393,19 @@ class AsyncContainerClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.container.get_and_return_list_of_objects(
-            request=[
-                ObjectWithRequiredField(
-                    string="string",
-                )
-            ],
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.container.get_and_return_list_of_objects(
+                request=[
+                    ObjectWithRequiredField(
+                        string="string",
+                    )
+                ],
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "container/list-of-objects", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -419,15 +435,23 @@ class AsyncContainerClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.container.get_and_return_set_of_primitives(
-            request={"string"},
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.container.get_and_return_set_of_primitives(
+                request={"string"},
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "container/set-of-primitives", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -460,6 +484,8 @@ class AsyncContainerClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
         from seed.types import ObjectWithRequiredField
 
@@ -467,13 +493,19 @@ class AsyncContainerClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.container.get_and_return_set_of_objects(
-            request={
-                ObjectWithRequiredField(
-                    string="string",
-                )
-            },
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.container.get_and_return_set_of_objects(
+                request={
+                    ObjectWithRequiredField(
+                        string="string",
+                    )
+                },
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "container/set-of-objects", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -503,15 +535,23 @@ class AsyncContainerClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.container.get_and_return_map_prim_to_prim(
-            request={"string": "string"},
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.container.get_and_return_map_prim_to_prim(
+                request={"string": "string"},
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "container/map-prim-to-prim", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -544,6 +584,8 @@ class AsyncContainerClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
         from seed.types import ObjectWithRequiredField
 
@@ -551,13 +593,19 @@ class AsyncContainerClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.container.get_and_return_map_of_prim_to_object(
-            request={
-                "string": ObjectWithRequiredField(
-                    string="string",
-                )
-            },
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.container.get_and_return_map_of_prim_to_object(
+                request={
+                    "string": ObjectWithRequiredField(
+                        string="string",
+                    )
+                },
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "container/map-prim-to-object", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -590,6 +638,8 @@ class AsyncContainerClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
         from seed.types import ObjectWithRequiredField
 
@@ -597,11 +647,17 @@ class AsyncContainerClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.container.get_and_return_optional(
-            request=ObjectWithRequiredField(
-                string="string",
-            ),
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.container.get_and_return_optional(
+                request=ObjectWithRequiredField(
+                    string="string",
+                ),
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "container/opt-objects", method="POST", json=request, request_options=request_options, omit=OMIT

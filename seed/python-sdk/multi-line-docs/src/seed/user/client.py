@@ -132,14 +132,22 @@ class AsyncUserClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedMultiLineDocs
 
         client = AsyncSeedMultiLineDocs(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.user.get_user(
-            user_id="string",
-        )
+
+
+        async def main() -> None:
+            await client.user.get_user(
+                user_id="string",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"users/{jsonable_encoder(user_id)}", method="GET", request_options=request_options
@@ -180,15 +188,23 @@ class AsyncUserClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedMultiLineDocs
 
         client = AsyncSeedMultiLineDocs(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.user.create_user(
-            name="string",
-            age=1,
-        )
+
+
+        async def main() -> None:
+            await client.user.create_user(
+                name="string",
+                age=1,
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users", method="POST", json={"name": name, "age": age}, request_options=request_options, omit=OMIT

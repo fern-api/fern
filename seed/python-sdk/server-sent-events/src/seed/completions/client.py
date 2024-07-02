@@ -90,16 +90,24 @@ class AsyncCompletionsClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedServerSentEvents
 
         client = AsyncSeedServerSentEvents(
             base_url="https://yourhost.com/path/to/api",
         )
-        response = await client.completions.stream(
-            query="string",
-        )
-        async for chunk in response:
-            yield chunk
+
+
+        async def main() -> None:
+            response = await client.completions.stream(
+                query="string",
+            )
+            async for chunk in response:
+                yield chunk
+
+
+        asyncio.run(main())
         """
         async with self._client_wrapper.httpx_client.stream(
             "stream", method="POST", json={"query": query}, request_options=request_options, omit=OMIT

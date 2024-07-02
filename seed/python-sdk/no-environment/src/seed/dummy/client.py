@@ -61,13 +61,21 @@ class AsyncDummyClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedNoEnvironment
 
         client = AsyncSeedNoEnvironment(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.dummy.get_dummy()
+
+
+        async def main() -> None:
+            await client.dummy.get_dummy()
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "dummy", method="GET", request_options=request_options

@@ -77,15 +77,23 @@ class AsyncEnumClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.enum.get_and_return_enum(
-            request="SUNNY",
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.enum.get_and_return_enum(
+                request="SUNNY",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "enum", method="POST", json=request, request_options=request_options, omit=OMIT

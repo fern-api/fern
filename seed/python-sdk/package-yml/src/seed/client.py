@@ -166,15 +166,23 @@ class AsyncSeedPackageYml:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedPackageYml
 
         client = AsyncSeedPackageYml(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.echo(
-            id="id-ksfd9c1",
-            request="Hello world!",
-        )
+
+
+        async def main() -> None:
+            await client.echo(
+                id="id-ksfd9c1",
+                request="Hello world!",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"{jsonable_encoder(id)}/", method="POST", json=request, request_options=request_options, omit=OMIT

@@ -7,6 +7,9 @@ import fern.ir.resources as ir_types
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies import HttpX
+from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
+    EndpointMetadataCollector,
+)
 from fern_python.generators.sdk.client_generator.endpoint_response_code_writer import (
     EndpointResponseCodeWriter,
 )
@@ -69,6 +72,7 @@ class RootClientGenerator:
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
         oauth_scheme: Optional[ir_types.OAuthScheme],
+        endpoint_metadata_collector: EndpointMetadataCollector,
     ):
         self._context = context
         self._package = package
@@ -80,6 +84,7 @@ class RootClientGenerator:
         self._snippet_registry = snippet_registry
         self._snippet_writer = snippet_writer
         self._oauth_scheme = oauth_scheme
+        self._endpoint_metadata_collector = endpoint_metadata_collector
 
         client_wrapper_generator = ClientWrapperGenerator(
             context=self._context,
@@ -272,6 +277,7 @@ class RootClientGenerator:
                     is_async=is_async,
                     generated_root_client=generated_root_client,
                     snippet_writer=self._snippet_writer,
+                    endpoint_metadata_collector=self._endpoint_metadata_collector,
                 )
                 generated_endpoint_function = endpoint_function_generator.generate()
                 class_declaration.add_method(generated_endpoint_function.function)

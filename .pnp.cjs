@@ -224,6 +224,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/cli/configuration"\
       },\
       {\
+        "name": "@fern-api/docs-markdown-utils",\
+        "reference": "workspace:packages/cli/docs-markdown-utils"\
+      },\
+      {\
         "name": "@fern-api/docs-preview",\
         "reference": "workspace:packages/cli/docs-preview"\
       },\
@@ -375,6 +379,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/core-utils", ["workspace:packages/commons/core-utils"]],\
       ["@fern-api/csharp-codegen", ["workspace:generators/csharp/codegen"]],\
       ["@fern-api/docker-utils", ["workspace:packages/cli/generation/local-generation/docker-utils"]],\
+      ["@fern-api/docs-markdown-utils", ["workspace:packages/cli/docs-markdown-utils"]],\
       ["@fern-api/docs-preview", ["workspace:packages/cli/docs-preview"]],\
       ["@fern-api/docs-resolver", ["workspace:packages/cli/docs-resolver"]],\
       ["@fern-api/docs-validator", ["workspace:packages/cli/yaml/docs-validator"]],\
@@ -6447,6 +6452,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/latest-version", "npm:4.0.1"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
+            ["@types/semver", "npm:7.5.8"],\
             ["@types/tar", "npm:6.1.11"],\
             ["@types/validate-npm-package-name", "npm:4.0.0"],\
             ["@types/yargs", "npm:17.0.28"],\
@@ -6469,10 +6475,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ora", "npm:7.0.1"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
+            ["semver", "npm:7.6.2"],\
             ["tar", "npm:6.2.1"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["validate-npm-package-name", "npm:5.0.1"],\
+            ["yaml", "npm:2.3.3"],\
             ["yargs", "npm:17.7.2"]\
           ],\
           "linkType": "SOFT"\
@@ -6597,6 +6605,32 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
+      ["@fern-api/docs-markdown-utils", [\
+        ["workspace:packages/cli/docs-markdown-utils", {\
+          "packageLocation": "./packages/cli/docs-markdown-utils/",\
+          "packageDependencies": [\
+            ["@fern-api/docs-markdown-utils", "workspace:packages/cli/docs-markdown-utils"],\
+            ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
+            ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
+            ["@types/diff", "npm:5.2.1"],\
+            ["@types/jest", "npm:29.0.3"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["depcheck", "npm:1.4.6"],\
+            ["diff", "npm:5.2.0"],\
+            ["eslint", "npm:8.56.0"],\
+            ["gray-matter", "npm:4.0.3"],\
+            ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
+            ["mdast-util-from-markdown", "npm:2.0.1"],\
+            ["mdast-util-mdx", "npm:3.0.0"],\
+            ["micromark-extension-mdx", "npm:2.1.0"],\
+            ["organize-imports-cli", "npm:0.10.0"],\
+            ["prettier", "npm:2.7.1"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
+            ["unist-util-visit", "npm:5.0.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
       ["@fern-api/docs-preview", [\
         ["workspace:packages/cli/docs-preview", {\
           "packageLocation": "./packages/cli/docs-preview/",\
@@ -6644,6 +6678,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/docs-resolver", "workspace:packages/cli/docs-resolver"],\
             ["@fern-api/configuration", "workspace:packages/cli/configuration"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
+            ["@fern-api/docs-markdown-utils", "workspace:packages/cli/docs-markdown-utils"],\
             ["@fern-api/fdr-sdk", "npm:0.98.4-bf08716d8"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
@@ -6651,24 +6686,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/register", "workspace:packages/cli/register"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-            ["@types/diff", "npm:5.2.1"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["dayjs", "npm:1.11.11"],\
             ["depcheck", "npm:1.4.6"],\
-            ["diff", "npm:5.2.0"],\
             ["eslint", "npm:8.56.0"],\
             ["gray-matter", "npm:4.0.3"],\
             ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
             ["lodash-es", "npm:4.17.21"],\
-            ["mdast-util-from-markdown", "npm:2.0.0"],\
-            ["mdast-util-mdx", "npm:3.0.0"],\
-            ["micromark-extension-mdx", "npm:2.1.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
-            ["unist-util-visit", "npm:5.0.0"],\
             ["url-join", "npm:5.0.0"]\
           ],\
           "linkType": "SOFT"\
@@ -6682,13 +6711,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/configuration", "workspace:packages/cli/configuration"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
+            ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/tinycolor2", "npm:1.4.6"],\
+            ["chardet", "npm:2.0.0"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
+            ["file-type", "npm:19.0.0"],\
+            ["is-svg", "npm:5.0.1"],\
             ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
             ["next-mdx-remote", "virtual:2434b322786904da39177ff03bdc5c7dbbf348dd60dac92e23ac99d71edb460312c4755faf7215e21192d941b8070d96ed0843e8723d06d3b608bb1250bd6880#npm:4.4.1"],\
             ["organize-imports-cli", "npm:0.10.0"],\
@@ -7505,6 +7538,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/ruby-codegen", "workspace:generators/ruby/codegen"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
+            ["@fern-api/generator-commons", "workspace:generators/commons"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.898"],\
             ["@fern-fern/ir-sdk", "npm:39.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -7799,8 +7833,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@fern-api/configuration", "workspace:packages/cli/configuration"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
+            ["@fern-api/docs-markdown-utils", "workspace:packages/cli/docs-markdown-utils"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/ir-sdk", "workspace:packages/ir-sdk"],\
+            ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/node", "npm:18.7.18"],\
@@ -10303,6 +10339,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@tokenizer/token", [\
+        ["npm:0.3.0", {\
+          "packageLocation": "./.yarn/cache/@tokenizer-token-npm-0.3.0-4441352cc5-1d575d02d2.zip/node_modules/@tokenizer/token/",\
+          "packageDependencies": [\
+            ["@tokenizer/token", "npm:0.3.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@tootallnate/once", [\
         ["npm:2.0.0", {\
           "packageLocation": "./.yarn/cache/@tootallnate-once-npm-2.0.0-e36cf4f140-ad87447820.zip/node_modules/@tootallnate/once/",\
@@ -11170,6 +11215,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-semver-npm-7.5.6-9d2637fc95-563a0120ec.zip/node_modules/@types/semver/",\
           "packageDependencies": [\
             ["@types/semver", "npm:7.5.6"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:7.5.8", {\
+          "packageLocation": "./.yarn/cache/@types-semver-npm-7.5.8-26073743d7-ea6f5276f5.zip/node_modules/@types/semver/",\
+          "packageDependencies": [\
+            ["@types/semver", "npm:7.5.8"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -13863,6 +13915,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/chardet-npm-0.7.0-27933dd6c7-6fd5da1f5d.zip/node_modules/chardet/",\
           "packageDependencies": [\
             ["chardet", "npm:0.7.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:2.0.0", {\
+          "packageLocation": "./.yarn/cache/chardet-npm-2.0.0-908b5db760-dfa2d3b2bf.zip/node_modules/chardet/",\
+          "packageDependencies": [\
+            ["chardet", "npm:2.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -17180,6 +17239,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["fast-xml-parser", [\
+        ["npm:4.4.0", {\
+          "packageLocation": "./.yarn/cache/fast-xml-parser-npm-4.4.0-5d120445d5-ad33a4b516.zip/node_modules/fast-xml-parser/",\
+          "packageDependencies": [\
+            ["fast-xml-parser", "npm:4.4.0"],\
+            ["strnum", "npm:1.0.5"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["fastest-levenshtein", [\
         ["npm:1.0.16", {\
           "packageLocation": "./.yarn/cache/fastest-levenshtein-npm-1.0.16-192d328856-a78d44285c.zip/node_modules/fastest-levenshtein/",\
@@ -17298,6 +17367,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["file-type", [\
+        ["npm:19.0.0", {\
+          "packageLocation": "./.yarn/cache/file-type-npm-19.0.0-4bd3efdf69-03eec30a0b.zip/node_modules/file-type/",\
+          "packageDependencies": [\
+            ["file-type", "npm:19.0.0"],\
+            ["readable-web-to-node-stream", "npm:3.0.2"],\
+            ["strtok3", "npm:7.0.0"],\
+            ["token-types", "npm:5.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:3.9.0", {\
           "packageLocation": "./.yarn/cache/file-type-npm-3.9.0-fec2c20533-1db70b2485.zip/node_modules/file-type/",\
           "packageDependencies": [\
@@ -19544,6 +19623,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["is-string", "npm:1.0.7"],\
             ["has-tostringtag", "npm:1.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["is-svg", [\
+        ["npm:5.0.1", {\
+          "packageLocation": "./.yarn/cache/is-svg-npm-5.0.1-2997868926-284683d6a9.zip/node_modules/is-svg/",\
+          "packageDependencies": [\
+            ["is-svg", "npm:5.0.1"],\
+            ["fast-xml-parser", "npm:4.4.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -21802,6 +21891,25 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/mdast-util-from-markdown-npm-2.0.0-7358a7473f-4e8d8a46b4.zip/node_modules/mdast-util-from-markdown/",\
           "packageDependencies": [\
             ["mdast-util-from-markdown", "npm:2.0.0"],\
+            ["@types/mdast", "npm:4.0.3"],\
+            ["@types/unist", "npm:3.0.2"],\
+            ["decode-named-character-reference", "npm:1.0.2"],\
+            ["devlop", "npm:1.1.0"],\
+            ["mdast-util-to-string", "npm:4.0.0"],\
+            ["micromark", "npm:4.0.0"],\
+            ["micromark-util-decode-numeric-character-reference", "npm:2.0.1"],\
+            ["micromark-util-decode-string", "npm:2.0.0"],\
+            ["micromark-util-normalize-identifier", "npm:2.0.0"],\
+            ["micromark-util-symbol", "npm:2.0.0"],\
+            ["micromark-util-types", "npm:2.0.0"],\
+            ["unist-util-stringify-position", "npm:4.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:2.0.1", {\
+          "packageLocation": "./.yarn/cache/mdast-util-from-markdown-npm-2.0.1-37ffa6064d-2e50be7127.zip/node_modules/mdast-util-from-markdown/",\
+          "packageDependencies": [\
+            ["mdast-util-from-markdown", "npm:2.0.1"],\
             ["@types/mdast", "npm:4.0.3"],\
             ["@types/unist", "npm:3.0.2"],\
             ["decode-named-character-reference", "npm:1.0.2"],\
@@ -24805,6 +24913,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["peek-readable", [\
+        ["npm:5.0.0", {\
+          "packageLocation": "./.yarn/cache/peek-readable-npm-5.0.0-c469f805e3-bef5ceb505.zip/node_modules/peek-readable/",\
+          "packageDependencies": [\
+            ["peek-readable", "npm:5.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["pend", [\
         ["npm:1.2.0", {\
           "packageLocation": "./.yarn/cache/pend-npm-1.2.0-7a13d93266-6c72f52433.zip/node_modules/pend/",\
@@ -25869,6 +25986,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["readable-web-to-node-stream", [\
+        ["npm:3.0.2", {\
+          "packageLocation": "./.yarn/cache/readable-web-to-node-stream-npm-3.0.2-682f5de297-8c56cc62c6.zip/node_modules/readable-web-to-node-stream/",\
+          "packageDependencies": [\
+            ["readable-web-to-node-stream", "npm:3.0.2"],\
+            ["readable-stream", "npm:3.6.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["readdir-scoped-modules", [\
         ["npm:1.1.0", {\
           "packageLocation": "./.yarn/cache/readdir-scoped-modules-npm-1.1.0-651d6882ac-6d9f334e40.zip/node_modules/readdir-scoped-modules/",\
@@ -26727,6 +26854,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["semver", "npm:7.6.0"],\
             ["lru-cache", "npm:6.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:7.6.2", {\
+          "packageLocation": "./.yarn/cache/semver-npm-7.6.2-0fec6944bb-40f6a95101.zip/node_modules/semver/",\
+          "packageDependencies": [\
+            ["semver", "npm:7.6.2"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -27767,6 +27901,26 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["strnum", [\
+        ["npm:1.0.5", {\
+          "packageLocation": "./.yarn/cache/strnum-npm-1.0.5-9ba11d2a0a-651b2031db.zip/node_modules/strnum/",\
+          "packageDependencies": [\
+            ["strnum", "npm:1.0.5"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["strtok3", [\
+        ["npm:7.0.0", {\
+          "packageLocation": "./.yarn/cache/strtok3-npm-7.0.0-bb1edd9ba5-2ebe7ad8f2.zip/node_modules/strtok3/",\
+          "packageDependencies": [\
+            ["strtok3", "npm:7.0.0"],\
+            ["@tokenizer/token", "npm:0.3.0"],\
+            ["peek-readable", "npm:5.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["stubborn-fs", [\
         ["npm:1.2.5", {\
           "packageLocation": "./.yarn/cache/stubborn-fs-npm-1.2.5-b4c27578fb-28d197afec.zip/node_modules/stubborn-fs/",\
@@ -28555,6 +28709,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/toidentifier-npm-1.0.1-f759712599-952c29e2a8.zip/node_modules/toidentifier/",\
           "packageDependencies": [\
             ["toidentifier", "npm:1.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["token-types", [\
+        ["npm:5.0.1", {\
+          "packageLocation": "./.yarn/cache/token-types-npm-5.0.1-a86fdb8b12-32780123bc.zip/node_modules/token-types/",\
+          "packageDependencies": [\
+            ["token-types", "npm:5.0.1"],\
+            ["@tokenizer/token", "npm:0.3.0"],\
+            ["ieee754", "npm:1.2.1"]\
           ],\
           "linkType": "HARD"\
         }]\

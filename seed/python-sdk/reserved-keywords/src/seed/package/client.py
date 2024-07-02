@@ -67,14 +67,22 @@ class AsyncPackageClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedNurseryApi
 
         client = AsyncSeedNurseryApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.package.test(
-            for_="string",
-        )
+
+
+        async def main() -> None:
+            await client.package.test(
+                for_="string",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="POST", params={"for": for_}, request_options=request_options

@@ -63,12 +63,20 @@ class AsyncPathClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedLiteral
 
         client = AsyncSeedLiteral(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.path.send()
+
+
+        async def main() -> None:
+            await client.path.send()
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"path/123", method="POST", request_options=request_options

@@ -384,15 +384,23 @@ class AsyncPrimitiveClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.primitive.get_and_return_string(
-            request="string",
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.primitive.get_and_return_string(
+                request="string",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/string", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -420,15 +428,23 @@ class AsyncPrimitiveClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.primitive.get_and_return_int(
-            request=1,
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.primitive.get_and_return_int(
+                request=1,
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/integer", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -458,15 +474,23 @@ class AsyncPrimitiveClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.primitive.get_and_return_long(
-            request=1000000,
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.primitive.get_and_return_long(
+                request=1000000,
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/long", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -496,15 +520,23 @@ class AsyncPrimitiveClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.primitive.get_and_return_double(
-            request=1.1,
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.primitive.get_and_return_double(
+                request=1.1,
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/double", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -534,15 +566,23 @@ class AsyncPrimitiveClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.primitive.get_and_return_bool(
-            request=True,
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.primitive.get_and_return_bool(
+                request=True,
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/boolean", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -572,6 +612,7 @@ class AsyncPrimitiveClient:
 
         Examples
         --------
+        import asyncio
         import datetime
 
         from seed.client import AsyncSeedExhaustive
@@ -580,11 +621,17 @@ class AsyncPrimitiveClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.primitive.get_and_return_datetime(
-            request=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.primitive.get_and_return_datetime(
+                request=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/datetime", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -614,6 +661,7 @@ class AsyncPrimitiveClient:
 
         Examples
         --------
+        import asyncio
         import datetime
 
         from seed.client import AsyncSeedExhaustive
@@ -622,11 +670,17 @@ class AsyncPrimitiveClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.primitive.get_and_return_date(
-            request=datetime.date.fromisoformat(
-                "2023-01-15",
-            ),
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.primitive.get_and_return_date(
+                request=datetime.date.fromisoformat(
+                    "2023-01-15",
+                ),
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/date", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -656,6 +710,7 @@ class AsyncPrimitiveClient:
 
         Examples
         --------
+        import asyncio
         import uuid
 
         from seed.client import AsyncSeedExhaustive
@@ -664,11 +719,17 @@ class AsyncPrimitiveClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.primitive.get_and_return_uuid(
-            request=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.primitive.get_and_return_uuid(
+                request=uuid.UUID(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/uuid", method="POST", json=request, request_options=request_options, omit=OMIT
@@ -698,15 +759,23 @@ class AsyncPrimitiveClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.primitive.get_and_return_base_64(
-            request="SGVsbG8gd29ybGQh",
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.primitive.get_and_return_base_64(
+                request="SGVsbG8gd29ybGQh",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/base64", method="POST", json=request, request_options=request_options, omit=OMIT

@@ -12,7 +12,7 @@
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedValidation\n\nclient = SeedValidation(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.create(\n    decimal=1.1,\n    even=1,\n    name=\"string\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedValidation\n\nclient = AsyncSeedValidation(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.create(\n    decimal=1.1,\n    even=1,\n    name=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedValidation\n\nclient = AsyncSeedValidation(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.create(\n        decimal=1.1,\n        even=1,\n        name=\"string\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -25,7 +25,7 @@
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedValidation\n\nclient = SeedValidation(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.get(\n    decimal=1.1,\n    even=1,\n    name=\"string\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedValidation\n\nclient = AsyncSeedValidation(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.get(\n    decimal=1.1,\n    even=1,\n    name=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedValidation\n\nclient = AsyncSeedValidation(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.get(\n        decimal=1.1,\n        even=1,\n        name=\"string\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

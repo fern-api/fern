@@ -72,14 +72,22 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedCodeSamples
 
         client = AsyncSeedCodeSamples(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.service.hello(
-            num_events=5,
-        )
+
+
+        async def main() -> None:
+            await client.service.hello(
+                num_events=5,
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "hello", method="POST", json={"num_events": num_events}, request_options=request_options, omit=OMIT

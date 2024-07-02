@@ -93,6 +93,8 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
 
@@ -100,10 +102,16 @@ class AsyncServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
-        await client.file.service.get_file(
-            filename="file.txt",
-            x_file_api_version="0.0.2",
-        )
+
+
+        async def main() -> None:
+            await client.file.service.get_file(
+                filename="file.txt",
+                x_file_api_version="0.0.2",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"file/{jsonable_encoder(filename)}",

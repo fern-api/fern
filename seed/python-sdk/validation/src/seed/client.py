@@ -219,16 +219,24 @@ class AsyncSeedValidation:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedValidation
 
         client = AsyncSeedValidation(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.create(
-            decimal=1.1,
-            even=1,
-            name="string",
-        )
+
+
+        async def main() -> None:
+            await client.create(
+                decimal=1.1,
+                even=1,
+                name="string",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "create",
@@ -266,16 +274,24 @@ class AsyncSeedValidation:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedValidation
 
         client = AsyncSeedValidation(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.get(
-            decimal=1.1,
-            even=1,
-            name="string",
-        )
+
+
+        async def main() -> None:
+            await client.get(
+                decimal=1.1,
+                even=1,
+                name="string",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="GET", params={"decimal": decimal, "even": even, "name": name}, request_options=request_options

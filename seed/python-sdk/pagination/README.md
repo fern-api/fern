@@ -40,23 +40,46 @@ for page in response.iter_pages():
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedPagination
 
 client = AsyncSeedPagination(
     token="YOUR_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
-response = await client.users.list_with_cursor_pagination(
-    page=1,
-    per_page=1,
-    order="asc",
-    starting_after="string",
-)
-async for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-async for page in response.iter_pages():
-    yield page
+
+
+async def main() -> None:
+    response = await client.users.list_with_cursor_pagination(
+        page=1,
+        per_page=1,
+        order="asc",
+        starting_after="string",
+    )
+    async for item in response:
+        yield item
+    # alternatively, you can paginate page-by-page
+    async for page in response.iter_pages():
+        yield page
+
+
+asyncio.run(main())
+```
+
+## Exception Handling
+
+When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error
+will be thrown.
+
+```python
+from .api_error import ApiError
+
+try:
+    client.users.list_with_cursor_pagination(...)
+except ApiError as e:
+    print(e.status_code)
+    print(e.body)
 ```
 
 ## Pagination
@@ -81,6 +104,123 @@ for item in response:
 # alternatively, you can paginate page-by-page
 for page in response.iter_pages():
     yield page
+```
+
+## Advanced
+
+### Retries
+
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
+
+A request is deemed retriable when any of the following HTTP status codes is returned:
+
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+Use the `max_retries` request option to configure this behavior.
+
+```python
+client.users.list_with_cursor_pagination(...,{
+    max_retries=1
+})
+```
+
+## Advanced
+
+### Retries
+
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
+
+A request is deemed retriable when any of the following HTTP status codes is returned:
+
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+Use the `max_retries` request option to configure this behavior.
+
+```python
+client.users.list_with_cursor_pagination(...,{
+    max_retries=1
+})
+```
+
+### Timeouts
+
+The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
+
+```python
+
+from seed.client import SeedPagination
+
+client = SeedPagination(..., { timeout=20.0 }, )
+
+
+# Override timeout for a specific method
+client.users.list_with_cursor_pagination(...,{
+    timeout_in_seconds=1
+})
+```
+
+## Advanced
+
+### Retries
+
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
+
+A request is deemed retriable when any of the following HTTP status codes is returned:
+
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+Use the `max_retries` request option to configure this behavior.
+
+```python
+client.users.list_with_cursor_pagination(...,{
+    max_retries=1
+})
+```
+
+### Timeouts
+
+The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
+
+```python
+
+from seed.client import SeedPagination
+
+client = SeedPagination(..., { timeout=20.0 }, )
+
+
+# Override timeout for a specific method
+client.users.list_with_cursor_pagination(...,{
+    timeout_in_seconds=1
+})
+```
+
+### Custom Client
+
+You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
+and transports.
+```python
+import httpx
+from seed.client import SeedPagination
+
+client = SeedPagination(
+    ...,
+    http_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
 ```
 
 ## Contributing

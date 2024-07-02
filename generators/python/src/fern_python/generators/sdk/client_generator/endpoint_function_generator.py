@@ -7,6 +7,12 @@ from typing_extensions import Never
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies import HttpX
+from fern_python.external_dependencies.asyncio import Asyncio
+from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
+    EndpointMetadata,
+    EndpointMetadataCollector,
+    ParameterMetadata,
+)
 from fern_python.generators.sdk.client_generator.endpoint_response_code_writer import (
     EndpointResponseCodeWriter,
     raise_stream_parameter_unsupported,
@@ -71,6 +77,7 @@ class EndpointFunctionGenerator:
         is_async: bool,
         generated_root_client: GeneratedRootClient,
         snippet_writer: SnippetWriter,
+        endpoint_metadata_collector: Optional[EndpointMetadataCollector],
     ):
         self._context = context
         self._package = package
@@ -81,6 +88,7 @@ class EndpointFunctionGenerator:
         self._client_wrapper_member_name = client_wrapper_member_name
         self._generated_root_client = generated_root_client
         self.snippet_writer = snippet_writer
+        self.endpoint_metadata_collector = endpoint_metadata_collector
 
         self.is_paginated = (
             self._endpoint.pagination is not None and self._context.generator_config.generate_paginated_clients
@@ -134,6 +142,37 @@ class EndpointFunctionGenerator:
                 self._path_parameter_names[path_parameter.name] = name
 
         self.is_default_body_parameter_used = self.request_body_parameters is not None
+        self.collect_metadata()
+
+    def collect_metadata(self) -> None:
+        if self.endpoint_metadata_collector is None:
+            return
+
+        # Consolidate the named parameters and path parameters in a single list.
+        parameters: List[AST.NamedFunctionParameter] = []
+        parameters = self._named_parameters_from_path_parameters(self._endpoint.all_path_parameters)
+        parameters.extend(self._named_parameters)
+
+        for param in parameters:
+            self.endpoint_metadata_collector.register_endpoint_parameter(
+                endpoint_id=self._endpoint.id,
+                parameter=ParameterMetadata(
+                    name=param.name,
+                    type_reference=param.raw_type,
+                    type_hint=param.type_hint,
+                    description=param.docs,
+                    is_required=param.type_hint is not None and param.type_hint.is_optional,
+                ),
+            )
+
+        self.endpoint_metadata_collector.register_endpoint(
+            endpoint_id=self._endpoint.id,
+            metadata=EndpointMetadata(
+                return_type=self._get_endpoint_return_type(),
+                endpoint_package_path=self._get_subpackage_client_accessor(self._package),
+                method_name=get_endpoint_name(self._endpoint),
+            ),
+        )
 
     def generate(self) -> GeneratedEndpointFunction:
         endpoint_snippets = self._generate_endpoint_snippets(
@@ -361,9 +400,8 @@ class EndpointFunctionGenerator:
                 pagination = self.pagination.get_as_union()
                 if pagination.type == "offset":
                     param = pagination.page
-                    writer.write_line(
-                        f"{request_property_to_name(param.property)} = {request_property_to_name(param.property)} or 1"
-                    )
+                    page_param_name = request_property_to_name(param.property)
+                    writer.write_line(f"{page_param_name} = {page_param_name} if {page_param_name} is not None else 1")
 
             writer.write_node(
                 HttpX.make_request(
@@ -519,6 +557,31 @@ class EndpointFunctionGenerator:
 
         return snippets
 
+    def _get_snippet_writer_function_body(
+        self,
+        is_async: bool,
+        writer: AST.NodeWriter,
+        endpoint_usage: Optional[AST.Expression],
+        endpoint_snippet: AST.Expression,
+        response_name: str,
+        package: ir_types.Package,
+    ) -> None:
+        if endpoint_usage is not None:
+            writer.write(f"{response_name} = ")
+        if is_async:
+            writer.write("await ")
+
+        writer.write("client.")
+        writer.write(self._get_subpackage_client_accessor(package))
+
+        writer.write_node(endpoint_snippet)
+
+        if endpoint_usage is not None:
+            writer.write_line()
+            writer.write_node(endpoint_usage)
+
+        writer.write_newline_if_last_line_not()
+
     def _get_snippet_writer(
         self,
         is_async: bool,
@@ -535,21 +598,28 @@ class EndpointFunctionGenerator:
                 writer.write_node(generated_root_client.sync_instantiation)
             writer.write_line()
 
-            if endpoint_usage is not None:
-                writer.write(f"{response_name} = ")
             if is_async:
-                writer.write("await ")
+                writer.write_line("async def main() -> None:")
+                with writer.indent():
+                    self._get_snippet_writer_function_body(
+                        is_async=is_async,
+                        writer=writer,
+                        endpoint_usage=endpoint_usage,
+                        endpoint_snippet=endpoint_snippet,
+                        response_name=response_name,
+                        package=package,
+                    )
 
-            writer.write("client.")
-            writer.write(self._get_subpackage_client_accessor(package))
-
-            writer.write_node(endpoint_snippet)
-
-            if endpoint_usage is not None:
-                writer.write_line()
-                writer.write_node(endpoint_usage)
-
-            writer.write_newline_if_last_line_not()
+                writer.write_node(Asyncio.run(AST.Expression("main()")), should_write_as_snippet=False)
+            else:
+                self._get_snippet_writer_function_body(
+                    is_async=is_async,
+                    writer=writer,
+                    endpoint_usage=endpoint_usage,
+                    endpoint_snippet=endpoint_snippet,
+                    response_name=response_name,
+                    package=package,
+                )
 
         return AST.CodeWriter(write)
 
@@ -1271,7 +1341,7 @@ class EndpointFunctionSnippetGenerator:
 
 
 def get_endpoint_name(endpoint: ir_types.HttpEndpoint) -> str:
-    if endpoint.name.get_as_name().original_name == "list":
+    if endpoint.name.get_as_name().original_name.lower() == "list":
         return "list"
     return endpoint.name.get_as_name().snake_case.safe_name
 

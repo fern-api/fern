@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedStreaming\n\nclient = SeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.dummy.generate_stream(\n    num_events=1,\n)\nfor chunk in response:\n    yield chunk\n",
-                "async_client": "from seed.client import AsyncSeedStreaming\n\nclient = AsyncSeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = await client.dummy.generate_stream(\n    num_events=1,\n)\nasync for chunk in response:\n    yield chunk\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedStreaming\n\nclient = AsyncSeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.dummy.generate_stream(\n        num_events=1,\n    )\n    async for chunk in response:\n        yield chunk\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -23,7 +23,7 @@
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedStreaming\n\nclient = SeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.dummy.generate(\n    num_events=5,\n)\n",
-                "async_client": "from seed.client import AsyncSeedStreaming\n\nclient = AsyncSeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.dummy.generate(\n    num_events=5,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedStreaming\n\nclient = AsyncSeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.dummy.generate(\n        num_events=5,\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

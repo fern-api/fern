@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Optional, Union
 
 from typing_extensions import Protocol
 
@@ -25,7 +25,7 @@ class CodeWriter(AstNode):
         self._code_writer(writer=writer)
         return writer.metadata
 
-    def write(self, writer: NodeWriter) -> None:
+    def write(self, writer: NodeWriter, should_write_as_snippet: Optional[bool] = None) -> None:
         if isinstance(self._code_writer, str):
             writer.write(self._code_writer)
         else:

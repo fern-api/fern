@@ -5,9 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.14.1] - 2024-07-01
+
+- Fix: Sync and AsyncPage now pass through the generic type to BasePage, allowing the use of `.items`, etc. to be appropriately typed within your type checking system.
+
+## [2.14.0] - 2024-07-01
+
+- Fix: offset page now allows for the usage of 0 as a page start, previously the use of `page or 1` made Python coerce booleans and become 1, ignoring the user-provided 0.
+
+## [2.14.0-rc3] - 2024-07-01
+
+- Improvement: Generated readmes now include an "advanced" section, outlining usage of retries, timeouts, error handling and usage of a custom client.
+
+## [2.14.0-rc2] - 2024-07-01
+
+- Improvement: Async snippets now run the async function leveraging asyncio.run to be more copy-pastable.
+
+## [2.14.0-rc1] - 2024-06-27
+
+- Fix: the fix from 2.5.2 is now case-insentitive
+  Recap of 2.5.2: `Fix: Support `list`SDK method names instead of defaulting to`list\_`.`
+
+## [2.14.0-rc0] - 2024-06-26
+
+- Feat: the Python SDK now generates an accompanying SDK reference (`reference.md`) for users to review the SDK methods at a glance within the SDK's GitHub repository.
+
 ## [2.13.1-rc0] - 2024-06-20
 
 - Fix: the Python SDK now does not send additional properties via JSON or data if the request is leveraging the other field.
+- Improvement: the Python SDK now copies unit tests over to the generated SDK for additional unit testing (separate from wire-format testing).
 
 ## [2.13.0-rc0] - 2024-06-20
 

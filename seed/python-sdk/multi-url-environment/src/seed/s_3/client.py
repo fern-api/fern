@@ -76,14 +76,22 @@ class AsyncS3Client:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedMultiUrlEnvironment
 
         client = AsyncSeedMultiUrlEnvironment(
             token="YOUR_TOKEN",
         )
-        await client.s_3.get_presigned_url(
-            s_3_key="string",
-        )
+
+
+        async def main() -> None:
+            await client.s_3.get_presigned_url(
+                s_3_key="string",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "s3/presigned-url",

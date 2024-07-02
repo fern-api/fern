@@ -76,14 +76,22 @@ class AsyncUserClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExtraProperties
 
         client = AsyncSeedExtraProperties(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.user.create_user(
-            name="string",
-        )
+
+
+        async def main() -> None:
+            await client.user.create_user(
+                name="string",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "user",

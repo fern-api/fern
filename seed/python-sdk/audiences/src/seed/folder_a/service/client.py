@@ -61,12 +61,20 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedAudiences
 
         client = AsyncSeedAudiences(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.folder_a.service.get_direct_thread()
+
+
+        async def main() -> None:
+            await client.folder_a.service.get_direct_thread()
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(method="GET", request_options=request_options)
         try:

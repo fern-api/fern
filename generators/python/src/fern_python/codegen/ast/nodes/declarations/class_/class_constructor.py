@@ -1,3 +1,5 @@
+from typing import Optional
+
 from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ...code_writer import CodeWriter
 from ...type_hint import TypeHint
@@ -27,5 +29,5 @@ class ClassConstructor(AstNode):
     def get_metadata(self) -> AstNodeMetadata:
         return self.function_declaration.get_metadata()
 
-    def write(self, writer: NodeWriter) -> None:
+    def write(self, writer: NodeWriter, should_write_as_snippet: Optional[bool] = None) -> None:
         writer.write_node(self.function_declaration)

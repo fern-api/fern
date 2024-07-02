@@ -115,6 +115,8 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedAuthEnvironmentVariables
 
         client = AsyncSeedAuthEnvironmentVariables(
@@ -122,7 +124,13 @@ class AsyncServiceClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.service.get_with_api_key()
+
+
+        async def main() -> None:
+            await client.service.get_with_api_key()
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "apiKey", method="GET", request_options=request_options
@@ -158,6 +166,8 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedAuthEnvironmentVariables
 
         client = AsyncSeedAuthEnvironmentVariables(
@@ -165,9 +175,15 @@ class AsyncServiceClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.service.get_with_header(
-            x_endpoint_header="string",
-        )
+
+
+        async def main() -> None:
+            await client.service.get_with_header(
+                x_endpoint_header="string",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "apiKeyInHeader",

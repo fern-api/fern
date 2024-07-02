@@ -315,15 +315,23 @@ class AsyncHttpMethodsClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.http_methods.test_get(
-            id="string",
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.http_methods.test_get(
+                id="string",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"http-methods/{jsonable_encoder(id)}", method="GET", request_options=request_options
@@ -353,15 +361,23 @@ class AsyncHttpMethodsClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.http_methods.test_post(
-            string="string",
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.http_methods.test_post(
+                string="string",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "http-methods", method="POST", json={"string": string}, request_options=request_options, omit=OMIT
@@ -393,16 +409,24 @@ class AsyncHttpMethodsClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.http_methods.test_put(
-            id="string",
-            string="string",
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.http_methods.test_put(
+                id="string",
+                string="string",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"http-methods/{jsonable_encoder(id)}",
@@ -478,6 +502,7 @@ class AsyncHttpMethodsClient:
 
         Examples
         --------
+        import asyncio
         import datetime
         import uuid
 
@@ -487,28 +512,34 @@ class AsyncHttpMethodsClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.http_methods.test_patch(
-            id="string",
-            string="string",
-            integer=1,
-            long_=1000000,
-            double=1.1,
-            bool_=True,
-            datetime=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            date=datetime.date.fromisoformat(
-                "2023-01-15",
-            ),
-            uuid_=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            base_64="SGVsbG8gd29ybGQh",
-            list_=["string"],
-            set_={"string"},
-            map_={1: "string"},
-            bigint="123456789123456789",
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.http_methods.test_patch(
+                id="string",
+                string="string",
+                integer=1,
+                long_=1000000,
+                double=1.1,
+                bool_=True,
+                datetime=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                date=datetime.date.fromisoformat(
+                    "2023-01-15",
+                ),
+                uuid_=uuid.UUID(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+                base_64="SGVsbG8gd29ybGQh",
+                list_=["string"],
+                set_={"string"},
+                map_={1: "string"},
+                bigint="123456789123456789",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"http-methods/{jsonable_encoder(id)}",
@@ -554,15 +585,23 @@ class AsyncHttpMethodsClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.endpoints.http_methods.test_delete(
-            id="string",
-        )
+
+
+        async def main() -> None:
+            await client.endpoints.http_methods.test_delete(
+                id="string",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"http-methods/{jsonable_encoder(id)}", method="DELETE", request_options=request_options

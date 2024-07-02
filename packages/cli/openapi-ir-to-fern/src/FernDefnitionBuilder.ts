@@ -332,6 +332,11 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     public addChannel(file: RelativeFilePath, { channel }: { channel: RawSchemas.WebSocketChannelSchema }): void {
         const fernFile = this.getOrCreateFile(file);
         fernFile.channel = channel;
+
+        const basePath = this.basePath;
+        if (basePath != null) {
+            fernFile.channel.path = path.join(basePath, channel.path);
+        }
     }
 
     public addChannelExample(

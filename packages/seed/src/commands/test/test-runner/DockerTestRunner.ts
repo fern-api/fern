@@ -46,6 +46,7 @@ export class DockerTestRunner extends TestRunner {
     }: TestRunner.DoRunArgs): Promise<void> {
         const generatorGroup: generatorsYml.GeneratorGroup = {
             groupName: "test",
+            reviewers: undefined,
             audiences: selectAudiences != null ? { type: "select", audiences: selectAudiences } : ALL_AUDIENCES,
             generators: [
                 getGeneratorInvocation({

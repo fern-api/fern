@@ -254,6 +254,8 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 
@@ -261,9 +263,15 @@ class AsyncServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
-        await client.service.get_movie(
-            movie_id="movie-c06a4ad7",
-        )
+
+
+        async def main() -> None:
+            await client.service.get_movie(
+                movie_id="movie-c06a4ad7",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"movie/{jsonable_encoder(movie_id)}", method="GET", request_options=request_options
@@ -318,6 +326,8 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 
@@ -325,19 +335,25 @@ class AsyncServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
-        await client.service.create_movie(
-            id="movie-c06a4ad7",
-            prequel="movie-cv9b914f",
-            title="The Boy and the Heron",
-            from_="Hayao Miyazaki",
-            rating=8.0,
-            tag="tag-wf9as23d",
-            metadata={
-                "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
-                "releaseDate": "2023-12-08",
-                "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
-            },
-        )
+
+
+        async def main() -> None:
+            await client.service.create_movie(
+                id="movie-c06a4ad7",
+                prequel="movie-cv9b914f",
+                title="The Boy and the Heron",
+                from_="Hayao Miyazaki",
+                rating=8.0,
+                tag="tag-wf9as23d",
+                metadata={
+                    "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+                    "releaseDate": "2023-12-08",
+                    "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
+                },
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "movie",
@@ -390,6 +406,8 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 
@@ -397,11 +415,17 @@ class AsyncServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
-        await client.service.get_metadata(
-            x_api_version="0.0.1",
-            shallow=False,
-            tag="development",
-        )
+
+
+        async def main() -> None:
+            await client.service.get_metadata(
+                x_api_version="0.0.1",
+                shallow=False,
+                tag="development",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "metadata",
@@ -431,6 +455,8 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 
@@ -438,7 +464,13 @@ class AsyncServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
-        await client.service.get_response()
+
+
+        async def main() -> None:
+            await client.service.get_response()
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "response", method="POST", request_options=request_options

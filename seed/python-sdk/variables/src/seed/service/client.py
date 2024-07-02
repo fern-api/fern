@@ -68,14 +68,22 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedVariables
 
         client = AsyncSeedVariables(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.service.post(
-            endpoint_param="string",
-        )
+
+
+        async def main() -> None:
+            await client.service.post(
+                endpoint_param="string",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"{jsonable_encoder(endpoint_param)}", method="POST", request_options=request_options

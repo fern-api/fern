@@ -43,9 +43,7 @@ class FormDataRequestBody {
             if (this.encoder == null) {
                 await this.setup();
             }
-            return {
-                "Content-Length": this.encoder.length,
-            };
+            return this.encoder.headers;
         }
     }
 }

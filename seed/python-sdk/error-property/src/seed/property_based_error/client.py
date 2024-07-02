@@ -73,12 +73,20 @@ class AsyncPropertyBasedErrorClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedErrorProperty
 
         client = AsyncSeedErrorProperty(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.property_based_error.throw_error()
+
+
+        async def main() -> None:
+            await client.property_based_error.throw_error()
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "property-based-error", method="GET", request_options=request_options

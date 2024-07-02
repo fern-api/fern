@@ -152,7 +152,7 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        page = page or 1
+        page = page if page is not None else 1
         _response = self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
@@ -224,7 +224,7 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        page = page or 1
+        page = page if page is not None else 1
         _response = self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
@@ -390,7 +390,7 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        offset = offset or 1
+        offset = offset if offset is not None else 1
         _response = self._client_wrapper.httpx_client.request(
             "users", method="GET", params={"offset": offset}, request_options=request_options
         )
@@ -444,23 +444,31 @@ class AsyncUsersClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedPagination
 
         client = AsyncSeedPagination(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = await client.users.list_with_cursor_pagination(
-            page=1,
-            per_page=1,
-            order="asc",
-            starting_after="string",
-        )
-        async for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        async for page in response.iter_pages():
-            yield page
+
+
+        async def main() -> None:
+            response = await client.users.list_with_cursor_pagination(
+                page=1,
+                per_page=1,
+                order="asc",
+                starting_after="string",
+            )
+            async for item in response:
+                yield item
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -523,25 +531,33 @@ class AsyncUsersClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedPagination
 
         client = AsyncSeedPagination(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = await client.users.list_with_offset_pagination(
-            page=1,
-            per_page=1,
-            order="asc",
-            starting_after="string",
-        )
-        async for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        async for page in response.iter_pages():
-            yield page
+
+
+        async def main() -> None:
+            response = await client.users.list_with_offset_pagination(
+                page=1,
+                per_page=1,
+                order="asc",
+                starting_after="string",
+            )
+            async for item in response:
+                yield item
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
         """
-        page = page or 1
+        page = page if page is not None else 1
         _response = await self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
@@ -596,24 +612,32 @@ class AsyncUsersClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedPagination
 
         client = AsyncSeedPagination(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = await client.users.list_with_offset_step_pagination(
-            page=1,
-            limit=1,
-            order="asc",
-        )
-        async for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        async for page in response.iter_pages():
-            yield page
+
+
+        async def main() -> None:
+            response = await client.users.list_with_offset_step_pagination(
+                page=1,
+                limit=1,
+                order="asc",
+            )
+            async for item in response:
+                yield item
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
         """
-        page = page or 1
+        page = page if page is not None else 1
         _response = await self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
@@ -651,6 +675,7 @@ class AsyncUsersClient:
 
         Examples
         --------
+        import asyncio
         import uuid
 
         from seed.client import AsyncSeedPagination
@@ -659,16 +684,22 @@ class AsyncUsersClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = await client.users.list_with_extended_results(
-            cursor=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-        )
-        async for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        async for page in response.iter_pages():
-            yield page
+
+
+        async def main() -> None:
+            response = await client.users.list_with_extended_results(
+                cursor=uuid.UUID(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+            )
+            async for item in response:
+                yield item
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users", method="GET", params={"cursor": jsonable_encoder(cursor)}, request_options=request_options
@@ -709,20 +740,28 @@ class AsyncUsersClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedPagination
 
         client = AsyncSeedPagination(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = await client.users.list_usernames(
-            starting_after="string",
-        )
-        async for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        async for page in response.iter_pages():
-            yield page
+
+
+        async def main() -> None:
+            response = await client.users.list_usernames(
+                starting_after="string",
+            )
+            async for item in response:
+                yield item
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users", method="GET", params={"starting_after": starting_after}, request_options=request_options
@@ -764,22 +803,30 @@ class AsyncUsersClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedPagination
 
         client = AsyncSeedPagination(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = await client.users.list_with_global_config(
-            offset=1,
-        )
-        async for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        async for page in response.iter_pages():
-            yield page
+
+
+        async def main() -> None:
+            response = await client.users.list_with_global_config(
+                offset=1,
+            )
+            async for item in response:
+                yield item
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
         """
-        offset = offset or 1
+        offset = offset if offset is not None else 1
         _response = await self._client_wrapper.httpx_client.request(
             "users", method="GET", params={"offset": offset}, request_options=request_options
         )

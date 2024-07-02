@@ -102,14 +102,22 @@ class AsyncUnionClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedUndiscriminatedUnions
 
         client = AsyncSeedUndiscriminatedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.union.get(
-            request="string",
-        )
+
+
+        async def main() -> None:
+            await client.union.get(
+                request="string",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="POST", json=request, request_options=request_options, omit=OMIT
@@ -135,12 +143,20 @@ class AsyncUnionClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedUndiscriminatedUnions
 
         client = AsyncSeedUndiscriminatedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.union.get_metadata()
+
+
+        async def main() -> None:
+            await client.union.get_metadata()
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "metadata", method="GET", request_options=request_options

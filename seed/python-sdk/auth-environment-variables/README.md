@@ -31,6 +31,8 @@ client.service.get_with_api_key()
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed.client import AsyncSeedAuthEnvironmentVariables
 
 client = AsyncSeedAuthEnvironmentVariables(
@@ -38,7 +40,145 @@ client = AsyncSeedAuthEnvironmentVariables(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-await client.service.get_with_api_key()
+
+
+async def main() -> None:
+    await client.service.get_with_api_key()
+
+
+asyncio.run(main())
+```
+
+## Exception Handling
+
+When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error
+will be thrown.
+
+```python
+from .api_error import ApiError
+
+try:
+    client.service.get_with_api_key(...)
+except ApiError as e:
+    print(e.status_code)
+    print(e.body)
+```
+
+## Advanced
+
+### Retries
+
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
+
+A request is deemed retriable when any of the following HTTP status codes is returned:
+
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+Use the `max_retries` request option to configure this behavior.
+
+```python
+client.service.get_with_api_key(...,{
+    max_retries=1
+})
+```
+
+## Advanced
+
+### Retries
+
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
+
+A request is deemed retriable when any of the following HTTP status codes is returned:
+
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+Use the `max_retries` request option to configure this behavior.
+
+```python
+client.service.get_with_api_key(...,{
+    max_retries=1
+})
+```
+
+### Timeouts
+
+The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
+
+```python
+
+from seed.client import SeedAuthEnvironmentVariables
+
+client = SeedAuthEnvironmentVariables(..., { timeout=20.0 }, )
+
+
+# Override timeout for a specific method
+client.service.get_with_api_key(...,{
+    timeout_in_seconds=1
+})
+```
+
+## Advanced
+
+### Retries
+
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
+
+A request is deemed retriable when any of the following HTTP status codes is returned:
+
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+Use the `max_retries` request option to configure this behavior.
+
+```python
+client.service.get_with_api_key(...,{
+    max_retries=1
+})
+```
+
+### Timeouts
+
+The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
+
+```python
+
+from seed.client import SeedAuthEnvironmentVariables
+
+client = SeedAuthEnvironmentVariables(..., { timeout=20.0 }, )
+
+
+# Override timeout for a specific method
+client.service.get_with_api_key(...,{
+    timeout_in_seconds=1
+})
+```
+
+### Custom Client
+
+You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
+and transports.
+```python
+import httpx
+from seed.client import SeedAuthEnvironmentVariables
+
+client = SeedAuthEnvironmentVariables(
+    ...,
+    http_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
 ```
 
 ## Contributing

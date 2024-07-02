@@ -77,6 +77,8 @@ class AsyncEc2Client:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedMultiUrlEnvironmentNoDefault
         from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
 
@@ -84,9 +86,15 @@ class AsyncEc2Client:
             token="YOUR_TOKEN",
             environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
         )
-        await client.ec_2.boot_instance(
-            size="string",
-        )
+
+
+        async def main() -> None:
+            await client.ec_2.boot_instance(
+                size="string",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "ec2/boot",

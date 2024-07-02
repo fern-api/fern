@@ -93,15 +93,23 @@ class AsyncInlinedClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedLiteral
 
         client = AsyncSeedLiteral(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.inlined.send(
-            temperature=10.1,
-            query="What is the weather today",
-        )
+
+
+        async def main() -> None:
+            await client.inlined.send(
+                temperature=10.1,
+                query="What is the weather today",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "inlined",

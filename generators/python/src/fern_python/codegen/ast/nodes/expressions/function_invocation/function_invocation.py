@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Sequence, Tuple
+from typing import TYPE_CHECKING, Optional, Sequence, Tuple
 
 from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ....references import Reference
@@ -19,8 +19,8 @@ class FunctionInvocation(AstNode):
     def get_metadata(self) -> AstNodeMetadata:
         return self._callable_invocation.get_metadata()
 
-    def write(self, writer: NodeWriter) -> None:
-        return self._callable_invocation.write(writer=writer)
+    def write(self, writer: NodeWriter, should_write_as_snippet: Optional[bool] = None) -> None:
+        return self._callable_invocation.write(writer=writer, should_write_as_snippet=should_write_as_snippet)
 
 
 if TYPE_CHECKING:

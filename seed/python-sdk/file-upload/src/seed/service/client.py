@@ -252,12 +252,20 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedFileUpload
 
         client = AsyncSeedFileUpload(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.service.post()
+
+
+        async def main() -> None:
+            await client.service.post()
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
@@ -296,12 +304,20 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedFileUpload
 
         client = AsyncSeedFileUpload(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.service.just_file()
+
+
+        async def main() -> None:
+            await client.service.just_file()
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "just-file", method="POST", data={}, files={"file": file}, request_options=request_options, omit=OMIT
@@ -350,18 +366,26 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed.client import AsyncSeedFileUpload
 
         client = AsyncSeedFileUpload(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.service.just_file_with_query_params(
-            maybe_string="string",
-            integer=1,
-            maybe_integer=1,
-            list_of_strings="string",
-            optional_list_of_strings="string",
-        )
+
+
+        async def main() -> None:
+            await client.service.just_file_with_query_params(
+                maybe_string="string",
+                integer=1,
+                maybe_integer=1,
+                list_of_strings="string",
+                optional_list_of_strings="string",
+            )
+
+
+        asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "just-file-with-query-params",

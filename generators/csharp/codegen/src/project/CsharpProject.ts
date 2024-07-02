@@ -131,7 +131,8 @@ export class CsharpProject {
                 github: (github) => github.repoUrl,
                 publish: () => undefined,
                 _other: () => undefined
-            })
+            }),
+            context: this.context
         });
         const templateCsProjContents = csproj.toString();
         await writeFile(
@@ -248,6 +249,7 @@ declare namespace CsProj {
         version?: string;
         license?: string;
         githubUrl?: string;
+        context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
     }
 }
 
@@ -257,15 +259,18 @@ class CsProj {
     private version: string | undefined;
     private license: string | undefined;
     private githubUrl: string | undefined;
+    private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
 
-    public constructor({ version, license, githubUrl }: CsProj.Args) {
+    public constructor({ version, license, githubUrl, context }: CsProj.Args) {
         this.version = version;
         this.license = license;
         this.githubUrl = githubUrl;
+        this.context = context;
     }
 
     public toString(): string {
         const propertyGroups = this.getPropertyGroups();
+        const dependencies = this.getDependencies();
         return `
 <Project Sdk="Microsoft.NET.Sdk">
 
@@ -277,8 +282,7 @@ class CsProj {
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="OneOf" Version="3.0.263" />
-        <PackageReference Include="System.Text.Json" Version="8.0.3" />
+        ${dependencies.join(`\n${FOUR_SPACES}${FOUR_SPACES}`)}
     </ItemGroup>
 
     <ItemGroup>
@@ -288,6 +292,16 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
 
 </Project>
 `;
+    }
+
+    private getDependencies(): string[] {
+        const result: string[] = [];
+        result.push('<PackageReference Include="OneOf" Version="3.0.263" />');
+        result.push('<PackageReference Include="System.Text.Json" Version="8.0.3" />');
+        for (const [name, version] of Object.entries(this.context.getExtraDependencies())) {
+            result.push(`<PackageReference Include="${name}" Version="${version}" />`);
+        }
+        return result;
     }
 
     private getPropertyGroups(): string[] {

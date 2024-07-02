@@ -109,6 +109,9 @@ export async function parse({
                     ...parsedAsyncAPI.schemas
                 };
             }
+            if (parsedAsyncAPI.basePath != null) {
+                ir.basePath = parsedAsyncAPI.basePath;
+            }
         } else {
             taskContext.failAndThrow(`${spec.absoluteFilepath} is not a valid OpenAPI or AsyncAPI file`);
         }
