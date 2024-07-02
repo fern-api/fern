@@ -12,8 +12,9 @@ export const JsConfigOptions: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([
     core.serialization.lazyObject(async () => (await import("../../..")).JsRemoteConfig),
     core.serialization.lazy(async () => (await import("../../..")).JsFileConfig),
+    core.serialization.lazyObject(async () => (await import("../../..")).JsInlineConfig),
 ]);
 
 export declare namespace JsConfigOptions {
-    type Raw = serializers.JsRemoteConfig.Raw | serializers.JsFileConfig.Raw;
+    type Raw = serializers.JsRemoteConfig.Raw | serializers.JsFileConfig.Raw | serializers.JsInlineConfig.Raw;
 }

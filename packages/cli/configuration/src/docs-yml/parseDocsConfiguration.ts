@@ -193,35 +193,42 @@ async function convertCssConfig(
     };
 }
 
-function isRemoteJsConfig(
-    config: RawDocs.JsRemoteConfig | RawDocs.JsFileConfigSettings
-): config is RawDocs.JsRemoteConfig {
+function isRemoteJsConfig(config: Exclude<RawDocs.JsConfigOptions, string>): config is RawDocs.JsRemoteConfig {
     return Object.hasOwn(config, "url");
 }
 
-function isFileJsConfig(
-    config: RawDocs.JsRemoteConfig | RawDocs.JsFileConfigSettings
-): config is RawDocs.JsFileConfigSettings {
+function isFileJsConfig(config: Exclude<RawDocs.JsConfigOptions, string>): config is RawDocs.JsFileConfigSettings {
     return Object.hasOwn(config, "path");
+}
+
+function isInlineJsConfig(config: Exclude<RawDocs.JsConfigOptions, string>): config is RawDocs.JsInlineConfig {
+    return Object.hasOwn(config, "inline");
 }
 
 async function convertJsConfig(
     js: RawDocs.JsConfig | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
-): Promise<JavascriptConfig> {
+): Promise<JavascriptConfig | undefined> {
+    if (js == null) {
+        return undefined;
+    }
     const remote: DocsV1Write.JsRemoteConfig[] = [];
     const files: AbsoluteJsFileConfig[] = [];
-    if (js == null) {
-        return { files: [] };
-    }
+    const inline: string[] = [];
 
     const configs = Array.isArray(js) ? js : [js];
 
     for (const config of configs) {
         if (typeof config === "string") {
-            files.push({
-                absolutePath: resolveFilepath(config, absoluteFilepathToDocsConfig)
-            });
+            if (config.startsWith("http")) {
+                remote.push({ url: config });
+            } else if (config.endsWith(".js")) {
+                files.push({
+                    absolutePath: resolveFilepath(config, absoluteFilepathToDocsConfig)
+                });
+            } else {
+                inline.push(config);
+            }
         } else if (isRemoteJsConfig(config)) {
             remote.push(config);
         } else if (isFileJsConfig(config)) {
@@ -229,10 +236,14 @@ async function convertJsConfig(
                 absolutePath: resolveFilepath(config.path, absoluteFilepathToDocsConfig),
                 strategy: config.strategy
             });
+        } else if (isInlineJsConfig(config)) {
+            inline.push(config.inline);
+        } else {
+            assertNever(config);
         }
     }
 
-    return { remote, files };
+    return { remote, files, inline };
 }
 
 function convertLayoutConfig(layout: RawDocs.LayoutConfig | undefined): ParsedDocsConfiguration["layout"] {
