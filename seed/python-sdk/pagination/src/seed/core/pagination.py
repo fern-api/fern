@@ -23,11 +23,11 @@ class BasePage(pydantic_v1.BaseModel, typing.Generic[T]):
     items: typing.Optional[typing.List[T]]
 
 
-class SyncPage(BasePage, typing.Generic[T]):
+class SyncPage(BasePage[T], typing.Generic[T]):
     get_next: typing.Optional[typing.Callable[[], typing.Optional[Self]]]
 
 
-class AsyncPage(BasePage, typing.Generic[T]):
+class AsyncPage(BasePage[T], typing.Generic[T]):
     get_next: typing.Optional[typing.Callable[[], typing.Awaitable[typing.Optional[Self]]]]
 
 
