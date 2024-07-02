@@ -21,7 +21,7 @@ import java.util.Set;
 import resources.commons.types.Language;
 import resources.problem.types.ProblemDescription;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = CreateProblemRequestV2.Builder.class
 )

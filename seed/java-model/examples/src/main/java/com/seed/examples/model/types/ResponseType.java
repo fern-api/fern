@@ -12,7 +12,7 @@ import com.seed.examples.core.ObjectMappers;
 import com.seed.examples.model.Type;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ResponseType.Builder.class)
 public final class ResponseType {
     private final Type type;

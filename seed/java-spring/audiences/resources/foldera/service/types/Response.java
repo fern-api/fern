@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.Optional;
 import resources.folderb.common.types.Foo;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = Response.Builder.class
 )

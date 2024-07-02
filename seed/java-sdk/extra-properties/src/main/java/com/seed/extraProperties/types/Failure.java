@@ -13,7 +13,7 @@ import com.seed.extraProperties.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Failure.Builder.class)
 public final class Failure {
     private final Map<String, Object> additionalProperties;

@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.Optional;
 import resources.commons.metadata.types.Metadata;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = Node.Builder.class
 )

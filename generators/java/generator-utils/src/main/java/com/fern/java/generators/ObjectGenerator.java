@@ -118,7 +118,8 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                 implementsInterfaces,
                 true,
                 publicConstructorsEnabled,
-                generatorContext.deserializeWithAdditionalProperties());
+                generatorContext.deserializeWithAdditionalProperties(),
+                generatorContext.getCustomConfig().jsonInclude());
         TypeSpec objectTypeSpec = genericObjectGenerator.generate();
         JavaFile javaFile =
                 JavaFile.builder(className.packageName(), objectTypeSpec).build();

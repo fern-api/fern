@@ -19,7 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = WorkspaceStarterFilesResponseV2.Builder.class)
 public final class WorkspaceStarterFilesResponseV2 {
     private final Map<Language, Files> filesByLanguage;

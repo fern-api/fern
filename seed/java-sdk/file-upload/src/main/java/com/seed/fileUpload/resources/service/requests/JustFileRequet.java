@@ -12,7 +12,7 @@ import com.seed.fileUpload.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = JustFileRequet.Builder.class)
 public final class JustFileRequet {
     private final Map<String, Object> additionalProperties;
