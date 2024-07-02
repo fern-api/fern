@@ -1,4 +1,6 @@
+using System.Text.Json;
 using SeedPackageYml;
+using SeedPackageYml.Core;
 
 #nullable enable
 
@@ -19,7 +21,23 @@ public partial class SeedPackageYmlClient
 
     public ServiceClient Service { get; }
 
-    public async void EchoAsync() { }
+    public async Task<string> EchoAsync(string id, string request)
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = $"/{id}/",
+                Body = request
+            }
+        );
+        string responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        {
+            return JsonSerializer.Deserialize<string>(responseBody);
+        }
+        throw new Exception(responseBody);
+    }
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {

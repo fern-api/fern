@@ -1,5 +1,5 @@
-using SeedObjectsWithImports;
 using SeedObjectsWithImports.Commons;
+using SeedObjectsWithImports.Core;
 
 #nullable enable
 

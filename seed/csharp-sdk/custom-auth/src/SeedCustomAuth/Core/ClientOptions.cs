@@ -1,4 +1,4 @@
-namespace SeedCustomAuth;
+namespace SeedCustomAuth.Core;
 
 public partial class ClientOptions
 {

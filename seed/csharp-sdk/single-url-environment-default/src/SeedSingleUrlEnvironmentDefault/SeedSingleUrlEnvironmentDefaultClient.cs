@@ -1,4 +1,5 @@
 using SeedSingleUrlEnvironmentDefault;
+using SeedSingleUrlEnvironmentDefault.Core;
 
 #nullable enable
 

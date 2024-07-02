@@ -1,4 +1,4 @@
-namespace SeedPagination;
+namespace SeedPagination.Core;
 
 public partial class ClientOptions
 {

@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedTrace;
+namespace SeedTrace.Core;
 
 #nullable enable
 

@@ -1,4 +1,4 @@
-namespace SeedApi;
+namespace SeedApi.Core;
 
 public partial class ClientOptions
 {

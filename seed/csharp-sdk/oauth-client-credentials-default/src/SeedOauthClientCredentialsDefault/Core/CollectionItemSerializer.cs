@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace SeedOauthClientCredentialsDefault;
+namespace SeedOauthClientCredentialsDefault.Core;
 
 /// <summary>
 /// Json collection converter.

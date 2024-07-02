@@ -1,4 +1,5 @@
 using SeedOauthClientCredentialsEnvironmentVariables;
+using SeedOauthClientCredentialsEnvironmentVariables.Core;
 
 #nullable enable
 

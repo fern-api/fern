@@ -1,4 +1,4 @@
-using SeedAudiences;
+using SeedAudiences.Core;
 
 #nullable enable
 

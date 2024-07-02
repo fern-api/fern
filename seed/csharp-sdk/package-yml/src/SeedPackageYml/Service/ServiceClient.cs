@@ -1,4 +1,4 @@
-using SeedPackageYml;
+using SeedPackageYml.Core;
 
 #nullable enable
 

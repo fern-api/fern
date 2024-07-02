@@ -1,4 +1,5 @@
 using SeedServerSentEvents;
+using SeedServerSentEvents.Core;
 
 #nullable enable
 

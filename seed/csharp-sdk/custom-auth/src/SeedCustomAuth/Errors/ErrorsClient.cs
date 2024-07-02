@@ -1,4 +1,4 @@
-using SeedCustomAuth;
+using SeedCustomAuth.Core;
 
 #nullable enable
 

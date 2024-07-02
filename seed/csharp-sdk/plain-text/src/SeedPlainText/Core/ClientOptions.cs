@@ -1,4 +1,4 @@
-namespace SeedPlainText;
+namespace SeedPlainText.Core;
 
 public partial class ClientOptions
 {

@@ -1,4 +1,4 @@
-using SeedVariables;
+using SeedVariables.Core;
 
 #nullable enable
 

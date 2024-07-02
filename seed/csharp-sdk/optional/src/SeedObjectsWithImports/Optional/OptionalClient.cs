@@ -1,5 +1,5 @@
 using System.Text.Json;
-using SeedObjectsWithImports;
+using SeedObjectsWithImports.Core;
 
 #nullable enable
 

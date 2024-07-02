@@ -1,4 +1,4 @@
-namespace SeedLiteral;
+namespace SeedLiteral.Core;
 
 public partial class ClientOptions
 {

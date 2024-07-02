@@ -1,5 +1,6 @@
 using System.Text.Json;
 using SeedEnum;
+using SeedEnum.Core;
 
 #nullable enable
 

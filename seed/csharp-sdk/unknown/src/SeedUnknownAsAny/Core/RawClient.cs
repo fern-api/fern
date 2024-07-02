@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedUnknownAsAny;
+namespace SeedUnknownAsAny.Core;
 
 #nullable enable
 

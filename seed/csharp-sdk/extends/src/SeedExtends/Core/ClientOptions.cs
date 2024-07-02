@@ -1,4 +1,4 @@
-namespace SeedExtends;
+namespace SeedExtends.Core;
 
 public partial class ClientOptions
 {

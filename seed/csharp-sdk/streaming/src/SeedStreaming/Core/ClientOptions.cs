@@ -1,4 +1,4 @@
-namespace SeedStreaming;
+namespace SeedStreaming.Core;
 
 public partial class ClientOptions
 {

@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedQueryParameters;
+namespace SeedQueryParameters.Core;
 
 #nullable enable
 

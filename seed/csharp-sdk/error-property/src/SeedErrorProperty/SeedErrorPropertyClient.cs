@@ -1,4 +1,5 @@
 using SeedErrorProperty;
+using SeedErrorProperty.Core;
 
 #nullable enable
 

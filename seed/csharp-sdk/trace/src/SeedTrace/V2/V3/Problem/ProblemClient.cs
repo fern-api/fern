@@ -1,5 +1,5 @@
 using System.Text.Json;
-using SeedTrace;
+using SeedTrace.Core;
 using SeedTrace.V2.V3;
 
 #nullable enable

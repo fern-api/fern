@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedBytes;
+namespace SeedBytes.Core;
 
 #nullable enable
 

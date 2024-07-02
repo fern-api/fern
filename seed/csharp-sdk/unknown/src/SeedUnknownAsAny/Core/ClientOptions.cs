@@ -1,4 +1,4 @@
-namespace SeedUnknownAsAny;
+namespace SeedUnknownAsAny.Core;
 
 public partial class ClientOptions
 {

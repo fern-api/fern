@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedUnions;
+namespace SeedUnions.Core;
 
 #nullable enable
 

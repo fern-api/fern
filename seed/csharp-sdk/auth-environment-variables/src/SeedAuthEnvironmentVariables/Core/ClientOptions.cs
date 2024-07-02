@@ -1,4 +1,4 @@
-namespace SeedAuthEnvironmentVariables;
+namespace SeedAuthEnvironmentVariables.Core;
 
 public partial class ClientOptions
 {

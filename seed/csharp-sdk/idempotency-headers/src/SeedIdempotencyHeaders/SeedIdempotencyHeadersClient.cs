@@ -1,4 +1,5 @@
 using SeedIdempotencyHeaders;
+using SeedIdempotencyHeaders.Core;
 
 #nullable enable
 

@@ -1,4 +1,4 @@
-namespace SeedWebsocket;
+namespace SeedWebsocket.Core;
 
 public partial class ClientOptions
 {

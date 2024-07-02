@@ -1,4 +1,4 @@
-namespace SeedMultiLineDocs;
+namespace SeedMultiLineDocs.Core;
 
 public partial class ClientOptions
 {

@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedErrorProperty;
+namespace SeedErrorProperty.Core;
 
 #nullable enable
 

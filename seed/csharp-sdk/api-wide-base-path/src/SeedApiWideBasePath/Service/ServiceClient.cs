@@ -1,4 +1,4 @@
-using SeedApiWideBasePath;
+using SeedApiWideBasePath.Core;
 
 #nullable enable
 

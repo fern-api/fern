@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedPagination;
+namespace SeedPagination.Core;
 
 #nullable enable
 

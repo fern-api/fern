@@ -1,4 +1,5 @@
 using SeedMultiUrlEnvironmentNoDefault;
+using SeedMultiUrlEnvironmentNoDefault.Core;
 
 #nullable enable
 

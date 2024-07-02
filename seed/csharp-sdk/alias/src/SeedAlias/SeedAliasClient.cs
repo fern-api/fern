@@ -1,4 +1,4 @@
-using SeedAlias;
+using SeedAlias.Core;
 
 #nullable enable
 

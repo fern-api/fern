@@ -106,7 +106,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     public getRawClientClassReference(): csharp.ClassReference {
         return csharp.classReference({
             name: "RawClient",
-            namespace: this.getNamespace()
+            namespace: this.getCoreNamespace()
         });
     }
 
@@ -120,7 +120,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     public getClientOptionsClassReference(): csharp.ClassReference {
         return csharp.classReference({
             name: CLIENT_OPTIONS_CLASS_NAME,
-            namespace: this.getNamespace()
+            namespace: this.getCoreNamespace()
         });
     }
 

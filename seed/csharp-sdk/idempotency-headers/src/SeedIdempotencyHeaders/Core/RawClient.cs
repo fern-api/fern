@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedIdempotencyHeaders;
+namespace SeedIdempotencyHeaders.Core;
 
 #nullable enable
 

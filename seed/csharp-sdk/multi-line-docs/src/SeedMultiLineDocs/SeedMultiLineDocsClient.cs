@@ -1,4 +1,5 @@
 using SeedMultiLineDocs;
+using SeedMultiLineDocs.Core;
 
 #nullable enable
 

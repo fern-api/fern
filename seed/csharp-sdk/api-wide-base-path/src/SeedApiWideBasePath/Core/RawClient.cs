@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedApiWideBasePath;
+namespace SeedApiWideBasePath.Core;
 
 #nullable enable
 

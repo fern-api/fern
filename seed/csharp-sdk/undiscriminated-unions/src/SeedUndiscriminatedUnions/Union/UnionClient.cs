@@ -1,6 +1,7 @@
 using System.Text.Json;
 using OneOf;
 using SeedUndiscriminatedUnions;
+using SeedUndiscriminatedUnions.Core;
 
 #nullable enable
 

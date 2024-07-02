@@ -1,4 +1,4 @@
-namespace SeedOauthClientCredentialsDefault;
+namespace SeedOauthClientCredentialsDefault.Core;
 
 public partial class ClientOptions
 {

@@ -1,4 +1,4 @@
-namespace SeedObjectsWithImports;
+namespace SeedObjectsWithImports.Core;
 
 public partial class ClientOptions
 {

@@ -1,4 +1,4 @@
-namespace SeedResponseProperty;
+namespace SeedResponseProperty.Core;
 
 public partial class ClientOptions
 {

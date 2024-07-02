@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedMixedCase;
+namespace SeedMixedCase.Core;
 
 #nullable enable
 

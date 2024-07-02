@@ -4,6 +4,10 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AuthScheme, HttpHeader, Literal, PrimitiveType, Subpackage, TypeReference } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { RawClient } from "../endpoint/RawClient";
+import { EndpointGenerator } from "../endpoint/EndpointGenerator";
+
+export const CLIENT_MEMBER_NAME = "_client";
 
 interface ConstructorParameter {
     name: string;
@@ -30,6 +34,14 @@ interface HeaderInfo {
 const GetFromEnvironmentOrThrow = "GetFromEnvironmentOrThrow";
 
 export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+    private rawClient: RawClient;
+    private endpointGenerator: EndpointGenerator;
+    constructor(context: SdkGeneratorContext) {
+        super(context);
+        this.rawClient = new RawClient(context);
+        this.endpointGenerator = new EndpointGenerator(context, this.rawClient);
+    }
+
     protected getFilepath(): RelativeFilePath {
         return join(RelativeFilePath.of(this.context.getRootClientClassName() + ".cs"));
     }
@@ -67,15 +79,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         if (rootServiceId != null) {
             const service = this.context.getHttpServiceOrThrow(rootServiceId);
             for (const endpoint of service.endpoints) {
-                class_.addMethod(
-                    csharp.method({
-                        name: this.context.getEndpointMethodName(endpoint),
-                        access: "public",
-                        isAsync: true,
-                        parameters: [],
-                        summary: endpoint.docs
-                    })
-                );
+                const method = this.endpointGenerator.generate({
+                    serviceId: rootServiceId,
+                    endpoint,
+                    rawClientReference: CLIENT_MEMBER_NAME
+                });
+                class_.addMethod(method);
             }
         }
 

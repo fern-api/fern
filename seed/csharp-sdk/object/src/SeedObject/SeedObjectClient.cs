@@ -1,4 +1,4 @@
-using SeedObject;
+using SeedObject.Core;
 
 #nullable enable
 

@@ -205,7 +205,7 @@ export class CsharpProject {
         return new File(
             filename.replace(".Template", ""),
             RelativeFilePath.of(""),
-            replaceTemplate({ contents, namespace: this.context.getNamespace() })
+            replaceTemplate({ contents, namespace: this.context.getCoreNamespace() })
         );
     }
 }

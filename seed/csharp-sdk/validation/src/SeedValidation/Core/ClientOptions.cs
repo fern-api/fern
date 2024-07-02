@@ -1,4 +1,4 @@
-namespace SeedValidation;
+namespace SeedValidation.Core;
 
 public partial class ClientOptions
 {

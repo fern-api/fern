@@ -1,4 +1,4 @@
-namespace SeedQueryParameters;
+namespace SeedQueryParameters.Core;
 
 public partial class ClientOptions
 {

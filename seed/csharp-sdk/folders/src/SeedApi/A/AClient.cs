@@ -1,7 +1,7 @@
-using SeedApi;
 using SeedApi.A.B;
 using SeedApi.A.C;
 using SeedApi.A.D;
+using SeedApi.Core;
 
 #nullable enable
 

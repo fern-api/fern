@@ -1,4 +1,4 @@
-namespace SeedEnum;
+namespace SeedEnum.Core;
 
 public partial class ClientOptions
 {

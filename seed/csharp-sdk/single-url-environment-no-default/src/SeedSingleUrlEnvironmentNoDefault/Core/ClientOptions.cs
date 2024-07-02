@@ -1,4 +1,4 @@
-namespace SeedSingleUrlEnvironmentNoDefault;
+namespace SeedSingleUrlEnvironmentNoDefault.Core;
 
 public partial class ClientOptions
 {

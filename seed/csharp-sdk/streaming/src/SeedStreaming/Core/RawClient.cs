@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedStreaming;
+namespace SeedStreaming.Core;
 
 #nullable enable
 

@@ -1,4 +1,5 @@
 using SeedUndiscriminatedUnions;
+using SeedUndiscriminatedUnions.Core;
 
 #nullable enable
 

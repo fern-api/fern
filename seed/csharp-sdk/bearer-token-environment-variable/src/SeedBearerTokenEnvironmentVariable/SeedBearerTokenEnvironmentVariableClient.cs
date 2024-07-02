@@ -1,3 +1,4 @@
+using SeedBearerTokenEnvironmentVariable.Core;
 using SeedBearerTokenEnvironmentVariable;
 
 #nullable enable

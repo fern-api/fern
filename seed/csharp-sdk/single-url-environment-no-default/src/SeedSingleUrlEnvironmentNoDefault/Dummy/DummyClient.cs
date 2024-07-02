@@ -1,5 +1,5 @@
 using System.Text.Json;
-using SeedSingleUrlEnvironmentNoDefault;
+using SeedSingleUrlEnvironmentNoDefault.Core;
 
 #nullable enable
 

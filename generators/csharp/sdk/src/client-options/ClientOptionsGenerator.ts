@@ -44,7 +44,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
     public doGenerate(): CSharpFile {
         const class_ = csharp.class_({
             name: CLIENT_OPTIONS_CLASS_NAME,
-            namespace: this.context.getNamespace(),
+            namespace: this.context.getCoreNamespace(),
             partial: true,
             access: "public"
         });

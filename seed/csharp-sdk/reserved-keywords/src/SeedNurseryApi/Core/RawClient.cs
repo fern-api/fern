@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace SeedNurseryApi;
+namespace SeedNurseryApi.Core;
 
 #nullable enable
 

@@ -1,4 +1,4 @@
-namespace SeedServerSentEvents;
+namespace SeedServerSentEvents.Core;
 
 public partial class ClientOptions
 {

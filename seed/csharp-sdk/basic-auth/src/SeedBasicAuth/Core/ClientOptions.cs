@@ -1,4 +1,4 @@
-namespace SeedBasicAuth;
+namespace SeedBasicAuth.Core;
 
 public partial class ClientOptions
 {

@@ -1,5 +1,5 @@
-using SeedExamples;
 using SeedExamples.Commons;
+using SeedExamples.Core;
 
 #nullable enable
 

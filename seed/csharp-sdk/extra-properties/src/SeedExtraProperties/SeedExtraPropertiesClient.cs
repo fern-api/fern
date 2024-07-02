@@ -1,4 +1,5 @@
 using SeedExtraProperties;
+using SeedExtraProperties.Core;
 
 #nullable enable
 
