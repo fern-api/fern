@@ -87,12 +87,41 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "$FERN_INPUT",
+                                        "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "isOptional": true,
+                                        "inputDelimiter": ",\n\t\t\t",
                                         "templateInputs": [
                                             {
-                                                "location": "BODY",
-                                                "type": "payload"
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "name: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "name",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "size: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "size",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
                                             }
                                         ],
                                         "type": "generic"

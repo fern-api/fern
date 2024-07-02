@@ -31,11 +31,27 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "request=$FERN_INPUT",
+                            "templateString": "name=$FERN_INPUT",
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": null,
+                                    "path": "name",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "size=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": "size",
                                     "type": "payload"
                                 }
                             ],
@@ -70,11 +86,27 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "request=$FERN_INPUT",
+                                "templateString": "name=$FERN_INPUT",
                                 "templateInputs": [
                                     {
                                         "location": "BODY",
-                                        "path": null,
+                                        "path": "name",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "size=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "size",
                                         "type": "payload"
                                     }
                                 ],

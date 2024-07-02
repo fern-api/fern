@@ -5,7 +5,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ClientOptionsGenerator } from "./client-options/ClientOptionsGenerator";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
-import { RootClientGenerator } from "./root-client/RootClientGenerator";
+import { CLIENT_MEMBER_NAME, RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
@@ -79,6 +79,23 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
 
         const rootClient = new RootClientGenerator(context);
         context.project.addSourceFiles(rootClient.generate());
+
+        const rootServiceId = context.ir.rootPackage.service;
+        if (rootServiceId != null) {
+            const service = context.getHttpServiceOrThrow(rootServiceId);
+            for (const endpoint of service.endpoints) {
+                if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
+                    const wrappedRequestGenerator = new WrappedRequestGenerator({
+                        wrapper: endpoint.sdkRequest.shape,
+                        context,
+                        endpoint,
+                        serviceId: rootServiceId
+                    });
+                    const wrappedRequest = wrappedRequestGenerator.generate();
+                    context.project.addSourceFiles(wrappedRequest);
+                }
+            }
+        }
 
         if (context.ir.environments?.environments.type === "singleBaseUrl") {
             const environments = new EnvironmentGenerator({

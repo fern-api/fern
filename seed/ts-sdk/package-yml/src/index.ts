@@ -1,3 +1,3 @@
-export { SeedPackageYmlClient } from "./Client";
 export * as SeedPackageYml from "./api";
+export { SeedPackageYmlClient } from "./Client";
 export { SeedPackageYmlError, SeedPackageYmlTimeoutError } from "./errors";

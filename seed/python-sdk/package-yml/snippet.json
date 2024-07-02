@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_.echo"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedPackageYml\n\nclient = SeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.echo(\n    id=\"id-ksfd9c1\",\n    request=\"Hello world!\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedPackageYml\n\nclient = AsyncSeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.echo(\n        id=\"id-ksfd9c1\",\n        request=\"Hello world!\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed.client import SeedPackageYml\n\nclient = SeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.echo(\n    id=\"id-ksfd9c1\",\n    name=\"Hello world!\",\n    size=20,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed.client import AsyncSeedPackageYml\n\nclient = AsyncSeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.echo(\n        id=\"id-ksfd9c1\",\n        name=\"Hello world!\",\n        size=20,\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
