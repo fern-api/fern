@@ -1,7 +1,10 @@
 from __future__ import annotations
 
 from abc import abstractmethod
+from dataclasses import dataclass
 from typing import Callable, List, Optional, TypeVar
+
+from fern_python.codegen.ast.ast_node.ast_node import AstNode
 
 from ordered_set import OrderedSet
 
@@ -17,6 +20,29 @@ from .top_level_statement import TopLevelStatement
 
 T_AstNode = TypeVar("T_AstNode", bound=AST.AstNode)
 
+@dataclass
+class IfConditionLeaf:
+    condition: AST.Expression
+    code: AstNode
+
+@dataclass
+class ConditionalTree:
+    conditions: List[IfConditionLeaf]
+    else_code: Optional[AstNode]
+
+    def as_expression(self) -> AST.Expression:
+        def writer(writer: AST.NodeWriter):
+            for i, condition in enumerate(self.conditions):
+                writer.write("if " if i == 0 else "elif ")
+                writer.write_node(condition.condition)
+                writer.write(":")
+                with writer.indent():
+                    writer.write_node(condition.code)
+            if self.else_code is not None:
+                writer.write("else:")
+                with writer.indent():
+                    writer.write_node(self.else_code)
+        return AST.Expression(AST.CodeWriter(writer))
 
 class SourceFile(ClassParent):
     @abstractmethod
@@ -45,6 +71,23 @@ class SourceFile(ClassParent):
 
     @abstractmethod
     def get_imports_manager(self) -> ImportsManager:
+        ...
+
+    @abstractmethod
+    def add_conditional_class_declaration(
+        self,
+        declaration: AST.ClassDeclaration,
+        conditional_tree: ConditionalTree,
+        should_export: bool = None
+    ) -> LocalClassReference:
+        ...
+
+    @abstractmethod
+    def get_dummy_class_declaration(
+        self,
+        declaration: AST.ClassDeclaration,
+        should_export: bool = None
+    ) -> LocalClassReference:
         ...
 
 
@@ -114,6 +157,70 @@ class SourceFileImpl(SourceFile):
             declaration=declaration,
             should_export=should_export if not declaration.name.startswith("_") else False,
         )
+        return LocalClassReferenceImpl(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path),
+                named_import=declaration.name,
+            ),
+        )
+    
+    def get_dummy_class_declaration(
+        self,
+        declaration: AST.ClassDeclaration,
+    ) -> LocalClassReference:
+        new_declaration = declaration
+
+        class LocalClassReferenceImpl(LocalClassReference):
+            def add_class_declaration(
+                class_reference_self,
+                declaration: AST.ClassDeclaration,
+                should_export: bool = None,
+            ) -> LocalClassReference:
+                new_declaration.add_class(declaration)
+                return LocalClassReferenceImpl(
+                    qualified_name_excluding_import=(
+                        class_reference_self.qualified_name_excluding_import + (declaration.name,)
+                    ),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path),
+                        named_import=new_declaration.name,
+                    ),
+                )
+
+        return LocalClassReferenceImpl(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path),
+                named_import=declaration.name,
+            ),
+        )
+
+    def add_conditional_class_declaration(
+        self,
+        declaration: AST.ClassDeclaration,
+        conditional_tree: ConditionalTree,
+    ) -> LocalClassReference:
+        self._statements.append(TopLevelStatement(node=conditional_tree.as_expression()))
+        new_declaration = declaration
+
+        class LocalClassReferenceImpl(LocalClassReference):
+            def add_class_declaration(
+                class_reference_self,
+                declaration: AST.ClassDeclaration,
+                should_export: bool = None,
+            ) -> LocalClassReference:
+                new_declaration.add_class(declaration)
+                return LocalClassReferenceImpl(
+                    qualified_name_excluding_import=(
+                        class_reference_self.qualified_name_excluding_import + (declaration.name,)
+                    ),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path),
+                        named_import=new_declaration.name,
+                    ),
+                )
+
         return LocalClassReferenceImpl(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(

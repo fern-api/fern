@@ -4,12 +4,12 @@ import datetime as dt
 import typing
 
 from ....core.datetime_utils import serialize_datetime
-from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+import pydantic
 
 
-class Cat(pydantic_v1.BaseModel):
+class Cat(pydantic.BaseModel):
     name: str
-    likes_to_meow: bool = pydantic_v1.Field(alias="likesToMeow")
+    likes_to_meow: bool = pydantic.Field(alias="likesToMeow")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -28,5 +28,5 @@ class Cat(pydantic_v1.BaseModel):
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic_v1.Extra.allow
+        extra = pydantic.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

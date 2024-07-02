@@ -1,4 +1,8 @@
+from ast import arg
+from email.mime import base
 from typing import List, Optional, Set
+
+from fern_python.codegen.source_file import ConditionalTree, IfConditionLeaf
 
 import fern.ir.resources as ir_types
 from typing_extensions import Never
@@ -34,18 +38,116 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
         self._name = name
         self._union = union
 
+
+    def _generate_conditional_base_class(self, conditional_class_name: str, internal_single_union_types: List[LocalClassReference]) -> LocalClassReference:
+        if self._custom_config.skip_validation:
+            root_type = AST.TypeHint.annotated(
+                type=AST.TypeHint.union(
+                    *(
+                        AST.TypeHint(type=internal_single_union_type)
+                        for internal_single_union_type in internal_single_union_types
+                    ),
+                ),
+                annotation=AST.Expression(
+                    AST.ClassInstantiation(
+                        class_=self._context.core_utilities.get_union_metadata(),
+                        kwargs=[
+                            (
+                                "discriminant",
+                                AST.Expression(f'"{self._union.discriminant.wire_value}"'),
+                            )
+                        ],
+                    )
+                ),
+            )
+        else:
+            root_type = AST.TypeHint.union(
+                *(
+                    AST.TypeHint(type=internal_single_union_type)
+                    for internal_single_union_type in internal_single_union_types
+                ),
+            )
+
+        root_type_annotation = AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=Pydantic.Field(),
+                kwargs=[
+                    (
+                        "discriminator",
+                        AST.Expression(
+                            f'"{self._get_discriminant_attr_name()}"',
+                        ),
+                    )
+                ],
+            )
+        ) if len(internal_single_union_types) != 1 else None
+
+        annotated_type_hint = AST.TypeHint.annotated(
+            type=root_type,
+            annotation=root_type_annotation,
+        ) if root_type_annotation is not None else root_type
+        
+        conditional_class_declaration_v2 = AST.ClassDeclaration(name=conditional_class_name)
+        conditional_class_declaration_v2.add_statement(
+            AST.VariableDeclaration(name="root", type_hint=annotated_type_hint)
+        )
+        conditional_class_declaration_v2.add_method(
+                AST.FunctionDeclaration(
+                    name="get_as_union",
+                    signature=AST.FunctionSignature(
+                        return_type=root_type,
+                    ),
+                    body=AST.CodeWriter("return self.root"),
+                )
+            )
+
+        conditional_class_declaration_v1 = AST.ClassDeclaration(name=conditional_class_name)
+        conditional_class_declaration_v1.add_statement(
+            AST.VariableDeclaration(name="root", type_hint=annotated_type_hint)
+        )
+        conditional_class_declaration_v1.add_method(
+                AST.FunctionDeclaration(
+                    name="get_as_union",
+                    signature=AST.FunctionSignature(
+                        return_type=root_type,
+                    ),
+                    body=AST.CodeWriter("return self.__root__"),
+                )
+            )
+
+        conditional_class = self._source_file.add_conditional_class_declaration(
+            declaration=conditional_class_declaration_v2,
+            conditional_tree=ConditionalTree(
+                conditions=[
+                    IfConditionLeaf(
+                        condition=AST.Expression(self._context.core_utilities.get_is_pydantic_v2()),
+                        code=conditional_class_declaration_v2
+                    )
+                ],
+                else_code=conditional_class_declaration_v2
+            )
+        )
+
+        return conditional_class
+
     def generate(self) -> None:
         factory_declaration = AST.ClassDeclaration(name="_Factory")
         factory = self._source_file.add_class_declaration(factory_declaration)
 
+        model_name = self._context.get_class_name_for_type_id(self._name.type_id)
+        conditional_class_name = f"_{model_name}Base"
+        dummy_base_class_declaration = AST.ClassDeclaration(name=conditional_class_name)
+        dummy_base_class = self._source_file.get_dummy_class_declaration(dummy_base_class_declaration)
+        
         with FernAwarePydanticModel(
-            class_name=self._context.get_class_name_for_type_id(self._name.type_id),
+            class_name=model_name,
             type_name=self._name,
             context=self._context,
             custom_config=self._custom_config,
             source_file=self._source_file,
             docstring=self._docs,
             snippet=self._snippet,
+            base_models=[dummy_base_class],
         ) as external_pydantic_model:
             external_pydantic_model.add_class_var_unsafe(
                 name="factory",
@@ -75,10 +177,11 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     frozen=self._custom_config.frozen,
                     orm_mode=self._custom_config.orm_mode,
                     smart_union=self._custom_config.smart_union,
-                    pydantic_base_model=self._context.core_utilities.get_unchecked_pydantic_base_model(
-                        self._custom_config.version
-                    ),
+                    pydantic_base_model=self._context.core_utilities.get_unchecked_pydantic_base_model(),
                     require_optional_fields=self._custom_config.require_optional_fields,
+                    is_pydantic_v2=self._context.core_utilities.get_is_pydantic_v2(),
+                    universal_field_validator=self._context.core_utilities.universal_field_validator,
+                    universal_root_validator=self._context.core_utilities.universal_root_validator,
                 ) as internal_pydantic_model_for_single_union_type:
                     internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()
                     internal_single_union_types.append(internal_single_union_type)
@@ -172,42 +275,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                         for type_id in forward_refed_types:
                             external_pydantic_model.add_ghost_reference(type_id)
 
-            root_type = (
-                AST.TypeHint.union(
-                    *(
-                        AST.TypeHint(type=internal_single_union_type)
-                        for internal_single_union_type in internal_single_union_types
-                    ),
-                )
-                if len(internal_single_union_types) > 1
-                else AST.TypeHint(type=internal_single_union_types[0])
-            )
-            if self._custom_config.skip_validation:
-                root_type = AST.TypeHint.annotated(
-                    type=root_type,
-                    annotation=AST.Expression(
-                        AST.ClassInstantiation(
-                            class_=self._context.core_utilities.get_union_metadata(),
-                            kwargs=[
-                                (
-                                    "discriminant",
-                                    AST.Expression(f'"{self._union.discriminant.wire_value}"'),
-                                )
-                            ],
-                        )
-                    ),
-                )
-
-            external_pydantic_model.add_method_unsafe(
-                AST.FunctionDeclaration(
-                    name="get_as_union",
-                    signature=AST.FunctionSignature(
-                        return_type=root_type,
-                    ),
-                    body=AST.CodeWriter("return self.__root__"),
-                )
-            )
-
+            self._generate_conditional_base_class(conditional_class_name, internal_single_union_types)
             external_pydantic_model.add_method_unsafe(
                 get_visit_method(
                     items=[
@@ -223,7 +291,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                             ),
                                             args=[
                                                 AST.Expression(
-                                                    f'self.__root__.dict(exclude_unset=True, exclude={{"{self._union.discriminant.wire_value}"}})',
+                                                    f'self.get_as_union().dict(exclude_unset=True, exclude={{"{self._union.discriminant.wire_value}"}})',
                                                     spread=AST.ExpressionSpread.TWO_ASTERISKS,
                                                 )
                                             ],
@@ -235,7 +303,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                 ),
                                 single_property=lambda property: VisitorArgument(
                                     expression=AST.Expression(
-                                        f"self.__root__.{get_field_name_for_single_property(property)}"
+                                        f"self.get_as_union().{get_field_name_for_single_property(property)}"
                                     ),
                                     type=external_pydantic_model.get_type_hint_for_type_reference(property.type),
                                 ),
@@ -244,29 +312,8 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                         )
                         for single_union_type in self._union.types
                     ],
-                    reference_to_current_value=f"self.__root__.{self._get_discriminant_attr_name()}",
+                    reference_to_current_value=f"self.get_as_union().{self._get_discriminant_attr_name()}",
                 )
-            )
-
-            external_pydantic_model.set_root_type_unsafe(
-                is_forward_ref=True,
-                root_type=root_type,
-                annotation=AST.Expression(
-                    AST.FunctionInvocation(
-                        function_definition=Pydantic.Field(self._custom_config.version),
-                        kwargs=[
-                            (
-                                "discriminator",
-                                AST.Expression(
-                                    f'"{self._get_discriminant_attr_name()}"',
-                                ),
-                            )
-                        ],
-                    )
-                )
-                # can't use discriminator without single variant pydantic models
-                # https://github.com/pydantic/pydantic/pull/3639
-                if len(internal_single_union_types) != 1 else None,
             )
 
     def _create_body_writer(
@@ -310,7 +357,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
 
             sub_union_instantiation = AST.ClassInstantiation(
                 class_=external_union,
-                kwargs=[("__root__", AST.Expression(internal_single_union_type_instantiation))],
+                args=[AST.Expression(internal_single_union_type_instantiation)],
             )
 
             writer.write("return ")

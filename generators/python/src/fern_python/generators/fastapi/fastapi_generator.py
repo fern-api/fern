@@ -57,7 +57,6 @@ class FastApiGenerator(AbstractGenerator):
     ) -> None:
         custom_config = FastAPICustomConfig.parse_obj(generator_config.custom_config or {})
         self._pydantic_model_custom_config = PydanticModelCustomConfig(
-            wrapped_aliases=True,
             include_union_utils=True,
             include_validators=custom_config.include_validators,
             skip_formatting=custom_config.skip_formatting,
