@@ -13,7 +13,7 @@ import {
     WebhookGroupId,
     WebSocketChannelId
 } from "@fern-api/ir-sdk";
-import { mapValues } from "lodash-es";
+import { difference, intersection, mapValues } from "lodash-es";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
 import { IdGenerator } from "./IdGenerator";
 
@@ -147,7 +147,14 @@ export class PackageTreeGenerator {
 
     public sortRootPackage(subpackagesInOrder: SubpackageId[]): void {
         if (!isEqualIgnoreOrder(this.rootPackage.subpackages, subpackagesInOrder)) {
-            throw new Error("Sorted subpackages differ from unsorted packages in root");
+            const subpackagesInCommon = intersection(this.rootPackage.subpackages, subpackagesInOrder);
+            const missingSubpackages = difference(this.rootPackage.subpackages, subpackagesInCommon);
+            const extraneousSubpackages = difference(subpackagesInOrder, subpackagesInCommon);
+            throw new Error(
+                `Sorted subpackages differ from unsorted packages in root. Missing: [${missingSubpackages.join(
+                    ", "
+                )}], extraneous: [${extraneousSubpackages.join(", ")}]`
+            );
         }
         this.rootPackage.subpackages = subpackagesInOrder;
     }
