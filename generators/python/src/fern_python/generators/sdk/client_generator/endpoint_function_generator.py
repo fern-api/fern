@@ -400,9 +400,8 @@ class EndpointFunctionGenerator:
                 pagination = self.pagination.get_as_union()
                 if pagination.type == "offset":
                     param = pagination.page
-                    writer.write_line(
-                        f"{request_property_to_name(param.property)} = {request_property_to_name(param.property)} or 1"
-                    )
+                    page_param_name = request_property_to_name(param.property)
+                    writer.write_line(f"{page_param_name} = {page_param_name} if {page_param_name} is not None else 1")
 
             writer.write_node(
                 HttpX.make_request(
