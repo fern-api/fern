@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix: Sync and AsyncPage now pass through the generic type to BasePage, allowing the use of `.items`, etc. to be appropriately typed within your type checking system.
 
+## [2.14.0] - 2024-07-01
+
+- Fix: offset page now allows for the usage of 0 as a page start, previously the use of `page or 1` made Python coerce booleans and become 1, ignoring the user-provided 0.
+
 ## [2.14.0-rc3] - 2024-07-01
 
 - Improvement: Generated readmes now include an "advanced" section, outlining usage of retries, timeouts, error handling and usage of a custom client.
