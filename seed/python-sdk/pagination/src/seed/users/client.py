@@ -152,7 +152,7 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        page = page or 1
+        page = page if page is not None else 1
         _response = self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
@@ -224,7 +224,7 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        page = page or 1
+        page = page if page is not None else 1
         _response = self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
@@ -390,7 +390,7 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        offset = offset or 1
+        offset = offset if offset is not None else 1
         _response = self._client_wrapper.httpx_client.request(
             "users", method="GET", params={"offset": offset}, request_options=request_options
         )
@@ -557,7 +557,7 @@ class AsyncUsersClient:
 
         asyncio.run(main())
         """
-        page = page or 1
+        page = page if page is not None else 1
         _response = await self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
@@ -637,7 +637,7 @@ class AsyncUsersClient:
 
         asyncio.run(main())
         """
-        page = page or 1
+        page = page if page is not None else 1
         _response = await self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
@@ -826,7 +826,7 @@ class AsyncUsersClient:
 
         asyncio.run(main())
         """
-        offset = offset or 1
+        offset = offset if offset is not None else 1
         _response = await self._client_wrapper.httpx_client.request(
             "users", method="GET", params={"offset": offset}, request_options=request_options
         )
