@@ -5,19 +5,11 @@ service:
     echo:
       method: POST
       path: ""
-      request: EchoRequest
+      request: string
       response: string
       examples:
         - path-parameters:
             id: id-ksfd9c1
-          request:
-            name: Hello world!
-            size: 20
+          request: Hello world!
           response:
             body: Hello world!
-
-types:
-  EchoRequest:
-    properties:
-      name: string
-      size: integer
