@@ -27,6 +27,7 @@ export * from "./DoubleType";
 export * from "./DoubleValidationRules";
 export * from "./StringType";
 export * from "./StringValidationRules";
+export * from "./BooleanType";
 export * from "./Literal";
 export * from "./ExampleType";
 export * from "./ExampleTypeShape";

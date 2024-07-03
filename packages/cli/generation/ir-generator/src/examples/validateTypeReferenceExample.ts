@@ -239,6 +239,7 @@ function validatePrimitiveExample({
                     example,
                     rules: v2.validation
                 }),
+            boolean: () => [],
             _other: () => {
                 throw new Error("Unknown primitive type v2: " + primitiveType.v2);
             }

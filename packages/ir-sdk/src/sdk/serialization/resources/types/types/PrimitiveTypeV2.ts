@@ -12,6 +12,7 @@ export const PrimitiveTypeV2: core.serialization.Schema<serializers.PrimitiveTyp
             integer: core.serialization.lazyObject(async () => (await import("../../..")).IntegerType),
             double: core.serialization.lazyObject(async () => (await import("../../..")).DoubleType),
             string: core.serialization.lazyObject(async () => (await import("../../..")).StringType),
+            boolean: core.serialization.lazyObject(async () => (await import("../../..")).BooleanType),
         })
         .transform<FernIr.PrimitiveTypeV2>({
             transform: (value) => {
@@ -22,6 +23,8 @@ export const PrimitiveTypeV2: core.serialization.Schema<serializers.PrimitiveTyp
                         return FernIr.PrimitiveTypeV2.double(value);
                     case "string":
                         return FernIr.PrimitiveTypeV2.string(value);
+                    case "boolean":
+                        return FernIr.PrimitiveTypeV2.boolean(value);
                     default:
                         return value as FernIr.PrimitiveTypeV2;
                 }
@@ -30,7 +33,7 @@ export const PrimitiveTypeV2: core.serialization.Schema<serializers.PrimitiveTyp
         });
 
 export declare namespace PrimitiveTypeV2 {
-    type Raw = PrimitiveTypeV2.Integer | PrimitiveTypeV2.Double | PrimitiveTypeV2.String;
+    type Raw = PrimitiveTypeV2.Integer | PrimitiveTypeV2.Double | PrimitiveTypeV2.String | PrimitiveTypeV2.Boolean;
 
     interface Integer extends serializers.IntegerType.Raw {
         type: "integer";
@@ -42,5 +45,9 @@ export declare namespace PrimitiveTypeV2 {
 
     interface String extends serializers.StringType.Raw {
         type: "string";
+    }
+
+    interface Boolean extends serializers.BooleanType.Raw {
+        type: "boolean";
     }
 }
