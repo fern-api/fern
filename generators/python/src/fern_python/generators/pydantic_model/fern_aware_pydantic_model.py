@@ -116,16 +116,7 @@ class FernAwarePydanticModel:
                     else:
                         default_value = AST.Expression(f"{literal.boolean}")
             elif union.type == "primitive":
-                maybe_v2_scheme = union.primitive.v_2
-                if maybe_v2_scheme is not None and maybe_v2_scheme.get_as_union().default is not None:
-                    default_value = maybe_v2_scheme.visit(
-                        integer=lambda it: AST.Expression(f"{it.default}"),
-                        double=lambda dt: AST.Expression(f"{dt.default}"),
-                        string=lambda st: AST.Expression(f'"{st.default}"'),
-                        boolean=lambda bt: AST.Expression(f"{bt.default}"),
-                        long_=lambda lt: AST.Expression(f"{lt.default}"),
-                        big_integer=lambda bit: AST.Expression(f"{bit.default}"),
-                    )
+                default_value = self._context.get_initializer_for_type_reference(type_reference)
 
         field = self._create_pydantic_field(
             name=name,
