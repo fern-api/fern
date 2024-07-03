@@ -550,6 +550,7 @@ types:
       typescript: optional<SnippetLanguageConfiguration>
       go: optional<SnippetLanguageConfiguration>
       java: optional<SnippetLanguageConfiguration>
+      ruby: optional<SnippetLanguageConfiguration>
 
   ColorsConfiguration:
     properties:

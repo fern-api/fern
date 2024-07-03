@@ -246,6 +246,7 @@ export declare namespace DocsNavigationItem {
         typescript: string | VersionedSnippetLanguageConfiguration | undefined;
         go: string | VersionedSnippetLanguageConfiguration | undefined;
         java: string | VersionedSnippetLanguageConfiguration | undefined;
+        ruby: string | VersionedSnippetLanguageConfiguration | undefined;
     }
 }
 

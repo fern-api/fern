@@ -5,8 +5,6 @@ import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
-import { convertColorsConfiguration } from "./convertColorsConfiguration";
-import { getAllPages } from "./getAllPages";
 import {
     AbsoluteJsFileConfig,
     DocsNavigationConfiguration,
@@ -23,7 +21,9 @@ import {
     UntabbedDocsNavigation,
     VersionInfo
 } from "./ParsedDocsConfiguration";
-import { FernDocsConfig as RawDocs, NavigationConfig, Serializer, VersionConfig } from "./schemas";
+import { convertColorsConfiguration } from "./convertColorsConfiguration";
+import { getAllPages } from "./getAllPages";
+import { NavigationConfig, FernDocsConfig as RawDocs, Serializer, VersionConfig } from "./schemas";
 
 export async function parseDocsConfiguration({
     rawDocsConfiguration,
@@ -735,7 +735,8 @@ function convertSnippetsConfiguration({
         python: rawConfig.python,
         typescript: rawConfig.typescript,
         go: rawConfig.go,
-        java: rawConfig.java
+        java: rawConfig.java,
+        ruby: rawConfig.ruby
     };
 }
 
