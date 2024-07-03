@@ -121,7 +121,7 @@ exports[`open api parser deel docs 1`] = `
             "path-parameters": {
               "invoice_id": {
                 "docs": "ID of an existing invoice",
-                "type": "long",
+                "type": "int64",
               },
             },
             "response": {
@@ -167,7 +167,7 @@ exports[`open api parser deel docs 1`] = `
             "path-parameters": {
               "invoice_id": {
                 "docs": "ID of an existing invoice",
-                "type": "long",
+                "type": "int64",
               },
             },
             "response": {
@@ -545,7 +545,7 @@ exports[`open api parser deel docs 1`] = `
                 },
                 "offset": {
                   "docs": "Return a page of results with given number of records.",
-                  "type": "optional<long>",
+                  "type": "optional<int64>",
                 },
               },
             },
@@ -3089,7 +3089,7 @@ exports[`open api parser deel docs 1`] = `
                 },
                 "invoice_id": {
                   "docs": "ID of an existing invoice; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<long>",
+                  "type": "optional<int64>",
                 },
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
@@ -3097,7 +3097,7 @@ exports[`open api parser deel docs 1`] = `
                 },
                 "offset": {
                   "docs": "Return a page of results after given index of row; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<long>",
+                  "type": "optional<int64>",
                 },
                 "reporter_id": {
                   "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
@@ -3224,7 +3224,7 @@ exports[`open api parser deel docs 1`] = `
                 },
                 "invoice_id": {
                   "docs": "ID of an existing invoice; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<long>",
+                  "type": "optional<int64>",
                 },
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
@@ -3232,7 +3232,7 @@ exports[`open api parser deel docs 1`] = `
                 },
                 "offset": {
                   "docs": "Return a page of results after given index of row; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<long>",
+                  "type": "optional<int64>",
                 },
                 "reporter_id": {
                   "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
@@ -3457,7 +3457,7 @@ exports[`open api parser deel docs 1`] = `
                 },
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<long>",
+                  "type": "optional<int64>",
                 },
               },
             },
@@ -3505,7 +3505,7 @@ exports[`open api parser deel docs 1`] = `
               "query-parameters": {
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<long>",
+                  "type": "optional<int64>",
                 },
               },
             },
@@ -5396,7 +5396,7 @@ exports[`open api parser deel docs 1`] = `
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
-                "type": "long",
+                "type": "int64",
               },
             },
             "request": {
@@ -5503,7 +5503,7 @@ exports[`open api parser deel docs 1`] = `
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
-                "type": "long",
+                "type": "int64",
               },
             },
             "request": {
@@ -5603,7 +5603,7 @@ exports[`open api parser deel docs 1`] = `
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
-                "type": "long",
+                "type": "int64",
               },
             },
             "response": {
@@ -5704,11 +5704,11 @@ exports[`open api parser deel docs 1`] = `
                 },
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<long>",
+                  "type": "optional<int64>",
                 },
                 "offset": {
                   "docs": "Return a page of results after given index of row",
-                  "type": "optional<long>",
+                  "type": "optional<int64>",
                 },
                 "reporter_id": {
                   "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
@@ -5824,11 +5824,11 @@ exports[`open api parser deel docs 1`] = `
                 },
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<long>",
+                  "type": "optional<int64>",
                 },
                 "offset": {
                   "docs": "Return a page of results after given index of row",
-                  "type": "optional<long>",
+                  "type": "optional<int64>",
                 },
                 "reporter_id": {
                   "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
@@ -5888,7 +5888,7 @@ exports[`open api parser deel docs 1`] = `
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
-                "type": "long",
+                "type": "int64",
               },
             },
             "request": {
@@ -9411,7 +9411,7 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "email": "optional<EmailType>",
-          "id": "long",
+          "id": "int64",
           "name": "string",
           "registration_number": "string",
           "subtype": "LegalEntitySubType",
@@ -9430,7 +9430,7 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "email": "optional<EmailType>",
           "full_name": "string",
-          "id": "long",
+          "id": "int64",
           "legal_entity": "optional<ClientLegalEntity>",
           "team": "TeamOfContract",
         },
@@ -11189,7 +11189,7 @@ exports[`open api parser deel docs 1`] = `
             "validation": undefined,
           },
           "work_visa_required": {
-            "default": undefined,
+            "default": false,
             "docs": "Do you require Deel to apply for work visa for this person?",
             "type": "optional<boolean>",
             "validation": undefined,
@@ -14816,7 +14816,7 @@ exports[`open api parser deel docs 1`] = `
               "pattern": undefined,
             },
           },
-          "id": "long",
+          "id": "int64",
           "image": "optional<UrlType>",
         },
       },
@@ -14849,7 +14849,7 @@ exports[`open api parser deel docs 1`] = `
               "pattern": undefined,
             },
           },
-          "id": "optional<long>",
+          "id": "optional<int64>",
           "image": {
             "default": undefined,
             "docs": undefined,
@@ -15027,7 +15027,7 @@ exports[`open api parser deel simple 1`] = `
             "path-parameters": {
               "invoice_id": {
                 "docs": "ID of an existing invoice",
-                "type": "long",
+                "type": "int64",
               },
             },
             "response": {
@@ -15073,7 +15073,7 @@ exports[`open api parser deel simple 1`] = `
             "path-parameters": {
               "invoice_id": {
                 "docs": "ID of an existing invoice",
-                "type": "long",
+                "type": "int64",
               },
             },
             "response": {
@@ -15451,7 +15451,7 @@ exports[`open api parser deel simple 1`] = `
                 },
                 "offset": {
                   "docs": "Return a page of results with given number of records.",
-                  "type": "optional<long>",
+                  "type": "optional<int64>",
                 },
               },
             },
@@ -17995,7 +17995,7 @@ exports[`open api parser deel simple 1`] = `
                 },
                 "invoice_id": {
                   "docs": "ID of an existing invoice; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<long>",
+                  "type": "optional<int64>",
                 },
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
@@ -18003,7 +18003,7 @@ exports[`open api parser deel simple 1`] = `
                 },
                 "offset": {
                   "docs": "Return a page of results after given index of row; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<long>",
+                  "type": "optional<int64>",
                 },
                 "reporter_id": {
                   "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
@@ -18130,7 +18130,7 @@ exports[`open api parser deel simple 1`] = `
                 },
                 "invoice_id": {
                   "docs": "ID of an existing invoice; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<long>",
+                  "type": "optional<int64>",
                 },
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
@@ -18138,7 +18138,7 @@ exports[`open api parser deel simple 1`] = `
                 },
                 "offset": {
                   "docs": "Return a page of results after given index of row; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<long>",
+                  "type": "optional<int64>",
                 },
                 "reporter_id": {
                   "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
@@ -18363,7 +18363,7 @@ exports[`open api parser deel simple 1`] = `
                 },
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<long>",
+                  "type": "optional<int64>",
                 },
               },
             },
@@ -18411,7 +18411,7 @@ exports[`open api parser deel simple 1`] = `
               "query-parameters": {
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<long>",
+                  "type": "optional<int64>",
                 },
               },
             },
@@ -20302,7 +20302,7 @@ exports[`open api parser deel simple 1`] = `
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
-                "type": "long",
+                "type": "int64",
               },
             },
             "request": {
@@ -20409,7 +20409,7 @@ exports[`open api parser deel simple 1`] = `
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
-                "type": "long",
+                "type": "int64",
               },
             },
             "request": {
@@ -20509,7 +20509,7 @@ exports[`open api parser deel simple 1`] = `
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
-                "type": "long",
+                "type": "int64",
               },
             },
             "response": {
@@ -20610,11 +20610,11 @@ exports[`open api parser deel simple 1`] = `
                 },
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<long>",
+                  "type": "optional<int64>",
                 },
                 "offset": {
                   "docs": "Return a page of results after given index of row",
-                  "type": "optional<long>",
+                  "type": "optional<int64>",
                 },
                 "reporter_id": {
                   "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
@@ -20730,11 +20730,11 @@ exports[`open api parser deel simple 1`] = `
                 },
                 "limit": {
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                  "type": "optional<long>",
+                  "type": "optional<int64>",
                 },
                 "offset": {
                   "docs": "Return a page of results after given index of row",
-                  "type": "optional<long>",
+                  "type": "optional<int64>",
                 },
                 "reporter_id": {
                   "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
@@ -20794,7 +20794,7 @@ exports[`open api parser deel simple 1`] = `
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
-                "type": "long",
+                "type": "int64",
               },
             },
             "request": {
@@ -21642,7 +21642,7 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "email": "optional<EmailType>",
-          "id": "long",
+          "id": "int64",
           "name": "string",
           "registration_number": "string",
           "subtype": "LegalEntitySubType",
@@ -21661,7 +21661,7 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "email": "optional<EmailType>",
           "full_name": "string",
-          "id": "long",
+          "id": "int64",
           "legal_entity": "optional<ClientLegalEntity>",
           "team": "TeamOfContract",
         },
@@ -23420,7 +23420,7 @@ exports[`open api parser deel simple 1`] = `
             "validation": undefined,
           },
           "work_visa_required": {
-            "default": undefined,
+            "default": false,
             "docs": "Do you require Deel to apply for work visa for this person?",
             "type": "optional<boolean>",
             "validation": undefined,
@@ -27047,7 +27047,7 @@ exports[`open api parser deel simple 1`] = `
               "pattern": undefined,
             },
           },
-          "id": "long",
+          "id": "int64",
           "image": "optional<UrlType>",
         },
       },
@@ -27080,7 +27080,7 @@ exports[`open api parser deel simple 1`] = `
               "pattern": undefined,
             },
           },
-          "id": "optional<long>",
+          "id": "optional<int64>",
           "image": {
             "default": undefined,
             "docs": undefined,

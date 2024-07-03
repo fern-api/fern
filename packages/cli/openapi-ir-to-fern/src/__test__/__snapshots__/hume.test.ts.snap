@@ -158,7 +158,7 @@ exports[`open api parser hume docs 1`] = `
                 },
                 "models": "optional<Models>",
                 "notify": {
-                  "default": undefined,
+                  "default": false,
                   "docs": "Whether to send an email notification to the user upon job failure.",
                   "type": "optional<boolean>",
                   "validation": undefined,
@@ -367,7 +367,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "validation": undefined,
           },
           "identify_faces": {
-            "default": undefined,
+            "default": false,
             "docs": "Whether to return identifiers for faces across frames. If \`true\`, unique identifiers will be assigned to face bounding boxes to differentiate different faces. If \`false\`, all faces will be tagged with an \`unknown\` ID.",
             "type": "optional<boolean>",
             "validation": undefined,
@@ -391,7 +391,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
           },
           "save_faces": {
-            "default": undefined,
+            "default": false,
             "docs": "Whether to extract and save the detected faces in the artifacts zip created by each job.",
             "type": "optional<boolean>",
             "validation": undefined,
@@ -625,7 +625,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "properties": {
           "granularity": "optional<Granularity>",
           "identify_speakers": {
-            "default": undefined,
+            "default": false,
             "docs": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
             "type": "optional<boolean>",
             "validation": undefined,
@@ -701,7 +701,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "docs": undefined,
         "properties": {
           "identify_speakers": {
-            "default": undefined,
+            "default": false,
             "docs": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
             "type": "optional<boolean>",
             "validation": undefined,
@@ -825,7 +825,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "properties": {
           "granularity": "optional<Granularity>",
           "identify_speakers": {
-            "default": undefined,
+            "default": false,
             "docs": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
             "type": "optional<boolean>",
             "validation": undefined,
@@ -887,7 +887,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "files": "list<File>",
           "models": "optional<Models>",
           "notify": {
-            "default": undefined,
+            "default": false,
             "docs": "Whether to send an email notification to the user upon job completion/failure.",
             "type": "optional<boolean>",
             "validation": undefined,
@@ -1281,7 +1281,7 @@ exports[`open api parser hume simple 1`] = `
                 },
                 "models": "optional<Models>",
                 "notify": {
-                  "default": undefined,
+                  "default": false,
                   "docs": "Whether to send an email notification to the user upon job failure.",
                   "type": "optional<boolean>",
                   "validation": undefined,
@@ -1490,7 +1490,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "validation": undefined,
           },
           "identify_faces": {
-            "default": undefined,
+            "default": false,
             "docs": "Whether to return identifiers for faces across frames. If \`true\`, unique identifiers will be assigned to face bounding boxes to differentiate different faces. If \`false\`, all faces will be tagged with an \`unknown\` ID.",
             "type": "optional<boolean>",
             "validation": undefined,
@@ -1514,7 +1514,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
           },
           "save_faces": {
-            "default": undefined,
+            "default": false,
             "docs": "Whether to extract and save the detected faces in the artifacts zip created by each job.",
             "type": "optional<boolean>",
             "validation": undefined,
@@ -1748,7 +1748,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "properties": {
           "granularity": "optional<Granularity>",
           "identify_speakers": {
-            "default": undefined,
+            "default": false,
             "docs": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
             "type": "optional<boolean>",
             "validation": undefined,
@@ -1824,7 +1824,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "docs": undefined,
         "properties": {
           "identify_speakers": {
-            "default": undefined,
+            "default": false,
             "docs": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
             "type": "optional<boolean>",
             "validation": undefined,
@@ -1948,7 +1948,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "properties": {
           "granularity": "optional<Granularity>",
           "identify_speakers": {
-            "default": undefined,
+            "default": false,
             "docs": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
             "type": "optional<boolean>",
             "validation": undefined,
@@ -2010,7 +2010,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "files": "list<File>",
           "models": "optional<Models>",
           "notify": {
-            "default": undefined,
+            "default": false,
             "docs": "Whether to send an email notification to the user upon job completion/failure.",
             "type": "optional<boolean>",
             "validation": undefined,

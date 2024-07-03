@@ -4606,7 +4606,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "Fields used to compose other joint owner invitation schemas.",
         "properties": {
           "disallowDebitCardAccess": {
-            "default": undefined,
+            "default": false,
             "docs": "If \`true\`, the invitee is not allowed to order or manage debit cards for the account.",
             "type": "optional<boolean>",
             "validation": undefined,
@@ -8850,7 +8850,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "Fields used to compose other joint owner invitation schemas.",
         "properties": {
           "disallowDebitCardAccess": {
-            "default": undefined,
+            "default": false,
             "docs": "If \`true\`, the invitee is not allowed to order or manage debit cards for the account.",
             "type": "optional<boolean>",
             "validation": undefined,

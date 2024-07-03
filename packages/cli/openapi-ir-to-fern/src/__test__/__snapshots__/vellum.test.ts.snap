@@ -2307,7 +2307,12 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "blocks": "optional<list<PromptTemplateBlock>>",
-          "chat_message_unterminated": "optional<boolean>",
+          "chat_message_unterminated": {
+            "default": false,
+            "docs": undefined,
+            "type": "optional<boolean>",
+            "validation": undefined,
+          },
           "chat_role": "optional<ChatMessageRole>",
           "function_description": "optional<string>",
           "function_name": "optional<string>",
@@ -2320,7 +2325,12 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "blocks": "optional<list<PromptTemplateBlockRequest>>",
-          "chat_message_unterminated": "optional<boolean>",
+          "chat_message_unterminated": {
+            "default": false,
+            "docs": undefined,
+            "type": "optional<boolean>",
+            "validation": undefined,
+          },
           "chat_role": "optional<ChatMessageRole>",
           "function_description": {
             "default": undefined,
@@ -5437,7 +5447,12 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "blocks": "optional<list<PromptTemplateBlock>>",
-          "chat_message_unterminated": "optional<boolean>",
+          "chat_message_unterminated": {
+            "default": false,
+            "docs": undefined,
+            "type": "optional<boolean>",
+            "validation": undefined,
+          },
           "chat_role": "optional<ChatMessageRole>",
           "function_description": "optional<string>",
           "function_name": "optional<string>",
@@ -5450,7 +5465,12 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "blocks": "optional<list<PromptTemplateBlockRequest>>",
-          "chat_message_unterminated": "optional<boolean>",
+          "chat_message_unterminated": {
+            "default": false,
+            "docs": undefined,
+            "type": "optional<boolean>",
+            "validation": undefined,
+          },
           "chat_role": "optional<ChatMessageRole>",
           "function_description": {
             "default": undefined,
