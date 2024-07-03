@@ -10345,6 +10345,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 99,
                 "type": "int64",
               },
               "type": "primitive",
@@ -10367,6 +10368,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 0,
                 "type": "int64",
               },
               "type": "primitive",
@@ -16323,6 +16325,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 99,
                 "type": "int64",
               },
               "type": "primitive",
@@ -16345,6 +16348,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 0,
                 "type": "int64",
               },
               "type": "primitive",
@@ -17035,6 +17039,7 @@ exports[`open api parser deel parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "int64",
             },
             "type": "primitive",
@@ -17228,6 +17233,7 @@ exports[`open api parser deel parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "int64",
             },
             "type": "primitive",
@@ -17472,6 +17478,7 @@ exports[`open api parser deel parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "int64",
             },
             "type": "primitive",
@@ -17691,6 +17698,7 @@ exports[`open api parser deel parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "int64",
             },
             "type": "primitive",
@@ -18441,6 +18449,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "int64",
               },
               "type": "primitive",
@@ -18559,6 +18568,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 0,
                 "type": "int64",
               },
               "type": "primitive",
@@ -19086,6 +19096,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "int64",
               },
               "type": "primitive",
@@ -19204,6 +19215,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 0,
                 "type": "int64",
               },
               "type": "primitive",
@@ -21132,6 +21144,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 99,
                 "type": "int64",
               },
               "type": "primitive",
@@ -21367,6 +21380,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 50,
                 "type": "int64",
               },
               "type": "primitive",
@@ -24001,6 +24015,7 @@ exports[`open api parser deel parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "int64",
             },
             "type": "primitive",
@@ -24208,6 +24223,7 @@ exports[`open api parser deel parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "int64",
             },
             "type": "primitive",
@@ -25016,6 +25032,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 0,
                 "type": "int64",
               },
               "type": "primitive",
@@ -27765,6 +27782,7 @@ exports[`open api parser deel parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -28293,6 +28311,7 @@ exports[`open api parser deel parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -28310,6 +28329,7 @@ exports[`open api parser deel parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -30109,6 +30129,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "int64",
               },
               "type": "primitive",
@@ -30290,6 +30311,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "int64",
               },
               "type": "primitive",
@@ -30725,6 +30747,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -31165,6 +31188,7 @@ exports[`open api parser deel parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -31856,6 +31880,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -34448,6 +34473,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -34910,6 +34936,7 @@ exports[`open api parser deel parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -34927,6 +34954,7 @@ exports[`open api parser deel parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -35211,6 +35239,7 @@ exports[`open api parser deel parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -35263,6 +35292,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -35287,6 +35317,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -36957,6 +36988,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -37242,6 +37274,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -37288,6 +37321,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -37312,6 +37346,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -37659,6 +37694,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -38114,6 +38150,7 @@ exports[`open api parser deel parse open api 1`] = `
                       "groupName": null,
                       "nameOverride": null,
                       "schema": {
+                        "default": null,
                         "type": "boolean",
                       },
                       "type": "primitive",
@@ -39182,6 +39219,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": {
+                      "default": false,
                       "type": "boolean",
                     },
                     "type": "primitive",
@@ -41786,6 +41824,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -42007,6 +42046,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -42031,6 +42071,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -42090,6 +42131,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -42534,6 +42576,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -42565,6 +42608,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -43787,6 +43831,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -43835,6 +43880,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -43883,6 +43929,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -43951,6 +43998,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -44149,6 +44197,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -44294,6 +44343,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -44469,6 +44519,7 @@ exports[`open api parser deel parse open api 1`] = `
                         "groupName": null,
                         "nameOverride": null,
                         "schema": {
+                          "default": null,
                           "type": "boolean",
                         },
                         "type": "primitive",
@@ -46099,6 +46150,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -46130,6 +46182,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -46231,6 +46284,7 @@ exports[`open api parser deel parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -46329,6 +46383,7 @@ exports[`open api parser deel parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -48923,6 +48978,7 @@ exports[`open api parser deel parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -48946,6 +49002,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -49021,6 +49078,7 @@ exports[`open api parser deel parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -53314,6 +53372,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -54564,6 +54623,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -54910,6 +54970,7 @@ exports[`open api parser deel parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -54927,6 +54988,7 @@ exports[`open api parser deel parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -56281,6 +56343,7 @@ exports[`open api parser deel parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -56625,6 +56688,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -56933,6 +56997,7 @@ exports[`open api parser deel parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -58401,6 +58466,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -59025,6 +59091,7 @@ exports[`open api parser deel parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "int64",
               },
               "type": "primitive",
@@ -59148,6 +59215,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "int64",
                 },
                 "type": "primitive",

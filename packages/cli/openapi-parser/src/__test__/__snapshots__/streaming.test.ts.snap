@@ -634,6 +634,7 @@ exports[`open api parser streaming parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -658,6 +659,7 @@ exports[`open api parser streaming parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -857,6 +859,7 @@ exports[`open api parser streaming parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
                     "type": "boolean",
                   },
                   "type": "primitive",

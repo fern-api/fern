@@ -123,7 +123,6 @@ class FernAwarePydanticModel:
                         resolved_tr = container.optional
                 default_value = self._context.get_initializer_for_type_reference(resolved_tr)
 
-
         field = self._create_pydantic_field(
             name=name,
             pascal_case_field_name=pascal_case_field_name,

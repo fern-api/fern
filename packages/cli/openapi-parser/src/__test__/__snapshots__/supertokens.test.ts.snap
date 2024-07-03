@@ -1184,6 +1184,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                                   "groupName": null,
                                   "nameOverride": null,
                                   "schema": {
+                                    "default": null,
                                     "type": "boolean",
                                   },
                                   "type": "primitive",
@@ -1530,6 +1531,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                         "groupName": null,
                         "nameOverride": null,
                         "schema": {
+                          "default": null,
                           "type": "boolean",
                         },
                         "type": "primitive",
@@ -1836,6 +1838,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -2337,6 +2340,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                         "groupName": null,
                         "nameOverride": null,
                         "schema": {
+                          "default": null,
                           "type": "boolean",
                         },
                         "type": "primitive",
@@ -3095,6 +3099,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -3169,6 +3174,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                         "groupName": null,
                         "nameOverride": null,
                         "schema": {
+                          "default": null,
                           "type": "boolean",
                         },
                         "type": "primitive",
@@ -3193,6 +3199,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                         "groupName": null,
                         "nameOverride": null,
                         "schema": {
+                          "default": null,
                           "type": "boolean",
                         },
                         "type": "primitive",
@@ -3521,6 +3528,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -3585,6 +3593,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -4389,6 +4398,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                         "groupName": null,
                         "nameOverride": null,
                         "schema": {
+                          "default": null,
                           "type": "boolean",
                         },
                         "type": "primitive",
@@ -10574,6 +10584,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -10967,6 +10978,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -15313,6 +15325,7 @@ e.g.:
                         "groupName": null,
                         "nameOverride": null,
                         "schema": {
+                          "default": null,
                           "type": "boolean",
                         },
                         "type": "primitive",
@@ -15643,6 +15656,7 @@ e.g.:
                         "groupName": null,
                         "nameOverride": null,
                         "schema": {
+                          "default": null,
                           "type": "boolean",
                         },
                         "type": "primitive",
@@ -16607,6 +16621,7 @@ e.g.:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -17849,6 +17864,7 @@ e.g.:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -19018,6 +19034,7 @@ e.g.:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -19847,6 +19864,7 @@ e.g.:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -19871,6 +19889,7 @@ e.g.:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -22206,6 +22225,7 @@ e.g.:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -24609,6 +24629,7 @@ e.g.:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -25020,6 +25041,7 @@ e.g.:
                             "groupName": null,
                             "nameOverride": null,
                             "schema": {
+                              "default": null,
                               "type": "boolean",
                             },
                             "type": "primitive",
@@ -27489,6 +27511,7 @@ e.g.:
                         "groupName": null,
                         "nameOverride": null,
                         "schema": {
+                          "default": null,
                           "type": "boolean",
                         },
                         "type": "primitive",
@@ -27554,6 +27577,7 @@ e.g.:
                         "groupName": null,
                         "nameOverride": null,
                         "schema": {
+                          "default": null,
                           "type": "boolean",
                         },
                         "type": "primitive",
@@ -30593,6 +30617,7 @@ e.g.:
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
         "type": "boolean",
       },
       "type": "primitive",
@@ -30671,6 +30696,7 @@ e.g.:
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
         "type": "boolean",
       },
       "type": "primitive",
