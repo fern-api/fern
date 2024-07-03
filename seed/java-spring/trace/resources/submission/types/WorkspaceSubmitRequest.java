@@ -19,7 +19,7 @@ import java.util.Objects;
 import java.util.Optional;
 import resources.commons.types.Language;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = WorkspaceSubmitRequest.Builder.class
 )

@@ -19,7 +19,7 @@ import java.util.Set;
 import resources.commons.types.ProblemId;
 import resources.commons.types.VariableType;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = LightweightProblemInfoV2.Builder.class
 )

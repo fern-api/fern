@@ -18,7 +18,7 @@ import java.util.Optional;
 import types.ColorOrOperand;
 import types.Operand;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = SendEnumInlinedRequest.Builder.class
 )

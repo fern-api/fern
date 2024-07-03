@@ -13,7 +13,7 @@ import com.seed.codeSamples.core.ObjectMappers;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = MyResponse.Builder.class)
 public final class MyResponse {
     private final String id;

@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import resources.v2.problem.types.TestCaseId;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = GradedResponseV2.Builder.class
 )
