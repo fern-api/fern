@@ -85,45 +85,48 @@ private registries for you at `npm.buildwithfern.com`, `pypi.buildwithfern.com`,
 
 <CodeBlocks>
   <CodeBlock title="TypeScript">
-  ```yaml {5}
+  ```yaml {10-11}
     groups: 
       ts-sdk: 
         - name: fernapi/fern-typescript-node-sdk
           version: 0.13.0
-          url: npm.buildwithfern.com
           config: 
             namespaceExport: Imdb
           output: 
             location: npm
             package-name: "@imdb-fern/sdk"
+            url: npm.buildwithfern.com
+            token: ${FERN_TOKEN}
   ```
   </CodeBlock>
   <CodeBlock title="Python">
-  ```yaml {5}
+  ```yaml {10-11}
     groups: 
       ts-sdk: 
         - name: fernapi/fern-python-sdk
           version: 1.0.0
-          url: pypi.buildwithfern.com
           config: 
             client_class_name: Imdb
           output: 
             location: pypi
             package-name: "imdb-fern"
+            url: pypi.buildwithfern.com
+            token: ${FERN_TOKEN}
   ```
   </CodeBlock>
   <CodeBlock title="Java">
-  ```yaml {5}
+  ```yaml {10-11}
     groups: 
       ts-sdk: 
         - name: fernapi/fern-java-sdk
           version: 0.12.0
-          url: maven.buildwithfern.com
           config: 
             client-class-name: Imdb
           output: 
             location: maven
             coordinate: com.imdb.fern:imdb-java
+            url: maven.buildwithfern.com
+            token: ${FERN_TOKEN}
   ```
   </CodeBlock>
 </CodeBlocks>
