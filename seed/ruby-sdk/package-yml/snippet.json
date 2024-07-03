@@ -1,0 +1,49 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/{id}/{nestedId}",
+                "method": "GET",
+                "identifierOverride": "endpoint_service.nop"
+            },
+            "snippet": {
+                "client": "require \"fern_package_yml\"\n\npackage_yml = SeedPackageYmlClient::Client.new(base_url: \"https://api.example.com\")\npackage_yml.service.nop(id: \"id-a2ijs82\", nested_id: \"id-219xca8\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/{id}/{nestedId}",
+                "method": "GET",
+                "identifierOverride": "endpoint_service.nop"
+            },
+            "snippet": {
+                "client": "require \"fern_package_yml\"\n\npackage_yml = SeedPackageYmlClient::Client.new(base_url: \"https://api.example.com\")\npackage_yml.service.nop(id: \"id-a2ijs82\", nested_id: \"id-219xca8\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/{id}/",
+                "method": "POST",
+                "identifierOverride": "endpoint_.echo"
+            },
+            "snippet": {
+                "client": "require \"fern_package_yml\"\n\npackage_yml = SeedPackageYmlClient::Client.new(base_url: \"https://api.example.com\")\npackage_yml.echo(id: \"id-ksfd9c1\", request: { name: \"Hello world!\", size: 20 })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/{id}/",
+                "method": "POST",
+                "identifierOverride": "endpoint_.echo"
+            },
+            "snippet": {
+                "client": "require \"fern_package_yml\"\n\npackage_yml = SeedPackageYmlClient::Client.new(base_url: \"https://api.example.com\")\npackage_yml.echo(id: \"id-ksfd9c1\", request: { name: \"Hello world!\", size: 20 })",
+                "type": "ruby"
+            }
+        }
+    ],
+    "types": {}
+}
