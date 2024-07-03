@@ -415,14 +415,14 @@ types:
   PrimitiveSchemaValue:
     union:
       int: IntSchema
-      int64: {}
+      int64: LongSchema
       float: {}
       double: DoubleSchema
       string: StringSchema
       datetime: {}
       date: {}
       base64: {}
-      boolean: {}
+      boolean: BooleanSchema
 
   IntSchema:
     properties:
@@ -442,6 +442,14 @@ types:
       exclusiveMaximum: optional<boolean>
       multipleOf: optional<double>
 
+  BooleanSchema:
+    properties:
+      default: optional<boolean>
+
+  LongSchema:
+    properties:
+      default: optional<long>
+  
   StringSchema:
     properties:
       default: optional<string>

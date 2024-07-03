@@ -6,17 +6,15 @@ import * as serializers from "../../..";
 import * as FernOpenapiIr from "../../../../api";
 import * as core from "../../../../core";
 
-export const BooleanWithExample: core.serialization.ObjectSchema<
-    serializers.BooleanWithExample.Raw,
-    FernOpenapiIr.BooleanWithExample
+export const BooleanSchema: core.serialization.ObjectSchema<
+    serializers.BooleanSchema.Raw,
+    FernOpenapiIr.BooleanSchema
 > = core.serialization.objectWithoutOptionalProperties({
     default: core.serialization.boolean().optional(),
-    example: core.serialization.boolean().optional(),
 });
 
-export declare namespace BooleanWithExample {
+export declare namespace BooleanSchema {
     interface Raw {
         default?: boolean | null;
-        example?: boolean | null;
     }
 }

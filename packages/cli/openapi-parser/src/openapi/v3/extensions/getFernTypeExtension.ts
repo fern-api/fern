@@ -67,6 +67,7 @@ export function getSchemaFromFernType({
                             description,
                             groupName,
                             schema: PrimitiveSchemaValueWithExample.boolean({
+                                default: undefined,
                                 example: undefined
                             })
                         });
@@ -129,6 +130,7 @@ export function getSchemaFromFernType({
                             description,
                             groupName,
                             schema: PrimitiveSchemaValueWithExample.int64({
+                                default: undefined,
                                 example: undefined
                             })
                         });
