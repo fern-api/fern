@@ -2,10 +2,10 @@ import { AbstractCsharpGeneratorCli, TestFileGenerator } from "@fern-api/csharp-
 import { generateModels } from "@fern-api/fern-csharp-model";
 import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ClientOptionsGenerator } from "./client-options/ClientOptionsGenerator";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
-import { CLIENT_MEMBER_NAME, RootClientGenerator } from "./root-client/RootClientGenerator";
+import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
@@ -43,6 +43,21 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         await this.generate(context);
     }
 
+    private generateRequests(context: SdkGeneratorContext, service: HttpService, serviceId: string) {
+        for (const endpoint of service.endpoints) {
+            if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
+                const wrappedRequestGenerator = new WrappedRequestGenerator({
+                    wrapper: endpoint.sdkRequest.shape,
+                    context,
+                    endpoint,
+                    serviceId: serviceId
+                });
+                const wrappedRequest = wrappedRequestGenerator.generate();
+                context.project.addSourceFiles(wrappedRequest);
+            }
+        }
+    }
+
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         const models = generateModels({ context });
         for (const file of models) {
@@ -54,23 +69,12 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
                 context,
                 subpackage,
                 serviceId: subpackage.service,
-                service: subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined
+                service: service
             });
             context.project.addSourceFiles(subClient.generate());
 
             if (subpackage.service != null && service != null) {
-                for (const endpoint of service.endpoints) {
-                    if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
-                        const wrappedRequestGenerator = new WrappedRequestGenerator({
-                            wrapper: endpoint.sdkRequest.shape,
-                            context,
-                            endpoint,
-                            serviceId: subpackage.service
-                        });
-                        const wrappedRequest = wrappedRequestGenerator.generate();
-                        context.project.addSourceFiles(wrappedRequest);
-                    }
-                }
+                this.generateRequests(context, service, subpackage.service);
             }
         }
 
@@ -83,18 +87,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         const rootServiceId = context.ir.rootPackage.service;
         if (rootServiceId != null) {
             const service = context.getHttpServiceOrThrow(rootServiceId);
-            for (const endpoint of service.endpoints) {
-                if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
-                    const wrappedRequestGenerator = new WrappedRequestGenerator({
-                        wrapper: endpoint.sdkRequest.shape,
-                        context,
-                        endpoint,
-                        serviceId: rootServiceId
-                    });
-                    const wrappedRequest = wrappedRequestGenerator.generate();
-                    context.project.addSourceFiles(wrappedRequest);
-                }
-            }
+            this.generateRequests(context, service, rootServiceId);
         }
 
         if (context.ir.environments?.environments.type === "singleBaseUrl") {
