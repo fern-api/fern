@@ -127,7 +127,6 @@ class FernAwarePydanticModel:
                         big_integer=lambda bit: AST.Expression(f"{bit.default}"),
                     )
 
-
         field = self._create_pydantic_field(
             name=name,
             pascal_case_field_name=pascal_case_field_name,
