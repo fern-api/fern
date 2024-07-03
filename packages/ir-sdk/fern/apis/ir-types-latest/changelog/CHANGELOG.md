@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v50.0.0] - 2024-06-20
 
-- Improvement: add PrimitiveType V2 for Boolean types, allowing for default values to be specified
+- Improvement: add PrimitiveType V2 for Boolean, Long and Big Int types, allowing for default values to be specified
 
 ## [v49.0.0] - 2024-06-20
 
