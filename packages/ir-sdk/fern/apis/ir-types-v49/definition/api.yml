@@ -1,0 +1,5 @@
+name: ir-v49
+docs: |
+ - The unique webhook id is now required.
+ - Pagination endpoints not support request body properties.
+ - Offset pagination now supports a configurable `step` size request property.

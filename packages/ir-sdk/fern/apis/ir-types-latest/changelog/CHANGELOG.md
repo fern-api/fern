@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v50.0.0] - 2024-06-20
+
+- Improvement: add PrimitiveType V2 for Boolean, Long and Big Int types, allowing for default values to be specified
+
 ## [v49.0.0] - 2024-06-20
 
 - Feature: Support generating code with `stream` param for endpoints like chat completion.

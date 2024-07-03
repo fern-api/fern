@@ -1,5 +1,3 @@
 name: ir
 docs: |
- - The unique webhook id is now required.
- - Pagination endpoints not support request body properties.
- - Offset pagination now supports a configurable `step` size request property.
+ - Add primitive type v2 (with defaults) to booleans, longs and big ints

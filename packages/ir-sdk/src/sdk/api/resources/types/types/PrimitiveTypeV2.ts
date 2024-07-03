@@ -7,7 +7,10 @@ import * as FernIr from "../../..";
 export type PrimitiveTypeV2 =
     | FernIr.PrimitiveTypeV2.Integer
     | FernIr.PrimitiveTypeV2.Double
-    | FernIr.PrimitiveTypeV2.String;
+    | FernIr.PrimitiveTypeV2.String
+    | FernIr.PrimitiveTypeV2.Boolean
+    | FernIr.PrimitiveTypeV2.Long
+    | FernIr.PrimitiveTypeV2.BigInteger;
 
 export declare namespace PrimitiveTypeV2 {
     interface Integer extends FernIr.IntegerType, _Utils {
@@ -22,6 +25,18 @@ export declare namespace PrimitiveTypeV2 {
         type: "string";
     }
 
+    interface Boolean extends FernIr.BooleanType, _Utils {
+        type: "boolean";
+    }
+
+    interface Long extends FernIr.LongType, _Utils {
+        type: "long";
+    }
+
+    interface BigInteger extends FernIr.BigIntegerType, _Utils {
+        type: "bigInteger";
+    }
+
     interface _Utils {
         _visit: <_Result>(visitor: FernIr.PrimitiveTypeV2._Visitor<_Result>) => _Result;
     }
@@ -30,6 +45,9 @@ export declare namespace PrimitiveTypeV2 {
         integer: (value: FernIr.IntegerType) => _Result;
         double: (value: FernIr.DoubleType) => _Result;
         string: (value: FernIr.StringType) => _Result;
+        boolean: (value: FernIr.BooleanType) => _Result;
+        long: (value: FernIr.LongType) => _Result;
+        bigInteger: (value: FernIr.BigIntegerType) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -74,6 +92,45 @@ export const PrimitiveTypeV2 = {
         };
     },
 
+    boolean: (value: FernIr.BooleanType): FernIr.PrimitiveTypeV2.Boolean => {
+        return {
+            ...value,
+            type: "boolean",
+            _visit: function <_Result>(
+                this: FernIr.PrimitiveTypeV2.Boolean,
+                visitor: FernIr.PrimitiveTypeV2._Visitor<_Result>
+            ) {
+                return FernIr.PrimitiveTypeV2._visit(this, visitor);
+            },
+        };
+    },
+
+    long: (value: FernIr.LongType): FernIr.PrimitiveTypeV2.Long => {
+        return {
+            ...value,
+            type: "long",
+            _visit: function <_Result>(
+                this: FernIr.PrimitiveTypeV2.Long,
+                visitor: FernIr.PrimitiveTypeV2._Visitor<_Result>
+            ) {
+                return FernIr.PrimitiveTypeV2._visit(this, visitor);
+            },
+        };
+    },
+
+    bigInteger: (value: FernIr.BigIntegerType): FernIr.PrimitiveTypeV2.BigInteger => {
+        return {
+            ...value,
+            type: "bigInteger",
+            _visit: function <_Result>(
+                this: FernIr.PrimitiveTypeV2.BigInteger,
+                visitor: FernIr.PrimitiveTypeV2._Visitor<_Result>
+            ) {
+                return FernIr.PrimitiveTypeV2._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(value: FernIr.PrimitiveTypeV2, visitor: FernIr.PrimitiveTypeV2._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "integer":
@@ -82,6 +139,12 @@ export const PrimitiveTypeV2 = {
                 return visitor.double(value);
             case "string":
                 return visitor.string(value);
+            case "boolean":
+                return visitor.boolean(value);
+            case "long":
+                return visitor.long(value);
+            case "bigInteger":
+                return visitor.bigInteger(value);
             default:
                 return visitor._other(value as any);
         }
