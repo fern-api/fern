@@ -81,7 +81,7 @@ about the publishing process.
 In some cases, you may want to publish your SDKs to a private registry. Fern hosts 
 private registries for you at `npm.buildwithfern.com`, `pypi.buildwithfern.com`, 
 `maven.buildwithfern.com`, etc. To use an internal registry, simply specify the
-`url` field in your `generators.yml`:
+`url` field and add the `FERN_TOKEN` variable to the `token` field in your `generators.yml`:
 
 <CodeBlocks>
   <CodeBlock title="TypeScript">
