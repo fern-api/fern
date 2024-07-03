@@ -106,14 +106,27 @@ class FernAwarePydanticModel:
         default_value: Optional[AST.Expression] = None,
     ) -> PydanticField:
         union = type_reference.get_as_union()
-        if default_value is None and union.type == "container" and union.container.get_as_union().type == "literal":
-            container = union.container.get_as_union()
-            if container is not None and container.type == "literal":
-                literal = container.literal.get_as_union()
-                if literal.type == "string":
-                    default_value = AST.Expression(f'"{literal.string}"')
-                else:
-                    default_value = AST.Expression(f"{literal.boolean}")
+        if default_value is None:
+            if union.type == "container" and union.container.get_as_union().type == "literal":
+                container = union.container.get_as_union()
+                if container is not None and container.type == "literal":
+                    literal = container.literal.get_as_union()
+                    if literal.type == "string":
+                        default_value = AST.Expression(f'"{literal.string}"')
+                    else:
+                        default_value = AST.Expression(f"{literal.boolean}")
+            elif union.type == "primitive":
+                maybe_v2_scheme = union.primitive.v_2
+                if maybe_v2_scheme is not None and maybe_v2_scheme.get_as_union().default is not None:
+                    default_value = maybe_v2_scheme.visit(
+                        integer=lambda it: AST.Expression(f"{it.default}"),
+                        double=lambda dt: AST.Expression(f"{dt.default}"),
+                        string=lambda st: AST.Expression(f'"{st.default}"'),
+                        boolean=lambda bt: AST.Expression(f"{bt.default}"),
+                        long_=lambda lt: AST.Expression(f"{lt.default}"),
+                        big_integer=lambda bit: AST.Expression(f"{bit.default}"),
+                    )
+
 
         field = self._create_pydantic_field(
             name=name,
