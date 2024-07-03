@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.15.0] - 2024-07-03
+
+- Improvement: The generated Python SDK can now respect configured defaults from the API spec.
+
+```yaml
+generators:
+  - name: fernapi/fern-python-sdk
+    config:
+      pydantic_config:
+        use_provided_defaults: true
+```
+
 ## [2.14.1] - 2024-07-01
 
 - Fix: Sync and AsyncPage now pass through the generic type to BasePage, allowing the use of `.items`, etc. to be appropriately typed within your type checking system.
