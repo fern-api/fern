@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = VoidFunctionSignatureThatTakesActualResult.Builder.class)
 public final class VoidFunctionSignatureThatTakesActualResult {
     private final List<Parameter> parameters;

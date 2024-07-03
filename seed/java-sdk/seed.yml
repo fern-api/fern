@@ -25,6 +25,9 @@ fixtures:
           - "implementation jakarta.websocket:jakarta.websocket-api:2.1.0"
       outputFolder: custom-dependency
     - customConfig:
+        json-include: non-empty
+      outputFolder: json-include-non-empty
+    - customConfig:
         enable-forward-compatible-enums: true
       outputFolder: forward-compatible-enums
     - customConfig:

@@ -15,7 +15,7 @@ import java.lang.String;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = WorkspaceSubmissionUpdate.Builder.class
 )

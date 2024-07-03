@@ -19,7 +19,7 @@ import java.util.Objects;
 import resources.commons.types.ProblemId;
 import resources.v2.problem.types.ProblemInfoV2;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = TestSubmissionStatusV2.Builder.class
 )

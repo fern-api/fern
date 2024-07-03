@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.oauthClientCredentialsDefault.core.ObjectMappers;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TokenResponse.Builder.class)
 public final class TokenResponse {
     private final String accessToken;

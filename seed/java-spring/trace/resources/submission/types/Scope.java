@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import resources.commons.types.DebugVariableValue;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = Scope.Builder.class
 )

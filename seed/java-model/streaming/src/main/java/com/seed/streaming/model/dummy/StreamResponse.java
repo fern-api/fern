@@ -13,7 +13,7 @@ import com.seed.streaming.core.ObjectMappers;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = StreamResponse.Builder.class)
 public final class StreamResponse {
     private final String id;
