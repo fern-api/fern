@@ -3,6 +3,7 @@
 require_relative "types_export"
 require_relative "requests"
 require_relative "fern_package_yml/service/client"
+require_relative "fern_package_yml/types/echo_request"
 require "json"
 
 module SeedPackageYmlClient
@@ -24,12 +25,14 @@ module SeedPackageYmlClient
     end
 
     # @param id [String]
-    # @param request [String]
+    # @param request [Hash] Request of type SeedPackageYmlClient::EchoRequest, as a Hash
+    #   * :name (String)
+    #   * :size (Integer)
     # @param request_options [SeedPackageYmlClient::RequestOptions]
     # @return [String]
     # @example
     #  package_yml = SeedPackageYmlClient::Client.new(base_url: "https://api.example.com")
-    #  package_yml.echo(id: "id-ksfd9c1", request: "Hello world!")
+    #  package_yml.echo(id: "id-ksfd9c1", request: { name: "Hello world!", size: 20 })
     def echo(id:, request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -63,12 +66,14 @@ module SeedPackageYmlClient
     end
 
     # @param id [String]
-    # @param request [String]
+    # @param request [Hash] Request of type SeedPackageYmlClient::EchoRequest, as a Hash
+    #   * :name (String)
+    #   * :size (Integer)
     # @param request_options [SeedPackageYmlClient::RequestOptions]
     # @return [String]
     # @example
     #  package_yml = SeedPackageYmlClient::Client.new(base_url: "https://api.example.com")
-    #  package_yml.echo(id: "id-ksfd9c1", request: "Hello world!")
+    #  package_yml.echo(id: "id-ksfd9c1", request: { name: "Hello world!", size: 20 })
     def echo(id:, request:, request_options: nil)
       response = @async_request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?

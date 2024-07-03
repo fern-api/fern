@@ -4,6 +4,7 @@ package client
 
 import (
 	context "context"
+	fern "github.com/package-yml/fern"
 	core "github.com/package-yml/fern/core"
 	option "github.com/package-yml/fern/option"
 	service "github.com/package-yml/fern/service"
@@ -36,7 +37,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 func (c *Client) Echo(
 	ctx context.Context,
 	id string,
-	request string,
+	request *fern.EchoRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
 	options := core.NewRequestOptions(opts...)

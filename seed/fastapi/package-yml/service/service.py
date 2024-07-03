@@ -11,6 +11,7 @@ import fastapi
 from ..core.abstract_fern_service import AbstractFernService
 from ..core.exceptions.fern_http_exception import FernHTTPException
 from ..core.route_args import get_route_args
+from ..types.echo_request import EchoRequest
 
 
 class AbstractRootService(AbstractFernService):
@@ -23,7 +24,7 @@ class AbstractRootService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def echo(self, *, body: str) -> str:
+    def echo(self, *, body: EchoRequest) -> str:
         ...
 
     """

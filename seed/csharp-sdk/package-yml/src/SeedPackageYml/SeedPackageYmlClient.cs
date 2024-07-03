@@ -21,7 +21,7 @@ public partial class SeedPackageYmlClient
 
     public ServiceClient Service { get; }
 
-    public async Task<string> EchoAsync(string id, string request)
+    public async Task<string> EchoAsync(string id, EchoRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
