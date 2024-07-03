@@ -18,6 +18,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         generator_config: GeneratorConfig,
         project_module_path: AST.ModulePath,
         allow_skipping_validation: bool,
+        allow_leveraging_defaults: bool,
     ):
         super().__init__(ir=ir, generator_config=generator_config, allow_skipping_validation=allow_skipping_validation)
         self._type_reference_to_type_hint_converter = TypeReferenceToTypeHintConverter(
@@ -25,6 +26,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         )
         self._type_declaration_referencer = type_declaration_referencer
         self._project_module_path = project_module_path
+        self._allow_leveraging_defaults = allow_leveraging_defaults
 
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:
         return self._project_module_path + module_path
@@ -45,6 +47,9 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         self,
         type_reference: ir_types.TypeReference,
     ) -> Optional[AST.Expression]:
+        if not self._allow_leveraging_defaults:
+            return None
+
         default_value = None
         union = type_reference.get_as_union()
         if union.type == "primitive":

@@ -70,6 +70,7 @@ class PydanticModelGenerator(AbstractGenerator):
                 ir=ir,
             ),
             allow_skipping_validation=custom_config.skip_validation,
+            allow_leveraging_defaults=custom_config.use_provided_defaults,
         )
         snippet_registry = SnippetRegistry()
         snippet_writer = self._build_snippet_writer(
