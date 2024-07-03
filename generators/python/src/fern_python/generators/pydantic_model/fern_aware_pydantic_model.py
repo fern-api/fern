@@ -115,8 +115,14 @@ class FernAwarePydanticModel:
                         default_value = AST.Expression(f'"{literal.string}"')
                     else:
                         default_value = AST.Expression(f"{literal.boolean}")
-            elif union.type == "primitive":
-                default_value = self._context.get_initializer_for_type_reference(type_reference)
+            else:
+                resolved_tr = type_reference
+                if union.type == "container":
+                    container = union.container.get_as_union()
+                    if container.type == "optional":
+                        resolved_tr = container.optional
+                default_value = self._context.get_initializer_for_type_reference(resolved_tr)
+
 
         field = self._create_pydantic_field(
             name=name,
@@ -281,11 +287,6 @@ class FernAwarePydanticModel:
         default_value: Optional[AST.Expression] = None,
     ) -> PydanticField:
         type_hint = self.get_type_hint_for_type_reference(type_reference)
-        fallback_default_value = default_value or (
-            AST.Expression("None")
-            if type_hint.is_optional and self._custom_config.require_optional_fields is False
-            else None
-        )
 
         return PydanticField(
             name=name,

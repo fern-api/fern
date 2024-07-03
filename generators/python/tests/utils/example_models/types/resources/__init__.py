@@ -4,6 +4,7 @@ from . import types
 from .types import (
     Circle,
     Color,
+    ObjectWithDefaults,
     ObjectWithOptionalField,
     Shape,
     Shape_Circle,
@@ -15,6 +16,7 @@ from .types import (
 __all__ = [
     "Circle",
     "Color",
+    "ObjectWithDefaults",
     "ObjectWithOptionalField",
     "Shape",
     "Shape_Circle",
