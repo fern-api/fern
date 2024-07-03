@@ -218,7 +218,7 @@ types:
       default: optional<long>
   BigIntegerType:
     properties:
-      default: optional<long>
+      default: optional<string>
 
   Literal:
     union:

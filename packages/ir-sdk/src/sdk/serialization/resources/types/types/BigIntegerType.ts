@@ -8,11 +8,11 @@ import * as core from "../../../../core";
 
 export const BigIntegerType: core.serialization.ObjectSchema<serializers.BigIntegerType.Raw, FernIr.BigIntegerType> =
     core.serialization.objectWithoutOptionalProperties({
-        default: core.serialization.number().optional(),
+        default: core.serialization.string().optional(),
     });
 
 export declare namespace BigIntegerType {
     interface Raw {
-        default?: number | null;
+        default?: string | null;
     }
 }
