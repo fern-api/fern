@@ -174,9 +174,6 @@ types:
       integer: IntegerType
       double: DoubleType
       string: StringType
-      boolean: BooleanType
-      long: LongType
-      bigInteger: BigIntegerType
 
   IntegerType:
     properties:
@@ -210,15 +207,6 @@ types:
       pattern: optional<string>
       minLength: optional<integer>
       maxLength: optional<integer>
-  BooleanType:
-    properties:
-      default: optional<boolean>
-  LongType:
-    properties:
-      default: optional<long>
-  BigIntegerType:
-    properties:
-      default: optional<long>
 
   Literal:
     union:

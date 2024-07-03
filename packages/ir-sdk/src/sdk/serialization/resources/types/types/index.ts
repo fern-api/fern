@@ -28,6 +28,8 @@ export * from "./DoubleValidationRules";
 export * from "./StringType";
 export * from "./StringValidationRules";
 export * from "./BooleanType";
+export * from "./LongType";
+export * from "./BigIntegerType";
 export * from "./Literal";
 export * from "./ExampleType";
 export * from "./ExampleTypeShape";

@@ -13,6 +13,8 @@ export const PrimitiveTypeV2: core.serialization.Schema<serializers.PrimitiveTyp
             double: core.serialization.lazyObject(async () => (await import("../../..")).DoubleType),
             string: core.serialization.lazyObject(async () => (await import("../../..")).StringType),
             boolean: core.serialization.lazyObject(async () => (await import("../../..")).BooleanType),
+            long: core.serialization.lazyObject(async () => (await import("../../..")).LongType),
+            bigInteger: core.serialization.lazyObject(async () => (await import("../../..")).BigIntegerType),
         })
         .transform<FernIr.PrimitiveTypeV2>({
             transform: (value) => {
@@ -25,6 +27,10 @@ export const PrimitiveTypeV2: core.serialization.Schema<serializers.PrimitiveTyp
                         return FernIr.PrimitiveTypeV2.string(value);
                     case "boolean":
                         return FernIr.PrimitiveTypeV2.boolean(value);
+                    case "long":
+                        return FernIr.PrimitiveTypeV2.long(value);
+                    case "bigInteger":
+                        return FernIr.PrimitiveTypeV2.bigInteger(value);
                     default:
                         return value as FernIr.PrimitiveTypeV2;
                 }
@@ -33,7 +39,13 @@ export const PrimitiveTypeV2: core.serialization.Schema<serializers.PrimitiveTyp
         });
 
 export declare namespace PrimitiveTypeV2 {
-    type Raw = PrimitiveTypeV2.Integer | PrimitiveTypeV2.Double | PrimitiveTypeV2.String | PrimitiveTypeV2.Boolean;
+    type Raw =
+        | PrimitiveTypeV2.Integer
+        | PrimitiveTypeV2.Double
+        | PrimitiveTypeV2.String
+        | PrimitiveTypeV2.Boolean
+        | PrimitiveTypeV2.Long
+        | PrimitiveTypeV2.BigInteger;
 
     interface Integer extends serializers.IntegerType.Raw {
         type: "integer";
@@ -49,5 +61,13 @@ export declare namespace PrimitiveTypeV2 {
 
     interface Boolean extends serializers.BooleanType.Raw {
         type: "boolean";
+    }
+
+    interface Long extends serializers.LongType.Raw {
+        type: "long";
+    }
+
+    interface BigInteger extends serializers.BigIntegerType.Raw {
+        type: "bigInteger";
     }
 }
