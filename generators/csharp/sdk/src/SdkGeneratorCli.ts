@@ -50,7 +50,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
                     wrapper: endpoint.sdkRequest.shape,
                     context,
                     endpoint,
-                    serviceId: serviceId
+                    serviceId
                 });
                 const wrappedRequest = wrappedRequestGenerator.generate();
                 context.project.addSourceFiles(wrappedRequest);
@@ -69,7 +69,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
                 context,
                 subpackage,
                 serviceId: subpackage.service,
-                service: service
+                service
             });
             context.project.addSourceFiles(subClient.generate());
 
