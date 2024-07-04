@@ -282,6 +282,7 @@ types:
 
   Int64WithExample:
     properties:
+      default: optional<long>
       example: optional<integer>
 
   FloatWithExample:
@@ -321,4 +322,5 @@ types:
 
   BooleanWithExample:
     properties:
+      default: optional<boolean>
       example: optional<boolean>

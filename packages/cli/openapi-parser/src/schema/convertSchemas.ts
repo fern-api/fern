@@ -282,6 +282,7 @@ export function convertSchemaObject(
             nameOverride,
             generatedName,
             primitive: PrimitiveSchemaValueWithExample.boolean({
+                default: schema.default,
                 example: getExampleAsBoolean(schema)
             }),
             wrapAsNullable,

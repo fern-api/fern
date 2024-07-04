@@ -3,5 +3,6 @@
  */
 
 export interface Int64WithExample {
+    default: number | undefined;
     example: number | undefined;
 }

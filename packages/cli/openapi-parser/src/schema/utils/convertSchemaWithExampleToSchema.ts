@@ -185,7 +185,7 @@ function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValueWith
         case "base64":
             return PrimitiveSchemaValue.base64();
         case "boolean":
-            return PrimitiveSchemaValue.boolean();
+            return PrimitiveSchemaValue.boolean(primitiveSchema);
         case "date":
             return PrimitiveSchemaValue.date();
         case "datetime":
@@ -197,7 +197,7 @@ function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValueWith
         case "int":
             return PrimitiveSchemaValue.int(primitiveSchema);
         case "int64":
-            return PrimitiveSchemaValue.int64();
+            return PrimitiveSchemaValue.int64(primitiveSchema);
         default:
             assertNever(primitiveSchema);
     }

@@ -40,6 +40,9 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                     property.value_type,
                     in_endpoint=True,
                 )
+                maybe_default_value = self._context.pydantic_generator_context.get_initializer_for_type_reference(
+                    property.value_type
+                )
                 parameters.append(
                     AST.NamedFunctionParameter(
                         name=self._get_property_name(property),
@@ -48,7 +51,11 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                             property.value_type,
                             in_endpoint=True,
                         ),
-                        initializer=AST.Expression(DEFAULT_BODY_PARAMETER_VALUE) if type_hint.is_optional else None,
+                        initializer=maybe_default_value
+                        if maybe_default_value is not None
+                        else AST.Expression(DEFAULT_BODY_PARAMETER_VALUE)
+                        if type_hint.is_optional
+                        else None,
                         raw_type=property.value_type,
                         raw_name=property.name.wire_value,
                     ),

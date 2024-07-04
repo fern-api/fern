@@ -38,7 +38,12 @@ exports[`open api parser superagent docs 1`] = `
               "body": {
                 "properties": {
                   "documentId": "optional<string>",
-                  "has_memory": "optional<boolean>",
+                  "has_memory": {
+                    "default": false,
+                    "docs": undefined,
+                    "type": "optional<boolean>",
+                    "validation": undefined,
+                  },
                   "llm": "optional<map<string, unknown>>",
                   "name": "string",
                   "promptId": "optional<string>",
@@ -201,7 +206,12 @@ exports[`open api parser superagent docs 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "has_streaming": "optional<boolean>",
+                  "has_streaming": {
+                    "default": false,
+                    "docs": undefined,
+                    "type": "optional<boolean>",
+                    "validation": undefined,
+                  },
                   "input": "map<string, unknown>",
                 },
               },
@@ -1159,7 +1169,12 @@ exports[`open api parser superagent simple 1`] = `
               "body": {
                 "properties": {
                   "documentId": "optional<string>",
-                  "has_memory": "optional<boolean>",
+                  "has_memory": {
+                    "default": false,
+                    "docs": undefined,
+                    "type": "optional<boolean>",
+                    "validation": undefined,
+                  },
                   "llm": "optional<map<string, unknown>>",
                   "name": "string",
                   "promptId": "optional<string>",
@@ -1322,7 +1337,12 @@ exports[`open api parser superagent simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "has_streaming": "optional<boolean>",
+                  "has_streaming": {
+                    "default": false,
+                    "docs": undefined,
+                    "type": "optional<boolean>",
+                    "validation": undefined,
+                  },
                   "input": "map<string, unknown>",
                 },
               },

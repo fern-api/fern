@@ -18,6 +18,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         generator_config: GeneratorConfig,
         project_module_path: AST.ModulePath,
         allow_skipping_validation: bool,
+        allow_leveraging_defaults: bool,
     ):
         super().__init__(ir=ir, generator_config=generator_config, allow_skipping_validation=allow_skipping_validation)
         self._type_reference_to_type_hint_converter = TypeReferenceToTypeHintConverter(
@@ -25,6 +26,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         )
         self._type_declaration_referencer = type_declaration_referencer
         self._project_module_path = project_module_path
+        self._allow_leveraging_defaults = allow_leveraging_defaults
 
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:
         return self._project_module_path + module_path
@@ -40,6 +42,28 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             must_import_after_current_declaration=must_import_after_current_declaration,
             in_endpoint=in_endpoint,
         )
+
+    def get_initializer_for_type_reference(
+        self,
+        type_reference: ir_types.TypeReference,
+    ) -> Optional[AST.Expression]:
+        if not self._allow_leveraging_defaults:
+            return None
+
+        default_value = None
+        union = type_reference.get_as_union()
+        if union.type == "primitive":
+            maybe_v2_scheme = union.primitive.v_2
+            if maybe_v2_scheme is not None and maybe_v2_scheme.get_as_union().default is not None:
+                default_value = maybe_v2_scheme.visit(
+                    integer=lambda it: AST.Expression(f"{it.default}"),
+                    double=lambda dt: AST.Expression(f"{dt.default}"),
+                    string=lambda st: AST.Expression(f'"{st.default}"'),
+                    boolean=lambda bt: AST.Expression(f"{bt.default}"),
+                    long_=lambda lt: AST.Expression(f"{lt.default}"),
+                    big_integer=lambda bit: AST.Expression(f"{bit.default}"),
+                )
+        return default_value
 
     def get_class_reference_for_type_id(
         self,
