@@ -60,7 +60,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.admin.send_test_submission_update(submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", request: { update_time: DateTime.parse(2024-01-15T09:30:00.000Z) })
+    #  trace.admin.send_test_submission_update(submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", request: { update_time: DateTime.parse("2024-01-15T09:30:00.000Z") })
     def send_test_submission_update(submission_id:, request:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -114,7 +114,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.admin.send_workspace_submission_update(submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", request: { update_time: DateTime.parse(2024-01-15T09:30:00.000Z) })
+    #  trace.admin.send_workspace_submission_update(submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", request: { update_time: DateTime.parse("2024-01-15T09:30:00.000Z") })
     def send_workspace_submission_update(submission_id:, request:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -379,7 +379,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.admin.send_test_submission_update(submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", request: { update_time: DateTime.parse(2024-01-15T09:30:00.000Z) })
+    #  trace.admin.send_test_submission_update(submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", request: { update_time: DateTime.parse("2024-01-15T09:30:00.000Z") })
     def send_test_submission_update(submission_id:, request:, request_options: nil)
       Async do
         @request_client.conn.post do |req|
@@ -437,7 +437,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.admin.send_workspace_submission_update(submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", request: { update_time: DateTime.parse(2024-01-15T09:30:00.000Z) })
+    #  trace.admin.send_workspace_submission_update(submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", request: { update_time: DateTime.parse("2024-01-15T09:30:00.000Z") })
     def send_workspace_submission_update(submission_id:, request:, request_options: nil)
       Async do
         @request_client.conn.post do |req|
