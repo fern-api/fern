@@ -264,15 +264,37 @@ function maybeStringValidation(
         return undefined;
     }
     const { format, pattern, minLength, maxLength } = schema;
-    if (format == null && pattern == null && minLength == null && maxLength == null) {
+    const validFormat = maybeValidFormat(format);
+    if (validFormat == null && pattern == null && minLength == null && maxLength == null) {
         return undefined;
     }
     return {
-        format,
+        format: validFormat,
         pattern,
         minLength,
         maxLength
     };
+}
+
+function maybeValidFormat(format: string | undefined): string | undefined {
+    // We only accept the set of OpenAPI formats that are explicitly listed at the following:
+    // https://swagger.io/docs/specification/data-models/data-types/#string
+    switch (format) {
+        case "date":
+        case "date-time":
+        case "password":
+        case "byte":
+        case "binary":
+        case "email":
+        case "uuid":
+        case "uri":
+        case "hostname":
+        case "ipv4":
+        case "ipv6":
+            return format;
+        default:
+            return undefined;
+    }
 }
 
 function maybeNumberValidation(

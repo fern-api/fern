@@ -81,7 +81,7 @@ exports[`rules rules docs 1`] = `
             "docs": "The unique name of the type.",
             "type": "optional<string>",
             "validation": {
-              "format": "custom",
+              "format": undefined,
               "maxLength": 10,
               "minLength": 3,
               "pattern": "^[a-zA-Z0-9]*$",
@@ -104,7 +104,7 @@ exports[`rules rules docs 1`] = `
       "String": {
         "type": "string",
         "validation": {
-          "format": "custom",
+          "format": undefined,
           "maxLength": 10,
           "minLength": 3,
           "pattern": "^[a-zA-Z0-9]*$",
@@ -203,7 +203,7 @@ exports[`rules rules simple 1`] = `
             "docs": "The unique name of the type.",
             "type": "optional<string>",
             "validation": {
-              "format": "custom",
+              "format": undefined,
               "maxLength": 10,
               "minLength": 3,
               "pattern": "^[a-zA-Z0-9]*$",
@@ -226,7 +226,7 @@ exports[`rules rules simple 1`] = `
       "String": {
         "type": "string",
         "validation": {
-          "format": "custom",
+          "format": undefined,
           "maxLength": 10,
           "minLength": 3,
           "pattern": "^[a-zA-Z0-9]*$",
