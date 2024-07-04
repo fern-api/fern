@@ -37,8 +37,8 @@ module SeedTraceClient
     #  )
     #  trace.playlist.create_playlist(
     #    service_param: 1,
-    #    datetime: DateTime.parse(2024-01-15T09:30:00.000Z),
-    #    optional_datetime: DateTime.parse(2024-01-15T09:30:00.000Z),
+    #    datetime: DateTime.parse("2024-01-15T09:30:00.000Z"),
+    #    optional_datetime: DateTime.parse("2024-01-15T09:30:00.000Z"),
     #    request: { name: "string", problems: ["string"] }
     #  )
     def create_playlist(service_param:, datetime:, request:, optional_datetime: nil, request_options: nil)
@@ -235,8 +235,8 @@ module SeedTraceClient
     #  )
     #  trace.playlist.create_playlist(
     #    service_param: 1,
-    #    datetime: DateTime.parse(2024-01-15T09:30:00.000Z),
-    #    optional_datetime: DateTime.parse(2024-01-15T09:30:00.000Z),
+    #    datetime: DateTime.parse("2024-01-15T09:30:00.000Z"),
+    #    optional_datetime: DateTime.parse("2024-01-15T09:30:00.000Z"),
     #    request: { name: "string", problems: ["string"] }
     #  )
     def create_playlist(service_param:, datetime:, request:, optional_datetime: nil, request_options: nil)
