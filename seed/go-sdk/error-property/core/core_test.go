@@ -82,6 +82,18 @@ func TestCall(t *testing.T) {
 			},
 		},
 		{
+			description: "POST empty body",
+			giveMethod:  http.MethodPost,
+			giveHeader: http.Header{
+				"X-API-Status": []string{"fail"},
+			},
+			giveRequest: nil,
+			wantError: NewAPIError(
+				http.StatusBadRequest,
+				errors.New("invalid request"),
+			),
+		},
+		{
 			description: "POST optional response",
 			giveMethod:  http.MethodPost,
 			giveHeader: http.Header{
@@ -215,10 +227,17 @@ func newTestServer(t *testing.T, tc *TestCase) *httptest.Server {
 					assert.Equal(t, value, r.Header.Values(header))
 				}
 
-				bytes, err := io.ReadAll(r.Body)
-				require.NoError(t, err)
-
 				request := new(Request)
+
+				bytes, err := io.ReadAll(r.Body)
+				if tc.giveRequest == nil {
+					require.Empty(t, bytes)
+					w.WriteHeader(http.StatusBadRequest)
+					_, err = w.Write([]byte("invalid request"))
+					require.NoError(t, err)
+					return
+				}
+				require.NoError(t, err)
 				require.NoError(t, json.Unmarshal(bytes, request))
 
 				switch request.Id {
