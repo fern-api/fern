@@ -32,7 +32,7 @@ const ALLOWED_FILE_TYPES = new Set<MimeType>([
 ]);
 
 const ALLOWED_EXTENSIONS = new Set(["js"]);
-const ALLOWED_ENCODINGS = new Set(["UTF-8"]);
+const ALLOWED_ENCODINGS = new Set(["UTF-8", "ISO-8859-1"]);
 
 export const ValidFileTypes: Rule = {
     name: "valid-file-types",
