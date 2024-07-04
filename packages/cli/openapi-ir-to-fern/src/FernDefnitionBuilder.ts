@@ -141,7 +141,9 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         if (this.rootApiFile["auth-schemes"] == null) {
             this.rootApiFile["auth-schemes"] = {};
         }
-        this.rootApiFile["auth-schemes"][name] = schema;
+        if (this.rootApiFile["auth-schemes"][name] == null) {
+            this.rootApiFile["auth-schemes"][name] = schema;
+        }
     }
 
     public setDefaultEnvironment(name: string): void {
