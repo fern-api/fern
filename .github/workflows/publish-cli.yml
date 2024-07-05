@@ -45,7 +45,10 @@ jobs:
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
       POSTHOG_PROJECT_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -78,7 +81,10 @@ jobs:
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
       POSTHOG_PROJECT_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -114,7 +120,10 @@ jobs:
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
       POSTHOG_PROJECT_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
       - uses: actions/setup-node@v3
         with:
           node-version: 18
