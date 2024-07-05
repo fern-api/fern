@@ -643,7 +643,11 @@ export function convertSchemaObject(
         // Now that we've handled the single-element allOf case, filter the
         // allOfs down to just the objects.
         const filteredAllOfObjects = filteredAllOfs.filter((allOf) => {
-            return isValidAllOfObject(allOf);
+            const valid = isValidAllOfObject(allOf);
+            if (!valid) {
+                context.logger.warn(`Skipping non-object allOf element: ${JSON.stringify(allOf)}`);
+            }
+            return valid;
         });
 
         if (
