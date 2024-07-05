@@ -40,7 +40,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     env:
-      NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+      YARN_NPM_AUTH_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
       POSTHOG_PROJECT_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
@@ -73,7 +73,7 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/') && contains(github.ref, '-rc')
     runs-on: ubuntu-latest
     env:
-      NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+      YARN_NPM_AUTH_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
       POSTHOG_PROJECT_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
@@ -109,7 +109,7 @@ jobs:
     needs: live-test
     runs-on: ubuntu-latest
     env:
-      NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+      YARN_NPM_AUTH_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
       POSTHOG_PROJECT_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
