@@ -33,26 +33,6 @@ service:
 In Fern Docs, this will look like: 
 ![Screenshot showing a deprecated tag next to an endpoint in API Reference docs](https://fern-image-hosting.s3.amazonaws.com/endpoint-deprecated.png)
 
-<CodeBlock title="pet.yml">
-```diff
-service:
-  base-path: /pet
-  auth: true
-  endpoints:
-    add:
-+     availability: in-development
-      display-name: Add pet
-      docs: Add a new Pet to the store
-      method: POST
-      path: ""
-      request: AddPetRequest
-      response: Pet
-```
-</CodeBlock>
-
-In Fern Docs, this will look like: 
-![Screenshot showing a beta tag next to an endpoint in API Reference docs](https://fern-image-hosting.s3.amazonaws.com/endpoint-beta.png)
-
 ## Type
 
 <CodeBlock title="pet.yml">
