@@ -43,7 +43,7 @@ jobs:
       YARN_NPM_AUTH_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
-      POSTHOG_PROJECT_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
+      POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -79,7 +79,7 @@ jobs:
       YARN_NPM_AUTH_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
-      POSTHOG_PROJECT_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
+      POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -93,11 +93,11 @@ jobs:
         run: yarn install
       - name: Print version
         run: |
-          git_version="$(./scripts/git-version.sh)"
+          git_version=${{ github.ref_name }}
           echo Publishing version: "${git_version}"
       - name: Add version to package.json's
         run: |
-          git_version="$(./scripts/git-version.sh)"
+          git_version=${{ github.ref_name }}
           yarn mrlint version "$git_version"
       - name: Update yarn.lock with new versions
         run: yarn
@@ -118,7 +118,7 @@ jobs:
       YARN_NPM_AUTH_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
-      POSTHOG_PROJECT_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
+      POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -132,11 +132,11 @@ jobs:
         run: yarn install
       - name: Print version
         run: |
-          git_version="$(./scripts/git-version.sh)"
+          git_version=${{ github.ref_name }}
           echo Publishing version: "${git_version}"
       - name: Add version to package.json's
         run: |
-          git_version="$(./scripts/git-version.sh)"
+          git_version=${{ github.ref_name }}
           yarn mrlint version "$git_version"
       - name: Update yarn.lock with new versions
         run: yarn
