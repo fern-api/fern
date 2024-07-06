@@ -302,12 +302,14 @@ export class DocsDefinitionResolver {
                 return {
                     type: "section",
                     title: item.title,
+
                     items: sectionItems,
                     urlSlugOverride: item.slug,
                     collapsed: item.collapsed,
                     icon: item.icon,
                     hidden: item.hidden,
-                    skipUrlSlug: item.skipUrlSlug
+                    skipUrlSlug: item.skipUrlSlug,
+                    overviewPageId: this.toRelativeFilepath(item.overviewAbsolutePath)
                 };
             }
             case "apiSection": {

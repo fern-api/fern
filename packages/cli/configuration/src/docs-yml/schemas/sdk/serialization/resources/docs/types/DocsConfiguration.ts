@@ -23,6 +23,10 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     versions: core.serialization
         .list(core.serialization.lazyObject(async () => (await import("../../..")).VersionConfig))
         .optional(),
+    landingPage: core.serialization.property(
+        "landing-page",
+        core.serialization.lazyObject(async () => (await import("../../..")).PageConfiguration).optional()
+    ),
     navigation: core.serialization.lazy(async () => (await import("../../..")).NavigationConfig).optional(),
     navbarLinks: core.serialization.property(
         "navbar-links",
@@ -56,6 +60,7 @@ export declare namespace DocsConfiguration {
         title?: string | null;
         tabs?: Record<serializers.TabId.Raw, serializers.TabConfig.Raw> | null;
         versions?: serializers.VersionConfig.Raw[] | null;
+        "landing-page"?: serializers.PageConfiguration.Raw | null;
         navigation?: serializers.NavigationConfig.Raw | null;
         "navbar-links"?: serializers.NavbarLink.Raw[] | null;
         "footer-links"?: serializers.FooterLinksConfig.Raw | null;
