@@ -11,6 +11,7 @@ export const SectionConfiguration: core.serialization.ObjectSchema<
     FernDocsConfig.SectionConfiguration
 > = core.serialization.object({
     section: core.serialization.string(),
+    path: core.serialization.string().optional(),
     contents: core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).NavigationItem)),
     collapsed: core.serialization.boolean().optional(),
     slug: core.serialization.string().optional(),
@@ -22,6 +23,7 @@ export const SectionConfiguration: core.serialization.ObjectSchema<
 export declare namespace SectionConfiguration {
     interface Raw {
         section: string;
+        path?: string | null;
         contents: serializers.NavigationItem.Raw[];
         collapsed?: boolean | null;
         slug?: string | null;
