@@ -58,36 +58,6 @@ try {
 }
 ```
 
-## Retries
-
-The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
-as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
-retry limit (default: 2).
-
-A request is deemed retriable when any of the following HTTP status codes is returned:
-
--   [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
--   [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
--   [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
-
-Use the `maxRetries` request option to configure this behavior.
-
-```typescript
-const response = await client.create(..., {
-    maxRetries: 0 // override maxRetries at the request level
-});
-```
-
-## Timeouts
-
-The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
-
-```typescript
-const response = await client.create(..., {
-    timeoutInSeconds: 30 // override timeout to 30s
-});
-```
-
 ## Aborting Requests
 
 The SDK allows users to abort requests at any point by passing in an abort signal.
@@ -123,6 +93,38 @@ import { SeedValidationClient } from "@fern/validation";
 const client = new SeedValidationClient({
     ...
     fetcher: // provide your implementation here
+});
+```
+
+## Advanced
+
+### Retries
+
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
+
+A request is deemed retriable when any of the following HTTP status codes is returned:
+
+-   [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+-   [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+-   [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+Use the `maxRetries` request option to configure this behavior.
+
+```typescript
+const response = await client.create(..., {
+    maxRetries: 0 // override maxRetries at the request level
+});
+```
+
+### Timeouts
+
+The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
+
+```typescript
+const response = await client.create(..., {
+    timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
 

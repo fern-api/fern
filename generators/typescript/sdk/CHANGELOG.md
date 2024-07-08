@@ -5,32 +5,45 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.27.0] - 2024-07-08
+
+- Feature: The generated `.github/workflows/ci.yml` file now supports NPM publishing with
+  alpha/beta dist tags. If the selected version contains the `alpha` or `beta` substring,
+  the associated dist tag will be added in the `npm publish` command like the following:
+
+  ```sh
+  # Version 1.0.0-beta
+  npm publish --tag beta
+  ```
+
+  For more on NPM dist tags, see https://docs.npmjs.com/adding-dist-tags-to-packages
+
 ## [0.26.0-rc3] - 2024-06-30
 
 - Fix: The typesript generator now returns all `FormData` headers and Fetcher no longer stringifies stream.Readable type.
 
 ## [0.26.0-rc2] - 2024-06-27
 
-- Improvement: `RequestOptions` now supports overriding global headers like authentication 
-  and version. 
+- Improvement: `RequestOptions` now supports overriding global headers like authentication
+  and version.
 
 ## [0.26.0-rc1] - 2024-06-27
 
-- Fix: The generator was skipping auto pagination for item arrays that were optional. Now, 
-  those are safely handled as well. 
+- Fix: The generator was skipping auto pagination for item arrays that were optional. Now,
+  those are safely handled as well.
 
 ## [0.26.0-rc0] - 2024-06-27
 
-- Feature: The TypeScript generator now supports cursor-based auto pagination. With 
-  auto pagination, a user can simply iterate over the results automatically: 
+- Feature: The TypeScript generator now supports cursor-based auto pagination. With
+  auto pagination, a user can simply iterate over the results automatically:
 
   ```ts
   for (const user of client.users.list()) {
     consoler.log(user);
   }
   ```
-  
-  Users can also paginate over data manually 
+
+  Users can also paginate over data manually
 
   ```ts
   const page = client.users.list();

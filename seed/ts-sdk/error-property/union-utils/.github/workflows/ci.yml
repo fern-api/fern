@@ -46,6 +46,12 @@ jobs:
       - name: Publish to npm
         run: |
           npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
-          npm publish --access restricted
+          if [[ ${NPM_TOKEN} == *alpha* ]]; then
+            npm publish --access restricted --tag alpha
+          elif [[ ${NPM_TOKEN} == *beta* ]]; then
+            npm publish --access restricted --tag beta
+          else
+            npm publish --access restricted
+          fi
         env:
           NPM_TOKEN: ${{ secrets. }}
