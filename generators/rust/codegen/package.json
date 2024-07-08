@@ -1,10 +1,10 @@
 {
-  "name": "@fern-api/LANGUAGE_NAME-codegen",
+  "name": "@fern-api/rust-codegen",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
-    "directory": "generators/LANGUAGE_NAME/codegen"
+    "directory": "generators/rust/codegen"
   },
   "files": [
     "lib"

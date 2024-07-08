@@ -7,6 +7,9 @@ cd "$(dirname "$0")/.." || { echo "Failed to change to root directory"; exit 1; 
 read -p "Enter the language name (e.g. 'Swift', 'Rust', etc): " new_name
 echo "🌿 Setting up a new generator for $new_name!"
 
+# Store the original name for later use
+original_name="$new_name"
+
 # Convert new_name to lowercase and replace spaces/dashes with underscores
 new_name=$(echo "$new_name" | tr '[:upper:]' '[:lower:]' | tr ' ' '_' | tr '-' '_')
 
@@ -28,6 +31,15 @@ fi
 
 # Copy template directory to a new directory with the user-provided name
 cp -r "$template_dir" "$new_dir"
+
+# Function to recursively replace "FULL_LANGUAGE_NAME" in all files
+replace_full_language_name() {
+  original_name="$1"
+  find "$new_dir" -type f -exec sed -i '' -e "s/FULL_LANGUAGE_NAME/$original_name/g" {} +
+}
+
+# Call the function to replace "FULL_LANGUAGE_NAME" in all files within the new directory
+replace_full_language_name "$original_name"
 
 # Function to recursively replace "LANGUAGE_NAME" in all files
 replace_language_name() {

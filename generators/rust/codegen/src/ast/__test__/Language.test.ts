@@ -1,11 +1,9 @@
-import { LANGUAGE_NAME } from "../..";
+import { rust } from "../..";
 
-describe("FULL_LANGUAGE_NAME Language", () => {
-
-    // TODO: 👋 Add your other language tests here
+describe("Rust Language", () => {
 
     it("makes function", async () => {
-        const output = LANGUAGE_NAME.makeFunction({
+        const output = rust.makeFunction({
             name: "doSomething",
         });
         // eslint-disable-next-line no-console
@@ -13,10 +11,10 @@ describe("FULL_LANGUAGE_NAME Language", () => {
     });
 
     it("makes class", async () => {
-        const output = LANGUAGE_NAME.makeClass({
+        const output = rust.makeClass({
             name: "Example",
             functions: [
-                LANGUAGE_NAME.makeFunction({
+                rust.makeFunction({
                     name: "doSomething",
                 }),
             ]
@@ -26,12 +24,12 @@ describe("FULL_LANGUAGE_NAME Language", () => {
     });
 
     it("makes file", async () => {
-        const output = LANGUAGE_NAME.makeFile({
-            name: "FernExample.LANGUAGE_NAME",
-            class: LANGUAGE_NAME.makeClass({
+        const output = rust.makeFile({
+            name: "FernExample.rust",
+            class: rust.makeClass({
                 name: "Example",
                 functions: [
-                    LANGUAGE_NAME.makeFunction({
+                    rust.makeFunction({
                         name: "doSomething",
                     }),
                 ]
