@@ -1,6 +1,6 @@
+import { replaceReferencedMarkdown } from "../replaceReferencedMarkdown";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { replaceReferencedMarkdown } from "../replaceReferencedMarkdown";
 
 const absolutePathToFernFolder = AbsoluteFilePath.of("/path/to/fern");
 const absolutePathToMdx = AbsoluteFilePath.of("/path/to/fern/pages/test.mdx");
