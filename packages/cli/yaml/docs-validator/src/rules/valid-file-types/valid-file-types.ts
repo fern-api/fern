@@ -115,9 +115,15 @@ export const isValidFileType = async (absoluteFilepath: string): Promise<RuleVio
     // if `fileType` is undefined, its type can't be parsed because it's likely a text file
     if (ALLOWED_EXTENSIONS.has(extension)) {
         const encoding = chardet.detect(file);
-        if (encoding != null && ALLOWED_ENCODINGS.has(encoding.toUpperCase())) {
-            return [];
-        } else {
+        if (encoding == null) {
+            return [
+                {
+                    severity: "error",
+                    message: `The encoding of the file could not be detected: ${absoluteFilepath}`
+                }
+            ];
+        }
+        if (!ALLOWED_ENCODINGS.has(encoding.toUpperCase())) {
             return [
                 {
                     severity: "error",
@@ -125,6 +131,8 @@ export const isValidFileType = async (absoluteFilepath: string): Promise<RuleVio
                 }
             ];
         }
+
+        return [];
     }
 
     // in all other cases, return false
