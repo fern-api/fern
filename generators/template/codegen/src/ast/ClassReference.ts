@@ -1,4 +1,4 @@
-import { lang } from "..";
+import { LANGUAGE_NAME } from "..";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
@@ -9,14 +9,14 @@ export declare namespace ClassReference {
         /* The namespace of the C# class*/
         namespace: string;
         /* Any generics used in the class reference */
-        generics?: lang.Type[];
+        generics?: LANGUAGE_NAME.Type[];
     }
 }
 
 export class ClassReference extends AstNode {
     public readonly name: string;
     public readonly namespace: string;
-    public readonly generics: lang.Type[];
+    public readonly generics: LANGUAGE_NAME.Type[];
 
     constructor({ name, namespace, generics }: ClassReference.Args) {
         super();

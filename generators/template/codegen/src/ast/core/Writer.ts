@@ -1,5 +1,5 @@
 import { ClassReference } from "..";
-import { lang } from "../..";
+import { LANGUAGE_NAME } from "../..";
 import { AstNode } from "./AstNode";
 
 type Namespace = string;
@@ -66,7 +66,7 @@ export class Writer {
      * @param node
      */
     public writeTextStatement(text: string): void {
-        const codeBlock = lang.codeblock(text);
+        const codeBlock = LANGUAGE_NAME.codeblock(text);
         codeBlock.write(this);
         this.write(";");
         this.writeNewLineIfLastLineNot();
@@ -77,7 +77,7 @@ export class Writer {
      * @param node
      */
     public controlFlow(prefix: string, statement: string): void {
-        const codeBlock = lang.codeblock(prefix);
+        const codeBlock = LANGUAGE_NAME.codeblock(prefix);
         codeBlock.write(this);
         this.write(" (");
         this.write(statement);

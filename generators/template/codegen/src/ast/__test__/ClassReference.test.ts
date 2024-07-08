@@ -1,18 +1,18 @@
-import { lang } from "../..";
+import { LANGUAGE_NAME } from "../..";
 
 describe("class reference", () => {
     it("generics", async () => {
-        const clazz = lang.classReference({
+        const clazz = LANGUAGE_NAME.classReference({
             name: "OneOf",
             namespace: "OneOf",
             generics: [
-                lang.Type.string(),
-                lang.Type.boolean(),
-                lang.Type.reference(
-                    lang.classReference({
+                LANGUAGE_NAME.Type.string(),
+                LANGUAGE_NAME.Type.boolean(),
+                LANGUAGE_NAME.Type.reference(
+                    LANGUAGE_NAME.classReference({
                         namespace: "System",
                         name: "List",
-                        generics: [lang.Type.string()]
+                        generics: [LANGUAGE_NAME.Type.string()]
                     })
                 )
             ]
