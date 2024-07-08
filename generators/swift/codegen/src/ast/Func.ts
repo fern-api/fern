@@ -1,8 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Lang from "../lang";
-import { AccessLevel } from "./AccessLevel";
-import { FunctionModifier } from "./FunctionModifier";
-import { Param } from "./Param";
+import Lang, { AccessLevel, FunctionModifier, Param } from "../lang";
 
 export declare namespace Func {
     interface Args {

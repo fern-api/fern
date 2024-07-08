@@ -1,11 +1,13 @@
-import { LANGUAGE_NAME } from "../..";
+import Lang from "../../lang";
+
+const FULL_LANGUAGE_NAME = Lang;
 
 describe("FULL_LANGUAGE_NAME Language", () => {
 
     // TODO: 👋 Add your other language tests here
 
     it("makes function", () => {
-        const output = LANGUAGE_NAME.makeFunction({
+        const output = FULL_LANGUAGE_NAME.makeFunction({
             name: "doSomething",
         });
         // eslint-disable-next-line no-console
@@ -13,10 +15,10 @@ describe("FULL_LANGUAGE_NAME Language", () => {
     });
 
     it("makes class", () => {
-        const output = LANGUAGE_NAME.makeClass({
+        const output = FULL_LANGUAGE_NAME.makeClass({
             name: "Example",
             functions: [
-                LANGUAGE_NAME.makeFunction({
+                FULL_LANGUAGE_NAME.makeFunction({
                     name: "doSomething",
                 }),
             ]
@@ -26,12 +28,12 @@ describe("FULL_LANGUAGE_NAME Language", () => {
     });
 
     it("makes file", () => {
-        const output = LANGUAGE_NAME.makeFile({
+        const output = FULL_LANGUAGE_NAME.makeFile({
             name: "FernExample.LANGUAGE_NAME",
-            class: LANGUAGE_NAME.makeClass({
+            class: FULL_LANGUAGE_NAME.makeClass({
                 name: "Example",
                 functions: [
-                    LANGUAGE_NAME.makeFunction({
+                    FULL_LANGUAGE_NAME.makeFunction({
                         name: "doSomething",
                     }),
                 ]

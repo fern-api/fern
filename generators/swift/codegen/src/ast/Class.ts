@@ -1,8 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Lang from "../lang";
-import { AccessLevel } from "./AccessLevel";
-import { Func } from "./Func";
-import { Import } from "./Import";
+import Lang, { AccessLevel, Func, Import } from "../lang";
 
 export declare namespace Class {
     interface Args {

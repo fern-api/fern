@@ -1,7 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Lang from "../lang";
-import { Class } from "./Class";
-import { FileHeader } from "./FileHeader";
+import Lang, { Class, FileHeader } from "../lang";
 
 export declare namespace File {
     interface Args {

@@ -1,6 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import { INDENT_SIZE } from "../lang";
-import { Func } from "./Func";
+import Lang, { Func } from "../lang";
 
 export declare namespace Class {
     interface Args {
@@ -18,7 +17,7 @@ export class Class extends AstNode {
         name,
         functions,
     }: Class.Args) {
-        super(INDENT_SIZE);
+        super(Lang.indentSize);
         this.name = name;
         this.functions = functions;
     }

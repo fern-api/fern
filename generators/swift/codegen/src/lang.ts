@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 import * as Ast from "./ast";
+export * from "./ast";
 
 export default class Lang {
 
