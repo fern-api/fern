@@ -34,6 +34,7 @@ const ALLOWED_EXTENSIONS = new Set(["js", "svg"]);
 
 // allowed text encodings
 const ALLOWED_ENCODINGS = new Set([
+    "ASCII", // 7-bit American Standard Code for Information Interchange
     "UTF-8", // default
     "UTF-16", // 16-bit Unicode Transformation Format
     "ISO-8859-1", // Latin-1 (Western European)
@@ -50,7 +51,6 @@ const ALLOWED_ENCODINGS = new Set([
     "ISO-8859-14", // Latin-8 (Celtic)
     "ISO-8859-15", // Latin-9 (Euro)
     "ISO-8859-16", // Latin-10 (South-Eastern European)
-    "ASCII", // 7-bit American Standard Code for Information Interchange
     "WINDOWS-1250", // Central European
     "WINDOWS-1251", // Cyrillic
     "WINDOWS-1252", // Western European
