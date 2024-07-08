@@ -1,5 +1,5 @@
 import { ClassReference } from "..";
-import { swift } from "../../";
+import { lang } from "../..";
 import { AstNode } from "./AstNode";
 
 type Namespace = string;
@@ -66,7 +66,7 @@ export class Writer {
      * @param node
      */
     public writeTextStatement(text: string): void {
-        const codeBlock = swift.codeblock(text);
+        const codeBlock = lang.codeblock(text);
         codeBlock.write(this);
         this.write(";");
         this.writeNewLineIfLastLineNot();
@@ -77,7 +77,7 @@ export class Writer {
      * @param node
      */
     public controlFlow(prefix: string, statement: string): void {
-        const codeBlock = swift.codeblock(prefix);
+        const codeBlock = lang.codeblock(prefix);
         codeBlock.write(this);
         this.write(" (");
         this.write(statement);

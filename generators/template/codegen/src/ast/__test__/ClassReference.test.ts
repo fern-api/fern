@@ -1,22 +1,23 @@
-import { swift } from "../..";
+import { lang } from "../..";
 
 describe("class reference", () => {
     it("generics", async () => {
-        const clazz = swift.classReference({
+        const clazz = lang.classReference({
             name: "OneOf",
             namespace: "OneOf",
             generics: [
-                swift.Type.string(),
-                swift.Type.boolean(),
-                swift.Type.reference(
-                    swift.classReference({
+                lang.Type.string(),
+                lang.Type.boolean(),
+                lang.Type.reference(
+                    lang.classReference({
                         namespace: "System",
                         name: "List",
-                        generics: [swift.Type.string()]
+                        generics: [lang.Type.string()]
                     })
                 )
             ]
         });
+        // eslint-disable-next-line no-console
         console.log(clazz.toString());
         expect(clazz.toString()).toContain("OneOf<string, bool, List<string>>");
     });

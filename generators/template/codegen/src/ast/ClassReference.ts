@@ -1,4 +1,4 @@
-import { swift } from "../";
+import { lang } from "..";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
@@ -9,14 +9,14 @@ export declare namespace ClassReference {
         /* The namespace of the C# class*/
         namespace: string;
         /* Any generics used in the class reference */
-        generics?: swift.Type[];
+        generics?: lang.Type[];
     }
 }
 
 export class ClassReference extends AstNode {
     public readonly name: string;
     public readonly namespace: string;
-    public readonly generics: swift.Type[];
+    public readonly generics: lang.Type[];
 
     constructor({ name, namespace, generics }: ClassReference.Args) {
         super();
