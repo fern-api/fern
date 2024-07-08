@@ -1,4 +1,5 @@
-import { Class, FileHeader, Import } from "./ast";
+import { Class, File, FileHeader, Func, Import } from "./ast";
+import { Param } from "./ast/Param";
 
 export function makeFileHeader(args: FileHeader.Args): FileHeader {
   return new FileHeader(args);
@@ -8,8 +9,20 @@ export function makeImport(args: Import.Args): Import {
   return new Import(args);
 }
 
+export function makeParam(args: Param.Args): Param {
+  return new Param(args);
+}
+
+export function makeFunc(args: Func.Args): Func {
+  return new Func(args);
+}
+
 export function makeClass(args: Class.Args): Class {
   return new Class(args);
+}
+
+export function makeFile(args: File.Args): File {
+  return new File(args);
 }
 
 // export function annotation(args: Annotation.Args): Annotation {

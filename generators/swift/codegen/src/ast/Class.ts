@@ -1,68 +1,62 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
 import { AccessLevel } from "./AccessLevel";
-import { FileHeader } from "./FileHeader";
+import { Func } from "./Func";
 import { Import } from "./Import";
 
 export declare namespace Class {
     interface Args {
-        fileHeader?: FileHeader;
         imports?: Import[];
-        accessLevel: AccessLevel;
+        accessLevel?: AccessLevel;
         name: string;
+        functions: Func[];
     }
 }
 
 export class Class extends AstNode {
 
-    public readonly fileHeader?: FileHeader;
-    public readonly imports: Import[];
-    public readonly accessLevel: AccessLevel;
+    public readonly imports?: Import[];
+    public readonly accessLevel?: AccessLevel;
     public readonly name: string;
+    public readonly functions?: Func[];
 
     constructor({ 
-        fileHeader = undefined, 
-        imports = [], 
-        accessLevel = AccessLevel.Internal, 
-        name 
+        imports, 
+        accessLevel, 
+        name,
+        functions
     }: Class.Args) {
         super();
-        this.fileHeader = fileHeader;
         this.imports = imports;
         this.accessLevel = accessLevel;
         this.name = name;
+        this.functions = functions;
     }
 
     public write(writer: Writer): void {
 
-        // e.g. // ClassName.swift ...
-        if (this.fileHeader) {
-            writer.writeNode(this.fileHeader);
-        }
-
         // e.g. import PackageName
-        this.imports.forEach(imp => {
-            writer.writeNode(imp);
-        });
-
-        // Add line break if needed
         if (this.imports) {
+            this.imports.forEach(imp => {
+                writer.writeNode(imp);
+            });
             writer.newLine();
         }
 
         // e.g. public class ClassName {
-        writer.write(`${this.accessLevel} class ${this.name} {`);
+        const title = [this.accessLevel, "class", this.name,  "{"].filter(value => value !== undefined).join(" ");
+
+        writer.write(title);
 
         writer.newLine();
 
             writer.openIndent();
 
-            writer.write("// Put code here");
-
-                writer.openIndent();
-
-                writer.write("// Another indent");
-
-                writer.closeIndent();
+            if (this.functions) {
+                this.functions.forEach(func => {
+                    writer.writeNode(func);
+                    writer.newLine();
+                });
+            }
 
             writer.closeIndent();
 
