@@ -1,5 +1,4 @@
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
+import { AstNode, Writer } from "@fern-api/generator-commons";
 
 export declare namespace Import {
   interface Args {

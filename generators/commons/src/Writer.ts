@@ -47,7 +47,7 @@ export class Writer {
     }
 
     public writeNode(node: AstNode): void {
-        node.write(this);
+        node.write(this); // Call the write method of AstNode passing this Writer instance
     }
 
     public toString(): string {

@@ -1,6 +1,5 @@
+import { AstNode, Writer } from "@fern-api/generator-commons";
 import { AccessLevel } from "./AccessLevel";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
 import { FileHeader } from "./FileHeader";
 import { Import } from "./Import";
 
@@ -75,4 +74,5 @@ export class Class extends AstNode {
         writer.newLine();
 
     }
+
 }

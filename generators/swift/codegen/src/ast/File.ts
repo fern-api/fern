@@ -1,6 +1,5 @@
+import { AstNode, Writer } from "@fern-api/generator-commons";
 import { Class } from "./Class";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
 import { Import } from "./Import";
 
 export declare namespace File {

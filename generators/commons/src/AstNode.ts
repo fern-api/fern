@@ -1,6 +1,7 @@
 import { Writer } from "./Writer";
 
 export abstract class AstNode {
+    
     /**
      * Every AST node knows how to write itself to a string.
      */

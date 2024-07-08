@@ -1,5 +1,4 @@
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
+import { AstNode, Writer } from "@fern-api/generator-commons";
 
 export declare namespace FileHeader {
     interface Args {
@@ -17,7 +16,7 @@ export class FileHeader extends AstNode {
         super();
         this.header = header;
     }
-
+ 
     public write(writer: Writer): void {
         writer.write(this.header);
     }
