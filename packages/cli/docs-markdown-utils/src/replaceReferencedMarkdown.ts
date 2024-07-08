@@ -9,6 +9,8 @@ async function defaultMarkdownLoader(filepath: AbsoluteFilePath) {
     return content;
 }
 
+// TODO: recursively replace referenced markdown files
+// TODO: inherit indentation from parent markdown file when replacing referenced markdown snippets
 export async function replaceReferencedMarkdown({
     markdown,
     absolutePathToFernFolder,
