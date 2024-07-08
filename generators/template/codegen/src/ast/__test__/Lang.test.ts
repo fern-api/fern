@@ -6,6 +6,8 @@ describe("FULL_LANGUAGE_NAME Language", () => {
 
     // TODO: 👋 Add your other language tests here
 
+    // Note: You can change the language's indentation size with FULL_LANGUAGE_NAME.indentSize
+
     it("makes function", () => {
         const output = FULL_LANGUAGE_NAME.makeFunction({
             name: "doSomething",
