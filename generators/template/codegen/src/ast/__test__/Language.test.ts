@@ -4,7 +4,7 @@ describe("FULL_LANGUAGE_NAME Language", () => {
 
     // TODO: 👋 Add your other language tests here
 
-    it("makes function", async () => {
+    it("makes function", () => {
         const output = LANGUAGE_NAME.makeFunction({
             name: "doSomething",
         });
@@ -12,7 +12,7 @@ describe("FULL_LANGUAGE_NAME Language", () => {
         console.log(output.toString());
     });
 
-    it("makes class", async () => {
+    it("makes class", () => {
         const output = LANGUAGE_NAME.makeClass({
             name: "Example",
             functions: [
@@ -25,7 +25,7 @@ describe("FULL_LANGUAGE_NAME Language", () => {
         console.log(output.toString());
     });
 
-    it("makes file", async () => {
+    it("makes file", () => {
         const output = LANGUAGE_NAME.makeFile({
             name: "FernExample.LANGUAGE_NAME",
             class: LANGUAGE_NAME.makeClass({

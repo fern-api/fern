@@ -1,4 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
+import { INDENT_SIZE } from "../lang";
 
 export declare namespace Func {
     interface Args {
@@ -13,7 +14,7 @@ export class Func extends AstNode {
     constructor({ 
         name,
     }: Func.Args) {
-        super();
+        super(INDENT_SIZE);
         this.name = name;
     }
 

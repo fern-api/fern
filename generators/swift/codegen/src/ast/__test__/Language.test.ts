@@ -4,7 +4,7 @@ import { FunctionModifier } from "../FunctionModifier";
 
 describe("Swift Language", () => {
 
-    it("makes file header", async () => {
+    it("makes file header", () => {
         const output = swift.makeFileHeader({
             header: "This is the header to a file"
         });
@@ -12,7 +12,7 @@ describe("Swift Language", () => {
         console.log(output.toString());
     });
 
-    it("makes import", async () => {
+    it("makes import", () => {
         const output = swift.makeImport({
             packageName: "ExamplePackage"
         });
@@ -20,7 +20,7 @@ describe("Swift Language", () => {
         console.log(output.toString());
     });
 
-    it("makes function", async () => {
+    it("makes function", () => {
         const output = swift.makeFunc({
             accessLevel: AccessLevel.Fileprivate,
             modifier: FunctionModifier.Static,
@@ -43,7 +43,7 @@ describe("Swift Language", () => {
         console.log(output.toString());
     });
 
-    it("makes class", async () => {
+    it("makes class", () => {
         const output = swift.makeClass({
             imports: [
                 swift.makeImport({ packageName: "SamplePackageOne" }),
@@ -61,7 +61,7 @@ describe("Swift Language", () => {
         console.log(output.toString());
     });
 
-    it("makes file", async () => {
+    it("makes file", () => {
         const output = swift.makeFile({
             fileHeader: swift.makeFileHeader({
                 header: "This is the header to a file"

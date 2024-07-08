@@ -8,13 +8,16 @@ export declare namespace Writer {
 
 export class Writer {
 
-    private buffer = "";
-    private indentLevel = 0;
-    private hasWrittenAnything = false;
-    private readonly tabSize: number;
+    private buffer: string;
+    private indentLevel: number;
+    private hasWrittenAnything: boolean;
+    private indentSize: number;
 
-    constructor({ tabSize = 4 }: Writer.Args = {}) {
-        this.tabSize = tabSize;
+    constructor(indentSize: number) {
+        this.buffer = "";
+        this.indentLevel = 0;
+        this.hasWrittenAnything = false;
+        this.indentSize = indentSize;
     }
 
     public write(text: string): void {
@@ -23,7 +26,7 @@ export class Writer {
             this.buffer += "\n";
         }
 
-        const indent = this.getIndentString();
+        const indent = this.getIndentString(this.indentSize);
         const indentedText = indent + text.replace(/\n/g, `\n${indent}`);
 
         this.buffer += indentedText;
@@ -47,14 +50,15 @@ export class Writer {
     }
 
     public writeNode(node: AstNode): void {
-        node.write(this); // Call the write method of AstNode passing this Writer instance
+        node.write(this);
     }
 
     public toString(): string {
         return this.buffer;
     }
 
-    private getIndentString(): string {
-        return " ".repeat(this.indentLevel * this.tabSize);
+    private getIndentString(tabSize: number): string {
+        return " ".repeat(this.indentLevel * tabSize);
     }
+
 }

@@ -1,4 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
+import { INDENT_SIZE } from "../lang";
 
 export declare namespace Param {
     interface Args {
@@ -19,7 +20,7 @@ export class Param extends AstNode {
         type,
         defaultValue,
     }: Param.Args) {
-        super();
+        super(INDENT_SIZE);
         this.title = title;
         this.type = type;
         this.defaultValue = defaultValue;

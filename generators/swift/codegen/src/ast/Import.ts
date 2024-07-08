@@ -1,4 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
+import { INDENT_SIZE } from "../lang";
 
 export declare namespace Import {
   interface Args {
@@ -13,7 +14,7 @@ export class Import extends AstNode {
   constructor({
     packageName 
   }: Import.Args) {
-    super();
+    super(INDENT_SIZE);
     this.packageName = packageName;
   }
 

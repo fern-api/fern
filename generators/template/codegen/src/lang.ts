@@ -7,6 +7,8 @@ export * from "./ast";
 //   return new Ast.NAME(args);
 // }
 
+export const INDENT_SIZE = 4;
+
 export function makeFunction(args: Ast.Func.Args): Ast.Func {
   return new Ast.Func(args);
 }

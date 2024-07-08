@@ -1,4 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
+import { INDENT_SIZE } from "../lang";
 import { AccessLevel } from "./AccessLevel";
 import { FunctionModifier } from "./FunctionModifier";
 import { Param } from "./Param";
@@ -34,7 +35,7 @@ export class Func extends AstNode {
         throws,
         returnObject,
     }: Func.Args) {
-        super();
+        super(INDENT_SIZE);
         this.accessLevel = accessLevel;
         this.modifier = modifier,
         this.name = name,

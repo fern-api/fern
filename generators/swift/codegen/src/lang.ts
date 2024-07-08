@@ -1,5 +1,7 @@
 import * as Ast from "./ast";
 
+export const INDENT_SIZE = 4;
+
 export function makeFileHeader(args: Ast.FileHeader.Args): Ast.FileHeader {
   return new Ast.FileHeader(args);
 }
@@ -23,4 +25,3 @@ export function makeClass(args: Ast.Class.Args): Ast.Class {
 export function makeFile(args: Ast.File.Args): Ast.File {
   return new Ast.File(args);
 }
-
