@@ -80,9 +80,9 @@ ${getTestJob({ config })}`;
       - name: Publish to npm
         run: |
           npm config set //registry.npmjs.org/:_authToken \${NPM_TOKEN}
-          if [[ \${NPM_TOKEN} == *alpha* ]]; then
+          if [[ \${GITHUB_REF} == *alpha* ]]; then
             npm publish --access ${access} --tag alpha
-          elif [[ \${NPM_TOKEN} == *beta* ]]; then
+          elif [[ \${GITHUB_REF} == *beta* ]]; then
             npm publish --access ${access} --tag beta
           else
             npm publish --access ${access}
