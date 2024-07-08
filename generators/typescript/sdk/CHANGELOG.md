@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.27.1] - 2024-07-08
+
+- Feature: Support JSR publishing. If you would like your SDK to be published to JSR, there
+  is now a configuration option called `publishToJsr: true`. When enabled, the generator will
+  generate a `jsr.json` as well as a GitHub workflow to publish to JSR.
+
+  ```yaml
+  - name: fernapi/fern-typescript-sdk
+    version: 0.27.1
+    config:
+      publishToJsr: true
+  ```
+
 ## [0.27.0] - 2024-07-08
 
 - Fix: Boolean literal headers can now be overridden via `RequestOptions`.

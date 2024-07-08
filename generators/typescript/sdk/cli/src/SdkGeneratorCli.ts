@@ -54,7 +54,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             retainOriginalCasing: parsed?.retainOriginalCasing ?? false,
             allowExtraFields: parsed?.allowExtraFields ?? false,
             inlineFileProperties: parsed?.inlineFileProperties ?? false,
-            packageJson: parsed?.packageJson
+            packageJson: parsed?.packageJson,
+            publishToJsr: parsed?.publishToJsr ?? false
         };
     }
 
@@ -130,7 +131,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 executionEnvironment: this.exectuionEnvironment(config),
                 packageJson: customConfig.packageJson,
                 githubRepoUrl: maybeGithubOutputMode?.repoUrl,
-                githubInstallationToken: maybeGithubOutputMode?.installationToken
+                githubInstallationToken: maybeGithubOutputMode?.installationToken,
+                outputJsr: customConfig.publishToJsr ?? false
             }
         });
         const typescriptProject = await sdkGenerator.generate();
@@ -152,6 +154,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
 
     protected shouldTolerateRepublish(customConfig: SdkCustomConfig): boolean {
         return customConfig.tolerateRepublish;
+    }
+
+    protected publishToJsr(customConfig: SdkCustomConfig): boolean {
+        return customConfig.publishToJsr ?? false;
     }
 
     protected exectuionEnvironment(config: FernGeneratorExec.GeneratorConfig): "local" | "dev" | "prod" {

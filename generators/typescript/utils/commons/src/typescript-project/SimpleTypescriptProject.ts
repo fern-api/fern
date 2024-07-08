@@ -5,6 +5,7 @@ import { IPackageJson } from "package-json-type";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph";
 import { DependencyType, PackageDependencies } from "../dependency-manager/DependencyManager";
 import { NpmPackage } from "../NpmPackage";
+import { JSR } from "./JSR";
 import { mergeExtraConfigs } from "./mergeExtraConfigs";
 import { TypescriptProject } from "./TypescriptProject";
 
@@ -12,6 +13,7 @@ const FERN_IGNORE_FILENAME = ".fernignore";
 
 export declare namespace SimpleTypescriptProject {
     export interface Init extends TypescriptProject.Init {
+        outputJsr: boolean;
         npmPackage: NpmPackage | undefined;
         dependencies: PackageDependencies;
         outputEsm: boolean;
@@ -30,6 +32,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
     private outputEsm: boolean;
     private resolutions: Record<string, string>;
     private extraConfigs: Record<string, unknown> | undefined;
+    private outputJsr: boolean;
 
     constructor({
         npmPackage,
@@ -37,6 +40,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
         outputEsm,
         resolutions,
         extraConfigs,
+        outputJsr,
         ...superInit
     }: SimpleTypescriptProject.Init) {
         super(superInit);
@@ -45,6 +49,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
         this.outputEsm = outputEsm;
         this.resolutions = resolutions;
         this.extraConfigs = extraConfigs;
+        this.outputJsr = outputJsr ?? false;
     }
 
     protected async addFilesToVolume(): Promise<void> {
@@ -53,6 +58,9 @@ export class SimpleTypescriptProject extends TypescriptProject {
         await this.generatePrettierRc();
         await this.generateTsConfig();
         await this.generatePackageJson();
+        if (this.outputJsr) {
+            await this.generateJsrJson();
+        }
     }
 
     protected getYarnFormatCommand(): string[] {
@@ -212,6 +220,17 @@ export class SimpleTypescriptProject extends TypescriptProject {
         packageJson = mergeExtraConfigs(packageJson, this.extraConfigs);
 
         await this.writeFileToVolume(RelativeFilePath.of("package.json"), JSON.stringify(packageJson, undefined, 4));
+    }
+
+    private async generateJsrJson(): Promise<void> {
+        if (this.npmPackage != null) {
+            const jsr: JSR = {
+                name: this.npmPackage?.packageName,
+                version: this.npmPackage.version,
+                exports: "src/index.ts"
+            };
+            await this.writeFileToVolume(RelativeFilePath.of("jsr.json"), JSON.stringify(jsr, undefined, 4));
+        }
     }
 
     private getDevDependencies(): Record<string, string> {
