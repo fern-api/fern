@@ -1,7 +1,7 @@
 {
   "extends": "../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*", "../docs-markdown-utils/src/__test__/replaceReferencedMarkdown.test.ts", "../docs-markdown-utils/src/replaceReferencedMarkdown.ts", "../docs-markdown-utils/src/replaceReferencedMarkdown.ts"],
+  "include": ["./src/**/*"],
   "references": [
     { "path": "../../commons/core-utils" },
     { "path": "../../commons/fs-utils" },
@@ -14,3 +14,4 @@
     { "path": "../workspace-loader" }
   ]
 }
+ 
