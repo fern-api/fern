@@ -1,27 +1,32 @@
+/* eslint-disable @typescript-eslint/no-extraneous-class */
 import * as Ast from "./ast";
 
-export const INDENT_SIZE = 4;
+export default class Lang {
 
-export function makeFileHeader(args: Ast.FileHeader.Args): Ast.FileHeader {
-  return new Ast.FileHeader(args);
-}
+  static indentSize = 4;
 
-export function makeImport(args: Ast.Import.Args): Ast.Import {
-  return new Ast.Import(args);
-}
+  public static makeFileHeader(args: Ast.FileHeader.Args): Ast.FileHeader {
+    return new Ast.FileHeader(args);
+  }
+  
+  public static makeImport(args: Ast.Import.Args): Ast.Import {
+    return new Ast.Import(args);
+  }
+  
+  public static makeParam(args: Ast.Param.Args): Ast.Param {
+    return new Ast.Param(args);
+  }
+  
+  public static makeFunc(args: Ast.Func.Args): Ast.Func {
+    return new Ast.Func(args);
+  }
+  
+  public static makeClass(args: Ast.Class.Args): Ast.Class {
+    return new Ast.Class(args);
+  }
+  
+  public static makeFile(args: Ast.File.Args): Ast.File {
+    return new Ast.File(args);
+  }
 
-export function makeParam(args: Ast.Param.Args): Ast.Param {
-  return new Ast.Param(args);
-}
-
-export function makeFunc(args: Ast.Func.Args): Ast.Func {
-  return new Ast.Func(args);
-}
-
-export function makeClass(args: Ast.Class.Args): Ast.Class {
-  return new Ast.Class(args);
-}
-
-export function makeFile(args: Ast.File.Args): Ast.File {
-  return new Ast.File(args);
 }

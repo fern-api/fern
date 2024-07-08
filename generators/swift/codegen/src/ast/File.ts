@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import { INDENT_SIZE } from "../lang";
+import Lang from "../lang";
 import { Class } from "./Class";
 import { FileHeader } from "./FileHeader";
 
@@ -19,7 +19,7 @@ export class File extends AstNode {
         fileHeader = undefined,
         class: classInstance,
     }: File.Args) {
-        super(INDENT_SIZE);
+        super(Lang.indentSize);
         this.fileHeader = fileHeader;
         this.class = classInstance;
     }

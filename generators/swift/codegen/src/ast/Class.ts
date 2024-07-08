@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import { INDENT_SIZE } from "../lang";
+import Lang from "../lang";
 import { AccessLevel } from "./AccessLevel";
 import { Func } from "./Func";
 import { Import } from "./Import";
@@ -26,7 +26,7 @@ export class Class extends AstNode {
         name,
         functions
     }: Class.Args) {
-        super(INDENT_SIZE);
+        super(Lang.indentSize);
         this.imports = imports;
         this.accessLevel = accessLevel;
         this.name = name;

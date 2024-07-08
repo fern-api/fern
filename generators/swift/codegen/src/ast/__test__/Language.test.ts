@@ -1,19 +1,21 @@
-import { swift } from "../..";
-import { AccessLevel } from "../AccessLevel";
-import { FunctionModifier } from "../FunctionModifier";
+import { AccessLevel, FunctionModifier } from "..";
+import Lang from "../../lang";
+
+const Swift = Lang;
 
 describe("Swift Language", () => {
 
     it("makes file header", () => {
-        const output = swift.makeFileHeader({
+        const output = Swift.makeFileHeader({
             header: "This is the header to a file"
         });
+
         // eslint-disable-next-line no-console
         console.log(output.toString());
     });
 
     it("makes import", () => {
-        const output = swift.makeImport({
+        const output = Swift.makeImport({
             packageName: "ExamplePackage"
         });
         // eslint-disable-next-line no-console
@@ -21,18 +23,18 @@ describe("Swift Language", () => {
     });
 
     it("makes function", () => {
-        const output = swift.makeFunc({
+        const output = Swift.makeFunc({
             accessLevel: AccessLevel.Fileprivate,
             modifier: FunctionModifier.Static,
             name: "makePerson",
             async: "async",
             throws: "throws",
             params: [
-                swift.makeParam({
+                Swift.makeParam({
                     title: "name",
                     type: "String",
                 }),
-                swift.makeParam({
+                Swift.makeParam({
                     title: "age",
                     type: "Int",
                     defaultValue: "33",
@@ -44,15 +46,15 @@ describe("Swift Language", () => {
     });
 
     it("makes class", () => {
-        const output = swift.makeClass({
+        const output = Swift.makeClass({
             imports: [
-                swift.makeImport({ packageName: "SamplePackageOne" }),
-                swift.makeImport({ packageName: "SamplePackageTwo" }),
+                Swift.makeImport({ packageName: "SamplePackageOne" }),
+                Swift.makeImport({ packageName: "SamplePackageTwo" }),
             ],
             accessLevel: AccessLevel.Fileprivate,
             name: "Sample",
             functions: [
-                swift.makeFunc({
+                Swift.makeFunc({
                     name: "doSomething"
                 })
             ],
@@ -62,22 +64,22 @@ describe("Swift Language", () => {
     });
 
     it("makes file", () => {
-        const output = swift.makeFile({
-            fileHeader: swift.makeFileHeader({
+        const output = Swift.makeFile({
+            fileHeader: Swift.makeFileHeader({
                 header: "This is the header to a file"
             }),
-            class: swift.makeClass({
+            class: Swift.makeClass({
                 imports: [
-                    swift.makeImport({ packageName: "SamplePackageOne" }),
-                    swift.makeImport({ packageName: "SamplePackageTwo" })
+                    Swift.makeImport({ packageName: "SamplePackageOne" }),
+                    Swift.makeImport({ packageName: "SamplePackageTwo" })
                 ],
                 accessLevel: AccessLevel.Open,
                 name: "Sample",
                 functions: [
-                    swift.makeFunc({
+                    Swift.makeFunc({
                         name: "findStuff"
                     }),
-                    swift.makeFunc({
+                    Swift.makeFunc({
                         accessLevel: AccessLevel.Public,
                         modifier: FunctionModifier.Static,
                         name: "getStuff",
