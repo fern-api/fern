@@ -61,6 +61,7 @@ ${getTestJob({ config })}`;
         (publishInfo != null && publishInfo?.shouldGeneratePublishWorkflow == null) ||
         publishInfo?.shouldGeneratePublishWorkflow === true
     ) {
+        const access = isPackagePrivate ? "restricted" : "public";
         workflowYaml += `
   publish:
     needs: [ compile, test ]
@@ -79,7 +80,13 @@ ${getTestJob({ config })}`;
       - name: Publish to npm
         run: |
           npm config set //registry.npmjs.org/:_authToken \${NPM_TOKEN}
-          npm publish --access ${isPackagePrivate ? "restricted" : "public"}
+          if [[ \${GITHUB_REF} == *alpha* ]]; then
+            npm publish --access ${access} --tag alpha
+          elif [[ \${GITHUB_REF} == *beta* ]]; then
+            npm publish --access ${access} --tag beta
+          else
+            npm publish --access ${access}
+          fi
         env:
           NPM_TOKEN: \${{ secrets.${publishInfo.tokenEnvironmentVariable} }}`;
     }
