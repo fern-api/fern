@@ -702,15 +702,43 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
                     let value: ts.Expression;
                     if (literalValue != null) {
-                        value = ts.factory.createBinaryExpression(
-                            ts.factory.createPropertyAccessChain(
-                                ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
-                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                ts.factory.createIdentifier(header.name.name.camelCase.safeName)
-                            ),
-                            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                            ts.factory.createStringLiteral(literalValue.toString())
-                        );
+                        if (typeof literalValue === "boolean") {
+                            value = ts.factory.createConditionalExpression(
+                                ts.factory.createBinaryExpression(
+                                    ts.factory.createPropertyAccessChain(
+                                        ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                        ts.factory.createIdentifier(header.name.name.camelCase.safeName)
+                                    ),
+                                    ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                                    ts.factory.createNull()
+                                ),
+                                ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                ts.factory.createCallExpression(
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                                            ts.factory.createIdentifier(header.name.name.camelCase.safeName)
+                                        ),
+                                        ts.factory.createIdentifier("toString")
+                                    ),
+                                    undefined,
+                                    []
+                                ),
+                                ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                                ts.factory.createStringLiteral(literalValue.toString())
+                            );
+                        } else {
+                            value = ts.factory.createBinaryExpression(
+                                ts.factory.createPropertyAccessChain(
+                                    ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                    ts.factory.createIdentifier(header.name.name.camelCase.safeName)
+                                ),
+                                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                ts.factory.createStringLiteral(literalValue.toString())
+                            );
+                        }
                     } else {
                         value = context.type.stringify(
                             context.coreUtilities.fetcher.Supplier.get(

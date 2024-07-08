@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.27.0] - 2024-07-08
 
+- Fix: Boolean literal headers can now be overridden via `RequestOptions`.
 - Feature: The generated `.github/workflows/ci.yml` file now supports NPM publishing with
   alpha/beta dist tags. If the selected version contains the `alpha` or `beta` substring,
   the associated dist tag will be added in the `npm publish` command like the following:
