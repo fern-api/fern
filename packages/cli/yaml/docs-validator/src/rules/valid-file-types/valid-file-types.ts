@@ -81,7 +81,7 @@ export const ValidFileTypes: Rule = {
 
                 const doesExist = await doesPathExist(absoluteFilepath);
                 if (doesExist) {
-                    return isValidFileType(absoluteFilepath);
+                    return getViolationsForFile(absoluteFilepath);
                 }
 
                 return [];
@@ -90,7 +90,7 @@ export const ValidFileTypes: Rule = {
     }
 };
 
-export const isValidFileType = async (absoluteFilepath: string): Promise<RuleViolation[]> => {
+export const getViolationsForFile = async (absoluteFilepath: string): Promise<RuleViolation[]> => {
     const file = await readFile(absoluteFilepath);
 
     // otherwise, check the file type
