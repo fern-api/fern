@@ -1,3 +1,4 @@
+import { DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import fetch from "node-fetch";
 import { runFernCli } from "../../utils/runFernCli";
@@ -26,10 +27,25 @@ describe("fern docs dev", () => {
         const responseText = await response.text();
         expect(responseText.includes("[object Promise]")).toBeFalsy();
 
-        const responseBody = JSON.parse(responseText);
+        const responseBody = JSON.parse(responseText) as DocsV2Read.LoadDocsForUrlResponse;
         expect(typeof responseBody === "object").toEqual(true);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         expect(Object.keys(responseBody as any)).toEqual(["baseUrl", "definition", "lightModeEnabled"]);
+
+        const root = FernNavigation.utils.convertLoadDocsForUrlResponse(responseBody);
+        const pageIds = new Set(Object.keys(responseBody.definition.pages));
+
+        let pagesVisited = 0;
+        FernNavigation.utils.traverseNavigation(root, (node) => {
+            if (FernNavigation.hasMarkdown(node)) {
+                const pageId = FernNavigation.utils.getPageId(node);
+                if (pageId != null) {
+                    expect(pageIds.has(pageId)).toBeTruthy();
+                    pagesVisited++;
+                }
+            }
+        });
+        expect(pagesVisited).toBeGreaterThan(0);
     }, 30_000);
 });
 
