@@ -3,14 +3,10 @@
 import Foundation
 import UIKit
 
-open class Sample {
 
-    func findStuff() {
-        print("Hey!")
-    }
-
-    public static func getStuff() async throws -> String {
-        print("Hey!")
-    }
-
-}
+            open class Sample {
+                func test() {
+                    print("Hello, world!")
+                }
+            }
+        

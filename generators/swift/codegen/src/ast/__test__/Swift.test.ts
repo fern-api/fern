@@ -40,11 +40,19 @@ describe("Swift Language", () => {
     });
 
     it("makes struct", () => {
+
         const output = Swift.makeStruct({
-            accessLevel: AccessLevel.Fileprivate,
+            accessLevel: AccessLevel.Internal,
             name: "Sample",
+            inheritance: [
+                Swift.makeClass({
+                    name: "Codable"
+                })
+            ]
         });
+
         expect(output.toString()).toMatchSnapshot();
+
     });
 
     it("makes class", () => {

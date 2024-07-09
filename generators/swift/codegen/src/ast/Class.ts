@@ -5,7 +5,7 @@ export declare namespace Class {
     interface Args {
         accessLevel?: AccessLevel;
         name: string;
-        functions: Func[];
+        functions?: Func[];
     }
 }
 
@@ -28,6 +28,22 @@ export class Class extends AstNode {
 
     public write(writer: Writer): void {
 
+        const snippet = `
+            $0 class $1 {
+
+                func test() {
+                    print("$2")
+                }
+            
+            }
+        `;
+
+        writer.writeSnippetWithVariables(snippet, {
+            "0": this.accessLevel,
+            "1": this.name,
+            "2": "Hello, world!"
+        });
+
         // e.g. public class ClassName {
         writer.openBlock([this.accessLevel, "class", this.name], "{", () => {
 
@@ -43,6 +59,7 @@ export class Class extends AstNode {
                 });
             }
 
+        // }
         }, "}");
 
     }
