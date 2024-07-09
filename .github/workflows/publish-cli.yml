@@ -1,0 +1,151 @@
+name: Publish CLI
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+      - '[0-9]+.[0-9]+.[0-9]+-rc[0-9]+'
+
+jobs:
+  live-test:
+    environment: Fern Prod
+    if: github.ref_type == 'tag' && github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Install
+        run: yarn install
+
+      - name: Check API definition is valid
+        env:
+          FORCE_COLOR: "2"
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+          POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
+        run: |
+          yarn workspace @fern-api/cli dist:cli:prod
+          cli_path="$(yarn workspace @fern-api/cli bin fern:prod)"
+          ./scripts/live-test.sh "$cli_path" "$FERN_TOKEN"
+
+  publish-dev:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    env:
+      YARN_NPM_AUTH_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+      AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+      AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+      POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn install
+      - name: Print version
+        run: |
+          git_version="$(./scripts/git-version.sh)"
+          echo Publishing version: "${git_version}"
+      - name: Add version to package.json's
+        run: |
+          git_version="$(./scripts/git-version.sh)"
+          yarn mrlint version "$git_version"
+      - name: Update yarn.lock with new versions
+        run: yarn
+      - name: Compile
+        run: yarn compile
+      - name: Publish seed CLI
+        run: yarn workspace @fern-api/seed-cli publish:cli
+      - name: Publish fern-api-dev CLI
+        run: yarn workspace @fern-api/cli publish:cli:dev --access restricted
+
+  publish-rc:
+    if: startsWith(github.ref, 'refs/tags/') && contains(github.ref, '-rc')
+    runs-on: ubuntu-latest
+    env:
+      YARN_NPM_AUTH_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+      AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+      AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+      POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn install
+      - name: Print version
+        run: |
+          git_version=${{ github.ref_name }}
+          echo Publishing version: "${git_version}"
+      - name: Add version to package.json's
+        run: |
+          git_version=${{ github.ref_name }}
+          yarn mrlint version "$git_version"
+      - name: Update yarn.lock with new versions
+        run: yarn
+      - name: Compile
+        run: yarn compile
+      - name: Publish fern-api-dev CLI
+        run: yarn workspace @fern-api/cli publish:cli:dev --access restricted
+      - name: Publish seed CLI
+        run: yarn workspace @fern-api/seed-cli publish:cli
+      - name: Publish fern-api CLI
+        run: yarn workspace @fern-api/cli publish:cli:prod --tag prerelease
+
+  publish:
+    if: startsWith(github.ref, 'refs/tags/') && !contains(github.ref, '-rc')
+    needs: live-test
+    runs-on: ubuntu-latest
+    env:
+      YARN_NPM_AUTH_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+      AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+      AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+      POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn install
+      - name: Print version
+        run: |
+          git_version=${{ github.ref_name }}
+          echo Publishing version: "${git_version}"
+      - name: Add version to package.json's
+        run: |
+          git_version=${{ github.ref_name }}
+          yarn mrlint version "$git_version"
+      - name: Update yarn.lock with new versions
+        run: yarn
+      - name: Compile
+        run: yarn compile
+      - name: Publish fern-api-dev CLI
+        run: yarn workspace @fern-api/cli publish:cli:dev --access restricted
+      - name: Publish seed CLI
+        run: yarn workspace @fern-api/seed-cli publish:cli
+      - name: Publish fern-api CLI
+        run: yarn workspace @fern-api/cli publish:cli:prod --tag latest

@@ -82,6 +82,9 @@ fixtures:
           "openai":
             optional: true
       outputFolder: dev-dependencies
+    - outputFolder: jsr
+      customConfig:
+        publishToJsr: true
   error-property:
     - customConfig:
         private: true

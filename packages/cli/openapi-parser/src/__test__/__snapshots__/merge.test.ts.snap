@@ -1067,6 +1067,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -1089,6 +1090,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -1609,6 +1611,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -2085,6 +2088,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -2107,6 +2111,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -2546,6 +2551,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -2917,6 +2923,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -2939,6 +2946,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -3346,6 +3354,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -4109,6 +4118,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -4131,6 +4141,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -5239,6 +5250,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -9007,6 +9019,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -9029,6 +9042,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -9051,6 +9065,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -10430,6 +10445,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -10452,6 +10468,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -14030,6 +14047,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -14052,6 +14070,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -15228,6 +15247,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -15250,6 +15270,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -16176,6 +16197,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -17020,6 +17042,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -17042,6 +17065,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -17500,6 +17524,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -18918,6 +18943,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -19415,6 +19441,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -19437,6 +19464,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -19907,6 +19935,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -20508,6 +20537,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -20530,6 +20560,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -20904,6 +20935,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -21308,6 +21340,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -21330,6 +21363,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -21971,6 +22005,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -23518,6 +23553,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -23540,6 +23576,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -23971,6 +24008,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -24467,6 +24505,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -24489,6 +24528,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -25424,6 +25464,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -25446,6 +25487,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -25865,6 +25907,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -25887,6 +25930,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -26448,6 +26492,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -26873,6 +26918,7 @@ exports[`open api parser merge parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -27953,6 +27999,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -28184,6 +28231,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -28383,6 +28431,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -28675,6 +28724,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -28848,6 +28898,7 @@ Fetch all the actions available for the \`Zenefits\` integration.",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -29219,6 +29270,7 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -29676,6 +29728,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -30294,6 +30347,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -30546,6 +30600,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -34224,6 +34279,7 @@ Create a \`DataPassthrough\` to get team hierarchies from your Rippling integrat
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -34626,6 +34682,7 @@ Fetch from the \`LIST Deductions\` endpoint and filter by \`ID\` to show all ded
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -34978,6 +35035,7 @@ Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earni
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -36389,6 +36447,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -36955,6 +37014,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -39573,6 +39633,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -40077,6 +40138,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": false,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -40744,6 +40806,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -41248,6 +41311,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -41801,6 +41865,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -42776,6 +42841,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -43115,6 +43181,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -43132,6 +43199,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -43618,6 +43686,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -49792,6 +49861,7 @@ Fetch from the \`LIST PayGroup\` endpoint and filter by \`ID\` to show all pay g
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -50359,6 +50429,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -51487,6 +51558,7 @@ View the \`SyncStatus\` for an account to see how recently its models were synce
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -51815,6 +51887,7 @@ Fetch from the \`LIST Taxes\` endpoint and filter by \`ID\` to show all taxes.",
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -51840,6 +51913,7 @@ Fetch from the \`LIST Taxes\` endpoint and filter by \`ID\` to show all taxes.",
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -52125,6 +52199,7 @@ If you're building a way to filter by \`Team\`, you'd hit the \`GET Teams\` endp
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -52745,6 +52820,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -53138,6 +53214,7 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -54183,6 +54260,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -54263,6 +54341,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",

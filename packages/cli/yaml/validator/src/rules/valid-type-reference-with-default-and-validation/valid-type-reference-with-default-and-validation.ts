@@ -74,11 +74,11 @@ function validateResolvedType({
             case "INTEGER":
                 return validateIntegerDefaultAndValidation({ _default, validation });
             case "BOOLEAN":
-                typeName = "boolean";
-                break;
+                return validateBooleanDefaultAndValidation({ _default, validation });
             case "LONG":
-                typeName = "long";
-                break;
+                return validateLongDefaultAndValidation({ _default, validation });
+            case "BIG_INTEGER":
+                return validateBigIntegerDefaultAndValidation({ _default, validation });
             case "DATE_TIME":
                 typeName = "datetime";
                 break;
@@ -87,9 +87,6 @@ function validateResolvedType({
                 break;
             case "BASE_64":
                 typeName = "base64";
-                break;
-            case "BIG_INTEGER":
-                typeName = "bigint";
                 break;
         }
     }
@@ -192,6 +189,95 @@ function validateIntegerDefaultAndValidation({
                 ...validateIntegerValidation({ name: "multipleOf", value: validation.multipleOf })
             );
         }
+    }
+
+    return violations;
+}
+
+function validateBooleanDefaultAndValidation({
+    _default,
+    validation
+}: {
+    _default: unknown | undefined;
+    validation: RawSchemas.ValidationSchema | undefined;
+}): RuleViolation[] {
+    const violations: RuleViolation[] = [];
+
+    if (_default != null && typeof _default !== "boolean") {
+        violations.push({
+            message: `Default value '${_default}' is not a valid boolean`,
+            severity: "error"
+        });
+    }
+
+    if (validation != null) {
+        violations.push({
+            message: `Validation rules '${JSON.stringify(validation)}' are not compatible with the boolean type`,
+            severity: "error"
+        });
+    }
+
+    return violations;
+}
+
+function validateLongDefaultAndValidation({
+    _default,
+    validation
+}: {
+    _default: unknown | undefined;
+    validation: RawSchemas.ValidationSchema | undefined;
+}): RuleViolation[] {
+    const violations: RuleViolation[] = [];
+
+    if (_default != null && typeof _default !== "number") {
+        violations.push({
+            message: `Default value '${_default}' is not a valid long`,
+            severity: "error"
+        });
+    }
+
+    if (validation != null) {
+        violations.push({
+            message: `Validation rules '${JSON.stringify(validation)}' are not compatible with the long type`,
+            severity: "error"
+        });
+    }
+
+    return violations;
+}
+
+function validateBigIntegerDefaultAndValidation({
+    _default,
+    validation
+}: {
+    _default: unknown | undefined;
+    validation: RawSchemas.ValidationSchema | undefined;
+}): RuleViolation[] {
+    const violations: RuleViolation[] = [];
+
+    if (_default != null) {
+        if (typeof _default !== "string") {
+            violations.push({
+                message: `Default value '${_default}' is not a valid bigint`,
+                severity: "error"
+            });
+        } else {
+            try {
+                BigInt(_default as string);
+            } catch (error) {
+                violations.push({
+                    message: `Default value '${_default}' is not a valid bigint`,
+                    severity: "error"
+                });
+            }
+        }
+    }
+
+    if (validation != null) {
+        violations.push({
+            message: `Validation rules '${JSON.stringify(validation)}' are not compatible with the bigint type`,
+            severity: "error"
+        });
     }
 
     return violations;

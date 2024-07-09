@@ -1,6 +1,6 @@
 import { docsYml } from "@fern-api/configuration";
-import { parseImagePaths } from "@fern-api/docs-markdown-utils";
-import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
+import { parseImagePaths, replaceReferencedMarkdown } from "@fern-api/docs-markdown-utils";
+import { AbsoluteFilePath, dirname, doesPathExist, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -24,7 +24,7 @@ export async function visitDocsConfigFileYamlAst(
     );
 
     // the following code parses markdown files for media and adds them to the filepath visitor
-    let pageEntries: [string, string][];
+    let pageEntries: Record<RelativeFilePath, string> = {};
 
     try {
         // wrap the parse call in a try/catch because it will throw if a markdown file doesn't exist
@@ -34,12 +34,23 @@ export async function visitDocsConfigFileYamlAst(
             absoluteFilepathToDocsConfig: absoluteFilepathToConfiguration,
             absolutePathToFernFolder
         });
-        pageEntries = Object.entries(pages);
+        pageEntries = pages;
     } catch {
-        pageEntries = [];
+        // if the parse fails, we'll just skip this step
     }
 
-    for (const [relativePath, markdown] of pageEntries) {
+    // replaces all instances of <Markdown src="path/to/file.md" /> with the content of the referenced markdown file
+    // this should happen before we parse image paths, as the referenced markdown files may contain images.
+    for (const [relativePath, markdown] of Object.entries(pageEntries)) {
+        pageEntries[RelativeFilePath.of(relativePath)] = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMdx: resolve(absolutePathToFernFolder, relativePath),
+            context
+        });
+    }
+
+    for (const [relativePath, markdown] of Object.entries(pageEntries)) {
         const { filepaths } = parseImagePaths(markdown, {
             absolutePathToFernFolder,
             absolutePathToMdx: resolve(absolutePathToFernFolder, relativePath)
@@ -344,10 +355,11 @@ async function visitNavigationItem({
         });
         const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), navigationItem.path);
         if (await doesPathExist(absoluteFilepath)) {
+            const content = (await readFile(absoluteFilepath)).toString();
             await visitor.markdownPage?.(
                 {
                     title: navigationItem.page,
-                    content: (await readFile(absoluteFilepath)).toString(),
+                    content,
                     absoluteFilepath
                 },
                 [...nodePath, "page", navigationItem.path]

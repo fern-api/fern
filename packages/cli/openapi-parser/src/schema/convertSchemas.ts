@@ -6,7 +6,6 @@ import {
     Schema,
     SchemaWithExample
 } from "@fern-api/openapi-ir-sdk";
-import { isEqual } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../getExtension";
 import { OpenAPIExtension } from "../openapi/v3/extensions/extensions";
@@ -282,6 +281,7 @@ export function convertSchemaObject(
             nameOverride,
             generatedName,
             primitive: PrimitiveSchemaValueWithExample.boolean({
+                default: schema.default,
                 example: getExampleAsBoolean(schema)
             }),
             wrapAsNullable,
@@ -619,9 +619,7 @@ export function convertSchemaObject(
     if (schema.allOf != null || schema.properties != null) {
         const filteredAllOfs: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[] = [];
         for (const allOf of schema.allOf ?? []) {
-            if (isReferenceObject(allOf)) {
-                filteredAllOfs.push(allOf);
-            } else if (Object.keys(allOf).length > 0 && Object.keys(allOf).includes("type")) {
+            if (isReferenceObject(allOf) || Object.keys(allOf).length > 0) {
                 filteredAllOfs.push(allOf);
             }
         }
@@ -630,6 +628,8 @@ export function convertSchemaObject(
             filteredAllOfs.length === 1 &&
             filteredAllOfs[0] != null
         ) {
+            // If we end up with a single element, we short-circuit and convert it directly.
+            // Note that this handles any schema type, not just objects (e.g. arrays).
             const convertedSchema = convertSchema(
                 filteredAllOfs[0],
                 wrapAsNullable,
@@ -640,7 +640,32 @@ export function convertSchemaObject(
             return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
         }
 
-        // otherwise convert as an object
+        // Now that we've handled the single-element allOf case, filter the
+        // allOfs down to just the objects.
+        const filteredAllOfObjects = filteredAllOfs.filter((allOf) => {
+            const valid = isValidAllOfObject(allOf);
+            if (!valid) {
+                context.logger.warn(`Skipping non-object allOf element: ${JSON.stringify(allOf)}`);
+            }
+            return valid;
+        });
+
+        if (
+            (schema.properties == null || schema.properties.length === 0) &&
+            filteredAllOfObjects.length === 1 &&
+            filteredAllOfObjects[0] != null
+        ) {
+            // Try to short-circuit again.
+            const convertedSchema = convertSchema(
+                filteredAllOfObjects[0],
+                wrapAsNullable,
+                context,
+                breadcrumbs,
+                referencedAsRequest
+            );
+            return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
+        }
+
         return convertObject({
             nameOverride,
             generatedName,
@@ -649,7 +674,7 @@ export function convertSchemaObject(
             description,
             required: schema.required,
             wrapAsNullable,
-            allOf: filteredAllOfs,
+            allOf: filteredAllOfObjects,
             context,
             propertiesToExclude,
             groupName,
@@ -782,14 +807,25 @@ function maybeInjectDescriptionOrGroupName(
     return schema;
 }
 
-// make sure these const sare sorted alphabetically
-const DEFAULT_KEY = ["default"];
-const DEFAULT_DESCRIPTION_KEYS = ["default", "description"];
-const DESCRIPTION_KEY = ["description"];
-
-function isAllOfElementEmpty(schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject): boolean {
-    const keys = Object.keys(schema).sort();
-    return isEqual(keys, DEFAULT_KEY) || isEqual(keys, DESCRIPTION_KEY) || isEqual(keys, DEFAULT_DESCRIPTION_KEYS);
+// isValidAllOfObject returns true if the given allOf is a valid object according to the following:
+//  (1): The allOf is a reference object
+//  (2): The allOf specifies 'type: object'
+//  (3): The allOf specifies 'properties'
+//  (4): All nested allOf, oneOf, or anyOf types satisfy (1), (2), or (3)
+function isValidAllOfObject(allOf: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject): boolean {
+    if (isReferenceObject(allOf) || allOf.type === "object" || allOf.properties != null) {
+        return true;
+    }
+    if (allOf.allOf != null) {
+        return allOf.allOf.every((elem) => isValidAllOfObject(elem));
+    }
+    if (allOf.oneOf != null) {
+        return allOf.oneOf.every((elem) => isValidAllOfObject(elem));
+    }
+    if (allOf.anyOf != null) {
+        return allOf.anyOf.every((elem) => isValidAllOfObject(elem));
+    }
+    return false;
 }
 
 export function wrapLiteral({

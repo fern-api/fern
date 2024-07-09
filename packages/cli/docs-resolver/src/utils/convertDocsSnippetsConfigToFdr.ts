@@ -57,6 +57,19 @@ export function convertDocsSnippetsConfigToFdr(
                               ? undefined
                               : snippetsConfiguration.java.version
                   }
+                : undefined,
+        rubySdk:
+            snippetsConfiguration.ruby != null
+                ? {
+                      gem:
+                          typeof snippetsConfiguration.ruby === "string"
+                              ? snippetsConfiguration.ruby
+                              : snippetsConfiguration.ruby.package,
+                      version:
+                          typeof snippetsConfiguration.ruby === "string"
+                              ? undefined
+                              : snippetsConfiguration.ruby.version
+                  }
                 : undefined
     };
 }

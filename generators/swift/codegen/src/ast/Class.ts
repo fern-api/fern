@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Lang, { AccessLevel, Func, Import } from "../swift";
+import Swift, { AccessLevel, Func, Import } from "../swift";
 
 export declare namespace Class {
     interface Args {
@@ -23,7 +23,7 @@ export class Class extends AstNode {
         name,
         functions
     }: Class.Args) {
-        super(Lang.indentSize);
+        super(Swift.indentSize);
         this.imports = imports;
         this.accessLevel = accessLevel;
         this.name = name;

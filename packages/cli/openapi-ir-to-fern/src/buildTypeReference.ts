@@ -98,6 +98,16 @@ export function buildPrimitiveTypeReference(primitiveSchema: PrimitiveSchema): R
                 description: primitiveSchema.description,
                 schema: primitiveSchema.schema
             });
+        case "boolean":
+            return buildBooleanTypeReference({
+                description: primitiveSchema.description,
+                schema: primitiveSchema.schema
+            });
+        case "int64":
+            return buildLongTypeReference({
+                description: primitiveSchema.description,
+                schema: primitiveSchema.schema
+            });
     }
     const typeReference = primitiveSchema.schema._visit({
         int: () => "integer",
@@ -118,6 +128,52 @@ export function buildPrimitiveTypeReference(primitiveSchema: PrimitiveSchema): R
         };
     }
     return typeReference;
+}
+
+function buildBooleanTypeReference({
+    description,
+    schema
+}: {
+    description: string | undefined;
+    schema: PrimitiveSchemaValue.Boolean;
+}): RawSchemas.TypeReferenceWithDocsSchema {
+    const type = "boolean";
+    if (description == null && schema.default == null) {
+        return type;
+    }
+    const result: RawSchemas.TypeReferenceWithDocsSchema = {
+        type
+    };
+    if (description != null) {
+        result.docs = description;
+    }
+    if (schema.default != null) {
+        result.default = schema.default;
+    }
+    return result;
+}
+
+function buildLongTypeReference({
+    description,
+    schema
+}: {
+    description: string | undefined;
+    schema: PrimitiveSchemaValue.Int64;
+}): RawSchemas.TypeReferenceWithDocsSchema {
+    const type = "int64";
+    if (description == null && schema.default == null) {
+        return type;
+    }
+    const result: RawSchemas.TypeReferenceWithDocsSchema = {
+        type
+    };
+    if (description != null) {
+        result.docs = description;
+    }
+    if (schema.default != null) {
+        result.default = schema.default;
+    }
+    return result;
 }
 
 function buildStringTypeReference({
@@ -208,15 +264,37 @@ function maybeStringValidation(
         return undefined;
     }
     const { format, pattern, minLength, maxLength } = schema;
-    if (format == null && pattern == null && minLength == null && maxLength == null) {
+    const validFormat = maybeValidFormat(format);
+    if (validFormat == null && pattern == null && minLength == null && maxLength == null) {
         return undefined;
     }
     return {
-        format,
+        format: validFormat,
         pattern,
         minLength,
         maxLength
     };
+}
+
+function maybeValidFormat(format: string | undefined): string | undefined {
+    // We only accept the set of OpenAPI formats that are explicitly listed at the following:
+    // https://swagger.io/docs/specification/data-models/data-types/#string
+    switch (format) {
+        case "date":
+        case "date-time":
+        case "password":
+        case "byte":
+        case "binary":
+        case "email":
+        case "uuid":
+        case "uri":
+        case "hostname":
+        case "ipv4":
+        case "ipv6":
+            return format;
+        default:
+            return undefined;
+    }
 }
 
 function maybeNumberValidation(

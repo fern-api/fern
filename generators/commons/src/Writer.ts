@@ -76,4 +76,5 @@ export class Writer {
     private getIndentString(tabSize: number): string {
         return " ".repeat(this.indentLevel * tabSize);
     }
+    
 }

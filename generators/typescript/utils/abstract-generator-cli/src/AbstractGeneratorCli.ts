@@ -97,7 +97,8 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             githubOutputMode,
                             isPackagePrivate: npmPackage != null && npmPackage.private,
                             pathToProject,
-                            config
+                            config,
+                            publishToJsr: this.publishToJsr(customConfig)
                         });
                     });
 
@@ -156,6 +157,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         intermediateRepresentation: IntermediateRepresentation;
     }): Promise<PersistedTypescriptProject>;
     protected abstract isPackagePrivate(customConfig: CustomConfig): boolean;
+    protected abstract publishToJsr(customConfig: CustomConfig): boolean;
     protected abstract outputSourceFiles(customConfig: CustomConfig): boolean;
     protected abstract shouldTolerateRepublish(customConfig: CustomConfig): boolean;
 }

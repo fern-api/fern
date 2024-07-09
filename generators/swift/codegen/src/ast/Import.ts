@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Lang from "../swift";
+import Swift from "../swift";
 
 export declare namespace Import {
   interface Args {
@@ -14,7 +14,7 @@ export class Import extends AstNode {
   constructor({
     packageName 
   }: Import.Args) {
-    super(Lang.indentSize);
+    super(Swift.indentSize);
     this.packageName = packageName;
   }
 

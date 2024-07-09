@@ -45,13 +45,14 @@ export function requestTypeHasProperty({
         return false;
     }
     if (typeof endpoint.request === "string") {
+        const resolvedType = typeResolver.resolveType({
+            type: endpoint.request,
+            file
+        });
         return resolvedTypeHasProperty({
             typeResolver,
-            file,
-            resolvedType: typeResolver.resolveType({
-                type: endpoint.request,
-                file
-            }),
+            file: maybeFileFromResolvedType(resolvedType) ?? file,
+            resolvedType,
             propertyComponents,
             validate
         });
@@ -93,13 +94,14 @@ function inlinedRequestTypeHasProperty({
         return false;
     }
     if (typeof requestType.body === "string") {
+        const resolvedType = typeResolver.resolveType({
+            type: requestType.body,
+            file
+        });
         return resolvedTypeHasProperty({
             typeResolver,
-            file,
-            resolvedType: typeResolver.resolveType({
-                type: requestType.body,
-                file
-            }),
+            file: maybeFileFromResolvedType(resolvedType) ?? file,
+            resolvedType,
             propertyComponents,
             validate
         });
@@ -113,9 +115,13 @@ function inlinedRequestTypeHasProperty({
             validate
         });
     }
+    const resolvedType = typeResolver.resolveType({
+        type: requestType.body.type,
+        file
+    });
     return resolvedTypeHasProperty({
         typeResolver,
-        file,
+        file: maybeFileFromResolvedType(resolvedType) ?? file,
         resolvedType: typeResolver.resolveType({
             type: requestType.body.type,
             file

@@ -48,6 +48,8 @@ export * from "./PrimitiveSchema";
 export * from "./PrimitiveSchemaValue";
 export * from "./IntSchema";
 export * from "./DoubleSchema";
+export * from "./BooleanSchema";
+export * from "./LongSchema";
 export * from "./StringSchema";
 export * from "./LiteralSchema";
 export * from "./LiteralSchemaValue";

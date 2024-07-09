@@ -87,4 +87,8 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
     protected shouldTolerateRepublish(customConfig: ExpressCustomConfig): boolean {
         return false;
     }
+
+    protected publishToJsr(customConfig: ExpressCustomConfig): boolean {
+        return false;
+    }
 }

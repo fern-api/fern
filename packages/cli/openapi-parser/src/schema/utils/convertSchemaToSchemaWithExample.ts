@@ -205,6 +205,7 @@ function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValue): P
             });
         case "boolean":
             return PrimitiveSchemaValueWithExample.boolean({
+                default: primitiveSchema.default,
                 example: undefined
             });
         case "date":
@@ -241,6 +242,7 @@ function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValue): P
             });
         case "int64":
             return PrimitiveSchemaValueWithExample.int64({
+                default: primitiveSchema.default,
                 example: undefined
             });
         default:

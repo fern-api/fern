@@ -12,7 +12,7 @@ export interface ParsedDocsConfiguration {
     pages: Record<RelativeFilePath, string>;
 
     /* navigation */
-    // tabs?: Record<RelativeFilePath, TabConfig>;
+    landingPage: DocsNavigationItem.Page | undefined;
     navigation: DocsNavigationConfiguration;
     navbarLinks: DocsV1Write.NavbarLink[] | undefined;
     footerLinks: DocsV1Write.FooterLink[] | undefined;
@@ -131,7 +131,7 @@ export interface VersionedDocsNavigation {
 }
 
 export interface VersionInfo {
-    // tabs?: Record<RelativeFilePath, TabConfig>;
+    landingPage: DocsNavigationItem.Page | undefined;
     navigation: UntabbedDocsNavigation | TabbedDocsNavigation;
     version: string;
     availability: VersionAvailability | undefined;
@@ -200,6 +200,7 @@ export declare namespace DocsNavigationItem {
         slug: string | undefined;
         hidden: boolean | undefined;
         skipUrlSlug: boolean | undefined;
+        overviewAbsolutePath: AbsoluteFilePath | undefined;
     }
 
     export interface ApiSection {
@@ -210,7 +211,7 @@ export declare namespace DocsNavigationItem {
         audiences: Audiences;
         showErrors: boolean;
         snippetsConfiguration: SnippetsConfiguration | undefined;
-        summaryAbsolutePath: AbsoluteFilePath | undefined;
+        overviewAbsolutePath: AbsoluteFilePath | undefined;
         navigation: ParsedApiReferenceLayoutItem[];
         hidden: boolean | undefined;
         slug: string | undefined;
@@ -246,6 +247,7 @@ export declare namespace DocsNavigationItem {
         typescript: string | VersionedSnippetLanguageConfiguration | undefined;
         go: string | VersionedSnippetLanguageConfiguration | undefined;
         java: string | VersionedSnippetLanguageConfiguration | undefined;
+        ruby: string | VersionedSnippetLanguageConfiguration | undefined;
     }
 }
 
@@ -254,7 +256,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         type: "section";
         title: string; // title
         referencedSubpackages: string[]; // subpackage IDs
-        summaryAbsolutePath: AbsoluteFilePath | undefined;
+        overviewAbsolutePath: AbsoluteFilePath | undefined;
         contents: ParsedApiReferenceLayoutItem[];
         slug: string | undefined;
         hidden: boolean | undefined;
@@ -265,7 +267,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         type: "package";
         title: string | undefined; // defaults to subpackage title
         package: string; // subpackage ID
-        summaryAbsolutePath: AbsoluteFilePath | undefined;
+        overviewAbsolutePath: AbsoluteFilePath | undefined;
         contents: ParsedApiReferenceLayoutItem[];
         slug: string | undefined;
         hidden: boolean | undefined;

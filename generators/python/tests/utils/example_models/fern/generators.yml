@@ -10,3 +10,4 @@ groups:
           path: ../types
         config:
           skip_validation: true
+          use_provided_defaults: true

@@ -270,6 +270,9 @@ class EndpointFunctionGenerator:
                         name=get_parameter_name(query_parameter.name.name),
                         docs=query_parameter.docs,
                         type_hint=self._get_typehint_for_query_param(query_parameter, query_parameter_type_hint),
+                        initializer=self._context.pydantic_generator_context.get_initializer_for_type_reference(
+                            query_parameter.value_type
+                        ),
                     ),
                 )
 

@@ -3539,7 +3539,7 @@ This error response may have one of the following \`type\` values:
             "docs": "The URL of the next page of resources. If this URL is omitted, there are no more resources in the collection.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 8000,
               "minLength": undefined,
               "pattern": undefined,
@@ -3859,7 +3859,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "docs": "The URL of the next page of accounts. If this URL is omitted, there are no more accounts.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 256,
               "minLength": undefined,
               "pattern": undefined,
@@ -4101,12 +4101,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "docs": "A URI reference that identifies the specific occurrence of the problem. This is the URI of an API resource that the problem is related to, with a unique error correlation ID URI fragment
 ",
             "type": "optional<string>",
-            "validation": {
-              "format": "uri-reference",
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
+            "validation": undefined,
           },
           "occurredAt": {
             "default": undefined,
@@ -4145,12 +4140,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "docs": "A [URI reference (RFC3986)](https://tools.ietf.org/html/rfc3986) that identifies the problem type. If present, this is the URL of human-readable HTML documentation for the problem type. When this member is not present, its value is assumed to be \`"about:blank"\`.
 ",
             "type": "optional<string>",
-            "validation": {
-              "format": "uri-reference",
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
+            "validation": undefined,
           },
         },
       },
@@ -4400,7 +4390,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The URL of the next page of eligible accounts. If this URL is omitted, there are no more accounts.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 256,
               "minLength": undefined,
               "pattern": undefined,
@@ -4606,7 +4596,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "Fields used to compose other joint owner invitation schemas.",
         "properties": {
           "disallowDebitCardAccess": {
-            "default": undefined,
+            "default": false,
             "docs": "If \`true\`, the invitee is not allowed to order or manage debit cards for the account.",
             "type": "optional<boolean>",
             "validation": undefined,
@@ -4772,7 +4762,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "A human-readable description of this banking product.",
             "type": "string",
             "validation": {
-              "format": "markdown",
+              "format": undefined,
               "maxLength": 400,
               "minLength": undefined,
               "pattern": undefined,
@@ -5016,7 +5006,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The URL for downloading the image of the front of the check.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 400,
               "minLength": undefined,
               "pattern": undefined,
@@ -5027,7 +5017,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The URL for downloading the image of the front of the check.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 400,
               "minLength": undefined,
               "pattern": undefined,
@@ -5163,7 +5153,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The optional URL of the merchant's logo. This image must be an image resource (SVG, PNG, GIF, JPEG image) that does not require any authentication. The URL may contain query parameters.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 400,
               "minLength": undefined,
               "pattern": undefined,
@@ -5185,7 +5175,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The merchant's website URL.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 400,
               "minLength": undefined,
               "pattern": undefined,
@@ -5893,7 +5883,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "docs": "The clearing code used to identify the financial institution for select countries.",
             "type": "optional<string>",
             "validation": {
-              "format": "[a-zA-Z0-9]{3,12}",
+              "format": undefined,
               "maxLength": 12,
               "minLength": 3,
               "pattern": undefined,
@@ -7783,7 +7773,7 @@ This error response may have one of the following \`type\` values:
             "docs": "The URL of the next page of resources. If this URL is omitted, there are no more resources in the collection.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 8000,
               "minLength": undefined,
               "pattern": undefined,
@@ -8103,7 +8093,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "docs": "The URL of the next page of accounts. If this URL is omitted, there are no more accounts.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 256,
               "minLength": undefined,
               "pattern": undefined,
@@ -8345,12 +8335,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "docs": "A URI reference that identifies the specific occurrence of the problem. This is the URI of an API resource that the problem is related to, with a unique error correlation ID URI fragment
 ",
             "type": "optional<string>",
-            "validation": {
-              "format": "uri-reference",
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
+            "validation": undefined,
           },
           "occurredAt": {
             "default": undefined,
@@ -8389,12 +8374,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "docs": "A [URI reference (RFC3986)](https://tools.ietf.org/html/rfc3986) that identifies the problem type. If present, this is the URL of human-readable HTML documentation for the problem type. When this member is not present, its value is assumed to be \`"about:blank"\`.
 ",
             "type": "optional<string>",
-            "validation": {
-              "format": "uri-reference",
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
+            "validation": undefined,
           },
         },
       },
@@ -8644,7 +8624,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The URL of the next page of eligible accounts. If this URL is omitted, there are no more accounts.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 256,
               "minLength": undefined,
               "pattern": undefined,
@@ -8850,7 +8830,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "Fields used to compose other joint owner invitation schemas.",
         "properties": {
           "disallowDebitCardAccess": {
-            "default": undefined,
+            "default": false,
             "docs": "If \`true\`, the invitee is not allowed to order or manage debit cards for the account.",
             "type": "optional<boolean>",
             "validation": undefined,
@@ -9016,7 +8996,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "A human-readable description of this banking product.",
             "type": "string",
             "validation": {
-              "format": "markdown",
+              "format": undefined,
               "maxLength": 400,
               "minLength": undefined,
               "pattern": undefined,
@@ -9260,7 +9240,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The URL for downloading the image of the front of the check.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 400,
               "minLength": undefined,
               "pattern": undefined,
@@ -9271,7 +9251,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The URL for downloading the image of the front of the check.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 400,
               "minLength": undefined,
               "pattern": undefined,
@@ -9407,7 +9387,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The optional URL of the merchant's logo. This image must be an image resource (SVG, PNG, GIF, JPEG image) that does not require any authentication. The URL may contain query parameters.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 400,
               "minLength": undefined,
               "pattern": undefined,
@@ -9429,7 +9409,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The merchant's website URL.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 400,
               "minLength": undefined,
               "pattern": undefined,
@@ -10137,7 +10117,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "docs": "The clearing code used to identify the financial institution for select countries.",
             "type": "optional<string>",
             "validation": {
-              "format": "[a-zA-Z0-9]{3,12}",
+              "format": undefined,
               "maxLength": 12,
               "minLength": 3,
               "pattern": undefined,

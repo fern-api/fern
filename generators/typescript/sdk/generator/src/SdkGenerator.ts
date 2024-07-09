@@ -91,6 +91,7 @@ export declare namespace SdkGenerator {
         neverThrowErrors: boolean;
         includeCredentialsOnCrossOriginRequests: boolean;
         outputEsm: boolean;
+        outputJsr: boolean;
         allowCustomFetcher: boolean;
         includeUtilsOnUnionMembers: boolean;
         includeOtherInUnionTypes: boolean;
@@ -482,13 +483,15 @@ export class SdkGenerator {
                   extraPeerDependenciesMeta: this.config.extraPeerDependenciesMeta,
                   extraFiles: this.extraFiles,
                   extraScripts: this.extraScripts,
-                  extraConfigs: this.config.packageJson
+                  extraConfigs: this.config.packageJson,
+                  outputJsr: this.config.outputJsr
               })
             : new SimpleTypescriptProject({
                   npmPackage: this.npmPackage,
                   dependencies: this.dependencyManager.getDependencies(),
                   tsMorphProject: this.project,
                   outputEsm: this.config.outputEsm,
+                  outputJsr: this.config.outputJsr,
                   extraDependencies: this.config.extraDependencies,
                   extraDevDependencies: this.config.extraDevDependencies,
                   extraPeerDependencies: this.config.extraPeerDependencies,

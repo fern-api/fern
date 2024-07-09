@@ -12,14 +12,14 @@ export const PrimitiveSchemaValue: core.serialization.Schema<
 > = core.serialization
     .union("type", {
         int: core.serialization.lazyObject(async () => (await import("../../..")).IntSchema),
-        int64: core.serialization.object({}),
+        int64: core.serialization.lazyObject(async () => (await import("../../..")).LongSchema),
         float: core.serialization.object({}),
         double: core.serialization.lazyObject(async () => (await import("../../..")).DoubleSchema),
         string: core.serialization.lazyObject(async () => (await import("../../..")).StringSchema),
         datetime: core.serialization.object({}),
         date: core.serialization.object({}),
         base64: core.serialization.object({}),
-        boolean: core.serialization.object({}),
+        boolean: core.serialization.lazyObject(async () => (await import("../../..")).BooleanSchema),
     })
     .transform<FernOpenapiIr.PrimitiveSchemaValue>({
         transform: (value) => {
@@ -27,7 +27,7 @@ export const PrimitiveSchemaValue: core.serialization.Schema<
                 case "int":
                     return FernOpenapiIr.PrimitiveSchemaValue.int(value);
                 case "int64":
-                    return FernOpenapiIr.PrimitiveSchemaValue.int64();
+                    return FernOpenapiIr.PrimitiveSchemaValue.int64(value);
                 case "float":
                     return FernOpenapiIr.PrimitiveSchemaValue.float();
                 case "double":
@@ -41,7 +41,7 @@ export const PrimitiveSchemaValue: core.serialization.Schema<
                 case "base64":
                     return FernOpenapiIr.PrimitiveSchemaValue.base64();
                 case "boolean":
-                    return FernOpenapiIr.PrimitiveSchemaValue.boolean();
+                    return FernOpenapiIr.PrimitiveSchemaValue.boolean(value);
                 default:
                     return value as FernOpenapiIr.PrimitiveSchemaValue;
             }
@@ -65,7 +65,7 @@ export declare namespace PrimitiveSchemaValue {
         type: "int";
     }
 
-    interface Int64 {
+    interface Int64 extends serializers.LongSchema.Raw {
         type: "int64";
     }
 
@@ -93,7 +93,7 @@ export declare namespace PrimitiveSchemaValue {
         type: "base64";
     }
 
-    interface Boolean {
+    interface Boolean extends serializers.BooleanSchema.Raw {
         type: "boolean";
     }
 }

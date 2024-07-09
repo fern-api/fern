@@ -36,7 +36,6 @@
     "@types/tinycolor2": "^1.4.6",
     "chardet": "^2.0.0",
     "file-type": "^19.0.0",
-    "is-svg": "^5.0.1",
     "next-mdx-remote": "^4.4.1",
     "remark-gfm": "^3.0.1",
     "tinycolor2": "^1.6.0",

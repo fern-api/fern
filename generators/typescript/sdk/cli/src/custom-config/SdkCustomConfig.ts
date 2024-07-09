@@ -29,4 +29,5 @@ export interface SdkCustomConfig {
     allowExtraFields: boolean | undefined;
     inlineFileProperties: boolean | undefined;
     packageJson: Record<string, unknown> | undefined;
+    publishToJsr: boolean | undefined;
 }

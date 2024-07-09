@@ -1,8 +1,8 @@
 import { AccessLevel, FunctionModifier } from "..";
 import Swift from "../../swift";
+import { FileGenerator } from "@fern-api/generator-commons";
 
 describe("Swift Language", () => {
-
     it("makes file header", () => {
         const output = Swift.makeFileHeader({
             header: "This is the header to a file"
@@ -27,12 +27,12 @@ describe("Swift Language", () => {
             params: [
                 Swift.makeParam({
                     title: "name",
-                    type: "String",
+                    type: "String"
                 }),
                 Swift.makeParam({
                     title: "age",
                     type: "Int",
-                    defaultValue: "33",
+                    defaultValue: "33"
                 })
             ]
         });
@@ -43,7 +43,7 @@ describe("Swift Language", () => {
         const output = Swift.makeClass({
             imports: [
                 Swift.makeImport({ packageName: "SamplePackageOne" }),
-                Swift.makeImport({ packageName: "SamplePackageTwo" }),
+                Swift.makeImport({ packageName: "SamplePackageTwo" })
             ],
             accessLevel: AccessLevel.Fileprivate,
             name: "Sample",
@@ -51,7 +51,7 @@ describe("Swift Language", () => {
                 Swift.makeFunc({
                     name: "doSomething"
                 })
-            ],
+            ]
         });
         expect(output.toString()).toMatchSnapshot();
     });
@@ -59,12 +59,11 @@ describe("Swift Language", () => {
     it("makes file", () => {
         const output = Swift.makeFile({
             fileHeader: Swift.makeFileHeader({
-                header: "This is the header to a file"
+                header: "// Sample.swift"
             }),
             class: Swift.makeClass({
                 imports: [
-                    Swift.makeImport({ packageName: "SamplePackageOne" }),
-                    Swift.makeImport({ packageName: "SamplePackageTwo" })
+                    Swift.makeImport({ packageName: "Foundation" })
                 ],
                 accessLevel: AccessLevel.Open,
                 name: "Sample",
@@ -78,12 +77,20 @@ describe("Swift Language", () => {
                         name: "getStuff",
                         async: "async",
                         throws: "throws",
-                        returnObject: "String",
-                    }),
+                        returnObject: "String"
+                    })
                 ]
             })
         });
         expect(output.toString()).toMatchSnapshot();
-    });
 
+        // Make a sample file that actually testable
+        FileGenerator.generate({
+            fileName: "Sample", 
+            node: output, 
+            extension: "swift", 
+            outputDir: "src/ast/__test__",
+        });
+
+    });
 });

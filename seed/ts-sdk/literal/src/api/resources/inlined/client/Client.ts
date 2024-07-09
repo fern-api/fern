@@ -49,7 +49,8 @@ export class Inlined {
             method: "POST",
             headers: {
                 "X-API-Version": requestOptions?.version ?? "02-02-2024",
-                "X-API-Enable-Audit-Logging": requestOptions?.auditLogging ?? "true",
+                "X-API-Enable-Audit-Logging":
+                    requestOptions?.auditLogging != null ? requestOptions.auditLogging.toString() : "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/literal",
                 "X-Fern-SDK-Version": "0.0.1",

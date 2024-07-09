@@ -93,6 +93,7 @@ async function createJob({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
+    const isPreview = absolutePathToPreview != null;
     const generatorConfig: FernFiddle.GeneratorConfigV2 = {
         id: generatorInvocation.name,
         version: generatorInvocation.version,
@@ -100,9 +101,11 @@ async function createJob({
         customConfig: generatorInvocation.config,
         publishMetadata: generatorInvocation.publishMetadata
     };
-    const generatorConfigsWithEnvVarSubstitutions = substituteEnvVariables(generatorConfig, context);
+    const generatorConfigsWithEnvVarSubstitutions = substituteEnvVariables(generatorConfig, context, {
+        substituteAsEmpty: isPreview
+    });
     const whitelabelWithEnvVarSubstiutions =
-        whitelabel != null ? substituteEnvVariables(whitelabel, context) : undefined;
+        whitelabel != null ? substituteEnvVariables(whitelabel, context, { substituteAsEmpty: isPreview }) : undefined;
 
     const remoteGenerationService = createFiddleService({ token: token.value });
 

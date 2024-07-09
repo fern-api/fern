@@ -43,7 +43,9 @@ try {
 }
 ```
 
-## Retries
+## Advanced
+
+### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
 as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
@@ -63,7 +65,7 @@ const response = await client.unknown.post(..., {
 });
 ```
 
-## Timeouts
+### Timeouts
 
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
@@ -73,7 +75,7 @@ const response = await client.unknown.post(..., {
 });
 ```
 
-## Aborting Requests
+### Aborting Requests
 
 The SDK allows users to abort requests at any point by passing in an abort signal.
 
@@ -85,7 +87,7 @@ const response = await client.unknown.post(..., {
 controller.abort(); // aborts the request
 ```
 
-## Runtime Compatibility
+### Runtime Compatibility
 
 The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
 runtimes:

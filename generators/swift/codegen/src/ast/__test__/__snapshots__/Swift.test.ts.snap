@@ -7,7 +7,7 @@ import SamplePackageTwo
 fileprivate class Sample {
 
     func doSomething() {
-        // CODE HERE
+        print("Hey!")
     }
 
 }
@@ -15,19 +15,18 @@ fileprivate class Sample {
 `;
 
 exports[`Swift Language makes file 1`] = `
-"This is the header to a file
+"// Sample.swift
 
-import SamplePackageOne
-import SamplePackageTwo
+import Foundation
 
 open class Sample {
 
     func findStuff() {
-        // CODE HERE
+        print("Hey!")
     }
 
     public static func getStuff() async throws -> String {
-        // CODE HERE
+        print("Hey!")
     }
 
 }
@@ -38,7 +37,7 @@ exports[`Swift Language makes file header 1`] = `"This is the header to a file"`
 
 exports[`Swift Language makes function 1`] = `
 "fileprivate static func makePerson(name: String, age: Int = 33) async throws {
-    // CODE HERE
+    print("Hey!")
 }"
 `;
 

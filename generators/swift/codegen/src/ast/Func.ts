@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Lang, { AccessLevel, FunctionModifier, Param } from "../swift";
+import Swift, { AccessLevel, FunctionModifier, Param } from "../swift";
 
 export declare namespace Func {
     interface Args {
@@ -32,7 +32,7 @@ export class Func extends AstNode {
         throws,
         returnObject,
     }: Func.Args) {
-        super(Lang.indentSize);
+        super(Swift.indentSize);
         this.accessLevel = accessLevel;
         this.modifier = modifier,
         this.name = name,
@@ -55,7 +55,7 @@ export class Func extends AstNode {
         const result = this.returnObject ? `-> ${this.returnObject}` : undefined;
 
         writer.openBlock([this.accessLevel, this.modifier, "func", func, this.async, this.throws, result], "{", () => {
-            writer.write("// CODE HERE");
+            writer.write("print(\"Hey!\")");
         }, "}");
 
     }

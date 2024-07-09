@@ -17,5 +17,6 @@ export const ExtraDependenciesSchema = z.record(z.union([z.string(), DependencyS
 export type BaseGeneratorConfigSchema = z.infer<typeof BaseGeneratorConfigSchema>;
 export const BaseGeneratorConfigSchema = z.strictObject({
     extraDependencies: z.optional(ExtraDependenciesSchema),
-    clientClassName: z.optional(z.string())
+    clientClassName: z.optional(z.string()),
+    useProvidedDefaults: z.optional(z.boolean())
 });

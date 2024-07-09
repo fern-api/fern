@@ -697,6 +697,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": false,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -1679,6 +1680,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": false,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -1777,6 +1779,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": false,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -2867,6 +2870,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": false,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -3448,6 +3452,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": false,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -4218,6 +4223,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": false,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -4560,6 +4566,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": false,
                 "type": "boolean",
               },
               "type": "primitive",

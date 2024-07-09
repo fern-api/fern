@@ -3489,6 +3489,7 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -5845,6 +5846,7 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -6872,6 +6874,7 @@ This error response may have one of the following \`type\` values:
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -8714,6 +8717,7 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -8979,6 +8983,7 @@ This error response may have one of the following \`type\` values:
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -9534,6 +9539,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -9551,6 +9557,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -9568,6 +9575,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -9585,6 +9593,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -9602,6 +9611,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -9619,6 +9629,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -9636,6 +9647,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -11347,6 +11359,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -11364,6 +11377,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -11608,6 +11622,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -11853,6 +11868,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": false,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -13136,6 +13152,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",

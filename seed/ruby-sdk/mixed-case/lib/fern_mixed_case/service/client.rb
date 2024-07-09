@@ -42,7 +42,7 @@ module SeedMixedCaseClient
     # @return [Array<SeedMixedCaseClient::Service::Resource>]
     # @example
     #  mixed_case = SeedMixedCaseClient::Client.new(base_url: "https://api.example.com")
-    #  mixed_case.service.list_resources(page_limit: 10, before_date: DateTime.parse(2023-01-01))
+    #  mixed_case.service.list_resources(page_limit: 10, before_date: Date.parse("2023-01-01"))
     def list_resources(page_limit:, before_date:, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -103,7 +103,7 @@ module SeedMixedCaseClient
     # @return [Array<SeedMixedCaseClient::Service::Resource>]
     # @example
     #  mixed_case = SeedMixedCaseClient::Client.new(base_url: "https://api.example.com")
-    #  mixed_case.service.list_resources(page_limit: 10, before_date: DateTime.parse(2023-01-01))
+    #  mixed_case.service.list_resources(page_limit: 10, before_date: Date.parse("2023-01-01"))
     def list_resources(page_limit:, before_date:, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|

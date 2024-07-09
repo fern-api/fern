@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Lang from "../swift";
+import Swift from "../swift";
 
 export declare namespace Param {
     interface Args {
@@ -20,7 +20,7 @@ export class Param extends AstNode {
         type,
         defaultValue,
     }: Param.Args) {
-        super(Lang.indentSize);
+        super(Swift.indentSize);
         this.title = title;
         this.type = type;
         this.defaultValue = defaultValue;

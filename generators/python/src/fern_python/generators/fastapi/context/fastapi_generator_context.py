@@ -25,6 +25,7 @@ class FastApiGeneratorContext(ABC):
             generator_config=generator_config,
             project_module_path=project_module_path,
             allow_skipping_validation=False,
+            allow_leveraging_defaults=False,
         )
         self.core_utilities = CoreUtilities()
 

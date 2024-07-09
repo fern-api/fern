@@ -3,6 +3,7 @@
 from .resources import (
     Circle,
     Color,
+    ObjectWithDefaults,
     ObjectWithOptionalField,
     Shape,
     Shape_Circle,
@@ -15,6 +16,7 @@ from .resources import (
 __all__ = [
     "Circle",
     "Color",
+    "ObjectWithDefaults",
     "ObjectWithOptionalField",
     "Shape",
     "Shape_Circle",

@@ -3476,13 +3476,14 @@ __metadata:
   resolution: "@fern-api/configuration@workspace:packages/cli/configuration"
   dependencies:
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/fdr-sdk": 0.98.4-bf08716d8
+    "@fern-api/fdr-sdk": 0.98.9-3b3a3fe5f
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-fern/fiddle-sdk": 0.0.584
     "@types/dockerode": ^3.3.9
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/tinycolor2": ^1.4.6
     depcheck: ^1.4.6
@@ -3491,6 +3492,7 @@ __metadata:
     find-up: ^6.3.0
     jest: ^29.7.0
     js-yaml: ^4.1.0
+    lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     tinycolor2: ^1.6.0
@@ -3523,7 +3525,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/core@workspace:packages/core"
   dependencies:
-    "@fern-api/fdr-sdk": 0.98.4-bf08716d8
+    "@fern-api/fdr-sdk": 0.98.9-3b3a3fe5f
     "@fern-api/venus-api-sdk": 0.0.38
     "@fern-fern/fdr-test-sdk": ^0.0.5297
     "@fern-fern/fiddle-sdk": 0.0.584
@@ -3609,7 +3611,7 @@ __metadata:
   resolution: "@fern-api/docs-preview@workspace:packages/cli/docs-preview"
   dependencies:
     "@fern-api/docs-resolver": "workspace:*"
-    "@fern-api/fdr-sdk": 0.98.4-bf08716d8
+    "@fern-api/fdr-sdk": 0.98.9-3b3a3fe5f
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-sdk": "workspace:*"
     "@fern-api/logger": "workspace:*"
@@ -3649,7 +3651,7 @@ __metadata:
     "@fern-api/configuration": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/docs-markdown-utils": "workspace:*"
-    "@fern-api/fdr-sdk": 0.98.4-bf08716d8
+    "@fern-api/fdr-sdk": 0.98.9-3b3a3fe5f
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-sdk": "workspace:*"
@@ -3689,7 +3691,6 @@ __metadata:
     depcheck: ^1.4.6
     eslint: ^8.56.0
     file-type: ^19.0.0
-    is-svg: ^5.0.1
     jest: ^29.7.0
     next-mdx-remote: ^4.4.1
     organize-imports-cli: ^0.10.0
@@ -3729,9 +3730,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/fdr-sdk@npm:0.98.4-bf08716d8":
-  version: 0.98.4-bf08716d8
-  resolution: "@fern-api/fdr-sdk@npm:0.98.4-bf08716d8"
+"@fern-api/fdr-sdk@npm:0.98.9-3b3a3fe5f":
+  version: 0.98.9-3b3a3fe5f
+  resolution: "@fern-api/fdr-sdk@npm:0.98.9-3b3a3fe5f"
   dependencies:
     dayjs: ^1.11.11
     fast-deep-equal: ^3.1.3
@@ -3743,7 +3744,7 @@ __metadata:
     tinycolor2: ^1.6.0
     title: ^3.5.3
     url-join: 5.0.0
-  checksum: 79f9847bfd0856da07ddc153583bae663aa7c6880ff60ac58033a41e5303a94c4c4c36a1f265632d8fb2de1ba3222774ea47c5c01f7354c52a214cb09aa461a4
+  checksum: 95367a9b40741630793430ca56f0b2e97be5a49642de0a3e202d43687ea9bc3c66c796b6de1bcb60e1f3a18d2c8ba066f4954631fbddb4c478d74b157eb875b0
   languageName: node
   linkType: hard
 
@@ -4023,6 +4024,7 @@ __metadata:
     "@fern-fern/ir-v46-sdk": 0.0.1
     "@fern-fern/ir-v47-sdk": 0.0.1
     "@fern-fern/ir-v48-sdk": 0.0.1
+    "@fern-fern/ir-v49-sdk": 0.0.1
     "@fern-fern/ir-v5-model": 0.0.3
     "@fern-fern/ir-v6-model": 0.0.33
     "@fern-fern/ir-v7-model": 0.0.2
@@ -4390,7 +4392,7 @@ __metadata:
     "@fern-api/configuration": "workspace:*"
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/fdr-sdk": 0.98.4-bf08716d8
+    "@fern-api/fdr-sdk": 0.98.9-3b3a3fe5f
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-sdk": "workspace:*"
     "@fern-api/task-context": "workspace:*"
@@ -4417,7 +4419,7 @@ __metadata:
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/docs-resolver": "workspace:*"
-    "@fern-api/fdr-sdk": 0.98.4-bf08716d8
+    "@fern-api/fdr-sdk": 0.98.9-3b3a3fe5f
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-migrations": "workspace:*"
@@ -4813,10 +4815,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/generator-cli-sdk@npm:^0.0.31":
-  version: 0.0.31
-  resolution: "@fern-fern/generator-cli-sdk@npm:0.0.31"
-  checksum: 125440ed261ca6bacd482bd9202be67bc0e4969db4446e28c796aeea5c97fab59c34c3f86fcadd7f672e67ed636a0413bfd4ee2b29de7a361b3ff6367b73f8b9
+"@fern-fern/generator-cli-sdk@npm:0.0.56":
+  version: 0.0.56
+  resolution: "@fern-fern/generator-cli-sdk@npm:0.0.56"
+  checksum: b077d570f27cd7484c1915bf9e851c3d4ee5c42313f89ab66ef4ec35f1a0a647bff6deb9d88b6964317cc63ba00f732a996581c89f671cedce216bdd2be5ea49
   languageName: node
   linkType: hard
 
@@ -5191,6 +5193,13 @@ __metadata:
   version: 0.0.1
   resolution: "@fern-fern/ir-v48-sdk@npm:0.0.1"
   checksum: 197ce84b4af1cb81f52d9aa5d621b992acd57c9d7c7908077b16d688a14815f51a521f79b54499cced38641bb4428a1eed6bd1508345807865da8a5571c0752a
+  languageName: node
+  linkType: hard
+
+"@fern-fern/ir-v49-sdk@npm:0.0.1":
+  version: 0.0.1
+  resolution: "@fern-fern/ir-v49-sdk@npm:0.0.1"
+  checksum: d35ca3b5b65069d239278e78e07189bfac6e83004417d91a82a25e8a141e4d8e3337f6128057529febc3e288a7dc44983d58f8d33eca40faaad455c52966438b
   languageName: node
   linkType: hard
 
@@ -5889,7 +5898,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
-    "@fern-fern/generator-cli-sdk": ^0.0.31
+    "@fern-fern/generator-cli-sdk": 0.0.56
     "@fern-fern/generator-exec-sdk": ^0.0.898
     "@fern-fern/ir-sdk": 46.2.0
     "@fern-fern/snippet-sdk": ^0.0.5492
@@ -12952,17 +12961,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"fast-xml-parser@npm:^4.1.3":
-  version: 4.4.0
-  resolution: "fast-xml-parser@npm:4.4.0"
-  dependencies:
-    strnum: ^1.0.5
-  bin:
-    fxparser: src/cli/cli.js
-  checksum: ad33a4b5165a0ffcb6e17ae78825bd4619a8298844a8a8408f2ea141a0d2d9439d18865dc5254162f09fe54d510ff18e5d5c0a190869cab21fc745ee66be816b
-  languageName: node
-  linkType: hard
-
 "fastest-levenshtein@npm:^1.0.16":
   version: 1.0.16
   resolution: "fastest-levenshtein@npm:1.0.16"
@@ -15146,15 +15144,6 @@ env-cmd@toddbluhm/env-cmd:
   dependencies:
     has-tostringtag: ^1.0.0
   checksum: 323b3d04622f78d45077cf89aab783b2f49d24dc641aa89b5ad1a72114cfeff2585efc8c12ef42466dff32bde93d839ad321b26884cf75e5a7892a938b089989
-  languageName: node
-  linkType: hard
-
-"is-svg@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "is-svg@npm:5.0.1"
-  dependencies:
-    fast-xml-parser: ^4.1.3
-  checksum: 284683d6a92950e4a9b507d2402bef1646aa46c9a9329f6a51a6ff449885fbff49ba2c32dfbbb394f050880f4f6c612ade88059dea2433e5bc40203b3a1dc00d
   languageName: node
   linkType: hard
 
@@ -22773,13 +22762,6 @@ env-cmd@toddbluhm/env-cmd:
   version: 3.1.1
   resolution: "strip-json-comments@npm:3.1.1"
   checksum: 492f73e27268f9b1c122733f28ecb0e7e8d8a531a6662efbd08e22cccb3f9475e90a1b82cab06a392f6afae6d2de636f977e231296400d0ec5304ba70f166443
-  languageName: node
-  linkType: hard
-
-"strnum@npm:^1.0.5":
-  version: 1.0.5
-  resolution: "strnum@npm:1.0.5"
-  checksum: 651b2031db5da1bf4a77fdd2f116a8ac8055157c5420f5569f64879133825915ad461513e7202a16d7fec63c54fd822410d0962f8ca12385c4334891b9ae6dd2
   languageName: node
   linkType: hard
 

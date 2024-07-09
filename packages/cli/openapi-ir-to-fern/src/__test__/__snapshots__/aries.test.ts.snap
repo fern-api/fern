@@ -1016,12 +1016,7 @@ exports[`open api parser aries docs 1`] = `
                     "default": undefined,
                     "docs": "Optional image URL for connection invitation",
                     "type": "optional<string>",
-                    "validation": {
-                      "format": "url",
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
-                    },
+                    "validation": undefined,
                   },
                   "label": {
                     "default": undefined,
@@ -15634,12 +15629,6 @@ exports[`open api parser aries docs 1`] = `
                   "tails_public_uri": {
                     "docs": "Public URI to the tails file",
                     "type": "string",
-                    "validation": {
-                      "format": "url",
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
-                    },
                   },
                 },
               },
@@ -17205,12 +17194,7 @@ exports[`open api parser aries docs 1`] = `
             "default": undefined,
             "docs": "Optional image URL for connection invitation",
             "type": "optional<string>",
-            "validation": {
-              "format": "url",
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
+            "validation": undefined,
           },
           "label": {
             "default": undefined,
@@ -19584,12 +19568,7 @@ exports[`open api parser aries docs 1`] = `
             "default": undefined,
             "docs": "Optional image URL for out-of-band invitation",
             "type": "optional<string>",
-            "validation": {
-              "format": "url",
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
+            "validation": undefined,
           },
           "label": {
             "default": undefined,
@@ -24102,12 +24081,7 @@ exports[`open api parser aries simple 1`] = `
                     "default": undefined,
                     "docs": "Optional image URL for connection invitation",
                     "type": "optional<string>",
-                    "validation": {
-                      "format": "url",
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
-                    },
+                    "validation": undefined,
                   },
                   "label": {
                     "default": undefined,
@@ -38720,12 +38694,6 @@ exports[`open api parser aries simple 1`] = `
                   "tails_public_uri": {
                     "docs": "Public URI to the tails file",
                     "type": "string",
-                    "validation": {
-                      "format": "url",
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
-                    },
                   },
                 },
               },
@@ -40291,12 +40259,7 @@ exports[`open api parser aries simple 1`] = `
             "default": undefined,
             "docs": "Optional image URL for connection invitation",
             "type": "optional<string>",
-            "validation": {
-              "format": "url",
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
+            "validation": undefined,
           },
           "label": {
             "default": undefined,
@@ -42670,12 +42633,7 @@ exports[`open api parser aries simple 1`] = `
             "default": undefined,
             "docs": "Optional image URL for out-of-band invitation",
             "type": "optional<string>",
-            "validation": {
-              "format": "url",
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
+            "validation": undefined,
           },
           "label": {
             "default": undefined,
