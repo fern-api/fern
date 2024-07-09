@@ -162,7 +162,8 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
                 importStrategy: (() => {
                     // Your logic here to determine the import strategy
                     if (isGeneratingSchema && isCircular) {
-                        return getSchemaImportStrategy({ useDynamicImport: true });
+                        // Circular references don't require an external import.
+                        return { type: "local" };
                     } else if (isGeneratingSchema) {
                         // Return default import strategy or another strategy based on your logic
                         return { type: "direct" };

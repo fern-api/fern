@@ -5,16 +5,14 @@
 import * as serializers from "../../../index";
 import * as SeedExamples from "../../../../api/index";
 import * as core from "../../../../core";
+import { Node } from "./Node";
+import { Tree } from "./Tree";
 
 export const Node: core.serialization.ObjectSchema<serializers.Node.Raw, SeedExamples.Node> = core.serialization.object(
     {
         name: core.serialization.string(),
-        nodes: core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("../../..")).Node))
-            .optional(),
-        trees: core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("../../..")).Tree))
-            .optional(),
+        nodes: core.serialization.list(core.serialization.lazyObject(() => Node)).optional(),
+        trees: core.serialization.list(core.serialization.lazyObject(() => Tree)).optional(),
     }
 );
 
