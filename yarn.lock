@@ -4584,6 +4584,28 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-api/template-codegen@workspace:generators/template/codegen":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/template-codegen@workspace:generators/template/codegen"
+  dependencies:
+    "@fern-api/core-utils": "workspace:*"
+    "@fern-api/fs-utils": "workspace:*"
+    "@fern-api/generator-commons": "workspace:*"
+    "@fern-api/logging-execa": "workspace:*"
+    "@types/jest": ^29.0.3
+    "@types/lodash-es": ^4.17.12
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.6
+    eslint: ^8.56.0
+    jest: ^29.7.0
+    lodash-es: ^4.17.21
+    organize-imports-cli: ^0.10.0
+    prettier: ^2.7.1
+    typescript: 4.6.4
+    zod: ^3.22.3
+  languageName: unknown
+  linkType: soft
+
 "@fern-api/validator@workspace:*, @fern-api/validator@workspace:packages/cli/yaml/validator":
   version: 0.0.0-use.local
   resolution: "@fern-api/validator@workspace:packages/cli/yaml/validator"
@@ -4770,10 +4792,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/generator-cli-sdk@npm:^0.0.31":
-  version: 0.0.31
-  resolution: "@fern-fern/generator-cli-sdk@npm:0.0.31"
-  checksum: 125440ed261ca6bacd482bd9202be67bc0e4969db4446e28c796aeea5c97fab59c34c3f86fcadd7f672e67ed636a0413bfd4ee2b29de7a361b3ff6367b73f8b9
+"@fern-fern/generator-cli-sdk@npm:0.0.56":
+  version: 0.0.56
+  resolution: "@fern-fern/generator-cli-sdk@npm:0.0.56"
+  checksum: b077d570f27cd7484c1915bf9e851c3d4ee5c42313f89ab66ef4ec35f1a0a647bff6deb9d88b6964317cc63ba00f732a996581c89f671cedce216bdd2be5ea49
   languageName: node
   linkType: hard
 
@@ -5853,7 +5875,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
-    "@fern-fern/generator-cli-sdk": ^0.0.31
+    "@fern-fern/generator-cli-sdk": 0.0.56
     "@fern-fern/generator-exec-sdk": ^0.0.898
     "@fern-fern/ir-sdk": 46.2.0
     "@fern-fern/snippet-sdk": ^0.0.5492

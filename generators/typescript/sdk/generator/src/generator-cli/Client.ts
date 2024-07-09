@@ -121,6 +121,7 @@ export class GeneratorCli {
             }
             features.push({
                 id: feature.id,
+                advanced: feature.advanced,
                 description: feature.description,
                 snippets: featureSnippets,
                 snippetsAreOptional: false

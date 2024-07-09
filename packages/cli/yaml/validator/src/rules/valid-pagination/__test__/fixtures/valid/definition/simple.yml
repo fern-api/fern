@@ -7,6 +7,14 @@ types:
       - asc
       - desc
 
+  WithCursorPagination:
+    properties:
+      pagination: optional<WithCursor>
+
+  WithCursor:
+    properties:
+      cursor: optional<string>
+
   WithUsers:
     properties:
       users: list<User>
@@ -75,6 +83,93 @@ service:
               The cursor used for pagination in order to fetch 
               the next page of results.
       response: ListUsersCursorPaginationResponse
+
+    listWithBodyCursorPagination:
+      pagination: 
+        cursor: $request.starting_after
+        next_cursor: $response.page.next.starting_after
+        results: $response.data
+      method: GET
+      path: ""
+      request: 
+        name: ListUsersBodyCursorPaginationRequest
+        body: 
+          properties:
+            page: 
+              type: optional<integer>
+              docs: Defaults to first page
+            per_page: 
+              type: optional<integer>
+              docs: Defaults to per page
+            order: 
+              type: optional<Order> 
+            starting_after: 
+              type: optional<string>
+              docs: | 
+                The cursor used for pagination in order to fetch 
+                the next page of results.
+      response: ListUsersCursorPaginationResponse
+
+    listWithNestedBodyCursorPagination:
+      pagination: 
+        cursor: $request.pagination.cursor
+        next_cursor: $response.page.next.starting_after
+        results: $response.data
+      method: GET
+      path: ""
+      request: 
+        name: ListUsersNestedBodyCursorPaginationRequest
+        body: 
+          properties:
+            page: 
+              type: optional<integer>
+              docs: Defaults to first page
+            per_page: 
+              type: optional<integer>
+              docs: Defaults to per page
+            order: 
+              type: optional<Order> 
+            pagination: 
+              type: optional<WithCursor>
+              docs: | 
+                The object that contains the cursor used for pagination
+                in order to fetch the next page of results.
+      response: ListUsersCursorPaginationResponse
+
+    listWithReferenceBodyCursorPagination:
+      pagination: 
+        cursor: $request.cursor
+        next_cursor: $response.page.next.starting_after
+        results: $response.data
+      method: GET
+      path: ""
+      request: 
+        body: WithCursor
+      response: ListUsersCursorPaginationResponse
+
+    listWithNestedReferenceBodyCursorPagination:
+      pagination: 
+        cursor: $request.pagination.cursor
+        next_cursor: $response.page.next.starting_after
+        results: $response.data
+      method: GET
+      path: ""
+      request: 
+        body: WithCursorPagination
+      response: ListUsersCursorPaginationResponse
+
+    listWithRootCursorPagination:
+      path: /root/search
+      method: POST
+      pagination:
+        cursor: $request.pagination.starting_after
+        next_cursor: $response.pages.next.starting_after
+        results: $response.data
+      display-name: Search
+      request:
+        body: root.SearchRequest
+      response:
+        type: root.ResultList
 
     listWithOffsetPagination:
       pagination: 

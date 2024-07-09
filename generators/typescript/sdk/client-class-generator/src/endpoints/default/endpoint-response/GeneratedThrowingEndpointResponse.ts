@@ -1,10 +1,12 @@
 import {
+    CursorPagination,
     ErrorDiscriminationByPropertyStrategy,
     ErrorDiscriminationStrategy,
     HttpEndpoint,
     HttpResponseBody,
     Name,
     NameAndWireValue,
+    OffsetPagination,
     ResponseError,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
@@ -90,74 +92,227 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             includeContentHeadersOnResponse: this.includeContentHeadersOnResponse
         });
 
-        if (this.endpoint.pagination != null && this.endpoint.pagination.type === "cursor") {
-            const cursor = this.endpoint.pagination;
-            const itemValueType = cursor.results.property.valueType;
-
-            const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType);
-            if (itemTypeReference == null) {
-                return undefined;
+        if (this.endpoint.pagination != null) {
+            switch (this.endpoint.pagination.type) {
+                case "cursor":
+                    return this.getCursorPaginationInfo({
+                        context,
+                        cursor: this.endpoint.pagination,
+                        successReturnType
+                    });
+                case "offset":
+                    return this.getOffsetPaginationInfo({
+                        context,
+                        offset: this.endpoint.pagination,
+                        successReturnType
+                    });
             }
+        }
 
-            const itemType = context.type.getReferenceToType(itemTypeReference).typeNode;
+        return undefined;
+    }
 
-            // hasNextPage checks if next property is not null
-            const nextProperty = this.getNameFromWireValue({ name: cursor.next.property.name, context });
-            const nextPropertyPath = [
-                "response",
-                ...(cursor.next.propertyPath ?? []).map((name) => this.getName({ name, context }))
-            ].join("?.");
-            const nextPropertyAccess = ts.factory.createPropertyAccessChain(
-                ts.factory.createIdentifier(nextPropertyPath),
+    private getCursorPaginationInfo({
+        context,
+        cursor,
+        successReturnType
+    }: {
+        context: SdkContext;
+        cursor: CursorPagination;
+        successReturnType: ts.TypeNode;
+    }): PaginationResponseInfo | undefined {
+        const itemValueType = cursor.results.property.valueType;
+
+        const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType);
+        if (itemTypeReference == null) {
+            return undefined;
+        }
+
+        const itemType = context.type.getReferenceToType(itemTypeReference).typeNode;
+
+        // hasNextPage checks if next property is not null
+        const nextProperty = this.getNameFromWireValue({ name: cursor.next.property.name, context });
+        const nextPropertyPath = [
+            "response",
+            ...(cursor.next.propertyPath ?? []).map((name) => this.getName({ name, context }))
+        ].join("?.");
+        const nextPropertyAccess = ts.factory.createPropertyAccessChain(
+            ts.factory.createIdentifier(nextPropertyPath),
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier(nextProperty)
+        );
+        const hasNextPage = ts.factory.createBinaryExpression(
+            nextPropertyAccess,
+            ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+            ts.factory.createNull()
+        );
+
+        // getItems gets the items
+        const itemsProperty = this.getNameFromWireValue({ name: cursor.results.property.name, context });
+        const itemsPropertyPath = [
+            "response",
+            ...(cursor.results.propertyPath ?? []).map((name) => this.getName({ name, context }))
+        ].join("?.");
+        const getItems = ts.factory.createBinaryExpression(
+            ts.factory.createPropertyAccessChain(
+                ts.factory.createIdentifier(itemsPropertyPath),
                 ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                ts.factory.createIdentifier(nextProperty)
-            );
-            const hasNextPage = ts.factory.createBinaryExpression(
-                nextPropertyAccess,
-                ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                ts.factory.createNull()
-            );
+                ts.factory.createIdentifier(itemsProperty)
+            ),
+            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+            ts.factory.createArrayLiteralExpression([], false)
+        );
 
-            // getItems gets the items
-            const itemsProperty = this.getNameFromWireValue({ name: cursor.results.property.name, context });
-            const itemsPropertyPath = [
-                "response",
-                ...(cursor.results.propertyPath ?? []).map((name) => this.getName({ name, context }))
-            ].join("?.");
-            const getItems = ts.factory.createBinaryExpression(
-                ts.factory.createPropertyAccessChain(
-                    ts.factory.createIdentifier(itemsPropertyPath),
-                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                    ts.factory.createIdentifier(itemsProperty)
+        // loadPage
+        const loadPage = [
+            ts.factory.createReturnStatement(
+                ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
+                    ts.factory.createObjectLiteralExpression(
+                        [
+                            ts.factory.createSpreadAssignment(ts.factory.createIdentifier("request")),
+                            ts.factory.createPropertyAssignment(
+                                ts.factory.createIdentifier(
+                                    this.getNameFromWireValue({ name: cursor.page.name, context })
+                                ),
+                                nextPropertyAccess
+                            )
+                        ],
+                        true
+                    )
+                ])
+            )
+        ];
+
+        return {
+            type: "cursor",
+            itemType,
+            responseType: successReturnType,
+            hasNextPage,
+            getItems,
+            loadPage
+        };
+    }
+
+    private getOffsetPaginationInfo({
+        context,
+        offset,
+        successReturnType
+    }: {
+        context: SdkContext;
+        offset: OffsetPagination;
+        successReturnType: ts.TypeNode;
+    }): PaginationResponseInfo | undefined {
+        const itemValueType = offset.results.property.valueType;
+
+        const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType);
+        if (itemTypeReference == null) {
+            return undefined;
+        }
+
+        const itemType = context.type.getReferenceToType(itemTypeReference).typeNode;
+
+        // initializeOffset uses the offset property if set
+        const pageProperty = this.getNameFromWireValue({ name: offset.page.name, context });
+        const pagePropertyPath = ["request"].join("?."); // TODO: Add support for nested properties after IR upgrade.
+        const pagePropertyAccess = ts.factory.createPropertyAccessExpression(
+            ts.factory.createIdentifier(pagePropertyPath),
+            ts.factory.createIdentifier(pageProperty)
+        );
+        const initializeOffset = ts.factory.createVariableStatement(
+            undefined,
+            ts.factory.createVariableDeclarationList(
+                [
+                    ts.factory.createVariableDeclaration(
+                        ts.factory.createIdentifier("_offset"),
+                        undefined,
+                        undefined,
+                        ts.factory.createConditionalExpression(
+                            ts.factory.createBinaryExpression(
+                                pagePropertyAccess,
+                                ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                                ts.factory.createNull()
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                            pagePropertyAccess,
+                            ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                            ts.factory.createNumericLiteral("1")
+                        )
+                    )
+                ],
+                ts.NodeFlags.Let
+            )
+        );
+
+        // hasNextPage checks if the items are not empty
+        const itemsProperty = this.getNameFromWireValue({ name: offset.results.property.name, context });
+        const itemsPropertyPath = [
+            "response",
+            ...(offset.results.propertyPath ?? []).map((name) => this.getName({ name, context }))
+        ].join("?.");
+        const itemsPropertyAccess = ts.factory.createPropertyAccessChain(
+            ts.factory.createIdentifier(itemsPropertyPath),
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier(itemsProperty)
+        );
+        const hasNextPage = ts.factory.createBinaryExpression(
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createParenthesizedExpression(
+                    ts.factory.createBinaryExpression(
+                        itemsPropertyAccess,
+                        ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                        ts.factory.createArrayLiteralExpression([], false)
+                    )
                 ),
-                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                ts.factory.createArrayLiteralExpression([], false)
-            );
+                ts.factory.createIdentifier("length")
+            ),
+            ts.factory.createToken(ts.SyntaxKind.GreaterThanToken),
+            ts.factory.createNumericLiteral("0")
+        );
 
-            // loadPage
-            const loadPage = ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
+        // getItems gets the items
+        const getItems = ts.factory.createBinaryExpression(
+            ts.factory.createPropertyAccessChain(
+                ts.factory.createIdentifier(itemsPropertyPath),
+                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                ts.factory.createIdentifier(itemsProperty)
+            ),
+            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+            ts.factory.createArrayLiteralExpression([], false)
+        );
+
+        // loadPage
+        const incrementOffset = ts.factory.createExpressionStatement(
+            ts.factory.createBinaryExpression(
+                ts.factory.createIdentifier("_offset"),
+                ts.factory.createToken(ts.SyntaxKind.PlusEqualsToken),
+                ts.factory.createNumericLiteral("1")
+            )
+        );
+        const callEndpoint = ts.factory.createReturnStatement(
+            ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
                 ts.factory.createObjectLiteralExpression(
                     [
                         ts.factory.createSpreadAssignment(ts.factory.createIdentifier("request")),
                         ts.factory.createPropertyAssignment(
-                            ts.factory.createIdentifier(this.getNameFromWireValue({ name: cursor.page.name, context })),
-                            nextPropertyAccess
+                            ts.factory.createIdentifier(this.getNameFromWireValue({ name: offset.page.name, context })),
+                            ts.factory.createIdentifier("_offset")
                         )
                     ],
                     true
                 )
-            ]);
+            ])
+        );
+        const loadPage = [incrementOffset, callEndpoint];
 
-            return {
-                itemType,
-                responseType: successReturnType,
-                hasNextPage,
-                getItems,
-                loadPage
-            };
-        }
-
-        return undefined;
+        return {
+            type: "offset",
+            initializeOffset,
+            itemType,
+            responseType: successReturnType,
+            hasNextPage,
+            getItems,
+            loadPage
+        };
     }
 
     private getName({ name, context }: { name: Name; context: SdkContext }): string {
