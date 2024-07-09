@@ -8,5 +8,3 @@ export function createRequestUrl(
         ? `${baseUrl}?${qs.stringify(queryParameters, { arrayFormat: "repeat" })}`
         : baseUrl;
 }
-
-

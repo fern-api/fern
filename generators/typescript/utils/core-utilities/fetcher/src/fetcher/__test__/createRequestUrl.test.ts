@@ -1,6 +1,4 @@
-import { RUNTIME } from "../../runtime";
 import { createRequestUrl } from "../createRequestUrl";
-
 
 describe("Test createRequestUrl", () => {
     it("should return the base URL when no query parameters are provided", () => {

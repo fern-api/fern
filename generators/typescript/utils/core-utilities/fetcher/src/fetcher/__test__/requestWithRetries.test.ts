@@ -1,5 +1,5 @@
 import { RUNTIME } from "../../runtime";
-import {requestWithRetries } from "../requestWithRetries";
+import { requestWithRetries } from "../requestWithRetries";
 
 if (RUNTIME.type === "browser") {
     require("jest-fetch-mock").enableMocks();

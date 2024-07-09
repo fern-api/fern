@@ -5,7 +5,6 @@ if (RUNTIME.type === "browser") {
     require("jest-fetch-mock").enableMocks();
 }
 
-
 describe("Test makeRequest", () => {
     const mockPostUrl = "https://httpbin.org/post";
     const mockGetUrl = "https://httpbin.org/get";
