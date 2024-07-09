@@ -7892,10 +7892,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/generator-cli-sdk", [\
-        ["npm:0.0.31", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-generator-cli-sdk-npm-0.0.31-19fdd279d3-125440ed26.zip/node_modules/@fern-fern/generator-cli-sdk/",\
+        ["npm:0.0.56", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-generator-cli-sdk-npm-0.0.56-0d9d93a3ff-b077d570f2.zip/node_modules/@fern-fern/generator-cli-sdk/",\
           "packageDependencies": [\
-            ["@fern-fern/generator-cli-sdk", "npm:0.0.31"]\
+            ["@fern-fern/generator-cli-sdk", "npm:0.0.56"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -9108,7 +9108,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
-            ["@fern-fern/generator-cli-sdk", "npm:0.0.31"],\
+            ["@fern-fern/generator-cli-sdk", "npm:0.0.56"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.898"],\
             ["@fern-fern/ir-sdk", "npm:46.2.0"],\
             ["@fern-fern/snippet-sdk", "npm:0.0.5492"],\
