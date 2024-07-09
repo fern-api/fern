@@ -233,15 +233,24 @@ export class DocsDefinitionResolver {
 
     private async convertNavigationConfig(): Promise<DocsV1Write.NavigationConfig> {
         const slug = FernNavigation.SlugGenerator.init(FernNavigation.utils.slugjoin(this.getDocsBasePath()));
-        const landingPage = this.parsedDocsConfig.landingPage;
         switch (this.parsedDocsConfig.navigation.type) {
+            case "untabbed": {
+                const items = await Promise.all(
+                    this.parsedDocsConfig.navigation.items.map((item) => this.convertNavigationItem(item, slug))
+                );
+                return { items };
+            }
+            case "tabbed": {
+                return {
+                    tabsV2: await this.convertTabbedNavigation(this.parsedDocsConfig.navigation.items, slug)
+                };
+            }
             case "versioned": {
                 const versions = await Promise.all(
                     this.parsedDocsConfig.navigation.versions.map(
                         async (version): Promise<DocsV1Write.VersionedNavigationConfigData> => {
                             const versionSlug = slug.setVersionSlug(version.slug ?? kebabCase(version.version));
                             const convertedNavigation = await this.convertUnversionedNavigationConfig({
-                                landingPage: version.landingPage,
                                 navigationConfig: version.navigation,
                                 parentSlug: versionSlug
                             });
@@ -259,13 +268,6 @@ export class DocsDefinitionResolver {
                 );
                 return { versions };
             }
-            case "untabbed":
-            case "tabbed":
-                return this.convertUnversionedNavigationConfig({
-                    landingPage: this.parsedDocsConfig.landingPage,
-                    navigationConfig: this.parsedDocsConfig.navigation,
-                    parentSlug: slug
-                });
             default:
                 assertNever(this.parsedDocsConfig.navigation);
         }
@@ -299,14 +301,12 @@ export class DocsDefinitionResolver {
                 return {
                     type: "section",
                     title: item.title,
-
                     items: sectionItems,
                     urlSlugOverride: item.slug,
                     collapsed: item.collapsed,
                     icon: item.icon,
                     hidden: item.hidden,
-                    skipUrlSlug: item.skipUrlSlug,
-                    overviewPageId: this.toRelativeFilepath(item.overviewAbsolutePath)
+                    skipUrlSlug: item.skipUrlSlug
                 };
             }
             case "apiSection": {
@@ -373,38 +373,23 @@ export class DocsDefinitionResolver {
     }
 
     private async convertUnversionedNavigationConfig({
-        landingPage: landingPageConfig,
         navigationConfig,
         parentSlug
     }: {
-        landingPage: docsYml.DocsNavigationItem.Page | undefined;
         navigationConfig: docsYml.UnversionedNavigationConfiguration;
         parentSlug: FernNavigation.SlugGenerator;
     }): Promise<DocsV1Write.UnversionedNavigationConfig> {
-        const landingPage =
-            landingPageConfig != null
-                ? {
-                      id: this.toRelativeFilepath(landingPageConfig.absolutePath),
-                      urlSlugOverride: landingPageConfig.slug,
-                      fullSlug: this.markdownFilesToFullSlugs.get(landingPageConfig.absolutePath)?.split("/"),
-                      hidden: landingPageConfig.hidden,
-                      title: landingPageConfig.title,
-                      icon: landingPageConfig.icon
-                  }
-                : undefined;
         switch (navigationConfig.type) {
             case "untabbed": {
                 const untabs = await Promise.all(
                     navigationConfig.items.map((item) => this.convertNavigationItem(item, parentSlug))
                 );
                 return {
-                    landingPage,
                     items: untabs
                 };
             }
             case "tabbed": {
                 return {
-                    landingPage,
                     tabsV2: await this.convertTabbedNavigation(navigationConfig.items, parentSlug)
                 };
             }

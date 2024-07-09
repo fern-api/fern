@@ -16,17 +16,12 @@ export const VersionFileConfig: core.serialization.ObjectSchema<
             core.serialization.lazyObject(async () => (await import("../../..")).TabConfig)
         )
         .optional(),
-    landingPage: core.serialization.property(
-        "landing-page",
-        core.serialization.lazyObject(async () => (await import("../../..")).PageConfiguration).optional()
-    ),
     navigation: core.serialization.lazy(async () => (await import("../../..")).NavigationConfig),
 });
 
 export declare namespace VersionFileConfig {
     interface Raw {
         tabs?: Record<serializers.TabId.Raw, serializers.TabConfig.Raw> | null;
-        "landing-page"?: serializers.PageConfiguration.Raw | null;
         navigation: serializers.NavigationConfig.Raw;
     }
 }
