@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Lang, { Class } from "../lang";
+import LANGUAGE, { Class } from "../SHORT_LANG";
 
 export declare namespace File {
     interface Args {
@@ -17,7 +17,7 @@ export class File extends AstNode {
         name,
         class: classInstance,
     }: File.Args) {
-        super(Lang.indentSize);
+        super(LANGUAGE.indentSize);
         this.name = name;
         this.class = classInstance;
     }
