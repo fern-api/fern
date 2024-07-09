@@ -3684,6 +3684,7 @@ __metadata:
   resolution: "@fern-api/ete-tests@workspace:packages/cli/ete-tests"
   dependencies:
     "@fern-api/configuration": "workspace:*"
+    "@fern-api/fdr-sdk": 0.98.10-04e9d1412
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
     "@fern-typescript/fetcher": "workspace:*"

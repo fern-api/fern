@@ -10,10 +10,15 @@ import {
 
 const BATCH_SIZE = 100; // Define a reasonable batch size
 
-async function loadBatch(
-    files: AbsoluteFilePath[],
-    absolutePathToFernFolder: AbsoluteFilePath
-): Promise<Record<RelativeFilePath, string>> {
+interface LoadPagesOptions {
+    files: AbsoluteFilePath[];
+    absolutePathToFernFolder: AbsoluteFilePath;
+}
+
+async function loadBatch({
+    files,
+    absolutePathToFernFolder
+}: LoadPagesOptions): Promise<Record<RelativeFilePath, string>> {
     const pairs = await Promise.all(
         files.map(async (file) => {
             const content = await readFile(file, "utf-8");
@@ -23,16 +28,21 @@ async function loadBatch(
     return Object.fromEntries(pairs);
 }
 
-export async function loadAllPages(
-    filesPromise: Promise<AbsoluteFilePath[]>,
-    absolutePathToFernFolder: AbsoluteFilePath
-): Promise<Record<RelativeFilePath, string>> {
-    const files = await filesPromise;
+export async function loadAllPages({
+    files,
+    absolutePathToFernFolder
+}: {
+    files: AbsoluteFilePath[];
+    absolutePathToFernFolder: AbsoluteFilePath;
+}): Promise<Record<RelativeFilePath, string>> {
     const result: Record<RelativeFilePath, string> = {};
 
     for (let i = 0; i < files.length; i += BATCH_SIZE) {
         const batch = files.slice(i, i + BATCH_SIZE);
-        const batchResult = await loadBatch(batch, absolutePathToFernFolder);
+        const batchResult = await loadBatch({
+            files: batch,
+            absolutePathToFernFolder
+        });
         Object.assign(result, batchResult);
     }
 
