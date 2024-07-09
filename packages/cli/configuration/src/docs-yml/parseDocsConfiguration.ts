@@ -80,11 +80,11 @@ export async function parseDocsConfiguration({
         context
     });
 
-    const pagesPromise = loadAllPages(
-        convertedNavigationPromise.then((convertedNavigation) =>
-            getAllPages({ navigation: convertedNavigation, landingPage })
-        ),
-        absoluteFilepathToDocsConfig
+    const pagesPromise = convertedNavigationPromise.then((convertedNavigation) =>
+        loadAllPages({
+            files: getAllPages({ navigation: convertedNavigation, landingPage }),
+            absolutePathToFernFolder
+        })
     );
 
     const logo = convertLogoReference(rawLogo, absoluteFilepathToDocsConfig);
