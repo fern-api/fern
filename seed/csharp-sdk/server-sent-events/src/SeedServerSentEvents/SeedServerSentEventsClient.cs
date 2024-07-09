@@ -9,7 +9,7 @@ public partial class SeedServerSentEventsClient
 {
     private RawClient _client;
 
-    public SeedServerSentEventsClient(ClientOptions clientOptions = null)
+    public SeedServerSentEventsClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
@@ -19,14 +19,4 @@ public partial class SeedServerSentEventsClient
     }
 
     public CompletionsClient Completions { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
 }

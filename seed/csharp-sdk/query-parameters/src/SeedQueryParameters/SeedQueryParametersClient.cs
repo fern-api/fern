@@ -9,7 +9,7 @@ public partial class SeedQueryParametersClient
 {
     private RawClient _client;
 
-    public SeedQueryParametersClient(ClientOptions clientOptions = null)
+    public SeedQueryParametersClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
@@ -19,14 +19,4 @@ public partial class SeedQueryParametersClient
     }
 
     public UserClient User { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
 }

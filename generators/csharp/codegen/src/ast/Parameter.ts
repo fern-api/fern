@@ -31,6 +31,9 @@ export class Parameter extends AstNode {
 
     public write(writer: Writer): void {
         this.type.write(writer);
+        if (this.initializer === "null") {
+            writer.write("?");
+        }
         writer.write(` ${this.name}`);
         if (this.initializer != null) {
             writer.write(` = ${this.initializer}`);

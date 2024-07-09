@@ -11,7 +11,7 @@ public partial class SeedOauthClientCredentialsEnvironmentVariablesClient
 
     public SeedOauthClientCredentialsEnvironmentVariablesClient(
         string token,
-        ClientOptions clientOptions = null
+        ClientOptions? clientOptions = null
     )
     {
         _client = new RawClient(
@@ -22,14 +22,4 @@ public partial class SeedOauthClientCredentialsEnvironmentVariablesClient
     }
 
     public AuthClient Auth { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
 }

@@ -9,7 +9,7 @@ public partial class SeedNurseryApiClient
 {
     private RawClient _client;
 
-    public SeedNurseryApiClient(ClientOptions clientOptions = null)
+    public SeedNurseryApiClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
@@ -19,14 +19,4 @@ public partial class SeedNurseryApiClient
     }
 
     public PackageClient Package { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
 }

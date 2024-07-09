@@ -28,6 +28,8 @@ export declare namespace Field {
         summary?: string;
         /* JSON value for this particular field */
         jsonPropertyName?: string;
+        /* If true, we will consider setting the field to required based on its type. If false, we will not. */
+        useRequired?: boolean;
     }
 }
 
@@ -42,6 +44,7 @@ export class Field extends AstNode {
     private summary: string | undefined;
     private jsonPropertyName: string | undefined;
     private static_: boolean | undefined;
+    private useRequired: boolean;
 
     constructor({
         name,
@@ -53,7 +56,8 @@ export class Field extends AstNode {
         initializer,
         summary,
         jsonPropertyName,
-        static_
+        static_,
+        useRequired
     }: Field.Args) {
         super();
         this.name = name;
@@ -66,6 +70,8 @@ export class Field extends AstNode {
         this.summary = summary;
         this.jsonPropertyName = jsonPropertyName;
         this.static_ = static_;
+        this.useRequired = useRequired ?? false;
+        // this.useRequired = false; // required keyword not compatible with .NET 6.0
 
         if (this.jsonPropertyName != null) {
             this.annotations = [
@@ -99,6 +105,12 @@ export class Field extends AstNode {
         }
 
         writer.write(`${this.access} `);
+        const underlyingTypeIfOptional = this.type.underlyingTypeIfOptional();
+        const isOptional = underlyingTypeIfOptional != null;
+        const isCollection = (underlyingTypeIfOptional ?? this.type).isCollection();
+        if (this.useRequired && !isOptional && !isCollection && this.initializer == null) {
+            writer.write("required ");
+        }
         if (this.static_) {
             writer.write("static ");
         }
@@ -120,6 +132,8 @@ export class Field extends AstNode {
             writer.write(" = ");
             this.initializer.write(writer);
             writer.writeLine(";");
+        } else if (!isOptional && isCollection) {
+            this.type.writeEmptyCollectionInitializer(writer);
         } else if (!this.get && !this.init) {
             writer.writeLine(";");
         }

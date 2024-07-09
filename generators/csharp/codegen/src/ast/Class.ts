@@ -21,6 +21,8 @@ export declare namespace Class {
         sealed?: boolean;
         /* Defaults to false */
         partial?: boolean;
+        /* Defaults to false */
+        record?: boolean;
         /* The class to inherit from if any */
         parentClassReference?: ClassReference;
         /* Any interfaces the class extends */
@@ -51,6 +53,7 @@ export class Class extends AstNode {
     public readonly parentClassReference: ClassReference | undefined;
     public readonly interfaceReferences: ClassReference[];
     public readonly isNestedClass: boolean;
+    public readonly record: boolean;
     public readonly annotations: Annotation[] = [];
 
     private fields: Field[] = [];
@@ -67,7 +70,8 @@ export class Class extends AstNode {
         partial,
         parentClassReference,
         interfaceReferences,
-        isNestedClass
+        isNestedClass,
+        record
     }: Class.Args) {
         super();
         this.name = name;
@@ -76,6 +80,7 @@ export class Class extends AstNode {
         this.sealed = sealed ?? false;
         this.partial = partial ?? false;
         this.isNestedClass = isNestedClass ?? false;
+        this.record = record ?? false;
 
         this.parentClassReference = parentClassReference;
         this.interfaceReferences = interfaceReferences ?? [];
@@ -126,7 +131,7 @@ export class Class extends AstNode {
         if (this.partial) {
             writer.write(" partial");
         }
-        writer.write(" class");
+        writer.write(this.record ? " record" : " class");
         writer.write(` ${this.name}`);
         if (this.parentClassReference != null || this.interfaceReferences.length > 0) {
             writer.write(" : ");

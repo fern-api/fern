@@ -25,7 +25,6 @@ fixtures:
       outputFolder: extra-dependencies
 allowedFailures:
   - alias
-  - auth-environment-variables
   - basic-auth-environment-variables
   - bearer-token-environment-variable
   - circular-references

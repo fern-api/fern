@@ -9,9 +9,10 @@ export const HTTP_CLIENT_FIELD = csharp.field({
     name: "HttpClient",
     get: true,
     init: true,
-    type: csharp.Type.coreClass(
-        csharp.coreClassReference({
-            name: "HttpClient"
+    type: csharp.Type.reference(
+        csharp.classReference({
+            name: "HttpClient",
+            namespace: "System.Net.Http"
         })
     ),
     initializer: csharp.codeblock("new HttpClient()"),

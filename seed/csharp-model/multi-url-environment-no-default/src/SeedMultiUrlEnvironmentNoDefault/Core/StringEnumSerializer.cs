@@ -23,17 +23,10 @@ public class StringEnumSerializer<TEnum> : JsonConverter<TEnum>
                 .Cast<EnumMemberAttribute>()
                 .FirstOrDefault();
 
-            _stringToEnum.Add(value.ToString(), value);
+            var stringValue = attr?.Value ?? value.ToString();
 
-            if (attr?.Value != null)
-            {
-                _enumToString.Add(value, attr.Value);
-                _stringToEnum.Add(attr.Value, value);
-            }
-            else
-            {
-                _enumToString.Add(value, value.ToString());
-            }
+            _enumToString.Add(value, stringValue);
+            _stringToEnum.Add(stringValue, value);
         }
     }
 

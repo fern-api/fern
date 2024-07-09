@@ -9,7 +9,7 @@ public partial class SeedUnknownAsAnyClient
 {
     private RawClient _client;
 
-    public SeedUnknownAsAnyClient(ClientOptions clientOptions = null)
+    public SeedUnknownAsAnyClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
@@ -19,14 +19,4 @@ public partial class SeedUnknownAsAnyClient
     }
 
     public UnknownClient Unknown { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
 }

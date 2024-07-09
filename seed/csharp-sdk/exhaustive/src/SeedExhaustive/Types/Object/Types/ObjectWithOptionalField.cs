@@ -33,14 +33,11 @@ public class ObjectWithOptionalField
     [JsonPropertyName("base64")]
     public string? Base64 { get; init; }
 
-    [JsonPropertyName("list")]
-    public IEnumerable<string>? List { get; init; }
+    [JsonPropertyName("list")] public IEnumerable<string>? List { get; init; } = Array.Empty<string>();
 
-    [JsonPropertyName("set")]
-    public HashSet<string>? Set { get; init; }
+    [JsonPropertyName("set")] public HashSet<string>? Set { get; init; } = new HashSet<string>();
 
-    [JsonPropertyName("map")]
-    public Dictionary<int, string>? Map { get; init; }
+    [JsonPropertyName("map")] public Dictionary<int, string>? Map { get; init; } = new Dictionary<int, string>();
 
     [JsonPropertyName("bigint")]
     public string? Bigint { get; init; }

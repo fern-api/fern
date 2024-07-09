@@ -9,13 +9,13 @@ public partial class SeedLiteralClient
 {
     private RawClient _client;
 
-    public SeedLiteralClient(ClientOptions clientOptions = null)
+    public SeedLiteralClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>()
             {
-                { "version", $"02-02-2024" },
-                { "auditLogging", true.ToString() },
+                { "X-API-Version", "02-02-2024" },
+                { "X-API-Enable-Audit-Logging", true.ToString() },
                 { "X-Fern-Language", "C#" },
             },
             clientOptions ?? new ClientOptions()
@@ -36,14 +36,4 @@ public partial class SeedLiteralClient
     public QueryClient Query { get; }
 
     public ReferenceClient Reference { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
 }

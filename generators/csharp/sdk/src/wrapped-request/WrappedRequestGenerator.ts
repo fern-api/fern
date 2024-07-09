@@ -32,7 +32,8 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         const class_ = csharp.class_({
             ...this.classReference,
             partial: false,
-            access: "public"
+            access: "public",
+            record: true
         });
 
         for (const query of this.endpoint.queryParameters) {
@@ -43,7 +44,8 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     access: "public",
                     get: true,
                     init: true,
-                    summary: query.docs
+                    summary: query.docs,
+                    useRequired: true
                 })
             );
         }
@@ -56,7 +58,8 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     access: "public",
                     get: true,
                     init: true,
-                    summary: header.docs
+                    summary: header.docs,
+                    useRequired: true
                 })
             );
         }
@@ -72,7 +75,8 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         access: "public",
                         get: true,
                         init: true,
-                        summary: reference.docs
+                        summary: reference.docs,
+                        useRequired: true
                     })
                 );
             },
@@ -102,7 +106,8 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                             init: true,
                             summary: property.docs,
                             jsonPropertyName: addJsonAnnotations ? property.name.wireValue : undefined,
-                            annotations
+                            annotations,
+                            useRequired: true
                         })
                     );
                 }

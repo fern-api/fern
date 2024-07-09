@@ -11,7 +11,7 @@ public partial class SeedExhaustiveClient
 {
     private RawClient _client;
 
-    public SeedExhaustiveClient(string token, ClientOptions clientOptions = null)
+    public SeedExhaustiveClient(string token, ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
@@ -39,14 +39,4 @@ public partial class SeedExhaustiveClient
     public ReqWithHeadersClient ReqWithHeaders { get; }
 
     public TypesClient Types { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
 }

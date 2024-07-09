@@ -9,7 +9,7 @@ public partial class SeedMultiUrlEnvironmentClient
 {
     private RawClient _client;
 
-    public SeedMultiUrlEnvironmentClient(string token = null, ClientOptions clientOptions = null)
+    public SeedMultiUrlEnvironmentClient(string? token = null, ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>()
@@ -26,14 +26,4 @@ public partial class SeedMultiUrlEnvironmentClient
     public Ec2Client Ec2 { get; }
 
     public S3Client S3 { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
 }

@@ -9,7 +9,7 @@ public partial class SeedBytesClient
 {
     private RawClient _client;
 
-    public SeedBytesClient(ClientOptions clientOptions = null)
+    public SeedBytesClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
@@ -19,14 +19,4 @@ public partial class SeedBytesClient
     }
 
     public ServiceClient Service { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
 }

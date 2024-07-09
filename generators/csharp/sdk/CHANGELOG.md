@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.36 - 2024-07-08]
+
+- Fix: The generated `StringEnumSerializer` now avoids duplicate key errors.
+- Fix: Fixed forgotten closed parentheses when getting values from the environment.
+- Fix: Fixed a bug where literal header names were generated incorrectly (as safe names rather than wire names).
+- Fix: Files in `Core` are now put in the `Core` namespace.
+- Fix: Other small fixes
+- Improvement: Constructor parameters initialized to `null` are now typed as nullable.
+
 ## [0.0.35 - 2024-07-02]
 
 - Fix: Base client requests are now generated, whereas previously they were skipped.

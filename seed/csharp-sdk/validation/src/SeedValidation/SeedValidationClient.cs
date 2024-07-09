@@ -10,7 +10,7 @@ public partial class SeedValidationClient
 {
     private RawClient _client;
 
-    public SeedValidationClient(ClientOptions clientOptions = null)
+    public SeedValidationClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
@@ -58,15 +58,5 @@ public partial class SeedValidationClient
             return JsonSerializer.Deserialize<Type>(responseBody);
         }
         throw new Exception(responseBody);
-    }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
     }
 }
