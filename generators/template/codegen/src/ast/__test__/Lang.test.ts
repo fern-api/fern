@@ -12,7 +12,7 @@ describe("FULL_LANGUAGE_NAME Language", () => {
             name: "doSomething"
         });
         // eslint-disable-next-line no-console
-        console.log(output.toString());
+        console.log(JSON.stringify(output));
     });
 
     it("makes class", () => {
@@ -25,7 +25,7 @@ describe("FULL_LANGUAGE_NAME Language", () => {
             ]
         });
         // eslint-disable-next-line no-console
-        console.log(output.toString());
+        console.log(JSON.stringify(output));
     });
 
     it("makes file", () => {
@@ -41,6 +41,6 @@ describe("FULL_LANGUAGE_NAME Language", () => {
             })
         });
         // eslint-disable-next-line no-console
-        console.log(output.toString());
+        console.log(JSON.stringify(output));
     });
 });
