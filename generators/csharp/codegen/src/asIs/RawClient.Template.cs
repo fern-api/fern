@@ -9,27 +9,21 @@ namespace <%= namespace%>;
 /// <summary>
 /// Utility class for making raw HTTP requests to the API.
 /// </summary>
-public class RawClient
+public class RawClient(Dictionary<string, string> headers, ClientOptions clientOptions)
 {
     /// <summary>
     /// The http client used to make requests.
     /// </summary>
-    private readonly ClientOptions _clientOptions;
+    private readonly ClientOptions _clientOptions = clientOptions;
 
     /// <summary>
     /// Global headers to be sent with every request.
     /// </summary>
-    private readonly Dictionary<String, String> _headers;
-
-    public RawClient(Dictionary<String, String> headers, ClientOptions clientOptions)
-    {
-        _clientOptions = clientOptions;
-        _headers = headers;
-    }
+    private readonly Dictionary<string, string> _headers = headers;
 
     public async Task<ApiResponse> MakeRequestAsync(BaseApiRequest request)
     {
-        var url = this.BuildUrl(request.Path, request.Query);
+        var url = BuildUrl(request.Path, request.Query);
         var httpRequest = new HttpRequestMessage(request.Method, url);
         if (request.ContentType != null)
         {
@@ -58,39 +52,36 @@ public class RawClient
                 );
             }
         }
-        else if (request is StreamApiRequest streamRequest)
+        else if (request is StreamApiRequest { Body: not null } streamRequest)
         {
-            if (streamRequest.Body != null)
-            {
-                httpRequest.Content = new StreamContent(streamRequest.Body);
-            }
+            httpRequest.Content = new StreamContent(streamRequest.Body);
         }
         // Send the request
-        HttpResponseMessage response = await _clientOptions.HttpClient.SendAsync(httpRequest);
+        var response = await _clientOptions.HttpClient.SendAsync(httpRequest);
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
 
     public abstract class BaseApiRequest
     {
-        public HttpMethod Method;
+        public required HttpMethod Method;
 
-        public string Path;
+        public required string Path;
 
-        public string? ContentType = null;
+        public readonly string? ContentType = null;
 
-        public Dictionary<string, object> Query { get; init; } = new();
+        public Dictionary<string, object> Query { get; } = new();
 
-        public Dictionary<string, string> Headers { get; init; } = new();
+        public Dictionary<string, string> Headers { get; } = new();
 
-        public object RequestOptions { get; init; }
+        public object? RequestOptions { get; init; }
     }
 
     /// <summary>
     /// The request object to be sent for streaming uploads.
     /// </summary>
-    public class StreamApiRequest : BaseApiRequest
+    public abstract class StreamApiRequest : BaseApiRequest
     {
-        public Stream? Body { get; init; } = null;
+        public Stream? Body => null;
     }
 
     /// <summary>
@@ -98,7 +89,7 @@ public class RawClient
     /// </summary>
     public class JsonApiRequest : BaseApiRequest
     {
-        public object? Body { get; init; } = null;
+        public object? Body { get; init; }
     }
 
     /// <summary>
@@ -108,37 +99,18 @@ public class RawClient
     {
         public int StatusCode;
 
-        public HttpResponseMessage Raw;
+        public required HttpResponseMessage Raw;
     }
 
-    private Dictionary<string, string> GetHeaders(BaseApiRequest request)
-    {
-        var headers = new Dictionary<string, string>();
-        foreach (var header in request.Headers)
-        {
-            headers.Add(header.Key, header.Value);
-        }
-        foreach (var header in _headers)
-        {
-            headers.Add(header.Key, header.Value);
-        }
-        return headers;
-    }
-
-    public string BuildUrl(string path, Dictionary<string, object> query)
+    private string BuildUrl(string path, Dictionary<string, object> query)
     {
         var trimmedBaseUrl = _clientOptions.BaseUrl.TrimEnd('/');
         var trimmedBasePath = path.TrimStart('/');
         var url = $"{trimmedBaseUrl}/{trimmedBasePath}";
-        if (query.Count > 0)
-        {
-            url += "?";
-            foreach (var queryItem in query)
-            {
-                url += $"{queryItem.Key}={queryItem.Value}&";
-            }
-            url = url.Substring(0, url.Length - 1);
-        }
+        if (query.Count <= 0) return url;
+        url += "?";
+        url = query.Aggregate(url, (current, queryItem) => current + $"{queryItem.Key}={queryItem.Value}&");
+        url = url.Substring(0, url.Length - 1);
         return url;
     }
 }

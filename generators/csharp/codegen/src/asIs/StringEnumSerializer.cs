@@ -24,7 +24,10 @@ public class StringEnumSerializer<TEnum> : JsonConverter<TEnum>
                 .Cast<EnumMemberAttribute>()
                 .FirstOrDefault();
 
-            var stringValue = attr?.Value ?? value.ToString();
+            var stringValue =
+                attr?.Value
+                ?? value.ToString()
+                ?? throw new Exception("Unexpected null enum toString value");
 
             _enumToString.Add(enumValue, stringValue);
             _stringToEnum.Add(stringValue, enumValue);
@@ -37,7 +40,9 @@ public class StringEnumSerializer<TEnum> : JsonConverter<TEnum>
         JsonSerializerOptions options
     )
     {
-        var stringValue = reader.GetString() ?? throw new Exception("The JSON value could not be read as a string.");
+        var stringValue =
+            reader.GetString()
+            ?? throw new Exception("The JSON value could not be read as a string.");
         return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
     }
 
