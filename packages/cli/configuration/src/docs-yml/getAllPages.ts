@@ -6,157 +6,123 @@ import {
     DocsNavigationItem,
     ParsedApiReferenceLayoutItem
 } from "./ParsedDocsConfiguration";
+import { compact } from "lodash-es";
 
-export async function getAllPages({
-    navigation,
-    absolutePathToFernFolder
+const BATCH_SIZE = 100; // Define a reasonable batch size
+
+async function loadBatch(
+    files: AbsoluteFilePath[],
+    absolutePathToFernFolder: AbsoluteFilePath
+): Promise<Record<RelativeFilePath, string>> {
+    const pairs = await Promise.all(
+        files.map(async (file) => {
+            const content = await readFile(file, "utf-8");
+            return [relativize(absolutePathToFernFolder, file), content];
+        })
+    );
+    return Object.fromEntries(pairs);
+}
+
+export async function loadAllPages(
+    filesPromise: Promise<AbsoluteFilePath[]>,
+    absolutePathToFernFolder: AbsoluteFilePath
+): Promise<Record<RelativeFilePath, string>> {
+    const files = await filesPromise;
+    const result: Record<RelativeFilePath, string> = {};
+
+    for (let i = 0; i < files.length; i += BATCH_SIZE) {
+        const batch = files.slice(i, i + BATCH_SIZE);
+        const batchResult = await loadBatch(batch, absolutePathToFernFolder);
+        Object.assign(result, batchResult);
+    }
+
+    return result;
+}
+
+export function getAllPages({
+    landingPage,
+    navigation
 }: {
+    landingPage: DocsNavigationItem.Page | undefined;
     navigation: DocsNavigationConfiguration;
-    absolutePathToFernFolder: AbsoluteFilePath;
-}): Promise<Record<RelativeFilePath, string>> {
+}): AbsoluteFilePath[] {
+    return compact([landingPage?.absolutePath, ...getAllPagesFromNavigationConfig(navigation)]);
+}
+
+function getAllPagesFromNavigationConfig(navigation: DocsNavigationConfiguration): AbsoluteFilePath[] {
     switch (navigation.type) {
         case "tabbed":
-            return combineMaps(
-                await Promise.all(
-                    navigation.items.map(async (tab) => {
-                        if (tab.child.type === "layout") {
-                            return combineMaps(
-                                await Promise.all(
-                                    tab.child.layout.map(async (item) => {
-                                        return await getAllPagesFromNavigationItem({
-                                            item,
-                                            absolutePathToFernFolder
-                                        });
-                                    })
-                                )
-                            );
-                        } else if (tab.child.type === "changelog") {
-                            return combineMaps(
-                                await Promise.all(
-                                    tab.child.changelog.map(async (filepath) => ({
-                                        [await relativize(absolutePathToFernFolder, filepath)]: (
-                                            await readFile(filepath)
-                                        ).toString()
-                                    }))
-                                )
-                            );
-                        }
-                        return {};
-                    })
-                )
-            );
+            return navigation.items.flatMap((tab) => {
+                if (tab.child.type === "layout") {
+                    return tab.child.layout.flatMap((item) => {
+                        return getAllPagesFromNavigationItem({
+                            item
+                        });
+                    });
+                } else if (tab.child.type === "changelog") {
+                    return tab.child.changelog;
+                }
+                return [];
+            });
         case "untabbed":
-            return combineMaps(
-                await Promise.all(
-                    navigation.items.map(async (item) => {
-                        return await getAllPagesFromNavigationItem({
-                            item,
-                            absolutePathToFernFolder
-                        });
-                    })
-                )
-            );
+            return navigation.items.flatMap((item) => {
+                return getAllPagesFromNavigationItem({
+                    item
+                });
+            });
         case "versioned":
-            return combineMaps(
-                await Promise.all(
-                    navigation.versions.map(async (version) => {
-                        return await getAllPages({
-                            navigation: version.navigation,
-                            absolutePathToFernFolder
-                        });
-                    })
-                )
-            );
+            return navigation.versions.flatMap((version) => {
+                return getAllPages({
+                    landingPage: version.landingPage,
+                    navigation: version.navigation
+                });
+            });
         default:
             assertNever(navigation);
     }
 }
 
-export async function getAllPagesFromNavigationItem({
-    item,
-    absolutePathToFernFolder
-}: {
-    item: DocsNavigationItem;
-    absolutePathToFernFolder: AbsoluteFilePath;
-}): Promise<Record<RelativeFilePath, string>> {
+export function getAllPagesFromNavigationItem({ item }: { item: DocsNavigationItem }): AbsoluteFilePath[] {
     switch (item.type) {
-        case "apiSection": {
-            const toRet = combineMaps(
-                await Promise.all(
-                    item.navigation.map((apiNavigation) =>
-                        getAllPagesFromApiReferenceLayoutItem({ item: apiNavigation, absolutePathToFernFolder })
-                    )
+        case "apiSection":
+            return compact([
+                item.overviewAbsolutePath,
+                ...item.navigation.flatMap((apiNavigation) =>
+                    getAllPagesFromApiReferenceLayoutItem({ item: apiNavigation })
                 )
-            );
-            if (item.summaryAbsolutePath != null) {
-                toRet[await relativize(absolutePathToFernFolder, item.summaryAbsolutePath)] = (
-                    await readFile(item.summaryAbsolutePath)
-                ).toString();
-            }
-            return toRet;
-        }
+            ]);
         case "link":
-            return {};
+            return [];
         case "page":
-            return {
-                [await relativize(absolutePathToFernFolder, item.absolutePath)]: (
-                    await readFile(item.absolutePath)
-                ).toString()
-            };
+            return [item.absolutePath];
         case "section":
-            return combineMaps(
-                await Promise.all(
-                    item.contents.map(async (sectionItem) => {
-                        return await getAllPagesFromNavigationItem({ item: sectionItem, absolutePathToFernFolder });
-                    })
-                )
-            );
+            return compact([
+                item.overviewAbsolutePath,
+                ...item.contents.flatMap((subItem) => {
+                    return getAllPagesFromNavigationItem({ item: subItem });
+                })
+            ]);
         case "changelog":
-            return combineMaps(
-                await Promise.all(
-                    item.changelog.map(async (filepath) => ({
-                        [await relativize(absolutePathToFernFolder, filepath)]: (await readFile(filepath)).toString()
-                    }))
-                )
-            );
+            return item.changelog;
         default:
             assertNever(item);
     }
 }
 
-function combineMaps(maps: Record<RelativeFilePath, string>[]) {
-    return maps.reduce((acc, record) => ({ ...acc, ...record }), {});
-}
+// function combineMaps(maps: Record<RelativeFilePath, string>[]) {
+//     return maps.reduce((acc, record) => ({ ...acc, ...record }), {});
+// }
 
-async function getAllPagesFromApiReferenceLayoutItem({
-    item,
-    absolutePathToFernFolder
-}: {
-    item: ParsedApiReferenceLayoutItem;
-    absolutePathToFernFolder: AbsoluteFilePath;
-}): Promise<Record<RelativeFilePath, string>> {
+function getAllPagesFromApiReferenceLayoutItem({ item }: { item: ParsedApiReferenceLayoutItem }): AbsoluteFilePath[] {
     if (item.type === "page") {
-        return {
-            [await relativize(absolutePathToFernFolder, item.absolutePath)]: (
-                await readFile(item.absolutePath)
-            ).toString()
-        };
+        return [item.absolutePath];
     } else if (item.type === "package" || item.type === "section") {
-        const toRet = combineMaps(
-            await Promise.all(
-                item.contents.map(async (subItem) => {
-                    return await getAllPagesFromApiReferenceLayoutItem({ item: subItem, absolutePathToFernFolder });
-                })
-            )
-        );
-
-        if (item.summaryAbsolutePath != null) {
-            toRet[await relativize(absolutePathToFernFolder, item.summaryAbsolutePath)] = (
-                await readFile(item.summaryAbsolutePath)
-            ).toString();
-        }
-
-        return toRet;
+        return compact([
+            item.overviewAbsolutePath,
+            ...item.contents.flatMap((subItem) => {
+                return getAllPagesFromApiReferenceLayoutItem({ item: subItem });
+            })
+        ]);
     }
-    return {};
+    return [];
 }
