@@ -35,7 +35,7 @@
     "@fern-typescript/zurg": "workspace:*",
     "decompress": "^4.2.1",
     "esutils": "^2.0.3",
-    "glob": "^8.0.3",
+    "glob": "^11.0.0",
     "glob-promise": "^5.0.0",
     "immer": "^9.0.15",
     "js-yaml": "^4.1.0",
