@@ -6,6 +6,9 @@ export async function getRequestBody(body: any, contentType: string): Promise<Bo
         if (body instanceof (await import("formdata-node")).FormData) {
             // @ts-expect-error
             requestBody = body;
+        } else if (body instanceof (await import("stream")).Readable) {
+            // @ts-expect-error
+            requestBody = body;
         } else {
             requestBody = maybeStringifyBody(body, contentType ?? "");
         }
