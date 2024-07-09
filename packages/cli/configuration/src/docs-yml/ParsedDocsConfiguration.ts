@@ -12,7 +12,7 @@ export interface ParsedDocsConfiguration {
     pages: Record<RelativeFilePath, string>;
 
     /* navigation */
-    landingPage: DocsNavigationItem.Page | undefined;
+    // tabs?: Record<RelativeFilePath, TabConfig>;
     navigation: DocsNavigationConfiguration;
     navbarLinks: DocsV1Write.NavbarLink[] | undefined;
     footerLinks: DocsV1Write.FooterLink[] | undefined;
@@ -131,7 +131,7 @@ export interface VersionedDocsNavigation {
 }
 
 export interface VersionInfo {
-    landingPage: DocsNavigationItem.Page | undefined;
+    // tabs?: Record<RelativeFilePath, TabConfig>;
     navigation: UntabbedDocsNavigation | TabbedDocsNavigation;
     version: string;
     availability: VersionAvailability | undefined;
@@ -200,7 +200,6 @@ export declare namespace DocsNavigationItem {
         slug: string | undefined;
         hidden: boolean | undefined;
         skipUrlSlug: boolean | undefined;
-        overviewAbsolutePath: AbsoluteFilePath | undefined;
     }
 
     export interface ApiSection {
@@ -211,7 +210,7 @@ export declare namespace DocsNavigationItem {
         audiences: Audiences;
         showErrors: boolean;
         snippetsConfiguration: SnippetsConfiguration | undefined;
-        overviewAbsolutePath: AbsoluteFilePath | undefined;
+        summaryAbsolutePath: AbsoluteFilePath | undefined;
         navigation: ParsedApiReferenceLayoutItem[];
         hidden: boolean | undefined;
         slug: string | undefined;
@@ -256,7 +255,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         type: "section";
         title: string; // title
         referencedSubpackages: string[]; // subpackage IDs
-        overviewAbsolutePath: AbsoluteFilePath | undefined;
+        summaryAbsolutePath: AbsoluteFilePath | undefined;
         contents: ParsedApiReferenceLayoutItem[];
         slug: string | undefined;
         hidden: boolean | undefined;
@@ -267,7 +266,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         type: "package";
         title: string | undefined; // defaults to subpackage title
         package: string; // subpackage ID
-        overviewAbsolutePath: AbsoluteFilePath | undefined;
+        summaryAbsolutePath: AbsoluteFilePath | undefined;
         contents: ParsedApiReferenceLayoutItem[];
         slug: string | undefined;
         hidden: boolean | undefined;

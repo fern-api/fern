@@ -10,7 +10,6 @@ export interface DocsConfiguration {
     title?: string;
     tabs?: Record<FernDocsConfig.TabId, FernDocsConfig.TabConfig>;
     versions?: FernDocsConfig.VersionConfig[];
-    landingPage?: FernDocsConfig.PageConfiguration;
     /** The navigation config is skipped when multiple versions are present. */
     navigation?: FernDocsConfig.NavigationConfig;
     navbarLinks?: FernDocsConfig.NavbarLink[];

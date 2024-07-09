@@ -6,8 +6,6 @@ import * as FernDocsConfig from "../../..";
 
 export interface SectionConfiguration {
     section: string;
-    /** The relative path to the markdown file that will be displayed when the section is clicked. */
-    path?: string;
     contents: FernDocsConfig.NavigationItem[];
     collapsed?: boolean;
     slug?: string;
