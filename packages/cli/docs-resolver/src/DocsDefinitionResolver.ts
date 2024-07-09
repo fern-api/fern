@@ -2,15 +2,14 @@ import { docsYml, WithoutQuestionMarks } from "@fern-api/configuration";
 import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { parseImagePaths, replaceImagePathsAndUrls, replaceReferencedMarkdown } from "@fern-api/docs-markdown-utils";
 import { APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, relative, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, listFiles, relative, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { readFile } from "fs/promises";
-import { glob } from "glob";
+import { readFile, stat } from "fs/promises";
 import matter from "gray-matter";
 import { kebabCase } from "lodash-es";
 import urlJoin from "url-join";
@@ -149,43 +148,39 @@ export class DocsDefinitionResolver {
 
         const config = await this.convertDocsConfiguration();
 
-        const jsFilePaths = new Set<AbsoluteFilePath>();
-
-        if (this._parsedDocsConfig.experimental?.enableReactInMdx) {
-            const files = await glob("**/*.{js,ts,jsx,tsx}", {
-                cwd: this.docsWorkspace.absoluteFilepath,
-                absolute: true
-            });
-
-            files.forEach((file) => {
-                jsFilePaths.add(AbsoluteFilePath.of(file));
-            });
-
+        // detect experimental js files to include in the docs
+        let jsFiles: Record<string, string> = {};
+        if (this._parsedDocsConfig.experimental?.mdxComponents != null) {
+            const jsFilePaths = new Set<AbsoluteFilePath>();
             await Promise.all(
-                this._parsedDocsConfig.experimental?.additionalFoldersContainingReactInMdx?.map(async (filepath) => {
+                this._parsedDocsConfig.experimental.mdxComponents.map(async (filepath) => {
                     const absoluteFilePath = resolve(this.docsWorkspace.absoluteFilepath, filepath);
 
-                    const files = await glob("**/*.{js,ts,jsx,tsx}", {
-                        cwd: absoluteFilePath,
-                        absolute: true
-                    });
+                    // check if absoluteFilePath is a directory or a file
+                    const stats = await stat(absoluteFilePath);
 
-                    files.forEach((file) => {
-                        jsFilePaths.add(AbsoluteFilePath.of(file));
-                    });
-                }) ?? []
+                    if (stats.isDirectory()) {
+                        const files = await listFiles(absoluteFilePath, "{js,ts,jsx,tsx}");
+
+                        files.forEach((file) => {
+                            jsFilePaths.add(file);
+                        });
+                    } else if (absoluteFilePath.match(/\.(js|ts|jsx|tsx)$/) != null) {
+                        jsFilePaths.add(absoluteFilePath);
+                    }
+                })
+            );
+
+            jsFiles = Object.fromEntries(
+                await Promise.all(
+                    [...jsFilePaths].map(async (filePath): Promise<[string, string]> => {
+                        const relativeFilePath = this.toRelativeFilepath(filePath);
+                        const contents = (await readFile(filePath)).toString();
+                        return [relativeFilePath, contents];
+                    })
+                )
             );
         }
-
-        const jsFiles = Object.fromEntries(
-            await Promise.all(
-                [...jsFilePaths].map(async (filePath): Promise<[string, string]> => {
-                    const relativeFilePath = this.toRelativeFilepath(filePath);
-                    const contents = (await readFile(filePath)).toString();
-                    return [relativeFilePath, contents];
-                })
-            )
-        );
 
         return { config, pages, jsFiles };
     }

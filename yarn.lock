@@ -3641,7 +3641,6 @@ __metadata:
     dayjs: ^1.11.11
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    glob: ^8.0.3
     gray-matter: ^4.0.3
     jest: ^29.7.0
     lodash-es: ^4.17.21

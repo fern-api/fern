@@ -10,16 +10,14 @@ export const ExperimentalConfig: core.serialization.ObjectSchema<
     serializers.ExperimentalConfig.Raw,
     FernDocsConfig.ExperimentalConfig
 > = core.serialization.object({
-    enableReactInMdx: core.serialization.property("enable-react-in-mdx", core.serialization.boolean().optional()),
-    additionalFoldersContainingReactInMdx: core.serialization.property(
-        "additional-folders-containing-react-in-mdx",
+    mdxComponents: core.serialization.property(
+        "mdx-components",
         core.serialization.list(core.serialization.string()).optional()
     ),
 });
 
 export declare namespace ExperimentalConfig {
     interface Raw {
-        "enable-react-in-mdx"?: boolean | null;
-        "additional-folders-containing-react-in-mdx"?: string[] | null;
+        "mdx-components"?: string[] | null;
     }
 }

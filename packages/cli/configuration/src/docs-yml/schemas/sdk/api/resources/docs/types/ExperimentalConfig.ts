@@ -3,13 +3,9 @@
  */
 
 export interface ExperimentalConfig {
-    /** If `enable-react-in-mdx` is set to true, you can use React components in your markdown files. */
-    enableReactInMdx?: boolean;
     /**
-     * By default, all javascript files inside the fern folder is automatically included.
-     * This config lets you track a file or folder that is outside of the fern folder.
-     *
-     * This config is ignored if `enable-react-in-mdx` is not set to true.
+     * List of relative paths to folders or files that end in .{ts,tsx,js,jsx},
+     * and makes them available for use in MDX files.
      */
-    additionalFoldersContainingReactInMdx?: string[];
+    mdxComponents?: string[];
 }
