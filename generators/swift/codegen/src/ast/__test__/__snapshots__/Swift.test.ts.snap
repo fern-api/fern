@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Swift Language makes class 1`] = `
+"import SamplePackageOne
+import SamplePackageTwo
+
+fileprivate class Sample {
+
+    func doSomething() {
+        // CODE HERE
+    }
+
+}
+"
+`;
+
+exports[`Swift Language makes file 1`] = `
+"This is the header to a file
+
+import SamplePackageOne
+import SamplePackageTwo
+
+open class Sample {
+
+    func findStuff() {
+        // CODE HERE
+    }
+
+    public static func getStuff() async throws -> String {
+        // CODE HERE
+    }
+
+}
+"
+`;
+
+exports[`Swift Language makes file header 1`] = `"This is the header to a file"`;
+
+exports[`Swift Language makes function 1`] = `
+"fileprivate static func makePerson(name: String, age: Int = 33) async throws {
+    // CODE HERE
+}"
+`;
+
+exports[`Swift Language makes import 1`] = `"import ExamplePackage"`;

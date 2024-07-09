@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Lang from "../lang";
+import Lang from "../swift";
 
 export declare namespace Param {
     interface Args {

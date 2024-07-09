@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Lang, { AccessLevel, Func, Import } from "../lang";
+import Lang, { AccessLevel, Func, Import } from "../swift";
 
 export declare namespace Class {
     interface Args {
@@ -41,26 +41,21 @@ export class Class extends AstNode {
         }
 
         // e.g. public class ClassName {
-        const title = [this.accessLevel, "class", this.name,  "{"].filter(value => value !== undefined).join(" ");
+        writer.openBlock([this.accessLevel, "class", this.name], "{", () => {
 
-        writer.write(title);
+            writer.newLine();
 
-        writer.newLine();
+            // TODO: Add fields
 
-            writer.openIndent();
-
+            // Add functions
             if (this.functions) {
-                this.functions.forEach(func => {
+                this.functions?.forEach(func => {
                     writer.writeNode(func);
                     writer.newLine();
                 });
             }
 
-            writer.closeIndent();
-
-        writer.newLine();
-
-        writer.write("}");
+        }, "}");
 
         // Common for swift classes to have an extra line at bottom of file
         writer.newLine();

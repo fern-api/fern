@@ -1,7 +1,5 @@
 import { AccessLevel, FunctionModifier } from "..";
-import Lang from "../../lang";
-
-const Swift = Lang;
+import Swift from "../../swift";
 
 describe("Swift Language", () => {
 
@@ -9,17 +7,14 @@ describe("Swift Language", () => {
         const output = Swift.makeFileHeader({
             header: "This is the header to a file"
         });
-
-        // eslint-disable-next-line no-console
-        console.log(output.toString());
+        expect(output.toString()).toMatchSnapshot();
     });
 
     it("makes import", () => {
         const output = Swift.makeImport({
             packageName: "ExamplePackage"
         });
-        // eslint-disable-next-line no-console
-        console.log(output.toString());
+        expect(output.toString()).toMatchSnapshot();
     });
 
     it("makes function", () => {
@@ -41,8 +36,7 @@ describe("Swift Language", () => {
                 })
             ]
         });
-        // eslint-disable-next-line no-console
-        console.log(output.toString());
+        expect(output.toString()).toMatchSnapshot();
     });
 
     it("makes class", () => {
@@ -59,8 +53,7 @@ describe("Swift Language", () => {
                 })
             ],
         });
-        // eslint-disable-next-line no-console
-        console.log(output.toString());
+        expect(output.toString()).toMatchSnapshot();
     });
 
     it("makes file", () => {
@@ -90,8 +83,7 @@ describe("Swift Language", () => {
                 ]
             })
         });
-        // eslint-disable-next-line no-console
-        console.log(output.toString());
+        expect(output.toString()).toMatchSnapshot();
     });
 
 });

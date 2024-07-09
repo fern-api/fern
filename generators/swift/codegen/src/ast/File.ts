@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Lang, { Class, FileHeader } from "../lang";
+import Lang, { Class, FileHeader } from "../swift";
 
 export declare namespace File {
     interface Args {

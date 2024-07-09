@@ -21,7 +21,6 @@ export class Writer {
     }
 
     public write(text: string): void {
-
         if (this.hasWrittenAnything) {
             this.buffer += "\n";
         }
@@ -30,21 +29,38 @@ export class Writer {
         const indentedText = indent + text.replace(/\n/g, `\n${indent}`);
 
         this.buffer += indentedText;
-
         this.hasWrittenAnything = true;
-
     }
 
     public newLine(): void {
         this.buffer += "\n";
     }
 
-    public openIndent(): void {
-        this.indentLevel++;
+    public openBlock(
+        titles: (string | undefined)[],
+        openingCharacter: string | undefined = "{",
+        callback: () => void,
+        closingCharacter: string | undefined = "}"
+    ): void {
+        const filteredTitles = titles.filter(title => title !== undefined).join(" ");
+        if (filteredTitles) {
+            this.write(`${filteredTitles} ${openingCharacter ?? ""}`);
+        } else {
+            this.write(openingCharacter ?? "");
+        }
+        
+        try {
+            this.indent(callback);
+        } finally {
+            this.write(closingCharacter ?? "");
+        }
     }
 
-    public closeIndent(): void {
-        if (this.indentLevel > 0) {
+    public indent(callback: () => void): void {
+        this.indentLevel++;
+        try {
+            callback();
+        } finally {
             this.indentLevel--;
         }
     }
@@ -60,5 +76,4 @@ export class Writer {
     private getIndentString(tabSize: number): string {
         return " ".repeat(this.indentLevel * tabSize);
     }
-
 }
