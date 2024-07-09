@@ -6497,7 +6497,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/configuration", "workspace:packages/cli/configuration"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/fdr-sdk", "npm:0.98.9-3b3a3fe5f"],\
+            ["@fern-api/fdr-sdk", "npm:0.98.10-04e9d1412"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.584"],\
@@ -6528,7 +6528,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/core/",\
           "packageDependencies": [\
             ["@fern-api/core", "workspace:packages/core"],\
-            ["@fern-api/fdr-sdk", "npm:0.98.9-3b3a3fe5f"],\
+            ["@fern-api/fdr-sdk", "npm:0.98.10-04e9d1412"],\
             ["@fern-api/venus-api-sdk", "npm:0.0.38"],\
             ["@fern-fern/fdr-test-sdk", "npm:0.0.5297"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.584"],\
@@ -6644,7 +6644,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/docs-preview", "workspace:packages/cli/docs-preview"],\
             ["@fern-api/docs-resolver", "workspace:packages/cli/docs-resolver"],\
-            ["@fern-api/fdr-sdk", "npm:0.98.9-3b3a3fe5f"],\
+            ["@fern-api/fdr-sdk", "npm:0.98.10-04e9d1412"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/ir-sdk", "workspace:packages/ir-sdk"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
@@ -6686,7 +6686,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/configuration", "workspace:packages/cli/configuration"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/docs-markdown-utils", "workspace:packages/cli/docs-markdown-utils"],\
-            ["@fern-api/fdr-sdk", "npm:0.98.9-3b3a3fe5f"],\
+            ["@fern-api/fdr-sdk", "npm:0.98.10-04e9d1412"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
             ["@fern-api/ir-sdk", "workspace:packages/ir-sdk"],\
@@ -6771,10 +6771,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/fdr-sdk", [\
-        ["npm:0.98.9-3b3a3fe5f", {\
-          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.98.9-3b3a3fe5f-ec323dd942-95367a9b40.zip/node_modules/@fern-api/fdr-sdk/",\
+        ["npm:0.98.10-04e9d1412", {\
+          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.98.10-04e9d1412-64e4054e49-69dfd21888.zip/node_modules/@fern-api/fdr-sdk/",\
           "packageDependencies": [\
-            ["@fern-api/fdr-sdk", "npm:0.98.9-3b3a3fe5f"],\
+            ["@fern-api/fdr-sdk", "npm:0.98.10-04e9d1412"],\
             ["dayjs", "npm:1.11.11"],\
             ["fast-deep-equal", "npm:3.1.3"],\
             ["form-data", "npm:4.0.0"],\
@@ -7470,7 +7470,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/configuration", "workspace:packages/cli/configuration"],\
             ["@fern-api/core", "workspace:packages/core"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/fdr-sdk", "npm:0.98.9-3b3a3fe5f"],\
+            ["@fern-api/fdr-sdk", "npm:0.98.10-04e9d1412"],\
             ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
             ["@fern-api/ir-sdk", "workspace:packages/ir-sdk"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
@@ -7499,7 +7499,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core", "workspace:packages/core"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/docs-resolver", "workspace:packages/cli/docs-resolver"],\
-            ["@fern-api/fdr-sdk", "npm:0.98.9-3b3a3fe5f"],\
+            ["@fern-api/fdr-sdk", "npm:0.98.10-04e9d1412"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
             ["@fern-api/ir-migrations", "workspace:packages/cli/generation/ir-migrations"],\
