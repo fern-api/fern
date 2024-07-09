@@ -39,7 +39,7 @@
     "tmp-promise": "^3.0.3"
   },
   "devDependencies": {
-    "@types/jest": "^29.0.3",
+    "@types/jest": "^29.5.12",
     "@types/js-yaml": "^4.0.8",
     "@types/node": "^18.7.18",
     "@types/node-fetch": "2.6.9",
