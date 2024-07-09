@@ -6,4 +6,4 @@ export { Func } from "./Func";
 export { FunctionModifier } from "./FunctionModifier";
 export { Import } from "./Import";
 export { Param } from "./Param";
-
+export { Struct } from "./Struct";

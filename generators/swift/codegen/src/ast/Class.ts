@@ -3,7 +3,6 @@ import Swift, { AccessLevel, Func, Import } from "../swift";
 
 export declare namespace Class {
     interface Args {
-        imports?: Import[];
         accessLevel?: AccessLevel;
         name: string;
         functions: Func[];
@@ -12,33 +11,22 @@ export declare namespace Class {
 
 export class Class extends AstNode {
 
-    public readonly imports?: Import[];
     public readonly accessLevel?: AccessLevel;
     public readonly name: string;
     public readonly functions?: Func[];
 
     constructor({ 
-        imports, 
         accessLevel, 
         name,
         functions
     }: Class.Args) {
         super(Swift.indentSize);
-        this.imports = imports;
         this.accessLevel = accessLevel;
         this.name = name;
         this.functions = functions;
     }
 
     public write(writer: Writer): void {
-
-        // e.g. import PackageName
-        if (this.imports) {
-            this.imports.forEach(imp => {
-                writer.writeNode(imp);
-            });
-            writer.newLine();
-        }
 
         // e.g. public class ClassName {
         writer.openBlock([this.accessLevel, "class", this.name], "{", () => {
@@ -56,9 +44,6 @@ export class Class extends AstNode {
             }
 
         }, "}");
-
-        // Common for swift classes to have an extra line at bottom of file
-        writer.newLine();
 
     }
 

@@ -21,6 +21,10 @@ export default class Swift {
   public static makeFunc(args: Ast.Func.Args): Ast.Func {
     return new Ast.Func(args);
   }
+
+  public static makeStruct(args: Ast.Struct.Args): Ast.Struct {
+    return new Ast.Struct(args);
+  }
   
   public static makeClass(args: Ast.Class.Args): Ast.Class {
     return new Ast.Class(args);

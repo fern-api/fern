@@ -39,12 +39,16 @@ describe("Swift Language", () => {
         expect(output.toString()).toMatchSnapshot();
     });
 
+    it("makes struct", () => {
+        const output = Swift.makeStruct({
+            accessLevel: AccessLevel.Fileprivate,
+            name: "Sample",
+        });
+        expect(output.toString()).toMatchSnapshot();
+    });
+
     it("makes class", () => {
         const output = Swift.makeClass({
-            imports: [
-                Swift.makeImport({ packageName: "SamplePackageOne" }),
-                Swift.makeImport({ packageName: "SamplePackageTwo" })
-            ],
             accessLevel: AccessLevel.Fileprivate,
             name: "Sample",
             functions: [
@@ -61,10 +65,11 @@ describe("Swift Language", () => {
             fileHeader: Swift.makeFileHeader({
                 header: "// Sample.swift"
             }),
+            imports: [
+                Swift.makeImport({ packageName: "Foundation" }),
+                Swift.makeImport({ packageName: "UIKit" })
+            ],
             class: Swift.makeClass({
-                imports: [
-                    Swift.makeImport({ packageName: "Foundation" })
-                ],
                 accessLevel: AccessLevel.Open,
                 name: "Sample",
                 functions: [
@@ -89,7 +94,7 @@ describe("Swift Language", () => {
             fileName: "Sample", 
             node: output, 
             extension: "swift", 
-            outputDir: "src/ast/__test__",
+            outputDir: "src/ast/__test__/__snapshots__",
         });
 
     });

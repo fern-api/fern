@@ -1,23 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Swift Language makes class 1`] = `
-"import SamplePackageOne
-import SamplePackageTwo
-
-fileprivate class Sample {
+"fileprivate class Sample {
 
     func doSomething() {
         print("Hey!")
     }
 
-}
-"
+}"
 `;
 
 exports[`Swift Language makes file 1`] = `
 "// Sample.swift
 
 import Foundation
+import UIKit
 
 open class Sample {
 
@@ -29,8 +26,7 @@ open class Sample {
         print("Hey!")
     }
 
-}
-"
+}"
 `;
 
 exports[`Swift Language makes file header 1`] = `"This is the header to a file"`;
@@ -42,3 +38,10 @@ exports[`Swift Language makes function 1`] = `
 `;
 
 exports[`Swift Language makes import 1`] = `"import ExamplePackage"`;
+
+exports[`Swift Language makes struct 1`] = `
+"fileprivate struct Sample {
+    print("Hey")
+}
+"
+`;

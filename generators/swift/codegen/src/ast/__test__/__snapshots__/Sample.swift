@@ -1,6 +1,7 @@
 // Sample.swift
 
 import Foundation
+import UIKit
 
 open class Sample {
 
