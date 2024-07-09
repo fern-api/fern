@@ -1,12 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
+import { compact } from "lodash-es";
 import {
     DocsNavigationConfiguration,
     DocsNavigationItem,
     ParsedApiReferenceLayoutItem
 } from "./ParsedDocsConfiguration";
-import { compact } from "lodash-es";
 
 const BATCH_SIZE = 100; // Define a reasonable batch size
 
@@ -17,7 +17,7 @@ async function loadBatch(
     const pairs = await Promise.all(
         files.map(async (file) => {
             const content = await readFile(file, "utf-8");
-            return [relativize(absolutePathToFernFolder, file), content];
+            return [await relativize(absolutePathToFernFolder, file), content];
         })
     );
     return Object.fromEntries(pairs);

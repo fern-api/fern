@@ -23,7 +23,10 @@ describe("fern docs dev", () => {
         });
 
         expect(response.body != null).toEqual(true);
-        const responseBody = await response.json();
+        const responseText = await response.text();
+        expect(responseText.includes("[object Promise]")).toBeFalsy();
+
+        const responseBody = JSON.parse(responseText);
         expect(typeof responseBody === "object").toEqual(true);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         expect(Object.keys(responseBody as any)).toEqual(["baseUrl", "definition", "lightModeEnabled"]);
