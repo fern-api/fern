@@ -5,8 +5,6 @@ import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
-import { convertColorsConfiguration } from "./convertColorsConfiguration";
-import { getAllPages, loadAllPages } from "./getAllPages";
 import {
     AbsoluteJsFileConfig,
     DocsNavigationConfiguration,
@@ -23,7 +21,9 @@ import {
     UntabbedDocsNavigation,
     VersionInfo
 } from "./ParsedDocsConfiguration";
-import { FernDocsConfig as RawDocs, NavigationConfig, Serializer, VersionConfig } from "./schemas";
+import { convertColorsConfiguration } from "./convertColorsConfiguration";
+import { getAllPages } from "./getAllPages";
+import { NavigationConfig, FernDocsConfig as RawDocs, Serializer, VersionConfig } from "./schemas";
 
 export async function parseDocsConfiguration({
     rawDocsConfiguration,
@@ -67,8 +67,6 @@ export async function parseDocsConfiguration({
         js: rawJsConfig
     } = rawDocsConfiguration;
 
-    const landingPage = parsePageConfig(rawDocsConfiguration.landingPage, absoluteFilepathToDocsConfig);
-
     const convertedNavigationPromise = getNavigationConfiguration({
         tabs,
         versions,
@@ -78,11 +76,8 @@ export async function parseDocsConfiguration({
         context
     });
 
-    const pagesPromise = loadAllPages(
-        convertedNavigationPromise.then((convertedNavigation) =>
-            getAllPages({ navigation: convertedNavigation, landingPage })
-        ),
-        absoluteFilepathToDocsConfig
+    const pagesPromise = convertedNavigationPromise.then((convertedNavigation) =>
+        getAllPages({ navigation: convertedNavigation, absolutePathToFernFolder })
     );
 
     const logo = convertLogoReference(rawLogo, absoluteFilepathToDocsConfig);
@@ -122,7 +117,7 @@ export async function parseDocsConfiguration({
         pages,
 
         /* navigation */
-        landingPage,
+        // tabs,
         navigation,
         navbarLinks: convertNavbarLinks(navbarLinks),
         footerLinks: convertFooterLinks(footerLinks),
@@ -333,7 +328,7 @@ async function getNavigationConfiguration({
                 context
             });
             versionedNavbars.push({
-                landingPage: parsePageConfig(result.landingPage, absoluteFilepathToVersionFile),
+                // tabs: result.tabs,
                 version: version.displayName,
                 navigation,
                 availability: version.availability,
@@ -576,7 +571,14 @@ async function convertNavigationItem({
     context: TaskContext;
 }): Promise<DocsNavigationItem> {
     if (isRawPageConfig(rawConfig)) {
-        return parsePageConfig(rawConfig, absolutePathToConfig);
+        return {
+            type: "page",
+            title: rawConfig.page,
+            absolutePath: resolveFilepath(rawConfig.path, absolutePathToConfig),
+            slug: rawConfig.slug,
+            icon: rawConfig.icon,
+            hidden: rawConfig.hidden
+        };
     }
     if (isRawSectionConfig(rawConfig)) {
         return {
@@ -591,8 +593,7 @@ async function convertNavigationItem({
             slug: rawConfig.slug ?? undefined,
             collapsed: rawConfig.collapsed ?? undefined,
             hidden: rawConfig.hidden ?? undefined,
-            skipUrlSlug: rawConfig.skipSlug ?? false,
-            overviewAbsolutePath: resolveFilepath(rawConfig.path, absolutePathToConfig)
+            skipUrlSlug: rawConfig.skipSlug ?? false
         };
     }
     if (isRawApiSectionConfig(rawConfig)) {
@@ -610,7 +611,7 @@ async function convertNavigationItem({
                     : undefined,
             navigation:
                 rawConfig.layout?.flatMap((item) => parseApiReferenceLayoutItem(item, absolutePathToConfig)) ?? [],
-            overviewAbsolutePath: resolveFilepath(rawConfig.summary, absolutePathToConfig),
+            summaryAbsolutePath: resolveFilepath(rawConfig.summary, absolutePathToConfig),
             hidden: rawConfig.hidden ?? undefined,
             slug: rawConfig.slug,
             skipUrlSlug: rawConfig.skipSlug ?? false,
@@ -640,31 +641,6 @@ async function convertNavigationItem({
     assertNever(rawConfig);
 }
 
-function parsePageConfig(
-    item: RawDocs.PageConfiguration,
-    absolutePathToConfig: AbsoluteFilePath
-): DocsNavigationItem.Page;
-function parsePageConfig(
-    item: RawDocs.PageConfiguration | undefined,
-    absolutePathToConfig: AbsoluteFilePath
-): DocsNavigationItem.Page | undefined;
-function parsePageConfig(
-    item: RawDocs.PageConfiguration | undefined,
-    absolutePathToConfig: AbsoluteFilePath
-): DocsNavigationItem.Page | undefined {
-    if (item == null) {
-        return undefined;
-    }
-    return {
-        type: "page",
-        title: item.page,
-        absolutePath: resolveFilepath(item.path, absolutePathToConfig),
-        slug: item.slug,
-        icon: item.icon,
-        hidden: item.hidden
-    };
-}
-
 function parseApiReferenceLayoutItem(
     item: RawDocs.ApiReferenceLayoutItem,
     absolutePathToConfig: AbsoluteFilePath
@@ -675,7 +651,16 @@ function parseApiReferenceLayoutItem(
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (isRawPageConfig(item)) {
-        return [parsePageConfig(item, absolutePathToConfig)];
+        return [
+            {
+                type: "page",
+                title: item.page,
+                absolutePath: resolveFilepath(item.path, absolutePathToConfig),
+                slug: item.slug,
+                icon: item.icon,
+                hidden: item.hidden
+            }
+        ];
     } else if (isRawLinkConfig(item)) {
         return [
             {
@@ -691,7 +676,7 @@ function parseApiReferenceLayoutItem(
                 type: "section",
                 title: item.section,
                 referencedSubpackages: item.referencedPackages ?? [],
-                overviewAbsolutePath: resolveFilepath(item.summary, absolutePathToConfig),
+                summaryAbsolutePath: resolveFilepath(item.summary, absolutePathToConfig),
                 contents:
                     item.contents?.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig)) ?? [],
                 slug: item.slug,
@@ -718,7 +703,7 @@ function parseApiReferenceLayoutItem(
                 type: "package",
                 title: value.title,
                 package: key,
-                overviewAbsolutePath: resolveFilepath(value.summary, absolutePathToConfig),
+                summaryAbsolutePath: resolveFilepath(value.summary, absolutePathToConfig),
                 contents:
                     value.contents?.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig)) ?? [],
                 slug: value.slug,
@@ -731,7 +716,7 @@ function parseApiReferenceLayoutItem(
             type: "package",
             title: undefined,
             package: key,
-            overviewAbsolutePath: undefined,
+            summaryAbsolutePath: undefined,
             contents: value.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig)),
             hidden: false,
             slug: undefined,

@@ -39,14 +39,14 @@ export class ApiReferenceNodeConverter {
         const idgen = NodeIdGenerator.init(this.apiDefinitionId);
 
         this.#overviewPageId =
-            this.apiSection.overviewAbsolutePath != null
-                ? FernNavigation.PageId(this.toRelativeFilepath(this.apiSection.overviewAbsolutePath))
+            this.apiSection.summaryAbsolutePath != null
+                ? FernNavigation.PageId(this.toRelativeFilepath(this.apiSection.summaryAbsolutePath))
                 : undefined;
 
         // the overview page markdown could contain a full slug, which would be used as the base slug for the API section.
         const maybeFullSlug =
-            this.apiSection.overviewAbsolutePath != null
-                ? this.markdownFilesToFullSlugs.get(this.apiSection.overviewAbsolutePath)
+            this.apiSection.summaryAbsolutePath != null
+                ? this.markdownFilesToFullSlugs.get(this.apiSection.summaryAbsolutePath)
                 : undefined;
 
         this.#slug = parentSlug.apply({
@@ -154,12 +154,12 @@ export class ApiReferenceNodeConverter {
         idgen: NodeIdGenerator
     ): FernNavigation.ApiPackageNode {
         const overviewPageId =
-            pkg.overviewAbsolutePath != null
-                ? FernNavigation.PageId(this.toRelativeFilepath(pkg.overviewAbsolutePath))
+            pkg.summaryAbsolutePath != null
+                ? FernNavigation.PageId(this.toRelativeFilepath(pkg.summaryAbsolutePath))
                 : undefined;
 
         const maybeFullSlug =
-            pkg.overviewAbsolutePath != null ? this.markdownFilesToFullSlugs.get(pkg.overviewAbsolutePath) : undefined;
+            pkg.summaryAbsolutePath != null ? this.markdownFilesToFullSlugs.get(pkg.summaryAbsolutePath) : undefined;
 
         const subpackage = this.#holder.getSubpackage(pkg.package);
 
@@ -241,13 +241,13 @@ export class ApiReferenceNodeConverter {
         idgen: NodeIdGenerator
     ): FernNavigation.ApiPackageNode {
         const overviewPageId =
-            section.overviewAbsolutePath != null
-                ? FernNavigation.PageId(this.toRelativeFilepath(section.overviewAbsolutePath))
+            section.summaryAbsolutePath != null
+                ? FernNavigation.PageId(this.toRelativeFilepath(section.summaryAbsolutePath))
                 : undefined;
 
         const maybeFullSlug =
-            section.overviewAbsolutePath != null
-                ? this.markdownFilesToFullSlugs.get(section.overviewAbsolutePath)
+            section.summaryAbsolutePath != null
+                ? this.markdownFilesToFullSlugs.get(section.summaryAbsolutePath)
                 : undefined;
 
         const nodeId = idgen.append(`section:${kebabCase(section.title)}`);

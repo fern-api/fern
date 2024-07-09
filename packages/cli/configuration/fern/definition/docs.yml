@@ -14,7 +14,6 @@ types:
       # navigation
       tabs: optional<map<TabId, TabConfig>>
       versions: optional<list<VersionConfig>>
-      landing-page: optional<PageConfiguration>
       navigation:
         type: optional<NavigationConfig>
         docs: The navigation config is skipped when multiple versions are present.
@@ -164,7 +163,6 @@ types:
   VersionFileConfig:
     properties:
       tabs: optional<map<TabId, TabConfig>>
-      landing-page: optional<PageConfiguration>
       navigation: NavigationConfig
 
   NavigationConfig:
@@ -422,10 +420,6 @@ types:
   SectionConfiguration:
     properties:
       section: string
-      path:
-        type: optional<string>
-        docs: |
-          The relative path to the markdown file that will be displayed when the section is clicked.
       contents: list<NavigationItem>
       collapsed: optional<boolean>
       slug: optional<string>
