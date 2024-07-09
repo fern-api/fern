@@ -6408,12 +6408,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
             ["@fern-fern/ir-sdk", "npm:32.0.0"],\
             ["@types/jest", "npm:29.5.12"],\
-            ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.19.39"],\
             ["depcheck", "npm:1.4.7"],\
             ["eslint", "npm:8.57.0"],\
             ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
-            ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["ts-node", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:10.9.2"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\

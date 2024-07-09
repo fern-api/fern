@@ -30,12 +30,10 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generator-commons": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
-    "lodash-es": "^4.17.21",
     "zod": "^3.22.3"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
-    "@types/lodash-es": "^4.17.12",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
