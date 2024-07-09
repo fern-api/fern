@@ -43,6 +43,7 @@ describe("Test exponential backoff", () => {
         mockFetch
             .mockResolvedValueOnce(new Response("", { status: 408 }))
             .mockResolvedValueOnce(new Response("", { status: 409 }))
+            .mockResolvedValueOnce(new Response("", { status: 429 }))
             .mockResolvedValueOnce(new Response("", { status: 429 }));
 
         const responsePromise = requestWithRetries(() => mockFetch(), 3);
@@ -50,7 +51,7 @@ describe("Test exponential backoff", () => {
         await jest.advanceTimersByTimeAsync(10000);
         const response = await responsePromise;
 
-        expect(mockFetch).toHaveBeenCalledTimes(3);
+        expect(mockFetch).toHaveBeenCalledTimes(4);
         expect(response.status).toBe(429);
     });
     it("should not retry on 200", async () => {
@@ -72,10 +73,11 @@ describe("Test exponential backoff", () => {
         const maxRetries = 7;
         const responsePromise = requestWithRetries(() => mockFetch(), maxRetries);
         expect(mockFetch).toHaveBeenCalledTimes(1);
+
         const delays = [1, 2, 4, 8, 16, 32, 64];
         for (let i = 0; i < delays.length; i++) {
             await jest.advanceTimersByTimeAsync(delays[i] as number);
-            expect(mockFetch).toHaveBeenCalledTimes(Math.min(i + 2, maxRetries));
+            expect(mockFetch).toHaveBeenCalledTimes(Math.min(i + 2, maxRetries + 1));
         }
         const response = await responsePromise;
         expect(response.status).toBe(500);
