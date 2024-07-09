@@ -1,5 +1,9 @@
-import "jest-fetch-mock";
+import { RUNTIME } from "../../runtime";
 import { makeRequest, requestWithRetries } from "../requests";
+
+if (RUNTIME.type === "browser") {
+    require("jest-fetch-mock").enableMocks();
+}
 
 describe("Test makeRequest", () => {
     const mockPostUrl = "https://httpbin.org/post";

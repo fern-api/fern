@@ -2,7 +2,7 @@ import { RUNTIME } from "../../runtime";
 import { createRequestUrl, getRequestBody, getResponseBody, maybeStringifyBody } from "../serialize";
 
 if (RUNTIME.type === "browser") {
-    require("jest-fetch-mock");
+    require("jest-fetch-mock").enableMocks();
 }
 
 describe("Test getResponseBody", () => {
@@ -15,7 +15,6 @@ describe("Test getResponseBody", () => {
     });
 
     it("should handle streaming response type", async () => {
-        console.log("RUNIME", RUNTIME);
         if (RUNTIME.type === "node") {
             const mockStream = new ReadableStream();
             const mockResponse = new Response(mockStream);
