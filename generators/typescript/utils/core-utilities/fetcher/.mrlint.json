@@ -4,10 +4,20 @@
   "private": false,
   "rules": {
     "duplicate-dependencies": {
-      "exclude": ["@fern-fern/ir-sdk"]
+      "exclude": [
+        "@fern-fern/ir-sdk"
+      ]
     },
     "depcheck": {
-      "ignores": ["@types/jest", "@types/node", "node-fetch", "qs", "@types/node-fetch", "@types/qs"]
+      "ignores": [
+        "@types/jest",
+        "@types/node",
+        "node-fetch",
+        "qs",
+        "@types/node-fetch",
+        "@types/qs",
+        "jest-environment-jsdom"
+      ]
     }
   }
 }
