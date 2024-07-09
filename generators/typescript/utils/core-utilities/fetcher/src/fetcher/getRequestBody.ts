@@ -8,7 +8,7 @@ export async function getRequestBody(body: any, contentType: string): Promise<Bo
             requestBody = body;
         } else if (body instanceof (await import("stream")).Readable) {
             // @ts-expect-error
-            body = body;
+            requestBody = body;
         } else {
             requestBody = maybeStringifyBody(body, contentType ?? "");
         }
