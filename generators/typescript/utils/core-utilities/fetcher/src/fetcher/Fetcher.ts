@@ -8,7 +8,6 @@ import { requestWithRetries } from "./requestWithRetries";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 
-
 export declare namespace Fetcher {
     export interface Args {
         url: string;
@@ -18,7 +17,7 @@ export declare namespace Fetcher {
         queryParameters?: Record<string, string | string[] | object | object[]>;
         body?: unknown;
         timeoutMs?: number;
-        maxRetries?: number;
+        maxRetries?: number | string;
         withCredentials?: boolean;
         abortSignal?: AbortSignal;
         responseType?: "json" | "blob" | "streaming" | "text";
