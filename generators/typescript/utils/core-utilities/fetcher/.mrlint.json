@@ -4,9 +4,7 @@
   "private": false,
   "rules": {
     "duplicate-dependencies": {
-      "exclude": [
-        "@fern-fern/ir-sdk"
-      ]
+      "exclude": ["@fern-fern/ir-sdk"]
     },
     "depcheck": {
       "ignores": [

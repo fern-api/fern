@@ -10,7 +10,5 @@
     "@types/qs",
     "jest-environment-jsdom"
   ],
-  "ignore-patterns": [
-    "lib"
-  ]
+  "ignore-patterns": ["lib"]
 }
