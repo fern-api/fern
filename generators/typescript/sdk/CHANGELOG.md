@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.28.0] - 2024-07-09
+
+- Internal: Upgrade to IRv48.
+- Feature: Add support for pagination endpoints that require request body properties.
+- Feature: Add support for pagination with an offset step. This is useful for endpoints
+  that page based on the element index rather than a page index (i.e. the 100th element
+  vs. the 10th page).
+
+  This feature shares the same UX as both the `offset` and `cursor` pagination variants.
+
 ## [0.28.0-rc0] - 2024-07-09
 
 - Feature: Add support for offset pagination, which uses the same pagination API introduced

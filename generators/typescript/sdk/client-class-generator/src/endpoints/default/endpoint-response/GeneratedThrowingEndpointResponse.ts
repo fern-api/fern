@@ -172,7 +172,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                             ts.factory.createSpreadAssignment(ts.factory.createIdentifier("request")),
                             ts.factory.createPropertyAssignment(
                                 ts.factory.createIdentifier(
-                                    this.getNameFromWireValue({ name: cursor.page.name, context })
+                                    this.getNameFromWireValue({ name: cursor.page.property.name, context })
                                 ),
                                 nextPropertyAccess
                             )
@@ -212,8 +212,11 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         const itemType = context.type.getReferenceToType(itemTypeReference).typeNode;
 
         // initializeOffset uses the offset property if set
-        const pageProperty = this.getNameFromWireValue({ name: offset.page.name, context });
-        const pagePropertyPath = ["request"].join("?."); // TODO: Add support for nested properties after IR upgrade.
+        const pageProperty = this.getNameFromWireValue({ name: offset.page.property.name, context });
+        const pagePropertyPath = [
+            "request",
+            ...(offset.page.propertyPath ?? []).map((name) => this.getName({ name, context }))
+        ].join("?.");
         const pagePropertyAccess = ts.factory.createPropertyAccessExpression(
             ts.factory.createIdentifier(pagePropertyPath),
             ts.factory.createIdentifier(pageProperty)
@@ -245,10 +248,12 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
         // hasNextPage checks if the items are not empty
         const itemsProperty = this.getNameFromWireValue({ name: offset.results.property.name, context });
-        const itemsPropertyPath = [
+        const itemsPropertyPathComponents = [
             "response",
             ...(offset.results.propertyPath ?? []).map((name) => this.getName({ name, context }))
-        ].join("?.");
+        ];
+        const itemsPropertyPath = itemsPropertyPathComponents.join("?.");
+        const itemsPropertyPathWithoutOptional = itemsPropertyPathComponents.join(".");
         const itemsPropertyAccess = ts.factory.createPropertyAccessChain(
             ts.factory.createIdentifier(itemsPropertyPath),
             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
@@ -281,20 +286,51 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         );
 
         // loadPage
-        const incrementOffset = ts.factory.createExpressionStatement(
-            ts.factory.createBinaryExpression(
-                ts.factory.createIdentifier("_offset"),
-                ts.factory.createToken(ts.SyntaxKind.PlusEqualsToken),
-                ts.factory.createNumericLiteral("1")
-            )
-        );
+        const incrementOffset =
+            offset.step != null
+                ? ts.factory.createExpressionStatement(
+                      ts.factory.createBinaryExpression(
+                          ts.factory.createIdentifier("_offset"),
+                          ts.factory.createToken(ts.SyntaxKind.PlusEqualsToken),
+                          ts.factory.createConditionalExpression(
+                              ts.factory.createBinaryExpression(
+                                  itemsPropertyAccess,
+                                  ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                                  ts.factory.createNull()
+                              ),
+                              ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                              ts.factory.createBinaryExpression(
+                                  ts.factory.createPropertyAccessExpression(
+                                      ts.factory.createPropertyAccessExpression(
+                                          ts.factory.createIdentifier(itemsPropertyPathWithoutOptional),
+                                          ts.factory.createIdentifier(itemsProperty)
+                                      ),
+                                      ts.factory.createIdentifier("length")
+                                  ),
+                                  ts.factory.createToken(ts.SyntaxKind.PlusToken),
+                                  ts.factory.createNumericLiteral("1")
+                              ),
+                              ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                              ts.factory.createNumericLiteral("1")
+                          )
+                      )
+                  )
+                : ts.factory.createExpressionStatement(
+                      ts.factory.createBinaryExpression(
+                          ts.factory.createIdentifier("_offset"),
+                          ts.factory.createToken(ts.SyntaxKind.PlusEqualsToken),
+                          ts.factory.createNumericLiteral("1")
+                      )
+                  );
         const callEndpoint = ts.factory.createReturnStatement(
             ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
                 ts.factory.createObjectLiteralExpression(
                     [
                         ts.factory.createSpreadAssignment(ts.factory.createIdentifier("request")),
                         ts.factory.createPropertyAssignment(
-                            ts.factory.createIdentifier(this.getNameFromWireValue({ name: offset.page.name, context })),
+                            ts.factory.createIdentifier(
+                                this.getNameFromWireValue({ name: offset.page.property.name, context })
+                            ),
                             ts.factory.createIdentifier("_offset")
                         )
                     ],
@@ -305,7 +341,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         const loadPage = [incrementOffset, callEndpoint];
 
         return {
-            type: "offset",
+            type: offset.step != null ? "offset-step" : "offset",
             initializeOffset,
             itemType,
             responseType: successReturnType,

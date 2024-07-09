@@ -1,6 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
 import * as IR from "@fern-fern/ir-sdk/api";
-import { DependencyManager, DependencyType, ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
+import {
+    DependencyManager,
+    DependencyType,
+    ExportedFilePath,
+    getExampleEndpointCalls,
+    getTextOfTsNode
+} from "@fern-typescript/commons";
 import { GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
 import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
 import path from "path";
@@ -260,7 +266,9 @@ describe("test", () => {
             return;
         }
 
-        const successfulExamples = endpoint.examples.filter((example) => example.response.type === "ok");
+        const successfulExamples = getExampleEndpointCalls(endpoint).filter(
+            (example) => example.response.type === "ok"
+        );
         const example = successfulExamples[0];
         if (!example) {
             return;
