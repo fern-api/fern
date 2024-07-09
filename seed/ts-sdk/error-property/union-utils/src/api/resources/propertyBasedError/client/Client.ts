@@ -53,7 +53,7 @@ export class PropertyBasedError {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.propertyBasedError.throwError.Response.parseOrThrow(_response.body, {
+            return serializers.propertyBasedError.throwError.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -65,7 +65,7 @@ export class PropertyBasedError {
             switch ((_response.error.body as any)?.["errorName"]) {
                 case "PropertyBasedErrorTest":
                     throw new SeedErrorProperty.PropertyBasedErrorTest(
-                        await serializers.PropertyBasedErrorTestBody.parseOrThrow(_response.error.body, {
+                        serializers.PropertyBasedErrorTestBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,

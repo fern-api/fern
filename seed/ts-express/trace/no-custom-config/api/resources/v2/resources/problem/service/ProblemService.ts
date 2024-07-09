@@ -86,7 +86,7 @@ export class ProblemService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.v2.problem.getLightweightProblems.Response.jsonOrThrow(responseBody, {
+                                serializers.v2.problem.getLightweightProblems.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -118,7 +118,7 @@ export class ProblemService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.v2.problem.getProblems.Response.jsonOrThrow(responseBody, {
+                                serializers.v2.problem.getProblems.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -150,7 +150,7 @@ export class ProblemService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.v2.ProblemInfoV2.jsonOrThrow(responseBody, {
+                                serializers.v2.ProblemInfoV2.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -182,7 +182,7 @@ export class ProblemService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.v2.ProblemInfoV2.jsonOrThrow(responseBody, {
+                                serializers.v2.ProblemInfoV2.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );

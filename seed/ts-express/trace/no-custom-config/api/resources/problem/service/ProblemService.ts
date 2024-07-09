@@ -84,7 +84,7 @@ export class ProblemService {
 
     public toRouter(): express.Router {
         this.router.post("/create", async (req, res, next) => {
-            const request = await serializers.CreateProblemRequest.parse(req.body);
+            const request = serializers.CreateProblemRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -93,7 +93,7 @@ export class ProblemService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.CreateProblemResponse.jsonOrThrow(responseBody, {
+                                    serializers.CreateProblemResponse.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );
@@ -127,7 +127,7 @@ export class ProblemService {
             }
         });
         this.router.post("/update/:problemId", async (req, res, next) => {
-            const request = await serializers.CreateProblemRequest.parse(req.body);
+            const request = serializers.CreateProblemRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -136,7 +136,7 @@ export class ProblemService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.UpdateProblemResponse.jsonOrThrow(responseBody, {
+                                    serializers.UpdateProblemResponse.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );
@@ -198,7 +198,7 @@ export class ProblemService {
             }
         });
         this.router.post("/default-starter-files", async (req, res, next) => {
-            const request = await serializers.GetDefaultStarterFilesRequest.parse(req.body);
+            const request = serializers.GetDefaultStarterFilesRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -207,7 +207,7 @@ export class ProblemService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.GetDefaultStarterFilesResponse.jsonOrThrow(responseBody, {
+                                    serializers.GetDefaultStarterFilesResponse.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );

@@ -38,7 +38,7 @@ export class InlinedRequestService {
 
     public toRouter(): express.Router {
         this.router.post("/inlined", async (req, res, next) => {
-            const request = await serializers.SendEnumInlinedRequest.parse(req.body);
+            const request = serializers.SendEnumInlinedRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {

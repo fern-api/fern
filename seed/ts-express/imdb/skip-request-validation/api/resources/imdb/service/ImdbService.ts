@@ -54,7 +54,7 @@ export class ImdbService {
 
     public toRouter(): express.Router {
         this.router.post("/create-movie", async (req, res, next) => {
-            const request = await serializers.CreateMovieRequest.parse(req.body, {
+            const request = serializers.CreateMovieRequest.parse(req.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -68,9 +68,7 @@ export class ImdbService {
                         {
                             send: async (responseBody) => {
                                 res.status(201).json(
-                                    await serializers.MovieId.jsonOrThrow(responseBody, {
-                                        unrecognizedObjectKeys: "strip",
-                                    })
+                                    serializers.MovieId.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
                                 );
                             },
                             cookie: res.cookie.bind(res),
@@ -107,9 +105,7 @@ export class ImdbService {
                     req as any,
                     {
                         send: async (responseBody) => {
-                            res.json(
-                                await serializers.Movie.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
-                            );
+                            res.json(serializers.Movie.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }));
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,

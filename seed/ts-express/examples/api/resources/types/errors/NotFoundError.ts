@@ -13,8 +13,6 @@ export class NotFoundError extends errors.SeedExamplesError {
     }
 
     public async send(res: express.Response): Promise<void> {
-        res.status(404).json(
-            await serializers.NotFoundError.jsonOrThrow(this.body, { unrecognizedObjectKeys: "strip" })
-        );
+        res.status(404).json(serializers.NotFoundError.jsonOrThrow(this.body, { unrecognizedObjectKeys: "strip" }));
     }
 }

@@ -139,7 +139,7 @@ export class UsersService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.ListUsersPaginationResponse.jsonOrThrow(responseBody, {
+                                serializers.ListUsersPaginationResponse.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -171,7 +171,7 @@ export class UsersService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.ListUsersPaginationResponse.jsonOrThrow(responseBody, {
+                                serializers.ListUsersPaginationResponse.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -203,7 +203,7 @@ export class UsersService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.ListUsersPaginationResponse.jsonOrThrow(responseBody, {
+                                serializers.ListUsersPaginationResponse.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -235,7 +235,7 @@ export class UsersService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.ListUsersExtendedResponse.jsonOrThrow(responseBody, {
+                                serializers.ListUsersExtendedResponse.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -267,7 +267,7 @@ export class UsersService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.UsernameCursor.jsonOrThrow(responseBody, {
+                                serializers.UsernameCursor.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -299,7 +299,7 @@ export class UsersService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.UsernameContainer.jsonOrThrow(responseBody, {
+                                serializers.UsernameContainer.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );

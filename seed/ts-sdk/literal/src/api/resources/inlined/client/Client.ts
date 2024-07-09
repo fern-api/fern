@@ -59,9 +59,7 @@ export class Inlined {
             },
             contentType: "application/json",
             body: {
-                ...(await serializers.SendLiteralsInlinedRequest.jsonOrThrow(request, {
-                    unrecognizedObjectKeys: "strip",
-                })),
+                ...serializers.SendLiteralsInlinedRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
                 prompt: "You are a helpful assistant",
                 stream: false,
             },
@@ -70,7 +68,7 @@ export class Inlined {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.SendResponse.parseOrThrow(_response.body, {
+            return serializers.SendResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

@@ -14,8 +14,6 @@ export class ErrorWithUnionBody extends errors.SeedExhaustiveError {
     }
 
     public async send(res: express.Response): Promise<void> {
-        res.status(400).json(
-            await serializers.types.Animal.jsonOrThrow(this.body, { unrecognizedObjectKeys: "strip" })
-        );
+        res.status(400).json(serializers.types.Animal.jsonOrThrow(this.body, { unrecognizedObjectKeys: "strip" }));
     }
 }

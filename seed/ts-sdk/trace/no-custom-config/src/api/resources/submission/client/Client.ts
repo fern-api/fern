@@ -50,7 +50,7 @@ export class Submission {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/sessions/create-session/${encodeURIComponent(await serializers.Language.jsonOrThrow(language))}`
+                `/sessions/create-session/${encodeURIComponent(serializers.Language.jsonOrThrow(language))}`
             ),
             method: "POST",
             headers: {
@@ -71,7 +71,7 @@ export class Submission {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.ExecutionSessionResponse.parseOrThrow(_response.body, {
+            return serializers.ExecutionSessionResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -138,7 +138,7 @@ export class Submission {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.submission.getExecutionSession.Response.parseOrThrow(_response.body, {
+            return serializers.submission.getExecutionSession.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -260,7 +260,7 @@ export class Submission {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.GetExecutionSessionStateResponse.parseOrThrow(_response.body, {
+            return serializers.GetExecutionSessionStateResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

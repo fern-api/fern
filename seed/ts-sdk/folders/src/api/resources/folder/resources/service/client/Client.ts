@@ -110,7 +110,7 @@ export class Service {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new SeedApi.folder.NotFoundError(
-                        await serializers.folder.NotFoundError.parseOrThrow(_response.error.body, {
+                        serializers.folder.NotFoundError.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,

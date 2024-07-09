@@ -113,7 +113,7 @@ export class HttpMethodsService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.endpoints.httpMethods.testGet.Response.jsonOrThrow(responseBody, {
+                                serializers.endpoints.httpMethods.testGet.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -137,7 +137,7 @@ export class HttpMethodsService {
             }
         });
         this.router.post("", async (req, res, next) => {
-            const request = await serializers.types.ObjectWithRequiredField.parse(req.body);
+            const request = serializers.types.ObjectWithRequiredField.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -146,7 +146,7 @@ export class HttpMethodsService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
+                                    serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );
@@ -178,7 +178,7 @@ export class HttpMethodsService {
             }
         });
         this.router.put("/:id", async (req, res, next) => {
-            const request = await serializers.types.ObjectWithRequiredField.parse(req.body);
+            const request = serializers.types.ObjectWithRequiredField.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -187,7 +187,7 @@ export class HttpMethodsService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
+                                    serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );
@@ -219,7 +219,7 @@ export class HttpMethodsService {
             }
         });
         this.router.patch("/:id", async (req, res, next) => {
-            const request = await serializers.types.ObjectWithOptionalField.parse(req.body);
+            const request = serializers.types.ObjectWithOptionalField.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -228,7 +228,7 @@ export class HttpMethodsService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
+                                    serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );
@@ -266,7 +266,7 @@ export class HttpMethodsService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.endpoints.httpMethods.testDelete.Response.jsonOrThrow(responseBody, {
+                                serializers.endpoints.httpMethods.testDelete.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );

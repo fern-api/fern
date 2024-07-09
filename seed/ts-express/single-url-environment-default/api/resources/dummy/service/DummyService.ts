@@ -43,7 +43,7 @@ export class DummyService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.dummy.getDummy.Response.jsonOrThrow(responseBody, {
+                                serializers.dummy.getDummy.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );

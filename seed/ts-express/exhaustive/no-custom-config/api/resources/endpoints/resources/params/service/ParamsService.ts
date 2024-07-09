@@ -118,7 +118,7 @@ export class ParamsService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.endpoints.params.getWithPath.Response.jsonOrThrow(responseBody, {
+                                serializers.endpoints.params.getWithPath.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -228,7 +228,7 @@ export class ParamsService {
             }
         });
         this.router.put("/path/:param", async (req, res, next) => {
-            const request = await serializers.endpoints.params.modifyWithPath.Request.parse(req.body);
+            const request = serializers.endpoints.params.modifyWithPath.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -237,10 +237,9 @@ export class ParamsService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.endpoints.params.modifyWithPath.Response.jsonOrThrow(
-                                        responseBody,
-                                        { unrecognizedObjectKeys: "strip" }
-                                    )
+                                    serializers.endpoints.params.modifyWithPath.Response.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
                                 );
                             },
                             cookie: res.cookie.bind(res),

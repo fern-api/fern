@@ -43,7 +43,7 @@ export class PropertyBasedErrorService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.propertyBasedError.throwError.Response.jsonOrThrow(responseBody, {
+                                serializers.propertyBasedError.throwError.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );

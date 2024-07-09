@@ -109,7 +109,7 @@ export class PrimitiveService {
 
     public toRouter(): express.Router {
         this.router.post("/string", async (req, res, next) => {
-            const request = await serializers.endpoints.primitive.getAndReturnString.Request.parse(req.body);
+            const request = serializers.endpoints.primitive.getAndReturnString.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -118,7 +118,7 @@ export class PrimitiveService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.endpoints.primitive.getAndReturnString.Response.jsonOrThrow(
+                                    serializers.endpoints.primitive.getAndReturnString.Response.jsonOrThrow(
                                         responseBody,
                                         {
                                             unrecognizedObjectKeys: "passthrough",
@@ -157,7 +157,7 @@ export class PrimitiveService {
             }
         });
         this.router.post("/integer", async (req, res, next) => {
-            const request = await serializers.endpoints.primitive.getAndReturnInt.Request.parse(req.body);
+            const request = serializers.endpoints.primitive.getAndReturnInt.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -166,14 +166,11 @@ export class PrimitiveService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.endpoints.primitive.getAndReturnInt.Response.jsonOrThrow(
-                                        responseBody,
-                                        {
-                                            unrecognizedObjectKeys: "passthrough",
-                                            allowUnrecognizedUnionMembers: true,
-                                            allowUnrecognizedEnumValues: true,
-                                        }
-                                    )
+                                    serializers.endpoints.primitive.getAndReturnInt.Response.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "passthrough",
+                                        allowUnrecognizedUnionMembers: true,
+                                        allowUnrecognizedEnumValues: true,
+                                    })
                                 );
                             },
                             cookie: res.cookie.bind(res),
@@ -205,7 +202,7 @@ export class PrimitiveService {
             }
         });
         this.router.post("/long", async (req, res, next) => {
-            const request = await serializers.endpoints.primitive.getAndReturnLong.Request.parse(req.body);
+            const request = serializers.endpoints.primitive.getAndReturnLong.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -214,7 +211,7 @@ export class PrimitiveService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.endpoints.primitive.getAndReturnLong.Response.jsonOrThrow(
+                                    serializers.endpoints.primitive.getAndReturnLong.Response.jsonOrThrow(
                                         responseBody,
                                         {
                                             unrecognizedObjectKeys: "passthrough",
@@ -253,7 +250,7 @@ export class PrimitiveService {
             }
         });
         this.router.post("/double", async (req, res, next) => {
-            const request = await serializers.endpoints.primitive.getAndReturnDouble.Request.parse(req.body);
+            const request = serializers.endpoints.primitive.getAndReturnDouble.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -262,7 +259,7 @@ export class PrimitiveService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.endpoints.primitive.getAndReturnDouble.Response.jsonOrThrow(
+                                    serializers.endpoints.primitive.getAndReturnDouble.Response.jsonOrThrow(
                                         responseBody,
                                         {
                                             unrecognizedObjectKeys: "passthrough",
@@ -301,7 +298,7 @@ export class PrimitiveService {
             }
         });
         this.router.post("/boolean", async (req, res, next) => {
-            const request = await serializers.endpoints.primitive.getAndReturnBool.Request.parse(req.body);
+            const request = serializers.endpoints.primitive.getAndReturnBool.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -310,7 +307,7 @@ export class PrimitiveService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.endpoints.primitive.getAndReturnBool.Response.jsonOrThrow(
+                                    serializers.endpoints.primitive.getAndReturnBool.Response.jsonOrThrow(
                                         responseBody,
                                         {
                                             unrecognizedObjectKeys: "passthrough",
@@ -349,7 +346,7 @@ export class PrimitiveService {
             }
         });
         this.router.post("/datetime", async (req, res, next) => {
-            const request = await serializers.endpoints.primitive.getAndReturnDatetime.Request.parse(req.body);
+            const request = serializers.endpoints.primitive.getAndReturnDatetime.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -358,7 +355,7 @@ export class PrimitiveService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.endpoints.primitive.getAndReturnDatetime.Response.jsonOrThrow(
+                                    serializers.endpoints.primitive.getAndReturnDatetime.Response.jsonOrThrow(
                                         responseBody,
                                         {
                                             unrecognizedObjectKeys: "passthrough",
@@ -397,7 +394,7 @@ export class PrimitiveService {
             }
         });
         this.router.post("/date", async (req, res, next) => {
-            const request = await serializers.endpoints.primitive.getAndReturnDate.Request.parse(req.body);
+            const request = serializers.endpoints.primitive.getAndReturnDate.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -406,7 +403,7 @@ export class PrimitiveService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.endpoints.primitive.getAndReturnDate.Response.jsonOrThrow(
+                                    serializers.endpoints.primitive.getAndReturnDate.Response.jsonOrThrow(
                                         responseBody,
                                         {
                                             unrecognizedObjectKeys: "passthrough",
@@ -445,7 +442,7 @@ export class PrimitiveService {
             }
         });
         this.router.post("/uuid", async (req, res, next) => {
-            const request = await serializers.endpoints.primitive.getAndReturnUuid.Request.parse(req.body);
+            const request = serializers.endpoints.primitive.getAndReturnUuid.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -454,7 +451,7 @@ export class PrimitiveService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.endpoints.primitive.getAndReturnUuid.Response.jsonOrThrow(
+                                    serializers.endpoints.primitive.getAndReturnUuid.Response.jsonOrThrow(
                                         responseBody,
                                         {
                                             unrecognizedObjectKeys: "passthrough",
@@ -493,7 +490,7 @@ export class PrimitiveService {
             }
         });
         this.router.post("/base64", async (req, res, next) => {
-            const request = await serializers.endpoints.primitive.getAndReturnBase64.Request.parse(req.body);
+            const request = serializers.endpoints.primitive.getAndReturnBase64.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -502,7 +499,7 @@ export class PrimitiveService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.endpoints.primitive.getAndReturnBase64.Response.jsonOrThrow(
+                                    serializers.endpoints.primitive.getAndReturnBase64.Response.jsonOrThrow(
                                         responseBody,
                                         {
                                             unrecognizedObjectKeys: "passthrough",
