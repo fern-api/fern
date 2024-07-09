@@ -1,11 +1,11 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift, { Class, FileHeader, Import } from "../swift";
+import Swift, { Type, FileHeader, Import } from "../swift";
 
 export declare namespace File {
     interface Args {
         fileHeader?: FileHeader;
         imports?: Import[];
-        class: Class;
+        class: Type;
     }
 }
 
@@ -13,7 +13,7 @@ export class File extends AstNode {
 
     public readonly fileHeader?: FileHeader;
     public readonly imports?: Import[];
-    public readonly class: Class;
+    public readonly class: Type;
 
     constructor({ 
         fileHeader,

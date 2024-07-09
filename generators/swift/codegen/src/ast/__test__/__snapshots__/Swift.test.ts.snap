@@ -1,14 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Swift Language makes class 1`] = `
-"class MyService: ExampleApiService {
-
-    func fetchData() {
-        print("Hey!")
-    }
-
+exports[`Swift Language makes enum 1`] = `
+"enum CodingKeys: String, CodingKey {
+    case name
+    case fallbackContent = fallback_content
 }"
 `;
+
+exports[`Swift Language makes enum case 1`] = `"case fallbackContent = fallback_content"`;
 
 exports[`Swift Language makes file 1`] = `
 "// Sample.swift
@@ -16,13 +15,26 @@ exports[`Swift Language makes file 1`] = `
 import Foundation
 import UIKit
 
-open class Sample {
+open class Room {
 
-    func findStuff() {
+    class Person {
+
+        func getName() {
+            print("Hey!")
+        }
+
+    }
+
+    enum RoomType {
+        case big
+        case small = sml
+    }
+
+    func openDoor() {
         print("Hey!")
     }
 
-    public static func getStuff() async throws -> Int {
+    public static func closeDoor() async throws -> Int {
         print("Hey!")
     }
 
@@ -38,13 +50,6 @@ exports[`Swift Language makes function 1`] = `
 `;
 
 exports[`Swift Language makes import 1`] = `"import ExamplePackage"`;
-
-exports[`Swift Language makes struct 1`] = `
-"internal struct Sample: Codable {
-    print("Hey")
-}
-"
-`;
 
 exports[`Swift Language makes type 1`] = `
 "open struct ExampleObject: Codable, NSObject {

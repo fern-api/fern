@@ -1,13 +1,14 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift, { AccessLevel, Func, Import, ClassLevel } from "../swift";
+import Swift, { AccessLevel, Func, Import, ClassLevel, Enum } from "../swift";
 
 export declare namespace Type {
     interface Args {
         accessLevel?: AccessLevel;
         classLevel?: ClassLevel;
         name: string;
+        subclasses?: (Type | Enum)[];
         functions?: Func[];
-        inheritance?: Type[],
+        inheritance?: Type[];
     }
 }
 
@@ -16,6 +17,7 @@ export class Type extends AstNode {
     public readonly accessLevel?: AccessLevel;
     public readonly classLevel?: ClassLevel;
     public readonly name: string;
+    public readonly subclasses?: (Type | Enum)[];
     public readonly functions?: Func[];
     public readonly inheritance?: Type[];
 
@@ -23,6 +25,7 @@ export class Type extends AstNode {
         accessLevel, 
         classLevel, 
         name,
+        subclasses,
         functions,
         inheritance,
     }: Type.Args) {
@@ -30,6 +33,7 @@ export class Type extends AstNode {
         this.accessLevel = accessLevel;
         this.classLevel = classLevel;
         this.name = name;
+        this.subclasses = subclasses;
         this.functions = functions;
         this.inheritance = inheritance;
     }
@@ -51,6 +55,13 @@ export class Type extends AstNode {
         writer.openBlock([this.accessLevel, this.classLevel, this.buildTitle()], "{", () => {
 
             writer.newLine();
+
+            if (this.subclasses) {
+                this.subclasses.forEach(sub => {
+                    writer.writeNode(sub);
+                    writer.newLine();
+                });
+            }
 
             if (this.functions) {
                 this.functions.forEach(func => {

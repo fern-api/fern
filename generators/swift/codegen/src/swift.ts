@@ -17,17 +17,17 @@ export default class Swift {
   public static makeParam(args: Ast.Param.Args): Ast.Param {
     return new Ast.Param(args);
   }
+
+  public static makeEnumCase(args: Ast.EnumCase.Args): Ast.EnumCase {
+    return new Ast.EnumCase(args);
+  }
+
+  public static makeEnum(args: Ast.Enum.Args): Ast.Enum {
+    return new Ast.Enum(args);
+  }
   
   public static makeFunc(args: Ast.Func.Args): Ast.Func {
     return new Ast.Func(args);
-  }
-
-  public static makeStruct(args: Ast.Struct.Args): Ast.Struct {
-    return new Ast.Struct(args);
-  }
-  
-  public static makeClass(args: Ast.Class.Args): Ast.Class {
-    return new Ast.Class(args);
   }
 
   public static makeType(args: Ast.Type.Args): Ast.Type {

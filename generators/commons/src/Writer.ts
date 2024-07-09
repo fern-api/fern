@@ -72,19 +72,19 @@ export class Writer {
         return this.buffer;
     }
 
-    private getIndentString(tabSize: number): string {
-        return " ".repeat(this.indentLevel * tabSize);
+    private calculateIndentationDistance(example: string): number {
+
+        const trimmedExample = example.trim();
+        if (trimmedExample.length) {
+            return example.indexOf(trimmedExample[0]!!);
+        }
+    
+        return 0;
+
     }
 
-    public writeSnippetWithVariables(template: string, variables: Record<string, string | undefined>): void {
-        const filledTemplate = template.replace(/\$(\d+)/g, (_, index) => {
-            const value = variables[index];
-            return value !== undefined ? value : '';
-        });
-
-        // Handle removing only placeholders and keeping the rest of the template as is
-        const cleanedTemplate = filledTemplate.replace(/(\s*\$\d+\s*)/g, '').replace(/\n\s*\n/g, '\n');
-        this.write(cleanedTemplate);
+    private getIndentString(tabSize: number): string {
+        return " ".repeat(this.indentLevel * tabSize);
     }
     
 }

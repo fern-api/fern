@@ -17,6 +17,38 @@ describe("Swift Language", () => {
         expect(output.toString()).toMatchSnapshot();
     });
 
+    it("makes enum case", () => {
+        const output = Swift.makeEnumCase({
+            name: "fallbackContent",
+            key: "fallback_content",
+        });
+        expect(output.toString()).toMatchSnapshot();
+    });
+
+    it("makes enum", () => {
+        const output = Swift.makeEnum({
+            name: "CodingKeys",
+            inheritance: [
+                Swift.makeType({
+                    name: "String"
+                }),
+                Swift.makeType({
+                    name: "CodingKey"
+                })
+            ],
+            enumCases: [
+                Swift.makeEnumCase({
+                    name: "name",
+                }),
+                Swift.makeEnumCase({
+                    name: "fallbackContent",
+                    key: "fallback_content",
+                }),
+            ]
+        });
+        expect(output.toString()).toMatchSnapshot();
+    });
+
     it("makes function", () => {
         const output = Swift.makeFunc({
             accessLevel: AccessLevel.Fileprivate,
@@ -33,39 +65,6 @@ describe("Swift Language", () => {
                     title: "age",
                     type: "Int",
                     defaultValue: "33"
-                })
-            ]
-        });
-        expect(output.toString()).toMatchSnapshot();
-    });
-
-    it("makes struct", () => {
-
-        const output = Swift.makeStruct({
-            accessLevel: AccessLevel.Internal,
-            name: "Sample",
-            inheritance: [
-                Swift.makeClass({
-                    name: "Codable"
-                })
-            ]
-        });
-
-        expect(output.toString()).toMatchSnapshot();
-
-    });
-
-    it("makes class", () => {
-        const output = Swift.makeClass({
-            name: "MyService",
-            functions: [
-                Swift.makeFunc({
-                    name: "fetchData"
-                })
-            ],
-            inheritance: [
-                Swift.makeClass({
-                    name: "ExampleApiService"
                 })
             ]
         });
@@ -103,17 +102,41 @@ describe("Swift Language", () => {
                 Swift.makeImport({ packageName: "Foundation" }),
                 Swift.makeImport({ packageName: "UIKit" })
             ],
-            class: Swift.makeClass({
+            class: Swift.makeType({
                 accessLevel: AccessLevel.Open,
-                name: "Sample",
+                classLevel: ClassLevel.Class,
+                name: "Room",
+                subclasses: [
+                    Swift.makeType({
+                        classLevel: ClassLevel.Class,
+                        name: "Person",
+                        functions: [
+                            Swift.makeFunc({
+                                name: "getName"
+                            })
+                        ]
+                    }),
+                    Swift.makeEnum({
+                        name: "RoomType",
+                        enumCases: [
+                            Swift.makeEnumCase({
+                                name: 'big'
+                            }),
+                            Swift.makeEnumCase({
+                                name: 'small',
+                                key: 'sml'
+                            }),
+                        ]
+                    })
+                ],
                 functions: [
                     Swift.makeFunc({
-                        name: "findStuff"
+                        name: "openDoor"
                     }),
                     Swift.makeFunc({
                         accessLevel: AccessLevel.Public,
                         modifier: FunctionModifier.Static,
-                        name: "getStuff",
+                        name: "closeDoor",
                         async: "async",
                         throws: "throws",
                         returnType: Swift.makeType({

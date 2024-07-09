@@ -1,33 +1,33 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift, { AccessLevel, Func, Import } from "../swift";
+import Swift, { AccessLevel, Func, Import, Type, EnumCase } from "../swift";
 
-export declare namespace Class {
+export declare namespace Enum {
     interface Args {
         accessLevel?: AccessLevel;
         name: string;
-        functions?: Func[];
-        inheritance?: Class[],
+        inheritance?: Type[],
+        enumCases: EnumCase[]
     }
 }
 
-export class Class extends AstNode {
+export class Enum extends AstNode {
 
     public readonly accessLevel?: AccessLevel;
     public readonly name: string;
-    public readonly functions?: Func[];
-    public readonly inheritance?: Class[];
+    public readonly inheritance?: Type[];
+    public readonly enumCases: EnumCase[];
 
     constructor({ 
         accessLevel, 
         name,
-        functions,
         inheritance,
-    }: Class.Args) {
+        enumCases,
+    }: Enum.Args) {
         super(Swift.indentSize);
         this.accessLevel = accessLevel;
         this.name = name;
-        this.functions = functions;
         this.inheritance = inheritance;
+        this.enumCases = enumCases;
     }
 
     private buildTitle(): string | undefined {
@@ -43,15 +43,12 @@ export class Class extends AstNode {
 
     public write(writer: Writer): void {
 
-        // example: public class Name {
-        writer.openBlock([this.accessLevel, "class", this.buildTitle()], "{", () => {
+        // example: enum CodingKeys: String, CodingKey {
+        writer.openBlock(["enum", this.buildTitle()], "{", () => {
 
-            writer.newLine();
-
-            if (this.functions) {
-                this.functions.forEach(func => {
-                    writer.writeNode(func);
-                    writer.newLine();
+            if (this.enumCases) {
+                this.enumCases.forEach(value => {
+                    writer.writeNode(value);
                 });
             }
 

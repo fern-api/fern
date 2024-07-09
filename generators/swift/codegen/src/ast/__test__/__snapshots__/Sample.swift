@@ -3,13 +3,26 @@
 import Foundation
 import UIKit
 
-open class Sample {
+open class Room {
 
-    func findStuff() {
+    class Person {
+
+        func getName() {
+            print("Hey!")
+        }
+
+    }
+
+    enum RoomType {
+        case big
+        case small = sml
+    }
+
+    func openDoor() {
         print("Hey!")
     }
 
-    public static func getStuff() async throws -> Int {
+    public static func closeDoor() async throws -> Int {
         print("Hey!")
     }
 
