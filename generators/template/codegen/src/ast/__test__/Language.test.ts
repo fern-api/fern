@@ -1,4 +1,4 @@
-import LANGUAGE from "../../SHORT_LANG";
+import LANGUAGE from "../../template";
 import { FileGenerator } from "@fern-api/generator-commons";
 
 describe("LANGUAGE Language", () => {
@@ -28,7 +28,7 @@ describe("LANGUAGE Language", () => {
 
     it("makes file", () => {
         const output = LANGUAGE.makeFile({
-            name: "FernExample.SHORT_LANG",
+            name: "FernExample.template",
             class: LANGUAGE.makeClass({
                 name: "Example",
                 functions: [
@@ -42,7 +42,7 @@ describe("LANGUAGE Language", () => {
         FileGenerator.generate({
             fileName: "Sample", 
             node: output, 
-            extension: "SHORT_LANG",
+            extension: "template",
             outputDir: "src/ast/__test__",
         });
     });

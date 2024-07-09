@@ -41,19 +41,19 @@ replace_full_language_name() {
 # Call the function to replace "LANGUAGE" in all files within the new directory
 replace_full_language_name "$original_name"
 
-# Function to recursively replace "SHORT_LANG" in all files and filenames
+# Function to recursively replace "template" in all files and filenames
 replace_language_name() {
   local directory="$1"
   local new_name="$2"
 
   # Replace in filenames first
-  find "$directory" -depth -name "*SHORT_LANG*" -execdir bash -c 'mv "$1" "${1//SHORT_LANG/'"$new_name"'}"' _ {} \;
+  find "$directory" -depth -name "*template*" -execdir bash -c 'mv "$1" "${1//template/'"$new_name"'}"' _ {} \;
 
   # Replace in file contents
-  find "$directory" -type f -exec sed -i '' -e "s/SHORT_LANG/$new_name/g" {} +
+  find "$directory" -type f -exec sed -i '' -e "s/template/$new_name/g" {} +
 }
 
-# Call the function to replace "SHORT_LANG" in all files and filenames within the new directory
+# Call the function to replace "template" in all files and filenames within the new directory
 replace_language_name "$new_dir" "$new_name"
 
 echo "Directory '$new_name' created successfully at '$new_dir'"

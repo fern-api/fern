@@ -2,7 +2,7 @@
 import * as Ast from "./ast";
 export * from "./ast";
 
-export default class FULL_LANGUAGE_NAME {
+export default class LANGUAGE {
 
     static indentSize = 4;
 

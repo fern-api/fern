@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import LANGUAGE from "../SHORT_LANG";
+import LANGUAGE from "../template";
 
 export declare namespace Func {
     interface Args {
