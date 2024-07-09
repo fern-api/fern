@@ -149,30 +149,33 @@ export class DocsDefinitionResolver {
 
         const config = await this.convertDocsConfiguration();
 
-        const jsFilePaths = new Set(
-            (
-                await glob("**/*.{js,ts,jsx,tsx}", {
-                    cwd: this.docsWorkspace.absoluteFilepath,
-                    absolute: true
-                })
-            ).map(AbsoluteFilePath.of)
-        );
+        const jsFilePaths = new Set<AbsoluteFilePath>();
 
-        // add all js files from the experimental mdxReactFiles config
-        await Promise.all(
-            this._parsedDocsConfig.experimental?.mdxReactFiles?.map(async (filepath) => {
-                const absoluteFilePath = resolve(this.docsWorkspace.absoluteFilepath, filepath);
+        if (this._parsedDocsConfig.experimental?.enableReactInMdx) {
+            const files = await glob("**/*.{js,ts,jsx,tsx}", {
+                cwd: this.docsWorkspace.absoluteFilepath,
+                absolute: true
+            });
 
-                const files = await glob("**/*.{js,ts,jsx,tsx}", {
-                    cwd: absoluteFilePath,
-                    absolute: true
-                });
+            files.forEach((file) => {
+                jsFilePaths.add(AbsoluteFilePath.of(file));
+            });
 
-                files.forEach((file) => {
-                    jsFilePaths.add(AbsoluteFilePath.of(file));
-                });
-            }) ?? []
-        );
+            await Promise.all(
+                this._parsedDocsConfig.experimental?.additionalFoldersContainingReactInMdx?.map(async (filepath) => {
+                    const absoluteFilePath = resolve(this.docsWorkspace.absoluteFilepath, filepath);
+
+                    const files = await glob("**/*.{js,ts,jsx,tsx}", {
+                        cwd: absoluteFilePath,
+                        absolute: true
+                    });
+
+                    files.forEach((file) => {
+                        jsFilePaths.add(AbsoluteFilePath.of(file));
+                    });
+                }) ?? []
+            );
+        }
 
         const jsFiles = Object.fromEntries(
             await Promise.all(
