@@ -3,12 +3,11 @@ import LANGUAGE from "../SHORT_LANG";
 
 export declare namespace Func {
     interface Args {
-        name: string
+        name: string;
     }
 }
 
 export class Func extends AstNode {
-
     public readonly name: string;
 
     constructor({ 

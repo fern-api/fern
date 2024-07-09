@@ -3,13 +3,12 @@ import LANGUAGE, { Func } from "../SHORT_LANG";
 
 export declare namespace Class {
     interface Args {
-        name: string,
-        functions: Func[]
+        name: string;
+        functions: Func[];
     }
 }
 
 export class Class extends AstNode {
-
     public readonly name: string;
     public readonly functions: Func[];
 
@@ -28,7 +27,7 @@ export class Class extends AstNode {
 
             writer.newLine();
 
-            this.functions.forEach(func => {
+            this.functions.forEach((func) => {
                 writer.writeNode(func);
                 writer.newLine();
             });

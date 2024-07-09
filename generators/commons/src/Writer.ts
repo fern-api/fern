@@ -7,7 +7,6 @@ export declare namespace Writer {
 }
 
 export class Writer {
-
     private buffer: string;
     private indentLevel: number;
     private hasWrittenAnything: boolean;

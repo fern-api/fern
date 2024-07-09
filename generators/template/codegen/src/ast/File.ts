@@ -3,13 +3,12 @@ import LANGUAGE, { Class } from "../SHORT_LANG";
 
 export declare namespace File {
     interface Args {
-        name: string,
-        class: Class
+        name: string;
+        class: Class;
     }
 }
 
 export class File extends AstNode {
-
     public readonly name: string;
     public readonly class: Class;
 
@@ -23,7 +22,6 @@ export class File extends AstNode {
     }
 
     public write(writer: Writer): void {
-
         writer.write(`// 🌿 ${this.name}`);
 
         writer.newLine();
@@ -31,6 +29,5 @@ export class File extends AstNode {
         writer.writeNode(this.class);
 
         writer.newLine();
-
     }
 }

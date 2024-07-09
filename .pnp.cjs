@@ -56,11 +56,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:generators/ruby/sdk"\
       },\
       {\
+<<<<<<< HEAD
         "name": "@fern-api/swift-codegen",\
         "reference": "workspace:generators/swift/codegen"\
       },\
       {\
         "name": "@fern-api/LANGUAGE_NAME-codegen",\
+=======
+        "name": "@fern-api/template-codegen",\
+>>>>>>> main
         "reference": "workspace:generators/template/codegen"\
       },\
       {\
@@ -383,8 +387,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     "enableTopLevelFallback": true,\
     "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
     "fallbackExclusionList": [\
+<<<<<<< HEAD
       ["@fern-api/LANGUAGE_NAME-codegen", ["workspace:generators/template/codegen"]],\
       ["@fern-api/Test_NAME-codegen", ["workspace:generators/test/codegen"]],\
+=======
+>>>>>>> main
       ["@fern-api/auth", ["workspace:packages/cli/auth"]],\
       ["@fern-api/browser-playground", ["workspace:generators/typescript/playground/browser"]],\
       ["@fern-api/cli", ["workspace:packages/cli/cli"]],\
@@ -429,8 +436,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/scripts", ["workspace:packages/scripts"]],\
       ["@fern-api/seed-cli", ["workspace:packages/seed"]],\
       ["@fern-api/semver-utils", ["workspace:packages/cli/semver-utils"]],\
-      ["@fern-api/swift-codegen", ["workspace:generators/swift/codegen"]],\
       ["@fern-api/task-context", ["workspace:packages/cli/task-context"]],\
+      ["@fern-api/template-codegen", ["workspace:generators/template/codegen"]],\
       ["@fern-api/validator", ["workspace:packages/cli/yaml/validator"]],\
       ["@fern-api/workspace-loader", ["workspace:packages/cli/workspace-loader"]],\
       ["@fern-api/yaml-formatter", ["workspace:packages/cli/yaml/formatter"]],\
@@ -6363,6 +6370,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+<<<<<<< HEAD
       ["@fern-api/LANGUAGE_NAME-codegen", [\
         ["workspace:generators/template/codegen", {\
           "packageLocation": "./generators/template/codegen/",\
@@ -6413,6 +6421,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
+=======
+>>>>>>> main
       ["@fern-api/auth", [\
         ["workspace:packages/cli/auth", {\
           "packageLocation": "./packages/cli/auth/",\
@@ -7737,31 +7747,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["@fern-api/swift-codegen", [\
-        ["workspace:generators/swift/codegen", {\
-          "packageLocation": "./generators/swift/codegen/",\
-          "packageDependencies": [\
-            ["@fern-api/swift-codegen", "workspace:generators/swift/codegen"],\
-            ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
-            ["@fern-api/generator-commons", "workspace:generators/commons"],\
-            ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
-            ["@fern-fern/ir-sdk", "npm:32.0.0"],\
-            ["@types/jest", "npm:29.0.3"],\
-            ["@types/lodash-es", "npm:4.17.12"],\
-            ["@types/node", "npm:18.7.18"],\
-            ["depcheck", "npm:1.4.6"],\
-            ["eslint", "npm:8.56.0"],\
-            ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
-            ["lodash-es", "npm:4.17.21"],\
-            ["organize-imports-cli", "npm:0.10.0"],\
-            ["ts-node", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:10.9.2"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
-            ["zod", "npm:3.22.4"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
       ["@fern-api/task-context", [\
         ["workspace:packages/cli/task-context", {\
           "packageLocation": "./packages/cli/task-context/",\
@@ -7776,6 +7761,30 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@fern-api/template-codegen", [\
+        ["workspace:generators/template/codegen", {\
+          "packageLocation": "./generators/template/codegen/",\
+          "packageDependencies": [\
+            ["@fern-api/template-codegen", "workspace:generators/template/codegen"],\
+            ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
+            ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
+            ["@fern-api/generator-commons", "workspace:generators/commons"],\
+            ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
+            ["@types/jest", "npm:29.0.3"],\
+            ["@types/lodash-es", "npm:4.17.12"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["depcheck", "npm:1.4.6"],\
+            ["eslint", "npm:8.56.0"],\
+            ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
+            ["lodash-es", "npm:4.17.21"],\
+            ["organize-imports-cli", "npm:0.10.0"],\
+            ["prettier", "npm:2.7.1"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
+            ["zod", "npm:3.22.4"]\
           ],\
           "linkType": "SOFT"\
         }]\
