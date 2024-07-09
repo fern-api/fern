@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedTrace;
 using SeedTrace.Core;
@@ -28,10 +29,10 @@ public class ProblemClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<object>(responseBody);
+            return JsonSerializer.Deserialize<object>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -52,10 +53,10 @@ public class ProblemClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<UpdateProblemResponse>(responseBody);
+            return JsonSerializer.Deserialize<UpdateProblemResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -63,9 +64,9 @@ public class ProblemClient
     /// <summary>
     /// Soft deletes a problem
     /// </summary>
-    public async void DeleteProblemAsync(string problemId)
+    public async Task DeleteProblemAsync(string problemId)
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Delete,
@@ -89,10 +90,10 @@ public class ProblemClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<GetDefaultStarterFilesResponse>(responseBody);
+            return JsonSerializer.Deserialize<GetDefaultStarterFilesResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

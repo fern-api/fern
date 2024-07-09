@@ -5,28 +5,32 @@ using System.Text.Json.Serialization;
 namespace SeedExhaustive.Core;
 
 public class StringEnumSerializer<TEnum> : JsonConverter<TEnum>
-    where TEnum : struct, System.Enum
+    where TEnum : struct, Enum
 {
-    private readonly Dictionary<TEnum, string> _enumToString = new Dictionary<TEnum, string>();
-    private readonly Dictionary<string, TEnum> _stringToEnum = new Dictionary<string, TEnum>();
+    private readonly Dictionary<TEnum, string> _enumToString = new();
+    private readonly Dictionary<string, TEnum> _stringToEnum = new();
 
     public StringEnumSerializer()
     {
         var type = typeof(TEnum);
-        var values = System.Enum.GetValues<TEnum>();
+        var values = Enum.GetValues(type);
 
         foreach (var value in values)
         {
-            var enumMember = type.GetMember(value.ToString())[0];
+            var enumValue = (TEnum)value;
+            var enumMember = type.GetMember(enumValue.ToString())[0];
             var attr = enumMember
                 .GetCustomAttributes(typeof(EnumMemberAttribute), false)
                 .Cast<EnumMemberAttribute>()
                 .FirstOrDefault();
 
-            var stringValue = attr?.Value ?? value.ToString();
+            var stringValue =
+                attr?.Value
+                ?? value.ToString()
+                ?? throw new Exception("Unexpected null enum toString value");
 
-            _enumToString.Add(value, stringValue);
-            _stringToEnum.Add(stringValue, value);
+            _enumToString.Add(enumValue, stringValue);
+            _stringToEnum.Add(stringValue, enumValue);
         }
     }
 
@@ -36,14 +40,10 @@ public class StringEnumSerializer<TEnum> : JsonConverter<TEnum>
         JsonSerializerOptions options
     )
     {
-        var stringValue = reader.GetString();
-
-        if (_stringToEnum.TryGetValue(stringValue, out var enumValue))
-        {
-            return enumValue;
-        }
-
-        return default;
+        var stringValue =
+            reader.GetString()
+            ?? throw new Exception("The JSON value could not be read as a string.");
+        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
     }
 
     public override void Write(Utf8JsonWriter writer, TEnum value, JsonSerializerOptions options)

@@ -1,3 +1,4 @@
+using System.Net.Http;
 using SeedApiWideBasePath.Core;
 
 #nullable enable
@@ -13,14 +14,14 @@ public class ServiceClient
         _client = client;
     }
 
-    public async void PostAsync(
+    public async Task PostAsync(
         string pathParam,
         string serviceParam,
         string resourceParam,
         int endpointParam
     )
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,

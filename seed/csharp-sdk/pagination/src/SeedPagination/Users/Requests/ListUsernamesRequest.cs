@@ -1,6 +1,6 @@
 namespace SeedPagination;
 
-public class ListUsernamesRequest
+public record ListUsernamesRequest
 {
     /// <summary>
     /// The cursor used for pagination in order to fetch

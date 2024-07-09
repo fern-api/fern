@@ -6,35 +6,36 @@ using SeedTrace.V2.V3;
 
 namespace SeedTrace.V2.V3;
 
-public class ProblemInfoV2
+public record ProblemInfoV2
 {
     [JsonPropertyName("problemId")]
-    public string ProblemId { get; init; }
+    public required string ProblemId { get; init; }
 
     [JsonPropertyName("problemDescription")]
-    public ProblemDescription ProblemDescription { get; init; }
+    public required ProblemDescription ProblemDescription { get; init; }
 
     [JsonPropertyName("problemName")]
-    public string ProblemName { get; init; }
+    public required string ProblemName { get; init; }
 
     [JsonPropertyName("problemVersion")]
-    public int ProblemVersion { get; init; }
+    public required int ProblemVersion { get; init; }
 
     [JsonPropertyName("supportedLanguages")]
-    public HashSet<Language> SupportedLanguages { get; init; }
+    public HashSet<Language> SupportedLanguages { get; init; } = new HashSet<Language>();
 
     [JsonPropertyName("customFiles")]
-    public object CustomFiles { get; init; }
+    public required object CustomFiles { get; init; }
 
     [JsonPropertyName("generatedFiles")]
-    public GeneratedFiles GeneratedFiles { get; init; }
+    public required GeneratedFiles GeneratedFiles { get; init; }
 
     [JsonPropertyName("customTestCaseTemplates")]
-    public IEnumerable<TestCaseTemplate> CustomTestCaseTemplates { get; init; }
+    public IEnumerable<TestCaseTemplate> CustomTestCaseTemplates { get; init; } =
+        new List<TestCaseTemplate>();
 
     [JsonPropertyName("testcases")]
-    public IEnumerable<TestCaseV2> Testcases { get; init; }
+    public IEnumerable<TestCaseV2> Testcases { get; init; } = new List<TestCaseV2>();
 
     [JsonPropertyName("isPublic")]
-    public bool IsPublic { get; init; }
+    public required bool IsPublic { get; init; }
 }

@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedAudiences;
 
-public class FilteredType
+public record FilteredType
 {
     [JsonPropertyName("public_property")]
     public string? PublicProperty { get; init; }
 
     [JsonPropertyName("private_property")]
-    public int PrivateProperty { get; init; }
+    public required int PrivateProperty { get; init; }
 }

@@ -1,3 +1,4 @@
+using System.Net.Http;
 using SeedApi.A;
 using SeedApi.Core;
 using SeedApi.Folder;
@@ -24,9 +25,9 @@ public partial class SeedApiClient
 
     public FolderClient Folder { get; }
 
-    public async void FooAsync()
+    public async Task FooAsync()
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = "" }
         );
     }

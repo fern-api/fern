@@ -1,3 +1,3 @@
 namespace SeedExamples.File;
 
-public class GetFileRequest { }
+public record GetFileRequest { }

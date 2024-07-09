@@ -5,7 +5,7 @@ using SeedExhaustive.Types;
 
 namespace SeedExhaustive.Types;
 
-public class NestedObjectWithOptionalField
+public record NestedObjectWithOptionalField
 {
     [JsonPropertyName("string")]
     public string? String { get; init; }

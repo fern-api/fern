@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class KeyValuePair
+public record KeyValuePair
 {
     [JsonPropertyName("key")]
-    public object Key { get; init; }
+    public required object Key { get; init; }
 
     [JsonPropertyName("value")]
-    public object Value { get; init; }
+    public required object Value { get; init; }
 }

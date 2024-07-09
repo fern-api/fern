@@ -3,16 +3,16 @@ using SeedObjectsWithImports;
 
 #nullable enable
 
-namespace SeedObjectsWithImports;
+namespace SeedObjectsWithImports.File.Types;
 
-public class File
+public record File
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     [JsonPropertyName("contents")]
-    public string Contents { get; init; }
+    public required string Contents { get; init; }
 
     [JsonPropertyName("info")]
-    public FileInfo Info { get; init; }
+    public required FileInfo Info { get; init; }
 }

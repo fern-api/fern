@@ -5,7 +5,7 @@ using SeedObjectsWithImports.Core;
 
 #nullable enable
 
-namespace SeedObjectsWithImports;
+namespace SeedObjectsWithImports.File.Types;
 
 [JsonConverter(typeof(StringEnumSerializer<FileInfo>))]
 public enum FileInfo

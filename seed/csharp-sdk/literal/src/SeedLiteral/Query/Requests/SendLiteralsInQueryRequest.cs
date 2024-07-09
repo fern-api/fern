@@ -1,10 +1,10 @@
 namespace SeedLiteral;
 
-public class SendLiteralsInQueryRequest
+public record SendLiteralsInQueryRequest
 {
-    public string Prompt { get; init; }
+    public required string Prompt { get; init; }
 
-    public string Query { get; init; }
+    public required string Query { get; init; }
 
-    public bool Stream { get; init; }
+    public required bool Stream { get; init; }
 }

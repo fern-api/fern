@@ -35,7 +35,7 @@ public partial class SeedBasicAuthEnvironmentVariablesClient
 
     public ErrorsClient Errors { get; }
 
-    private string GetFromEnvironmentOrThrow(string env, string message)
+    private static string GetFromEnvironmentOrThrow(string env, string message)
     {
         return Environment.GetEnvironmentVariable(env) ?? throw new Exception(message);
     }

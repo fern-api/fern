@@ -1,3 +1,4 @@
+using System.Net.Http;
 using SeedFileDownload.Core;
 
 #nullable enable
@@ -13,7 +14,7 @@ public class ServiceClient
         _client = client;
     }
 
-    public async void DownloadFileAsync()
+    public async Task DownloadFileAsync()
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = "" }

@@ -8,7 +8,7 @@ namespace SeedExhaustive.Core;
 public class OneOfSerializer<TOneOf> : JsonConverter<TOneOf>
     where TOneOf : IOneOf
 {
-    public override TOneOf Read(
+    public override TOneOf? Read(
         ref Utf8JsonReader reader,
         Type typeToConvert,
         JsonSerializerOptions options
@@ -21,10 +21,10 @@ public class OneOfSerializer<TOneOf> : JsonConverter<TOneOf>
         {
             try
             {
-                Utf8JsonReader readerCopy = reader;
+                var readerCopy = reader;
                 var result = JsonSerializer.Deserialize(ref readerCopy, type, options);
                 reader.Skip();
-                return (TOneOf)cast.Invoke(null, new[] { result })!;
+                return (TOneOf)cast.Invoke(null, [result])!;
             }
             catch (JsonException) { }
         }

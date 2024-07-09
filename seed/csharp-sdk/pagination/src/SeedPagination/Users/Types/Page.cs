@@ -5,20 +5,20 @@ using SeedPagination;
 
 namespace SeedPagination;
 
-public class Page
+public record Page
 {
     /// <summary>
     /// The current page
     /// </summary>
     [JsonPropertyName("page")]
-    public int Page_ { get; init; }
+    public required int Page_ { get; init; }
 
     [JsonPropertyName("next")]
     public NextPage? Next { get; init; }
 
     [JsonPropertyName("per_page")]
-    public int PerPage { get; init; }
+    public required int PerPage { get; init; }
 
     [JsonPropertyName("total_page")]
-    public int TotalPage { get; init; }
+    public required int TotalPage { get; init; }
 }

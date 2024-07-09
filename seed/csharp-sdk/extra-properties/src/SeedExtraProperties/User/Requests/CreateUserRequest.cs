@@ -4,14 +4,14 @@ using System.Text.Json.Serialization;
 
 namespace SeedExtraProperties;
 
-public class CreateUserRequest
+public record CreateUserRequest
 {
     [JsonPropertyName("_type")]
-    public string Type { get; init; }
+    public required string Type { get; init; }
 
     [JsonPropertyName("_version")]
-    public string Version { get; init; }
+    public required string Version { get; init; }
 
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 }

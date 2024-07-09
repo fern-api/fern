@@ -1,9 +1,9 @@
 using SeedObjectsWithImports.Core;
-using SeedObjectsWithImports.File;
+using SeedObjectsWithImports.File.Directory;
 
 #nullable enable
 
-namespace SeedObjectsWithImports;
+namespace SeedObjectsWithImports.File;
 
 public class FileClient
 {

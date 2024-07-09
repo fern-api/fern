@@ -61,17 +61,17 @@ public class RawClient(Dictionary<string, string> headers, ClientOptions clientO
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
 
-    public abstract class BaseApiRequest
+    public record BaseApiRequest
     {
-        public required HttpMethod Method;
+        public required HttpMethod Method { get; init; }
 
-        public required string Path;
+        public required string Path { get; init; }
 
-        public readonly string? ContentType = null;
+        public string? ContentType { get; init; }
 
-        public Dictionary<string, object> Query { get; } = new();
+        public Dictionary<string, object> Query { get; init; } = new();
 
-        public Dictionary<string, string> Headers { get; } = new();
+        public Dictionary<string, string> Headers { get; init; } = new();
 
         public object? RequestOptions { get; init; }
     }
@@ -79,15 +79,15 @@ public class RawClient(Dictionary<string, string> headers, ClientOptions clientO
     /// <summary>
     /// The request object to be sent for streaming uploads.
     /// </summary>
-    public abstract class StreamApiRequest : BaseApiRequest
+    public record StreamApiRequest : BaseApiRequest
     {
-        public Stream? Body => null;
+        public Stream? Body { get; init; }
     }
 
     /// <summary>
     /// The request object to be sent for JSON APIs.
     /// </summary>
-    public class JsonApiRequest : BaseApiRequest
+    public record JsonApiRequest : BaseApiRequest
     {
         public object? Body { get; init; }
     }
@@ -95,11 +95,11 @@ public class RawClient(Dictionary<string, string> headers, ClientOptions clientO
     /// <summary>
     /// The response object returned from the API.
     /// </summary>
-    public class ApiResponse
+    public record ApiResponse
     {
-        public int StatusCode;
+        public required int StatusCode { get; init; }
 
-        public required HttpResponseMessage Raw;
+        public required HttpResponseMessage Raw { get; init; }
     }
 
     private string BuildUrl(string path, Dictionary<string, object> query)
@@ -107,9 +107,13 @@ public class RawClient(Dictionary<string, string> headers, ClientOptions clientO
         var trimmedBaseUrl = _clientOptions.BaseUrl.TrimEnd('/');
         var trimmedBasePath = path.TrimStart('/');
         var url = $"{trimmedBaseUrl}/{trimmedBasePath}";
-        if (query.Count <= 0) return url;
+        if (query.Count <= 0)
+            return url;
         url += "?";
-        url = query.Aggregate(url, (current, queryItem) => current + $"{queryItem.Key}={queryItem.Value}&");
+        url = query.Aggregate(
+            url,
+            (current, queryItem) => current + $"{queryItem.Key}={queryItem.Value}&"
+        );
         url = url.Substring(0, url.Length - 1);
         return url;
     }

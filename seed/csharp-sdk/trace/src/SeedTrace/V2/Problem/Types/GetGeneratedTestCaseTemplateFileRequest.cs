@@ -5,8 +5,8 @@ using SeedTrace.V2;
 
 namespace SeedTrace.V2;
 
-public class GetGeneratedTestCaseTemplateFileRequest
+public record GetGeneratedTestCaseTemplateFileRequest
 {
     [JsonPropertyName("template")]
-    public TestCaseTemplate Template { get; init; }
+    public required TestCaseTemplate Template { get; init; }
 }

@@ -4,10 +4,10 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class TestCaseNonHiddenGrade
+public record TestCaseNonHiddenGrade
 {
     [JsonPropertyName("passed")]
-    public bool Passed { get; init; }
+    public required bool Passed { get; init; }
 
     [JsonPropertyName("actualResult")]
     public object? ActualResult { get; init; }
@@ -16,5 +16,5 @@ public class TestCaseNonHiddenGrade
     public object? Exception { get; init; }
 
     [JsonPropertyName("stdout")]
-    public string Stdout { get; init; }
+    public required string Stdout { get; init; }
 }

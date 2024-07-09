@@ -1,15 +1,14 @@
 using System.Text.Json.Serialization;
-using SeedObjectsWithImports;
-using SeedObjectsWithImports.File;
+using SeedObjectsWithImports.File.Types;
 
 #nullable enable
 
-namespace SeedObjectsWithImports.File;
+namespace SeedObjectsWithImports.File.Directory.Types;
 
-public class Directory
+public record Directory
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     [JsonPropertyName("files")]
     public IEnumerable<File>? Files { get; init; }

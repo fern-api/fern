@@ -5,11 +5,11 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class Migration
+public record Migration
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     [JsonPropertyName("status")]
-    public MigrationStatus Status { get; init; }
+    public required MigrationStatus Status { get; init; }
 }

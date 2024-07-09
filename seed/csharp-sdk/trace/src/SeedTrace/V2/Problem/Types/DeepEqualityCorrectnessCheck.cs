@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace.V2;
 
-public class DeepEqualityCorrectnessCheck
+public record DeepEqualityCorrectnessCheck
 {
     [JsonPropertyName("expectedValueParameterId")]
-    public string ExpectedValueParameterId { get; init; }
+    public required string ExpectedValueParameterId { get; init; }
 }

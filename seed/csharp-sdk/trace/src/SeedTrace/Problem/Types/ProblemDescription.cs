@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class ProblemDescription
+public record ProblemDescription
 {
     [JsonPropertyName("boards")]
-    public IEnumerable<object> Boards { get; init; }
+    public IEnumerable<object> Boards { get; init; } = new List<object>();
 }

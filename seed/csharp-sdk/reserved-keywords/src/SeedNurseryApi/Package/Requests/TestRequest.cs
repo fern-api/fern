@@ -1,6 +1,6 @@
 namespace SeedNurseryApi;
 
-public class TestRequest
+public record TestRequest
 {
-    public string For { get; init; }
+    public required string For { get; init; }
 }

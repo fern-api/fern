@@ -5,11 +5,11 @@ using SeedTrace.V2;
 
 namespace SeedTrace.V2;
 
-public class TestCaseWithActualResultImplementation
+public record TestCaseWithActualResultImplementation
 {
     [JsonPropertyName("getActualResult")]
-    public NonVoidFunctionDefinition GetActualResult { get; init; }
+    public required NonVoidFunctionDefinition GetActualResult { get; init; }
 
     [JsonPropertyName("assertCorrectnessCheck")]
-    public object AssertCorrectnessCheck { get; init; }
+    public required object AssertCorrectnessCheck { get; init; }
 }

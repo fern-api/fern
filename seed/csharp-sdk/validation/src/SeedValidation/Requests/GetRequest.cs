@@ -1,10 +1,10 @@
 namespace SeedValidation;
 
-public class GetRequest
+public record GetRequest
 {
-    public double Decimal { get; init; }
+    public required double Decimal { get; init; }
 
-    public int Even { get; init; }
+    public required int Even { get; init; }
 
-    public string Name { get; init; }
+    public required string Name { get; init; }
 }

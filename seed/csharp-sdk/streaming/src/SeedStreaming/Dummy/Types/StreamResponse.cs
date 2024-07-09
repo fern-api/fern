@@ -4,10 +4,10 @@ using System.Text.Json.Serialization;
 
 namespace SeedStreaming;
 
-public class StreamResponse
+public record StreamResponse
 {
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; init; }
 
     [JsonPropertyName("name")]
     public string? Name { get; init; }

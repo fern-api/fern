@@ -2,7 +2,7 @@
 irVersion: v33
 docker: fernapi/fern-csharp-sdk:latest
 dockerCommand: yarn workspace @fern-api/fern-csharp-sdk dockerTagLatest
-language: java # change to csharp
+language: csharp
 generatorType: SDK
 defaultOutputMode: github
 scripts:
@@ -24,19 +24,6 @@ fixtures:
           Moq.Contrib.HttpClient: "1.4.0"
       outputFolder: extra-dependencies
 allowedFailures:
-  - alias
-  - basic-auth-environment-variables
-  - bearer-token-environment-variable
-  - circular-references
-  - circular-references-advanced
-  - enum
   - examples
-  - exhaustive
-  - idempotency-headers
-  - mixed-case
-  - multi-line-docs
-  - object
   - objects-with-imports
-  - pagination
-  - undiscriminated-unions
-  - validation
+

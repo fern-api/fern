@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedExamples;
 
-public class Actor
+public record Actor
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; init; }
 }

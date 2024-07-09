@@ -178,9 +178,9 @@ export class EndpointGenerator {
                     );
                     writer.write(".Deserialize<");
                     writer.writeNode(astType);
-                    writer.writeLine(
-                        `>(${RESPONSE_BODY_VARIABLE_NAME}) ?? throw new Exception($"Deserialization failed. Response body: {responseBody}");`
-                    );
+                    // todo: Maybe remove ! below and handle potential null. Requires introspecting type to know if its
+                    // nullable.
+                    writer.writeLine(`>(${RESPONSE_BODY_VARIABLE_NAME})!;`);
 
                     writer.indent();
                     writer.writeLine("}");

@@ -31,7 +31,7 @@ public partial class SeedBearerTokenEnvironmentVariableClient
 
     public ServiceClient Service { get; }
 
-    private string GetFromEnvironmentOrThrow(string env, string message)
+    private static string GetFromEnvironmentOrThrow(string env, string message)
     {
         return Environment.GetEnvironmentVariable(env) ?? throw new Exception(message);
     }

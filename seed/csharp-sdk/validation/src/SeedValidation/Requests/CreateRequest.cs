@@ -4,14 +4,14 @@ using System.Text.Json.Serialization;
 
 namespace SeedValidation;
 
-public class CreateRequest
+public record CreateRequest
 {
     [JsonPropertyName("decimal")]
-    public double Decimal { get; init; }
+    public required double Decimal { get; init; }
 
     [JsonPropertyName("even")]
-    public int Even { get; init; }
+    public required int Even { get; init; }
 
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 }

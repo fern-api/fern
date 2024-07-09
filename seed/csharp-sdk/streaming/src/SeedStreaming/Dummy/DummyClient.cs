@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedStreaming;
 using SeedStreaming.Core;
@@ -15,7 +16,7 @@ public class DummyClient
         _client = client;
     }
 
-    public async void GenerateStreamAsync(GenerateStreamRequest request)
+    public async Task GenerateStreamAsync(GenerateStreamRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -37,10 +38,10 @@ public class DummyClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<StreamResponse>(responseBody);
+            return JsonSerializer.Deserialize<StreamResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

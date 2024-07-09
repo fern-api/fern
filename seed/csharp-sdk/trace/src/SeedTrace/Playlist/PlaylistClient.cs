@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedTrace;
 using SeedTrace.Core;
@@ -37,10 +38,10 @@ public class PlaylistClient
                 Query = _query
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Playlist>(responseBody);
+            return JsonSerializer.Deserialize<Playlist>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -75,10 +76,10 @@ public class PlaylistClient
                 Query = _query
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<Playlist>>(responseBody);
+            return JsonSerializer.Deserialize<IEnumerable<Playlist>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -95,10 +96,10 @@ public class PlaylistClient
                 Path = $"/v2/playlist/{serviceParam}/{playlistId}"
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Playlist>(responseBody);
+            return JsonSerializer.Deserialize<Playlist>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -109,7 +110,7 @@ public class PlaylistClient
     public async Task<Playlist?> UpdatePlaylistAsync(
         int serviceParam,
         string playlistId,
-        UpdatePlaylistRequest? request
+        UpdatePlaylistRequest? request = null
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -120,10 +121,10 @@ public class PlaylistClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Playlist?>(responseBody);
+            return JsonSerializer.Deserialize<Playlist?>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -131,9 +132,9 @@ public class PlaylistClient
     /// <summary>
     /// Deletes a playlist
     /// </summary>
-    public async void DeletePlaylistAsync(int serviceParam, string playlistId)
+    public async Task DeletePlaylistAsync(int serviceParam, string playlistId)
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Delete,

@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedResponseProperty;
 
-public class WithDocs
+public record WithDocs
 {
     [JsonPropertyName("docs")]
-    public string Docs { get; init; }
+    public required string Docs { get; init; }
 }

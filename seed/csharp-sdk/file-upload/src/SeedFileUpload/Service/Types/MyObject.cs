@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedFileUpload;
 
-public class MyObject
+public record MyObject
 {
     [JsonPropertyName("foo")]
-    public string Foo { get; init; }
+    public required string Foo { get; init; }
 }

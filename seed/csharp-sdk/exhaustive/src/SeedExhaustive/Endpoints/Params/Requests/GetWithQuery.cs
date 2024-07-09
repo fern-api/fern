@@ -1,8 +1,8 @@
 namespace SeedExhaustive.Endpoints;
 
-public class GetWithQuery
+public record GetWithQuery
 {
-    public string Query { get; init; }
+    public required string Query { get; init; }
 
-    public int Number { get; init; }
+    public required int Number { get; init; }
 }

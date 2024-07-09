@@ -5,7 +5,7 @@ using SeedPagination;
 
 namespace SeedPagination;
 
-public class ListUsersPaginationResponse
+public record ListUsersPaginationResponse
 {
     [JsonPropertyName("page")]
     public Page? Page { get; init; }
@@ -14,8 +14,8 @@ public class ListUsersPaginationResponse
     /// The totall number of /users
     /// </summary>
     [JsonPropertyName("total_count")]
-    public int TotalCount { get; init; }
+    public required int TotalCount { get; init; }
 
     [JsonPropertyName("data")]
-    public IEnumerable<User> Data { get; init; }
+    public IEnumerable<User> Data { get; init; } = new List<User>();
 }

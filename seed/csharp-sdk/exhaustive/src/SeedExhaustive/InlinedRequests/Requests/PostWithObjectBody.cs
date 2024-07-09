@@ -5,14 +5,14 @@ using SeedExhaustive.Types;
 
 namespace SeedExhaustive;
 
-public class PostWithObjectBody
+public record PostWithObjectBody
 {
     [JsonPropertyName("string")]
-    public string String { get; init; }
+    public required string String { get; init; }
 
     [JsonPropertyName("integer")]
-    public int Integer { get; init; }
+    public required int Integer { get; init; }
 
     [JsonPropertyName("NestedObject")]
-    public ObjectWithOptionalField NestedObject { get; init; }
+    public required ObjectWithOptionalField NestedObject { get; init; }
 }

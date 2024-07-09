@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedTrace;
 using SeedTrace.Core;
@@ -27,10 +28,10 @@ public class SubmissionClient
                 Path = $"/sessions/create-session/{language}"
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ExecutionSessionResponse>(responseBody);
+            return JsonSerializer.Deserialize<ExecutionSessionResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -47,10 +48,10 @@ public class SubmissionClient
                 Path = $"/sessions/{sessionId}"
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ExecutionSessionResponse?>(responseBody);
+            return JsonSerializer.Deserialize<ExecutionSessionResponse?>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -58,9 +59,9 @@ public class SubmissionClient
     /// <summary>
     /// Stops execution session.
     /// </summary>
-    public async void StopExecutionSessionAsync(string sessionId)
+    public async Task StopExecutionSessionAsync(string sessionId)
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Delete,
@@ -78,10 +79,10 @@ public class SubmissionClient
                 Path = "/sessions/execution-sessions-state"
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<GetExecutionSessionStateResponse>(responseBody);
+            return JsonSerializer.Deserialize<GetExecutionSessionStateResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

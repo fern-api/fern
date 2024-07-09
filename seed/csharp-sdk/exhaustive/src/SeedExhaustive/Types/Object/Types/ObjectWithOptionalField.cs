@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace SeedExhaustive.Types;
 
-public class ObjectWithOptionalField
+public record ObjectWithOptionalField
 {
     [JsonPropertyName("string")]
     public string? String { get; init; }
@@ -33,11 +33,14 @@ public class ObjectWithOptionalField
     [JsonPropertyName("base64")]
     public string? Base64 { get; init; }
 
-    [JsonPropertyName("list")] public IEnumerable<string>? List { get; init; } = Array.Empty<string>();
+    [JsonPropertyName("list")]
+    public IEnumerable<string>? List { get; init; }
 
-    [JsonPropertyName("set")] public HashSet<string>? Set { get; init; } = new HashSet<string>();
+    [JsonPropertyName("set")]
+    public HashSet<string>? Set { get; init; }
 
-    [JsonPropertyName("map")] public Dictionary<int, string>? Map { get; init; } = new Dictionary<int, string>();
+    [JsonPropertyName("map")]
+    public Dictionary<int, string>? Map { get; init; }
 
     [JsonPropertyName("bigint")]
     public string? Bigint { get; init; }

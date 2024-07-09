@@ -116,16 +116,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 csharp.parameter({
                     name: param.name,
                     type: this.context.csharpTypeMapper.convert({ reference: param.typeReference }),
-                    docs: param.docs,
-                    initializer: "null"
+                    docs: param.docs
                 })
             );
         }
         parameters.push(
             csharp.parameter({
                 name: "clientOptions",
-                type: csharp.Type.reference(this.context.getClientOptionsClassReference()),
-                initializer: "null"
+                type: csharp.Type.optional(csharp.Type.reference(this.context.getClientOptionsClassReference()))
             })
         );
 

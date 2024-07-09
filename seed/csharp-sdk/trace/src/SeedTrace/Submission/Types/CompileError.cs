@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class CompileError
+public record CompileError
 {
     [JsonPropertyName("message")]
-    public string Message { get; init; }
+    public required string Message { get; init; }
 }

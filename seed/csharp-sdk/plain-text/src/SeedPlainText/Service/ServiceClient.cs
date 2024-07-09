@@ -1,3 +1,4 @@
+using System.Net.Http;
 using SeedPlainText.Core;
 
 #nullable enable
@@ -13,7 +14,7 @@ public class ServiceClient
         _client = client;
     }
 
-    public async void GetTextAsync()
+    public async Task GetTextAsync()
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = "text" }

@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedMultiUrlEnvironment;
 using SeedMultiUrlEnvironment.Core;
@@ -25,10 +26,10 @@ public class S3Client
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody);
+            return JsonSerializer.Deserialize<string>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
