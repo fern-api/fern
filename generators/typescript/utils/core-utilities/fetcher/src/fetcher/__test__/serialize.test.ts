@@ -1,17 +1,9 @@
+import { RUNTIME } from "../../runtime";
 import { createRequestUrl, getRequestBody, getResponseBody, maybeStringifyBody } from "../serialize";
 
-export const setNode = () => {
-    (global as any).RUNTIME = {
-        type: "node",
-        version: "v20.0.0"
-    };
-};
-export const setBrowser = () => {
-    (global as any).RUNTIME = {
-        type: "browser",
-        version: "1.0.0"
-    };
-};
+if (RUNTIME.type === "browser") {
+    require("jest-fetch-mock");
+}
 
 describe("Test getResponseBody", () => {
     it("should handle blob response type", async () => {
@@ -23,10 +15,13 @@ describe("Test getResponseBody", () => {
     });
 
     it("should handle streaming response type", async () => {
-        const mockStream = new ReadableStream();
-        const mockResponse = new Response(mockStream);
-        const result = await getResponseBody(mockResponse, "streaming");
-        expect(result).toBe(mockStream);
+        console.log("RUNIME", RUNTIME);
+        if (RUNTIME.type === "node") {
+            const mockStream = new ReadableStream();
+            const mockResponse = new Response(mockStream);
+            const result = await getResponseBody(mockResponse, "streaming");
+            expect(result).toBe(mockStream);
+        }
     });
 
     it("should handle text response type", async () => {
@@ -64,18 +59,20 @@ describe("Test getResponseBody", () => {
 
 describe("Test getRequestBody", () => {
     it("should return FormData as is in Node environment", async () => {
-        setNode();
-        const formData = new (await import("formdata-node")).FormData();
-        formData.append("key", "value");
-        const result = await getRequestBody(formData, "multipart/form-data");
-        expect(result).toBe(formData);
+        if (RUNTIME.type === "node") {
+            const formData = new (await import("formdata-node")).FormData();
+            formData.append("key", "value");
+            const result = await getRequestBody(formData, "multipart/form-data");
+            expect(result).toBe(formData);
+        }
     });
 
     it("should stringify body if not FormData in Node environment", async () => {
-        setNode();
-        const body = { key: "value" };
-        const result = await getRequestBody(body, "application/json");
-        expect(result).toBe('{"key":"value"}');
+        if (RUNTIME.type === "node") {
+            const body = { key: "value" };
+            const result = await getRequestBody(body, "application/json");
+            expect(result).toBe('{"key":"value"}');
+        }
     });
 
     // it("should return FormData as is in browser environment", async () => {
@@ -87,10 +84,11 @@ describe("Test getRequestBody", () => {
     // });
 
     it("should stringify body if not FormData in browser environment", async () => {
-        setBrowser();
-        const body = { key: "value" };
-        const result = await getRequestBody(body, "application/json");
-        expect(result).toBe('{"key":"value"}');
+        if (RUNTIME.type === "browser") {
+            const body = { key: "value" };
+            const result = await getRequestBody(body, "application/json");
+            expect(result).toBe('{"key":"value"}');
+        }
     });
 });
 

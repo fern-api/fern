@@ -1,3 +1,4 @@
+import "jest-fetch-mock";
 import { makeRequest, requestWithRetries } from "../requests";
 
 describe("Test makeRequest", () => {
