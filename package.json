@@ -11,7 +11,8 @@
     "!packages/**/generated",
     "generators/**",
     "!generators/**/lib",
-    "!generators/**/dist"
+    "!generators/**/dist",
+    "!generators/template"
   ],
   "scripts": {
     "clean": "yarn workspaces foreach --verbose --parallel --topological-dev run clean",
