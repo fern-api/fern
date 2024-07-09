@@ -36,7 +36,7 @@
     "@fern-fern/legacy-docs-config": "0.0.58",
     "chalk": "^5.0.1",
     "find-up": "^6.3.0",
-    "glob": "^11.0.0",
+    "glob": "^8.1.0",
     "glob-promise": "^5.0.0",
     "inquirer": "^9.2.23",
     "js-yaml": "^4.1.0",
