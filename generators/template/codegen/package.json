@@ -1,10 +1,10 @@
 {
-  "name": "@fern-api/template-codegen",
+  "name": "@fern-api/SHORT_LANG-codegen",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
-    "directory": "generators/template/codegen"
+    "directory": "generators/SHORT_LANG/codegen"
   },
   "files": [
     "lib"

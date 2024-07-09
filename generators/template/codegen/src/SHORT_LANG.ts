@@ -4,6 +4,8 @@ export * from "./ast";
 
 export default class FULL_LANGUAGE_NAME {
 
+    static indentSize = 4;
+
     // Breakdown the language functionality here.
     // Checkout CSharp or Swift for more inspiration
     // public static makeField(args: Ast.NAME.Args): Ast.NAME {
