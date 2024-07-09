@@ -15,7 +15,7 @@ export class NestedObjectWithRequiredFieldError extends errors.SeedExhaustiveErr
 
     public async send(res: express.Response): Promise<void> {
         res.status(400).json(
-            await serializers.types.NestedObjectWithRequiredField.jsonOrThrow(this.body, {
+            serializers.types.NestedObjectWithRequiredField.jsonOrThrow(this.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

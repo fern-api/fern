@@ -37,7 +37,7 @@ export class ReqWithHeadersService {
 
     public toRouter(): express.Router {
         this.router.post("/custom-header", async (req, res, next) => {
-            const request = await serializers.reqWithHeaders.getWithCustomHeader.Request.parse(req.body);
+            const request = serializers.reqWithHeaders.getWithCustomHeader.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {

@@ -54,7 +54,7 @@ export class NoReqBody {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+                body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -97,7 +97,7 @@ export class NoReqBody {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.noReqBody.postWithNoRequestBody.Response.parseOrThrow(_response.body, {
+                body: serializers.noReqBody.postWithNoRequestBody.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,

@@ -52,7 +52,7 @@ export class BasicAuthService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.basicAuth.getWithBasicAuth.Response.jsonOrThrow(responseBody, {
+                                serializers.basicAuth.getWithBasicAuth.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -89,7 +89,7 @@ export class BasicAuthService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.basicAuth.postWithBasicAuth.Response.jsonOrThrow(responseBody, {
+                                serializers.basicAuth.postWithBasicAuth.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );

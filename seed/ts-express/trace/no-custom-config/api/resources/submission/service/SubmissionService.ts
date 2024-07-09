@@ -95,7 +95,7 @@ export class SubmissionService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.ExecutionSessionResponse.jsonOrThrow(responseBody, {
+                                serializers.ExecutionSessionResponse.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -127,7 +127,7 @@ export class SubmissionService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.submission.getExecutionSession.Response.jsonOrThrow(responseBody, {
+                                serializers.submission.getExecutionSession.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -187,7 +187,7 @@ export class SubmissionService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.GetExecutionSessionStateResponse.jsonOrThrow(responseBody, {
+                                serializers.GetExecutionSessionStateResponse.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );

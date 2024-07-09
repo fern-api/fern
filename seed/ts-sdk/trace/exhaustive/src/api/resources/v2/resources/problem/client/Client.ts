@@ -70,7 +70,7 @@ export class Problem {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.v2.problem.getLightweightProblems.Response.parseOrThrow(_response.body, {
+                body: serializers.v2.problem.getLightweightProblems.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -123,7 +123,7 @@ export class Problem {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.v2.problem.getProblems.Response.parseOrThrow(_response.body, {
+                body: serializers.v2.problem.getProblems.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -154,7 +154,7 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${encodeURIComponent(await serializers.ProblemId.jsonOrThrow(problemId))}`
+                `/problems-v2/problem-info/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId))}`
             ),
             method: "GET",
             headers: {
@@ -178,7 +178,7 @@ export class Problem {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.v2.ProblemInfoV2.parseOrThrow(_response.body, {
+                body: serializers.v2.ProblemInfoV2.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -212,7 +212,7 @@ export class Problem {
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
                 `/problems-v2/problem-info/${encodeURIComponent(
-                    await serializers.ProblemId.jsonOrThrow(problemId)
+                    serializers.ProblemId.jsonOrThrow(problemId)
                 )}/version/${encodeURIComponent(problemVersion)}`
             ),
             method: "GET",
@@ -237,7 +237,7 @@ export class Problem {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.v2.ProblemInfoV2.parseOrThrow(_response.body, {
+                body: serializers.v2.ProblemInfoV2.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,

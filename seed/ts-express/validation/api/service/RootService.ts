@@ -56,7 +56,7 @@ export class RootService {
 
     public toRouter(): express.Router {
         this.router.post("/create", async (req, res, next) => {
-            const request = await serializers.CreateRequest.parse(req.body);
+            const request = serializers.CreateRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -65,9 +65,7 @@ export class RootService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.Type.jsonOrThrow(responseBody, {
-                                        unrecognizedObjectKeys: "strip",
-                                    })
+                                    serializers.Type.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
                                 );
                             },
                             cookie: res.cookie.bind(res),
@@ -104,9 +102,7 @@ export class RootService {
                     req as any,
                     {
                         send: async (responseBody) => {
-                            res.json(
-                                await serializers.Type.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
-                            );
+                            res.json(serializers.Type.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }));
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,

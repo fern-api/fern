@@ -57,7 +57,7 @@ export class ReqWithHeaders {
                 "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
             },
             contentType: "application/json",
-            body: await serializers.reqWithHeaders.getWithCustomHeader.Request.jsonOrThrow(_body, {
+            body: serializers.reqWithHeaders.getWithCustomHeader.Request.jsonOrThrow(_body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

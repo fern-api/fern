@@ -54,7 +54,7 @@ export class PaymentService {
 
     public toRouter(): express.Router {
         this.router.post("", async (req, res, next) => {
-            const request = await serializers.CreatePaymentRequest.parse(req.body);
+            const request = serializers.CreatePaymentRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -63,7 +63,7 @@ export class PaymentService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.payment.create.Response.jsonOrThrow(responseBody, {
+                                    serializers.payment.create.Response.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );

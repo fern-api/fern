@@ -53,9 +53,7 @@ export class QueryService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.SendResponse.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
+                                serializers.SendResponse.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
                             );
                         },
                         cookie: res.cookie.bind(res),

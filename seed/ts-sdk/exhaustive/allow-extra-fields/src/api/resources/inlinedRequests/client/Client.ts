@@ -74,7 +74,7 @@ export class InlinedRequests {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.PostWithObjectBody.jsonOrThrow(request, {
+            body: serializers.PostWithObjectBody.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -84,7 +84,7 @@ export class InlinedRequests {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+            return serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -96,7 +96,7 @@ export class InlinedRequests {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new SeedExhaustive.BadRequestBody(
-                        await serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
+                        serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,

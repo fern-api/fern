@@ -47,7 +47,7 @@ export class UnionService {
 
     public toRouter(): express.Router {
         this.router.post("", async (req, res, next) => {
-            const request = await serializers.MyUnion.parse(req.body);
+            const request = serializers.MyUnion.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -56,9 +56,7 @@ export class UnionService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.MyUnion.jsonOrThrow(responseBody, {
-                                        unrecognizedObjectKeys: "strip",
-                                    })
+                                    serializers.MyUnion.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
                                 );
                             },
                             cookie: res.cookie.bind(res),
@@ -96,9 +94,7 @@ export class UnionService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.Metadata.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
+                                serializers.Metadata.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
                             );
                         },
                         cookie: res.cookie.bind(res),

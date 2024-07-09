@@ -72,7 +72,7 @@ export class Migration {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.migration.getAttemptedMigrations.Response.parseOrThrow(_response.body, {
+                body: serializers.migration.getAttemptedMigrations.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,

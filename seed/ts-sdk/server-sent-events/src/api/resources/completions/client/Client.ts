@@ -42,7 +42,7 @@ export class Completions {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.StreamCompletionRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.StreamCompletionRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             responseType: "streaming",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -52,7 +52,7 @@ export class Completions {
             return new core.Stream({
                 stream: _response.body,
                 parse: async (data) => {
-                    return await serializers.StreamedCompletion.parseOrThrow(data, {
+                    return serializers.StreamedCompletion.parseOrThrow(data, {
                         unrecognizedObjectKeys: "passthrough",
                         allowUnrecognizedUnionMembers: true,
                         allowUnrecognizedEnumValues: true,

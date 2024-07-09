@@ -51,7 +51,7 @@ export class InlinedRequest {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.SendEnumInlinedRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.SendEnumInlinedRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

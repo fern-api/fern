@@ -50,7 +50,7 @@ export class Dummy {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.dummy.getDummy.Response.parseOrThrow(_response.body, {
+            return serializers.dummy.getDummy.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

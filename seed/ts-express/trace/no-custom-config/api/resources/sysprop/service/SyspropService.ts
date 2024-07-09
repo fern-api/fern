@@ -89,7 +89,7 @@ export class SyspropService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.sysprop.getNumWarmInstances.Response.jsonOrThrow(responseBody, {
+                                serializers.sysprop.getNumWarmInstances.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );

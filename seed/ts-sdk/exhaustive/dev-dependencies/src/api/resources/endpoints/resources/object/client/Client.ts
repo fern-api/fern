@@ -73,9 +73,7 @@ export class Object_ {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-            }),
+            body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -83,7 +81,7 @@ export class Object_ {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+                body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -131,9 +129,7 @@ export class Object_ {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-            }),
+            body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -141,7 +137,7 @@ export class Object_ {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, {
+                body: serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -187,7 +183,7 @@ export class Object_ {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.ObjectWithMapOfMap.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.types.ObjectWithMapOfMap.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -195,7 +191,7 @@ export class Object_ {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.types.ObjectWithMapOfMap.parseOrThrow(_response.body, {
+                body: serializers.types.ObjectWithMapOfMap.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -260,7 +256,7 @@ export class Object_ {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.NestedObjectWithOptionalField.jsonOrThrow(request, {
+            body: serializers.types.NestedObjectWithOptionalField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -270,7 +266,7 @@ export class Object_ {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.types.NestedObjectWithOptionalField.parseOrThrow(_response.body, {
+                body: serializers.types.NestedObjectWithOptionalField.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -337,7 +333,7 @@ export class Object_ {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.NestedObjectWithRequiredField.jsonOrThrow(request, {
+            body: serializers.types.NestedObjectWithRequiredField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -347,7 +343,7 @@ export class Object_ {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
+                body: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -412,10 +408,9 @@ export class Object_ {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.jsonOrThrow(
-                request,
-                { unrecognizedObjectKeys: "strip" }
-            ),
+            body: serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+            }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -423,7 +418,7 @@ export class Object_ {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
+                body: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,

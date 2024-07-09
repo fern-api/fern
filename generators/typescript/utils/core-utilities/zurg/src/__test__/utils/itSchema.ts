@@ -45,8 +45,8 @@ export function itParse<Raw, Parsed>(
     }
 ): void {
     // eslint-disable-next-line jest/valid-title
-    it(title, async () => {
-        const maybeValid = await schema.parse(raw, opts);
+    it(title, () => {
+        const maybeValid = schema.parse(raw, opts);
         if (!maybeValid.ok) {
             throw new Error("Failed to parse() " + JSON.stringify(maybeValid.errors, undefined, 4));
         }
@@ -68,8 +68,8 @@ export function itJson<Raw, Parsed>(
     }
 ): void {
     // eslint-disable-next-line jest/valid-title
-    it(title, async () => {
-        const maybeValid = await schema.json(parsed, opts);
+    it(title, () => {
+        const maybeValid = schema.json(parsed, opts);
         if (!maybeValid.ok) {
             throw new Error("Failed to json() " + JSON.stringify(maybeValid.errors, undefined, 4));
         }

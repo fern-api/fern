@@ -82,7 +82,7 @@ export class UserService {
             }
         });
         this.router.post("/users", async (req, res, next) => {
-            const request = await serializers.CreateUserRequest.parse(req.body);
+            const request = serializers.CreateUserRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -91,9 +91,7 @@ export class UserService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.User.jsonOrThrow(responseBody, {
-                                        unrecognizedObjectKeys: "strip",
-                                    })
+                                    serializers.User.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
                                 );
                             },
                             cookie: res.cookie.bind(res),
