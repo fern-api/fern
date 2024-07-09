@@ -8,6 +8,7 @@ import { requestWithRetries } from "./requestWithRetries";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 
+
 export declare namespace Fetcher {
     export interface Args {
         url: string;
