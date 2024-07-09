@@ -3,17 +3,17 @@ import Lang from "../../lang";
 const FULL_LANGUAGE_NAME = Lang;
 
 describe("FULL_LANGUAGE_NAME Language", () => {
-
     // TODO: 👋 Add your other language tests here
 
     // Note: You can change the language's indentation size with FULL_LANGUAGE_NAME.indentSize
 
     it("makes function", () => {
         const output = FULL_LANGUAGE_NAME.makeFunction({
-            name: "doSomething",
+            name: "doSomething"
         });
         // eslint-disable-next-line no-console
-        console.log(output.toString());
+        console.log(JSON.stringify(output));
+        expect(output).not.toBe(null);
     });
 
     it("makes class", () => {
@@ -21,12 +21,13 @@ describe("FULL_LANGUAGE_NAME Language", () => {
             name: "Example",
             functions: [
                 FULL_LANGUAGE_NAME.makeFunction({
-                    name: "doSomething",
-                }),
+                    name: "doSomething"
+                })
             ]
         });
         // eslint-disable-next-line no-console
-        console.log(output.toString());
+        console.log(JSON.stringify(output));
+        expect(output).not.toBe(null);
     });
 
     it("makes file", () => {
@@ -36,13 +37,13 @@ describe("FULL_LANGUAGE_NAME Language", () => {
                 name: "Example",
                 functions: [
                     FULL_LANGUAGE_NAME.makeFunction({
-                        name: "doSomething",
-                    }),
+                        name: "doSomething"
+                    })
                 ]
-            }),
+            })
         });
         // eslint-disable-next-line no-console
-        console.log(output.toString());
+        console.log(JSON.stringify(output));
+        expect(output).not.toBe(null);
     });
-
 });

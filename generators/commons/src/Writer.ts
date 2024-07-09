@@ -7,7 +7,6 @@ export declare namespace Writer {
 }
 
 export class Writer {
-
     private buffer: string;
     private indentLevel: number;
     private hasWrittenAnything: boolean;
@@ -21,7 +20,6 @@ export class Writer {
     }
 
     public write(text: string): void {
-
         if (this.hasWrittenAnything) {
             this.buffer += "\n";
         }
@@ -32,7 +30,6 @@ export class Writer {
         this.buffer += indentedText;
 
         this.hasWrittenAnything = true;
-
     }
 
     public newLine(): void {
@@ -60,5 +57,4 @@ export class Writer {
     private getIndentString(tabSize: number): string {
         return " ".repeat(this.indentLevel * tabSize);
     }
-
 }
