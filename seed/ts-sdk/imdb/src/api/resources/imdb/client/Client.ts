@@ -55,13 +55,13 @@ export class Imdb {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.CreateMovieRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.CreateMovieRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.MovieId.parseOrThrow(_response.body, {
+            return serializers.MovieId.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -104,7 +104,7 @@ export class Imdb {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/movies/${encodeURIComponent(await serializers.MovieId.jsonOrThrow(movieId))}`
+                `/movies/${encodeURIComponent(serializers.MovieId.jsonOrThrow(movieId))}`
             ),
             method: "GET",
             headers: {
@@ -121,7 +121,7 @@ export class Imdb {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.Movie.parseOrThrow(_response.body, {
+            return serializers.Movie.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -133,7 +133,7 @@ export class Imdb {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new SeedApi.MovieDoesNotExistError(
-                        await serializers.MovieId.parseOrThrow(_response.error.body, {
+                        serializers.MovieId.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,

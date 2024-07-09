@@ -78,7 +78,7 @@ export class Users {
                 abortSignal: requestOptions?.abortSignal,
             });
             if (_response.ok) {
-                return await serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
+                return serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -169,7 +169,7 @@ export class Users {
                 abortSignal: requestOptions?.abortSignal,
             });
             if (_response.ok) {
-                return await serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
+                return serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -258,7 +258,7 @@ export class Users {
                 abortSignal: requestOptions?.abortSignal,
             });
             if (_response.ok) {
-                return await serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
+                return serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -339,7 +339,7 @@ export class Users {
                 abortSignal: requestOptions?.abortSignal,
             });
             if (_response.ok) {
-                return await serializers.ListUsersExtendedResponse.parseOrThrow(_response.body, {
+                return serializers.ListUsersExtendedResponse.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -416,7 +416,7 @@ export class Users {
                 abortSignal: requestOptions?.abortSignal,
             });
             if (_response.ok) {
-                return await serializers.UsernameCursor.parseOrThrow(_response.body, {
+                return serializers.UsernameCursor.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -495,7 +495,7 @@ export class Users {
                 abortSignal: requestOptions?.abortSignal,
             });
             if (_response.ok) {
-                return await serializers.UsernameContainer.parseOrThrow(_response.body, {
+                return serializers.UsernameContainer.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,

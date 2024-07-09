@@ -15,7 +15,7 @@ export class ErrorWithEnumBody extends errors.SeedExhaustiveError {
 
     public async send(res: express.Response): Promise<void> {
         res.status(400).json(
-            await serializers.types.WeatherReport.jsonOrThrow(this.body, {
+            serializers.types.WeatherReport.jsonOrThrow(this.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

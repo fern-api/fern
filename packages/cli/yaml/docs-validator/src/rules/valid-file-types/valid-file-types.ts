@@ -23,6 +23,7 @@ const ALLOWED_FILE_TYPES = new Set<MimeType>([
     "audio/wav",
     // document files
     "application/pdf",
+    "application/xml",
     // font files
     "font/woff",
     "font/woff2",

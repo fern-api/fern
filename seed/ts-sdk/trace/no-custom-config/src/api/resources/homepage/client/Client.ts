@@ -62,7 +62,7 @@ export class Homepage {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.homepage.getHomepageProblems.Response.parseOrThrow(_response.body, {
+            return serializers.homepage.getHomepageProblems.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -122,7 +122,7 @@ export class Homepage {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.homepage.setHomepageProblems.Request.jsonOrThrow(request, {
+            body: serializers.homepage.setHomepageProblems.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

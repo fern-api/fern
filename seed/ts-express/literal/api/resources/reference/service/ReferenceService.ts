@@ -38,7 +38,7 @@ export class ReferenceService {
 
     public toRouter(): express.Router {
         this.router.post("/reference", async (req, res, next) => {
-            const request = await serializers.SendRequest.parse(req.body);
+            const request = serializers.SendRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -47,7 +47,7 @@ export class ReferenceService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.SendResponse.jsonOrThrow(responseBody, {
+                                    serializers.SendResponse.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );

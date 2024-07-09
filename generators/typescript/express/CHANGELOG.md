@@ -5,9 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.16.4] - 2024-07-09
+## [0.17.0] - 2024-07-09
 
 - Internal: Upgrade to IRv48.
+
+## [0.17.0-rc0] - 2024-07-09
+
+- Fix: All serializers in the generated express server are now synchronous. This makes the serializers
+  easier to use and improves the performance as well.
 
 ## [0.16.3] - 2024-06-26
 

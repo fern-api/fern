@@ -57,7 +57,7 @@ export class Params {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.endpoints.params.getWithPath.Response.parseOrThrow(_response.body, {
+            return serializers.endpoints.params.getWithPath.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -319,7 +319,7 @@ export class Params {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.params.modifyWithPath.Request.jsonOrThrow(request, {
+            body: serializers.endpoints.params.modifyWithPath.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -329,7 +329,7 @@ export class Params {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.endpoints.params.modifyWithPath.Response.parseOrThrow(_response.body, {
+            return serializers.endpoints.params.modifyWithPath.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

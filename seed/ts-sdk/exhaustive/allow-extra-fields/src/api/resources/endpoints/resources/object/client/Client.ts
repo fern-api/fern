@@ -69,7 +69,7 @@ export class Object_ {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
+            body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -79,7 +79,7 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+            return serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -137,7 +137,7 @@ export class Object_ {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
+            body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -147,7 +147,7 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, {
+            return serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -206,7 +206,7 @@ export class Object_ {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.ObjectWithMapOfMap.jsonOrThrow(request, {
+            body: serializers.types.ObjectWithMapOfMap.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -216,7 +216,7 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.types.ObjectWithMapOfMap.parseOrThrow(_response.body, {
+            return serializers.types.ObjectWithMapOfMap.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -291,7 +291,7 @@ export class Object_ {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.NestedObjectWithOptionalField.jsonOrThrow(request, {
+            body: serializers.types.NestedObjectWithOptionalField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -301,7 +301,7 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.types.NestedObjectWithOptionalField.parseOrThrow(_response.body, {
+            return serializers.types.NestedObjectWithOptionalField.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -378,7 +378,7 @@ export class Object_ {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.NestedObjectWithRequiredField.jsonOrThrow(request, {
+            body: serializers.types.NestedObjectWithRequiredField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -388,7 +388,7 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
+            return serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -463,20 +463,17 @@ export class Object_ {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.jsonOrThrow(
-                request,
-                {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                }
-            ),
+            body: serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
+            return serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

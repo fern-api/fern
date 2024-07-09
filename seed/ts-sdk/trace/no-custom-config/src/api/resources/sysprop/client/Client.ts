@@ -48,7 +48,7 @@ export class Sysprop {
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
                 `/sysprop/num-warm-instances/${encodeURIComponent(
-                    await serializers.Language.jsonOrThrow(language)
+                    serializers.Language.jsonOrThrow(language)
                 )}/${encodeURIComponent(numWarmInstances)}`
             ),
             method: "PUT",
@@ -128,7 +128,7 @@ export class Sysprop {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.sysprop.getNumWarmInstances.Response.parseOrThrow(_response.body, {
+            return serializers.sysprop.getNumWarmInstances.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

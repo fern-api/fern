@@ -112,7 +112,7 @@ export class ContainerService {
 
     public toRouter(): express.Router {
         this.router.post("/list-of-primitives", async (req, res, next) => {
-            const request = await serializers.endpoints.container.getAndReturnListOfPrimitives.Request.parse(req.body);
+            const request = serializers.endpoints.container.getAndReturnListOfPrimitives.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -121,7 +121,7 @@ export class ContainerService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.endpoints.container.getAndReturnListOfPrimitives.Response.jsonOrThrow(
+                                    serializers.endpoints.container.getAndReturnListOfPrimitives.Response.jsonOrThrow(
                                         responseBody,
                                         { unrecognizedObjectKeys: "strip" }
                                     )
@@ -154,7 +154,7 @@ export class ContainerService {
             }
         });
         this.router.post("/list-of-objects", async (req, res, next) => {
-            const request = await serializers.endpoints.container.getAndReturnListOfObjects.Request.parse(req.body);
+            const request = serializers.endpoints.container.getAndReturnListOfObjects.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -163,7 +163,7 @@ export class ContainerService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.endpoints.container.getAndReturnListOfObjects.Response.jsonOrThrow(
+                                    serializers.endpoints.container.getAndReturnListOfObjects.Response.jsonOrThrow(
                                         responseBody,
                                         { unrecognizedObjectKeys: "strip" }
                                     )
@@ -196,7 +196,7 @@ export class ContainerService {
             }
         });
         this.router.post("/set-of-primitives", async (req, res, next) => {
-            const request = await serializers.endpoints.container.getAndReturnSetOfPrimitives.Request.parse(req.body);
+            const request = serializers.endpoints.container.getAndReturnSetOfPrimitives.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -205,7 +205,7 @@ export class ContainerService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.endpoints.container.getAndReturnSetOfPrimitives.Response.jsonOrThrow(
+                                    serializers.endpoints.container.getAndReturnSetOfPrimitives.Response.jsonOrThrow(
                                         responseBody,
                                         { unrecognizedObjectKeys: "strip" }
                                     )
@@ -238,7 +238,7 @@ export class ContainerService {
             }
         });
         this.router.post("/set-of-objects", async (req, res, next) => {
-            const request = await serializers.endpoints.container.getAndReturnSetOfObjects.Request.parse(req.body);
+            const request = serializers.endpoints.container.getAndReturnSetOfObjects.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -247,7 +247,7 @@ export class ContainerService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.endpoints.container.getAndReturnSetOfObjects.Response.jsonOrThrow(
+                                    serializers.endpoints.container.getAndReturnSetOfObjects.Response.jsonOrThrow(
                                         responseBody,
                                         { unrecognizedObjectKeys: "strip" }
                                     )
@@ -280,7 +280,7 @@ export class ContainerService {
             }
         });
         this.router.post("/map-prim-to-prim", async (req, res, next) => {
-            const request = await serializers.endpoints.container.getAndReturnMapPrimToPrim.Request.parse(req.body);
+            const request = serializers.endpoints.container.getAndReturnMapPrimToPrim.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -289,7 +289,7 @@ export class ContainerService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.jsonOrThrow(
+                                    serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.jsonOrThrow(
                                         responseBody,
                                         { unrecognizedObjectKeys: "strip" }
                                     )
@@ -322,7 +322,7 @@ export class ContainerService {
             }
         });
         this.router.post("/map-prim-to-object", async (req, res, next) => {
-            const request = await serializers.endpoints.container.getAndReturnMapOfPrimToObject.Request.parse(req.body);
+            const request = serializers.endpoints.container.getAndReturnMapOfPrimToObject.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -331,7 +331,7 @@ export class ContainerService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.jsonOrThrow(
+                                    serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.jsonOrThrow(
                                         responseBody,
                                         { unrecognizedObjectKeys: "strip" }
                                     )
@@ -364,7 +364,7 @@ export class ContainerService {
             }
         });
         this.router.post("/opt-objects", async (req, res, next) => {
-            const request = await serializers.endpoints.container.getAndReturnOptional.Request.parse(req.body);
+            const request = serializers.endpoints.container.getAndReturnOptional.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -373,7 +373,7 @@ export class ContainerService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.endpoints.container.getAndReturnOptional.Response.jsonOrThrow(
+                                    serializers.endpoints.container.getAndReturnOptional.Response.jsonOrThrow(
                                         responseBody,
                                         { unrecognizedObjectKeys: "strip" }
                                     )

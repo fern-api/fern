@@ -43,7 +43,7 @@ export class ServiceService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.service.getWithBearerToken.Response.jsonOrThrow(responseBody, {
+                                serializers.service.getWithBearerToken.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );

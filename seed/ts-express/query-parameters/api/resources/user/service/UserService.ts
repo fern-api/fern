@@ -63,9 +63,7 @@ export class UserService {
                     req as any,
                     {
                         send: async (responseBody) => {
-                            res.json(
-                                await serializers.User.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
-                            );
+                            res.json(serializers.User.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }));
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,

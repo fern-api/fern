@@ -38,7 +38,7 @@ export class S3Service {
 
     public toRouter(): express.Router {
         this.router.post("/presigned-url", async (req, res, next) => {
-            const request = await serializers.GetPresignedUrlRequest.parse(req.body);
+            const request = serializers.GetPresignedUrlRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -47,7 +47,7 @@ export class S3Service {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.s3.getPresignedUrl.Response.jsonOrThrow(responseBody, {
+                                    serializers.s3.getPresignedUrl.Response.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );

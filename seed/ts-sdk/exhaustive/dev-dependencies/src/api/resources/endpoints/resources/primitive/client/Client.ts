@@ -49,7 +49,7 @@ export class Primitive {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.primitive.getAndReturnString.Request.jsonOrThrow(request, {
+            body: serializers.endpoints.primitive.getAndReturnString.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -59,7 +59,7 @@ export class Primitive {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.endpoints.primitive.getAndReturnString.Response.parseOrThrow(_response.body, {
+                body: serializers.endpoints.primitive.getAndReturnString.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -97,7 +97,7 @@ export class Primitive {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.primitive.getAndReturnInt.Request.jsonOrThrow(request, {
+            body: serializers.endpoints.primitive.getAndReturnInt.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -107,7 +107,7 @@ export class Primitive {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.endpoints.primitive.getAndReturnInt.Response.parseOrThrow(_response.body, {
+                body: serializers.endpoints.primitive.getAndReturnInt.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -145,7 +145,7 @@ export class Primitive {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.primitive.getAndReturnLong.Request.jsonOrThrow(request, {
+            body: serializers.endpoints.primitive.getAndReturnLong.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -155,7 +155,7 @@ export class Primitive {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.endpoints.primitive.getAndReturnLong.Response.parseOrThrow(_response.body, {
+                body: serializers.endpoints.primitive.getAndReturnLong.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -193,7 +193,7 @@ export class Primitive {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.primitive.getAndReturnDouble.Request.jsonOrThrow(request, {
+            body: serializers.endpoints.primitive.getAndReturnDouble.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -203,7 +203,7 @@ export class Primitive {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.endpoints.primitive.getAndReturnDouble.Response.parseOrThrow(_response.body, {
+                body: serializers.endpoints.primitive.getAndReturnDouble.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -241,7 +241,7 @@ export class Primitive {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.primitive.getAndReturnBool.Request.jsonOrThrow(request, {
+            body: serializers.endpoints.primitive.getAndReturnBool.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -251,7 +251,7 @@ export class Primitive {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.endpoints.primitive.getAndReturnBool.Response.parseOrThrow(_response.body, {
+                body: serializers.endpoints.primitive.getAndReturnBool.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -289,7 +289,7 @@ export class Primitive {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.primitive.getAndReturnDatetime.Request.jsonOrThrow(request, {
+            body: serializers.endpoints.primitive.getAndReturnDatetime.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -299,7 +299,7 @@ export class Primitive {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.endpoints.primitive.getAndReturnDatetime.Response.parseOrThrow(_response.body, {
+                body: serializers.endpoints.primitive.getAndReturnDatetime.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -337,7 +337,7 @@ export class Primitive {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.primitive.getAndReturnDate.Request.jsonOrThrow(request, {
+            body: serializers.endpoints.primitive.getAndReturnDate.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -347,7 +347,7 @@ export class Primitive {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.endpoints.primitive.getAndReturnDate.Response.parseOrThrow(_response.body, {
+                body: serializers.endpoints.primitive.getAndReturnDate.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -385,7 +385,7 @@ export class Primitive {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.primitive.getAndReturnUuid.Request.jsonOrThrow(request, {
+            body: serializers.endpoints.primitive.getAndReturnUuid.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -395,7 +395,7 @@ export class Primitive {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.endpoints.primitive.getAndReturnUuid.Response.parseOrThrow(_response.body, {
+                body: serializers.endpoints.primitive.getAndReturnUuid.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -433,7 +433,7 @@ export class Primitive {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.primitive.getAndReturnBase64.Request.jsonOrThrow(request, {
+            body: serializers.endpoints.primitive.getAndReturnBase64.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -443,7 +443,7 @@ export class Primitive {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.endpoints.primitive.getAndReturnBase64.Response.parseOrThrow(_response.body, {
+                body: serializers.endpoints.primitive.getAndReturnBase64.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,

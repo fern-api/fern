@@ -56,7 +56,7 @@ export class HttpMethods {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.endpoints.httpMethods.testGet.Response.parseOrThrow(_response.body, {
+                body: serializers.endpoints.httpMethods.testGet.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -96,9 +96,7 @@ export class HttpMethods {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-            }),
+            body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -106,7 +104,7 @@ export class HttpMethods {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+                body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -148,9 +146,7 @@ export class HttpMethods {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-            }),
+            body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -158,7 +154,7 @@ export class HttpMethods {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+                body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -214,9 +210,7 @@ export class HttpMethods {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-            }),
+            body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -224,7 +218,7 @@ export class HttpMethods {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+                body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -269,7 +263,7 @@ export class HttpMethods {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.endpoints.httpMethods.testDelete.Response.parseOrThrow(_response.body, {
+                body: serializers.endpoints.httpMethods.testDelete.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,

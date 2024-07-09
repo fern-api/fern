@@ -115,7 +115,7 @@ export class ObjectService {
 
     public toRouter(): express.Router {
         this.router.post("/get-and-return-with-optional-field", async (req, res, next) => {
-            const request = await serializers.types.ObjectWithOptionalField.parse(req.body);
+            const request = serializers.types.ObjectWithOptionalField.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -124,7 +124,7 @@ export class ObjectService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
+                                    serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );
@@ -156,7 +156,7 @@ export class ObjectService {
             }
         });
         this.router.post("/get-and-return-with-required-field", async (req, res, next) => {
-            const request = await serializers.types.ObjectWithRequiredField.parse(req.body);
+            const request = serializers.types.ObjectWithRequiredField.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -165,7 +165,7 @@ export class ObjectService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.types.ObjectWithRequiredField.jsonOrThrow(responseBody, {
+                                    serializers.types.ObjectWithRequiredField.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );
@@ -197,7 +197,7 @@ export class ObjectService {
             }
         });
         this.router.post("/get-and-return-with-map-of-map", async (req, res, next) => {
-            const request = await serializers.types.ObjectWithMapOfMap.parse(req.body);
+            const request = serializers.types.ObjectWithMapOfMap.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -206,7 +206,7 @@ export class ObjectService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.types.ObjectWithMapOfMap.jsonOrThrow(responseBody, {
+                                    serializers.types.ObjectWithMapOfMap.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );
@@ -238,7 +238,7 @@ export class ObjectService {
             }
         });
         this.router.post("/get-and-return-nested-with-optional-field", async (req, res, next) => {
-            const request = await serializers.types.NestedObjectWithOptionalField.parse(req.body);
+            const request = serializers.types.NestedObjectWithOptionalField.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -247,7 +247,7 @@ export class ObjectService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.types.NestedObjectWithOptionalField.jsonOrThrow(responseBody, {
+                                    serializers.types.NestedObjectWithOptionalField.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );
@@ -279,7 +279,7 @@ export class ObjectService {
             }
         });
         this.router.post("/get-and-return-nested-with-required-field/:string", async (req, res, next) => {
-            const request = await serializers.types.NestedObjectWithRequiredField.parse(req.body);
+            const request = serializers.types.NestedObjectWithRequiredField.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -288,7 +288,7 @@ export class ObjectService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.types.NestedObjectWithRequiredField.jsonOrThrow(responseBody, {
+                                    serializers.types.NestedObjectWithRequiredField.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );
@@ -320,7 +320,7 @@ export class ObjectService {
             }
         });
         this.router.post("/get-and-return-nested-with-required-field-list", async (req, res, next) => {
-            const request = await serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.parse(
+            const request = serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.parse(
                 req.body
             );
             if (request.ok) {
@@ -331,7 +331,7 @@ export class ObjectService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.types.NestedObjectWithRequiredField.jsonOrThrow(responseBody, {
+                                    serializers.types.NestedObjectWithRequiredField.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );

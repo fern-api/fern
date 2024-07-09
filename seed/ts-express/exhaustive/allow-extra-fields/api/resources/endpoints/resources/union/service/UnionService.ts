@@ -38,7 +38,7 @@ export class UnionService {
 
     public toRouter(): express.Router {
         this.router.post("", async (req, res, next) => {
-            const request = await serializers.types.Animal.parse(req.body);
+            const request = serializers.types.Animal.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -47,7 +47,7 @@ export class UnionService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.types.Animal.jsonOrThrow(responseBody, {
+                                    serializers.types.Animal.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "passthrough",
                                         allowUnrecognizedUnionMembers: true,
                                         allowUnrecognizedEnumValues: true,
