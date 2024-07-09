@@ -6719,7 +6719,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/tinycolor2", "npm:1.4.6"],\
-            ["chardet", "npm:2.0.0"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
             ["file-type", "npm:19.0.0"],\
@@ -13926,13 +13925,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/chardet-npm-0.7.0-27933dd6c7-6fd5da1f5d.zip/node_modules/chardet/",\
           "packageDependencies": [\
             ["chardet", "npm:0.7.0"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:2.0.0", {\
-          "packageLocation": "./.yarn/cache/chardet-npm-2.0.0-908b5db760-dfa2d3b2bf.zip/node_modules/chardet/",\
-          "packageDependencies": [\
-            ["chardet", "npm:2.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
