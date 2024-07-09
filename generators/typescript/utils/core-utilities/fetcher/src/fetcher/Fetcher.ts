@@ -1,7 +1,11 @@
 import { APIResponse } from "./APIResponse";
 import { getFetchFn } from "./getFetchFn";
-import { makeRequest, requestWithRetries } from "./requests";
-import { createRequestUrl, getRequestBody, getResponseBody } from "./serialize";
+
+import { requestWithRetries } from "./requestWithRetries";
+import { makeRequest } from "./makeRequest";
+import { getRequestBody} from "./getRequestBody";
+import { createRequestUrl } from "./createRequestUrl";
+import { getResponseBody } from "./getResponseBody";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 
