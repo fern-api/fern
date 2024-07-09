@@ -14,7 +14,7 @@ describe("Test fetcherImpl", () => {
         mockRequestWithRetries = jest.fn();
         mockGetResponseBody = jest.fn();
 
-        jest.mock("../../src/core/fetcher/Fetcher", () => ({
+        jest.mock("../Fetcher", () => ({
             createUrl: mockCreateUrl,
             getBody: mockGetBody,
             getFetchFn: mockGetFetchFn,

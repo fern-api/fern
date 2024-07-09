@@ -34,7 +34,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.24.3",
     "@babel/preset-typescript": "^7.24.1",
-    "@types/jest": "^29.0.3",
+    "@types/jest": "^29.5.12",
     "@types/node": "^18.7.18",
     "@types/node-fetch": "2.6.9",
     "@types/qs": "6.9.15",
