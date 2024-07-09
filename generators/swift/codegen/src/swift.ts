@@ -29,6 +29,10 @@ export default class Swift {
   public static makeClass(args: Ast.Class.Args): Ast.Class {
     return new Ast.Class(args);
   }
+
+  public static makeType(args: Ast.Type.Args): Ast.Type {
+    return new Ast.Type(args);
+  }
   
   public static makeFile(args: Ast.File.Args): Ast.File {
     return new Ast.File(args);

@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Swift Language makes class 1`] = `
-"
-            fileprivate class Sample {
-                func test() {
-                    print("Hello, world!")
-                }
-            }
-        "
+"class MyService: ExampleApiService {
+
+    func fetchData() {
+        print("Hey!")
+    }
+
+}"
 `;
 
 exports[`Swift Language makes file 1`] = `
@@ -16,13 +16,17 @@ exports[`Swift Language makes file 1`] = `
 import Foundation
 import UIKit
 
+open class Sample {
 
-            open class Sample {
-                func test() {
-                    print("Hello, world!")
-                }
-            }
-        "
+    func findStuff() {
+        print("Hey!")
+    }
+
+    public static func getStuff() async throws -> Int {
+        print("Hey!")
+    }
+
+}"
 `;
 
 exports[`Swift Language makes file header 1`] = `"This is the header to a file"`;
@@ -40,4 +44,14 @@ exports[`Swift Language makes struct 1`] = `
     print("Hey")
 }
 "
+`;
+
+exports[`Swift Language makes type 1`] = `
+"open struct ExampleObject: Codable, NSObject {
+
+    func fetchData() {
+        print("Hey!")
+    }
+
+}"
 `;

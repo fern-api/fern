@@ -39,7 +39,7 @@ export class Struct extends AstNode {
 
     public write(writer: Writer): void {
 
-        // e.g. public struct StructName {
+        // example: public struct StructName {
         writer.openBlock([this.accessLevel, "struct", this.buildTitle()], "{", () => {
 
             writer.write("print(\"Hey\")");

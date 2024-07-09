@@ -1,30 +1,34 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift, { AccessLevel, Func, Import } from "../swift";
+import Swift, { AccessLevel, Func, Import, ClassLevel } from "../swift";
 
-export declare namespace Class {
+export declare namespace Type {
     interface Args {
         accessLevel?: AccessLevel;
+        classLevel?: ClassLevel;
         name: string;
         functions?: Func[];
-        inheritance?: Class[],
+        inheritance?: Type[],
     }
 }
 
-export class Class extends AstNode {
+export class Type extends AstNode {
 
     public readonly accessLevel?: AccessLevel;
+    public readonly classLevel?: ClassLevel;
     public readonly name: string;
     public readonly functions?: Func[];
-    public readonly inheritance?: Class[];
+    public readonly inheritance?: Type[];
 
     constructor({ 
         accessLevel, 
+        classLevel, 
         name,
         functions,
         inheritance,
-    }: Class.Args) {
+    }: Type.Args) {
         super(Swift.indentSize);
         this.accessLevel = accessLevel;
+        this.classLevel = classLevel;
         this.name = name;
         this.functions = functions;
         this.inheritance = inheritance;
@@ -44,7 +48,7 @@ export class Class extends AstNode {
     public write(writer: Writer): void {
 
         // example: public class Name {
-        writer.openBlock([this.accessLevel, "class", this.buildTitle()], "{", () => {
+        writer.openBlock([this.accessLevel, this.classLevel, this.buildTitle()], "{", () => {
 
             writer.newLine();
 

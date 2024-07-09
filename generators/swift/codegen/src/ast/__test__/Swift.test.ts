@@ -1,4 +1,4 @@
-import { AccessLevel, FunctionModifier } from "..";
+import { AccessLevel, FunctionModifier, ClassLevel } from "..";
 import Swift from "../../swift";
 import { FileGenerator } from "@fern-api/generator-commons";
 
@@ -57,12 +57,38 @@ describe("Swift Language", () => {
 
     it("makes class", () => {
         const output = Swift.makeClass({
-            accessLevel: AccessLevel.Fileprivate,
-            name: "Sample",
+            name: "MyService",
             functions: [
                 Swift.makeFunc({
-                    name: "doSomething"
+                    name: "fetchData"
                 })
+            ],
+            inheritance: [
+                Swift.makeClass({
+                    name: "ExampleApiService"
+                })
+            ]
+        });
+        expect(output.toString()).toMatchSnapshot();
+    });
+
+    it("makes type", () => {
+        const output = Swift.makeType({
+            accessLevel: AccessLevel.Open,
+            classLevel: ClassLevel.Struct,
+            name: "ExampleObject",
+            functions: [
+                Swift.makeFunc({
+                    name: "fetchData"
+                })
+            ],
+            inheritance: [
+                Swift.makeType({
+                    name: "Codable"
+                }),
+                Swift.makeType({
+                    name: "NSObject"
+                }),
             ]
         });
         expect(output.toString()).toMatchSnapshot();
@@ -90,7 +116,9 @@ describe("Swift Language", () => {
                         name: "getStuff",
                         async: "async",
                         throws: "throws",
-                        returnObject: "String"
+                        returnType: Swift.makeType({
+                            name: "Int"
+                        })
                     })
                 ]
             })

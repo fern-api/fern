@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift, { AccessLevel, FunctionModifier, Param } from "../swift";
+import Swift, { AccessLevel, FunctionModifier, Param, Type } from "../swift";
 
 export declare namespace Func {
     interface Args {
@@ -9,7 +9,7 @@ export declare namespace Func {
         params?: Param[];
         async?: "async";
         throws?: "throws";
-        returnObject?: string;
+        returnType?: Type;
     }
 }
 
@@ -21,16 +21,16 @@ export class Func extends AstNode {
     public readonly params?: Param[];
     public readonly async?: "async";
     public readonly throws?: "throws";
-    public readonly returnObject?: string;
+    public readonly returnType?: Type;
 
     constructor({ 
-        accessLevel = undefined,
-        modifier = undefined,
+        accessLevel,
+        modifier,
         name,
         params,
         async,
         throws,
-        returnObject,
+        returnType,
     }: Func.Args) {
         super(Swift.indentSize);
         this.accessLevel = accessLevel;
@@ -39,7 +39,7 @@ export class Func extends AstNode {
         this.params = params;
         this.async = async;
         this.throws = throws;
-        this.returnObject = returnObject;
+        this.returnType = returnType;
     }
  
     public write(writer: Writer): void {
@@ -52,7 +52,7 @@ export class Func extends AstNode {
 
         const func = `${this.name}(${parameters})`;
 
-        const result = this.returnObject ? `-> ${this.returnObject}` : undefined;
+        const result = this.returnType ? `-> ${this.returnType.name}` : undefined;
 
         writer.openBlock([this.accessLevel, this.modifier, "func", func, this.async, this.throws, result], "{", () => {
             writer.write("print(\"Hey!\")");
