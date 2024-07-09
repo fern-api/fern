@@ -34,18 +34,20 @@ describe("fern docs dev", () => {
 
         const root = FernNavigation.utils.convertLoadDocsForUrlResponse(responseBody);
         const pageIds = new Set(Object.keys(responseBody.definition.pages));
+        const pageIdsVisited = new Set<string>();
 
-        let pagesVisited = 0;
         FernNavigation.utils.traverseNavigation(root, (node) => {
             if (FernNavigation.hasMarkdown(node)) {
                 const pageId = FernNavigation.utils.getPageId(node);
                 if (pageId != null) {
-                    expect(pageIds.has(pageId)).toBeTruthy();
-                    pagesVisited++;
+                    pageIdsVisited.add(pageId);
                 }
             }
         });
-        expect(pagesVisited).toBeGreaterThan(0);
+        expect(pageIdsVisited.size).toBeGreaterThan(0);
+
+        const overlap = new Set([...pageIds].filter((x) => pageIdsVisited.has(x)));
+        expect(overlap.size).toEqual(pageIdsVisited.size);
     }, 30_000);
 });
 
