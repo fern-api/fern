@@ -23,13 +23,14 @@ describe("Test getRequestBody", () => {
         }
     });
 
-    // it("should return FormData as is in browser environment", async () => {
-    //     setBrowser();
-    //     const formData = new (await import("form-data")).default();
-    //     formData.append("key", "value");
-    //     const result = await getRequestBody(formData, "multipart/form-data");
-    //     expect(result).toBe(formData);
-    // });
+    it("should return FormData in browser environment", async () => {
+        if (RUNTIME.type === "browser") {
+        const formData = new (await import("form-data")).default();
+        formData.append("key", "value");
+        const result = await getRequestBody(formData, "multipart/form-data");
+        expect(result).toBe(formData);
+        }
+    });
 
     it("should stringify body if not FormData in browser environment", async () => {
         if (RUNTIME.type === "browser") {

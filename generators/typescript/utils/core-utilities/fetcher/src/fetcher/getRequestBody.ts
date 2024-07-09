@@ -12,7 +12,7 @@ export async function getRequestBody(body: any, contentType: string): Promise<Bo
     } else {
         if (body instanceof (await import("form-data")).default) {
             // @ts-expect-error
-            requestBody = args.body;
+            requestBody = body;
         } else {
             requestBody = maybeStringifyBody(body, contentType ?? "");
         }
