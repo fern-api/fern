@@ -17,7 +17,7 @@ export declare namespace Fetcher {
         queryParameters?: Record<string, string | string[] | object | object[]>;
         body?: unknown;
         timeoutMs?: number;
-        maxRetries?: number | string;
+        maxRetries?: number;
         withCredentials?: boolean;
         abortSignal?: AbortSignal;
         responseType?: "json" | "blob" | "streaming" | "text";
