@@ -20,6 +20,7 @@ types:
         docs: The navigation config is skipped when multiple versions are present.
       "navbar-links": optional<list<NavbarLink>>
       "footer-links": optional<FooterLinksConfig>
+      experimental: optional<ExperimentalConfig>
 
       # seo
       metadata: optional<MetadataConfig>
@@ -812,3 +813,11 @@ types:
   IntegrationsConfig:
     properties:
       intercom: optional<string>
+
+  ExperimentalConfig:
+    properties:
+      mdx-react-files:
+        type: optional<list<string>>
+        docs: |
+          By default, all javascript files inside the fern folder is automatically included.
+          This config lets you track a file or folder that is outside of the fern folder.

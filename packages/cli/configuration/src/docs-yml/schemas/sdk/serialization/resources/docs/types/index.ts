@@ -60,3 +60,4 @@ export * from "./MetadataConfig";
 export * from "./TwitterCardSetting";
 export * from "./RedirectConfig";
 export * from "./IntegrationsConfig";
+export * from "./ExperimentalConfig";

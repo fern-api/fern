@@ -64,7 +64,9 @@ export async function parseDocsConfiguration({
 
         /* scripts */
         css: rawCssConfig,
-        js: rawJsConfig
+        js: rawJsConfig,
+
+        experimental
     } = rawDocsConfiguration;
 
     const landingPage = parsePageConfig(rawDocsConfiguration.landingPage, absoluteFilepathToDocsConfig);
@@ -144,7 +146,9 @@ export async function parseDocsConfiguration({
 
         /* scripts */
         css,
-        js
+        js,
+
+        experimental
     };
 }
 

@@ -9,7 +9,8 @@ import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { readFile } from "fs/promises";
+import { fstat } from "fs";
+import { readdir, readFile } from "fs/promises";
 import { glob } from "glob";
 import matter from "gray-matter";
 import { kebabCase } from "lodash-es";
@@ -149,16 +150,34 @@ export class DocsDefinitionResolver {
 
         const config = await this.convertDocsConfiguration();
 
-        const jsFilePaths = (
-            await glob("**/*.{js,ts,jsx,tsx}", {
-                cwd: this.docsWorkspace.absoluteFilepath,
-                absolute: true
-            })
-        ).map(AbsoluteFilePath.of);
+        const jsFilePaths = new Set(
+            (
+                await glob("**/*.{js,ts,jsx,tsx}", {
+                    cwd: this.docsWorkspace.absoluteFilepath,
+                    absolute: true
+                })
+            ).map(AbsoluteFilePath.of)
+        );
 
-        const jsFiles = Object.entries(
+        // add all js files from the experimental mdxReactFiles config
+        await Promise.all(
+            this._parsedDocsConfig.experimental?.mdxReactFiles?.map(async (filepath) => {
+                const absoluteFilePath = resolve(this.docsWorkspace.absoluteFilepath, filepath);
+
+                const files = await glob("**/*.{js,ts,jsx,tsx}", {
+                    cwd: absoluteFilePath,
+                    absolute: true
+                });
+
+                files.forEach((file) => {
+                    jsFilePaths.add(AbsoluteFilePath.of(file));
+                });
+            }) ?? []
+        );
+
+        const jsFiles = Object.fromEntries(
             await Promise.all(
-                jsFilePaths.map(async (filePath): Promise<[string, string]> => {
+                [...jsFilePaths].map(async (filePath): Promise<[string, string]> => {
                     const relativeFilePath = this.toRelativeFilepath(filePath);
                     const contents = (await readFile(filePath)).toString();
                     return [relativeFilePath, contents];

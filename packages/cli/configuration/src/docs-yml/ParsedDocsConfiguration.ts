@@ -2,7 +2,7 @@ import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { Audiences } from "../commons";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
-import { DocsInstance, VersionAvailability } from "./schemas";
+import { DocsInstance, VersionAvailability, ExperimentalConfig } from "./schemas";
 
 export interface ParsedDocsConfiguration {
     instances: DocsInstance[];
@@ -35,6 +35,8 @@ export interface ParsedDocsConfiguration {
     /* scripts */
     css: DocsV1Write.CssConfig | undefined;
     js: JavascriptConfig | undefined;
+
+    experimental: ExperimentalConfig | undefined;
 }
 
 export interface AbsoluteJsFileConfig {
