@@ -7,12 +7,14 @@ export async function writeGitHubWorkflows({
     config,
     githubOutputMode,
     isPackagePrivate,
-    pathToProject
+    pathToProject,
+    publishToJsr
 }: {
     config: FernGeneratorExec.GeneratorConfig;
     githubOutputMode: FernGeneratorExec.GithubOutputMode;
     isPackagePrivate: boolean;
     pathToProject: AbsoluteFilePath;
+    publishToJsr: boolean;
 }): Promise<void> {
     if (githubOutputMode.publishInfo != null && githubOutputMode.publishInfo.type !== "npm") {
         throw new Error(
@@ -22,7 +24,8 @@ export async function writeGitHubWorkflows({
     const workflowYaml = constructWorkflowYaml({
         publishInfo: githubOutputMode.publishInfo,
         isPackagePrivate,
-        config
+        config,
+        publishToJsr
     });
     const githubWorkflowsDir = path.join(pathToProject, ".github", "workflows");
     await mkdir(githubWorkflowsDir, { recursive: true });
@@ -32,11 +35,13 @@ export async function writeGitHubWorkflows({
 function constructWorkflowYaml({
     config,
     publishInfo,
-    isPackagePrivate
+    isPackagePrivate,
+    publishToJsr
 }: {
     config: FernGeneratorExec.GeneratorConfig;
     publishInfo: FernGeneratorExec.NpmGithubPublishInfo | undefined;
     isPackagePrivate: boolean;
+    publishToJsr: boolean;
 }) {
     let workflowYaml = `name: ci
 
@@ -89,6 +94,33 @@ ${getTestJob({ config })}`;
           fi
         env:
           NPM_TOKEN: \${{ secrets.${publishInfo.tokenEnvironmentVariable} }}`;
+    }
+
+    if (publishToJsr) {
+        workflowYaml += `
+
+  publish-jsr:
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    needs: [ compile, test ]
+    permissions:
+      contents: read
+      id-token: write # The OIDC ID token is used for authentication with JSR. 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      
+      - name: Set up node
+        uses: actions/setup-node@v3
+      
+      - name: Install dependencies
+        run: yarn install
+      
+      - name: Build
+        run: yarn build
+
+      - name: Publish to JSR
+        run: npx jsr publish`;
     }
 
     return workflowYaml;
