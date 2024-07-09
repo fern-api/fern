@@ -9,6 +9,8 @@ import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import { readFile } from "fs/promises";
+import { glob } from "glob";
 import matter from "gray-matter";
 import { kebabCase } from "lodash-es";
 import urlJoin from "url-join";
@@ -147,7 +149,24 @@ export class DocsDefinitionResolver {
 
         const config = await this.convertDocsConfiguration();
 
-        return { config, pages };
+        const jsFilePaths = (
+            await glob("**/*.{js,ts,jsx,tsx}", {
+                cwd: this.docsWorkspace.absoluteFilepath,
+                absolute: true
+            })
+        ).map(AbsoluteFilePath.of);
+
+        const jsFiles = Object.entries(
+            await Promise.all(
+                jsFilePaths.map(async (filePath): Promise<[string, string]> => {
+                    const relativeFilePath = this.toRelativeFilepath(filePath);
+                    const contents = (await readFile(filePath)).toString();
+                    return [relativeFilePath, contents];
+                })
+            )
+        );
+
+        return { config, pages, jsFiles };
     }
 
     private resolveFilepath(unresolvedFilepath: string): AbsoluteFilePath;
