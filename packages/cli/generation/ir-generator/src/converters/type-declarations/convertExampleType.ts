@@ -205,8 +205,8 @@ export function convertTypeReferenceExample({
                     throw new Error("Example is not an object");
                 }
                 return ExampleTypeReferenceShape.container(
-                    ExampleContainer.map(
-                        Object.entries(resolvedExample).map(([key, value]) => ({
+                    ExampleContainer.map({
+                        map: Object.entries(resolvedExample).map(([key, value]) => ({
                             key: convertTypeReferenceExample({
                                 example: key,
                                 fileContainingExample: fileContainingResolvedExample,
@@ -225,17 +225,24 @@ export function convertTypeReferenceExample({
                                 exampleResolver,
                                 workspace
                             })
-                        }))
-                    )
+                        })),
+                        keyType: keyType,
+                        valueType: valueType
+                    })
                 );
             },
             list: (itemType) => {
                 if (!Array.isArray(resolvedExample)) {
                     throw new Error("Example is not a list");
                 }
+                const typeDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
+                    referenceToNamedType: rawTypeBeingExemplified,
+                    file: fileContainingRawTypeReference
+                });
+                typeDeclaration.
                 return ExampleTypeReferenceShape.container(
-                    ExampleContainer.list(
-                        resolvedExample.map((exampleItem) =>
+                    ExampleContainer.list({
+                        list: resolvedExample.map((exampleItem) =>
                             convertTypeReferenceExample({
                                 example: exampleItem,
                                 fileContainingExample: fileContainingResolvedExample,
@@ -245,8 +252,9 @@ export function convertTypeReferenceExample({
                                 exampleResolver,
                                 workspace
                             })
-                        )
-                    )
+                        ),
+                        itemType: itemType
+                    })
                 );
             },
             set: (itemType) => {
@@ -254,8 +262,8 @@ export function convertTypeReferenceExample({
                     throw new Error("Example is not a list");
                 }
                 return ExampleTypeReferenceShape.container(
-                    ExampleContainer.set(
-                        resolvedExample.map((exampleItem) =>
+                    ExampleContainer.set({
+                        set: resolvedExample.map((exampleItem) =>
                             convertTypeReferenceExample({
                                 example: exampleItem,
                                 fileContainingExample: fileContainingResolvedExample,
@@ -265,40 +273,43 @@ export function convertTypeReferenceExample({
                                 exampleResolver,
                                 workspace
                             })
-                        )
-                    )
+                        ),
+                        itemType: itemType
+                    })
                 );
             },
             optional: (itemType) => {
                 return ExampleTypeReferenceShape.container(
-                    ExampleContainer.optional(
-                        resolvedExample != null
-                            ? convertTypeReferenceExample({
-                                  example: resolvedExample,
-                                  fileContainingExample: fileContainingResolvedExample,
-                                  rawTypeBeingExemplified: itemType,
-                                  fileContainingRawTypeReference,
-                                  typeResolver,
-                                  exampleResolver,
-                                  workspace
-                              })
-                            : undefined
-                    )
+                    ExampleContainer.optional({
+                        optional:
+                            resolvedExample != null
+                                ? convertTypeReferenceExample({
+                                      example: resolvedExample,
+                                      fileContainingExample: fileContainingResolvedExample,
+                                      rawTypeBeingExemplified: itemType,
+                                      fileContainingRawTypeReference,
+                                      typeResolver,
+                                      exampleResolver,
+                                      workspace
+                                  })
+                                : undefined,
+                        valueType: itemType
+                    })
                 );
             },
             literal: (literal) => {
                 switch (literal.type) {
                     case "boolean":
                         return ExampleTypeReferenceShape.container(
-                            ExampleContainer.literal(ExamplePrimitive.boolean(literal.boolean))
+                            ExampleContainer.literal({ literal: ExamplePrimitive.boolean(literal.boolean) })
                         );
                     case "string":
                         return ExampleTypeReferenceShape.container(
-                            ExampleContainer.literal(
-                                ExamplePrimitive.string({
+                            ExampleContainer.literal({
+                                literal: ExamplePrimitive.string({
                                     original: literal.string
                                 })
-                            )
+                            })
                         );
                     default:
                         assertNever(literal);

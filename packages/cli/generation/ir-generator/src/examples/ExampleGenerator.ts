@@ -688,7 +688,12 @@ export class ExampleGenerator {
         const exampleTypeReference = this.generateExampleTypeReference(typeReference, depth);
         return {
             jsonExample: exampleTypeReference.jsonExample,
-            shape: ExampleTypeReferenceShape.container(ExampleContainer.optional(exampleTypeReference))
+            shape: ExampleTypeReferenceShape.container(
+                ExampleContainer.optional({
+                    optional: exampleTypeReference,
+                    valueType: typeReference
+                })
+            )
         };
     }
 
@@ -696,7 +701,12 @@ export class ExampleGenerator {
         const exampleTypeReference = this.generateExampleTypeReference(typeReference, depth);
         return {
             jsonExample: [exampleTypeReference.jsonExample],
-            shape: ExampleTypeReferenceShape.container(ExampleContainer.list([exampleTypeReference]))
+            shape: ExampleTypeReferenceShape.container(
+                ExampleContainer.list({
+                    list: [exampleTypeReference],
+                    itemType: typeReference
+                })
+            )
         };
     }
 
@@ -711,12 +721,16 @@ export class ExampleGenerator {
                 [jsonExampleMapKey]: exampleTypeReferenceValue.jsonExample
             },
             shape: ExampleTypeReferenceShape.container(
-                ExampleContainer.map([
-                    {
-                        key: exampleTypeReferenceKey,
-                        value: exampleTypeReferenceValue
-                    }
-                ])
+                ExampleContainer.map({
+                    map: [
+                        {
+                            key: exampleTypeReferenceKey,
+                            value: exampleTypeReferenceValue
+                        }
+                    ],
+                    keyType: mapType.keyType,
+                    valueType: mapType.valueType
+                })
             )
         };
     }
@@ -736,7 +750,12 @@ export class ExampleGenerator {
             // NOTE: you will have to manage this within the generator to ensure this list becomes a set,
             // as you can't represent a set in JSON.
             jsonExample: [exampleTypeReference.jsonExample],
-            shape: ExampleTypeReferenceShape.container(ExampleContainer.set([exampleTypeReference]))
+            shape: ExampleTypeReferenceShape.container(
+                ExampleContainer.set({
+                    set: [exampleTypeReference],
+                    itemType: typeReference
+                })
+            )
         };
     }
 
@@ -746,14 +765,14 @@ export class ExampleGenerator {
                 return {
                     jsonExample: literal.boolean,
                     shape: ExampleTypeReferenceShape.container(
-                        ExampleContainer.literal(ExamplePrimitive.boolean(literal.boolean))
+                        ExampleContainer.literal({ literal: ExamplePrimitive.boolean(literal.boolean) })
                     )
                 };
             case "string":
                 return {
                     jsonExample: literal.string,
                     shape: ExampleTypeReferenceShape.container(
-                        ExampleContainer.literal(ExamplePrimitive.string({ original: literal.string }))
+                        ExampleContainer.literal({ literal: ExamplePrimitive.string({ original: literal.string }) })
                     )
                 };
             default:
