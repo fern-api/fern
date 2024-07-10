@@ -9375,8 +9375,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/utils/core-utilities/utils/",\
           "packageDependencies": [\
             ["@fern-typescript/utils", "workspace:generators/typescript/utils/core-utilities/utils"],\
-            ["@babel/preset-env", "virtual:2faa50efc97dbc1bcf8362bab30ec9c2420177b3ec5d7b26e8049bc5b8b1e5a679c5ee38acb51b25948e2fd46f810b2882a9f7bdc3d8e6618ffd386357806c31#npm:7.24.3"],\
-            ["@babel/preset-typescript", "virtual:2faa50efc97dbc1bcf8362bab30ec9c2420177b3ec5d7b26e8049bc5b8b1e5a679c5ee38acb51b25948e2fd46f810b2882a9f7bdc3d8e6618ffd386357806c31#npm:7.24.1"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\

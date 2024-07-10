@@ -6060,8 +6060,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/utils@workspace:generators/typescript/utils/core-utilities/utils"
   dependencies:
-    "@babel/preset-env": ^7.24.3
-    "@babel/preset-typescript": ^7.24.1
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
