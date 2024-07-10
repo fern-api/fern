@@ -1,19 +1,19 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift from "../swift";
+import Swift, { Type } from "../swift";
 
 export declare namespace Param {
     interface Args {
         title: string;
-        type: string; // TODO
-        defaultValue?: string; // TODO
+        type: Type;
+        defaultValue?: Type;
     }
 }
 
 export class Param extends AstNode {
 
     public readonly title: string;
-    public readonly type: string;
-    public readonly defaultValue?: string;
+    public readonly type: Type;
+    public readonly defaultValue?: Type;
 
     constructor({ 
         title,
@@ -30,8 +30,12 @@ export class Param extends AstNode {
 
         let title = [`${this.title}:`, this.type].join(" ");
 
+        // if (this.defaultValue) {
+        //     title += ` = ${this.defaultValue}`;
+        // }
+
         if (this.defaultValue) {
-            title += ` = ${this.defaultValue}`;
+            title += ` =  FIX THIS`;
         }
 
         writer.write(title);

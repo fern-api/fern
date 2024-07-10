@@ -59,12 +59,18 @@ describe("Swift Language", () => {
             params: [
                 Swift.makeParam({
                     title: "name",
-                    type: "String"
+                    type: Swift.makeType({
+                        name: "String"
+                    })
                 }),
                 Swift.makeParam({
                     title: "age",
-                    type: "Int",
-                    defaultValue: "33"
+                    type: Swift.makeType({
+                        name: "Int"
+                    }),
+                    defaultValue: Swift.makeType({
+                        name: "Int"
+                    })
                 })
             ]
         });

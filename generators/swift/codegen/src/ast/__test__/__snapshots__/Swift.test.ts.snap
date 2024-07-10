@@ -44,7 +44,11 @@ open class Room {
 exports[`Swift Language makes file header 1`] = `"This is the header to a file"`;
 
 exports[`Swift Language makes function 1`] = `
-"fileprivate static func makePerson(name: String, age: Int = 33) async throws {
+"fileprivate static func makePerson(name: String {
+
+}, age: Int {
+
+} =  FIX THIS) async throws {
     print("Hey!")
 }"
 `;
