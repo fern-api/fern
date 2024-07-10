@@ -102,7 +102,6 @@ export function getReferenceToExportFromRoot({
                 importsManager,
                 referencedIn,
                 importAlias: undefined,
-                ignoreImport: false,
                 subImport
             });
         }
