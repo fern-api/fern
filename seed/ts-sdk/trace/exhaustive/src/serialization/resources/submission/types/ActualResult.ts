@@ -12,7 +12,7 @@ export const ActualResult: core.serialization.Schema<serializers.ActualResult.Ra
     core.serialization
         .union("type", {
             value: core.serialization.object({
-                value: core.serialization.lazy(async () => (await import("../../..")).VariableValue),
+                value: core.serialization.lazy(() => serializers.VariableValue),
             }),
             exception: ExceptionInfo,
             exceptionV2: core.serialization.object({

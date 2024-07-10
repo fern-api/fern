@@ -20,7 +20,7 @@ export const ProblemInfo: core.serialization.ObjectSchema<serializers.ProblemInf
         problemVersion: core.serialization.number(),
         files: core.serialization.record(Language, ProblemFiles.optional()),
         inputParams: core.serialization.list(VariableTypeAndName),
-        outputType: core.serialization.lazy(async () => (await import("../../..")).VariableType),
+        outputType: core.serialization.lazy(() => serializers.VariableType),
         testcases: core.serialization.list(TestCaseWithExpectedResult),
         methodName: core.serialization.string(),
         supportsCustomTestCases: core.serialization.boolean(),

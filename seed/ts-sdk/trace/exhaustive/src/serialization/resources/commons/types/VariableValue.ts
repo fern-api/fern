@@ -27,11 +27,9 @@ export const VariableValue: core.serialization.Schema<serializers.VariableValue.
             charValue: core.serialization.object({
                 value: core.serialization.string(),
             }),
-            mapValue: core.serialization.lazyObject(async () => (await import("../../..")).MapValue),
+            mapValue: core.serialization.lazyObject(() => serializers.MapValue),
             listValue: core.serialization.object({
-                value: core.serialization.list(
-                    core.serialization.lazy(async () => (await import("../../..")).VariableValue)
-                ),
+                value: core.serialization.list(core.serialization.lazy(() => serializers.VariableValue)),
             }),
             binaryTreeValue: BinaryTreeValue,
             singlyLinkedListValue: SinglyLinkedListValue,

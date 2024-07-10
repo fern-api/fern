@@ -12,7 +12,7 @@ export const VoidFunctionSignatureThatTakesActualResult: core.serialization.Obje
     SeedTrace.v2.VoidFunctionSignatureThatTakesActualResult
 > = core.serialization.object({
     parameters: core.serialization.list(Parameter),
-    actualResultType: core.serialization.lazy(async () => (await import("../../../../..")).VariableType),
+    actualResultType: core.serialization.lazy(() => serializers.VariableType),
 });
 
 export declare namespace VoidFunctionSignatureThatTakesActualResult {

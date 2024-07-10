@@ -74,19 +74,4 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                 assertNever(importStrategy);
         }
     }
-
-    // private getReferenceToLocalExport(exportedName: string): Reference {
-    //     const name = ts.factory.createIdentifier(exportedName);
-    //     return {
-    //         getTypeNode: (_opts) => {
-    //             return ts.factory.createTypeReferenceNode(name);
-    //         },
-    //         getEntityName: (_opts) => {
-    //             return name;
-    //         },
-    //         getExpression: (_opts) => {
-    //             return name;
-    //         }
-    //     };
-    // }
 }

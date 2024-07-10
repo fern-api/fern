@@ -9,7 +9,7 @@ import * as core from "../../../../core";
 export const TestCase: core.serialization.ObjectSchema<serializers.TestCase.Raw, SeedTrace.TestCase> =
     core.serialization.object({
         id: core.serialization.string(),
-        params: core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).VariableValue)),
+        params: core.serialization.list(core.serialization.lazy(() => serializers.VariableValue)),
     });
 
 export declare namespace TestCase {

@@ -162,7 +162,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
                 importStrategy: (() => {
                     // Your logic here to determine the import strategy
                     if (isGeneratingSchema && isCircular) {
-                        // Circular references don't require an external import.
+                        // Circular references should be imported from the root.
                         return { type: "fromRoot", useDynamicImport: false, namespaceImport: "serializers" };
                     } else if (isGeneratingSchema) {
                         // Return default import strategy or another strategy based on your logic
