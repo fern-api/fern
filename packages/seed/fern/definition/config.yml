@@ -65,6 +65,7 @@ types:
       - go
       - ruby
       - csharp
+      - swift
 
   GeneratorType:
     enum:

@@ -10,6 +10,7 @@ export type SupportedSdkLanguage =
     | "go"
     | "ruby"
     | "csharp"
+    | "swift"
     | "java"
     | "js"
     | "node"
@@ -27,6 +28,7 @@ export const SupportedSdkLanguage = {
     Go: "go",
     Ruby: "ruby",
     Csharp: "csharp",
+    Swift: "swift",
     Java: "java",
     Js: "js",
     Node: "node",
@@ -51,6 +53,8 @@ export const SupportedSdkLanguage = {
                 return visitor.ruby();
             case SupportedSdkLanguage.Csharp:
                 return visitor.csharp();
+            case SupportedSdkLanguage.Swift:
+                return visitor.swift();
             case SupportedSdkLanguage.Java:
                 return visitor.java();
             case SupportedSdkLanguage.Js:
@@ -82,6 +86,7 @@ export declare namespace SupportedSdkLanguage {
         go: () => R;
         ruby: () => R;
         csharp: () => R;
+        swift: () => R;
         java: () => R;
         js: () => R;
         node: () => R;

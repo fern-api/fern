@@ -11,6 +11,7 @@ export const SupportedSdkLanguageSchema = z.enum([
     "go",
     "ruby",
     "csharp",
+    "swift",
     "java",
     "js", // alias to javascript
     "node", // alias to javascript

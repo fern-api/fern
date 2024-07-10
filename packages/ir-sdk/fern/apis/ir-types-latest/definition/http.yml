@@ -373,6 +373,7 @@ types:
       - go
       - ruby
       - csharp
+      - swift
       - java
 
   ExamplePathParameter:

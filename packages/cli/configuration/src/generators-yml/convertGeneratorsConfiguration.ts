@@ -625,6 +625,9 @@ function getLanguageFromGeneratorName(generatorName: string) {
     if (generatorName.includes("csharp")) {
         return GenerationLanguage.CSHARP;
     }
+    if (generatorName.includes("swift")) {
+        return GenerationLanguage.SWIFT;
+    }
     return undefined;
 }
 

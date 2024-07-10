@@ -78,7 +78,8 @@ export const GenerationLanguage = {
     PYTHON: "python",
     GO: "go",
     RUBY: "ruby",
-    CSHARP: "csharp"
+    CSHARP: "csharp",
+    SWIFT: "swift"
 } as const;
 
 export type GenerationLanguage = Values<typeof GenerationLanguage>;

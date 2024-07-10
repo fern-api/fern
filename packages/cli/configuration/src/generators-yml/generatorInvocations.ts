@@ -133,5 +133,19 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
             location: "local-file-system",
             path: "../sdks/csharp"
         }
+    },
+    [GeneratorName.SWIFT_MODEL]: {
+        version: "0.0.0",
+        output: {
+            location: "local-file-system",
+            path: "../sdks/swift/model"
+        }
+    },
+    [GeneratorName.SWIFT_SDK]: {
+        version: "0.0.0",
+        output: {
+            location: "local-file-system",
+            path: "../sdks/swift/sdk"
+        }
     }
 };

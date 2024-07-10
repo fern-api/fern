@@ -389,5 +389,7 @@ export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<str
         "where",
         "with",
         "yield"
-    ])
+    ]),
+    // TODO(mikemilla): add reserved keywords for Swift
+    [generatorsYml.GenerationLanguage.SWIFT]: new Set([])
 };
