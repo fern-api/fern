@@ -23,7 +23,7 @@
     "package-json": {
       "scripts": {
         "dockerTagLatest": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-swift-model:latest ../../..",
-        "dist:cli": "yarn compile && node build.cjs && cp -R ../codegen/src/asIs dist"
+        "dist:cli": "yarn compile && node build.cjs"
       }
     }
   },
