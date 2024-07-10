@@ -15,6 +15,18 @@ type ListUsernamesRequest struct {
 	StartingAfter *string `query:"starting_after"`
 }
 
+type ListUsersBodyCursorPaginationRequest struct {
+	// The object that contains the cursor used for pagination
+	// in order to fetch the next page of results.
+	Pagination *WithCursor `json:"pagination,omitempty" url:"-"`
+}
+
+type ListUsersBodyOffsetPaginationRequest struct {
+	// The object that contains the offset used for pagination
+	// in order to fetch the next page of results.
+	Pagination *WithPage `json:"pagination,omitempty" url:"-"`
+}
+
 type ListUsersCursorPaginationRequest struct {
 	// Defaults to first page
 	Page *int `query:"page"`
@@ -217,4 +229,72 @@ func (u *UsernameContainer) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
+}
+
+type WithCursor struct {
+	Cursor *string `json:"cursor,omitempty" url:"cursor,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (w *WithCursor) GetExtraProperties() map[string]interface{} {
+	return w.extraProperties
+}
+
+func (w *WithCursor) UnmarshalJSON(data []byte) error {
+	type unmarshaler WithCursor
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*w = WithCursor(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+
+	return nil
+}
+
+func (w *WithCursor) String() string {
+	if value, err := core.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
+}
+
+type WithPage struct {
+	Page *int `json:"page,omitempty" url:"page,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (w *WithPage) GetExtraProperties() map[string]interface{} {
+	return w.extraProperties
+}
+
+func (w *WithPage) UnmarshalJSON(data []byte) error {
+	type unmarshaler WithPage
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*w = WithPage(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+
+	return nil
+}
+
+func (w *WithPage) String() string {
+	if value, err := core.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
 }

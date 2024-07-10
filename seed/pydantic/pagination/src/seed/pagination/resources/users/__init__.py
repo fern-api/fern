@@ -9,6 +9,8 @@ from .user import User
 from .user_list_container import UserListContainer
 from .user_page import UserPage
 from .username_container import UsernameContainer
+from .with_cursor import WithCursor
+from .with_page import WithPage
 
 __all__ = [
     "ListUsersExtendedResponse",
@@ -20,4 +22,6 @@ __all__ = [
     "UserListContainer",
     "UserPage",
     "UsernameContainer",
+    "WithCursor",
+    "WithPage",
 ]

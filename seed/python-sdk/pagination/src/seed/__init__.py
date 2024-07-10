@@ -12,6 +12,8 @@ from .users import (
     UserListContainer,
     UserPage,
     UsernameContainer,
+    WithCursor,
+    WithPage,
 )
 from .version import __version__
 
@@ -27,6 +29,8 @@ __all__ = [
     "UsernameContainer",
     "UsernameCursor",
     "UsernamePage",
+    "WithCursor",
+    "WithPage",
     "__version__",
     "users",
 ]
