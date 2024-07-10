@@ -154,7 +154,9 @@ export class Type extends AstNode {
                 break;
             case "optional":
                 this.internalType.value.write(writer);
-                writer.write("?");
+                if (writer.getLastCharacter() !== "?") {
+                    writer.write("?");
+                }
                 break;
             case "reference":
                 writer.writeNode(this.internalType.value);

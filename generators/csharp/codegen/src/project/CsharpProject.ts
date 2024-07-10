@@ -271,7 +271,7 @@ class CsProj {
     public toString(): string {
         const propertyGroups = this.getPropertyGroups();
         const dependencies = this.getDependencies();
-        return `
+        return ` 
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
@@ -318,6 +318,7 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
     private getDependencies(): string[] {
         const result: string[] = [];
         result.push('<PackageReference Include="OneOf" Version="3.0.263" />');
+        result.push('<PackageReference Include="OneOf.Extended" Version="3.0.263" />');
         result.push('<PackageReference Include="System.Text.Json" Version="8.0.3" />');
         for (const [name, version] of Object.entries(this.context.getExtraDependencies())) {
             result.push(`<PackageReference Include="${name}" Version="${version}" />`);

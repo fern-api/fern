@@ -33,6 +33,12 @@ types:
       string: string
       NestedObject: ObjectWithOptionalField
 
+  DoubleOptional:
+    properties:
+      optionalAlias: optional<OptionalAlias>
+
+  OptionalAlias: optional<string>
+
 errors:
   ObjectWithOptionalFieldError:
     status-code: 400

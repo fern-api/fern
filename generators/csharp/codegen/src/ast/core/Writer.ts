@@ -22,6 +22,8 @@ export class Writer {
     private hasWrittenAnything = false;
     /* Whether the last character written was a newline */
     private lastCharacterIsNewline = false;
+    /* Whether the last character written was a question mark */
+    private lastCharacter: string | undefined = undefined;
     /* The current line number */
     private references: Record<Namespace, ClassReference[]> = {};
     /* The namespace that is being written to */
@@ -120,6 +122,10 @@ export class Writer {
         this.indentLevel--;
     }
 
+    public getLastCharacter(): string | undefined {
+        return this.lastCharacter;
+    }
+
     public addReference(reference: ClassReference): void {
         if (reference.namespace == null) {
             return;
@@ -152,6 +158,7 @@ ${this.buffer}`;
         if (text.length > 0) {
             this.hasWrittenAnything = true;
             this.lastCharacterIsNewline = text.endsWith("\n");
+            this.lastCharacter = text[text.length - 1];
         }
         return (this.buffer += text);
     }

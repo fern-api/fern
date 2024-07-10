@@ -38,6 +38,40 @@ func (w WeatherReport) Ptr() *WeatherReport {
 	return &w
 }
 
+type DoubleOptional struct {
+	OptionalAlias *OptionalAlias `json:"optionalAlias,omitempty" url:"optionalAlias,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (d *DoubleOptional) GetExtraProperties() map[string]interface{} {
+	return d.extraProperties
+}
+
+func (d *DoubleOptional) UnmarshalJSON(data []byte) error {
+	type unmarshaler DoubleOptional
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = DoubleOptional(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+
+	return nil
+}
+
+func (d *DoubleOptional) String() string {
+	if value, err := core.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
+}
+
 type NestedObjectWithOptionalField struct {
 	String       *string                  `json:"string,omitempty" url:"string,omitempty"`
 	NestedObject *ObjectWithOptionalField `json:"NestedObject,omitempty" url:"NestedObject,omitempty"`
@@ -243,6 +277,8 @@ func (o *ObjectWithRequiredField) String() string {
 	}
 	return fmt.Sprintf("%#v", o)
 }
+
+type OptionalAlias = *string
 
 type Animal struct {
 	Animal string
