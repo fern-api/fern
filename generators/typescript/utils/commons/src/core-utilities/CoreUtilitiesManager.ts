@@ -17,6 +17,7 @@ import { FormDataUtilsImpl } from "./form-data-utils/FormDataUtilsImpl";
 import { PaginationImpl } from "./pagination/PaginationImpl";
 import { RuntimeImpl } from "./runtime/RuntimeImpl";
 import { StreamingUtilsImpl } from "./stream-utils/StreamUtilsImpl";
+import { UtilsImpl } from "./utils/UtilsImpl";
 import { ZurgImpl } from "./zurg/ZurgImpl";
 
 export declare namespace CoreUtilitiesManager {
@@ -43,7 +44,8 @@ export class CoreUtilitiesManager {
             callbackQueue: new CallbackQueueImpl({ getReferenceToExport }),
             formDataUtils: new FormDataUtilsImpl({ getReferenceToExport }),
             runtime: new RuntimeImpl({ getReferenceToExport }),
-            pagination: new PaginationImpl({ getReferenceToExport })
+            pagination: new PaginationImpl({ getReferenceToExport }),
+            utils: new UtilsImpl({ getReferenceToExport })
         };
     }
 
