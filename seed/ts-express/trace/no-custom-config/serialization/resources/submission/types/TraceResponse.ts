@@ -8,13 +8,11 @@ import * as core from "../../../../core";
 
 export const TraceResponse: core.serialization.ObjectSchema<serializers.TraceResponse.Raw, SeedTrace.TraceResponse> =
     core.serialization.object({
-        submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
+        submissionId: core.serialization.lazy(() => serializers.SubmissionId),
         lineNumber: core.serialization.number(),
-        returnValue: core.serialization.lazy(async () => (await import("../../..")).DebugVariableValue).optional(),
-        expressionLocation: core.serialization
-            .lazyObject(async () => (await import("../../..")).ExpressionLocation)
-            .optional(),
-        stack: core.serialization.lazyObject(async () => (await import("../../..")).StackInformation),
+        returnValue: core.serialization.lazy(() => serializers.DebugVariableValue).optional(),
+        expressionLocation: core.serialization.lazyObject(() => serializers.ExpressionLocation).optional(),
+        stack: core.serialization.lazyObject(() => serializers.StackInformation),
         stdout: core.serialization.string().optional(),
     });
 

@@ -13,14 +13,14 @@ export const SubmissionResponse: core.serialization.Schema<
     .union("type", {
         serverInitialized: core.serialization.object({}),
         problemInitialized: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).ProblemId),
+            value: core.serialization.lazy(() => serializers.ProblemId),
         }),
         workspaceInitialized: core.serialization.object({}),
-        serverErrored: core.serialization.lazyObject(async () => (await import("../../..")).ExceptionInfo),
+        serverErrored: core.serialization.lazyObject(() => serializers.ExceptionInfo),
         codeExecutionUpdate: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).CodeExecutionUpdate),
+            value: core.serialization.lazy(() => serializers.CodeExecutionUpdate),
         }),
-        terminated: core.serialization.lazyObject(async () => (await import("../../..")).TerminatedResponse),
+        terminated: core.serialization.lazyObject(() => serializers.TerminatedResponse),
     })
     .transform<SeedTrace.SubmissionResponse>({
         transform: (value) => value,

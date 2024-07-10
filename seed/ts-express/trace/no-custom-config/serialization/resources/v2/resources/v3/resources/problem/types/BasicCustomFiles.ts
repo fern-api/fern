@@ -11,16 +11,12 @@ export const BasicCustomFiles: core.serialization.ObjectSchema<
     SeedTrace.v2.v3.BasicCustomFiles
 > = core.serialization.object({
     methodName: core.serialization.string(),
-    signature: core.serialization.lazyObject(
-        async () => (await import("../../../../../../..")).v2.v3.NonVoidFunctionSignature
-    ),
+    signature: core.serialization.lazyObject(() => serializers.v2.v3.NonVoidFunctionSignature),
     additionalFiles: core.serialization.record(
-        core.serialization.lazy(async () => (await import("../../../../../../..")).Language),
-        core.serialization.lazyObject(async () => (await import("../../../../../../..")).v2.v3.Files).optional()
+        core.serialization.lazy(() => serializers.Language),
+        core.serialization.lazyObject(() => serializers.v2.v3.Files).optional()
     ),
-    basicTestCaseTemplate: core.serialization.lazyObject(
-        async () => (await import("../../../../../../..")).v2.v3.BasicTestCaseTemplate
-    ),
+    basicTestCaseTemplate: core.serialization.lazyObject(() => serializers.v2.v3.BasicTestCaseTemplate),
 });
 
 export declare namespace BasicCustomFiles {

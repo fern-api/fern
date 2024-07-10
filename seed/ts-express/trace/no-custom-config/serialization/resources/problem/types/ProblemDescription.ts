@@ -10,9 +10,7 @@ export const ProblemDescription: core.serialization.ObjectSchema<
     serializers.ProblemDescription.Raw,
     SeedTrace.ProblemDescription
 > = core.serialization.object({
-    boards: core.serialization.list(
-        core.serialization.lazy(async () => (await import("../../..")).ProblemDescriptionBoard)
-    ),
+    boards: core.serialization.list(core.serialization.lazy(() => serializers.ProblemDescriptionBoard)),
 });
 
 export declare namespace ProblemDescription {

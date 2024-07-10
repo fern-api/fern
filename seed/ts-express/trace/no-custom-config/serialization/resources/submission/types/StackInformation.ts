@@ -11,7 +11,7 @@ export const StackInformation: core.serialization.ObjectSchema<
     SeedTrace.StackInformation
 > = core.serialization.object({
     numStackFrames: core.serialization.number(),
-    topStackFrame: core.serialization.lazyObject(async () => (await import("../../..")).StackFrame).optional(),
+    topStackFrame: core.serialization.lazyObject(() => serializers.StackFrame).optional(),
 });
 
 export declare namespace StackInformation {

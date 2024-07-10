@@ -9,7 +9,7 @@ import * as core from "../../../../core";
 export const NestedUser: core.serialization.ObjectSchema<serializers.NestedUser.Raw, SeedMixedCase.NestedUser> =
     core.serialization.object({
         Name: core.serialization.string(),
-        NestedUser: core.serialization.lazyObject(async () => (await import("../../..")).User),
+        NestedUser: core.serialization.lazyObject(() => serializers.User),
     });
 
 export declare namespace NestedUser {

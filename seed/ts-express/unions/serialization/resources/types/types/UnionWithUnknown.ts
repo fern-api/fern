@@ -11,7 +11,7 @@ export const UnionWithUnknown: core.serialization.Schema<
     SeedUnions.UnionWithUnknown
 > = core.serialization
     .union("type", {
-        foo: core.serialization.lazyObject(async () => (await import("../../..")).Foo),
+        foo: core.serialization.lazyObject(() => serializers.Foo),
         unknown: core.serialization.object({}),
     })
     .transform<SeedUnions.UnionWithUnknown>({

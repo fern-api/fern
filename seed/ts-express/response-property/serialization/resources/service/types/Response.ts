@@ -9,10 +9,10 @@ import * as core from "../../../../core";
 export const Response: core.serialization.ObjectSchema<serializers.Response.Raw, SeedResponseProperty.Response> =
     core.serialization
         .object({
-            data: core.serialization.lazyObject(async () => (await import("../../..")).Movie),
+            data: core.serialization.lazyObject(() => serializers.Movie),
         })
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithMetadata))
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDocs));
+        .extend(core.serialization.lazyObject(() => serializers.WithMetadata))
+        .extend(core.serialization.lazyObject(() => serializers.WithDocs));
 
 export declare namespace Response {
     interface Raw extends serializers.WithMetadata.Raw, serializers.WithDocs.Raw {

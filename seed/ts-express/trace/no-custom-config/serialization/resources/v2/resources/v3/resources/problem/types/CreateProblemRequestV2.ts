@@ -11,19 +11,13 @@ export const CreateProblemRequestV2: core.serialization.ObjectSchema<
     SeedTrace.v2.v3.CreateProblemRequestV2
 > = core.serialization.object({
     problemName: core.serialization.string(),
-    problemDescription: core.serialization.lazyObject(
-        async () => (await import("../../../../../../..")).ProblemDescription
-    ),
-    customFiles: core.serialization.lazy(async () => (await import("../../../../../../..")).v2.v3.CustomFiles),
+    problemDescription: core.serialization.lazyObject(() => serializers.ProblemDescription),
+    customFiles: core.serialization.lazy(() => serializers.v2.v3.CustomFiles),
     customTestCaseTemplates: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("../../../../../../..")).v2.v3.TestCaseTemplate)
+        core.serialization.lazyObject(() => serializers.v2.v3.TestCaseTemplate)
     ),
-    testcases: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("../../../../../../..")).v2.v3.TestCaseV2)
-    ),
-    supportedLanguages: core.serialization.set(
-        core.serialization.lazy(async () => (await import("../../../../../../..")).Language)
-    ),
+    testcases: core.serialization.list(core.serialization.lazyObject(() => serializers.v2.v3.TestCaseV2)),
+    supportedLanguages: core.serialization.set(core.serialization.lazy(() => serializers.Language)),
     isPublic: core.serialization.boolean(),
 });
 

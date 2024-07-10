@@ -13,15 +13,15 @@ export const TestSubmissionStatus: core.serialization.Schema<
     .union("type", {
         stopped: core.serialization.object({}),
         errored: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).ErrorInfo),
+            value: core.serialization.lazy(() => serializers.ErrorInfo),
         }),
         running: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).RunningSubmissionState),
+            value: core.serialization.lazy(() => serializers.RunningSubmissionState),
         }),
         testCaseIdToState: core.serialization.object({
             value: core.serialization.record(
                 core.serialization.string(),
-                core.serialization.lazy(async () => (await import("../../..")).SubmissionStatusForTestCase)
+                core.serialization.lazy(() => serializers.SubmissionStatusForTestCase)
             ),
         }),
     })

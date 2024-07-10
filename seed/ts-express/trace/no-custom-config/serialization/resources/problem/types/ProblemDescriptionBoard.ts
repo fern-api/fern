@@ -15,7 +15,7 @@ export const ProblemDescriptionBoard: core.serialization.Schema<
             value: core.serialization.string(),
         }),
         variable: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).VariableValue),
+            value: core.serialization.lazy(() => serializers.VariableValue),
         }),
         testCaseId: core.serialization.object({
             value: core.serialization.string(),

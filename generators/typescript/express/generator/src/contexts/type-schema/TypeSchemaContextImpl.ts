@@ -149,9 +149,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
             .getReferenceToType({
                 name: typeName,
                 importStrategy: getSchemaImportStrategy({
-                    // use dynamic imports with schemas insides schemas,
-                    // to avoid issues with circular imports
-                    useDynamicImport: isGeneratingSchema
+                    useDynamicImport: false
                 }),
                 importsManager: this.importsManager,
                 referencedIn: this.sourceFile

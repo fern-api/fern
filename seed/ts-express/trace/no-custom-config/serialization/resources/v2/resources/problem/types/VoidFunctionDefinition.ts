@@ -10,12 +10,8 @@ export const VoidFunctionDefinition: core.serialization.ObjectSchema<
     serializers.v2.VoidFunctionDefinition.Raw,
     SeedTrace.v2.VoidFunctionDefinition
 > = core.serialization.object({
-    parameters: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("../../../../..")).v2.Parameter)
-    ),
-    code: core.serialization.lazyObject(
-        async () => (await import("../../../../..")).v2.FunctionImplementationForMultipleLanguages
-    ),
+    parameters: core.serialization.list(core.serialization.lazyObject(() => serializers.v2.Parameter)),
+    code: core.serialization.lazyObject(() => serializers.v2.FunctionImplementationForMultipleLanguages),
 });
 
 export declare namespace VoidFunctionDefinition {

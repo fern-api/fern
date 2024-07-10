@@ -8,9 +8,7 @@ import * as core from "../../../../../../core";
 
 export const Files: core.serialization.ObjectSchema<serializers.v2.Files.Raw, SeedTrace.v2.Files> =
     core.serialization.object({
-        files: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("../../../../..")).v2.FileInfoV2)
-        ),
+        files: core.serialization.list(core.serialization.lazyObject(() => serializers.v2.FileInfoV2)),
     });
 
 export declare namespace Files {

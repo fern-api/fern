@@ -10,12 +10,10 @@ export const BasicTestCaseTemplate: core.serialization.ObjectSchema<
     serializers.v2.BasicTestCaseTemplate.Raw,
     SeedTrace.v2.BasicTestCaseTemplate
 > = core.serialization.object({
-    templateId: core.serialization.lazy(async () => (await import("../../../../..")).v2.TestCaseTemplateId),
+    templateId: core.serialization.lazy(() => serializers.v2.TestCaseTemplateId),
     name: core.serialization.string(),
-    description: core.serialization.lazyObject(
-        async () => (await import("../../../../..")).v2.TestCaseImplementationDescription
-    ),
-    expectedValueParameterId: core.serialization.lazy(async () => (await import("../../../../..")).v2.ParameterId),
+    description: core.serialization.lazyObject(() => serializers.v2.TestCaseImplementationDescription),
+    expectedValueParameterId: core.serialization.lazy(() => serializers.v2.ParameterId),
 });
 
 export declare namespace BasicTestCaseTemplate {

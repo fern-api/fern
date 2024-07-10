@@ -11,8 +11,8 @@ export const SubmissionTypeState: core.serialization.Schema<
     SeedTrace.SubmissionTypeState
 > = core.serialization
     .union("type", {
-        test: core.serialization.lazyObject(async () => (await import("../../..")).TestSubmissionState),
-        workspace: core.serialization.lazyObject(async () => (await import("../../..")).WorkspaceSubmissionState),
+        test: core.serialization.lazyObject(() => serializers.TestSubmissionState),
+        workspace: core.serialization.lazyObject(() => serializers.WorkspaceSubmissionState),
     })
     .transform<SeedTrace.SubmissionTypeState>({
         transform: (value) => value,

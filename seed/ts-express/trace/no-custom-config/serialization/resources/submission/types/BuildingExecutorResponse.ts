@@ -10,8 +10,8 @@ export const BuildingExecutorResponse: core.serialization.ObjectSchema<
     serializers.BuildingExecutorResponse.Raw,
     SeedTrace.BuildingExecutorResponse
 > = core.serialization.object({
-    submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
-    status: core.serialization.lazy(async () => (await import("../../..")).ExecutionSessionStatus),
+    submissionId: core.serialization.lazy(() => serializers.SubmissionId),
+    status: core.serialization.lazy(() => serializers.ExecutionSessionStatus),
 });
 
 export declare namespace BuildingExecutorResponse {

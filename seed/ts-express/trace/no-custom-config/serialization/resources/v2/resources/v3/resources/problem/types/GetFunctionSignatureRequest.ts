@@ -10,9 +10,7 @@ export const GetFunctionSignatureRequest: core.serialization.ObjectSchema<
     serializers.v2.v3.GetFunctionSignatureRequest.Raw,
     SeedTrace.v2.v3.GetFunctionSignatureRequest
 > = core.serialization.object({
-    functionSignature: core.serialization.lazy(
-        async () => (await import("../../../../../../..")).v2.v3.FunctionSignature
-    ),
+    functionSignature: core.serialization.lazy(() => serializers.v2.v3.FunctionSignature),
 });
 
 export declare namespace GetFunctionSignatureRequest {

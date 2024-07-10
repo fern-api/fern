@@ -9,7 +9,7 @@ import * as core from "../../../../core";
 export const OptionalWithDocs: core.serialization.Schema<
     serializers.OptionalWithDocs.Raw,
     SeedResponseProperty.OptionalWithDocs
-> = core.serialization.lazyObject(async () => (await import("../../..")).WithDocs).optional();
+> = core.serialization.lazyObject(() => serializers.WithDocs).optional();
 
 export declare namespace OptionalWithDocs {
     type Raw = serializers.WithDocs.Raw | null | undefined;

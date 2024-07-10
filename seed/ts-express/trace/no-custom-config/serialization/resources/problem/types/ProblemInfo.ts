@@ -8,21 +8,17 @@ import * as core from "../../../../core";
 
 export const ProblemInfo: core.serialization.ObjectSchema<serializers.ProblemInfo.Raw, SeedTrace.ProblemInfo> =
     core.serialization.object({
-        problemId: core.serialization.lazy(async () => (await import("../../..")).ProblemId),
-        problemDescription: core.serialization.lazyObject(async () => (await import("../../..")).ProblemDescription),
+        problemId: core.serialization.lazy(() => serializers.ProblemId),
+        problemDescription: core.serialization.lazyObject(() => serializers.ProblemDescription),
         problemName: core.serialization.string(),
         problemVersion: core.serialization.number(),
         files: core.serialization.record(
-            core.serialization.lazy(async () => (await import("../../..")).Language),
-            core.serialization.lazyObject(async () => (await import("../../..")).ProblemFiles).optional()
+            core.serialization.lazy(() => serializers.Language),
+            core.serialization.lazyObject(() => serializers.ProblemFiles).optional()
         ),
-        inputParams: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("../../..")).VariableTypeAndName)
-        ),
-        outputType: core.serialization.lazy(async () => (await import("../../..")).VariableType),
-        testcases: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("../../..")).TestCaseWithExpectedResult)
-        ),
+        inputParams: core.serialization.list(core.serialization.lazyObject(() => serializers.VariableTypeAndName)),
+        outputType: core.serialization.lazy(() => serializers.VariableType),
+        testcases: core.serialization.list(core.serialization.lazyObject(() => serializers.TestCaseWithExpectedResult)),
         methodName: core.serialization.string(),
         supportsCustomTestCases: core.serialization.boolean(),
     });

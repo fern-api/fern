@@ -10,8 +10,8 @@ export const RunningResponse: core.serialization.ObjectSchema<
     serializers.RunningResponse.Raw,
     SeedTrace.RunningResponse
 > = core.serialization.object({
-    submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
-    state: core.serialization.lazy(async () => (await import("../../..")).RunningSubmissionState),
+    submissionId: core.serialization.lazy(() => serializers.SubmissionId),
+    state: core.serialization.lazy(() => serializers.RunningSubmissionState),
 });
 
 export declare namespace RunningResponse {

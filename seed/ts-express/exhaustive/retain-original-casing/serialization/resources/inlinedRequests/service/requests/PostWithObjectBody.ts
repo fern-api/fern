@@ -12,9 +12,7 @@ export const PostWithObjectBody: core.serialization.Schema<
 > = core.serialization.object({
     string: core.serialization.string(),
     integer: core.serialization.number(),
-    NestedObject: core.serialization.lazyObject(
-        async () => (await import("../../../..")).types.ObjectWithOptionalField
-    ),
+    NestedObject: core.serialization.lazyObject(() => serializers.types.ObjectWithOptionalField),
 });
 
 export declare namespace PostWithObjectBody {

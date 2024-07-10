@@ -11,8 +11,8 @@ export const FunctionImplementationForMultipleLanguages: core.serialization.Obje
     SeedTrace.v2.FunctionImplementationForMultipleLanguages
 > = core.serialization.object({
     codeByLanguage: core.serialization.record(
-        core.serialization.lazy(async () => (await import("../../../../..")).Language),
-        core.serialization.lazyObject(async () => (await import("../../../../..")).v2.FunctionImplementation).optional()
+        core.serialization.lazy(() => serializers.Language),
+        core.serialization.lazyObject(() => serializers.v2.FunctionImplementation).optional()
     ),
 });
 
