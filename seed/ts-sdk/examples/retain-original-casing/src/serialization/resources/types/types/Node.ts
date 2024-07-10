@@ -9,8 +9,8 @@ import * as core from "../../../../core";
 export const Node: core.serialization.ObjectSchema<serializers.Node.Raw, SeedExamples.Node> = core.serialization.object(
     {
         name: core.serialization.string(),
-        nodes: core.serialization.list(core.serialization.lazyObject(() => Node)).optional(),
-        trees: core.serialization.list(core.serialization.lazyObject(() => Tree)).optional(),
+        nodes: core.serialization.list(core.serialization.lazyObject(() => serializers.Node)).optional(),
+        trees: core.serialization.list(core.serialization.lazyObject(() => serializers.Tree)).optional(),
     }
 );
 
