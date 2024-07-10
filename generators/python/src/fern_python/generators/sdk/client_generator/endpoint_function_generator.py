@@ -48,6 +48,11 @@ HTTPX_PRIMITIVE_DATA_TYPES = set(
     ]
 )
 
+ALLOWED_RESERVED_METHOD_NAMES = [
+    "list",
+    "set",
+]
+
 
 @dataclass
 class GeneratedEndpointFunctionSnippet:
@@ -1344,8 +1349,8 @@ class EndpointFunctionSnippetGenerator:
 
 
 def get_endpoint_name(endpoint: ir_types.HttpEndpoint) -> str:
-    if endpoint.name.get_as_name().original_name.lower() == "list":
-        return "list"
+    if endpoint.name.get_as_name().original_name.lower() in ALLOWED_RESERVED_METHOD_NAMES:
+        return endpoint.name.get_as_name().snake_case.unsafe_name
     return endpoint.name.get_as_name().snake_case.safe_name
 
 
