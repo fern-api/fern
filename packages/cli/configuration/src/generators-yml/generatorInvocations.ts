@@ -135,11 +135,7 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         }
     },
     [GeneratorName.SWIFT_MODEL]: {
-        version: "0.0.0",
-        output: {
-            location: "local-file-system",
-            path: "../sdks/swift/model"
-        }
+        version: "0.0.0"
     },
     [GeneratorName.SWIFT_SDK]: {
         version: "0.0.0",

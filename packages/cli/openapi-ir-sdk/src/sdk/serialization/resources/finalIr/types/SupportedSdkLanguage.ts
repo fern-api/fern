@@ -17,7 +17,6 @@ export const SupportedSdkLanguage: core.serialization.Schema<
     "go",
     "ruby",
     "csharp",
-    "swift",
     "java",
     "js",
     "node",
@@ -37,7 +36,6 @@ export declare namespace SupportedSdkLanguage {
         | "go"
         | "ruby"
         | "csharp"
-        | "swift"
         | "java"
         | "js"
         | "node"

@@ -38,7 +38,7 @@ export const V50_TO_V49_MIGRATION: IrMigration<
         [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.SWIFT_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.SWIFT_MODEL]: "0.0.0",
         [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) =>
