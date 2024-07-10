@@ -1,0 +1,1611 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/container/list-of-primitives",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnListOfPrimitives"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_primitives(request: [\"string\"])",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/list-of-objects",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnListOfObjects"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_objects(request: [{ string: \"string\" }])",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/set-of-primitives",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnSetOfPrimitives"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_set_of_primitives(request: Set[\"string\"])",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/set-of-objects",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnSetOfObjects"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_set_of_objects(request: Set[{ string: \"string\" }])",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/map-prim-to-prim",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnMapPrimToPrim"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_map_prim_to_prim(request: { \"string\": \"string\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/map-prim-to-object",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnMapOfPrimToObject"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_map_of_prim_to_object(request: { \"string\": { string: \"string\" } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/opt-objects",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnOptional"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_optional(request: { string: \"string\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/list-of-primitives",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnListOfPrimitives"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_primitives(request: [\"string\"])",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/list-of-objects",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnListOfObjects"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_objects(request: [{ string: \"string\" }])",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/set-of-primitives",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnSetOfPrimitives"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_set_of_primitives(request: Set[\"string\"])",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/set-of-objects",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnSetOfObjects"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_set_of_objects(request: Set[{ string: \"string\" }])",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/map-prim-to-prim",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnMapPrimToPrim"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_map_prim_to_prim(request: { \"string\": \"string\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/map-prim-to-object",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnMapOfPrimToObject"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_map_of_prim_to_object(request: { \"string\": { string: \"string\" } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/opt-objects",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnOptional"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_optional(request: { string: \"string\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/enum",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/enum.getAndReturnEnum"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.enum.get_and_return_enum(request: SUNNY)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/enum",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/enum.getAndReturnEnum"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.enum.get_and_return_enum(request: SUNNY)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/http-methods.testGet"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_get(id: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/http-methods.testPost"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_post(request: { string: \"string\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "PUT",
+                "identifierOverride": "endpoint_endpoints/http-methods.testPut"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_put(id: \"string\", request: { string: \"string\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "PATCH",
+                "identifierOverride": "endpoint_endpoints/http-methods.testPatch"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_patch(id: \"string\", request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "DELETE",
+                "identifierOverride": "endpoint_endpoints/http-methods.testDelete"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_delete(id: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/http-methods.testGet"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_get(id: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/http-methods.testPost"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_post(request: { string: \"string\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "PUT",
+                "identifierOverride": "endpoint_endpoints/http-methods.testPut"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_put(id: \"string\", request: { string: \"string\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "PATCH",
+                "identifierOverride": "endpoint_endpoints/http-methods.testPatch"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_patch(id: \"string\", request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "DELETE",
+                "identifierOverride": "endpoint_endpoints/http-methods.testDelete"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_delete(id: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-optional-field",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnWithOptionalField"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_optional_field(request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-required-field",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnWithRequiredField"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_required_field(request: { string: \"string\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-map-of-map",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnWithMapOfMap"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_map_of_map(request: { map: { \"string\": { \"string\": \"string\" } } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-nested-with-optional-field",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithOptionalField"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_optional_field(request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-nested-with-required-field/{string}",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithRequiredField"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field(string: \"string\", request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-nested-with-required-field-list",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithRequiredFieldAsList"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{ string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } }])",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-optional-field",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnWithOptionalField"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_optional_field(request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-required-field",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnWithRequiredField"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_required_field(request: { string: \"string\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-map-of-map",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnWithMapOfMap"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_map_of_map(request: { map: { \"string\": { \"string\": \"string\" } } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-nested-with-optional-field",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithOptionalField"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_optional_field(request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-nested-with-required-field/{string}",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithRequiredField"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field(string: \"string\", request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-nested-with-required-field-list",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithRequiredFieldAsList"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{ string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } }])",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithPath"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path(param: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithQuery"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_query(query: \"string\", number: 1)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithAllowMultipleQuery"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_allow_multiple_query(query: \"string\", numer: 1)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path-query/{param}",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithPathAndQuery"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path_and_query(param: \"string\", query: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "PUT",
+                "identifierOverride": "endpoint_endpoints/params.modifyWithPath"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.modify_with_path(param: \"string\", request: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithPath"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path(param: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithQuery"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_query(query: \"string\", number: 1)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithAllowMultipleQuery"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_allow_multiple_query(query: \"string\", numer: 1)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path-query/{param}",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithPathAndQuery"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path_and_query(param: \"string\", query: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "PUT",
+                "identifierOverride": "endpoint_endpoints/params.modifyWithPath"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.modify_with_path(param: \"string\", request: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/string",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnString"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_string(request: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/integer",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnInt"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_int(request: 1)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/long",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnLong"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_long(request: 1000000)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/double",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnDouble"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_double(request: 1.1)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/boolean",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnBool"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_bool(request: true)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/datetime",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnDatetime"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_datetime(request: DateTime.parse(\"2024-01-15T09:30:00.000Z\"))",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/date",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnDate"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_date(request: Date.parse(\"2023-01-15\"))",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/uuid",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnUUID"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_uuid(request: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/base64",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnBase64"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_base_64(request: \"SGVsbG8gd29ybGQh\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/string",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnString"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_string(request: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/integer",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnInt"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_int(request: 1)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/long",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnLong"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_long(request: 1000000)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/double",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnDouble"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_double(request: 1.1)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/boolean",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnBool"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_bool(request: true)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/datetime",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnDatetime"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_datetime(request: DateTime.parse(\"2024-01-15T09:30:00.000Z\"))",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/date",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnDate"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_date(request: Date.parse(\"2023-01-15\"))",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/uuid",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnUUID"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_uuid(request: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/base64",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnBase64"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_base_64(request: \"SGVsbG8gd29ybGQh\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/union",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/union.getAndReturnUnion"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.union.get_and_return_union",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/union",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/union.getAndReturnUnion"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.union.get_and_return_union",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/list-of-primitives",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnListOfPrimitives"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_primitives(request: [\"string\"])",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/list-of-objects",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnListOfObjects"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_objects(request: [{ string: \"string\" }])",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/set-of-primitives",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnSetOfPrimitives"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_set_of_primitives(request: Set[\"string\"])",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/set-of-objects",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnSetOfObjects"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_set_of_objects(request: Set[{ string: \"string\" }])",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/map-prim-to-prim",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnMapPrimToPrim"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_map_prim_to_prim(request: { \"string\": \"string\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/map-prim-to-object",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnMapOfPrimToObject"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_map_of_prim_to_object(request: { \"string\": { string: \"string\" } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/opt-objects",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnOptional"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_optional(request: { string: \"string\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/list-of-primitives",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnListOfPrimitives"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_primitives(request: [\"string\"])",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/list-of-objects",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnListOfObjects"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_objects(request: [{ string: \"string\" }])",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/set-of-primitives",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnSetOfPrimitives"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_set_of_primitives(request: Set[\"string\"])",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/set-of-objects",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnSetOfObjects"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_set_of_objects(request: Set[{ string: \"string\" }])",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/map-prim-to-prim",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnMapPrimToPrim"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_map_prim_to_prim(request: { \"string\": \"string\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/map-prim-to-object",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnMapOfPrimToObject"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_map_of_prim_to_object(request: { \"string\": { string: \"string\" } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/opt-objects",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/container.getAndReturnOptional"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_optional(request: { string: \"string\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/enum",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/enum.getAndReturnEnum"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.enum.get_and_return_enum(request: SUNNY)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/enum",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/enum.getAndReturnEnum"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.enum.get_and_return_enum(request: SUNNY)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/http-methods.testGet"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_get(id: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/http-methods.testPost"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_post(request: { string: \"string\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "PUT",
+                "identifierOverride": "endpoint_endpoints/http-methods.testPut"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_put(id: \"string\", request: { string: \"string\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "PATCH",
+                "identifierOverride": "endpoint_endpoints/http-methods.testPatch"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_patch(id: \"string\", request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "DELETE",
+                "identifierOverride": "endpoint_endpoints/http-methods.testDelete"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_delete(id: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/http-methods.testGet"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_get(id: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/http-methods.testPost"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_post(request: { string: \"string\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "PUT",
+                "identifierOverride": "endpoint_endpoints/http-methods.testPut"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_put(id: \"string\", request: { string: \"string\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "PATCH",
+                "identifierOverride": "endpoint_endpoints/http-methods.testPatch"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_patch(id: \"string\", request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "DELETE",
+                "identifierOverride": "endpoint_endpoints/http-methods.testDelete"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_delete(id: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-optional-field",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnWithOptionalField"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_optional_field(request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-required-field",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnWithRequiredField"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_required_field(request: { string: \"string\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-map-of-map",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnWithMapOfMap"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_map_of_map(request: { map: { \"string\": { \"string\": \"string\" } } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-nested-with-optional-field",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithOptionalField"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_optional_field(request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-nested-with-required-field/{string}",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithRequiredField"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field(string: \"string\", request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-nested-with-required-field-list",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithRequiredFieldAsList"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{ string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } }])",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-optional-field",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnWithOptionalField"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_optional_field(request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-required-field",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnWithRequiredField"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_required_field(request: { string: \"string\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-map-of-map",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnWithMapOfMap"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_map_of_map(request: { map: { \"string\": { \"string\": \"string\" } } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-nested-with-optional-field",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithOptionalField"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_optional_field(request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-nested-with-required-field/{string}",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithRequiredField"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field(string: \"string\", request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-nested-with-required-field-list",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithRequiredFieldAsList"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{ string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } }])",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithPath"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path(param: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithQuery"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_query(query: \"string\", number: 1)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithAllowMultipleQuery"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_allow_multiple_query(query: \"string\", numer: 1)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path-query/{param}",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithPathAndQuery"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path_and_query(param: \"string\", query: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "PUT",
+                "identifierOverride": "endpoint_endpoints/params.modifyWithPath"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.modify_with_path(param: \"string\", request: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithPath"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path(param: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithQuery"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_query(query: \"string\", number: 1)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithAllowMultipleQuery"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_allow_multiple_query(query: \"string\", numer: 1)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path-query/{param}",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithPathAndQuery"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path_and_query(param: \"string\", query: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "PUT",
+                "identifierOverride": "endpoint_endpoints/params.modifyWithPath"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.modify_with_path(param: \"string\", request: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/string",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnString"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_string(request: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/integer",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnInt"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_int(request: 1)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/long",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnLong"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_long(request: 1000000)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/double",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnDouble"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_double(request: 1.1)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/boolean",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnBool"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_bool(request: true)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/datetime",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnDatetime"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_datetime(request: DateTime.parse(\"2024-01-15T09:30:00.000Z\"))",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/date",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnDate"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_date(request: Date.parse(\"2023-01-15\"))",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/uuid",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnUUID"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_uuid(request: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/base64",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnBase64"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_base_64(request: \"SGVsbG8gd29ybGQh\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/string",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnString"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_string(request: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/integer",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnInt"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_int(request: 1)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/long",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnLong"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_long(request: 1000000)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/double",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnDouble"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_double(request: 1.1)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/boolean",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnBool"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_bool(request: true)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/datetime",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnDatetime"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_datetime(request: DateTime.parse(\"2024-01-15T09:30:00.000Z\"))",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/date",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnDate"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_date(request: Date.parse(\"2023-01-15\"))",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/uuid",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnUUID"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_uuid(request: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/base64",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/primitive.getAndReturnBase64"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_base_64(request: \"SGVsbG8gd29ybGQh\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/union",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/union.getAndReturnUnion"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.union.get_and_return_union",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/union",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/union.getAndReturnUnion"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.union.get_and_return_union",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/req-bodies/object",
+                "method": "POST",
+                "identifierOverride": "endpoint_inlined-requests.postWithObjectBodyandResponse"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.inlined_requests.post_with_object_bodyand_response(\n  string: \"string\",\n  integer: 1,\n  nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" }\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/req-bodies/object",
+                "method": "POST",
+                "identifierOverride": "endpoint_inlined-requests.postWithObjectBodyandResponse"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.inlined_requests.post_with_object_bodyand_response(\n  string: \"string\",\n  integer: 1,\n  nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" }\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/no-auth",
+                "method": "POST",
+                "identifierOverride": "endpoint_no-auth.postWithNoAuth"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.no_auth.post_with_no_auth(request: {\"key\":\"value\"})",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/no-auth",
+                "method": "POST",
+                "identifierOverride": "endpoint_no-auth.postWithNoAuth"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.no_auth.post_with_no_auth(request: {\"key\":\"value\"})",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/no-req-body",
+                "method": "GET",
+                "identifierOverride": "endpoint_no-req-body.getWithNoRequestBody"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.no_req_body.get_with_no_request_body",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/no-req-body",
+                "method": "POST",
+                "identifierOverride": "endpoint_no-req-body.postWithNoRequestBody"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.no_req_body.post_with_no_request_body",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/no-req-body",
+                "method": "GET",
+                "identifierOverride": "endpoint_no-req-body.getWithNoRequestBody"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.no_req_body.get_with_no_request_body",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/no-req-body",
+                "method": "POST",
+                "identifierOverride": "endpoint_no-req-body.postWithNoRequestBody"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.no_req_body.post_with_no_request_body",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/test-headers/custom-header",
+                "method": "POST",
+                "identifierOverride": "endpoint_req-with-headers.getWithCustomHeader"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.req_with_headers.get_with_custom_header(x_test_endpoint_header: \"string\", request: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/test-headers/custom-header",
+                "method": "POST",
+                "identifierOverride": "endpoint_req-with-headers.getWithCustomHeader"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.req_with_headers.get_with_custom_header(x_test_endpoint_header: \"string\", request: \"string\")",
+                "type": "ruby"
+            }
+        }
+    ],
+    "types": {}
+}
