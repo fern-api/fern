@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift, { AccessLevel, FunctionModifier, Param, Type } from "../swift";
+import Swift, { AccessLevel, FunctionModifier, Param, Type } from "..";
 
 /*
 

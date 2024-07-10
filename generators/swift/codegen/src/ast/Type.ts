@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift, { AccessLevel, ClassLevel, Enum, Func } from "../swift";
+import Swift, { AccessLevel, ClassLevel, Enum, Func } from "..";
 
 /*
 

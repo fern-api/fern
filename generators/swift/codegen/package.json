@@ -30,7 +30,7 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generator-commons": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
-    "@fern-fern/ir-sdk": "^32",
+    "@fern-fern/ir-sdk": "^50",
     "zod": "^3.22.3"
   },
   "devDependencies": {

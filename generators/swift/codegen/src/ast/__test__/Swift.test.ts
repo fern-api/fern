@@ -1,6 +1,5 @@
-import { FileGenerator } from "@fern-api/generator-commons";
-import { AccessLevel, ClassLevel, FunctionModifier } from "..";
-import Swift from "../../swift";
+import Swift, { AccessLevel, ClassLevel, FunctionModifier } from "../..";
+import { SwiftFile } from "../../project/SwiftFile";
 
 describe("Swift Language", () => {
     it("makes file header", () => {
@@ -98,7 +97,7 @@ describe("Swift Language", () => {
         expect(output.toString()).toMatchSnapshot();
     });
 
-    it("makes file", () => {
+    it("makes file", async () => {
         const output = Swift.makeFile({
             fileHeader: Swift.makeFileHeader({
                 header: "// Sample.swift"
@@ -153,13 +152,13 @@ describe("Swift Language", () => {
         });
         expect(output.toString()).toMatchSnapshot();
 
-        // Make a sample file that actually testable
-        FileGenerator.generate({
-            fileName: "Sample", 
-            node: output, 
-            extension: "swift", 
-            outputDir: "src/ast/__test__/__snapshots__",
+        const file = new SwiftFile({
+            name: "Example", 
+            file: output, 
+            directory: "src/ast/__test__",
         });
+
+        await file.generate();
 
     });
 });

@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift, { Type, FileHeader, Import } from "../swift";
+import Swift, { FileHeader, Import, Type } from "../";
 
 export declare namespace File {
     interface Args {
@@ -38,7 +38,7 @@ export class File extends AstNode {
         if (this.imports) {
             this.imports.forEach(imp => {
                 writer.writeNode(imp);
-            })
+            });
             writer.newLine();
         }
 

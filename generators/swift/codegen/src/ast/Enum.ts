@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift, { AccessLevel, Func, Import, Type, EnumCase } from "../swift";
+import Swift, { AccessLevel, EnumCase, Type } from "..";
 
 export declare namespace Enum {
     interface Args {
