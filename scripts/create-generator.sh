@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO: Add generation of this: https://github.com/fern-api/fern/pull/4034
+
 # Change to the root directory of the project
 cd "$(dirname "$0")/.." || { echo "Failed to change to root directory"; exit 1; }
 
