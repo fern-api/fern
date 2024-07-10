@@ -323,36 +323,21 @@ types:
 
   ExampleContainer:
     union:
-      list: ExampleListContainer
-      set: ExampleSetContainer
-      optional: ExampleOptionalContainer
-      map: ExampleMapContainer
-      literal: ExampleLiteralContainer
-
-  ExampleListContainer:
-    properties:
-      list: list<ExampleTypeReference>
-      itemType: optional<TypeReference>
-
-  ExampleSetContainer:
-    properties:
-      set: list<ExampleTypeReference>
-      itemType: optional<TypeReference>
-
-  ExampleOptionalContainer:
-    properties:
-      optional: optional<ExampleTypeReference>
-      valueType: optional<TypeReference>
-
-  ExampleMapContainer:
-    properties:
-      map: list<ExampleKeyValuePair>
-      keyType: optional<TypeReference>
-      valueType: optional<TypeReference>
-
-  ExampleLiteralContainer:
-    properties:
-      literal: ExamplePrimitive
+      list:
+        type: list<ExampleTypeReference>
+        key: list
+      set:
+        type: list<ExampleTypeReference>
+        key: set
+      optional:
+        type: optional<ExampleTypeReference>
+        key: optional
+      map:
+        type: list<ExampleKeyValuePair>
+        key: map
+      literal:
+        type: ExamplePrimitive
+        key: literal
 
   ExampleKeyValuePair:
     properties:
