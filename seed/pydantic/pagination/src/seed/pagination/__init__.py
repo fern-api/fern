@@ -10,6 +10,8 @@ from .resources import (
     UserListContainer,
     UserPage,
     UsernameContainer,
+    WithCursor,
+    WithPage,
     users,
 )
 from .username_cursor import UsernameCursor
@@ -27,5 +29,7 @@ __all__ = [
     "UsernameContainer",
     "UsernameCursor",
     "UsernamePage",
+    "WithCursor",
+    "WithPage",
     "users",
 ]

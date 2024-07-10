@@ -16,17 +16,17 @@ pip install fern_pagination
 Instantiate and use the client with the following:
 
 ```python
+from seed import WithCursor
 from seed.client import SeedPagination
 
 client = SeedPagination(
     token="YOUR_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.users.list_with_cursor_pagination(
-    page=1,
-    per_page=1,
-    order="asc",
-    starting_after="string",
+response = client.users.list_with_body_cursor_pagination(
+    pagination=WithCursor(
+        cursor="string",
+    ),
 )
 for item in response:
     yield item
@@ -42,6 +42,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
+from seed import WithCursor
 from seed.client import AsyncSeedPagination
 
 client = AsyncSeedPagination(
@@ -51,11 +52,10 @@ client = AsyncSeedPagination(
 
 
 async def main() -> None:
-    response = await client.users.list_with_cursor_pagination(
-        page=1,
-        per_page=1,
-        order="asc",
-        starting_after="string",
+    response = await client.users.list_with_body_cursor_pagination(
+        pagination=WithCursor(
+            cursor="string",
+        ),
     )
     async for item in response:
         yield item
@@ -76,7 +76,7 @@ will be thrown.
 from .api_error import ApiError
 
 try:
-    client.users.list_with_cursor_pagination(...)
+    client.users.list_with_body_cursor_pagination(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -123,7 +123,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.users.list_with_cursor_pagination(...,{
+client.users.list_with_body_cursor_pagination(...,{
     max_retries=1
 })
 ```
@@ -140,7 +140,7 @@ client = SeedPagination(..., { timeout=20.0 }, )
 
 
 # Override timeout for a specific method
-client.users.list_with_cursor_pagination(...,{
+client.users.list_with_body_cursor_pagination(...,{
     timeout_in_seconds=1
 })
 ```

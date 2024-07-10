@@ -92,6 +92,75 @@ the next page of results.
 </dl>
 </details>
 
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_body_cursor_pagination</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import WithCursor
+from seed.client import SeedPagination
+
+client = SeedPagination(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.users.list_with_body_cursor_pagination(
+    pagination=WithCursor(
+        cursor="string",
+    ),
+)
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pagination:** `typing.Optional[WithCursor]` 
+
+The object that contains the cursor used for pagination
+in order to fetch the next page of results.
+
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_offset_pagination</a>(...)</code></summary>
 <dl>
 <dd>
@@ -165,6 +234,75 @@ for page in response.iter_pages():
 
 The cursor used for pagination in order to fetch
 the next page of results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_body_offset_pagination</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import WithPage
+from seed.client import SeedPagination
+
+client = SeedPagination(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.users.list_with_body_offset_pagination(
+    pagination=WithPage(
+        page=1,
+    ),
+)
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pagination:** `typing.Optional[WithPage]` 
+
+The object that contains the offset used for pagination
+in order to fetch the next page of results.
+
     
 </dd>
 </dl>

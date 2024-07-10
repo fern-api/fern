@@ -16,14 +16,13 @@ npm i -s @fern/pagination
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedPaginationClient, SeedPagination } from "@fern/pagination";
+import { SeedPaginationClient } from "@fern/pagination";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-await client.users.listWithCursorPagination({
-    page: 1,
-    perPage: 1,
-    order: SeedPagination.Order.Asc,
-    startingAfter: "string",
+await client.users.listWithBodyCursorPagination({
+    pagination: {
+        cursor: "string",
+    },
 });
 ```
 
@@ -49,7 +48,7 @@ will be thrown.
 import { SeedPaginationError } from "@fern/pagination";
 
 try {
-    await client.users.listWithCursorPagination(...);
+    await client.users.listWithBodyCursorPagination(...);
 } catch (err) {
     if (err instanceof SeedPaginationError) {
         console.log(err.statusCode);
@@ -76,7 +75,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.users.listWithCursorPagination(..., {
+const response = await client.users.listWithBodyCursorPagination(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -86,7 +85,7 @@ const response = await client.users.listWithCursorPagination(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.users.listWithCursorPagination(..., {
+const response = await client.users.listWithBodyCursorPagination(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -97,7 +96,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.users.listWithCursorPagination(..., {
+const response = await client.users.listWithBodyCursorPagination(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request

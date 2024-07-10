@@ -164,21 +164,19 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         );
 
         // loadPage
+        const pageProperty = this.getNameFromWireValue({ name: cursor.page.property.name, context });
+        const pagePropertyPathForSet = [
+            ...(cursor.page.propertyPath ?? []).map((name) => this.getName({ name, context })),
+            pageProperty
+        ].join(".");
         const loadPage = [
             ts.factory.createReturnStatement(
                 ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
-                    ts.factory.createObjectLiteralExpression(
-                        [
-                            ts.factory.createSpreadAssignment(ts.factory.createIdentifier("request")),
-                            ts.factory.createPropertyAssignment(
-                                ts.factory.createIdentifier(
-                                    this.getNameFromWireValue({ name: cursor.page.property.name, context })
-                                ),
-                                nextPropertyAccess
-                            )
-                        ],
-                        true
-                    )
+                    context.coreUtilities.utils.setObjectProperty._invoke({
+                        referenceToObject: ts.factory.createIdentifier("request"),
+                        path: pagePropertyPathForSet,
+                        value: nextPropertyAccess
+                    })
                 ])
             )
         ];
@@ -217,8 +215,13 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             "request",
             ...(offset.page.propertyPath ?? []).map((name) => this.getName({ name, context }))
         ].join("?.");
-        const pagePropertyAccess = ts.factory.createPropertyAccessExpression(
+        const pagePropertyPathForSet = [
+            ...(offset.page.propertyPath ?? []).map((name) => this.getName({ name, context })),
+            pageProperty
+        ].join(".");
+        const pagePropertyAccess = ts.factory.createPropertyAccessChain(
             ts.factory.createIdentifier(pagePropertyPath),
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
             ts.factory.createIdentifier(pageProperty)
         );
         const initializeOffset = ts.factory.createVariableStatement(
@@ -299,16 +302,12 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                   ts.factory.createNull()
                               ),
                               ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                              ts.factory.createBinaryExpression(
+                              ts.factory.createPropertyAccessExpression(
                                   ts.factory.createPropertyAccessExpression(
-                                      ts.factory.createPropertyAccessExpression(
-                                          ts.factory.createIdentifier(itemsPropertyPathWithoutOptional),
-                                          ts.factory.createIdentifier(itemsProperty)
-                                      ),
-                                      ts.factory.createIdentifier("length")
+                                      ts.factory.createIdentifier(itemsPropertyPathWithoutOptional),
+                                      ts.factory.createIdentifier(itemsProperty)
                                   ),
-                                  ts.factory.createToken(ts.SyntaxKind.PlusToken),
-                                  ts.factory.createNumericLiteral("1")
+                                  ts.factory.createIdentifier("length")
                               ),
                               ts.factory.createToken(ts.SyntaxKind.ColonToken),
                               ts.factory.createNumericLiteral("1")
@@ -324,18 +323,11 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                   );
         const callEndpoint = ts.factory.createReturnStatement(
             ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
-                ts.factory.createObjectLiteralExpression(
-                    [
-                        ts.factory.createSpreadAssignment(ts.factory.createIdentifier("request")),
-                        ts.factory.createPropertyAssignment(
-                            ts.factory.createIdentifier(
-                                this.getNameFromWireValue({ name: offset.page.property.name, context })
-                            ),
-                            ts.factory.createIdentifier("_offset")
-                        )
-                    ],
-                    true
-                )
+                context.coreUtilities.utils.setObjectProperty._invoke({
+                    referenceToObject: ts.factory.createIdentifier("request"),
+                    path: pagePropertyPathForSet,
+                    value: ts.factory.createIdentifier("_offset")
+                })
             ])
         );
         const loadPage = [incrementOffset, callEndpoint];

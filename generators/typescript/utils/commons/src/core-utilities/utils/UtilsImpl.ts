@@ -9,7 +9,7 @@ export class UtilsImpl extends CoreUtility implements Utils {
         repoInfoForTesting: {
             path: RelativeFilePath.of("generators/typescript/utils/core-utilities/utils/src/utils")
         },
-        originalPathOnDocker: AbsoluteFilePath.of("/assets/utils/utils"),
+        originalPathOnDocker: AbsoluteFilePath.of("/assets/utils"),
         pathInCoreUtilities: [{ nameOnDisk: "utils", exportDeclaration: { exportAll: true } }]
     };
 

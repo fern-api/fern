@@ -3,6 +3,8 @@
 require_relative "fern_pagination/types/username_cursor"
 require_relative "fern_pagination/types/username_page"
 require_relative "fern_pagination/users/types/order"
+require_relative "fern_pagination/users/types/with_page"
+require_relative "fern_pagination/users/types/with_cursor"
 require_relative "fern_pagination/users/types/user_list_container"
 require_relative "fern_pagination/users/types/user_page"
 require_relative "fern_pagination/users/types/username_container"
