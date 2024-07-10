@@ -208,6 +208,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:generators/typescript/utils/core-utilities/fetcher"\
       },\
       {\
+        "name": "@fern-typescript/utils",\
+        "reference": "workspace:generators/typescript/utils/core-utilities/utils"\
+      },\
+      {\
         "name": "@fern-typescript/zurg",\
         "reference": "workspace:generators/typescript/utils/core-utilities/zurg"\
       },\
@@ -463,6 +467,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-typescript/type-schema-generator", ["workspace:generators/typescript/model/type-schema-generator"]],\
       ["@fern-typescript/union-generator", ["workspace:generators/typescript/model/union-generator"]],\
       ["@fern-typescript/union-schema-generator", ["workspace:generators/typescript/model/union-schema-generator"]],\
+      ["@fern-typescript/utils", ["workspace:generators/typescript/utils/core-utilities/utils"]],\
       ["@fern-typescript/zurg", ["workspace:generators/typescript/utils/core-utilities/zurg"]],\
       ["fern", ["workspace:."]]\
     ],\
@@ -9360,6 +9365,23 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["ts-morph", "npm:15.1.0"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@fern-typescript/utils", [\
+        ["workspace:generators/typescript/utils/core-utilities/utils", {\
+          "packageLocation": "./generators/typescript/utils/core-utilities/utils/",\
+          "packageDependencies": [\
+            ["@fern-typescript/utils", "workspace:generators/typescript/utils/core-utilities/utils"],\
+            ["@types/jest", "npm:29.0.3"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["depcheck", "npm:1.4.6"],\
+            ["eslint", "npm:8.56.0"],\
+            ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
+            ["organize-imports-cli", "npm:0.10.0"],\
+            ["prettier", "npm:2.7.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\

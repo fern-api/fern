@@ -106,7 +106,7 @@ export class Type extends AstNode {
         super();
     }
 
-    public write(writer: Writer): void {
+    public write(writer: Writer, parentType: Type | undefined = undefined): void {
         switch (this.internalType.type) {
             case "integer":
                 writer.write("int");
@@ -153,8 +153,11 @@ export class Type extends AstNode {
                 writer.write(">");
                 break;
             case "optional":
-                this.internalType.value.write(writer);
-                writer.write("?");
+                this.internalType.value.write(writer, this);
+                // avoid double optional
+                if (parentType?.internalType?.type !== "optional") {
+                    writer.write("?");
+                }
                 break;
             case "reference":
                 writer.writeNode(this.internalType.value);
