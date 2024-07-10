@@ -6,7 +6,8 @@ import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { RawClient } from "../endpoint/RawClient";
 import { EndpointGenerator } from "../endpoint/EndpointGenerator";
-import { MethodType } from "@fern-api/csharp-codegen/lib/ast/Method";
+// eslint-disable-next-line import/no-internal-modules
+import { MethodType } from "@fern-api/csharp-codegen/src/ast/Method";
 
 export const CLIENT_MEMBER_NAME = "_client";
 
@@ -70,6 +71,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 csharp.field({
                     access: "public",
                     get: true,
+                    init: true,
                     name: subpackage.name.pascalCase.safeName,
                     type: csharp.Type.reference(this.context.getSubpackageClassReference(subpackage))
                 })
@@ -115,15 +117,19 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             parameters.push(
                 csharp.parameter({
                     name: param.name,
-                    type: this.context.csharpTypeMapper.convert({ reference: param.typeReference }),
-                    docs: param.docs
+                    type: this.context.csharpTypeMapper
+                        .convert({ reference: param.typeReference })
+                        .toOptionalIfNotAlready(),
+                    docs: param.docs,
+                    initializer: "null"
                 })
             );
         }
         parameters.push(
             csharp.parameter({
                 name: "clientOptions",
-                type: csharp.Type.optional(csharp.Type.reference(this.context.getClientOptionsClassReference()))
+                type: csharp.Type.optional(csharp.Type.reference(this.context.getClientOptionsClassReference())),
+                initializer: "null"
             })
         );
 
