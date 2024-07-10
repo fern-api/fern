@@ -20,9 +20,9 @@ public partial class SeedEnumClient
         QueryParam = new QueryParamClient(_client);
     }
 
-    public InlinedRequestClient InlinedRequest { get; }
+    public InlinedRequestClient InlinedRequest { get; init; }
 
-    public PathParamClient PathParam { get; }
+    public PathParamClient PathParam { get; init; }
 
-    public QueryParamClient QueryParam { get; }
+    public QueryParamClient QueryParam { get; init; }
 }

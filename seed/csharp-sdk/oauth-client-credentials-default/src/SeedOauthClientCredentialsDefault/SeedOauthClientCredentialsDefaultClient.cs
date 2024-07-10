@@ -21,5 +21,5 @@ public partial class SeedOauthClientCredentialsDefaultClient
         Auth = new AuthClient(_client);
     }
 
-    public AuthClient Auth { get; }
+    public AuthClient Auth { get; init; }
 }

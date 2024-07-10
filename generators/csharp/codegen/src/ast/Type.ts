@@ -210,6 +210,13 @@ export class Type extends AstNode {
         return ["list", "set", "map"].includes(this.internalType.type);
     }
 
+    public toOptionalIfNotAlready(): Type {
+        if (this.internalType.type === "optional") {
+            return this;
+        }
+        return Type.optional(this);
+    }
+
     public underlyingTypeIfOptional(): Type | undefined {
         if (this.internalType.type === "optional") {
             return (this.internalType as Optional).value;

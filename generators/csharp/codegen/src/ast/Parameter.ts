@@ -31,12 +31,9 @@ export class Parameter extends AstNode {
 
     public write(writer: Writer): void {
         this.type.write(writer);
-        const isOptional = this.type.underlyingTypeIfOptional() != null;
         writer.write(` ${this.name}`);
         if (this.initializer != null) {
             writer.write(` = ${this.initializer}`);
-        } else if (isOptional) {
-            writer.write(" = null");
         }
     }
 }

@@ -18,5 +18,5 @@ public partial class SeedVariablesClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; }
+    public ServiceClient Service { get; init; }
 }

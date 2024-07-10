@@ -5,11 +5,12 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class GradedResponse
+public record GradedResponse
 {
     [JsonPropertyName("submissionId")]
-    public Guid SubmissionId { get; init; }
+    public required Guid SubmissionId { get; init; }
 
     [JsonPropertyName("testCases")]
-    public Dictionary<string, TestCaseResultWithStdout> TestCases { get; init; }
+    public Dictionary<string, TestCaseResultWithStdout> TestCases { get; init; } =
+        new Dictionary<string, TestCaseResultWithStdout>();
 }

@@ -21,9 +21,9 @@ public partial class SeedApiClient
         Folder = new FolderClient(_client);
     }
 
-    public AClient A { get; }
+    public AClient A { get; init; }
 
-    public FolderClient Folder { get; }
+    public FolderClient Folder { get; init; }
 
     public async Task FooAsync()
     {

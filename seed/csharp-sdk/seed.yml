@@ -24,6 +24,5 @@ fixtures:
           Moq.Contrib.HttpClient: "1.4.0"
       outputFolder: extra-dependencies
 allowedFailures:
-  - examples
   - objects-with-imports
 

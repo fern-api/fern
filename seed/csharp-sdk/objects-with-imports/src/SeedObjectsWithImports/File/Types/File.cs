@@ -3,7 +3,7 @@ using SeedObjectsWithImports;
 
 #nullable enable
 
-namespace SeedObjectsWithImports.File.Types;
+namespace SeedObjectsWithImports;
 
 public record File
 {

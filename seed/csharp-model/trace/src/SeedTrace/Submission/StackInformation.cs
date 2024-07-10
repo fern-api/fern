@@ -5,10 +5,10 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class StackInformation
+public record StackInformation
 {
     [JsonPropertyName("numStackFrames")]
-    public int NumStackFrames { get; init; }
+    public required int NumStackFrames { get; init; }
 
     [JsonPropertyName("topStackFrame")]
     public StackFrame? TopStackFrame { get; init; }

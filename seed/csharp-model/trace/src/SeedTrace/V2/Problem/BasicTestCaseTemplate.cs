@@ -5,17 +5,17 @@ using SeedTrace.V2;
 
 namespace SeedTrace.V2;
 
-public class BasicTestCaseTemplate
+public record BasicTestCaseTemplate
 {
     [JsonPropertyName("templateId")]
-    public string TemplateId { get; init; }
+    public required string TemplateId { get; init; }
 
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     [JsonPropertyName("description")]
-    public TestCaseImplementationDescription Description { get; init; }
+    public required TestCaseImplementationDescription Description { get; init; }
 
     [JsonPropertyName("expectedValueParameterId")]
-    public string ExpectedValueParameterId { get; init; }
+    public required string ExpectedValueParameterId { get; init; }
 }

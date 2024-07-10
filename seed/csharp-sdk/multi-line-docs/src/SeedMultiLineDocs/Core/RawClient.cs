@@ -61,7 +61,7 @@ public class RawClient(Dictionary<string, string> headers, ClientOptions clientO
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
 
-    public abstract class BaseApiRequest
+    public record BaseApiRequest
     {
         public required HttpMethod Method { get; init; }
 
@@ -79,7 +79,7 @@ public class RawClient(Dictionary<string, string> headers, ClientOptions clientO
     /// <summary>
     /// The request object to be sent for streaming uploads.
     /// </summary>
-    public abstract class StreamApiRequest : BaseApiRequest
+    public record StreamApiRequest : BaseApiRequest
     {
         public Stream? Body { get; init; }
     }
@@ -87,7 +87,7 @@ public class RawClient(Dictionary<string, string> headers, ClientOptions clientO
     /// <summary>
     /// The request object to be sent for JSON APIs.
     /// </summary>
-    public class JsonApiRequest : BaseApiRequest
+    public record JsonApiRequest : BaseApiRequest
     {
         public object? Body { get; init; }
     }
@@ -95,7 +95,7 @@ public class RawClient(Dictionary<string, string> headers, ClientOptions clientO
     /// <summary>
     /// The response object returned from the API.
     /// </summary>
-    public class ApiResponse
+    public record ApiResponse
     {
         public required int StatusCode { get; init; }
 

@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedPagination;
 
-public class User
+public record User
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     [JsonPropertyName("id")]
-    public int Id { get; init; }
+    public required int Id { get; init; }
 }

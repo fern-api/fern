@@ -2,7 +2,7 @@ using SeedObjectsWithImports.Core;
 
 #nullable enable
 
-namespace SeedObjectsWithImports.File.Directory;
+namespace SeedObjectsWithImports.File;
 
 public class DirectoryClient
 {

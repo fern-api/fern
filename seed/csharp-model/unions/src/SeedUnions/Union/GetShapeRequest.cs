@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedUnions;
 
-public class GetShapeRequest
+public record GetShapeRequest
 {
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; init; }
 }

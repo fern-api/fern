@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class GradedTestCaseUpdate
+public record GradedTestCaseUpdate
 {
     [JsonPropertyName("testCaseId")]
-    public string TestCaseId { get; init; }
+    public required string TestCaseId { get; init; }
 
     [JsonPropertyName("grade")]
-    public object Grade { get; init; }
+    public required object Grade { get; init; }
 }

@@ -22,5 +22,5 @@ public partial class SeedIdempotencyHeadersClient
         Payment = new PaymentClient(_client);
     }
 
-    public PaymentClient Payment { get; }
+    public PaymentClient Payment { get; init; }
 }

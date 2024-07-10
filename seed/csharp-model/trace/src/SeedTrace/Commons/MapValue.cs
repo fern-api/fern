@@ -5,8 +5,8 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class MapValue
+public record MapValue
 {
     [JsonPropertyName("keyValuePairs")]
-    public IEnumerable<KeyValuePair> KeyValuePairs { get; init; }
+    public IEnumerable<KeyValuePair> KeyValuePairs { get; init; } = new List<KeyValuePair>();
 }

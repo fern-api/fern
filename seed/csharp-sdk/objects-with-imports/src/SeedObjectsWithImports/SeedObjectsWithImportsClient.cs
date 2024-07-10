@@ -1,7 +1,6 @@
 using SeedObjectsWithImports;
 using SeedObjectsWithImports.Commons;
 using SeedObjectsWithImports.Core;
-using SeedObjectsWithImports.File;
 
 #nullable enable
 
@@ -21,7 +20,7 @@ public partial class SeedObjectsWithImportsClient
         File = new FileClient(_client);
     }
 
-    public CommonsClient Commons { get; }
+    public CommonsClient Commons { get; init; }
 
-    public FileClient File { get; }
+    public FileClient File { get; init; }
 }

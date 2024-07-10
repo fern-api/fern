@@ -5,7 +5,7 @@ using SeedApi;
 
 namespace SeedApi;
 
-public class ImportingA
+public record ImportingA
 {
     [JsonPropertyName("a")]
     public A? A { get; init; }

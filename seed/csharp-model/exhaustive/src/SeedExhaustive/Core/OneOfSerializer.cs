@@ -10,7 +10,7 @@ public class OneOfSerializer<TOneOf> : JsonConverter<TOneOf>
 {
     public override TOneOf? Read(
         ref Utf8JsonReader reader,
-        Type typeToConvert,
+        System.Type typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -34,14 +34,14 @@ public class OneOfSerializer<TOneOf> : JsonConverter<TOneOf>
         );
     }
 
-    private static readonly (Type type, MethodInfo cast)[] s_types = GetOneOfTypes();
+    private static readonly (System.Type type, MethodInfo cast)[] s_types = GetOneOfTypes();
 
     public override void Write(Utf8JsonWriter writer, TOneOf value, JsonSerializerOptions options)
     {
         JsonSerializer.Serialize(writer, value.Value, options);
     }
 
-    private static (Type type, MethodInfo cast)[] GetOneOfTypes()
+    private static (System.Type type, MethodInfo cast)[] GetOneOfTypes()
     {
         var casts = typeof(TOneOf)
             .GetRuntimeMethods()

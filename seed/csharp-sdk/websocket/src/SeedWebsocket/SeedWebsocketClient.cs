@@ -18,5 +18,5 @@ public partial class SeedWebsocketClient
         Realtime = new RealtimeClient(_client);
     }
 
-    public RealtimeClient Realtime { get; }
+    public RealtimeClient Realtime { get; init; }
 }

@@ -18,5 +18,5 @@ public partial class SeedExtraPropertiesClient
         User = new UserClient(_client);
     }
 
-    public UserClient User { get; }
+    public UserClient User { get; init; }
 }

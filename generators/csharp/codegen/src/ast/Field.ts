@@ -71,7 +71,6 @@ export class Field extends AstNode {
         this.jsonPropertyName = jsonPropertyName;
         this.static_ = static_;
         this.useRequired = useRequired ?? false;
-        // this.useRequired = false; // required keyword not compatible with .NET 6.0
 
         if (this.jsonPropertyName != null) {
             this.annotations = [

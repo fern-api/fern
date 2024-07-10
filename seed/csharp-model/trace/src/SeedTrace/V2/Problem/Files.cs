@@ -5,8 +5,8 @@ using SeedTrace.V2;
 
 namespace SeedTrace.V2;
 
-public class Files
+public record Files
 {
     [JsonPropertyName("files")]
-    public IEnumerable<FileInfoV2> Files_ { get; init; }
+    public IEnumerable<FileInfoV2> Files_ { get; init; } = new List<FileInfoV2>();
 }

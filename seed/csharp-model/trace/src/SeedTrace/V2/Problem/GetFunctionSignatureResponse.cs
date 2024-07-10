@@ -5,8 +5,9 @@ using SeedTrace;
 
 namespace SeedTrace.V2;
 
-public class GetFunctionSignatureResponse
+public record GetFunctionSignatureResponse
 {
     [JsonPropertyName("functionByLanguage")]
-    public Dictionary<Language, string> FunctionByLanguage { get; init; }
+    public Dictionary<Language, string> FunctionByLanguage { get; init; } =
+        new Dictionary<Language, string>();
 }

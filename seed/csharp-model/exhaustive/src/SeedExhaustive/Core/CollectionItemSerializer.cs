@@ -23,7 +23,7 @@ public class CollectionItemSerializer<TDatatype, TConverterType>
     /// <returns>Created object.</returns>
     public override IEnumerable<TDatatype>? Read(
         ref Utf8JsonReader reader,
-        Type typeToConvert,
+        System.Type typeToConvert,
         JsonSerializerOptions options
     )
     {

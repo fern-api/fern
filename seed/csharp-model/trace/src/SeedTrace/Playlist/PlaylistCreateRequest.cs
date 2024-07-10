@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class PlaylistCreateRequest
+public record PlaylistCreateRequest
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     [JsonPropertyName("problems")]
-    public IEnumerable<string> Problems { get; init; }
+    public IEnumerable<string> Problems { get; init; } = new List<string>();
 }

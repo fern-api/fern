@@ -110,7 +110,7 @@ public class PlaylistClient
     public async Task<Playlist?> UpdatePlaylistAsync(
         int serviceParam,
         string playlistId,
-        UpdatePlaylistRequest? request = null
+        UpdatePlaylistRequest? request
     )
     {
         var response = await _client.MakeRequestAsync(

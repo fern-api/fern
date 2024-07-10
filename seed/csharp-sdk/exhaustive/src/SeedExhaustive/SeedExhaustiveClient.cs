@@ -26,17 +26,17 @@ public partial class SeedExhaustiveClient
         Types = new TypesClient(_client);
     }
 
-    public EndpointsClient Endpoints { get; }
+    public EndpointsClient Endpoints { get; init; }
 
-    public GeneralErrorsClient GeneralErrors { get; }
+    public GeneralErrorsClient GeneralErrors { get; init; }
 
-    public InlinedRequestsClient InlinedRequests { get; }
+    public InlinedRequestsClient InlinedRequests { get; init; }
 
-    public NoAuthClient NoAuth { get; }
+    public NoAuthClient NoAuth { get; init; }
 
-    public NoReqBodyClient NoReqBody { get; }
+    public NoReqBodyClient NoReqBody { get; init; }
 
-    public ReqWithHeadersClient ReqWithHeaders { get; }
+    public ReqWithHeadersClient ReqWithHeaders { get; init; }
 
-    public TypesClient Types { get; }
+    public TypesClient Types { get; init; }
 }

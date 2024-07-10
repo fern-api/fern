@@ -25,5 +25,5 @@ public partial class SeedSingleUrlEnvironmentDefaultClient
         Dummy = new DummyClient(_client);
     }
 
-    public DummyClient Dummy { get; }
+    public DummyClient Dummy { get; init; }
 }

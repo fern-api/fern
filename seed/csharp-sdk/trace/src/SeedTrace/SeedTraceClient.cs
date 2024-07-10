@@ -36,23 +36,23 @@ public partial class SeedTraceClient
         Sysprop = new SyspropClient(_client);
     }
 
-    public V2Client V2 { get; }
+    public V2Client V2 { get; init; }
 
-    public AdminClient Admin { get; }
+    public AdminClient Admin { get; init; }
 
-    public CommonsClient Commons { get; }
+    public CommonsClient Commons { get; init; }
 
-    public HomepageClient Homepage { get; }
+    public HomepageClient Homepage { get; init; }
 
-    public LangServerClient LangServer { get; }
+    public LangServerClient LangServer { get; init; }
 
-    public MigrationClient Migration { get; }
+    public MigrationClient Migration { get; init; }
 
-    public PlaylistClient Playlist { get; }
+    public PlaylistClient Playlist { get; init; }
 
-    public ProblemClient Problem { get; }
+    public ProblemClient Problem { get; init; }
 
-    public SubmissionClient Submission { get; }
+    public SubmissionClient Submission { get; init; }
 
-    public SyspropClient Sysprop { get; }
+    public SyspropClient Sysprop { get; init; }
 }

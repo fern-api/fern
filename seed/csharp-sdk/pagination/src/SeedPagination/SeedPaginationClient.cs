@@ -18,5 +18,5 @@ public partial class SeedPaginationClient
         Users = new UsersClient(_client);
     }
 
-    public UsersClient Users { get; }
+    public UsersClient Users { get; init; }
 }

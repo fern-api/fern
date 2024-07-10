@@ -22,5 +22,5 @@ public partial class SeedNoEnvironmentClient
         Dummy = new DummyClient(_client);
     }
 
-    public DummyClient Dummy { get; }
+    public DummyClient Dummy { get; init; }
 }

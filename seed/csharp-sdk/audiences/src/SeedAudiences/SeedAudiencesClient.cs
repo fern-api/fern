@@ -25,13 +25,13 @@ public partial class SeedAudiencesClient
         Foo = new FooClient(_client);
     }
 
-    public CommonsClient Commons { get; }
+    public CommonsClient Commons { get; init; }
 
-    public FolderAClient FolderA { get; }
+    public FolderAClient FolderA { get; init; }
 
-    public FolderBClient FolderB { get; }
+    public FolderBClient FolderB { get; init; }
 
-    public FolderCClient FolderC { get; }
+    public FolderCClient FolderC { get; init; }
 
-    public FooClient Foo { get; }
+    public FooClient Foo { get; init; }
 }

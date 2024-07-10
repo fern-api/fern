@@ -5,7 +5,15 @@ language: csharp
 generatorType: SDK
 defaultOutputMode: github
 fixtures: []
-scripts: []
+scripts:
+  - docker: bitnami/dotnet-sdk:8
+    commands:
+      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true
+local:
+  workingDirectory: generators/csharp
+  buildCommand:
+    - yarn workspace @fern-api/fern-csharp-model dist:cli
+  runCommand: node model/dist/bundle.cjs
 allowedFailures:
   - examples
   - objects-with-imports

@@ -27,15 +27,15 @@ public partial class SeedExamplesClient
         Types = new TypesClient(_client);
     }
 
-    public CommonsClient Commons { get; }
+    public CommonsClient Commons { get; init; }
 
-    public FileClient File { get; }
+    public FileClient File { get; init; }
 
-    public HealthClient Health { get; }
+    public HealthClient Health { get; init; }
 
-    public ServiceClient Service { get; }
+    public ServiceClient Service { get; init; }
 
-    public TypesClient Types { get; }
+    public TypesClient Types { get; init; }
 
     public async Task<string> EchoAsync(string request)
     {

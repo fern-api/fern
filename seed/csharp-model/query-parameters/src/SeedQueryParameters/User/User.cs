@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedQueryParameters;
 
-public class User
+public record User
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     [JsonPropertyName("tags")]
-    public IEnumerable<string> Tags { get; init; }
+    public IEnumerable<string> Tags { get; init; } = new List<string>();
 }

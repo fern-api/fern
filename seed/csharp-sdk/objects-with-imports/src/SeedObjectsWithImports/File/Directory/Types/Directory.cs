@@ -1,9 +1,10 @@
 using System.Text.Json.Serialization;
-using SeedObjectsWithImports.File.Types;
+using SeedObjectsWithImports;
+using SeedObjectsWithImports.File;
 
 #nullable enable
 
-namespace SeedObjectsWithImports.File.Directory.Types;
+namespace SeedObjectsWithImports.File;
 
 public record Directory
 {

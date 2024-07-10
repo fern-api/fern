@@ -19,7 +19,7 @@ public partial class SeedUnionsClient
         Union = new UnionClient(_client);
     }
 
-    public TypesClient Types { get; }
+    public TypesClient Types { get; init; }
 
-    public UnionClient Union { get; }
+    public UnionClient Union { get; init; }
 }

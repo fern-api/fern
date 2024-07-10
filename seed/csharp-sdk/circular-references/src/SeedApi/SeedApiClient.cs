@@ -19,7 +19,7 @@ public partial class SeedApiClient
         Ast = new AstClient(_client);
     }
 
-    public AClient A { get; }
+    public AClient A { get; init; }
 
-    public AstClient Ast { get; }
+    public AstClient Ast { get; init; }
 }

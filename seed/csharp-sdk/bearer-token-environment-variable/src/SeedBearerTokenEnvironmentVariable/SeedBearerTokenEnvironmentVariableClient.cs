@@ -29,7 +29,7 @@ public partial class SeedBearerTokenEnvironmentVariableClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; }
+    public ServiceClient Service { get; init; }
 
     private static string GetFromEnvironmentOrThrow(string env, string message)
     {

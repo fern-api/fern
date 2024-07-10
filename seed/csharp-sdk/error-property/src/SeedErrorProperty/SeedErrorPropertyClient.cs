@@ -19,7 +19,7 @@ public partial class SeedErrorPropertyClient
         PropertyBasedError = new PropertyBasedErrorClient(_client);
     }
 
-    public ErrorsClient Errors { get; }
+    public ErrorsClient Errors { get; init; }
 
-    public PropertyBasedErrorClient PropertyBasedError { get; }
+    public PropertyBasedErrorClient PropertyBasedError { get; init; }
 }
