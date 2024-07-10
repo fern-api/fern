@@ -5,11 +5,11 @@ using SeedIdempotencyHeaders;
 
 namespace SeedIdempotencyHeaders;
 
-public class CreatePaymentRequest
+public record CreatePaymentRequest
 {
     [JsonPropertyName("amount")]
-    public int Amount { get; init; }
+    public required int Amount { get; init; }
 
     [JsonPropertyName("currency")]
-    public Currency Currency { get; init; }
+    public required Currency Currency { get; init; }
 }

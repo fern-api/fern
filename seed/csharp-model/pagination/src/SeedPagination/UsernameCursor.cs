@@ -5,8 +5,8 @@ using SeedPagination;
 
 namespace SeedPagination;
 
-public class UsernameCursor
+public record UsernameCursor
 {
     [JsonPropertyName("cursor")]
-    public UsernamePage Cursor { get; init; }
+    public required UsernamePage Cursor { get; init; }
 }

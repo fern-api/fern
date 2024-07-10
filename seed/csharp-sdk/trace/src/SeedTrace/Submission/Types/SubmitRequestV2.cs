@@ -5,19 +5,20 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class SubmitRequestV2
+public record SubmitRequestV2
 {
     [JsonPropertyName("submissionId")]
-    public Guid SubmissionId { get; init; }
+    public required Guid SubmissionId { get; init; }
 
     [JsonPropertyName("language")]
-    public Language Language { get; init; }
+    public required Language Language { get; init; }
 
     [JsonPropertyName("submissionFiles")]
-    public IEnumerable<SubmissionFileInfo> SubmissionFiles { get; init; }
+    public IEnumerable<SubmissionFileInfo> SubmissionFiles { get; init; } =
+        new List<SubmissionFileInfo>();
 
     [JsonPropertyName("problemId")]
-    public string ProblemId { get; init; }
+    public required string ProblemId { get; init; }
 
     [JsonPropertyName("problemVersion")]
     public int? ProblemVersion { get; init; }

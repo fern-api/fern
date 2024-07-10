@@ -53,7 +53,7 @@ export class HomepageService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.homepage.getHomepageProblems.Response.jsonOrThrow(responseBody, {
+                                serializers.homepage.getHomepageProblems.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -79,7 +79,7 @@ export class HomepageService {
             }
         });
         this.router.post("", async (req, res, next) => {
-            const request = await serializers.homepage.setHomepageProblems.Request.parse(req.body);
+            const request = serializers.homepage.setHomepageProblems.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {

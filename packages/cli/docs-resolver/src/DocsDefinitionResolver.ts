@@ -2,13 +2,14 @@ import { docsYml, WithoutQuestionMarks } from "@fern-api/configuration";
 import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { parseImagePaths, replaceImagePathsAndUrls, replaceReferencedMarkdown } from "@fern-api/docs-markdown-utils";
 import { APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, relative, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, listFiles, relative, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import { readFile, stat } from "fs/promises";
 import matter from "gray-matter";
 import { kebabCase } from "lodash-es";
 import urlJoin from "url-join";
@@ -147,7 +148,41 @@ export class DocsDefinitionResolver {
 
         const config = await this.convertDocsConfiguration();
 
-        return { config, pages };
+        // detect experimental js files to include in the docs
+        let jsFiles: Record<string, string> = {};
+        if (this._parsedDocsConfig.experimental?.mdxComponents != null) {
+            const jsFilePaths = new Set<AbsoluteFilePath>();
+            await Promise.all(
+                this._parsedDocsConfig.experimental.mdxComponents.map(async (filepath) => {
+                    const absoluteFilePath = resolve(this.docsWorkspace.absoluteFilepath, filepath);
+
+                    // check if absoluteFilePath is a directory or a file
+                    const stats = await stat(absoluteFilePath);
+
+                    if (stats.isDirectory()) {
+                        const files = await listFiles(absoluteFilePath, "{js,ts,jsx,tsx}");
+
+                        files.forEach((file) => {
+                            jsFilePaths.add(file);
+                        });
+                    } else if (absoluteFilePath.match(/\.(js|ts|jsx|tsx)$/) != null) {
+                        jsFilePaths.add(absoluteFilePath);
+                    }
+                })
+            );
+
+            jsFiles = Object.fromEntries(
+                await Promise.all(
+                    [...jsFilePaths].map(async (filePath): Promise<[string, string]> => {
+                        const relativeFilePath = this.toRelativeFilepath(filePath);
+                        const contents = (await readFile(filePath)).toString();
+                        return [relativeFilePath, contents];
+                    })
+                )
+            );
+        }
+
+        return { config, pages, jsFiles };
     }
 
     private resolveFilepath(unresolvedFilepath: string): AbsoluteFilePath;
@@ -233,24 +268,15 @@ export class DocsDefinitionResolver {
 
     private async convertNavigationConfig(): Promise<DocsV1Write.NavigationConfig> {
         const slug = FernNavigation.SlugGenerator.init(FernNavigation.utils.slugjoin(this.getDocsBasePath()));
+        const landingPage = this.parsedDocsConfig.landingPage;
         switch (this.parsedDocsConfig.navigation.type) {
-            case "untabbed": {
-                const items = await Promise.all(
-                    this.parsedDocsConfig.navigation.items.map((item) => this.convertNavigationItem(item, slug))
-                );
-                return { items };
-            }
-            case "tabbed": {
-                return {
-                    tabsV2: await this.convertTabbedNavigation(this.parsedDocsConfig.navigation.items, slug)
-                };
-            }
             case "versioned": {
                 const versions = await Promise.all(
                     this.parsedDocsConfig.navigation.versions.map(
                         async (version): Promise<DocsV1Write.VersionedNavigationConfigData> => {
                             const versionSlug = slug.setVersionSlug(version.slug ?? kebabCase(version.version));
                             const convertedNavigation = await this.convertUnversionedNavigationConfig({
+                                landingPage: version.landingPage,
                                 navigationConfig: version.navigation,
                                 parentSlug: versionSlug
                             });
@@ -268,6 +294,13 @@ export class DocsDefinitionResolver {
                 );
                 return { versions };
             }
+            case "untabbed":
+            case "tabbed":
+                return this.convertUnversionedNavigationConfig({
+                    landingPage: this.parsedDocsConfig.landingPage,
+                    navigationConfig: this.parsedDocsConfig.navigation,
+                    parentSlug: slug
+                });
             default:
                 assertNever(this.parsedDocsConfig.navigation);
         }
@@ -301,12 +334,14 @@ export class DocsDefinitionResolver {
                 return {
                     type: "section",
                     title: item.title,
+
                     items: sectionItems,
                     urlSlugOverride: item.slug,
                     collapsed: item.collapsed,
                     icon: item.icon,
                     hidden: item.hidden,
-                    skipUrlSlug: item.skipUrlSlug
+                    skipUrlSlug: item.skipUrlSlug,
+                    overviewPageId: this.toRelativeFilepath(item.overviewAbsolutePath)
                 };
             }
             case "apiSection": {
@@ -373,23 +408,38 @@ export class DocsDefinitionResolver {
     }
 
     private async convertUnversionedNavigationConfig({
+        landingPage: landingPageConfig,
         navigationConfig,
         parentSlug
     }: {
+        landingPage: docsYml.DocsNavigationItem.Page | undefined;
         navigationConfig: docsYml.UnversionedNavigationConfiguration;
         parentSlug: FernNavigation.SlugGenerator;
     }): Promise<DocsV1Write.UnversionedNavigationConfig> {
+        const landingPage =
+            landingPageConfig != null
+                ? {
+                      id: this.toRelativeFilepath(landingPageConfig.absolutePath),
+                      urlSlugOverride: landingPageConfig.slug,
+                      fullSlug: this.markdownFilesToFullSlugs.get(landingPageConfig.absolutePath)?.split("/"),
+                      hidden: landingPageConfig.hidden,
+                      title: landingPageConfig.title,
+                      icon: landingPageConfig.icon
+                  }
+                : undefined;
         switch (navigationConfig.type) {
             case "untabbed": {
                 const untabs = await Promise.all(
                     navigationConfig.items.map((item) => this.convertNavigationItem(item, parentSlug))
                 );
                 return {
+                    landingPage,
                     items: untabs
                 };
             }
             case "tabbed": {
                 return {
+                    landingPage,
                     tabsV2: await this.convertTabbedNavigation(navigationConfig.items, parentSlug)
                 };
             }

@@ -5,16 +5,16 @@ using SeedPagination;
 
 namespace SeedPagination;
 
-public class ListUsersExtendedResponse
+public record ListUsersExtendedResponse
 {
     /// <summary>
     /// The totall number of /users
     /// </summary>
     [JsonPropertyName("total_count")]
-    public int TotalCount { get; init; }
+    public required int TotalCount { get; init; }
 
     [JsonPropertyName("data")]
-    public UserListContainer Data { get; init; }
+    public required UserListContainer Data { get; init; }
 
     [JsonPropertyName("next")]
     public Guid? Next { get; init; }

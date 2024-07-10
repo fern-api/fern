@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedExhaustive.Core;
 
@@ -24,10 +25,10 @@ public class PrimitiveClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody);
+            return JsonSerializer.Deserialize<string>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -42,10 +43,10 @@ public class PrimitiveClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<int>(responseBody);
+            return JsonSerializer.Deserialize<int>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -60,10 +61,10 @@ public class PrimitiveClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<long>(responseBody);
+            return JsonSerializer.Deserialize<long>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -78,10 +79,10 @@ public class PrimitiveClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<double>(responseBody);
+            return JsonSerializer.Deserialize<double>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -96,10 +97,10 @@ public class PrimitiveClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<bool>(responseBody);
+            return JsonSerializer.Deserialize<bool>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -114,10 +115,10 @@ public class PrimitiveClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<DateTime>(responseBody);
+            return JsonSerializer.Deserialize<DateTime>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -132,10 +133,10 @@ public class PrimitiveClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<DateOnly>(responseBody);
+            return JsonSerializer.Deserialize<DateOnly>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -150,10 +151,10 @@ public class PrimitiveClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Guid>(responseBody);
+            return JsonSerializer.Deserialize<Guid>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -168,10 +169,10 @@ public class PrimitiveClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody);
+            return JsonSerializer.Deserialize<string>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

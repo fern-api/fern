@@ -10,8 +10,8 @@ public partial class SeedSingleUrlEnvironmentDefaultClient
     private RawClient _client;
 
     public SeedSingleUrlEnvironmentDefaultClient(
-        string token = null,
-        ClientOptions clientOptions = null
+        string? token = null,
+        ClientOptions? clientOptions = null
     )
     {
         _client = new RawClient(
@@ -25,15 +25,5 @@ public partial class SeedSingleUrlEnvironmentDefaultClient
         Dummy = new DummyClient(_client);
     }
 
-    public DummyClient Dummy { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public DummyClient Dummy { get; init; }
 }

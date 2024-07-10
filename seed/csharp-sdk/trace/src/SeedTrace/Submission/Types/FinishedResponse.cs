@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class FinishedResponse
+public record FinishedResponse
 {
     [JsonPropertyName("submissionId")]
-    public Guid SubmissionId { get; init; }
+    public required Guid SubmissionId { get; init; }
 }

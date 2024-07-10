@@ -14,6 +14,6 @@ export class MovieDoesNotExistError extends errors.SeedApiError {
     }
 
     public async send(res: express.Response): Promise<void> {
-        res.status(404).json(await serializers.MovieId.jsonOrThrow(this.body, { unrecognizedObjectKeys: "strip" }));
+        res.status(404).json(serializers.MovieId.jsonOrThrow(this.body, { unrecognizedObjectKeys: "strip" }));
     }
 }

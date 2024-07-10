@@ -70,7 +70,7 @@ export class Migration {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.migration.getAttemptedMigrations.Response.parseOrThrow(_response.body, {
+            return serializers.migration.getAttemptedMigrations.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

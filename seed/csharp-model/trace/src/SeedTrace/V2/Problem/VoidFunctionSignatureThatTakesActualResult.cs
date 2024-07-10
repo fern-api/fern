@@ -5,11 +5,11 @@ using SeedTrace.V2;
 
 namespace SeedTrace.V2;
 
-public class VoidFunctionSignatureThatTakesActualResult
+public record VoidFunctionSignatureThatTakesActualResult
 {
     [JsonPropertyName("parameters")]
-    public IEnumerable<Parameter> Parameters { get; init; }
+    public IEnumerable<Parameter> Parameters { get; init; } = new List<Parameter>();
 
     [JsonPropertyName("actualResultType")]
-    public object ActualResultType { get; init; }
+    public required object ActualResultType { get; init; }
 }

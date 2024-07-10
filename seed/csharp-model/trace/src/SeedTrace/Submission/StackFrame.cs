@@ -5,14 +5,14 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class StackFrame
+public record StackFrame
 {
     [JsonPropertyName("methodName")]
-    public string MethodName { get; init; }
+    public required string MethodName { get; init; }
 
     [JsonPropertyName("lineNumber")]
-    public int LineNumber { get; init; }
+    public required int LineNumber { get; init; }
 
     [JsonPropertyName("scopes")]
-    public IEnumerable<Scope> Scopes { get; init; }
+    public IEnumerable<Scope> Scopes { get; init; } = new List<Scope>();
 }

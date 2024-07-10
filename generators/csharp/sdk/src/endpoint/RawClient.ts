@@ -112,8 +112,10 @@ export class RawClient {
                 method = "Delete";
                 break;
             case "PATCH":
-                method = "Patch";
-                break;
+                return csharp.codeblock((writer) => {
+                    writer.writeNode(csharp.coreClassReference({ name: "HttpMethodExtensions" }));
+                    writer.write(".Patch");
+                });
             case "GET":
                 method = "Get";
                 break;
@@ -121,7 +123,10 @@ export class RawClient {
                 method = "Put";
                 break;
         }
-        return csharp.codeblock(`HttpMethod.${method}`);
+        return csharp.codeblock((writer) => {
+            writer.writeNode(csharp.classReference({ name: "HttpMethod", namespace: "System.Net.Http" }));
+            writer.write(`.${method}`);
+        });
     }
 
     private getPathString({

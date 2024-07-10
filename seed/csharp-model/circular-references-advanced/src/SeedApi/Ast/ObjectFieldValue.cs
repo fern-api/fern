@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedApi;
 
-public class ObjectFieldValue
+public record ObjectFieldValue
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     [JsonPropertyName("value")]
-    public object Value { get; init; }
+    public required object Value { get; init; }
 }

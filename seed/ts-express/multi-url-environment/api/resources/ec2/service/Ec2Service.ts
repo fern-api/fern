@@ -38,7 +38,7 @@ export class Ec2Service {
 
     public toRouter(): express.Router {
         this.router.post("/boot", async (req, res, next) => {
-            const request = await serializers.BootInstanceRequest.parse(req.body);
+            const request = serializers.BootInstanceRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {

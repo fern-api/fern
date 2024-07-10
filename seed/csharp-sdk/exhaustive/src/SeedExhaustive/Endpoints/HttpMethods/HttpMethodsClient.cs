@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
@@ -20,10 +21,10 @@ public class HttpMethodsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"/http-methods/{id}" }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody);
+            return JsonSerializer.Deserialize<string>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -38,10 +39,10 @@ public class HttpMethodsClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody);
+            return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -59,10 +60,10 @@ public class HttpMethodsClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody);
+            return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -75,15 +76,15 @@ public class HttpMethodsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                Method = HttpMethod.Patch,
+                Method = HttpMethodExtensions.Patch,
                 Path = $"/http-methods/{id}",
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody);
+            return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -97,10 +98,10 @@ public class HttpMethodsClient
                 Path = $"/http-methods/{id}"
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<bool>(responseBody);
+            return JsonSerializer.Deserialize<bool>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

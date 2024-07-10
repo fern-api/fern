@@ -10,9 +10,9 @@ public partial class SeedBasicAuthClient
     private RawClient _client;
 
     public SeedBasicAuthClient(
-        string username = null,
-        string password = null,
-        ClientOptions clientOptions = null
+        string? username = null,
+        string? password = null,
+        ClientOptions? clientOptions = null
     )
     {
         _client = new RawClient(
@@ -23,17 +23,7 @@ public partial class SeedBasicAuthClient
         Errors = new ErrorsClient(_client);
     }
 
-    public BasicAuthClient BasicAuth { get; }
+    public BasicAuthClient BasicAuth { get; init; }
 
-    public ErrorsClient Errors { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public ErrorsClient Errors { get; init; }
 }

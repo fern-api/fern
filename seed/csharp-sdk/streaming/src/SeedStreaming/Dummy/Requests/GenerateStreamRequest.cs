@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedStreaming;
 
-public class GenerateStreamRequest
+public record GenerateStreamRequest
 {
     [JsonPropertyName("stream")]
-    public bool Stream { get; init; }
+    public required bool Stream { get; init; }
 
     [JsonPropertyName("num_events")]
-    public int NumEvents { get; init; }
+    public required int NumEvents { get; init; }
 }

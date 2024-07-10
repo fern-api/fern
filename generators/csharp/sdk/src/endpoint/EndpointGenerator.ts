@@ -70,7 +70,9 @@ export class EndpointGenerator {
                     headerParameterCodeBlock.code.write(writer);
                 }
                 const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
-                writer.write(`var ${RESPONSE_VARIABLE_NAME} = `);
+                if (endpoint.response != null) {
+                    writer.write(`var ${RESPONSE_VARIABLE_NAME} = `);
+                }
                 writer.writeNodeStatement(
                     this.rawClient.makeRequest({
                         requestType: request?.getRequestType(),
@@ -161,11 +163,9 @@ export class EndpointGenerator {
                 const astType = this.context.csharpTypeMapper.convert({ reference: reference.responseBodyType });
                 return csharp.codeblock((writer) => {
                     writer.writeTextStatement(
-                        `string ${RESPONSE_BODY_VARIABLE_NAME} = await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStringAsync()`
+                        `var ${RESPONSE_BODY_VARIABLE_NAME} = await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStringAsync()`
                     );
-                    writer.writeLine(
-                        `if (${RESPONSE_VARIABLE_NAME}.StatusCode >= 200 && ${RESPONSE_VARIABLE_NAME}.StatusCode < 400) {`
-                    );
+                    writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
                     writer.writeNewLineIfLastLineNot();
 
                     // Deserialize the response as json
@@ -178,7 +178,9 @@ export class EndpointGenerator {
                     );
                     writer.write(".Deserialize<");
                     writer.writeNode(astType);
-                    writer.writeLine(`>(${RESPONSE_BODY_VARIABLE_NAME});`);
+                    // todo: Maybe remove ! below and handle potential null. Requires introspecting type to know if its
+                    // nullable.
+                    writer.writeLine(`>(${RESPONSE_BODY_VARIABLE_NAME})!;`);
 
                     writer.indent();
                     writer.writeLine("}");

@@ -38,7 +38,7 @@ export class ServiceService {
 
     public toRouter(): express.Router {
         this.router.post("/hello", async (req, res, next) => {
-            const request = await serializers.MyRequest.parse(req.body);
+            const request = serializers.MyRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -47,7 +47,7 @@ export class ServiceService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.MyResponse.jsonOrThrow(responseBody, {
+                                    serializers.MyResponse.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );

@@ -67,7 +67,8 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             AsIsFiles.RawClient,
             AsIsFiles.StringEnumSerializer,
             AsIsFiles.OneOfSerializer,
-            AsIsFiles.CollectionItemSerializer
+            AsIsFiles.CollectionItemSerializer,
+            AsIsFiles.HttpMethodExtensions
         ];
     }
 

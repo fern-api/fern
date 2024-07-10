@@ -86,10 +86,9 @@ export class ProblemService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.v2.v3.problem.getLightweightProblems.Response.jsonOrThrow(
-                                    responseBody,
-                                    { unrecognizedObjectKeys: "strip" }
-                                )
+                                serializers.v2.v3.problem.getLightweightProblems.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
                             );
                         },
                         cookie: res.cookie.bind(res),
@@ -119,7 +118,7 @@ export class ProblemService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.v2.v3.problem.getProblems.Response.jsonOrThrow(responseBody, {
+                                serializers.v2.v3.problem.getProblems.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -151,7 +150,7 @@ export class ProblemService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.v2.v3.ProblemInfoV2.jsonOrThrow(responseBody, {
+                                serializers.v2.v3.ProblemInfoV2.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -183,7 +182,7 @@ export class ProblemService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.v2.v3.ProblemInfoV2.jsonOrThrow(responseBody, {
+                                serializers.v2.v3.ProblemInfoV2.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );

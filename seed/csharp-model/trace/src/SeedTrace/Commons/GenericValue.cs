@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class GenericValue
+public record GenericValue
 {
     [JsonPropertyName("stringifiedType")]
     public string? StringifiedType { get; init; }
 
     [JsonPropertyName("stringifiedValue")]
-    public string StringifiedValue { get; init; }
+    public required string StringifiedValue { get; init; }
 }

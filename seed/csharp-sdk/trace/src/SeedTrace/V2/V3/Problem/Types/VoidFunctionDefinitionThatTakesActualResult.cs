@@ -5,11 +5,11 @@ using SeedTrace.V2.V3;
 
 namespace SeedTrace.V2.V3;
 
-public class VoidFunctionDefinitionThatTakesActualResult
+public record VoidFunctionDefinitionThatTakesActualResult
 {
     [JsonPropertyName("additionalParameters")]
-    public IEnumerable<Parameter> AdditionalParameters { get; init; }
+    public IEnumerable<Parameter> AdditionalParameters { get; init; } = new List<Parameter>();
 
     [JsonPropertyName("code")]
-    public FunctionImplementationForMultipleLanguages Code { get; init; }
+    public required FunctionImplementationForMultipleLanguages Code { get; init; }
 }

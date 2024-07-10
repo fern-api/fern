@@ -46,11 +46,11 @@ export class PathParam {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `path/${encodeURIComponent(await serializers.Operand.jsonOrThrow(operand))}/${encodeURIComponent(
+                `path/${encodeURIComponent(serializers.Operand.jsonOrThrow(operand))}/${encodeURIComponent(
                     maybeOperand
-                )}/${encodeURIComponent(
-                    await serializers.ColorOrOperand.jsonOrThrow(operandOrColor)
-                )}/${encodeURIComponent(maybeOperandOrColor)}`
+                )}/${encodeURIComponent(serializers.ColorOrOperand.jsonOrThrow(operandOrColor))}/${encodeURIComponent(
+                    maybeOperandOrColor
+                )}`
             ),
             method: "POST",
             headers: {

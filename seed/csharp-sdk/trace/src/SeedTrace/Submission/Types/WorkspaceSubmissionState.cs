@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class WorkspaceSubmissionState
+public record WorkspaceSubmissionState
 {
     [JsonPropertyName("status")]
-    public object Status { get; init; }
+    public required object Status { get; init; }
 }

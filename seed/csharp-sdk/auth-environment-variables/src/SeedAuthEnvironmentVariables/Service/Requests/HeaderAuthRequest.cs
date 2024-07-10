@@ -1,9 +1,9 @@
 namespace SeedAuthEnvironmentVariables;
 
-public class HeaderAuthRequest
+public record HeaderAuthRequest
 {
     /// <summary>
     /// Specifies the endpoint key.
     /// </summary>
-    public string XEndpointHeader { get; init; }
+    public required string XEndpointHeader { get; init; }
 }

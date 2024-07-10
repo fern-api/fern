@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class ErroredResponse
+public record ErroredResponse
 {
     [JsonPropertyName("submissionId")]
-    public Guid SubmissionId { get; init; }
+    public required Guid SubmissionId { get; init; }
 
     [JsonPropertyName("errorInfo")]
-    public object ErrorInfo { get; init; }
+    public required object ErrorInfo { get; init; }
 }

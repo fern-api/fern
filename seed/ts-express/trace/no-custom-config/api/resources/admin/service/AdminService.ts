@@ -159,7 +159,7 @@ export class AdminService {
 
     public toRouter(): express.Router {
         this.router.post("/store-test-submission-status/:submissionId", async (req, res, next) => {
-            const request = await serializers.TestSubmissionStatus.parse(req.body);
+            const request = serializers.TestSubmissionStatus.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -198,7 +198,7 @@ export class AdminService {
             }
         });
         this.router.post("/store-test-submission-status-v2/:submissionId", async (req, res, next) => {
-            const request = await serializers.TestSubmissionUpdate.parse(req.body);
+            const request = serializers.TestSubmissionUpdate.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -237,7 +237,7 @@ export class AdminService {
             }
         });
         this.router.post("/store-workspace-submission-status/:submissionId", async (req, res, next) => {
-            const request = await serializers.WorkspaceSubmissionStatus.parse(req.body);
+            const request = serializers.WorkspaceSubmissionStatus.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -276,7 +276,7 @@ export class AdminService {
             }
         });
         this.router.post("/store-workspace-submission-status-v2/:submissionId", async (req, res, next) => {
-            const request = await serializers.WorkspaceSubmissionUpdate.parse(req.body);
+            const request = serializers.WorkspaceSubmissionUpdate.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -315,7 +315,7 @@ export class AdminService {
             }
         });
         this.router.post("/store-test-trace/submission/:submissionId/testCase/:testCaseId", async (req, res, next) => {
-            const request = await serializers.StoreTracedTestCaseRequest.parse(req.body);
+            const request = serializers.StoreTracedTestCaseRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -356,7 +356,7 @@ export class AdminService {
         this.router.post(
             "/store-test-trace-v2/submission/:submissionId/testCase/:testCaseId",
             async (req, res, next) => {
-                const request = await serializers.admin.storeTracedTestCaseV2.Request.parse(req.body);
+                const request = serializers.admin.storeTracedTestCaseV2.Request.parse(req.body);
                 if (request.ok) {
                     req.body = request.value;
                     try {
@@ -396,7 +396,7 @@ export class AdminService {
             }
         );
         this.router.post("/store-workspace-trace/submission/:submissionId", async (req, res, next) => {
-            const request = await serializers.StoreTracedWorkspaceRequest.parse(req.body);
+            const request = serializers.StoreTracedWorkspaceRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -435,7 +435,7 @@ export class AdminService {
             }
         });
         this.router.post("/store-workspace-trace-v2/submission/:submissionId", async (req, res, next) => {
-            const request = await serializers.admin.storeTracedWorkspaceV2.Request.parse(req.body);
+            const request = serializers.admin.storeTracedWorkspaceV2.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {

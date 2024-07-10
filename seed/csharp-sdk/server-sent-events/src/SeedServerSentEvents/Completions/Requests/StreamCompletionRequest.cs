@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedServerSentEvents;
 
-public class StreamCompletionRequest
+public record StreamCompletionRequest
 {
     [JsonPropertyName("query")]
-    public string Query { get; init; }
+    public required string Query { get; init; }
 }

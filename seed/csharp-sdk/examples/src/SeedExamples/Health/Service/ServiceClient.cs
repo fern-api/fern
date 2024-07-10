@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedExamples.Core;
 
@@ -17,9 +18,9 @@ public class ServiceClient
     /// <summary>
     /// This endpoint checks the health of a resource.
     /// </summary>
-    public async void CheckAsync(string id)
+    public async Task CheckAsync(string id)
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"/check/{id}" }
         );
     }
@@ -32,10 +33,10 @@ public class ServiceClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "/ping" }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<bool>(responseBody);
+            return JsonSerializer.Deserialize<bool>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

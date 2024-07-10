@@ -5,11 +5,11 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class UnexpectedLanguageError
+public record UnexpectedLanguageError
 {
     [JsonPropertyName("expectedLanguage")]
-    public Language ExpectedLanguage { get; init; }
+    public required Language ExpectedLanguage { get; init; }
 
     [JsonPropertyName("actualLanguage")]
-    public Language ActualLanguage { get; init; }
+    public required Language ActualLanguage { get; init; }
 }

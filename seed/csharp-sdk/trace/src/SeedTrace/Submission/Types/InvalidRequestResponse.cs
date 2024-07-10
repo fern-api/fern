@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class InvalidRequestResponse
+public record InvalidRequestResponse
 {
     [JsonPropertyName("request")]
-    public object Request { get; init; }
+    public required object Request { get; init; }
 
     [JsonPropertyName("cause")]
-    public object Cause { get; init; }
+    public required object Cause { get; init; }
 }

@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedAudiences;
 
-public class ImportingType
+public record ImportingType
 {
     [JsonPropertyName("imported")]
-    public string Imported { get; init; }
+    public required string Imported { get; init; }
 }

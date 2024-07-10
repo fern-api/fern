@@ -5,19 +5,19 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class RecordingResponseNotification
+public record RecordingResponseNotification
 {
     [JsonPropertyName("submissionId")]
-    public Guid SubmissionId { get; init; }
+    public required Guid SubmissionId { get; init; }
 
     [JsonPropertyName("testCaseId")]
     public string? TestCaseId { get; init; }
 
     [JsonPropertyName("lineNumber")]
-    public int LineNumber { get; init; }
+    public required int LineNumber { get; init; }
 
     [JsonPropertyName("lightweightStackInfo")]
-    public LightweightStackframeInformation LightweightStackInfo { get; init; }
+    public required LightweightStackframeInformation LightweightStackInfo { get; init; }
 
     [JsonPropertyName("tracedFile")]
     public TracedFile? TracedFile { get; init; }

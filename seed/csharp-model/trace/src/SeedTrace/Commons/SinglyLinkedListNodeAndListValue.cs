@@ -5,11 +5,11 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class SinglyLinkedListNodeAndListValue
+public record SinglyLinkedListNodeAndListValue
 {
     [JsonPropertyName("nodeId")]
-    public string NodeId { get; init; }
+    public required string NodeId { get; init; }
 
     [JsonPropertyName("fullList")]
-    public SinglyLinkedListValue FullList { get; init; }
+    public required SinglyLinkedListValue FullList { get; init; }
 }

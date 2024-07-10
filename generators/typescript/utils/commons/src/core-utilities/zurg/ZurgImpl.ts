@@ -422,36 +422,28 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         return {
             optional: () => this.optional(baseSchema),
             parse: (raw, opts) =>
-                ts.factory.createAwaitExpression(
-                    ts.factory.createCallExpression(
-                        ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "parse"),
-                        undefined,
-                        [raw, ...this.constructSchemaOptionsArgs(opts)]
-                    )
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "parse"),
+                    undefined,
+                    [raw, ...this.constructSchemaOptionsArgs(opts)]
                 ),
             json: (parsed, opts) =>
-                ts.factory.createAwaitExpression(
-                    ts.factory.createCallExpression(
-                        ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "json"),
-                        undefined,
-                        [parsed, ...this.constructSchemaOptionsArgs(opts)]
-                    )
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "json"),
+                    undefined,
+                    [parsed, ...this.constructSchemaOptionsArgs(opts)]
                 ),
             parseOrThrow: (raw, opts) =>
-                ts.factory.createAwaitExpression(
-                    ts.factory.createCallExpression(
-                        ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "parseOrThrow"),
-                        undefined,
-                        [raw, ...this.constructSchemaOptionsArgs(opts)]
-                    )
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "parseOrThrow"),
+                    undefined,
+                    [raw, ...this.constructSchemaOptionsArgs(opts)]
                 ),
             jsonOrThrow: (parsed, opts) =>
-                ts.factory.createAwaitExpression(
-                    ts.factory.createCallExpression(
-                        ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "jsonOrThrow"),
-                        undefined,
-                        [parsed, ...this.constructSchemaOptionsArgs(opts)]
-                    )
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "jsonOrThrow"),
+                    undefined,
+                    [parsed, ...this.constructSchemaOptionsArgs(opts)]
                 ),
             transform: ({
                 newShape,

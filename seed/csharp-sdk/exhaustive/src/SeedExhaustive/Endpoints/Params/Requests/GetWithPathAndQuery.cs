@@ -1,6 +1,6 @@
 namespace SeedExhaustive.Endpoints;
 
-public class GetWithPathAndQuery
+public record GetWithPathAndQuery
 {
-    public string Query { get; init; }
+    public required string Query { get; init; }
 }

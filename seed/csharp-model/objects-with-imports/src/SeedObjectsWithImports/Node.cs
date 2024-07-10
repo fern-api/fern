@@ -5,10 +5,10 @@ using SeedObjectsWithImports.Commons;
 
 namespace SeedObjectsWithImports;
 
-public class Node
+public record Node
 {
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; init; }
 
     [JsonPropertyName("label")]
     public string? Label { get; init; }

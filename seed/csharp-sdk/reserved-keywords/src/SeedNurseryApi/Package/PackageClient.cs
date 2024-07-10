@@ -1,3 +1,4 @@
+using System.Net.Http;
 using SeedNurseryApi;
 using SeedNurseryApi.Core;
 
@@ -14,10 +15,10 @@ public class PackageClient
         _client = client;
     }
 
-    public async void TestAsync(TestRequest request)
+    public async Task TestAsync(TestRequest request)
     {
         var _query = new Dictionary<string, object>() { { "for", request.For }, };
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,

@@ -5,8 +5,8 @@ using SeedTrace.V2;
 
 namespace SeedTrace.V2;
 
-public class VoidFunctionSignature
+public record VoidFunctionSignature
 {
     [JsonPropertyName("parameters")]
-    public IEnumerable<Parameter> Parameters { get; init; }
+    public IEnumerable<Parameter> Parameters { get; init; } = new List<Parameter>();
 }

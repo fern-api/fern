@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedExamples;
 using SeedExamples.Commons;
@@ -13,7 +14,7 @@ public partial class SeedExamplesClient
 {
     private RawClient _client;
 
-    public SeedExamplesClient(string token, ClientOptions clientOptions = null)
+    public SeedExamplesClient(string token, ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
@@ -26,15 +27,15 @@ public partial class SeedExamplesClient
         Types = new TypesClient(_client);
     }
 
-    public CommonsClient Commons { get; }
+    public CommonsClient Commons { get; init; }
 
-    public FileClient File { get; }
+    public FileClient File { get; init; }
 
-    public HealthClient Health { get; }
+    public HealthClient Health { get; init; }
 
-    public ServiceClient Service { get; }
+    public ServiceClient Service { get; init; }
 
-    public TypesClient Types { get; }
+    public TypesClient Types { get; init; }
 
     public async Task<string> EchoAsync(string request)
     {
@@ -46,21 +47,11 @@ public partial class SeedExamplesClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody);
+            return JsonSerializer.Deserialize<string>(responseBody)!;
         }
         throw new Exception(responseBody);
-    }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
     }
 }

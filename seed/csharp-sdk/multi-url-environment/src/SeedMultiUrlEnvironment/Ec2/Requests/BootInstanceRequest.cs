@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedMultiUrlEnvironment;
 
-public class BootInstanceRequest
+public record BootInstanceRequest
 {
     [JsonPropertyName("size")]
-    public string Size { get; init; }
+    public required string Size { get; init; }
 }

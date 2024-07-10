@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class GradedResponseV2
+public record GradedResponseV2
 {
     [JsonPropertyName("submissionId")]
-    public Guid SubmissionId { get; init; }
+    public required Guid SubmissionId { get; init; }
 
     [JsonPropertyName("testCases")]
-    public Dictionary<string, object> TestCases { get; init; }
+    public Dictionary<string, object> TestCases { get; init; } = new Dictionary<string, object>();
 }

@@ -54,7 +54,7 @@ export class Union {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.Animal.jsonOrThrow(request, {
+            body: serializers.types.Animal.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -64,7 +64,7 @@ export class Union {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.types.Animal.parseOrThrow(_response.body, {
+            return serializers.types.Animal.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

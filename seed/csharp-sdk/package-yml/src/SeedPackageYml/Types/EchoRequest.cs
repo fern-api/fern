@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedPackageYml;
 
-public class EchoRequest
+public record EchoRequest
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     [JsonPropertyName("size")]
-    public int Size { get; init; }
+    public required int Size { get; init; }
 }

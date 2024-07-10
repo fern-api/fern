@@ -5,7 +5,7 @@ export { CodeBlock } from "./CodeBlock";
 export * as dependencies from "./dependencies";
 export { Enum } from "./Enum";
 export { Field } from "./Field";
-export { Method } from "./Method";
+export { Method, MethodType } from "./Method";
 export { Parameter } from "./Parameter";
 export { Type } from "./Type";
 export { Interface } from "./Interface";

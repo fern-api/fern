@@ -2,7 +2,7 @@ import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { Audiences } from "../commons";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
-import { DocsInstance, VersionAvailability } from "./schemas";
+import { DocsInstance, VersionAvailability, ExperimentalConfig } from "./schemas";
 
 export interface ParsedDocsConfiguration {
     instances: DocsInstance[];
@@ -12,7 +12,7 @@ export interface ParsedDocsConfiguration {
     pages: Record<RelativeFilePath, string>;
 
     /* navigation */
-    // tabs?: Record<RelativeFilePath, TabConfig>;
+    landingPage: DocsNavigationItem.Page | undefined;
     navigation: DocsNavigationConfiguration;
     navbarLinks: DocsV1Write.NavbarLink[] | undefined;
     footerLinks: DocsV1Write.FooterLink[] | undefined;
@@ -35,6 +35,8 @@ export interface ParsedDocsConfiguration {
     /* scripts */
     css: DocsV1Write.CssConfig | undefined;
     js: JavascriptConfig | undefined;
+
+    experimental: ExperimentalConfig | undefined;
 }
 
 export interface AbsoluteJsFileConfig {
@@ -131,7 +133,7 @@ export interface VersionedDocsNavigation {
 }
 
 export interface VersionInfo {
-    // tabs?: Record<RelativeFilePath, TabConfig>;
+    landingPage: DocsNavigationItem.Page | undefined;
     navigation: UntabbedDocsNavigation | TabbedDocsNavigation;
     version: string;
     availability: VersionAvailability | undefined;
@@ -200,6 +202,7 @@ export declare namespace DocsNavigationItem {
         slug: string | undefined;
         hidden: boolean | undefined;
         skipUrlSlug: boolean | undefined;
+        overviewAbsolutePath: AbsoluteFilePath | undefined;
     }
 
     export interface ApiSection {
@@ -210,7 +213,7 @@ export declare namespace DocsNavigationItem {
         audiences: Audiences;
         showErrors: boolean;
         snippetsConfiguration: SnippetsConfiguration | undefined;
-        summaryAbsolutePath: AbsoluteFilePath | undefined;
+        overviewAbsolutePath: AbsoluteFilePath | undefined;
         navigation: ParsedApiReferenceLayoutItem[];
         hidden: boolean | undefined;
         slug: string | undefined;
@@ -255,7 +258,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         type: "section";
         title: string; // title
         referencedSubpackages: string[]; // subpackage IDs
-        summaryAbsolutePath: AbsoluteFilePath | undefined;
+        overviewAbsolutePath: AbsoluteFilePath | undefined;
         contents: ParsedApiReferenceLayoutItem[];
         slug: string | undefined;
         hidden: boolean | undefined;
@@ -266,7 +269,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         type: "package";
         title: string | undefined; // defaults to subpackage title
         package: string; // subpackage ID
-        summaryAbsolutePath: AbsoluteFilePath | undefined;
+        overviewAbsolutePath: AbsoluteFilePath | undefined;
         contents: ParsedApiReferenceLayoutItem[];
         slug: string | undefined;
         hidden: boolean | undefined;

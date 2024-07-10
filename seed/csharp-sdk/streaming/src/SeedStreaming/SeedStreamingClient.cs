@@ -9,7 +9,7 @@ public partial class SeedStreamingClient
 {
     private RawClient _client;
 
-    public SeedStreamingClient(ClientOptions clientOptions = null)
+    public SeedStreamingClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
@@ -18,15 +18,5 @@ public partial class SeedStreamingClient
         Dummy = new DummyClient(_client);
     }
 
-    public DummyClient Dummy { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public DummyClient Dummy { get; init; }
 }

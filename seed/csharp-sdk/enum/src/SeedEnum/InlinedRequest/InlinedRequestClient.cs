@@ -1,3 +1,4 @@
+using System.Net.Http;
 using SeedEnum;
 using SeedEnum.Core;
 
@@ -14,9 +15,9 @@ public class InlinedRequestClient
         _client = client;
     }
 
-    public async void SendAsync(SendEnumInlinedRequest request)
+    public async Task SendAsync(SendEnumInlinedRequest request)
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,

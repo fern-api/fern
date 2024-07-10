@@ -55,7 +55,7 @@ export class Auth {
             },
             contentType: "application/json",
             body: {
-                ...(await serializers.auth.GetTokenRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
+                ...serializers.auth.GetTokenRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
                 audience: "https://api.example.com",
                 grant_type: "client_credentials",
             },
@@ -64,7 +64,7 @@ export class Auth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.auth.TokenResponse.parseOrThrow(_response.body, {
+            return serializers.auth.TokenResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

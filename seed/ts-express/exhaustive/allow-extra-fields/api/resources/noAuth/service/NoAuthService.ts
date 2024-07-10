@@ -43,7 +43,7 @@ export class NoAuthService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.noAuth.postWithNoAuth.Response.jsonOrThrow(responseBody, {
+                                serializers.noAuth.postWithNoAuth.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "passthrough",
                                     allowUnrecognizedUnionMembers: true,
                                     allowUnrecognizedEnumValues: true,

@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace SeedExhaustive.Types;
 
-public class ObjectWithOptionalField
+public record ObjectWithOptionalField
 {
     [JsonPropertyName("string")]
     public string? String { get; init; }

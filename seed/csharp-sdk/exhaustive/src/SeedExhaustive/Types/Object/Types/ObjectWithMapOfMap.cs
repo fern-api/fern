@@ -4,8 +4,9 @@ using System.Text.Json.Serialization;
 
 namespace SeedExhaustive.Types;
 
-public class ObjectWithMapOfMap
+public record ObjectWithMapOfMap
 {
     [JsonPropertyName("map")]
-    public Dictionary<string, Dictionary<string, string>> Map { get; init; }
+    public Dictionary<string, Dictionary<string, string>> Map { get; init; } =
+        new Dictionary<string, Dictionary<string, string>>();
 }

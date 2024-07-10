@@ -5,13 +5,13 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class TraceResponse
+public record TraceResponse
 {
     [JsonPropertyName("submissionId")]
-    public Guid SubmissionId { get; init; }
+    public required Guid SubmissionId { get; init; }
 
     [JsonPropertyName("lineNumber")]
-    public int LineNumber { get; init; }
+    public required int LineNumber { get; init; }
 
     [JsonPropertyName("returnValue")]
     public object? ReturnValue { get; init; }
@@ -20,7 +20,7 @@ public class TraceResponse
     public ExpressionLocation? ExpressionLocation { get; init; }
 
     [JsonPropertyName("stack")]
-    public StackInformation Stack { get; init; }
+    public required StackInformation Stack { get; init; }
 
     [JsonPropertyName("stdout")]
     public string? Stdout { get; init; }

@@ -4,13 +4,13 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class BinaryTreeNodeValue
+public record BinaryTreeNodeValue
 {
     [JsonPropertyName("nodeId")]
-    public string NodeId { get; init; }
+    public required string NodeId { get; init; }
 
     [JsonPropertyName("val")]
-    public double Val { get; init; }
+    public required double Val { get; init; }
 
     [JsonPropertyName("right")]
     public string? Right { get; init; }

@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedAudiences.FolderC;
 
-public class Foo
+public record Foo
 {
     [JsonPropertyName("bar_property")]
-    public Guid BarProperty { get; init; }
+    public required Guid BarProperty { get; init; }
 }

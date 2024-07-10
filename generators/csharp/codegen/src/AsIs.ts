@@ -13,5 +13,6 @@ export enum AsIsFiles {
     CiYaml = "github-ci.yml",
     StringEnumSerializer = "StringEnumSerializer.cs",
     OneOfSerializer = "OneOfSerializer.cs",
-    CollectionItemSerializer = "CollectionItemSerializer.cs"
+    CollectionItemSerializer = "CollectionItemSerializer.cs",
+    HttpMethodExtensions = "HttpMethodExtensions.cs"
 }

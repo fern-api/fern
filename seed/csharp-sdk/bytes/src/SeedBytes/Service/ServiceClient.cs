@@ -1,3 +1,4 @@
+using System.Net.Http;
 using SeedBytes.Core;
 
 #nullable enable
@@ -13,9 +14,9 @@ public class ServiceClient
         _client = client;
     }
 
-    public async void UploadAsync(Stream request)
+    public async Task UploadAsync(Stream request)
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.StreamApiRequest
             {
                 Method = HttpMethod.Post,

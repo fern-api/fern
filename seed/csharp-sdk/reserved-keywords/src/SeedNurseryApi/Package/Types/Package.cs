@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedNurseryApi;
 
-public class Package
+public record Package
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 }

@@ -10,8 +10,8 @@ public partial class SeedMultiUrlEnvironmentNoDefaultClient
     private RawClient _client;
 
     public SeedMultiUrlEnvironmentNoDefaultClient(
-        string token = null,
-        ClientOptions clientOptions = null
+        string? token = null,
+        ClientOptions? clientOptions = null
     )
     {
         _client = new RawClient(
@@ -26,17 +26,7 @@ public partial class SeedMultiUrlEnvironmentNoDefaultClient
         S3 = new S3Client(_client);
     }
 
-    public Ec2Client Ec2 { get; }
+    public Ec2Client Ec2 { get; init; }
 
-    public S3Client S3 { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public S3Client S3 { get; init; }
 }

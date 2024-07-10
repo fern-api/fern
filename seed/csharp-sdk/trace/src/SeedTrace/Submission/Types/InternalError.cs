@@ -5,8 +5,8 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class InternalError
+public record InternalError
 {
     [JsonPropertyName("exceptionInfo")]
-    public ExceptionInfo ExceptionInfo { get; init; }
+    public required ExceptionInfo ExceptionInfo { get; init; }
 }

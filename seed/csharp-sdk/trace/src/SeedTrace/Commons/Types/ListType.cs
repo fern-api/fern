@@ -4,10 +4,10 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class ListType
+public record ListType
 {
     [JsonPropertyName("valueType")]
-    public object ValueType { get; init; }
+    public required object ValueType { get; init; }
 
     /// <summary>
     /// Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.

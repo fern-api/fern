@@ -5,14 +5,14 @@ using SeedResponseProperty;
 
 namespace SeedResponseProperty;
 
-public class Response
+public record Response
 {
     [JsonPropertyName("data")]
-    public Movie Data { get; init; }
+    public required Movie Data { get; init; }
 
     [JsonPropertyName("metadata")]
-    public Dictionary<string, string> Metadata { get; init; }
+    public Dictionary<string, string> Metadata { get; init; } = new Dictionary<string, string>();
 
     [JsonPropertyName("docs")]
-    public string Docs { get; init; }
+    public required string Docs { get; init; }
 }

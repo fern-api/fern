@@ -9,7 +9,10 @@ public partial class SeedCustomAuthClient
 {
     private RawClient _client;
 
-    public SeedCustomAuthClient(string customAuthScheme = null, ClientOptions clientOptions = null)
+    public SeedCustomAuthClient(
+        string? customAuthScheme = null,
+        ClientOptions? clientOptions = null
+    )
     {
         _client = new RawClient(
             new Dictionary<string, string>()
@@ -23,17 +26,7 @@ public partial class SeedCustomAuthClient
         Errors = new ErrorsClient(_client);
     }
 
-    public CustomAuthClient CustomAuth { get; }
+    public CustomAuthClient CustomAuth { get; init; }
 
-    public ErrorsClient Errors { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public ErrorsClient Errors { get; init; }
 }

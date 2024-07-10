@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace SeedMultiLineDocs;
 
-public class CreateUserRequest
+public record CreateUserRequest
 {
     /// <summary>
     /// The name of the user to create.
@@ -12,7 +12,7 @@ public class CreateUserRequest
     ///
     /// </summary>
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     /// <summary>
     /// The age of the user.

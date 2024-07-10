@@ -92,7 +92,7 @@ export class ServiceService {
 
     public toRouter(): express.Router {
         this.router.post("/movie", async (req, res, next) => {
-            const request = await serializers.service.getMovie.Request.parse(req.body);
+            const request = serializers.service.getMovie.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -101,9 +101,7 @@ export class ServiceService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.Response.jsonOrThrow(responseBody, {
-                                        unrecognizedObjectKeys: "strip",
-                                    })
+                                    serializers.Response.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
                                 );
                             },
                             cookie: res.cookie.bind(res),
@@ -135,7 +133,7 @@ export class ServiceService {
             }
         });
         this.router.post("/movie", async (req, res, next) => {
-            const request = await serializers.service.getMovieDocs.Request.parse(req.body);
+            const request = serializers.service.getMovieDocs.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -144,9 +142,7 @@ export class ServiceService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.Response.jsonOrThrow(responseBody, {
-                                        unrecognizedObjectKeys: "strip",
-                                    })
+                                    serializers.Response.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
                                 );
                             },
                             cookie: res.cookie.bind(res),
@@ -178,7 +174,7 @@ export class ServiceService {
             }
         });
         this.router.post("/movie", async (req, res, next) => {
-            const request = await serializers.service.getMovieName.Request.parse(req.body);
+            const request = serializers.service.getMovieName.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -187,7 +183,7 @@ export class ServiceService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.StringResponse.jsonOrThrow(responseBody, {
+                                    serializers.StringResponse.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );
@@ -221,7 +217,7 @@ export class ServiceService {
             }
         });
         this.router.post("/movie", async (req, res, next) => {
-            const request = await serializers.service.getMovieMetadata.Request.parse(req.body);
+            const request = serializers.service.getMovieMetadata.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -230,9 +226,7 @@ export class ServiceService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.Response.jsonOrThrow(responseBody, {
-                                        unrecognizedObjectKeys: "strip",
-                                    })
+                                    serializers.Response.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
                                 );
                             },
                             cookie: res.cookie.bind(res),
@@ -264,7 +258,7 @@ export class ServiceService {
             }
         });
         this.router.post("/movie", async (req, res, next) => {
-            const request = await serializers.service.getOptionalMovie.Request.parse(req.body);
+            const request = serializers.service.getOptionalMovie.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -273,7 +267,7 @@ export class ServiceService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.service.getOptionalMovie.Response.jsonOrThrow(responseBody, {
+                                    serializers.service.getOptionalMovie.Response.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );
@@ -307,7 +301,7 @@ export class ServiceService {
             }
         });
         this.router.post("/movie", async (req, res, next) => {
-            const request = await serializers.service.getOptionalMovieDocs.Request.parse(req.body);
+            const request = serializers.service.getOptionalMovieDocs.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -316,7 +310,7 @@ export class ServiceService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.OptionalWithDocs.jsonOrThrow(responseBody, {
+                                    serializers.OptionalWithDocs.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );
@@ -350,7 +344,7 @@ export class ServiceService {
             }
         });
         this.router.post("/movie", async (req, res, next) => {
-            const request = await serializers.service.getOptionalMovieName.Request.parse(req.body);
+            const request = serializers.service.getOptionalMovieName.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -359,7 +353,7 @@ export class ServiceService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.OptionalStringResponse.jsonOrThrow(responseBody, {
+                                    serializers.OptionalStringResponse.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );

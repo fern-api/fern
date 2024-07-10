@@ -4,17 +4,10 @@ import { join } from "./join";
 import { RelativeFilePath } from "./RelativeFilePath";
 
 export async function listFiles(root: AbsoluteFilePath, extensionGlob: string): Promise<AbsoluteFilePath[]> {
-    const files: AbsoluteFilePath[] = [];
-
-    const filepaths = (
+    return (
         await glob(`**/*.${extensionGlob}`, {
-            cwd: root
+            cwd: root,
+            absolute: true
         })
-    ).map(RelativeFilePath.of);
-
-    for (const filepath of filepaths) {
-        files.push(join(root, filepath));
-    }
-
-    return files;
+    ).map(AbsoluteFilePath.of);
 }

@@ -5,8 +5,8 @@ using SeedPagination;
 
 namespace SeedPagination;
 
-public class UserListContainer
+public record UserListContainer
 {
     [JsonPropertyName("users")]
-    public IEnumerable<User> Users { get; init; }
+    public IEnumerable<User> Users { get; init; } = new List<User>();
 }

@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedTrace;
 using SeedTrace.Core;
@@ -31,10 +32,10 @@ public class MigrationClient
                 Headers = _headers
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<Migration>>(responseBody);
+            return JsonSerializer.Deserialize<IEnumerable<Migration>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

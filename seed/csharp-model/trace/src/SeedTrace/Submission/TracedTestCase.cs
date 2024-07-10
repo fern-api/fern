@@ -5,11 +5,11 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class TracedTestCase
+public record TracedTestCase
 {
     [JsonPropertyName("result")]
-    public TestCaseResultWithStdout Result { get; init; }
+    public required TestCaseResultWithStdout Result { get; init; }
 
     [JsonPropertyName("traceResponsesSize")]
-    public int TraceResponsesSize { get; init; }
+    public required int TraceResponsesSize { get; init; }
 }

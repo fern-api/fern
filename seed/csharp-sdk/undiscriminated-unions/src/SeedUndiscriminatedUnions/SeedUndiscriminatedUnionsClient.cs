@@ -9,7 +9,7 @@ public partial class SeedUndiscriminatedUnionsClient
 {
     private RawClient _client;
 
-    public SeedUndiscriminatedUnionsClient(ClientOptions clientOptions = null)
+    public SeedUndiscriminatedUnionsClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
@@ -18,15 +18,5 @@ public partial class SeedUndiscriminatedUnionsClient
         Union = new UnionClient(_client);
     }
 
-    public UnionClient Union { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public UnionClient Union { get; init; }
 }

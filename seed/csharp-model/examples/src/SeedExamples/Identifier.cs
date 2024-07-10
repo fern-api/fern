@@ -7,15 +7,15 @@ using SeedExamples.Core;
 
 namespace SeedExamples;
 
-public class Identifier
+public record Identifier
 {
     [JsonPropertyName("type")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<BasicType, ComplexType>>))]
-    public OneOf<BasicType, ComplexType> Type { get; init; }
+    public required OneOf<BasicType, ComplexType> Type { get; init; }
 
     [JsonPropertyName("value")]
-    public string Value { get; init; }
+    public required string Value { get; init; }
 
     [JsonPropertyName("label")]
-    public string Label { get; init; }
+    public required string Label { get; init; }
 }

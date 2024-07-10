@@ -1,3 +1,4 @@
+using System.Net.Http;
 using OneOf;
 using SeedEnum;
 using SeedEnum.Core;
@@ -15,14 +16,14 @@ public class PathParamClient
         _client = client;
     }
 
-    public async void SendAsync(
+    public async Task SendAsync(
         Operand operand,
         Operand? maybeOperand,
         OneOf<Color, Operand> operandOrColor,
         OneOf<Color, Operand>? maybeOperandOrColor
     )
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,

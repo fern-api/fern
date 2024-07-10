@@ -5,16 +5,16 @@ using SeedTrace.V2;
 
 namespace SeedTrace.V2;
 
-public class TestCaseV2
+public record TestCaseV2
 {
     [JsonPropertyName("metadata")]
-    public TestCaseMetadata Metadata { get; init; }
+    public required TestCaseMetadata Metadata { get; init; }
 
     [JsonPropertyName("implementation")]
-    public object Implementation { get; init; }
+    public required object Implementation { get; init; }
 
     [JsonPropertyName("arguments")]
-    public Dictionary<string, object> Arguments { get; init; }
+    public Dictionary<string, object> Arguments { get; init; } = new Dictionary<string, object>();
 
     [JsonPropertyName("expects")]
     public TestCaseExpects? Expects { get; init; }

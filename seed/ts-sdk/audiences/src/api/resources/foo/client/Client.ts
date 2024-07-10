@@ -58,13 +58,13 @@ export class Foo {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            body: await serializers.FindRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.FindRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.ImportingType.parseOrThrow(_response.body, {
+            return serializers.ImportingType.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

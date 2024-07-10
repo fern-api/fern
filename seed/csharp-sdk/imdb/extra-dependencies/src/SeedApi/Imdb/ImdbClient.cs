@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedApi;
 using SeedApi.Core;
@@ -28,10 +29,10 @@ public class ImdbClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody);
+            return JsonSerializer.Deserialize<string>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -41,10 +42,10 @@ public class ImdbClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"/movies/{movieId}" }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Movie>(responseBody);
+            return JsonSerializer.Deserialize<Movie>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

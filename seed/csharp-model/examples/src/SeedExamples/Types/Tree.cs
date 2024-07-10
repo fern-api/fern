@@ -5,7 +5,7 @@ using SeedExamples;
 
 namespace SeedExamples;
 
-public class Tree
+public record Tree
 {
     [JsonPropertyName("nodes")]
     public IEnumerable<Node>? Nodes { get; init; }

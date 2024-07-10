@@ -43,7 +43,7 @@ export class Dummy {
             },
             contentType: "application/json",
             body: {
-                ...(await serializers.GenerateStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
+                ...serializers.GenerateStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
                 stream: true,
             },
             responseType: "streaming",
@@ -55,7 +55,7 @@ export class Dummy {
             return new core.Stream({
                 stream: _response.body,
                 parse: async (data) => {
-                    return await serializers.StreamResponse.parseOrThrow(data, {
+                    return serializers.StreamResponse.parseOrThrow(data, {
                         unrecognizedObjectKeys: "passthrough",
                         allowUnrecognizedUnionMembers: true,
                         allowUnrecognizedEnumValues: true,
@@ -117,7 +117,7 @@ export class Dummy {
             },
             contentType: "application/json",
             body: {
-                ...(await serializers.Generateequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
+                ...serializers.Generateequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
                 stream: false,
             },
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -125,7 +125,7 @@ export class Dummy {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.StreamResponse.parseOrThrow(_response.body, {
+            return serializers.StreamResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

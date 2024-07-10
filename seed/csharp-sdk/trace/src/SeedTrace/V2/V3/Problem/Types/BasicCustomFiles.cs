@@ -6,17 +6,18 @@ using SeedTrace.V2.V3;
 
 namespace SeedTrace.V2.V3;
 
-public class BasicCustomFiles
+public record BasicCustomFiles
 {
     [JsonPropertyName("methodName")]
-    public string MethodName { get; init; }
+    public required string MethodName { get; init; }
 
     [JsonPropertyName("signature")]
-    public NonVoidFunctionSignature Signature { get; init; }
+    public required NonVoidFunctionSignature Signature { get; init; }
 
     [JsonPropertyName("additionalFiles")]
-    public Dictionary<Language, Files> AdditionalFiles { get; init; }
+    public Dictionary<Language, Files> AdditionalFiles { get; init; } =
+        new Dictionary<Language, Files>();
 
     [JsonPropertyName("basicTestCaseTemplate")]
-    public BasicTestCaseTemplate BasicTestCaseTemplate { get; init; }
+    public required BasicTestCaseTemplate BasicTestCaseTemplate { get; init; }
 }

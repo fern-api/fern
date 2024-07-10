@@ -61,7 +61,7 @@ export class NoAuth {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.noAuth.postWithNoAuth.Response.parseOrThrow(_response.body, {
+                body: serializers.noAuth.postWithNoAuth.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -76,7 +76,7 @@ export class NoAuth {
                     return {
                         ok: false,
                         error: Fiddle.noAuth.postWithNoAuth.Error.badRequestBody(
-                            await serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
+                            serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
                                 unrecognizedObjectKeys: "passthrough",
                                 allowUnrecognizedUnionMembers: true,
                                 allowUnrecognizedEnumValues: true,

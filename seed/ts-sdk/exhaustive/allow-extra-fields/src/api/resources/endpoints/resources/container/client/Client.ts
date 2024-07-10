@@ -50,7 +50,7 @@ export class Container {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.container.getAndReturnListOfPrimitives.Request.jsonOrThrow(request, {
+            body: serializers.endpoints.container.getAndReturnListOfPrimitives.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -60,15 +60,12 @@ export class Container {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.endpoints.container.getAndReturnListOfPrimitives.Response.parseOrThrow(
-                _response.body,
-                {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }
-            );
+            return serializers.endpoints.container.getAndReturnListOfPrimitives.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -118,7 +115,7 @@ export class Container {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.container.getAndReturnListOfObjects.Request.jsonOrThrow(request, {
+            body: serializers.endpoints.container.getAndReturnListOfObjects.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -128,15 +125,12 @@ export class Container {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.endpoints.container.getAndReturnListOfObjects.Response.parseOrThrow(
-                _response.body,
-                {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }
-            );
+            return serializers.endpoints.container.getAndReturnListOfObjects.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -184,7 +178,7 @@ export class Container {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.container.getAndReturnSetOfPrimitives.Request.jsonOrThrow(request, {
+            body: serializers.endpoints.container.getAndReturnSetOfPrimitives.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -194,15 +188,12 @@ export class Container {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.endpoints.container.getAndReturnSetOfPrimitives.Response.parseOrThrow(
-                _response.body,
-                {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }
-            );
+            return serializers.endpoints.container.getAndReturnSetOfPrimitives.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -252,7 +243,7 @@ export class Container {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.container.getAndReturnSetOfObjects.Request.jsonOrThrow(request, {
+            body: serializers.endpoints.container.getAndReturnSetOfObjects.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -262,15 +253,12 @@ export class Container {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.endpoints.container.getAndReturnSetOfObjects.Response.parseOrThrow(
-                _response.body,
-                {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }
-            );
+            return serializers.endpoints.container.getAndReturnSetOfObjects.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -320,7 +308,7 @@ export class Container {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.container.getAndReturnMapPrimToPrim.Request.jsonOrThrow(request, {
+            body: serializers.endpoints.container.getAndReturnMapPrimToPrim.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -330,15 +318,12 @@ export class Container {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.parseOrThrow(
-                _response.body,
-                {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }
-            );
+            return serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -390,7 +375,7 @@ export class Container {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.container.getAndReturnMapOfPrimToObject.Request.jsonOrThrow(request, {
+            body: serializers.endpoints.container.getAndReturnMapOfPrimToObject.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -400,15 +385,12 @@ export class Container {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.parseOrThrow(
-                _response.body,
-                {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }
-            );
+            return serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -460,7 +442,7 @@ export class Container {
             contentType: "application/json",
             body:
                 request != null
-                    ? await serializers.endpoints.container.getAndReturnOptional.Request.jsonOrThrow(request, {
+                    ? serializers.endpoints.container.getAndReturnOptional.Request.jsonOrThrow(request, {
                           unrecognizedObjectKeys: "passthrough",
                           allowUnrecognizedUnionMembers: true,
                           allowUnrecognizedEnumValues: true,
@@ -471,7 +453,7 @@ export class Container {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.endpoints.container.getAndReturnOptional.Response.parseOrThrow(_response.body, {
+            return serializers.endpoints.container.getAndReturnOptional.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

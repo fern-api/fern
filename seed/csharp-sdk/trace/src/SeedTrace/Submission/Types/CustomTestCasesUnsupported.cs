@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class CustomTestCasesUnsupported
+public record CustomTestCasesUnsupported
 {
     [JsonPropertyName("problemId")]
-    public string ProblemId { get; init; }
+    public required string ProblemId { get; init; }
 
     [JsonPropertyName("submissionId")]
-    public Guid SubmissionId { get; init; }
+    public required Guid SubmissionId { get; init; }
 }

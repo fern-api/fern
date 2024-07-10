@@ -4,11 +4,11 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class CreatePlaylistRequest
+public record CreatePlaylistRequest
 {
-    public DateTime Datetime { get; init; }
+    public required DateTime Datetime { get; init; }
 
     public DateTime? OptionalDatetime { get; init; }
 
-    public PlaylistCreateRequest Body { get; init; }
+    public required PlaylistCreateRequest Body { get; init; }
 }

@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedExtraProperties;
 
-public class Failure
+public record Failure
 {
     [JsonPropertyName("status")]
-    public string Status { get; init; }
+    public required string Status { get; init; }
 }

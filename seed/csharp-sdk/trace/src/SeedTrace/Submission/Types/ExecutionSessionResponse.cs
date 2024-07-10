@@ -5,17 +5,17 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class ExecutionSessionResponse
+public record ExecutionSessionResponse
 {
     [JsonPropertyName("sessionId")]
-    public string SessionId { get; init; }
+    public required string SessionId { get; init; }
 
     [JsonPropertyName("executionSessionUrl")]
     public string? ExecutionSessionUrl { get; init; }
 
     [JsonPropertyName("language")]
-    public Language Language { get; init; }
+    public required Language Language { get; init; }
 
     [JsonPropertyName("status")]
-    public ExecutionSessionStatus Status { get; init; }
+    public required ExecutionSessionStatus Status { get; init; }
 }

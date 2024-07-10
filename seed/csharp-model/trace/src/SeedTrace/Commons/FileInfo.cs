@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class FileInfo
+public record FileInfo
 {
     [JsonPropertyName("filename")]
-    public string Filename { get; init; }
+    public required string Filename { get; init; }
 
     [JsonPropertyName("contents")]
-    public string Contents { get; init; }
+    public required string Contents { get; init; }
 }

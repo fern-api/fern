@@ -38,7 +38,7 @@ export class EnumService {
 
     public toRouter(): express.Router {
         this.router.post("", async (req, res, next) => {
-            const request = await serializers.types.WeatherReport.parse(req.body);
+            const request = serializers.types.WeatherReport.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -47,7 +47,7 @@ export class EnumService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.types.WeatherReport.jsonOrThrow(responseBody, {
+                                    serializers.types.WeatherReport.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "passthrough",
                                         allowUnrecognizedUnionMembers: true,
                                         allowUnrecognizedEnumValues: true,

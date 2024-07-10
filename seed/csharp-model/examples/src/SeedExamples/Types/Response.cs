@@ -5,11 +5,11 @@ using SeedExamples;
 
 namespace SeedExamples;
 
-public class Response
+public record Response
 {
     [JsonPropertyName("response")]
-    public object Response_ { get; init; }
+    public required object Response_ { get; init; }
 
     [JsonPropertyName("identifiers")]
-    public IEnumerable<Identifier> Identifiers { get; init; }
+    public IEnumerable<Identifier> Identifiers { get; init; } = new List<Identifier>();
 }

@@ -60,13 +60,13 @@ export class Payment {
                 "Idempotency-Expiration": requestOptions?.idempotencyExpiration.toString(),
             },
             contentType: "application/json",
-            body: await serializers.CreatePaymentRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.CreatePaymentRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.payment.create.Response.parseOrThrow(_response.body, {
+            return serializers.payment.create.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

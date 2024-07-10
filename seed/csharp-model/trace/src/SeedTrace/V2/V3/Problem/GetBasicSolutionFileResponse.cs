@@ -6,8 +6,9 @@ using SeedTrace.V2.V3;
 
 namespace SeedTrace.V2.V3;
 
-public class GetBasicSolutionFileResponse
+public record GetBasicSolutionFileResponse
 {
     [JsonPropertyName("solutionFileByLanguage")]
-    public Dictionary<Language, FileInfoV2> SolutionFileByLanguage { get; init; }
+    public Dictionary<Language, FileInfoV2> SolutionFileByLanguage { get; init; } =
+        new Dictionary<Language, FileInfoV2>();
 }

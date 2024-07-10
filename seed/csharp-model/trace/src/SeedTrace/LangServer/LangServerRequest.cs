@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class LangServerRequest
+public record LangServerRequest
 {
     [JsonPropertyName("request")]
-    public object Request { get; init; }
+    public required object Request { get; init; }
 }

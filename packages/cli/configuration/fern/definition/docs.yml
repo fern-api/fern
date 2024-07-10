@@ -14,11 +14,13 @@ types:
       # navigation
       tabs: optional<map<TabId, TabConfig>>
       versions: optional<list<VersionConfig>>
+      landing-page: optional<PageConfiguration>
       navigation:
         type: optional<NavigationConfig>
         docs: The navigation config is skipped when multiple versions are present.
       "navbar-links": optional<list<NavbarLink>>
       "footer-links": optional<FooterLinksConfig>
+      experimental: optional<ExperimentalConfig>
 
       # seo
       metadata: optional<MetadataConfig>
@@ -163,6 +165,7 @@ types:
   VersionFileConfig:
     properties:
       tabs: optional<map<TabId, TabConfig>>
+      landing-page: optional<PageConfiguration>
       navigation: NavigationConfig
 
   NavigationConfig:
@@ -420,6 +423,10 @@ types:
   SectionConfiguration:
     properties:
       section: string
+      path:
+        type: optional<string>
+        docs: |
+          The relative path to the markdown file that will be displayed when the section is clicked.
       contents: list<NavigationItem>
       collapsed: optional<boolean>
       slug: optional<string>
@@ -806,3 +813,11 @@ types:
   IntegrationsConfig:
     properties:
       intercom: optional<string>
+
+  ExperimentalConfig:
+    properties:
+      mdx-components:
+        type: optional<list<string>>
+        docs: |
+          List of relative paths to folders or files that end in .{ts,tsx,js,jsx},
+          and makes them available for use in MDX files.

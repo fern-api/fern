@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class VariableTypeAndName
+public record VariableTypeAndName
 {
     [JsonPropertyName("variableType")]
-    public object VariableType { get; init; }
+    public required object VariableType { get; init; }
 
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 }

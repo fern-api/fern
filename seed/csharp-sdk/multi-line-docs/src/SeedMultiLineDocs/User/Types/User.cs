@@ -4,10 +4,10 @@ using System.Text.Json.Serialization;
 
 namespace SeedMultiLineDocs;
 
-public class User
+public record User
 {
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; init; }
 
     /// <summary>
     /// The user's name. This name is unique to each user. A few examples are included below:
@@ -17,7 +17,7 @@ public class User
     /// - Charlie
     /// </summary>
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     /// <summary>
     /// The user's age.

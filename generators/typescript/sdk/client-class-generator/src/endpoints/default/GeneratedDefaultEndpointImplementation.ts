@@ -118,7 +118,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         }
 
         const examples: string[] = [];
-        for (const example of getExampleEndpointCalls(this.endpoint.examples)) {
+        for (const example of getExampleEndpointCalls(this.endpoint)) {
             const generatedExample = this.getExample({
                 context,
                 example,
@@ -209,7 +209,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 ts.NodeFlags.Const
             );
             const statements: ts.Statement[] = [ts.factory.createVariableStatement(undefined, listFn)];
-            if (paginationInfo.type === "offset") {
+            if (paginationInfo.type === "offset" || paginationInfo.type === "offset-step") {
                 statements.push(paginationInfo.initializeOffset);
             }
             statements.push(
