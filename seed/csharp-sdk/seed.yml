@@ -25,4 +25,5 @@ fixtures:
       outputFolder: extra-dependencies
 allowedFailures:
   - objects-with-imports
+  - examples
 

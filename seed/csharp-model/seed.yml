@@ -15,5 +15,4 @@ local:
     - yarn workspace @fern-api/fern-csharp-model dist:cli
   runCommand: node model/dist/bundle.cjs
 allowedFailures:
-  - examples
   - objects-with-imports

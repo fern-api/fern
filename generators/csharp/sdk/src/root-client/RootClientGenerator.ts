@@ -6,8 +6,6 @@ import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { RawClient } from "../endpoint/RawClient";
 import { EndpointGenerator } from "../endpoint/EndpointGenerator";
-// eslint-disable-next-line import/no-internal-modules
-import { MethodType } from "@fern-api/csharp-codegen/src/ast/Method";
 
 export const CLIENT_MEMBER_NAME = "_client";
 
@@ -347,7 +345,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             body: csharp.codeblock((writer) => {
                 writer.writeLine("return Environment.GetEnvironmentVariable(env) ?? throw new Exception(message);");
             }),
-            type: MethodType.STATIC
+            type: csharp.MethodType.STATIC
         });
     }
 

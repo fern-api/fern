@@ -10,7 +10,8 @@ import {
     Field,
     Method,
     Parameter,
-    Type
+    Type,
+    MethodType
 } from "./ast";
 import { Interface } from "./ast/Interface";
 import { MethodInvocation } from "./ast/MethodInvocation";
@@ -80,5 +81,6 @@ export {
     Method,
     MethodInvocation,
     Parameter,
-    Type
+    Type,
+    MethodType
 } from "./ast";
