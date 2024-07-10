@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedExtends;
 
-public class Json
+public record Json
 {
     [JsonPropertyName("raw")]
-    public string Raw { get; init; }
+    public required string Raw { get; init; }
 
     [JsonPropertyName("docs")]
-    public string Docs { get; init; }
+    public required string Docs { get; init; }
 }

@@ -7,17 +7,17 @@ using SeedEnum.Core;
 
 namespace SeedEnum;
 
-public class SendEnumInlinedRequest
+public record SendEnumInlinedRequest
 {
     [JsonPropertyName("operand")]
-    public Operand Operand { get; init; }
+    public required Operand Operand { get; init; }
 
     [JsonPropertyName("maybeOperand")]
     public Operand? MaybeOperand { get; init; }
 
     [JsonPropertyName("operandOrColor")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<Color, Operand>>))]
-    public OneOf<Color, Operand> OperandOrColor { get; init; }
+    public required OneOf<Color, Operand> OperandOrColor { get; init; }
 
     [JsonPropertyName("maybeOperandOrColor")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<Color, Operand>>))]

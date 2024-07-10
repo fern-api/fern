@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedExamples;
 
-public class Request
+public record Request
 {
     [JsonPropertyName("request")]
-    public object Request_ { get; init; }
+    public required object Request_ { get; init; }
 }

@@ -1,6 +1,6 @@
 namespace SeedTrace;
 
-public class GetAttemptedMigrationsRequest
+public record GetAttemptedMigrationsRequest
 {
-    public string AdminKeyHeader { get; init; }
+    public required string AdminKeyHeader { get; init; }
 }

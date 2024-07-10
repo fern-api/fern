@@ -12,8 +12,8 @@ import { ERROR_NAMES_BY_STATUS_CODE } from "../convertToHttpError";
 import { getApplicationJsonSchemaMediaObject, getSchemaMediaObject } from "./getApplicationJsonSchema";
 
 // The converter will attempt to get response in priority order
-// (i.e. try for 200, then 201, then 204)
-const SUCCESSFUL_STATUS_CODES = ["200", "201", "204"];
+// (i.e. try for 200, then 201, then 202...)
+const SUCCESSFUL_STATUS_CODES = ["200", "201", "202", "204"];
 
 export interface ConvertedResponse {
     value: ResponseWithExample | undefined;

@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedValidation;
 using SeedValidation.Core;
@@ -10,7 +11,7 @@ public partial class SeedValidationClient
 {
     private RawClient _client;
 
-    public SeedValidationClient(ClientOptions clientOptions = null)
+    public SeedValidationClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
@@ -28,10 +29,10 @@ public partial class SeedValidationClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Type>(responseBody);
+            return JsonSerializer.Deserialize<Type>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -52,21 +53,11 @@ public partial class SeedValidationClient
                 Query = _query
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Type>(responseBody);
+            return JsonSerializer.Deserialize<Type>(responseBody)!;
         }
         throw new Exception(responseBody);
-    }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
     }
 }

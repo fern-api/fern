@@ -4,14 +4,14 @@ using System.Text.Json.Serialization;
 
 namespace SeedExamples;
 
-public class Moment
+public record Moment
 {
     [JsonPropertyName("id")]
-    public Guid Id { get; init; }
+    public required Guid Id { get; init; }
 
     [JsonPropertyName("date")]
-    public DateOnly Date { get; init; }
+    public required DateOnly Date { get; init; }
 
     [JsonPropertyName("datetime")]
-    public DateTime Datetime { get; init; }
+    public required DateTime Datetime { get; init; }
 }

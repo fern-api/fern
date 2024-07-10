@@ -1,3 +1,3 @@
 namespace SeedApi;
 
-public class ObjectValue { }
+public record ObjectValue { }

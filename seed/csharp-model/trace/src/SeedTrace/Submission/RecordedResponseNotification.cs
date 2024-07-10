@@ -4,13 +4,13 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class RecordedResponseNotification
+public record RecordedResponseNotification
 {
     [JsonPropertyName("submissionId")]
-    public Guid SubmissionId { get; init; }
+    public required Guid SubmissionId { get; init; }
 
     [JsonPropertyName("traceResponsesSize")]
-    public int TraceResponsesSize { get; init; }
+    public required int TraceResponsesSize { get; init; }
 
     [JsonPropertyName("testCaseId")]
     public string? TestCaseId { get; init; }

@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedResponseProperty;
 
-public class WithMetadata
+public record WithMetadata
 {
     [JsonPropertyName("metadata")]
-    public Dictionary<string, string> Metadata { get; init; }
+    public Dictionary<string, string> Metadata { get; init; } = new Dictionary<string, string>();
 }

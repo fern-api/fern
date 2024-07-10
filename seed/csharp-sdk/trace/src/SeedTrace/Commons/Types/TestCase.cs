@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class TestCase
+public record TestCase
 {
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; init; }
 
     [JsonPropertyName("params")]
-    public IEnumerable<object> Params { get; init; }
+    public IEnumerable<object> Params { get; init; } = new List<object>();
 }

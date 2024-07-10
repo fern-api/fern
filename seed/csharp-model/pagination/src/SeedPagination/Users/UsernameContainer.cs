@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedPagination;
 
-public class UsernameContainer
+public record UsernameContainer
 {
     [JsonPropertyName("results")]
-    public IEnumerable<string> Results { get; init; }
+    public IEnumerable<string> Results { get; init; } = new List<string>();
 }

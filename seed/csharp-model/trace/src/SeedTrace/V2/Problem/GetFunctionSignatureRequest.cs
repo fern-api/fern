@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace.V2;
 
-public class GetFunctionSignatureRequest
+public record GetFunctionSignatureRequest
 {
     [JsonPropertyName("functionSignature")]
-    public object FunctionSignature { get; init; }
+    public required object FunctionSignature { get; init; }
 }

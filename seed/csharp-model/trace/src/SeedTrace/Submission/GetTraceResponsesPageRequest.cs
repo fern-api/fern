@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class GetTraceResponsesPageRequest
+public record GetTraceResponsesPageRequest
 {
     [JsonPropertyName("offset")]
     public int? Offset { get; init; }

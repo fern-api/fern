@@ -9,7 +9,7 @@ public partial class SeedEnumClient
 {
     private RawClient _client;
 
-    public SeedEnumClient(ClientOptions clientOptions = null)
+    public SeedEnumClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
@@ -20,19 +20,9 @@ public partial class SeedEnumClient
         QueryParam = new QueryParamClient(_client);
     }
 
-    public InlinedRequestClient InlinedRequest { get; }
+    public InlinedRequestClient InlinedRequest { get; init; }
 
-    public PathParamClient PathParam { get; }
+    public PathParamClient PathParam { get; init; }
 
-    public QueryParamClient QueryParam { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public QueryParamClient QueryParam { get; init; }
 }

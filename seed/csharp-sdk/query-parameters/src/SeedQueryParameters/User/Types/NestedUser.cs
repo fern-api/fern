@@ -5,11 +5,11 @@ using SeedQueryParameters;
 
 namespace SeedQueryParameters;
 
-public class NestedUser
+public record NestedUser
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     [JsonPropertyName("user")]
-    public User User { get; init; }
+    public required User User { get; init; }
 }

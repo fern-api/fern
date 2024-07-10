@@ -5,10 +5,10 @@ using SeedExamples;
 
 namespace SeedExamples;
 
-public class Node
+public record Node
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     [JsonPropertyName("nodes")]
     public IEnumerable<Node>? Nodes { get; init; }

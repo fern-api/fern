@@ -4,17 +4,17 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace.V2.V3;
 
-public class LightweightProblemInfoV2
+public record LightweightProblemInfoV2
 {
     [JsonPropertyName("problemId")]
-    public string ProblemId { get; init; }
+    public required string ProblemId { get; init; }
 
     [JsonPropertyName("problemName")]
-    public string ProblemName { get; init; }
+    public required string ProblemName { get; init; }
 
     [JsonPropertyName("problemVersion")]
-    public int ProblemVersion { get; init; }
+    public required int ProblemVersion { get; init; }
 
     [JsonPropertyName("variableTypes")]
-    public HashSet<object> VariableTypes { get; init; }
+    public HashSet<object> VariableTypes { get; init; } = new HashSet<object>();
 }

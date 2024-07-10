@@ -5,11 +5,11 @@ using SeedTrace.V2;
 
 namespace SeedTrace.V2;
 
-public class GetGeneratedTestCaseFileRequest
+public record GetGeneratedTestCaseFileRequest
 {
     [JsonPropertyName("template")]
     public TestCaseTemplate? Template { get; init; }
 
     [JsonPropertyName("testCase")]
-    public TestCaseV2 TestCase { get; init; }
+    public required TestCaseV2 TestCase { get; init; }
 }

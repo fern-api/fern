@@ -4,14 +4,14 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class UpdatePlaylistRequest
+public record UpdatePlaylistRequest
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     /// <summary>
     /// The problems that make up the playlist.
     /// </summary>
     [JsonPropertyName("problems")]
-    public IEnumerable<string> Problems { get; init; }
+    public IEnumerable<string> Problems { get; init; } = new List<string>();
 }

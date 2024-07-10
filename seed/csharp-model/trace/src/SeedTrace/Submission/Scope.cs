@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class Scope
+public record Scope
 {
     [JsonPropertyName("variables")]
-    public Dictionary<string, object> Variables { get; init; }
+    public Dictionary<string, object> Variables { get; init; } = new Dictionary<string, object>();
 }

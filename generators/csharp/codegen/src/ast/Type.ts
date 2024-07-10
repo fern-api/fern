@@ -184,6 +184,46 @@ export class Type extends AstNode {
         }
     }
 
+    public writeEmptyCollectionInitializer(writer: Writer): void {
+        switch (this.internalType.type) {
+            case "list":
+                writer.write(" = new List<");
+                this.internalType.value.write(writer);
+                writer.write(">();");
+                break;
+            case "set":
+                writer.write(" = new HashSet<");
+                this.internalType.value.write(writer);
+                writer.write(">();");
+                break;
+            case "map":
+                writer.write(" = new Dictionary<");
+                this.internalType.keyType.write(writer);
+                writer.write(", ");
+                this.internalType.valueType.write(writer);
+                writer.write(">();");
+                break;
+        }
+    }
+
+    public isCollection(): boolean {
+        return ["list", "set", "map"].includes(this.internalType.type);
+    }
+
+    public toOptionalIfNotAlready(): Type {
+        if (this.internalType.type === "optional") {
+            return this;
+        }
+        return Type.optional(this);
+    }
+
+    public underlyingTypeIfOptional(): Type | undefined {
+        if (this.internalType.type === "optional") {
+            return (this.internalType as Optional).value;
+        }
+        return undefined;
+    }
+
     /* Static factory methods for creating a Type */
     public static string(): Type {
         return new this({

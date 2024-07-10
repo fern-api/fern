@@ -4,14 +4,14 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace.V2;
 
-public class TestCaseMetadata
+public record TestCaseMetadata
 {
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; init; }
 
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     [JsonPropertyName("hidden")]
-    public bool Hidden { get; init; }
+    public required bool Hidden { get; init; }
 }

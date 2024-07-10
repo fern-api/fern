@@ -5,7 +5,7 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class TraceResponsesPage
+public record TraceResponsesPage
 {
     /// <summary>
     /// If present, use this to load subseqent pages.
@@ -15,5 +15,5 @@ public class TraceResponsesPage
     public int? Offset { get; init; }
 
     [JsonPropertyName("traceResponses")]
-    public IEnumerable<TraceResponse> TraceResponses { get; init; }
+    public IEnumerable<TraceResponse> TraceResponses { get; init; } = new List<TraceResponse>();
 }

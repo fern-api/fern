@@ -4,14 +4,14 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class GenericCreateProblemError
+public record GenericCreateProblemError
 {
     [JsonPropertyName("message")]
-    public string Message { get; init; }
+    public required string Message { get; init; }
 
     [JsonPropertyName("type")]
-    public string Type { get; init; }
+    public required string Type { get; init; }
 
     [JsonPropertyName("stacktrace")]
-    public string Stacktrace { get; init; }
+    public required string Stacktrace { get; init; }
 }

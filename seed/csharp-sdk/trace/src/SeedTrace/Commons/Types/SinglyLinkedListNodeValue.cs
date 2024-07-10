@@ -4,13 +4,13 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class SinglyLinkedListNodeValue
+public record SinglyLinkedListNodeValue
 {
     [JsonPropertyName("nodeId")]
-    public string NodeId { get; init; }
+    public required string NodeId { get; init; }
 
     [JsonPropertyName("val")]
-    public double Val { get; init; }
+    public required double Val { get; init; }
 
     [JsonPropertyName("next")]
     public string? Next { get; init; }

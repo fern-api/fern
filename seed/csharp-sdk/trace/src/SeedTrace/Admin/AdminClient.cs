@@ -1,3 +1,4 @@
+using System.Net.Http;
 using SeedTrace;
 using SeedTrace.Core;
 
@@ -14,9 +15,9 @@ public class AdminClient
         _client = client;
     }
 
-    public async void UpdateTestSubmissionStatusAsync(Guid submissionId, object request)
+    public async Task UpdateTestSubmissionStatusAsync(Guid submissionId, object request)
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
@@ -26,9 +27,9 @@ public class AdminClient
         );
     }
 
-    public async void SendTestSubmissionUpdateAsync(Guid submissionId, TestSubmissionUpdate request)
+    public async Task SendTestSubmissionUpdateAsync(Guid submissionId, TestSubmissionUpdate request)
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
@@ -38,9 +39,9 @@ public class AdminClient
         );
     }
 
-    public async void UpdateWorkspaceSubmissionStatusAsync(Guid submissionId, object request)
+    public async Task UpdateWorkspaceSubmissionStatusAsync(Guid submissionId, object request)
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
@@ -50,12 +51,12 @@ public class AdminClient
         );
     }
 
-    public async void SendWorkspaceSubmissionUpdateAsync(
+    public async Task SendWorkspaceSubmissionUpdateAsync(
         Guid submissionId,
         WorkspaceSubmissionUpdate request
     )
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
@@ -65,13 +66,13 @@ public class AdminClient
         );
     }
 
-    public async void StoreTracedTestCaseAsync(
+    public async Task StoreTracedTestCaseAsync(
         Guid submissionId,
         string testCaseId,
         StoreTracedTestCaseRequest request
     )
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
@@ -81,13 +82,13 @@ public class AdminClient
         );
     }
 
-    public async void StoreTracedTestCaseV2Async(
+    public async Task StoreTracedTestCaseV2Async(
         Guid submissionId,
         string testCaseId,
         IEnumerable<TraceResponseV2> request
     )
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
@@ -98,12 +99,12 @@ public class AdminClient
         );
     }
 
-    public async void StoreTracedWorkspaceAsync(
+    public async Task StoreTracedWorkspaceAsync(
         Guid submissionId,
         StoreTracedWorkspaceRequest request
     )
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
@@ -113,12 +114,12 @@ public class AdminClient
         );
     }
 
-    public async void StoreTracedWorkspaceV2Async(
+    public async Task StoreTracedWorkspaceV2Async(
         Guid submissionId,
         IEnumerable<TraceResponseV2> request
     )
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,

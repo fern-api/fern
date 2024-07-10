@@ -6,17 +6,18 @@ using SeedTrace.V2;
 
 namespace SeedTrace;
 
-public class TestSubmissionStatusV2
+public record TestSubmissionStatusV2
 {
     [JsonPropertyName("updates")]
-    public IEnumerable<TestSubmissionUpdate> Updates { get; init; }
+    public IEnumerable<TestSubmissionUpdate> Updates { get; init; } =
+        new List<TestSubmissionUpdate>();
 
     [JsonPropertyName("problemId")]
-    public string ProblemId { get; init; }
+    public required string ProblemId { get; init; }
 
     [JsonPropertyName("problemVersion")]
-    public int ProblemVersion { get; init; }
+    public required int ProblemVersion { get; init; }
 
     [JsonPropertyName("problemInfo")]
-    public ProblemInfoV2 ProblemInfo { get; init; }
+    public required ProblemInfoV2 ProblemInfo { get; init; }
 }

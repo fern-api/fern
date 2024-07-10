@@ -5,11 +5,12 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class SinglyLinkedListValue
+public record SinglyLinkedListValue
 {
     [JsonPropertyName("head")]
     public string? Head { get; init; }
 
     [JsonPropertyName("nodes")]
-    public Dictionary<string, SinglyLinkedListNodeValue> Nodes { get; init; }
+    public Dictionary<string, SinglyLinkedListNodeValue> Nodes { get; init; } =
+        new Dictionary<string, SinglyLinkedListNodeValue>();
 }

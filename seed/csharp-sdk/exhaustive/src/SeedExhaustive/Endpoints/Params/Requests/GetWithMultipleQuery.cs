@@ -1,8 +1,8 @@
 namespace SeedExhaustive.Endpoints;
 
-public class GetWithMultipleQuery
+public record GetWithMultipleQuery
 {
-    public string Query { get; init; }
+    public required string Query { get; init; }
 
-    public int Numer { get; init; }
+    public required int Numer { get; init; }
 }

@@ -9,7 +9,7 @@ public partial class SeedNoEnvironmentClient
 {
     private RawClient _client;
 
-    public SeedNoEnvironmentClient(string token = null, ClientOptions clientOptions = null)
+    public SeedNoEnvironmentClient(string? token = null, ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>()
@@ -22,15 +22,5 @@ public partial class SeedNoEnvironmentClient
         Dummy = new DummyClient(_client);
     }
 
-    public DummyClient Dummy { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public DummyClient Dummy { get; init; }
 }

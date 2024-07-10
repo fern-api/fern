@@ -5,11 +5,11 @@ using SeedTrace.V2.V3;
 
 namespace SeedTrace.V2.V3;
 
-public class NonVoidFunctionDefinition
+public record NonVoidFunctionDefinition
 {
     [JsonPropertyName("signature")]
-    public NonVoidFunctionSignature Signature { get; init; }
+    public required NonVoidFunctionSignature Signature { get; init; }
 
     [JsonPropertyName("code")]
-    public FunctionImplementationForMultipleLanguages Code { get; init; }
+    public required FunctionImplementationForMultipleLanguages Code { get; init; }
 }

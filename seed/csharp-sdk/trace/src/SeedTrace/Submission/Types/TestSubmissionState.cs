@@ -5,17 +5,17 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class TestSubmissionState
+public record TestSubmissionState
 {
     [JsonPropertyName("problemId")]
-    public string ProblemId { get; init; }
+    public required string ProblemId { get; init; }
 
     [JsonPropertyName("defaultTestCases")]
-    public IEnumerable<TestCase> DefaultTestCases { get; init; }
+    public IEnumerable<TestCase> DefaultTestCases { get; init; } = new List<TestCase>();
 
     [JsonPropertyName("customTestCases")]
-    public IEnumerable<TestCase> CustomTestCases { get; init; }
+    public IEnumerable<TestCase> CustomTestCases { get; init; } = new List<TestCase>();
 
     [JsonPropertyName("status")]
-    public object Status { get; init; }
+    public required object Status { get; init; }
 }

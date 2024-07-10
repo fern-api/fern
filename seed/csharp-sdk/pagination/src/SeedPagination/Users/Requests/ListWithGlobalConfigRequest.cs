@@ -1,6 +1,6 @@
 namespace SeedPagination;
 
-public class ListWithGlobalConfigRequest
+public record ListWithGlobalConfigRequest
 {
     public int? Offset { get; init; }
 }

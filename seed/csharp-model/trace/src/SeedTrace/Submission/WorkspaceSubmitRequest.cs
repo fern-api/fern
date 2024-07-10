@@ -5,16 +5,17 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class WorkspaceSubmitRequest
+public record WorkspaceSubmitRequest
 {
     [JsonPropertyName("submissionId")]
-    public Guid SubmissionId { get; init; }
+    public required Guid SubmissionId { get; init; }
 
     [JsonPropertyName("language")]
-    public Language Language { get; init; }
+    public required Language Language { get; init; }
 
     [JsonPropertyName("submissionFiles")]
-    public IEnumerable<SubmissionFileInfo> SubmissionFiles { get; init; }
+    public IEnumerable<SubmissionFileInfo> SubmissionFiles { get; init; } =
+        new List<SubmissionFileInfo>();
 
     [JsonPropertyName("userId")]
     public string? UserId { get; init; }

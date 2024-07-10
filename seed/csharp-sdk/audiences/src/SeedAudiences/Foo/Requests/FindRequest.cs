@@ -1,6 +1,6 @@
 namespace SeedAudiences;
 
-public class FindRequest
+public record FindRequest
 {
     public string? OptionalString { get; init; }
 

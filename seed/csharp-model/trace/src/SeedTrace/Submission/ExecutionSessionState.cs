@@ -5,7 +5,7 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class ExecutionSessionState
+public record ExecutionSessionState
 {
     [JsonPropertyName("lastTimeContacted")]
     public string? LastTimeContacted { get; init; }
@@ -14,17 +14,17 @@ public class ExecutionSessionState
     /// The auto-generated session id. Formatted as a uuid.
     /// </summary>
     [JsonPropertyName("sessionId")]
-    public string SessionId { get; init; }
+    public required string SessionId { get; init; }
 
     [JsonPropertyName("isWarmInstance")]
-    public bool IsWarmInstance { get; init; }
+    public required bool IsWarmInstance { get; init; }
 
     [JsonPropertyName("awsTaskId")]
     public string? AwsTaskId { get; init; }
 
     [JsonPropertyName("language")]
-    public Language Language { get; init; }
+    public required Language Language { get; init; }
 
     [JsonPropertyName("status")]
-    public ExecutionSessionStatus Status { get; init; }
+    public required ExecutionSessionStatus Status { get; init; }
 }

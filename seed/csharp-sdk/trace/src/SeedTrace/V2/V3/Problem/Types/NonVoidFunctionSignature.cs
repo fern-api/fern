@@ -5,11 +5,11 @@ using SeedTrace.V2.V3;
 
 namespace SeedTrace.V2.V3;
 
-public class NonVoidFunctionSignature
+public record NonVoidFunctionSignature
 {
     [JsonPropertyName("parameters")]
-    public IEnumerable<Parameter> Parameters { get; init; }
+    public IEnumerable<Parameter> Parameters { get; init; } = new List<Parameter>();
 
     [JsonPropertyName("returnType")]
-    public object ReturnType { get; init; }
+    public required object ReturnType { get; init; }
 }

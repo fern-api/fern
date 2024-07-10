@@ -1,8 +1,8 @@
 namespace SeedMixedCase;
 
-public class ListResourcesRequest
+public record ListResourcesRequest
 {
-    public int PageLimit { get; init; }
+    public required int PageLimit { get; init; }
 
-    public DateOnly BeforeDate { get; init; }
+    public required DateOnly BeforeDate { get; init; }
 }

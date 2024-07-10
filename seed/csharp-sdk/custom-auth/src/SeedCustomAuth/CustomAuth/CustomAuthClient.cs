@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedCustomAuth.Core;
 
@@ -22,10 +23,10 @@ public class CustomAuthClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "custom-auth" }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<bool>(responseBody);
+            return JsonSerializer.Deserialize<bool>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -43,10 +44,10 @@ public class CustomAuthClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<bool>(responseBody);
+            return JsonSerializer.Deserialize<bool>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

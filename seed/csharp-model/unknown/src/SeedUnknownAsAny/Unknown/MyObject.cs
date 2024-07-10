@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedUnknownAsAny;
 
-public class MyObject
+public record MyObject
 {
     [JsonPropertyName("unknown")]
-    public object Unknown { get; init; }
+    public required object Unknown { get; init; }
 }

@@ -1,3 +1,4 @@
+using System.Net.Http;
 using SeedFileUpload;
 using SeedFileUpload.Core;
 
@@ -14,21 +15,21 @@ public class ServiceClient
         _client = client;
     }
 
-    public async void PostAsync(MyRequest request)
+    public async Task PostAsync(MyRequest request)
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = "" }
         );
     }
 
-    public async void JustFileAsync(JustFileRequet request)
+    public async Task JustFileAsync(JustFileRequet request)
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = "/just-file" }
         );
     }
 
-    public async void JustFileWithQueryParamsAsync(JustFileWithQueryParamsRequet request)
+    public async Task JustFileWithQueryParamsAsync(JustFileWithQueryParamsRequet request)
     {
         var _query = new Dictionary<string, object>()
         {
@@ -47,7 +48,7 @@ public class ServiceClient
         {
             _query["optionalListOfStrings"] = request.OptionalListOfStrings;
         }
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,

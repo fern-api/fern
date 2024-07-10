@@ -5,11 +5,11 @@ using SeedTrace.V2.V3;
 
 namespace SeedTrace.V2.V3;
 
-public class DefaultProvidedFile
+public record DefaultProvidedFile
 {
     [JsonPropertyName("file")]
-    public FileInfoV2 File { get; init; }
+    public required FileInfoV2 File { get; init; }
 
     [JsonPropertyName("relatedTypes")]
-    public IEnumerable<object> RelatedTypes { get; init; }
+    public IEnumerable<object> RelatedTypes { get; init; } = new List<object>();
 }

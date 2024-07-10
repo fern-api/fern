@@ -5,10 +5,10 @@ using SeedExamples;
 
 namespace SeedExamples;
 
-public class Directory
+public record Directory
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     [JsonPropertyName("files")]
     public IEnumerable<File>? Files { get; init; }

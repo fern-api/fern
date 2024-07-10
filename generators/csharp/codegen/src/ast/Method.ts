@@ -79,7 +79,7 @@ export class Method extends AstNode {
             writer.write("async ");
         }
         if (this.return == null) {
-            writer.write("void ");
+            writer.write("Task ");
         } else {
             if (this.isAsync) {
                 writer.write("Task<");

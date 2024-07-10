@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedTrace.Core;
 using SeedTrace.V2.V3;
@@ -27,10 +28,10 @@ public class ProblemClient
                 Path = "/problems-v2/lightweight-problem-info"
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<LightweightProblemInfoV2>>(responseBody);
+            return JsonSerializer.Deserialize<IEnumerable<LightweightProblemInfoV2>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -47,10 +48,10 @@ public class ProblemClient
                 Path = "/problems-v2/problem-info"
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<ProblemInfoV2>>(responseBody);
+            return JsonSerializer.Deserialize<IEnumerable<ProblemInfoV2>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -67,10 +68,10 @@ public class ProblemClient
                 Path = $"/problems-v2/problem-info/{problemId}"
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ProblemInfoV2>(responseBody);
+            return JsonSerializer.Deserialize<ProblemInfoV2>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -87,10 +88,10 @@ public class ProblemClient
                 Path = $"/problems-v2/problem-info/{problemId}/version/{problemVersion}"
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ProblemInfoV2>(responseBody);
+            return JsonSerializer.Deserialize<ProblemInfoV2>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

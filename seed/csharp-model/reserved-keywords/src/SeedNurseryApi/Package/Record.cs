@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedNurseryApi;
 
-public class Record
+public record Record
 {
     [JsonPropertyName("foo")]
-    public Dictionary<string, string> Foo { get; init; }
+    public Dictionary<string, string> Foo { get; init; } = new Dictionary<string, string>();
 
     [JsonPropertyName("3d")]
-    public int _3D { get; init; }
+    public required int _3D { get; init; }
 }

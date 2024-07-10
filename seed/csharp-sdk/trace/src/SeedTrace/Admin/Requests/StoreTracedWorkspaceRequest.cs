@@ -5,11 +5,11 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class StoreTracedWorkspaceRequest
+public record StoreTracedWorkspaceRequest
 {
     [JsonPropertyName("workspaceRunDetails")]
-    public WorkspaceRunDetails WorkspaceRunDetails { get; init; }
+    public required WorkspaceRunDetails WorkspaceRunDetails { get; init; }
 
     [JsonPropertyName("traceResponses")]
-    public IEnumerable<TraceResponse> TraceResponses { get; init; }
+    public IEnumerable<TraceResponse> TraceResponses { get; init; } = new List<TraceResponse>();
 }

@@ -5,13 +5,14 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class GetDefaultStarterFilesRequest
+public record GetDefaultStarterFilesRequest
 {
     [JsonPropertyName("inputParams")]
-    public IEnumerable<VariableTypeAndName> InputParams { get; init; }
+    public IEnumerable<VariableTypeAndName> InputParams { get; init; } =
+        new List<VariableTypeAndName>();
 
     [JsonPropertyName("outputType")]
-    public object OutputType { get; init; }
+    public required object OutputType { get; init; }
 
     /// <summary>
     /// The name of the `method` that the student has to complete.
@@ -23,5 +24,5 @@ public class GetDefaultStarterFilesRequest
     ///
     /// </summary>
     [JsonPropertyName("methodName")]
-    public string MethodName { get; init; }
+    public required string MethodName { get; init; }
 }

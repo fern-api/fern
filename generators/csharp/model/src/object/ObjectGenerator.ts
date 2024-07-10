@@ -22,7 +22,8 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         const class_ = csharp.class_({
             ...this.classReference,
             partial: false,
-            access: "public"
+            access: "public",
+            record: true
         });
 
         const properties = this.context.flattenedProperties.get(typeId) ?? this.objectDeclaration.properties;
@@ -48,7 +49,8 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                     init: true,
                     summary: property.docs,
                     jsonPropertyName: property.name.wireValue,
-                    annotations
+                    annotations,
+                    useRequired: true
                 })
             );
         });

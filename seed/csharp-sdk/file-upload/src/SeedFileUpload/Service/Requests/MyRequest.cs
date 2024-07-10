@@ -1,3 +1,3 @@
 namespace SeedFileUpload;
 
-public class MyRequest { }
+public record MyRequest { }

@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedUnions;
 
-public class Circle
+public record Circle
 {
     [JsonPropertyName("radius")]
-    public double Radius { get; init; }
+    public required double Radius { get; init; }
 }

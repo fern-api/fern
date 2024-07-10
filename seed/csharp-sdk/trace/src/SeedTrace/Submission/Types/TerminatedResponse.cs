@@ -1,3 +1,3 @@
 namespace SeedTrace;
 
-public class TerminatedResponse { }
+public record TerminatedResponse { }

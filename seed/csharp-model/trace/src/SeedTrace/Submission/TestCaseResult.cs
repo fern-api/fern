@@ -4,14 +4,14 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class TestCaseResult
+public record TestCaseResult
 {
     [JsonPropertyName("expectedResult")]
-    public object ExpectedResult { get; init; }
+    public required object ExpectedResult { get; init; }
 
     [JsonPropertyName("actualResult")]
-    public object ActualResult { get; init; }
+    public required object ActualResult { get; init; }
 
     [JsonPropertyName("passed")]
-    public bool Passed { get; init; }
+    public required bool Passed { get; init; }
 }

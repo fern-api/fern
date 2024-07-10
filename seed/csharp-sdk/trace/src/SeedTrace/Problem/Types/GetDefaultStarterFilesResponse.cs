@@ -5,8 +5,9 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class GetDefaultStarterFilesResponse
+public record GetDefaultStarterFilesResponse
 {
     [JsonPropertyName("files")]
-    public Dictionary<Language, ProblemFiles> Files { get; init; }
+    public Dictionary<Language, ProblemFiles> Files { get; init; } =
+        new Dictionary<Language, ProblemFiles>();
 }
