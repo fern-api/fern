@@ -145,7 +145,7 @@ exports[`generate IR from OpenAPI 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "454df425701f24c31195dec54881012dd731acd1",
+                "id": "e1a416a9e783773a211d8ca3a11c3574c907ca49",
                 "name": null,
                 "queryParameters": [
                   {
@@ -186,6 +186,13 @@ exports[`generate IR from OpenAPI 1`] = `
                             },
                           },
                           "type": "optional",
+                          "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                              "v1": "BOOLEAN",
+                              "v2": null,
+                            },
+                          },
                         },
                         "type": "container",
                       },
@@ -313,6 +320,17 @@ exports[`generate IR from OpenAPI 1`] = `
                                       },
                                     },
                                     "type": "optional",
+                                    "valueType": {
+                                      "_type": "primitive",
+                                      "primitive": {
+                                        "v1": "DOUBLE",
+                                        "v2": {
+                                          "default": null,
+                                          "type": "double",
+                                          "validation": null,
+                                        },
+                                      },
+                                    },
                                   },
                                   "type": "container",
                                 },
@@ -423,6 +441,17 @@ exports[`generate IR from OpenAPI 1`] = `
                                       },
                                     },
                                     "type": "optional",
+                                    "valueType": {
+                                      "_type": "primitive",
+                                      "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                          "default": null,
+                                          "type": "string",
+                                          "validation": null,
+                                        },
+                                      },
+                                    },
                                   },
                                   "type": "container",
                                 },
@@ -675,6 +704,17 @@ exports[`generate IR from OpenAPI 1`] = `
                                                       },
                                                     },
                                                     "type": "optional",
+                                                    "valueType": {
+                                                      "_type": "primitive",
+                                                      "primitive": {
+                                                        "v1": "DOUBLE",
+                                                        "v2": {
+                                                          "default": null,
+                                                          "type": "double",
+                                                          "validation": null,
+                                                        },
+                                                      },
+                                                    },
                                                   },
                                                   "type": "container",
                                                 },
@@ -822,6 +862,17 @@ exports[`generate IR from OpenAPI 1`] = `
                                                       },
                                                     },
                                                     "type": "optional",
+                                                    "valueType": {
+                                                      "_type": "primitive",
+                                                      "primitive": {
+                                                        "v1": "DOUBLE",
+                                                        "v2": {
+                                                          "default": null,
+                                                          "type": "double",
+                                                          "validation": null,
+                                                        },
+                                                      },
+                                                    },
                                                   },
                                                   "type": "container",
                                                 },
@@ -969,6 +1020,17 @@ exports[`generate IR from OpenAPI 1`] = `
                                                       },
                                                     },
                                                     "type": "optional",
+                                                    "valueType": {
+                                                      "_type": "primitive",
+                                                      "primitive": {
+                                                        "v1": "DOUBLE",
+                                                        "v2": {
+                                                          "default": null,
+                                                          "type": "double",
+                                                          "validation": null,
+                                                        },
+                                                      },
+                                                    },
                                                   },
                                                   "type": "container",
                                                 },
@@ -1085,6 +1147,111 @@ exports[`generate IR from OpenAPI 1`] = `
                                       },
                                     },
                                     "type": "optional",
+                                    "valueType": {
+                                      "_type": "named",
+                                      "fernFilepath": {
+                                        "allParts": [
+                                          {
+                                            "camelCase": {
+                                              "safeName": "infra",
+                                              "unsafeName": "infra",
+                                            },
+                                            "originalName": "infra",
+                                            "pascalCase": {
+                                              "safeName": "Infra",
+                                              "unsafeName": "Infra",
+                                            },
+                                            "screamingSnakeCase": {
+                                              "safeName": "INFRA",
+                                              "unsafeName": "INFRA",
+                                            },
+                                            "snakeCase": {
+                                              "safeName": "infra",
+                                              "unsafeName": "infra",
+                                            },
+                                          },
+                                          {
+                                            "camelCase": {
+                                              "safeName": "telemetry",
+                                              "unsafeName": "telemetry",
+                                            },
+                                            "originalName": "telemetry",
+                                            "pascalCase": {
+                                              "safeName": "Telemetry",
+                                              "unsafeName": "Telemetry",
+                                            },
+                                            "screamingSnakeCase": {
+                                              "safeName": "TELEMETRY",
+                                              "unsafeName": "TELEMETRY",
+                                            },
+                                            "snakeCase": {
+                                              "safeName": "telemetry",
+                                              "unsafeName": "telemetry",
+                                            },
+                                          },
+                                        ],
+                                        "file": {
+                                          "camelCase": {
+                                            "safeName": "telemetry",
+                                            "unsafeName": "telemetry",
+                                          },
+                                          "originalName": "telemetry",
+                                          "pascalCase": {
+                                            "safeName": "Telemetry",
+                                            "unsafeName": "Telemetry",
+                                          },
+                                          "screamingSnakeCase": {
+                                            "safeName": "TELEMETRY",
+                                            "unsafeName": "TELEMETRY",
+                                          },
+                                          "snakeCase": {
+                                            "safeName": "telemetry",
+                                            "unsafeName": "telemetry",
+                                          },
+                                        },
+                                        "packagePath": [
+                                          {
+                                            "camelCase": {
+                                              "safeName": "infra",
+                                              "unsafeName": "infra",
+                                            },
+                                            "originalName": "infra",
+                                            "pascalCase": {
+                                              "safeName": "Infra",
+                                              "unsafeName": "Infra",
+                                            },
+                                            "screamingSnakeCase": {
+                                              "safeName": "INFRA",
+                                              "unsafeName": "INFRA",
+                                            },
+                                            "snakeCase": {
+                                              "safeName": "infra",
+                                              "unsafeName": "infra",
+                                            },
+                                          },
+                                        ],
+                                      },
+                                      "name": {
+                                        "camelCase": {
+                                          "safeName": "telemetryData",
+                                          "unsafeName": "telemetryData",
+                                        },
+                                        "originalName": "TelemetryData",
+                                        "pascalCase": {
+                                          "safeName": "TelemetryData",
+                                          "unsafeName": "TelemetryData",
+                                        },
+                                        "screamingSnakeCase": {
+                                          "safeName": "TELEMETRY_DATA",
+                                          "unsafeName": "TELEMETRY_DATA",
+                                        },
+                                        "snakeCase": {
+                                          "safeName": "telemetry_data",
+                                          "unsafeName": "telemetry_data",
+                                        },
+                                      },
+                                      "typeId": "type_infra/telemetry:TelemetryData",
+                                    },
                                   },
                                   "type": "container",
                                 },
@@ -1521,6 +1688,17 @@ exports[`generate IR from OpenAPI 1`] = `
                                       },
                                     },
                                     "type": "optional",
+                                    "valueType": {
+                                      "_type": "primitive",
+                                      "primitive": {
+                                        "v1": "DOUBLE",
+                                        "v2": {
+                                          "default": null,
+                                          "type": "double",
+                                          "validation": null,
+                                        },
+                                      },
+                                    },
                                   },
                                   "type": "container",
                                 },
@@ -1631,6 +1809,17 @@ exports[`generate IR from OpenAPI 1`] = `
                                       },
                                     },
                                     "type": "optional",
+                                    "valueType": {
+                                      "_type": "primitive",
+                                      "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                          "default": null,
+                                          "type": "string",
+                                          "validation": null,
+                                        },
+                                      },
+                                    },
                                   },
                                   "type": "container",
                                 },
@@ -1883,6 +2072,17 @@ exports[`generate IR from OpenAPI 1`] = `
                                                       },
                                                     },
                                                     "type": "optional",
+                                                    "valueType": {
+                                                      "_type": "primitive",
+                                                      "primitive": {
+                                                        "v1": "DOUBLE",
+                                                        "v2": {
+                                                          "default": null,
+                                                          "type": "double",
+                                                          "validation": null,
+                                                        },
+                                                      },
+                                                    },
                                                   },
                                                   "type": "container",
                                                 },
@@ -2030,6 +2230,17 @@ exports[`generate IR from OpenAPI 1`] = `
                                                       },
                                                     },
                                                     "type": "optional",
+                                                    "valueType": {
+                                                      "_type": "primitive",
+                                                      "primitive": {
+                                                        "v1": "DOUBLE",
+                                                        "v2": {
+                                                          "default": null,
+                                                          "type": "double",
+                                                          "validation": null,
+                                                        },
+                                                      },
+                                                    },
                                                   },
                                                   "type": "container",
                                                 },
@@ -2177,6 +2388,17 @@ exports[`generate IR from OpenAPI 1`] = `
                                                       },
                                                     },
                                                     "type": "optional",
+                                                    "valueType": {
+                                                      "_type": "primitive",
+                                                      "primitive": {
+                                                        "v1": "DOUBLE",
+                                                        "v2": {
+                                                          "default": null,
+                                                          "type": "double",
+                                                          "validation": null,
+                                                        },
+                                                      },
+                                                    },
                                                   },
                                                   "type": "container",
                                                 },
@@ -2293,6 +2515,111 @@ exports[`generate IR from OpenAPI 1`] = `
                                       },
                                     },
                                     "type": "optional",
+                                    "valueType": {
+                                      "_type": "named",
+                                      "fernFilepath": {
+                                        "allParts": [
+                                          {
+                                            "camelCase": {
+                                              "safeName": "infra",
+                                              "unsafeName": "infra",
+                                            },
+                                            "originalName": "infra",
+                                            "pascalCase": {
+                                              "safeName": "Infra",
+                                              "unsafeName": "Infra",
+                                            },
+                                            "screamingSnakeCase": {
+                                              "safeName": "INFRA",
+                                              "unsafeName": "INFRA",
+                                            },
+                                            "snakeCase": {
+                                              "safeName": "infra",
+                                              "unsafeName": "infra",
+                                            },
+                                          },
+                                          {
+                                            "camelCase": {
+                                              "safeName": "telemetry",
+                                              "unsafeName": "telemetry",
+                                            },
+                                            "originalName": "telemetry",
+                                            "pascalCase": {
+                                              "safeName": "Telemetry",
+                                              "unsafeName": "Telemetry",
+                                            },
+                                            "screamingSnakeCase": {
+                                              "safeName": "TELEMETRY",
+                                              "unsafeName": "TELEMETRY",
+                                            },
+                                            "snakeCase": {
+                                              "safeName": "telemetry",
+                                              "unsafeName": "telemetry",
+                                            },
+                                          },
+                                        ],
+                                        "file": {
+                                          "camelCase": {
+                                            "safeName": "telemetry",
+                                            "unsafeName": "telemetry",
+                                          },
+                                          "originalName": "telemetry",
+                                          "pascalCase": {
+                                            "safeName": "Telemetry",
+                                            "unsafeName": "Telemetry",
+                                          },
+                                          "screamingSnakeCase": {
+                                            "safeName": "TELEMETRY",
+                                            "unsafeName": "TELEMETRY",
+                                          },
+                                          "snakeCase": {
+                                            "safeName": "telemetry",
+                                            "unsafeName": "telemetry",
+                                          },
+                                        },
+                                        "packagePath": [
+                                          {
+                                            "camelCase": {
+                                              "safeName": "infra",
+                                              "unsafeName": "infra",
+                                            },
+                                            "originalName": "infra",
+                                            "pascalCase": {
+                                              "safeName": "Infra",
+                                              "unsafeName": "Infra",
+                                            },
+                                            "screamingSnakeCase": {
+                                              "safeName": "INFRA",
+                                              "unsafeName": "INFRA",
+                                            },
+                                            "snakeCase": {
+                                              "safeName": "infra",
+                                              "unsafeName": "infra",
+                                            },
+                                          },
+                                        ],
+                                      },
+                                      "name": {
+                                        "camelCase": {
+                                          "safeName": "telemetryData",
+                                          "unsafeName": "telemetryData",
+                                        },
+                                        "originalName": "TelemetryData",
+                                        "pascalCase": {
+                                          "safeName": "TelemetryData",
+                                          "unsafeName": "TelemetryData",
+                                        },
+                                        "screamingSnakeCase": {
+                                          "safeName": "TELEMETRY_DATA",
+                                          "unsafeName": "TELEMETRY_DATA",
+                                        },
+                                        "snakeCase": {
+                                          "safeName": "telemetry_data",
+                                          "unsafeName": "telemetry_data",
+                                        },
+                                      },
+                                      "typeId": "type_infra/telemetry:TelemetryData",
+                                    },
                                   },
                                   "type": "container",
                                 },

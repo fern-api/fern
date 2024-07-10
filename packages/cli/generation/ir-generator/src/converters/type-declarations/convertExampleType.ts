@@ -226,8 +226,8 @@ export function convertTypeReferenceExample({
                                 workspace
                             })
                         })),
-                        keyType: keyType,
-                        valueType: valueType
+                        keyType: fileContainingRawTypeReference.parseTypeReference(keyType),
+                        valueType: fileContainingRawTypeReference.parseTypeReference(valueType)
                     })
                 );
             },
@@ -235,11 +235,6 @@ export function convertTypeReferenceExample({
                 if (!Array.isArray(resolvedExample)) {
                     throw new Error("Example is not a list");
                 }
-                const typeDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
-                    referenceToNamedType: rawTypeBeingExemplified,
-                    file: fileContainingRawTypeReference
-                });
-                typeDeclaration.
                 return ExampleTypeReferenceShape.container(
                     ExampleContainer.list({
                         list: resolvedExample.map((exampleItem) =>
@@ -253,7 +248,7 @@ export function convertTypeReferenceExample({
                                 workspace
                             })
                         ),
-                        itemType: itemType
+                        itemType: fileContainingRawTypeReference.parseTypeReference(itemType)
                     })
                 );
             },
@@ -274,7 +269,7 @@ export function convertTypeReferenceExample({
                                 workspace
                             })
                         ),
-                        itemType: itemType
+                        itemType: fileContainingRawTypeReference.parseTypeReference(itemType)
                     })
                 );
             },
@@ -293,7 +288,7 @@ export function convertTypeReferenceExample({
                                       workspace
                                   })
                                 : undefined,
-                        valueType: itemType
+                        valueType: fileContainingRawTypeReference.parseTypeReference(itemType)
                     })
                 );
             },

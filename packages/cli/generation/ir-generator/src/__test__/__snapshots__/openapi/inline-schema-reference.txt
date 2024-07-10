@@ -124,7 +124,7 @@ exports[`generate IR from OpenAPI 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "a4e841988b0128cceb0968d0a550080f7f2d67c3",
+                "id": "409c3a7dd2fa87414d8e9967cc4e24670f237804",
                 "name": null,
                 "queryParameters": [],
                 "request": null,
@@ -213,6 +213,17 @@ exports[`generate IR from OpenAPI 1`] = `
                                             },
                                           },
                                           "type": "optional",
+                                          "valueType": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                              "v1": "STRING",
+                                              "v2": {
+                                                "default": null,
+                                                "type": "string",
+                                                "validation": null,
+                                              },
+                                            },
+                                          },
                                         },
                                         "type": "container",
                                       },
@@ -467,6 +478,17 @@ exports[`generate IR from OpenAPI 1`] = `
                                             },
                                           },
                                           "type": "optional",
+                                          "valueType": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                              "v1": "STRING",
+                                              "v2": {
+                                                "default": null,
+                                                "type": "string",
+                                                "validation": null,
+                                              },
+                                            },
+                                          },
                                         },
                                         "type": "container",
                                       },
