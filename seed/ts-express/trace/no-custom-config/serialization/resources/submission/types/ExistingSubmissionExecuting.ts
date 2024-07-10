@@ -10,7 +10,7 @@ export const ExistingSubmissionExecuting: core.serialization.ObjectSchema<
     serializers.ExistingSubmissionExecuting.Raw,
     SeedTrace.ExistingSubmissionExecuting
 > = core.serialization.object({
-    submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
+    submissionId: core.serialization.lazy(() => serializers.SubmissionId),
 });
 
 export declare namespace ExistingSubmissionExecuting {

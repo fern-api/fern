@@ -10,7 +10,7 @@ export const SubmissionIdNotFound: core.serialization.ObjectSchema<
     serializers.SubmissionIdNotFound.Raw,
     SeedTrace.SubmissionIdNotFound
 > = core.serialization.object({
-    missingSubmissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
+    missingSubmissionId: core.serialization.lazy(() => serializers.SubmissionId),
 });
 
 export declare namespace SubmissionIdNotFound {

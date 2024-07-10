@@ -10,7 +10,7 @@ export const Response: core.serialization.ObjectSchema<
     serializers.folderA.Response.Raw,
     SeedAudiences.folderA.Response
 > = core.serialization.object({
-    foo: core.serialization.lazyObject(async () => (await import("../../../../..")).folderB.Foo).optional(),
+    foo: core.serialization.lazyObject(() => serializers.folderB.Foo).optional(),
 });
 
 export declare namespace Response {

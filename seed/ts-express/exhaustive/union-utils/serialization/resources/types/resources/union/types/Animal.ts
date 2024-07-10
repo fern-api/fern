@@ -9,8 +9,8 @@ import * as core from "../../../../../../core";
 export const Animal: core.serialization.Schema<serializers.types.Animal.Raw, SeedExhaustive.types.Animal> =
     core.serialization
         .union("animal", {
-            dog: core.serialization.lazyObject(async () => (await import("../../../../..")).types.Dog),
-            cat: core.serialization.lazyObject(async () => (await import("../../../../..")).types.Cat),
+            dog: core.serialization.lazyObject(() => serializers.types.Dog),
+            cat: core.serialization.lazyObject(() => serializers.types.Cat),
         })
         .transform<SeedExhaustive.types.Animal>({
             transform: (value) => {

@@ -10,7 +10,7 @@ export const RecordedResponseNotification: core.serialization.ObjectSchema<
     serializers.RecordedResponseNotification.Raw,
     SeedTrace.RecordedResponseNotification
 > = core.serialization.object({
-    submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
+    submissionId: core.serialization.lazy(() => serializers.SubmissionId),
     traceResponsesSize: core.serialization.number(),
     testCaseId: core.serialization.string().optional(),
 });

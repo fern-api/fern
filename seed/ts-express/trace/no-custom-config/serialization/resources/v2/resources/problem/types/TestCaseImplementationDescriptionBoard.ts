@@ -15,7 +15,7 @@ export const TestCaseImplementationDescriptionBoard: core.serialization.Schema<
             value: core.serialization.string(),
         }),
         paramId: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../../../..")).v2.ParameterId),
+            value: core.serialization.lazy(() => serializers.v2.ParameterId),
         }),
     })
     .transform<SeedTrace.v2.TestCaseImplementationDescriptionBoard>({

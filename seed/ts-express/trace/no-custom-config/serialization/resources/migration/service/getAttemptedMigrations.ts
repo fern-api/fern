@@ -9,7 +9,7 @@ import * as core from "../../../../core";
 export const Response: core.serialization.Schema<
     serializers.migration.getAttemptedMigrations.Response.Raw,
     SeedTrace.Migration[]
-> = core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Migration));
+> = core.serialization.list(core.serialization.lazyObject(() => serializers.Migration));
 
 export declare namespace Response {
     type Raw = serializers.Migration.Raw[];

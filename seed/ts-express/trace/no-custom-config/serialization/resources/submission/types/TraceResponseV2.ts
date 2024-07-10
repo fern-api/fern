@@ -10,14 +10,12 @@ export const TraceResponseV2: core.serialization.ObjectSchema<
     serializers.TraceResponseV2.Raw,
     SeedTrace.TraceResponseV2
 > = core.serialization.object({
-    submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
+    submissionId: core.serialization.lazy(() => serializers.SubmissionId),
     lineNumber: core.serialization.number(),
-    file: core.serialization.lazyObject(async () => (await import("../../..")).TracedFile),
-    returnValue: core.serialization.lazy(async () => (await import("../../..")).DebugVariableValue).optional(),
-    expressionLocation: core.serialization
-        .lazyObject(async () => (await import("../../..")).ExpressionLocation)
-        .optional(),
-    stack: core.serialization.lazyObject(async () => (await import("../../..")).StackInformation),
+    file: core.serialization.lazyObject(() => serializers.TracedFile),
+    returnValue: core.serialization.lazy(() => serializers.DebugVariableValue).optional(),
+    expressionLocation: core.serialization.lazyObject(() => serializers.ExpressionLocation).optional(),
+    stack: core.serialization.lazyObject(() => serializers.StackInformation),
     stdout: core.serialization.string().optional(),
 });
 

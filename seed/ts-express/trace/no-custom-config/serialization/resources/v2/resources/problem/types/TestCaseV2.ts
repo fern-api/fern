@@ -8,17 +8,13 @@ import * as core from "../../../../../../core";
 
 export const TestCaseV2: core.serialization.ObjectSchema<serializers.v2.TestCaseV2.Raw, SeedTrace.v2.TestCaseV2> =
     core.serialization.object({
-        metadata: core.serialization.lazyObject(async () => (await import("../../../../..")).v2.TestCaseMetadata),
-        implementation: core.serialization.lazy(
-            async () => (await import("../../../../..")).v2.TestCaseImplementationReference
-        ),
+        metadata: core.serialization.lazyObject(() => serializers.v2.TestCaseMetadata),
+        implementation: core.serialization.lazy(() => serializers.v2.TestCaseImplementationReference),
         arguments: core.serialization.record(
-            core.serialization.lazy(async () => (await import("../../../../..")).v2.ParameterId),
-            core.serialization.lazy(async () => (await import("../../../../..")).VariableValue)
+            core.serialization.lazy(() => serializers.v2.ParameterId),
+            core.serialization.lazy(() => serializers.VariableValue)
         ),
-        expects: core.serialization
-            .lazyObject(async () => (await import("../../../../..")).v2.TestCaseExpects)
-            .optional(),
+        expects: core.serialization.lazyObject(() => serializers.v2.TestCaseExpects).optional(),
     });
 
 export declare namespace TestCaseV2 {

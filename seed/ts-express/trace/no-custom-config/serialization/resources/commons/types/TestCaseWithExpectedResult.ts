@@ -10,8 +10,8 @@ export const TestCaseWithExpectedResult: core.serialization.ObjectSchema<
     serializers.TestCaseWithExpectedResult.Raw,
     SeedTrace.TestCaseWithExpectedResult
 > = core.serialization.object({
-    testCase: core.serialization.lazyObject(async () => (await import("../../..")).TestCase),
-    expectedResult: core.serialization.lazy(async () => (await import("../../..")).VariableValue),
+    testCase: core.serialization.lazyObject(() => serializers.TestCase),
+    expectedResult: core.serialization.lazy(() => serializers.VariableValue),
 });
 
 export declare namespace TestCaseWithExpectedResult {

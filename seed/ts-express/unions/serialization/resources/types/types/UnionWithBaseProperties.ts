@@ -24,7 +24,7 @@ export const UnionWithBaseProperties: core.serialization.Schema<
                 value: core.serialization.string(),
             })
             .extend(_Base),
-        foo: core.serialization.lazyObject(async () => (await import("../../..")).Foo).extend(_Base),
+        foo: core.serialization.lazyObject(() => serializers.Foo).extend(_Base),
     })
     .transform<SeedUnions.UnionWithBaseProperties>({
         transform: (value) => value,

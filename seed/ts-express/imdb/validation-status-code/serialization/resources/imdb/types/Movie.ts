@@ -7,7 +7,7 @@ import * as SeedApi from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const Movie: core.serialization.ObjectSchema<serializers.Movie.Raw, SeedApi.Movie> = core.serialization.object({
-    id: core.serialization.lazy(async () => (await import("../../..")).MovieId),
+    id: core.serialization.lazy(() => serializers.MovieId),
     title: core.serialization.string(),
     rating: core.serialization.number(),
 });

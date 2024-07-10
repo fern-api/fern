@@ -10,8 +10,8 @@ export const DebugKeyValuePairs: core.serialization.ObjectSchema<
     serializers.DebugKeyValuePairs.Raw,
     SeedTrace.DebugKeyValuePairs
 > = core.serialization.object({
-    key: core.serialization.lazy(async () => (await import("../../..")).DebugVariableValue),
-    value: core.serialization.lazy(async () => (await import("../../..")).DebugVariableValue),
+    key: core.serialization.lazy(() => serializers.DebugVariableValue),
+    value: core.serialization.lazy(() => serializers.DebugVariableValue),
 });
 
 export declare namespace DebugKeyValuePairs {

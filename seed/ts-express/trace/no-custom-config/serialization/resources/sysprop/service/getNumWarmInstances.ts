@@ -10,7 +10,7 @@ export const Response: core.serialization.Schema<
     serializers.sysprop.getNumWarmInstances.Response.Raw,
     Record<SeedTrace.Language, number | undefined>
 > = core.serialization.record(
-    core.serialization.lazy(async () => (await import("../../..")).Language),
+    core.serialization.lazy(() => serializers.Language),
     core.serialization.number().optional()
 );
 

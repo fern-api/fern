@@ -11,7 +11,7 @@ export const UnionWithSingleElement: core.serialization.Schema<
     SeedUnions.UnionWithSingleElement
 > = core.serialization
     .union("type", {
-        foo: core.serialization.lazyObject(async () => (await import("../../..")).Foo),
+        foo: core.serialization.lazyObject(() => serializers.Foo),
     })
     .transform<SeedUnions.UnionWithSingleElement>({
         transform: (value) => value,

@@ -10,8 +10,8 @@ export const WorkspaceRunDetails: core.serialization.ObjectSchema<
     serializers.WorkspaceRunDetails.Raw,
     SeedTrace.WorkspaceRunDetails
 > = core.serialization.object({
-    exceptionV2: core.serialization.lazy(async () => (await import("../../..")).ExceptionV2).optional(),
-    exception: core.serialization.lazyObject(async () => (await import("../../..")).ExceptionInfo).optional(),
+    exceptionV2: core.serialization.lazy(() => serializers.ExceptionV2).optional(),
+    exception: core.serialization.lazyObject(() => serializers.ExceptionInfo).optional(),
     stdout: core.serialization.string(),
 });
 

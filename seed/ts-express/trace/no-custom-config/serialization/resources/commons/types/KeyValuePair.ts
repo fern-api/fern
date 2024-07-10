@@ -8,8 +8,8 @@ import * as core from "../../../../core";
 
 export const KeyValuePair: core.serialization.ObjectSchema<serializers.KeyValuePair.Raw, SeedTrace.KeyValuePair> =
     core.serialization.object({
-        key: core.serialization.lazy(async () => (await import("../../..")).VariableValue),
-        value: core.serialization.lazy(async () => (await import("../../..")).VariableValue),
+        key: core.serialization.lazy(() => serializers.VariableValue),
+        value: core.serialization.lazy(() => serializers.VariableValue),
     });
 
 export declare namespace KeyValuePair {

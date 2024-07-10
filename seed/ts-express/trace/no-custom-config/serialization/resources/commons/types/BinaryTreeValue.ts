@@ -10,10 +10,10 @@ export const BinaryTreeValue: core.serialization.ObjectSchema<
     serializers.BinaryTreeValue.Raw,
     SeedTrace.BinaryTreeValue
 > = core.serialization.object({
-    root: core.serialization.lazy(async () => (await import("../../..")).NodeId).optional(),
+    root: core.serialization.lazy(() => serializers.NodeId).optional(),
     nodes: core.serialization.record(
-        core.serialization.lazy(async () => (await import("../../..")).NodeId),
-        core.serialization.lazyObject(async () => (await import("../../..")).BinaryTreeNodeValue)
+        core.serialization.lazy(() => serializers.NodeId),
+        core.serialization.lazyObject(() => serializers.BinaryTreeNodeValue)
     ),
 });
 

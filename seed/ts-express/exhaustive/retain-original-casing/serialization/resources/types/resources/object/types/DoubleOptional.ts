@@ -10,7 +10,7 @@ export const DoubleOptional: core.serialization.ObjectSchema<
     serializers.types.DoubleOptional.Raw,
     SeedExhaustive.types.DoubleOptional
 > = core.serialization.object({
-    optionalAlias: core.serialization.lazy(async () => (await import("../../../../..")).types.OptionalAlias).optional(),
+    optionalAlias: core.serialization.lazy(() => serializers.types.OptionalAlias).optional(),
 });
 
 export declare namespace DoubleOptional {

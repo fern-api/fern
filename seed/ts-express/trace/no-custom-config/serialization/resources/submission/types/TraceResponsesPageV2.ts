@@ -11,9 +11,7 @@ export const TraceResponsesPageV2: core.serialization.ObjectSchema<
     SeedTrace.TraceResponsesPageV2
 > = core.serialization.object({
     offset: core.serialization.number().optional(),
-    traceResponses: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("../../..")).TraceResponseV2)
-    ),
+    traceResponses: core.serialization.list(core.serialization.lazyObject(() => serializers.TraceResponseV2)),
 });
 
 export declare namespace TraceResponsesPageV2 {

@@ -10,10 +10,8 @@ export const DefaultProvidedFile: core.serialization.ObjectSchema<
     serializers.v2.v3.DefaultProvidedFile.Raw,
     SeedTrace.v2.v3.DefaultProvidedFile
 > = core.serialization.object({
-    file: core.serialization.lazyObject(async () => (await import("../../../../../../..")).v2.v3.FileInfoV2),
-    relatedTypes: core.serialization.list(
-        core.serialization.lazy(async () => (await import("../../../../../../..")).VariableType)
-    ),
+    file: core.serialization.lazyObject(() => serializers.v2.v3.FileInfoV2),
+    relatedTypes: core.serialization.list(core.serialization.lazy(() => serializers.VariableType)),
 });
 
 export declare namespace DefaultProvidedFile {

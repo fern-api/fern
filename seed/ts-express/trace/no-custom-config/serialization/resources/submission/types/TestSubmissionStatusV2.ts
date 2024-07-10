@@ -10,12 +10,10 @@ export const TestSubmissionStatusV2: core.serialization.ObjectSchema<
     serializers.TestSubmissionStatusV2.Raw,
     SeedTrace.TestSubmissionStatusV2
 > = core.serialization.object({
-    updates: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("../../..")).TestSubmissionUpdate)
-    ),
-    problemId: core.serialization.lazy(async () => (await import("../../..")).ProblemId),
+    updates: core.serialization.list(core.serialization.lazyObject(() => serializers.TestSubmissionUpdate)),
+    problemId: core.serialization.lazy(() => serializers.ProblemId),
     problemVersion: core.serialization.number(),
-    problemInfo: core.serialization.lazyObject(async () => (await import("../../..")).v2.ProblemInfoV2),
+    problemInfo: core.serialization.lazyObject(() => serializers.v2.ProblemInfoV2),
 });
 
 export declare namespace TestSubmissionStatusV2 {

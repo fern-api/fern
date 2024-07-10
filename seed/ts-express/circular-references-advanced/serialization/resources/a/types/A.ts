@@ -8,7 +8,7 @@ import * as core from "../../../../core";
 
 export const A: core.serialization.ObjectSchema<serializers.A.Raw, SeedApi.A> = core.serialization
     .object({})
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).RootType));
+    .extend(core.serialization.lazyObject(() => serializers.RootType));
 
 export declare namespace A {
     interface Raw extends serializers.RootType.Raw {}

@@ -10,7 +10,7 @@ export const TestCaseResultWithStdout: core.serialization.ObjectSchema<
     serializers.TestCaseResultWithStdout.Raw,
     SeedTrace.TestCaseResultWithStdout
 > = core.serialization.object({
-    result: core.serialization.lazyObject(async () => (await import("../../..")).TestCaseResult),
+    result: core.serialization.lazyObject(() => serializers.TestCaseResult),
     stdout: core.serialization.string(),
 });
 

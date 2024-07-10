@@ -11,8 +11,8 @@ const _Base = core.serialization.object({
 });
 export const Shape: core.serialization.Schema<serializers.Shape.Raw, SeedUnions.Shape> = core.serialization
     .union("type", {
-        circle: core.serialization.lazyObject(async () => (await import("../../..")).Circle).extend(_Base),
-        square: core.serialization.lazyObject(async () => (await import("../../..")).Square).extend(_Base),
+        circle: core.serialization.lazyObject(() => serializers.Circle).extend(_Base),
+        square: core.serialization.lazyObject(() => serializers.Square).extend(_Base),
     })
     .transform<SeedUnions.Shape>({
         transform: (value) => value,

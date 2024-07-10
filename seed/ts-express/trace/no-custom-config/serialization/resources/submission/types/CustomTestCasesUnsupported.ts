@@ -10,8 +10,8 @@ export const CustomTestCasesUnsupported: core.serialization.ObjectSchema<
     serializers.CustomTestCasesUnsupported.Raw,
     SeedTrace.CustomTestCasesUnsupported
 > = core.serialization.object({
-    problemId: core.serialization.lazy(async () => (await import("../../..")).ProblemId),
-    submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
+    problemId: core.serialization.lazy(() => serializers.ProblemId),
+    submissionId: core.serialization.lazy(() => serializers.SubmissionId),
 });
 
 export declare namespace CustomTestCasesUnsupported {

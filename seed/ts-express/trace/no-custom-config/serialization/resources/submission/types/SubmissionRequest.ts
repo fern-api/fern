@@ -11,13 +11,11 @@ export const SubmissionRequest: core.serialization.Schema<
     SeedTrace.SubmissionRequest
 > = core.serialization
     .union("type", {
-        initializeProblemRequest: core.serialization.lazyObject(
-            async () => (await import("../../..")).InitializeProblemRequest
-        ),
+        initializeProblemRequest: core.serialization.lazyObject(() => serializers.InitializeProblemRequest),
         initializeWorkspaceRequest: core.serialization.object({}),
-        submitV2: core.serialization.lazyObject(async () => (await import("../../..")).SubmitRequestV2),
-        workspaceSubmit: core.serialization.lazyObject(async () => (await import("../../..")).WorkspaceSubmitRequest),
-        stop: core.serialization.lazyObject(async () => (await import("../../..")).StopRequest),
+        submitV2: core.serialization.lazyObject(() => serializers.SubmitRequestV2),
+        workspaceSubmit: core.serialization.lazyObject(() => serializers.WorkspaceSubmitRequest),
+        stop: core.serialization.lazyObject(() => serializers.StopRequest),
     })
     .transform<SeedTrace.SubmissionRequest>({
         transform: (value) => value,

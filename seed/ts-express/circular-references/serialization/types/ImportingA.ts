@@ -8,7 +8,7 @@ import * as core from "../../core";
 
 export const ImportingA: core.serialization.ObjectSchema<serializers.ImportingA.Raw, SeedApi.ImportingA> =
     core.serialization.object({
-        a: core.serialization.lazyObject(async () => (await import("..")).A).optional(),
+        a: core.serialization.lazyObject(() => serializers.A).optional(),
     });
 
 export declare namespace ImportingA {

@@ -11,8 +11,8 @@ export const GetBasicSolutionFileResponse: core.serialization.ObjectSchema<
     SeedTrace.v2.GetBasicSolutionFileResponse
 > = core.serialization.object({
     solutionFileByLanguage: core.serialization.record(
-        core.serialization.lazy(async () => (await import("../../../../..")).Language),
-        core.serialization.lazyObject(async () => (await import("../../../../..")).v2.FileInfoV2).optional()
+        core.serialization.lazy(() => serializers.Language),
+        core.serialization.lazyObject(() => serializers.v2.FileInfoV2).optional()
     ),
 });
 

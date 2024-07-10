@@ -9,7 +9,7 @@ import * as core from "../../../../core";
 export const Request: core.serialization.Schema<
     serializers.admin.storeTracedTestCaseV2.Request.Raw,
     SeedTrace.TraceResponseV2[]
-> = core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).TraceResponseV2));
+> = core.serialization.list(core.serialization.lazyObject(() => serializers.TraceResponseV2));
 
 export declare namespace Request {
     type Raw = serializers.TraceResponseV2.Raw[];

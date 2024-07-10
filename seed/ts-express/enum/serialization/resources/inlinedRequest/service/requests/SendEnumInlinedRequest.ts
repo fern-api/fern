@@ -10,10 +10,10 @@ export const SendEnumInlinedRequest: core.serialization.Schema<
     serializers.SendEnumInlinedRequest.Raw,
     SeedEnum.SendEnumInlinedRequest
 > = core.serialization.object({
-    operand: core.serialization.lazy(async () => (await import("../../../..")).Operand),
-    maybeOperand: core.serialization.lazy(async () => (await import("../../../..")).Operand).optional(),
-    operandOrColor: core.serialization.lazy(async () => (await import("../../../..")).ColorOrOperand),
-    maybeOperandOrColor: core.serialization.lazy(async () => (await import("../../../..")).ColorOrOperand).optional(),
+    operand: core.serialization.lazy(() => serializers.Operand),
+    maybeOperand: core.serialization.lazy(() => serializers.Operand).optional(),
+    operandOrColor: core.serialization.lazy(() => serializers.ColorOrOperand),
+    maybeOperandOrColor: core.serialization.lazy(() => serializers.ColorOrOperand).optional(),
 });
 
 export declare namespace SendEnumInlinedRequest {

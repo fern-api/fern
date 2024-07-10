@@ -15,7 +15,7 @@ export const FieldValue: core.serialization.Schema<serializers.FieldValue.Raw, S
         }),
         object_value: ObjectValue,
         container_value: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).ContainerValue),
+            value: core.serialization.lazy(() => serializers.ContainerValue),
         }),
     })
     .transform<SeedApi.FieldValue>({

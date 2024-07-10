@@ -10,7 +10,7 @@ export const UserListContainer: core.serialization.ObjectSchema<
     serializers.UserListContainer.Raw,
     SeedPagination.UserListContainer
 > = core.serialization.object({
-    users: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).User)),
+    users: core.serialization.list(core.serialization.lazyObject(() => serializers.User)),
 });
 
 export declare namespace UserListContainer {

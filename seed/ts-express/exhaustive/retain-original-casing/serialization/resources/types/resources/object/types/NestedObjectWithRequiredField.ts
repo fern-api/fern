@@ -11,9 +11,7 @@ export const NestedObjectWithRequiredField: core.serialization.ObjectSchema<
     SeedExhaustive.types.NestedObjectWithRequiredField
 > = core.serialization.object({
     string: core.serialization.string(),
-    NestedObject: core.serialization.lazyObject(
-        async () => (await import("../../../../..")).types.ObjectWithOptionalField
-    ),
+    NestedObject: core.serialization.lazyObject(() => serializers.types.ObjectWithOptionalField),
 });
 
 export declare namespace NestedObjectWithRequiredField {

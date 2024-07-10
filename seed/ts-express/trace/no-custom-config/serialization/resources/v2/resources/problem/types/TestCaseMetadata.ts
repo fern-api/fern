@@ -10,7 +10,7 @@ export const TestCaseMetadata: core.serialization.ObjectSchema<
     serializers.v2.TestCaseMetadata.Raw,
     SeedTrace.v2.TestCaseMetadata
 > = core.serialization.object({
-    id: core.serialization.lazy(async () => (await import("../../../../..")).v2.TestCaseId),
+    id: core.serialization.lazy(() => serializers.v2.TestCaseId),
     name: core.serialization.string(),
     hidden: core.serialization.boolean(),
 });

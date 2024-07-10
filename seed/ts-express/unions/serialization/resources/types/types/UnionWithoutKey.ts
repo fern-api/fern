@@ -9,8 +9,8 @@ import * as core from "../../../../core";
 export const UnionWithoutKey: core.serialization.Schema<serializers.UnionWithoutKey.Raw, SeedUnions.UnionWithoutKey> =
     core.serialization
         .union("type", {
-            foo: core.serialization.lazyObject(async () => (await import("../../..")).Foo),
-            bar: core.serialization.lazyObject(async () => (await import("../../..")).Bar),
+            foo: core.serialization.lazyObject(() => serializers.Foo),
+            bar: core.serialization.lazyObject(() => serializers.Bar),
         })
         .transform<SeedUnions.UnionWithoutKey>({
             transform: (value) => value,

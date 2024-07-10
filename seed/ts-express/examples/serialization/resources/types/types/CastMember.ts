@@ -8,9 +8,9 @@ import * as core from "../../../../core";
 
 export const CastMember: core.serialization.Schema<serializers.CastMember.Raw, SeedExamples.CastMember> =
     core.serialization.undiscriminatedUnion([
-        core.serialization.lazyObject(async () => (await import("../../..")).Actor),
-        core.serialization.lazyObject(async () => (await import("../../..")).Actress),
-        core.serialization.lazyObject(async () => (await import("../../..")).StuntDouble),
+        core.serialization.lazyObject(() => serializers.Actor),
+        core.serialization.lazyObject(() => serializers.Actress),
+        core.serialization.lazyObject(() => serializers.StuntDouble),
     ]);
 
 export declare namespace CastMember {
