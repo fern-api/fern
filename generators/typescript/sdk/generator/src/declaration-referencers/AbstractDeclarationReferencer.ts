@@ -7,7 +7,6 @@ import {
     getReferenceToExportFromRoot,
     Reference
 } from "@fern-typescript/commons";
-import { ts } from "ts-morph";
 import { DeclarationReferencer } from "./DeclarationReferencer";
 
 export declare namespace AbstractDeclarationReferencer {
@@ -49,6 +48,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                     exportedName,
                     exportedFromPath: this.getExportedFilepathForReference(name),
                     importAlias: importStrategy.alias,
+                    ignoreImport: importStrategy.ignoreImport,
                     importsManager,
                     referencedIn,
                     subImport
@@ -71,25 +71,23 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                     exportedName,
                     subImport
                 });
-            case "local":
-                return this.getReferenceToLocalExport(exportedName);
             default:
                 assertNever(importStrategy);
         }
     }
 
-    private getReferenceToLocalExport(exportedName: string): Reference {
-        const name = ts.factory.createIdentifier(exportedName);
-        return {
-            getTypeNode: (_opts) => {
-                return ts.factory.createTypeReferenceNode(name);
-            },
-            getEntityName: (_opts) => {
-                return name;
-            },
-            getExpression: (_opts) => {
-                return name;
-            }
-        };
-    }
+    // private getReferenceToLocalExport(exportedName: string): Reference {
+    //     const name = ts.factory.createIdentifier(exportedName);
+    //     return {
+    //         getTypeNode: (_opts) => {
+    //             return ts.factory.createTypeReferenceNode(name);
+    //         },
+    //         getEntityName: (_opts) => {
+    //             return name;
+    //         },
+    //         getExpression: (_opts) => {
+    //             return name;
+    //         }
+    //     };
+    // }
 }

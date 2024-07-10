@@ -47,6 +47,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                     exportedName,
                     exportedFromPath: this.getExportedFilepathForReference(name),
                     importAlias: importStrategy.alias,
+                    ignoreImport: importStrategy.ignoreImport,
                     importsManager,
                     referencedIn,
                     subImport

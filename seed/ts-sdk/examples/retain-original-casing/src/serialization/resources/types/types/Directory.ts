@@ -6,7 +6,6 @@ import * as serializers from "../../../index";
 import * as SeedExamples from "../../../../api/index";
 import * as core from "../../../../core";
 import { File_ } from "./File_";
-import { Directory } from "./Directory";
 
 export const Directory: core.serialization.ObjectSchema<serializers.Directory.Raw, SeedExamples.Directory> =
     core.serialization.object({

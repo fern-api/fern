@@ -163,7 +163,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
                     // Your logic here to determine the import strategy
                     if (isGeneratingSchema && isCircular) {
                         // Circular references don't require an external import.
-                        return { type: "local" };
+                        return { type: "direct", ignoreImport: true };
                     } else if (isGeneratingSchema) {
                         // Return default import strategy or another strategy based on your logic
                         return { type: "direct" };

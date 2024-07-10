@@ -4,8 +4,7 @@ import { SourceFile } from "ts-morph";
 export type ImportStrategy =
     | { type: "fromRoot"; namespaceImport?: string; useDynamicImport?: boolean }
     | { type: "fromPackage"; namespaceImport?: string; packageName: string }
-    | { type: "direct"; alias?: string }
-    | { type: "local" };
+    | { type: "direct"; alias?: string; ignoreImport?: boolean };
 
 export interface DeclarationReferencer<Name> {
     getExportedFilepath: (name: Name) => ExportedFilePath;
