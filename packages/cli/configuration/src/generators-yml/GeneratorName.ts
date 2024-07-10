@@ -18,6 +18,8 @@ export const GeneratorName = {
     RUBY_SDK: "fernapi/fern-ruby-sdk",
     CSHARP_MODEL: "fernapi/fern-csharp-model",
     CSHARP_SDK: "fernapi/fern-csharp-sdk",
+    SWIFT_MODEL: "fernapi/fern-swift-model",
+    SWIFT_SDK: "fernapi/fern-swift-sdk",
     OPENAPI: "fernapi/fern-openapi",
     STOPLIGHT: "fernapi/fern-stoplight",
     POSTMAN: "fernapi/fern-postman",
