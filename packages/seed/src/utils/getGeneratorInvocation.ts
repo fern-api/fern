@@ -166,7 +166,7 @@ function getPublishInfo({
         case "csharp":
             throw new Error("Seed doesn't support publish mode in C#!");
         case "swift":
-            throw new Error("Seed doesn't support publish mode in C#!");
+            throw new Error("Seed doesn't support publish mode in Swift");
         default:
             assertNever(language);
     }
