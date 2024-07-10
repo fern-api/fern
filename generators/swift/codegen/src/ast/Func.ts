@@ -1,14 +1,26 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
 import Swift, { AccessLevel, FunctionModifier, Param, Type } from "../swift";
 
+/*
+
+Builds Swift Functions
+
+Example:
+
+func addNumbers(a: Int, b: Int) -> Int {
+    return a + b
+}
+
+*/
+
 export declare namespace Func {
     interface Args {
         accessLevel?: AccessLevel,
         modifier?: FunctionModifier,
         name: string,
         params?: Param[];
-        async?: "async";
-        throws?: "throws";
+        async?: boolean;
+        throws?: boolean;
         returnType?: Type;
     }
 }
@@ -19,8 +31,8 @@ export class Func extends AstNode {
     public readonly modifier?: FunctionModifier;
     public readonly name: string;
     public readonly params?: Param[];
-    public readonly async?: "async";
-    public readonly throws?: "throws";
+    public readonly async: boolean;
+    public readonly throws: boolean;
     public readonly returnType?: Type;
 
     constructor({ 
@@ -37,8 +49,8 @@ export class Func extends AstNode {
         this.modifier = modifier,
         this.name = name,
         this.params = params;
-        this.async = async;
-        this.throws = throws;
+        this.async = async ?? false;
+        this.throws = throws ?? false;
         this.returnType = returnType;
     }
  
@@ -54,7 +66,16 @@ export class Func extends AstNode {
 
         const result = this.returnType ? `-> ${this.returnType.name}` : undefined;
 
-        writer.openBlock([this.accessLevel, this.modifier, "func", func, this.async, this.throws, result], "{", () => {
+        // Attach trailing modifiers
+        const trailingModifiers = [];
+        if (this.async) {
+            trailingModifiers.push("async");
+        }
+        if (this.throws) {
+            trailingModifiers.push("throws");
+        }
+
+        writer.openBlock([this.accessLevel, this.modifier, "func", func, ...trailingModifiers, result], "{", () => {
             writer.write("print(\"Hey!\")");
         }, "}");
 

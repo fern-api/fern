@@ -48,7 +48,7 @@ exports[`Swift Language makes function 1`] = `
 
 }, age: Int {
 
-} =  FIX THIS) async throws {
+} =  FIX THIS) async {
     print("Hey!")
 }"
 `;

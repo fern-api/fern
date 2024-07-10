@@ -1,6 +1,6 @@
-import { AccessLevel, FunctionModifier, ClassLevel } from "..";
-import Swift from "../../swift";
 import { FileGenerator } from "@fern-api/generator-commons";
+import { AccessLevel, ClassLevel, FunctionModifier } from "..";
+import Swift from "../../swift";
 
 describe("Swift Language", () => {
     it("makes file header", () => {
@@ -54,8 +54,7 @@ describe("Swift Language", () => {
             accessLevel: AccessLevel.Fileprivate,
             modifier: FunctionModifier.Static,
             name: "makePerson",
-            async: "async",
-            throws: "throws",
+            async: true,
             params: [
                 Swift.makeParam({
                     title: "name",
@@ -126,11 +125,11 @@ describe("Swift Language", () => {
                         name: "RoomType",
                         enumCases: [
                             Swift.makeEnumCase({
-                                name: 'big'
+                                name: "big"
                             }),
                             Swift.makeEnumCase({
-                                name: 'small',
-                                key: 'sml'
+                                name: "small",
+                                key: "sml"
                             }),
                         ]
                     })
@@ -143,8 +142,8 @@ describe("Swift Language", () => {
                         accessLevel: AccessLevel.Public,
                         modifier: FunctionModifier.Static,
                         name: "closeDoor",
-                        async: "async",
-                        throws: "throws",
+                        async: true,
+                        throws: true,
                         returnType: Swift.makeType({
                             name: "Int"
                         })
