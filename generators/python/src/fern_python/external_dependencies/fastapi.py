@@ -126,7 +126,7 @@ class FastAPI:
             kwargs.append(
                 (
                     "description",
-                    AST.Expression(AST.CodeWriter('"' + docs.replace("\n", "\\n") + docs.replace("\r", "\\r") + '"')),
+                    AST.Expression(AST.CodeWriter('"' + docs.replace("\n", "\\n").replace("\r", "\\r") + '"')),
                 )
             )
         return AST.Expression(
