@@ -1,13 +1,50 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift, { AccessLevel, Func, Import, ClassLevel, Enum } from "../swift";
+import Swift, { AccessLevel, ClassLevel, Enum, Func } from "../swift";
+
+/*
+
+Builds Swift Types (Classes, Structs, etc)
+==========================================
+
+Example:
+
+private class Mike: Person {
+
+    class Snowboard {
+        ...
+    }
+    
+    func wave() {
+        print("👋")
+    }
+
+}
+
+Breakdown:
+
+{accessLevel} {classLevel} {name}: {inheritance} {
+
+    {subclasses}
+    
+    {functions}
+
+}
+
+*/
 
 export declare namespace Type {
     interface Args {
+        /* The access level of the type */
         accessLevel?: AccessLevel;
+        /* The class level of the type, such as class or struct */
         classLevel?: ClassLevel;
+        /* The name of the type */
         name: string;
+        /* The subclasses of this type, which can be other types or enums */
         subclasses?: (Type | Enum)[];
+        /* The functions associated with this type */
         functions?: Func[];
+        /* The inheritance hierarchy of this type */
         inheritance?: Type[];
     }
 }

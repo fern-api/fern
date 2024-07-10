@@ -4,23 +4,37 @@ import Swift, { AccessLevel, FunctionModifier, Param, Type } from "../swift";
 /*
 
 Builds Swift Functions
+======================
 
 Example:
 
-func addNumbers(a: Int, b: Int) -> Int {
+private static func addNumbers(a: Int, b: Int) -> Int {
     return a + b
+}
+
+Breakdown:
+
+{accessLevel} {modifier} func {name}({params}) {async} {throws} -> {returnType} {
+    ...
 }
 
 */
 
 export declare namespace Func {
     interface Args {
-        accessLevel?: AccessLevel,
-        modifier?: FunctionModifier,
-        name: string,
+        /* The access level of the function */
+        accessLevel?: AccessLevel;
+        /* The modifier of the function, such as static or override */
+        modifier?: FunctionModifier;
+        /* The name of the function */
+        name: string;
+        /* The parameters of the function */
         params?: Param[];
+        /* Indicates if the function is asynchronous */
         async?: boolean;
+        /* Indicates if the function throws an error */
         throws?: boolean;
+        /* The return type of the function */
         returnType?: Type;
     }
 }

@@ -1,10 +1,28 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
 import Swift, { Type } from "../swift";
 
+/*
+
+Builds Swift Params
+===================
+
+Example:
+
+number: Int = 4
+
+Breakdown:
+
+{title}: {type} = {defaultValue}
+
+*/
+
 export declare namespace Param {
     interface Args {
+        /* param name */
         title: string;
+        /* Type of the value */
         type: Type;
+        /* Original value. Optional because it may not exist */
         defaultValue?: Type;
     }
 }
@@ -35,7 +53,7 @@ export class Param extends AstNode {
         // }
 
         if (this.defaultValue) {
-            title += ` =  FIX THIS`;
+            title += " =  FIX THIS";
         }
 
         writer.write(title);
