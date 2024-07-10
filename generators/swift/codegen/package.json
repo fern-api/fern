@@ -31,7 +31,6 @@
     "@fern-api/generator-commons": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
     "@fern-fern/ir-sdk": "^32",
-    "lodash-es": "^4.17.21",
     "zod": "^3.22.3"
   },
   "devDependencies": {
