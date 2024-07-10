@@ -2337,6 +2337,31 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-api/fern-swift-model@workspace:generators/swift/model":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/fern-swift-model@workspace:generators/swift/model"
+  dependencies:
+    "@fern-api/fs-utils": "workspace:*"
+    "@fern-api/generator-commons": "workspace:*"
+    "@fern-api/swift-codegen": "workspace:*"
+    "@fern-fern/ir-sdk": 0.0.3318
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
+    depcheck: ^1.4.6
+    env-cmd: toddbluhm/env-cmd
+    esbuild: ^0.15.7
+    eslint: ^8.56.0
+    jest: ^29.7.0
+    organize-imports-cli: ^0.10.0
+    prettier: ^2.7.1
+    typescript: 4.6.4
+    zod: ^3.22.3
+  bin:
+    fern-swift-model: ./dist/bundle.cjs
+  languageName: unknown
+  linkType: soft
+
 "@fern-api/fs-utils@workspace:*, @fern-api/fs-utils@workspace:packages/commons/fs-utils":
   version: 0.0.0-use.local
   resolution: "@fern-api/fs-utils@workspace:packages/commons/fs-utils"
@@ -3066,18 +3091,24 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/swift-codegen@workspace:generators/swift/codegen":
+"@fern-api/swift-codegen@workspace:*, @fern-api/swift-codegen@workspace:generators/swift/codegen":
   version: 0.0.0-use.local
   resolution: "@fern-api/swift-codegen@workspace:generators/swift/codegen"
   dependencies:
+    "@fern-api/core-utils": "workspace:*"
+    "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
+    "@fern-api/logging-execa": "workspace:*"
+    "@fern-fern/ir-sdk": ^32
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
     jest: ^29.7.0
+    lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     typescript: 4.6.4
+    zod: ^3.22.3
   languageName: unknown
   linkType: soft
 
