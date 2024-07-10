@@ -65,6 +65,28 @@
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/pagination/fern\"\n\tfernclient \"github.com/pagination/fern/client\"\n\toption \"github.com/pagination/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Users.ListWithOffsetStepPagination(\n\tcontext.TODO(),\n\t\u0026fern.ListUsersOffsetStepPaginationRequest{\n\t\tPage: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tOrder: fern.OrderAsc,\n\t},\n)\n"
             }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_users.listWithBodyCursorPagination"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/pagination/fern\"\n\tfernclient \"github.com/pagination/fern/client\"\n\toption \"github.com/pagination/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Users.ListWithBodyCursorPagination(\n\tcontext.TODO(),\n\t\u0026fern.ListUsersBodyCursorPaginationRequest{\n\t\tPagination: \u0026fern.WithCursor{\n\t\t\tCursor: fern.String(\n\t\t\t\t\"string\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_users.listWithBodyOffsetPagination"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/pagination/fern\"\n\tfernclient \"github.com/pagination/fern/client\"\n\toption \"github.com/pagination/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Users.ListWithBodyOffsetPagination(\n\tcontext.TODO(),\n\t\u0026fern.ListUsersBodyOffsetPaginationRequest{\n\t\tPagination: \u0026fern.WithPage{\n\t\t\tPage: fern.Int(\n\t\t\t\t1,\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
         }
     ]
 }

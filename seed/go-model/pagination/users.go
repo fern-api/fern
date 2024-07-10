@@ -172,3 +172,71 @@ func (u *UsernameContainer) String() string {
 	}
 	return fmt.Sprintf("%#v", u)
 }
+
+type WithCursor struct {
+	Cursor *string `json:"cursor,omitempty" url:"cursor,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (w *WithCursor) GetExtraProperties() map[string]interface{} {
+	return w.extraProperties
+}
+
+func (w *WithCursor) UnmarshalJSON(data []byte) error {
+	type unmarshaler WithCursor
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*w = WithCursor(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+
+	return nil
+}
+
+func (w *WithCursor) String() string {
+	if value, err := core.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
+}
+
+type WithPage struct {
+	Page *int `json:"page,omitempty" url:"page,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (w *WithPage) GetExtraProperties() map[string]interface{} {
+	return w.extraProperties
+}
+
+func (w *WithPage) UnmarshalJSON(data []byte) error {
+	type unmarshaler WithPage
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*w = WithPage(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+
+	return nil
+}
+
+func (w *WithPage) String() string {
+	if value, err := core.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
+}

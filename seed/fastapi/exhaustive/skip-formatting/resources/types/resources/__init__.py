@@ -2,6 +2,6 @@
 
 from . import enum, object, union
 from .enum import ErrorWithEnumBody, WeatherReport
-from .object import NestedObjectWithOptionalField, NestedObjectWithOptionalFieldError, NestedObjectWithRequiredField, NestedObjectWithRequiredFieldError, ObjectWithMapOfMap, ObjectWithOptionalField, ObjectWithOptionalFieldError, ObjectWithRequiredField, ObjectWithRequiredFieldError
+from .object import DoubleOptional, NestedObjectWithOptionalField, NestedObjectWithOptionalFieldError, NestedObjectWithRequiredField, NestedObjectWithRequiredFieldError, ObjectWithMapOfMap, ObjectWithOptionalField, ObjectWithOptionalFieldError, ObjectWithRequiredField, ObjectWithRequiredFieldError, OptionalAlias
 from .union import Animal, Cat, Dog, ErrorWithUnionBody
-__all__ = ["Animal", "Cat", "Dog", "ErrorWithEnumBody", "ErrorWithUnionBody", "NestedObjectWithOptionalField", "NestedObjectWithOptionalFieldError", "NestedObjectWithRequiredField", "NestedObjectWithRequiredFieldError", "ObjectWithMapOfMap", "ObjectWithOptionalField", "ObjectWithOptionalFieldError", "ObjectWithRequiredField", "ObjectWithRequiredFieldError", "WeatherReport", "enum", "object", "union"]
+__all__ = ["Animal", "Cat", "Dog", "DoubleOptional", "ErrorWithEnumBody", "ErrorWithUnionBody", "NestedObjectWithOptionalField", "NestedObjectWithOptionalFieldError", "NestedObjectWithRequiredField", "NestedObjectWithRequiredFieldError", "ObjectWithMapOfMap", "ObjectWithOptionalField", "ObjectWithOptionalFieldError", "ObjectWithRequiredField", "ObjectWithRequiredFieldError", "OptionalAlias", "WeatherReport", "enum", "object", "union"]

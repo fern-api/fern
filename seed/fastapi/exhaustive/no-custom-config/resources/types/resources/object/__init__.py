@@ -7,14 +7,17 @@ from .errors import (
     ObjectWithRequiredFieldError,
 )
 from .types import (
+    DoubleOptional,
     NestedObjectWithOptionalField,
     NestedObjectWithRequiredField,
     ObjectWithMapOfMap,
     ObjectWithOptionalField,
     ObjectWithRequiredField,
+    OptionalAlias,
 )
 
 __all__ = [
+    "DoubleOptional",
     "NestedObjectWithOptionalField",
     "NestedObjectWithOptionalFieldError",
     "NestedObjectWithRequiredField",
@@ -24,4 +27,5 @@ __all__ = [
     "ObjectWithOptionalFieldError",
     "ObjectWithRequiredField",
     "ObjectWithRequiredFieldError",
+    "OptionalAlias",
 ]
