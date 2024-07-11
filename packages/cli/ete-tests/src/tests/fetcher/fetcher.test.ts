@@ -110,10 +110,8 @@ describe("Fetcher Tests", () => {
         });
 
         for await (const message of stream) {
-            // process.stdout.write("event");
             // eslint-disable-next-line no-console
-            // process.stdout.write(JSON.stringify(message));
-            let json = JSON.stringify(message);
+            process.stdout.write(JSON.stringify(message));
         }
     }, 90_000);
 
