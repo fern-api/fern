@@ -1,0 +1,175 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`x-fern-pagination x-fern-pagination docs 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "list": {
+          "auth": false,
+          "display-name": "List",
+          "docs": "",
+          "examples": [
+            {
+              "response": {
+                "body": {
+                  "users": [
+                    {
+                      "age": 1,
+                      "email": "email",
+                      "id": "id",
+                      "name": "name",
+                    },
+                  ],
+                },
+              },
+            },
+          ],
+          "method": "GET",
+          "pagination": {
+            "offset": "$request.pageNumber",
+            "results": "$response.users",
+            "step": "$request.limit",
+          },
+          "path": "/list-with-step",
+          "request": {
+            "name": "ListRequest",
+            "query-parameters": {
+              "limit": "optional<integer>",
+              "pageNumber": "optional<integer>",
+            },
+          },
+          "response": {
+            "docs": "Success",
+            "type": "UsersResponse",
+          },
+        },
+      },
+    },
+    "types": {
+      "User": {
+        "docs": undefined,
+        "properties": {
+          "age": "optional<integer>",
+          "email": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "name": "optional<string>",
+        },
+      },
+      "UsersResponse": {
+        "docs": undefined,
+        "properties": {
+          "users": "optional<list<User>>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test extension \`x-fern-pagination\`",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`x-fern-pagination x-fern-pagination simple 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "list": {
+          "auth": false,
+          "display-name": "List",
+          "docs": "",
+          "examples": [
+            {
+              "response": {
+                "body": {
+                  "users": [
+                    {
+                      "age": 1,
+                      "email": "email",
+                      "id": "id",
+                      "name": "name",
+                    },
+                  ],
+                },
+              },
+            },
+          ],
+          "method": "GET",
+          "pagination": {
+            "offset": "$request.pageNumber",
+            "results": "$response.users",
+            "step": "$request.limit",
+          },
+          "path": "/list-with-step",
+          "request": {
+            "name": "ListRequest",
+            "query-parameters": {
+              "limit": "optional<integer>",
+              "pageNumber": "optional<integer>",
+            },
+          },
+          "response": {
+            "docs": "Success",
+            "type": "UsersResponse",
+          },
+        },
+      },
+    },
+    "types": {
+      "User": {
+        "docs": undefined,
+        "properties": {
+          "age": "optional<integer>",
+          "email": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "name": "optional<string>",
+        },
+      },
+      "UsersResponse": {
+        "docs": undefined,
+        "properties": {
+          "users": "optional<list<User>>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test extension \`x-fern-pagination\`",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
