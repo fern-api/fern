@@ -1,5 +1,6 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
 import Swift, { AccessLevel, ClassLevel, Enum, Func } from "..";
+import { Field } from "./Field";
 
 /*
 
@@ -42,6 +43,8 @@ export declare namespace Type {
         name: string;
         /* The subclasses of this type, which can be other types or enums */
         subclasses?: (Type | Enum)[];
+        /* The field variables in the class */
+        fields?: Field[];
         /* The functions associated with this type */
         functions?: Func[];
         /* The inheritance hierarchy of this type */
@@ -55,6 +58,7 @@ export class Type extends AstNode {
     public readonly classLevel?: ClassLevel;
     public readonly name: string;
     public readonly subclasses?: (Type | Enum)[];
+    public readonly fields?: Field[];
     public readonly functions?: Func[];
     public readonly inheritance?: Type[];
 
@@ -63,6 +67,7 @@ export class Type extends AstNode {
         classLevel, 
         name,
         subclasses,
+        fields,
         functions,
         inheritance,
     }: Type.Args) {
@@ -71,6 +76,7 @@ export class Type extends AstNode {
         this.classLevel = classLevel;
         this.name = name;
         this.subclasses = subclasses;
+        this.fields = fields;
         this.functions = functions;
         this.inheritance = inheritance;
     }
@@ -98,6 +104,13 @@ export class Type extends AstNode {
                     writer.writeNode(sub);
                     writer.newLine();
                 });
+            }
+
+            if (this.fields) {
+                this.fields.forEach(field => {
+                    writer.writeNode(field);
+                });
+                writer.newLine();
             }
 
             if (this.functions) {

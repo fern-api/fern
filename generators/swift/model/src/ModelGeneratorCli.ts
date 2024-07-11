@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
 import { AbstractGeneratorCli, AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/generator-commons";
-import Swift, { SwiftFile } from "@fern-api/swift-codegen";
+import { SwiftFile } from "@fern-api/swift-codegen";
 import { EnumTypeDeclaration, IntermediateRepresentation, ObjectTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { readFile } from "fs/promises";
 import { z } from "zod";
+import SwiftObjectGenerator from "./SwiftObjectGenerator";
 
 // Generate Models
 
@@ -12,36 +13,16 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
 
     const files: SwiftFile[] = [];
 
+    console.log("generateModels ir");
+    console.log(context.ir);
+
     for (const [_, typeDeclaration] of Object.entries(context.ir.types)) {
 
         // Build file for declaration
         const file = typeDeclaration.shape._visit<SwiftFile | undefined>({
             alias: () => undefined,
             enum: (etd: EnumTypeDeclaration) => undefined,
-            object: (otd: ObjectTypeDeclaration) => {
-                
-                console.log("generateModel otd");
-                console.log(JSON.stringify(otd, null, 2));
-
-                const output = Swift.makeFile({
-                    fileHeader: Swift.makeFileHeader({
-                        header: "// Sample.swift"
-                    }),
-                    imports: [
-                        Swift.makeImport({ packageName: "Foundation" }),
-                    ],
-                    class: Swift.makeType({
-                        name: "Room"
-                    })
-                });
-
-                return new SwiftFile({
-                    name: typeDeclaration.name.name.originalName,
-                    file: output,
-                    directory: "test",
-                });
-
-            },
+            object: (otd: ObjectTypeDeclaration) => new SwiftObjectGenerator(context, typeDeclaration, otd).generate(),
             undiscriminatedUnion: () => undefined,
             union: () => undefined,
             _other: () => undefined
@@ -143,22 +124,32 @@ export class ModelGeneratorCLI extends AbstractSwiftGeneratorCli<BaseSwiftCustom
         throw new Error("Method not implemented.");
     }
 
+    /**
+     * struct Movie {
+     *   let id: MovieId
+     *   let title: String
+     *   let rating: Double // "The rating scale is one to five stars"
+     * }
+     */
+
     protected async writeForGithub(context: ModelGeneratorContext): Promise<void> {
+
         // eslint-disable-next-line no-console
         console.log("writeForGithub");
-        const generatedTypes = generateModels({ context });
+        const generatedModels = generateModels({ context });
         // eslint-disable-next-line no-console
-        console.log(generatedTypes);
+        console.log(generatedModels);
         // const writes = generatedTypes.map(type => type.generate());
 
-        const writes = generatedTypes.map(async (type) => {
-            await type.generate(); // Ensure each type's content is generated
-            const outputFile = await type.generate(); // Write each type to file
+        const generatedFiles = generatedModels.map(async (model) => {
+            await model.generate(); // Ensure each type's content is generated
+            const outputFile = await model.generate(); // Write each type to file
             console.log(`File written: ${outputFile}`);
-            await type.seeFile();
+            await model.logFile();
         });
 
-        await Promise.all(writes);
+        await Promise.all(generatedFiles);
+
     }
 
     protected async writeForDownload(context: ModelGeneratorContext): Promise<void> {
