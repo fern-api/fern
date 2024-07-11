@@ -60,10 +60,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:generators/swift/codegen"\
       },\
       {\
-        "name": "@fern-api/fern-swift-model",\
-        "reference": "workspace:generators/swift/model"\
-      },\
-      {\
         "name": "@fern-api/template-codegen",\
         "reference": "workspace:generators/template/codegen"\
       },\
@@ -404,7 +400,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/fern-csharp-sdk", ["workspace:generators/csharp/sdk"]],\
       ["@fern-api/fern-ruby-model", ["workspace:generators/ruby/model"]],\
       ["@fern-api/fern-ruby-sdk", ["workspace:generators/ruby/sdk"]],\
-      ["@fern-api/fern-swift-model", ["workspace:generators/swift/model"]],\
       ["@fern-api/fs-utils", ["workspace:packages/commons/fs-utils"]],\
       ["@fern-api/generator-commons", ["workspace:generators/commons"]],\
       ["@fern-api/init", ["workspace:packages/cli/init"]],\
@@ -7703,7 +7698,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/generator-commons", "workspace:generators/commons"],\
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
             ["@fern-fern/ir-sdk", "npm:50.0.0"],\
-            ["@types/jest", "npm:29.0.3"],\
+            ["@types/jest", "npm:29.5.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
