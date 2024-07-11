@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.11.1] - 2024-07-10
 
-- Fix: The FastAPI generator now respects the `use_str_enums` flag
+- Fix: The FastAPI generator now respects the `use_str_enums` flag, and defaults it to `False`.
 
 ## [0.11.0] - 2024-07-10
 
