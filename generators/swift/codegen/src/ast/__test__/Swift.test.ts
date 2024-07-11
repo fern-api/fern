@@ -76,6 +76,16 @@ describe("Swift Language", () => {
         expect(output.toString()).toMatchSnapshot();
     });
 
+    it("makes primatives", () => {
+        const output = Swift.makeField({
+            name: "count",
+            valueType: Swift.makePrimative({
+                key: "integer"
+            })
+        });
+        expect(output.toString()).toMatchSnapshot();
+    });
+
     it("makes struct", () => {
         const output = Swift.makeStruct({
             accessLevel: AccessLevel.Public,
@@ -89,7 +99,9 @@ describe("Swift Language", () => {
                 Swift.makeField({
                     name: "description",
                     variableType: VariableType.Let,
-                    valueType: "TODO"
+                    valueType: Swift.makePrimative({
+                        key: "string"
+                    })
                 })
             ]
         });

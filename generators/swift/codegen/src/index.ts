@@ -7,6 +7,7 @@ import { FileHeader } from "./ast/FileHeader";
 import { Func } from "./ast/Func";
 import { Import } from "./ast/Import";
 import { Param } from "./ast/Param";
+import { Primative } from "./ast/Primative";
 import { Struct } from "./ast/Struct";
 import { Type } from "./ast/Type";
 
@@ -20,6 +21,7 @@ export { Func } from "./ast/Func";
 export { FunctionModifier } from "./ast/FunctionModifier";
 export { Import } from "./ast/Import";
 export { Param } from "./ast/Param";
+export { Primative } from "./ast/Primative";
 export { Struct } from "./ast/Struct";
 export { Type } from "./ast/Type";
 export { VariableType } from "./ast/VariableType";
@@ -55,6 +57,10 @@ export default class Swift {
   
   public static makeFunc(args: Func.Args): Func {
     return new Func(args);
+  }
+
+  public static makePrimative(args: Primative.Args): Primative {
+    return new Primative(args);
   }
 
   public static makeStruct(args: Struct.Args): Struct {

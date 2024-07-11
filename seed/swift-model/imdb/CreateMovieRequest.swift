@@ -8,6 +8,6 @@
 import Foundation
 
 public struct CreateMovieRequest {
-    public let title: string
-    public let rating: double
+    public let title: String
+    public let rating: Double
 }

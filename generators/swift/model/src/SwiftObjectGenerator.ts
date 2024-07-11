@@ -1,7 +1,7 @@
 /* eslint-disable object-shorthand */
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 /* eslint-disable no-console */
-import Swift, { AccessLevel, SwiftFile, VariableType } from "@fern-api/swift-codegen";
+import Swift, { AccessLevel, SwiftFile, Type, VariableType } from "@fern-api/swift-codegen";
 import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "./ModelGeneratorCli";
 
@@ -30,12 +30,12 @@ export default class SwiftObjectGenerator {
 
     const fields = this.objectDeclaration.properties.map(property => {
 
-      const valueType = property.valueType._visit<string>({
-        container: (value) => "ERROR",
-        named: (value) => value.name.pascalCase.safeName,
-        primitive: (valueType) => valueType.v2?.type ?? "ERROR",
-        unknown: () => "Any",
-        _other: (value: { type: string; }) => "ERROR",
+      const type = property.valueType._visit<Type>({
+        container:                 (value) => Swift.makeType({ name: value.type }),
+        named:                     (value) => Swift.makeType({ name: value.name.pascalCase.safeName }),
+        primitive:             (valueType) => Swift.makePrimative({ key: valueType.v2?.type }),
+        unknown:                        () => Swift.makeType({ name: "Unknown" }),
+        _other: (value: { type: string; }) => Swift.makeType({ name: value.type }),
       });
       
       // example: let name: String
@@ -43,7 +43,7 @@ export default class SwiftObjectGenerator {
         accessLevel: AccessLevel.Public,
         variableType: VariableType.Let,
         name: property.name.name.camelCase.safeName,
-        valueType: valueType
+        valueType: type
       });
 
     });
@@ -59,9 +59,9 @@ export default class SwiftObjectGenerator {
 //
         `.trim()
       }),
-      imports: [
-        Swift.makeImport({ packageName: "Foundation" }),
-      ],
+      // imports: [
+      //   Swift.makeImport({ packageName: "Foundation" }), // TODO: Will need to add imports if the value needs it
+      // ],
       class: Swift.makeStruct({
         accessLevel: AccessLevel.Public,
         name: name,

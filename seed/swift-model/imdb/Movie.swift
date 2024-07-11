@@ -9,6 +9,6 @@ import Foundation
 
 public struct Movie {
     public let id: MovieId
-    public let title: string
-    public let rating: double
+    public let title: String
+    public let rating: Double
 }
