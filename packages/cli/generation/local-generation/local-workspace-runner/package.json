@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@types/decompress": "^4.2.7",
-    "@types/jest": "^29.0.3",
+    "@types/jest": "^29.5.12",
     "@types/node": "^18.7.18",
     "@types/tmp": "^0.2.4",
     "depcheck": "^1.4.6",
