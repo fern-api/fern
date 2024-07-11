@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 import { Enum } from "./ast/Enum";
 import { EnumCase } from "./ast/EnumCase";
+import { Field } from "./ast/Field";
 import { File } from "./ast/File";
 import { FileHeader } from "./ast/FileHeader";
 import { Func } from "./ast/Func";
 import { Import } from "./ast/Import";
 import { Param } from "./ast/Param";
+import { Struct } from "./ast/Struct";
 import { Type } from "./ast/Type";
 
 export { AccessLevel } from "./ast/AccessLevel";
@@ -18,7 +20,9 @@ export { Func } from "./ast/Func";
 export { FunctionModifier } from "./ast/FunctionModifier";
 export { Import } from "./ast/Import";
 export { Param } from "./ast/Param";
+export { Struct } from "./ast/Struct";
 export { Type } from "./ast/Type";
+export { VariableType } from "./ast/VariableType";
 export { SwiftFile } from "./project/SwiftFile";
 
 export default class Swift {
@@ -31,6 +35,10 @@ export default class Swift {
   
   public static makeImport(args: Import.Args): Import {
     return new Import(args);
+  }
+
+  public static makeField(args: Field.Args): Field {
+    return new Field(args);
   }
   
   public static makeParam(args: Param.Args): Param {
@@ -47,6 +55,10 @@ export default class Swift {
   
   public static makeFunc(args: Func.Args): Func {
     return new Func(args);
+  }
+
+  public static makeStruct(args: Struct.Args): Struct {
+    return new Struct(args);
   }
 
   public static makeType(args: Type.Args): Type {

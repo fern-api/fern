@@ -1,5 +1,6 @@
 import Swift, { AccessLevel, ClassLevel, FunctionModifier } from "../..";
 import { SwiftFile } from "../../project/SwiftFile";
+import { VariableType } from "../VariableType";
 
 describe("Swift Language", () => {
     it("makes file header", () => {
@@ -69,6 +70,26 @@ describe("Swift Language", () => {
                     defaultValue: Swift.makeType({
                         name: "Int"
                     })
+                })
+            ]
+        });
+        expect(output.toString()).toMatchSnapshot();
+    });
+
+    it("makes struct", () => {
+        const output = Swift.makeStruct({
+            accessLevel: AccessLevel.Public,
+            name: "TopGun",
+            inheritance: [
+                Swift.makeType({
+                    name: "Movie"
+                }),
+            ],
+            fields: [
+                Swift.makeField({
+                    name: "description",
+                    variableType: VariableType.Let,
+                    valueType: "TODO"
                 })
             ]
         });

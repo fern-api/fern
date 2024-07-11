@@ -124,14 +124,6 @@ export class ModelGeneratorCLI extends AbstractSwiftGeneratorCli<BaseSwiftCustom
         throw new Error("Method not implemented.");
     }
 
-    /**
-     * struct Movie {
-     *   let id: MovieId
-     *   let title: String
-     *   let rating: Double // "The rating scale is one to five stars"
-     * }
-     */
-
     protected async writeForGithub(context: ModelGeneratorContext): Promise<void> {
 
         // eslint-disable-next-line no-console

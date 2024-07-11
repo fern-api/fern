@@ -1,11 +1,12 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
 import Swift, { FileHeader, Import, Type } from "../";
+import { Struct } from "./Struct";
 
 export declare namespace File {
     interface Args {
         fileHeader?: FileHeader;
         imports?: Import[];
-        class: Type;
+        class: Type | Struct;
     }
 }
 
@@ -13,7 +14,7 @@ export class File extends AstNode {
 
     public readonly fileHeader?: FileHeader;
     public readonly imports?: Import[];
-    public readonly class: Type;
+    public readonly class: Type | Struct;
 
     constructor({ 
         fileHeader,
@@ -43,6 +44,9 @@ export class File extends AstNode {
         }
 
         writer.writeNode(this.class);
+
+        // Common for swift files to have an extra line at end
+        writer.newLine();
 
     }
 }
