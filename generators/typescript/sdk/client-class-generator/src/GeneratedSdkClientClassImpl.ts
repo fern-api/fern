@@ -704,6 +704,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     let value: ts.Expression;
                     if (literalValue != null) {
                         if (typeof literalValue === "boolean") {
+                            const booleanLiteral = literalValue ? ts.factory.createTrue() : ts.factory.createFalse();
                             value = ts.factory.createCallExpression(
                                 ts.factory.createPropertyAccessExpression(
                                     ts.factory.createParenthesizedExpression(
@@ -725,7 +726,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                                 )
                                             ),
                                             ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                            ts.factory.createTrue()
+                                            booleanLiteral
                                         )
                                     ),
                                     ts.factory.createIdentifier("toString")
