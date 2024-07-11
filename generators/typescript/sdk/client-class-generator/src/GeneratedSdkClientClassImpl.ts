@@ -704,60 +704,34 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     let value: ts.Expression;
                     if (literalValue != null) {
                         if (typeof literalValue === "boolean") {
-                            value = ts.factory.createConditionalExpression(
-                                ts.factory.createBinaryExpression(
-                                    ts.factory.createPropertyAccessChain(
-                                        ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
-                                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                        ts.factory.createIdentifier(headerName)
-                                    ),
-                                    ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                                    ts.factory.createNull()
-                                ),
-                                ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                                ts.factory.createCallExpression(
-                                    ts.factory.createPropertyAccessExpression(
-                                        ts.factory.createPropertyAccessExpression(
-                                            ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
-                                            ts.factory.createIdentifier(headerName)
-                                        ),
-                                        ts.factory.createIdentifier("toString")
-                                    ),
-                                    undefined,
-                                    []
-                                ),
-                                ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                                ts.factory.createConditionalExpression(
-                                    ts.factory.createBinaryExpression(
-                                        ts.factory.createPropertyAccessChain(
-                                            ts.factory.createPropertyAccessExpression(
-                                                ts.factory.createThis(),
-                                                GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
-                                            ),
-                                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                            ts.factory.createIdentifier(headerName)
-                                        ),
-                                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                                        ts.factory.createNull()
-                                    ),
-                                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                                    ts.factory.createCallExpression(
-                                        ts.factory.createPropertyAccessExpression(
-                                            ts.factory.createPropertyAccessExpression(
-                                                ts.factory.createPropertyAccessExpression(
-                                                    ts.factory.createThis(),
-                                                    GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
+                            value = ts.factory.createCallExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createParenthesizedExpression(
+                                        ts.factory.createBinaryExpression(
+                                            ts.factory.createBinaryExpression(
+                                                ts.factory.createPropertyAccessChain(
+                                                    ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                                                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                    ts.factory.createIdentifier(headerName)
                                                 ),
-                                                ts.factory.createIdentifier(headerName)
+                                                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                                ts.factory.createPropertyAccessChain(
+                                                    ts.factory.createPropertyAccessExpression(
+                                                        ts.factory.createThis(),
+                                                        GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
+                                                    ),
+                                                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                    ts.factory.createIdentifier(headerName)
+                                                )
                                             ),
-                                            ts.factory.createIdentifier("toString")
-                                        ),
-                                        undefined,
-                                        []
+                                            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                            ts.factory.createTrue()
+                                        )
                                     ),
-                                    ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                                    ts.factory.createStringLiteral(literalValue.toString())
-                                )
+                                    ts.factory.createIdentifier("toString")
+                                ),
+                                undefined,
+                                []
                             );
                         } else {
                             value = ts.factory.createBinaryExpression(

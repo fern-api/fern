@@ -54,12 +54,11 @@ export class Reference {
             method: "POST",
             headers: {
                 "X-API-Version": requestOptions?.version ?? this._options?.version ?? "02-02-2024",
-                "X-API-Enable-Audit-Logging":
-                    requestOptions?.auditLogging != null
-                        ? requestOptions.auditLogging.toString()
-                        : this._options?.auditLogging != null
-                        ? this._options.auditLogging.toString()
-                        : "true",
+                "X-API-Enable-Audit-Logging": (
+                    requestOptions?.auditLogging ??
+                    this._options?.auditLogging ??
+                    true
+                ).toString(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/literal",
                 "X-Fern-SDK-Version": "0.0.1",
