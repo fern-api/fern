@@ -10,8 +10,8 @@ export const InvalidRequestResponse: core.serialization.ObjectSchema<
     serializers.InvalidRequestResponse.Raw,
     SeedTrace.InvalidRequestResponse
 > = core.serialization.object({
-    request: core.serialization.lazy(async () => (await import("../../..")).SubmissionRequest),
-    cause: core.serialization.lazy(async () => (await import("../../..")).InvalidRequestCause),
+    request: core.serialization.lazy(() => serializers.SubmissionRequest),
+    cause: core.serialization.lazy(() => serializers.InvalidRequestCause),
 });
 
 export declare namespace InvalidRequestResponse {

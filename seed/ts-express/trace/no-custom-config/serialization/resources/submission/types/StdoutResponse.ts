@@ -8,7 +8,7 @@ import * as core from "../../../../core";
 
 export const StdoutResponse: core.serialization.ObjectSchema<serializers.StdoutResponse.Raw, SeedTrace.StdoutResponse> =
     core.serialization.object({
-        submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
+        submissionId: core.serialization.lazy(() => serializers.SubmissionId),
         stdout: core.serialization.string(),
     });
 

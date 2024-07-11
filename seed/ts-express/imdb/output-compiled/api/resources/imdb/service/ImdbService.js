@@ -55,15 +55,13 @@ class ImdbService {
     }
     toRouter() {
         this.router.post("/create-movie", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            const request = yield serializers.CreateMovieRequest.parse(req.body);
+            const request = serializers.CreateMovieRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
                     yield this.methods.createMovie(req, {
                         send: (responseBody) => __awaiter(this, void 0, void 0, function* () {
-                            res.status(201).json(yield serializers.MovieId.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            }));
+                            res.status(201).json(serializers.MovieId.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }));
                         }),
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
@@ -94,7 +92,7 @@ class ImdbService {
             try {
                 yield this.methods.getMovie(req, {
                     send: (responseBody) => __awaiter(this, void 0, void 0, function* () {
-                        res.json(yield serializers.Movie.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }));
+                        res.json(serializers.Movie.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }));
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,

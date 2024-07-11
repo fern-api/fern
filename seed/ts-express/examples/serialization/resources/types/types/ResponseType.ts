@@ -8,7 +8,7 @@ import * as core from "../../../../core";
 
 export const ResponseType: core.serialization.ObjectSchema<serializers.ResponseType.Raw, SeedExamples.ResponseType> =
     core.serialization.object({
-        type: core.serialization.lazy(async () => (await import("../../..")).Type),
+        type: core.serialization.lazy(() => serializers.Type),
     });
 
 export declare namespace ResponseType {

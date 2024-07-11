@@ -9,9 +9,7 @@ import * as core from "../../../../../../core";
 export const Request: core.serialization.Schema<
     serializers.endpoints.container.getAndReturnOptional.Request.Raw,
     SeedExhaustive.types.ObjectWithRequiredField | undefined
-> = core.serialization
-    .lazyObject(async () => (await import("../../../../..")).types.ObjectWithRequiredField)
-    .optional();
+> = core.serialization.lazyObject(() => serializers.types.ObjectWithRequiredField).optional();
 
 export declare namespace Request {
     type Raw = serializers.types.ObjectWithRequiredField.Raw | null | undefined;
@@ -20,9 +18,7 @@ export declare namespace Request {
 export const Response: core.serialization.Schema<
     serializers.endpoints.container.getAndReturnOptional.Response.Raw,
     SeedExhaustive.types.ObjectWithRequiredField | undefined
-> = core.serialization
-    .lazyObject(async () => (await import("../../../../..")).types.ObjectWithRequiredField)
-    .optional();
+> = core.serialization.lazyObject(() => serializers.types.ObjectWithRequiredField).optional();
 
 export declare namespace Response {
     type Raw = serializers.types.ObjectWithRequiredField.Raw | null | undefined;

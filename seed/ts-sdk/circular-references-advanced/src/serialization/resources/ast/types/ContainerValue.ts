@@ -10,12 +10,10 @@ export const ContainerValue: core.serialization.Schema<serializers.ContainerValu
     core.serialization
         .union("type", {
             list: core.serialization.object({
-                value: core.serialization.list(
-                    core.serialization.lazy(async () => (await import("../../..")).FieldValue)
-                ),
+                value: core.serialization.list(core.serialization.lazy(() => serializers.FieldValue)),
             }),
             optional: core.serialization.object({
-                value: core.serialization.lazy(async () => (await import("../../..")).FieldValue).optional(),
+                value: core.serialization.lazy(() => serializers.FieldValue).optional(),
             }),
         })
         .transform<SeedApi.ContainerValue>({

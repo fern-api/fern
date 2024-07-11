@@ -11,12 +11,8 @@ export const AssertCorrectnessCheck: core.serialization.Schema<
     SeedTrace.v2.AssertCorrectnessCheck
 > = core.serialization
     .union("type", {
-        deepEquality: core.serialization.lazyObject(
-            async () => (await import("../../../../..")).v2.DeepEqualityCorrectnessCheck
-        ),
-        custom: core.serialization.lazyObject(
-            async () => (await import("../../../../..")).v2.VoidFunctionDefinitionThatTakesActualResult
-        ),
+        deepEquality: core.serialization.lazyObject(() => serializers.v2.DeepEqualityCorrectnessCheck),
+        custom: core.serialization.lazyObject(() => serializers.v2.VoidFunctionDefinitionThatTakesActualResult),
     })
     .transform<SeedTrace.v2.AssertCorrectnessCheck>({
         transform: (value) => value,

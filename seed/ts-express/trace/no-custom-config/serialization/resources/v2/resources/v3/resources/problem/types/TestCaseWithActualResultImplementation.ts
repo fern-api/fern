@@ -10,12 +10,8 @@ export const TestCaseWithActualResultImplementation: core.serialization.ObjectSc
     serializers.v2.v3.TestCaseWithActualResultImplementation.Raw,
     SeedTrace.v2.v3.TestCaseWithActualResultImplementation
 > = core.serialization.object({
-    getActualResult: core.serialization.lazyObject(
-        async () => (await import("../../../../../../..")).v2.v3.NonVoidFunctionDefinition
-    ),
-    assertCorrectnessCheck: core.serialization.lazy(
-        async () => (await import("../../../../../../..")).v2.v3.AssertCorrectnessCheck
-    ),
+    getActualResult: core.serialization.lazyObject(() => serializers.v2.v3.NonVoidFunctionDefinition),
+    assertCorrectnessCheck: core.serialization.lazy(() => serializers.v2.v3.AssertCorrectnessCheck),
 });
 
 export declare namespace TestCaseWithActualResultImplementation {

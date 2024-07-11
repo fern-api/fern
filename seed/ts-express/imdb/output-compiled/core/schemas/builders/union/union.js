@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __rest = (this && this.__rest) || function (s, e) {
     var t = {};
     for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -36,7 +27,7 @@ function union(discriminant, union) {
         : discriminant.parsedDiscriminant;
     const discriminantValueSchema = (0, enum_1.enum_)((0, keys_1.keys)(union));
     const baseSchema = {
-        parse: (raw, opts) => __awaiter(this, void 0, void 0, function* () {
+        parse: (raw, opts) => {
             return transformAndValidateUnion({
                 value: raw,
                 discriminant: rawDiscriminant,
@@ -53,8 +44,8 @@ function union(discriminant, union) {
                 transformAdditionalProperties: (additionalProperties, additionalPropertiesSchema) => additionalPropertiesSchema.parse(additionalProperties, opts),
                 breadcrumbsPrefix: opts === null || opts === void 0 ? void 0 : opts.breadcrumbsPrefix,
             });
-        }),
-        json: (parsed, opts) => __awaiter(this, void 0, void 0, function* () {
+        },
+        json: (parsed, opts) => {
             return transformAndValidateUnion({
                 value: parsed,
                 discriminant: parsedDiscriminant,
@@ -71,71 +62,69 @@ function union(discriminant, union) {
                 transformAdditionalProperties: (additionalProperties, additionalPropertiesSchema) => additionalPropertiesSchema.json(additionalProperties, opts),
                 breadcrumbsPrefix: opts === null || opts === void 0 ? void 0 : opts.breadcrumbsPrefix,
             });
-        }),
+        },
         getType: () => Schema_1.SchemaType.UNION,
     };
     return Object.assign(Object.assign(Object.assign({}, (0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema)), (0, schema_utils_1.getSchemaUtils)(baseSchema)), (0, object_like_1.getObjectLikeUtils)(baseSchema));
 }
 exports.union = union;
 function transformAndValidateUnion({ value, discriminant, transformedDiscriminant, transformDiscriminantValue, getAdditionalPropertiesSchema, allowUnrecognizedUnionMembers = false, transformAdditionalProperties, breadcrumbsPrefix = [], }) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (!(0, isPlainObject_1.isPlainObject)(value)) {
-            return {
-                ok: false,
-                errors: [
-                    {
-                        path: breadcrumbsPrefix,
-                        message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, "object"),
-                    },
-                ],
-            };
-        }
-        const _a = value, _b = discriminant, discriminantValue = _a[_b], additionalProperties = __rest(_a, [typeof _b === "symbol" ? _b : _b + ""]);
-        if (discriminantValue == null) {
-            return {
-                ok: false,
-                errors: [
-                    {
-                        path: breadcrumbsPrefix,
-                        message: `Missing discriminant ("${discriminant}")`,
-                    },
-                ],
-            };
-        }
-        const transformedDiscriminantValue = yield transformDiscriminantValue(discriminantValue);
-        if (!transformedDiscriminantValue.ok) {
-            return {
-                ok: false,
-                errors: transformedDiscriminantValue.errors,
-            };
-        }
-        const additionalPropertiesSchema = getAdditionalPropertiesSchema(transformedDiscriminantValue.value);
-        if (additionalPropertiesSchema == null) {
-            if (allowUnrecognizedUnionMembers) {
-                return {
-                    ok: true,
-                    value: Object.assign({ [transformedDiscriminant]: transformedDiscriminantValue.value }, additionalProperties),
-                };
-            }
-            else {
-                return {
-                    ok: false,
-                    errors: [
-                        {
-                            path: [...breadcrumbsPrefix, discriminant],
-                            message: "Unexpected discriminant value",
-                        },
-                    ],
-                };
-            }
-        }
-        const transformedAdditionalProperties = yield transformAdditionalProperties(additionalProperties, additionalPropertiesSchema);
-        if (!transformedAdditionalProperties.ok) {
-            return transformedAdditionalProperties;
-        }
+    if (!(0, isPlainObject_1.isPlainObject)(value)) {
         return {
-            ok: true,
-            value: Object.assign({ [transformedDiscriminant]: discriminantValue }, transformedAdditionalProperties.value),
+            ok: false,
+            errors: [
+                {
+                    path: breadcrumbsPrefix,
+                    message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, "object"),
+                },
+            ],
         };
-    });
+    }
+    const _a = value, _b = discriminant, discriminantValue = _a[_b], additionalProperties = __rest(_a, [typeof _b === "symbol" ? _b : _b + ""]);
+    if (discriminantValue == null) {
+        return {
+            ok: false,
+            errors: [
+                {
+                    path: breadcrumbsPrefix,
+                    message: `Missing discriminant ("${discriminant}")`,
+                },
+            ],
+        };
+    }
+    const transformedDiscriminantValue = transformDiscriminantValue(discriminantValue);
+    if (!transformedDiscriminantValue.ok) {
+        return {
+            ok: false,
+            errors: transformedDiscriminantValue.errors,
+        };
+    }
+    const additionalPropertiesSchema = getAdditionalPropertiesSchema(transformedDiscriminantValue.value);
+    if (additionalPropertiesSchema == null) {
+        if (allowUnrecognizedUnionMembers) {
+            return {
+                ok: true,
+                value: Object.assign({ [transformedDiscriminant]: transformedDiscriminantValue.value }, additionalProperties),
+            };
+        }
+        else {
+            return {
+                ok: false,
+                errors: [
+                    {
+                        path: [...breadcrumbsPrefix, discriminant],
+                        message: "Unexpected discriminant value",
+                    },
+                ],
+            };
+        }
+    }
+    const transformedAdditionalProperties = transformAdditionalProperties(additionalProperties, additionalPropertiesSchema);
+    if (!transformedAdditionalProperties.ok) {
+        return transformedAdditionalProperties;
+    }
+    return {
+        ok: true,
+        value: Object.assign({ [transformedDiscriminant]: discriminantValue }, transformedAdditionalProperties.value),
+    };
 }

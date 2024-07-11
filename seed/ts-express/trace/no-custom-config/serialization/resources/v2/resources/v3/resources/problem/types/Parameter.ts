@@ -8,9 +8,9 @@ import * as core from "../../../../../../../../core";
 
 export const Parameter: core.serialization.ObjectSchema<serializers.v2.v3.Parameter.Raw, SeedTrace.v2.v3.Parameter> =
     core.serialization.object({
-        parameterId: core.serialization.lazy(async () => (await import("../../../../../../..")).v2.v3.ParameterId),
+        parameterId: core.serialization.lazy(() => serializers.v2.v3.ParameterId),
         name: core.serialization.string(),
-        variableType: core.serialization.lazy(async () => (await import("../../../../../../..")).VariableType),
+        variableType: core.serialization.lazy(() => serializers.VariableType),
     });
 
 export declare namespace Parameter {

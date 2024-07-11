@@ -53,6 +53,26 @@ public class UsersClient
         throw new Exception(responseBody);
     }
 
+    public async Task<ListUsersPaginationResponse> ListWithBodyCursorPaginationAsync(
+        ListUsersBodyCursorPaginationRequest request
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "/users",
+                Body = request
+            }
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return JsonSerializer.Deserialize<ListUsersPaginationResponse>(responseBody)!;
+        }
+        throw new Exception(responseBody);
+    }
+
     public async Task<ListUsersPaginationResponse> ListWithOffsetPaginationAsync(
         ListUsersOffsetPaginationRequest request
     )
@@ -80,6 +100,26 @@ public class UsersClient
                 Method = HttpMethod.Get,
                 Path = "/users",
                 Query = _query
+            }
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return JsonSerializer.Deserialize<ListUsersPaginationResponse>(responseBody)!;
+        }
+        throw new Exception(responseBody);
+    }
+
+    public async Task<ListUsersPaginationResponse> ListWithBodyOffsetPaginationAsync(
+        ListUsersBodyOffsetPaginationRequest request
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "/users",
+                Body = request
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

@@ -11,7 +11,7 @@ export const ExtendedMovie: core.serialization.ObjectSchema<serializers.Extended
         .object({
             cast: core.serialization.list(core.serialization.string()),
         })
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).Movie));
+        .extend(core.serialization.lazyObject(() => serializers.Movie));
 
 export declare namespace ExtendedMovie {
     interface Raw extends serializers.Movie.Raw {

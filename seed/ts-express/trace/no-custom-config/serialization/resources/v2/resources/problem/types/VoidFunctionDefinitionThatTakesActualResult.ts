@@ -10,12 +10,8 @@ export const VoidFunctionDefinitionThatTakesActualResult: core.serialization.Obj
     serializers.v2.VoidFunctionDefinitionThatTakesActualResult.Raw,
     SeedTrace.v2.VoidFunctionDefinitionThatTakesActualResult
 > = core.serialization.object({
-    additionalParameters: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("../../../../..")).v2.Parameter)
-    ),
-    code: core.serialization.lazyObject(
-        async () => (await import("../../../../..")).v2.FunctionImplementationForMultipleLanguages
-    ),
+    additionalParameters: core.serialization.list(core.serialization.lazyObject(() => serializers.v2.Parameter)),
+    code: core.serialization.lazyObject(() => serializers.v2.FunctionImplementationForMultipleLanguages),
 });
 
 export declare namespace VoidFunctionDefinitionThatTakesActualResult {

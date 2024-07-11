@@ -11,7 +11,7 @@ export const Parameter: core.serialization.ObjectSchema<serializers.v2.Parameter
     core.serialization.object({
         parameterId: ParameterId,
         name: core.serialization.string(),
-        variableType: core.serialization.lazy(async () => (await import("../../../../..")).VariableType),
+        variableType: core.serialization.lazy(() => serializers.VariableType),
     });
 
 export declare namespace Parameter {

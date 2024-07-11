@@ -9,7 +9,7 @@ import { ActualResult } from "./ActualResult";
 
 export const TestCaseResult: core.serialization.ObjectSchema<serializers.TestCaseResult.Raw, SeedTrace.TestCaseResult> =
     core.serialization.object({
-        expectedResult: core.serialization.lazy(async () => (await import("../../..")).VariableValue),
+        expectedResult: core.serialization.lazy(() => serializers.VariableValue),
         actualResult: ActualResult,
         passed: core.serialization.boolean(),
     });

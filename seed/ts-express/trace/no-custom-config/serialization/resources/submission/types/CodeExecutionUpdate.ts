@@ -11,19 +11,17 @@ export const CodeExecutionUpdate: core.serialization.Schema<
     SeedTrace.CodeExecutionUpdate
 > = core.serialization
     .union("type", {
-        buildingExecutor: core.serialization.lazyObject(
-            async () => (await import("../../..")).BuildingExecutorResponse
-        ),
-        running: core.serialization.lazyObject(async () => (await import("../../..")).RunningResponse),
-        errored: core.serialization.lazyObject(async () => (await import("../../..")).ErroredResponse),
-        stopped: core.serialization.lazyObject(async () => (await import("../../..")).StoppedResponse),
-        graded: core.serialization.lazyObject(async () => (await import("../../..")).GradedResponse),
-        gradedV2: core.serialization.lazyObject(async () => (await import("../../..")).GradedResponseV2),
-        workspaceRan: core.serialization.lazyObject(async () => (await import("../../..")).WorkspaceRanResponse),
-        recording: core.serialization.lazyObject(async () => (await import("../../..")).RecordingResponseNotification),
-        recorded: core.serialization.lazyObject(async () => (await import("../../..")).RecordedResponseNotification),
-        invalidRequest: core.serialization.lazyObject(async () => (await import("../../..")).InvalidRequestResponse),
-        finished: core.serialization.lazyObject(async () => (await import("../../..")).FinishedResponse),
+        buildingExecutor: core.serialization.lazyObject(() => serializers.BuildingExecutorResponse),
+        running: core.serialization.lazyObject(() => serializers.RunningResponse),
+        errored: core.serialization.lazyObject(() => serializers.ErroredResponse),
+        stopped: core.serialization.lazyObject(() => serializers.StoppedResponse),
+        graded: core.serialization.lazyObject(() => serializers.GradedResponse),
+        gradedV2: core.serialization.lazyObject(() => serializers.GradedResponseV2),
+        workspaceRan: core.serialization.lazyObject(() => serializers.WorkspaceRanResponse),
+        recording: core.serialization.lazyObject(() => serializers.RecordingResponseNotification),
+        recorded: core.serialization.lazyObject(() => serializers.RecordedResponseNotification),
+        invalidRequest: core.serialization.lazyObject(() => serializers.InvalidRequestResponse),
+        finished: core.serialization.lazyObject(() => serializers.FinishedResponse),
     })
     .transform<SeedTrace.CodeExecutionUpdate>({
         transform: (value) => value,

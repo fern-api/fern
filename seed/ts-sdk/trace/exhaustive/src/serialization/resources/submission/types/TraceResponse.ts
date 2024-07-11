@@ -13,7 +13,7 @@ export const TraceResponse: core.serialization.ObjectSchema<serializers.TraceRes
     core.serialization.object({
         submissionId: SubmissionId,
         lineNumber: core.serialization.number(),
-        returnValue: core.serialization.lazy(async () => (await import("../../..")).DebugVariableValue).optional(),
+        returnValue: core.serialization.lazy(() => serializers.DebugVariableValue).optional(),
         expressionLocation: ExpressionLocation.optional(),
         stack: StackInformation,
         stdout: core.serialization.string().optional(),

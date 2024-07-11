@@ -9,7 +9,7 @@ import * as core from "../../../../core";
 export const Request: core.serialization.Schema<
     serializers.playlist.updatePlaylist.Request.Raw,
     SeedTrace.UpdatePlaylistRequest | undefined
-> = core.serialization.lazyObject(async () => (await import("../../..")).UpdatePlaylistRequest).optional();
+> = core.serialization.lazyObject(() => serializers.UpdatePlaylistRequest).optional();
 
 export declare namespace Request {
     type Raw = serializers.UpdatePlaylistRequest.Raw | null | undefined;
@@ -18,7 +18,7 @@ export declare namespace Request {
 export const Response: core.serialization.Schema<
     serializers.playlist.updatePlaylist.Response.Raw,
     SeedTrace.Playlist | undefined
-> = core.serialization.lazyObject(async () => (await import("../../..")).Playlist).optional();
+> = core.serialization.lazyObject(() => serializers.Playlist).optional();
 
 export declare namespace Response {
     type Raw = serializers.Playlist.Raw | null | undefined;

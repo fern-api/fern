@@ -7,7 +7,7 @@ import * as SeedAlias from "../../api/index";
 import * as core from "../../core";
 
 export const Object_: core.serialization.ObjectSchema<serializers.Object_.Raw, SeedAlias.Object_> =
-    core.serialization.lazyObject(async () => (await import("..")).Type);
+    core.serialization.lazyObject(() => serializers.Type);
 
 export declare namespace Object_ {
     type Raw = serializers.Type.Raw;

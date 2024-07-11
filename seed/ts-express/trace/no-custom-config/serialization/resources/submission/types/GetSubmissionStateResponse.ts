@@ -12,8 +12,8 @@ export const GetSubmissionStateResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     timeSubmitted: core.serialization.date().optional(),
     submission: core.serialization.string(),
-    language: core.serialization.lazy(async () => (await import("../../..")).Language),
-    submissionTypeState: core.serialization.lazy(async () => (await import("../../..")).SubmissionTypeState),
+    language: core.serialization.lazy(() => serializers.Language),
+    submissionTypeState: core.serialization.lazy(() => serializers.SubmissionTypeState),
 });
 
 export declare namespace GetSubmissionStateResponse {

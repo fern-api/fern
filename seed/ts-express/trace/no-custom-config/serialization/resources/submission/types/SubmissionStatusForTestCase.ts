@@ -11,11 +11,11 @@ export const SubmissionStatusForTestCase: core.serialization.Schema<
     SeedTrace.SubmissionStatusForTestCase
 > = core.serialization
     .union("type", {
-        graded: core.serialization.lazyObject(async () => (await import("../../..")).TestCaseResultWithStdout),
+        graded: core.serialization.lazyObject(() => serializers.TestCaseResultWithStdout),
         gradedV2: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).TestCaseGrade),
+            value: core.serialization.lazy(() => serializers.TestCaseGrade),
         }),
-        traced: core.serialization.lazyObject(async () => (await import("../../..")).TracedTestCase),
+        traced: core.serialization.lazyObject(() => serializers.TracedTestCase),
     })
     .transform<SeedTrace.SubmissionStatusForTestCase>({
         transform: (value) => value,

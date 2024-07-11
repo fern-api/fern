@@ -10,10 +10,10 @@ export const GradedResponseV2: core.serialization.ObjectSchema<
     serializers.GradedResponseV2.Raw,
     SeedTrace.GradedResponseV2
 > = core.serialization.object({
-    submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
+    submissionId: core.serialization.lazy(() => serializers.SubmissionId),
     testCases: core.serialization.record(
-        core.serialization.lazy(async () => (await import("../../..")).v2.TestCaseId),
-        core.serialization.lazy(async () => (await import("../../..")).TestCaseGrade)
+        core.serialization.lazy(() => serializers.v2.TestCaseId),
+        core.serialization.lazy(() => serializers.TestCaseGrade)
     ),
 });
 

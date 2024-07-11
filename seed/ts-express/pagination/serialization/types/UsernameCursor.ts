@@ -10,7 +10,7 @@ export const UsernameCursor: core.serialization.ObjectSchema<
     serializers.UsernameCursor.Raw,
     SeedPagination.UsernameCursor
 > = core.serialization.object({
-    cursor: core.serialization.lazyObject(async () => (await import("..")).UsernamePage),
+    cursor: core.serialization.lazyObject(() => serializers.UsernamePage),
 });
 
 export declare namespace UsernameCursor {

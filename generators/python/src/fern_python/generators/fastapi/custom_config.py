@@ -8,6 +8,7 @@ from fern_python.generators.pydantic_model.custom_config import (
 
 class FastApiPydanticModelCustomConfig(BasePydanticModelCustomConfig):
     extra_fields: Optional[Literal["allow", "forbid"]] = "forbid"
+    use_str_enums: bool = False
 
 
 class FastAPICustomConfig(pydantic.BaseModel):

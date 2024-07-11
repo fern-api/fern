@@ -12,10 +12,10 @@ export const CreateProblemResponse: core.serialization.Schema<
 > = core.serialization
     .union("type", {
         success: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).ProblemId),
+            value: core.serialization.lazy(() => serializers.ProblemId),
         }),
         error: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).CreateProblemError),
+            value: core.serialization.lazy(() => serializers.CreateProblemError),
         }),
     })
     .transform<SeedTrace.CreateProblemResponse>({

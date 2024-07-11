@@ -17,7 +17,7 @@ export const TraceResponseV2: core.serialization.ObjectSchema<
     submissionId: SubmissionId,
     lineNumber: core.serialization.number(),
     file: TracedFile,
-    returnValue: core.serialization.lazy(async () => (await import("../../..")).DebugVariableValue).optional(),
+    returnValue: core.serialization.lazy(() => serializers.DebugVariableValue).optional(),
     expressionLocation: ExpressionLocation.optional(),
     stack: StackInformation,
     stdout: core.serialization.string().optional(),

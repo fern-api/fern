@@ -11,7 +11,7 @@ export const TestSubmissionUpdate: core.serialization.ObjectSchema<
     SeedTrace.TestSubmissionUpdate
 > = core.serialization.object({
     updateTime: core.serialization.date(),
-    updateInfo: core.serialization.lazy(async () => (await import("../../..")).TestSubmissionUpdateInfo),
+    updateInfo: core.serialization.lazy(() => serializers.TestSubmissionUpdateInfo),
 });
 
 export declare namespace TestSubmissionUpdate {

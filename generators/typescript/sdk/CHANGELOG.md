@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.29.2] - 2024-07-10
+
+- Fix: This fixes a bug introduced in `0.29.0-rc0` that prevented the SDK from serializing types
+  with circular references.
+
+## [0.29.1] - 2024-07-10
+
+- Fix: Pagination endpoints that define nested offset/cursor properties are now functional.
+  A new `setObjectProperty` helper is used to dynamically set the property, which is inspired
+  by Lodash's `set` function (https://lodash.com/docs/4.17.15#set).
+
+  The generated code now looks like the following:
+
+  ```typescript
+  let _offset = request?.pagination?.page != null ? request?.pagination?.page : 1;
+  return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
+    response: await list(request),
+    hasNextPage: (response) => (response?.data ?? []).length > 0,
+    getItems: (response) => response?.data ?? [],
+    loadPage: (_response) => {
+      _offset += 1;
+      return list(core.setObjectProperty(request, "pagination.page", _offset));
+    }
+  });
+  ```
+
 ## [0.29.0] - 2024-07-09
 
 - Internal: Upgrade to IRv48.

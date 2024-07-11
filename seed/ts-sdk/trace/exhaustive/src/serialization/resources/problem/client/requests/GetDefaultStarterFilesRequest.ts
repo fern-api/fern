@@ -12,7 +12,7 @@ export const GetDefaultStarterFilesRequest: core.serialization.Schema<
     SeedTrace.GetDefaultStarterFilesRequest
 > = core.serialization.object({
     inputParams: core.serialization.list(VariableTypeAndName),
-    outputType: core.serialization.lazy(async () => (await import("../../../..")).VariableType),
+    outputType: core.serialization.lazy(() => serializers.VariableType),
     methodName: core.serialization.string(),
 });
 

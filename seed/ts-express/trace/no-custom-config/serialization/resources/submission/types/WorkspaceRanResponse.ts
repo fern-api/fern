@@ -10,8 +10,8 @@ export const WorkspaceRanResponse: core.serialization.ObjectSchema<
     serializers.WorkspaceRanResponse.Raw,
     SeedTrace.WorkspaceRanResponse
 > = core.serialization.object({
-    submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
-    runDetails: core.serialization.lazyObject(async () => (await import("../../..")).WorkspaceRunDetails),
+    submissionId: core.serialization.lazy(() => serializers.SubmissionId),
+    runDetails: core.serialization.lazyObject(() => serializers.WorkspaceRunDetails),
 });
 
 export declare namespace WorkspaceRanResponse {

@@ -8,10 +8,8 @@ import * as core from "../../../../core";
 
 export const WorkspaceFiles: core.serialization.ObjectSchema<serializers.WorkspaceFiles.Raw, SeedTrace.WorkspaceFiles> =
     core.serialization.object({
-        mainFile: core.serialization.lazyObject(async () => (await import("../../..")).FileInfo),
-        readOnlyFiles: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("../../..")).FileInfo)
-        ),
+        mainFile: core.serialization.lazyObject(() => serializers.FileInfo),
+        readOnlyFiles: core.serialization.list(core.serialization.lazyObject(() => serializers.FileInfo)),
     });
 
 export declare namespace WorkspaceFiles {

@@ -3,6 +3,7 @@
 from . import enum, object, union
 from .enum import ErrorWithEnumBody, WeatherReport
 from .object import (
+    DoubleOptional,
     NestedObjectWithOptionalField,
     NestedObjectWithOptionalFieldError,
     NestedObjectWithRequiredField,
@@ -12,6 +13,7 @@ from .object import (
     ObjectWithOptionalFieldError,
     ObjectWithRequiredField,
     ObjectWithRequiredFieldError,
+    OptionalAlias,
 )
 from .union import Animal, Cat, Dog, ErrorWithUnionBody
 
@@ -19,6 +21,7 @@ __all__ = [
     "Animal",
     "Cat",
     "Dog",
+    "DoubleOptional",
     "ErrorWithEnumBody",
     "ErrorWithUnionBody",
     "NestedObjectWithOptionalField",
@@ -30,6 +33,7 @@ __all__ = [
     "ObjectWithOptionalFieldError",
     "ObjectWithRequiredField",
     "ObjectWithRequiredFieldError",
+    "OptionalAlias",
     "WeatherReport",
     "enum",
     "object",

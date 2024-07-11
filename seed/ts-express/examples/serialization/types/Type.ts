@@ -8,8 +8,8 @@ import * as core from "../../core";
 
 export const Type: core.serialization.Schema<serializers.Type.Raw, SeedExamples.Type> =
     core.serialization.undiscriminatedUnion([
-        core.serialization.lazy(async () => (await import("..")).BasicType),
-        core.serialization.lazy(async () => (await import("..")).ComplexType),
+        core.serialization.lazy(() => serializers.BasicType),
+        core.serialization.lazy(() => serializers.ComplexType),
     ]);
 
 export declare namespace Type {

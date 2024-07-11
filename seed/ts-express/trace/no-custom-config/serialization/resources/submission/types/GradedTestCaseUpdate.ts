@@ -10,8 +10,8 @@ export const GradedTestCaseUpdate: core.serialization.ObjectSchema<
     serializers.GradedTestCaseUpdate.Raw,
     SeedTrace.GradedTestCaseUpdate
 > = core.serialization.object({
-    testCaseId: core.serialization.lazy(async () => (await import("../../..")).v2.TestCaseId),
-    grade: core.serialization.lazy(async () => (await import("../../..")).TestCaseGrade),
+    testCaseId: core.serialization.lazy(() => serializers.v2.TestCaseId),
+    grade: core.serialization.lazy(() => serializers.TestCaseGrade),
 });
 
 export declare namespace GradedTestCaseUpdate {

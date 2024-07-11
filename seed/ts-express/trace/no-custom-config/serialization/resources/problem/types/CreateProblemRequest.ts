@@ -11,18 +11,14 @@ export const CreateProblemRequest: core.serialization.ObjectSchema<
     SeedTrace.CreateProblemRequest
 > = core.serialization.object({
     problemName: core.serialization.string(),
-    problemDescription: core.serialization.lazyObject(async () => (await import("../../..")).ProblemDescription),
+    problemDescription: core.serialization.lazyObject(() => serializers.ProblemDescription),
     files: core.serialization.record(
-        core.serialization.lazy(async () => (await import("../../..")).Language),
-        core.serialization.lazyObject(async () => (await import("../../..")).ProblemFiles).optional()
+        core.serialization.lazy(() => serializers.Language),
+        core.serialization.lazyObject(() => serializers.ProblemFiles).optional()
     ),
-    inputParams: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("../../..")).VariableTypeAndName)
-    ),
-    outputType: core.serialization.lazy(async () => (await import("../../..")).VariableType),
-    testcases: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("../../..")).TestCaseWithExpectedResult)
-    ),
+    inputParams: core.serialization.list(core.serialization.lazyObject(() => serializers.VariableTypeAndName)),
+    outputType: core.serialization.lazy(() => serializers.VariableType),
+    testcases: core.serialization.list(core.serialization.lazyObject(() => serializers.TestCaseWithExpectedResult)),
     methodName: core.serialization.string(),
 });
 

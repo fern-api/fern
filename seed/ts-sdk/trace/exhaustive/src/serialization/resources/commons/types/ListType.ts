@@ -8,7 +8,7 @@ import * as core from "../../../../core";
 
 export const ListType: core.serialization.ObjectSchema<serializers.ListType.Raw, SeedTrace.ListType> =
     core.serialization.object({
-        valueType: core.serialization.lazy(async () => (await import("../../..")).VariableType),
+        valueType: core.serialization.lazy(() => serializers.VariableType),
         isFixedLength: core.serialization.boolean().optional(),
     });
 

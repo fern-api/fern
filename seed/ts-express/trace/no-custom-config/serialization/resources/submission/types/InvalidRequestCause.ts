@@ -11,15 +11,9 @@ export const InvalidRequestCause: core.serialization.Schema<
     SeedTrace.InvalidRequestCause
 > = core.serialization
     .union("type", {
-        submissionIdNotFound: core.serialization.lazyObject(
-            async () => (await import("../../..")).SubmissionIdNotFound
-        ),
-        customTestCasesUnsupported: core.serialization.lazyObject(
-            async () => (await import("../../..")).CustomTestCasesUnsupported
-        ),
-        unexpectedLanguage: core.serialization.lazyObject(
-            async () => (await import("../../..")).UnexpectedLanguageError
-        ),
+        submissionIdNotFound: core.serialization.lazyObject(() => serializers.SubmissionIdNotFound),
+        customTestCasesUnsupported: core.serialization.lazyObject(() => serializers.CustomTestCasesUnsupported),
+        unexpectedLanguage: core.serialization.lazyObject(() => serializers.UnexpectedLanguageError),
     })
     .transform<SeedTrace.InvalidRequestCause>({
         transform: (value) => value,

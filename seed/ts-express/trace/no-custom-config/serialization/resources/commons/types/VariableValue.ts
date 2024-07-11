@@ -24,19 +24,13 @@ export const VariableValue: core.serialization.Schema<serializers.VariableValue.
             charValue: core.serialization.object({
                 value: core.serialization.string(),
             }),
-            mapValue: core.serialization.lazyObject(async () => (await import("../../..")).MapValue),
+            mapValue: core.serialization.lazyObject(() => serializers.MapValue),
             listValue: core.serialization.object({
-                value: core.serialization.list(
-                    core.serialization.lazy(async () => (await import("../../..")).VariableValue)
-                ),
+                value: core.serialization.list(core.serialization.lazy(() => serializers.VariableValue)),
             }),
-            binaryTreeValue: core.serialization.lazyObject(async () => (await import("../../..")).BinaryTreeValue),
-            singlyLinkedListValue: core.serialization.lazyObject(
-                async () => (await import("../../..")).SinglyLinkedListValue
-            ),
-            doublyLinkedListValue: core.serialization.lazyObject(
-                async () => (await import("../../..")).DoublyLinkedListValue
-            ),
+            binaryTreeValue: core.serialization.lazyObject(() => serializers.BinaryTreeValue),
+            singlyLinkedListValue: core.serialization.lazyObject(() => serializers.SinglyLinkedListValue),
+            doublyLinkedListValue: core.serialization.lazyObject(() => serializers.DoublyLinkedListValue),
             nullValue: core.serialization.object({}),
         })
         .transform<SeedTrace.VariableValue>({

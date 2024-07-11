@@ -8,8 +8,8 @@ import * as core from "../../../../core";
 
 export const TestCaseResult: core.serialization.ObjectSchema<serializers.TestCaseResult.Raw, SeedTrace.TestCaseResult> =
     core.serialization.object({
-        expectedResult: core.serialization.lazy(async () => (await import("../../..")).VariableValue),
-        actualResult: core.serialization.lazy(async () => (await import("../../..")).ActualResult),
+        expectedResult: core.serialization.lazy(() => serializers.VariableValue),
+        actualResult: core.serialization.lazy(() => serializers.ActualResult),
         passed: core.serialization.boolean(),
     });
 

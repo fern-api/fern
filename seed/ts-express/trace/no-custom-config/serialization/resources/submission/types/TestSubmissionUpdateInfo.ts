@@ -12,14 +12,14 @@ export const TestSubmissionUpdateInfo: core.serialization.Schema<
 > = core.serialization
     .union("type", {
         running: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).RunningSubmissionState),
+            value: core.serialization.lazy(() => serializers.RunningSubmissionState),
         }),
         stopped: core.serialization.object({}),
         errored: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).ErrorInfo),
+            value: core.serialization.lazy(() => serializers.ErrorInfo),
         }),
-        gradedTestCase: core.serialization.lazyObject(async () => (await import("../../..")).GradedTestCaseUpdate),
-        recordedTestCase: core.serialization.lazyObject(async () => (await import("../../..")).RecordedTestCaseUpdate),
+        gradedTestCase: core.serialization.lazyObject(() => serializers.GradedTestCaseUpdate),
+        recordedTestCase: core.serialization.lazyObject(() => serializers.RecordedTestCaseUpdate),
         finished: core.serialization.object({}),
     })
     .transform<SeedTrace.TestSubmissionUpdateInfo>({

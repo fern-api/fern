@@ -7,7 +7,7 @@ import * as SeedAlias from "../../api/index";
 import * as core from "../../core";
 
 export const Type: core.serialization.ObjectSchema<serializers.Type.Raw, SeedAlias.Type> = core.serialization.object({
-    id: core.serialization.lazy(async () => (await import("..")).TypeId),
+    id: core.serialization.lazy(() => serializers.TypeId),
     name: core.serialization.string(),
 });
 

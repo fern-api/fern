@@ -11,8 +11,8 @@ export const GetDefaultStarterFilesResponse: core.serialization.ObjectSchema<
     SeedTrace.GetDefaultStarterFilesResponse
 > = core.serialization.object({
     files: core.serialization.record(
-        core.serialization.lazy(async () => (await import("../../..")).Language),
-        core.serialization.lazyObject(async () => (await import("../../..")).ProblemFiles).optional()
+        core.serialization.lazy(() => serializers.Language),
+        core.serialization.lazyObject(() => serializers.ProblemFiles).optional()
     ),
 });
 
