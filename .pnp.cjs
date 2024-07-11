@@ -9379,7 +9379,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/utils/core-utilities/utils/",\
           "packageDependencies": [\
             ["@fern-typescript/utils", "workspace:generators/typescript/utils/core-utilities/utils"],\
-            ["@types/jest", "npm:29.0.3"],\
+            ["@types/jest", "npm:29.5.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
