@@ -139,7 +139,7 @@ describe("Swift Language", () => {
                 Swift.makeImport({ packageName: "Foundation" }),
                 Swift.makeImport({ packageName: "UIKit" })
             ],
-            class: Swift.makeType({
+            node: Swift.makeType({
                 accessLevel: AccessLevel.Open,
                 classLevel: ClassLevel.Class,
                 name: "Room",

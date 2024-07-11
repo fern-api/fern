@@ -10,6 +10,7 @@ import { Param } from "./ast/Param";
 import { Primative } from "./ast/Primative";
 import { Struct } from "./ast/Struct";
 import { Type } from "./ast/Type";
+import { TypeAlias } from "./ast/TypeAlias";
 
 export { AccessLevel } from "./ast/AccessLevel";
 export { ClassLevel } from "./ast/ClassLevel";
@@ -22,6 +23,7 @@ export { FunctionModifier } from "./ast/FunctionModifier";
 export { Import } from "./ast/Import";
 export { Param } from "./ast/Param";
 export { Primative } from "./ast/Primative";
+export type { PrimativeKey } from "./ast/Primative";
 export { Struct } from "./ast/Struct";
 export { Type } from "./ast/Type";
 export { VariableType } from "./ast/VariableType";
@@ -33,6 +35,10 @@ export default class Swift {
 
   public static makeFileHeader(args: FileHeader.Args): FileHeader {
     return new FileHeader(args);
+  }
+
+  public static makeTypeAlias(args: TypeAlias.Args): TypeAlias {
+    return new TypeAlias(args);
   }
   
   public static makeImport(args: Import.Args): Import {

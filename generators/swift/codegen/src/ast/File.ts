@@ -1,12 +1,11 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift, { FileHeader, Import, Type } from "../";
-import { Struct } from "./Struct";
+import Swift, { FileHeader, Import } from "../";
 
 export declare namespace File {
     interface Args {
         fileHeader?: FileHeader;
         imports?: Import[];
-        class: Type | Struct;
+        node: AstNode;
     }
 }
 
@@ -14,17 +13,17 @@ export class File extends AstNode {
 
     public readonly fileHeader?: FileHeader;
     public readonly imports?: Import[];
-    public readonly class: Type | Struct;
+    public readonly node: AstNode;
 
     constructor({ 
         fileHeader,
         imports,
-        class: classInstance,
+        node,
     }: File.Args) {
         super(Swift.indentSize);
         this.fileHeader = fileHeader;
         this.imports = imports;
-        this.class = classInstance;
+        this.node = node;
     }
 
     public write(writer: Writer): void {
@@ -43,7 +42,7 @@ export class File extends AstNode {
             writer.newLine();
         }
 
-        writer.writeNode(this.class);
+        writer.writeNode(this.node);
 
         // Common for swift files to have an extra line at end
         writer.newLine();

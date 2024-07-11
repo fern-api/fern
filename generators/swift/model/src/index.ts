@@ -1,2 +1,3 @@
-// export { generateModels } from "./generateModels";
 export * from "./ModelGeneratorCli";
+export * from "./Utils";
+

@@ -5,7 +5,9 @@ import { EnumTypeDeclaration, IntermediateRepresentation, ObjectTypeDeclaration 
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { readFile } from "fs/promises";
 import { z } from "zod";
-import SwiftObjectGenerator from "./SwiftObjectGenerator";
+import EnumBuilder from "./builders/EnumBuilder";
+import ObjectBuilder from "./builders/ObjectBuilder";
+import TypeAliasBuilder from "./builders/TypeAliasBuilder";
 
 // Generate Models
 
@@ -13,23 +15,26 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
 
     const files: SwiftFile[] = [];
 
-    console.log("generateModels ir");
-    console.log(context.ir);
+    console.log("Generate Models IR");
+    console.log(JSON.stringify(context.ir, null, 2));
 
     for (const [_, typeDeclaration] of Object.entries(context.ir.types)) {
 
+        console.log("Type Declaration");
+        console.log(JSON.stringify(typeDeclaration, null, 2));
+
         // Build file for declaration
         const file = typeDeclaration.shape._visit<SwiftFile | undefined>({
-            alias: () => undefined,
-            enum: (etd: EnumTypeDeclaration) => undefined,
-            object: (otd: ObjectTypeDeclaration) => new SwiftObjectGenerator(context, typeDeclaration, otd).generate(),
+            alias: () => new TypeAliasBuilder(context, typeDeclaration).build(),
+            enum: (etd: EnumTypeDeclaration) => new EnumBuilder(context, typeDeclaration, etd).build(),
+            object: (otd: ObjectTypeDeclaration) => new ObjectBuilder(context, typeDeclaration, otd).build(),
             undiscriminatedUnion: () => undefined,
             union: () => undefined,
             _other: () => undefined
         });
 
-        // Add file
-        if (file != null) {
+        // Add file if defined
+        if (file) {
             files.push(file);
         }
 

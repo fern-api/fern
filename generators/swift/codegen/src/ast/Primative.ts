@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { Type } from "./Type";
 
 /*
@@ -14,15 +15,23 @@ NSDecimalNumber = "bigInteger"
 
 */
 
+export type PrimativeKey =
+    | "integer"
+    | "double"
+    | "string"
+    | "boolean"
+    | "long"
+    | "bigInteger";
+
 export declare namespace Primative {
     interface Args {
-        key?: string
+        key?: PrimativeKey
     }
 }
 
 export class Primative extends Type {
 
-    public readonly key?: string;
+    public readonly key?: PrimativeKey;
 
     constructor(args: Primative.Args) {
         super({ 
@@ -31,7 +40,7 @@ export class Primative extends Type {
         this.key = args.key;
     }
 
-    public static getNameForKey(key?: string): string {
+    public static getNameForKey(key?: PrimativeKey): string {
         switch (key) {
             case "integer": return "Int";
             case "long": return "Int64";
@@ -39,8 +48,8 @@ export class Primative extends Type {
             case "boolean": return "Bool";
             case "double": return "Double";
             case "bigInteger": return "NSDecimalNumber";
+            default: { assertNever(key as never); }
         }
-        return "Any";
     }
 
 }
