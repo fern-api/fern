@@ -93,15 +93,18 @@ function filterExampleTypeReference({
                     )
                 }),
                 optional: (o) => {
-                    const innerOption =
+                    const filteredOptionalTypReference =
                         o.optional != null
                             ? filterExampleTypeReference({ filteredIr, exampleTypeReference: o.optional })
-                            : o.optional;
-                    return innerOption != null
+                            : undefined;
+                    return filteredOptionalTypReference != null
                         ? {
                               ...exampleTypeReference,
                               shape: ExampleTypeReferenceShape.container(
-                                  ExampleContainer.optional({ ...o, valueType: o.valueType })
+                                  ExampleContainer.optional({
+                                      optional: filteredOptionalTypReference,
+                                      valueType: o.valueType
+                                  })
                               )
                           }
                         : undefined;
