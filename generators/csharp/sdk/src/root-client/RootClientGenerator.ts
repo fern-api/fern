@@ -1,7 +1,16 @@
 import { assertNever } from "@fern-api/core-utils";
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { AuthScheme, HttpHeader, Literal, PrimitiveType, Subpackage, TypeReference } from "@fern-fern/ir-sdk/api";
+import {
+    AuthScheme,
+    HttpHeader,
+    Literal,
+    PrimitiveType,
+    PrimitiveTypeV1,
+    PrimitiveTypeV2,
+    Subpackage,
+    TypeReference
+} from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { RawClient } from "../endpoint/RawClient";
@@ -255,8 +264,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
 
     private getParameterFromAuthScheme(scheme: AuthScheme): ConstructorParameter[] {
         const isOptional = this.context.ir.sdkConfig.isAuthMandatory;
-        switch (scheme.type) {
-            case "header": {
+        if (scheme.type === "header") {
+            {
                 const name = scheme.name.name.camelCase.safeName;
                 return [
                     {
@@ -272,7 +281,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     }
                 ];
             }
-            case "bearer": {
+        } else if (scheme.type === "bearer") {
+            {
                 const name = scheme.token.camelCase.safeName;
                 return [
                     {
@@ -283,12 +293,16 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                             name: "Authorization",
                             prefix: "Bearer"
                         },
-                        typeReference: TypeReference.primitive(PrimitiveType.String),
+                        typeReference: TypeReference.primitive({
+                            v1: PrimitiveTypeV1.String,
+                            v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
+                        }),
                         environmentVariable: scheme.tokenEnvVar
                     }
                 ];
             }
-            case "basic": {
+        } else if (scheme.type === "basic") {
+            {
                 const usernameName = scheme.username.camelCase.safeName;
                 const passwordName = scheme.password.camelCase.safeName;
                 return [
@@ -296,20 +310,28 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                         name: usernameName,
                         docs: scheme.docs ?? `The ${usernameName} to use for authentication.`,
                         isOptional,
-                        typeReference: TypeReference.primitive(PrimitiveType.String),
+                        typeReference: TypeReference.primitive({
+                            v1: PrimitiveTypeV1.String,
+                            v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
+                        }),
                         environmentVariable: scheme.usernameEnvVar
                     },
                     {
                         name: passwordName,
                         docs: scheme.docs ?? `The ${passwordName} to use for authentication.`,
                         isOptional,
-                        typeReference: TypeReference.primitive(PrimitiveType.String),
+                        typeReference: TypeReference.primitive({
+                            v1: PrimitiveTypeV1.String,
+                            v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
+                        }),
                         environmentVariable: scheme.passwordEnvVar
                     }
                 ];
             }
-            default:
-                assertNever(scheme);
+        } else if (scheme.type === "oauth") {
+            return [];
+        } else {
+            assertNever(scheme);
         }
     }
 

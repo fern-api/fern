@@ -139,10 +139,11 @@ export class EndpointGenerator {
     }
 
     private getEndpointReturnType({ endpoint }: { endpoint: HttpEndpoint }): csharp.Type | undefined {
-        if (endpoint.response == null) {
+        if (endpoint.response?.body == null) {
             return undefined;
         }
-        return endpoint.response._visit({
+        return endpoint.response.body._visit({
+            streamParameter: () => undefined,
             fileDownload: () => undefined,
             json: (reference) => {
                 return this.context.csharpTypeMapper.convert({ reference: reference.responseBodyType });
@@ -154,10 +155,11 @@ export class EndpointGenerator {
     }
 
     private getEndpointResponseStatements({ endpoint }: { endpoint: HttpEndpoint }): csharp.CodeBlock | undefined {
-        if (endpoint.response == null) {
+        if (endpoint.response?.body == null) {
             return undefined;
         }
-        return endpoint.response._visit({
+        return endpoint.response.body._visit({
+            streamParameter: () => undefined,
             fileDownload: () => undefined,
             json: (reference) => {
                 const astType = this.context.csharpTypeMapper.convert({ reference: reference.responseBodyType });
