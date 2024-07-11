@@ -7,7 +7,8 @@
     "node-fetch",
     "qs",
     "@types/node-fetch",
-    "@types/qs"
+    "@types/qs",
+    "jest-environment-jsdom"
   ],
   "ignore-patterns": ["lib"]
 }
