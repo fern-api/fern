@@ -1,5 +1,5 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Lang, { Func } from "../lang";
+import LANGUAGE, { Func } from "../template";
 
 export declare namespace Class {
     interface Args {
@@ -12,26 +12,28 @@ export class Class extends AstNode {
     public readonly name: string;
     public readonly functions: Func[];
 
-    constructor({ name, functions }: Class.Args) {
-        super(Lang.indentSize);
+    constructor({ 
+        name,
+        functions,
+    }: Class.Args) {
+        super(LANGUAGE.indentSize);
         this.name = name;
         this.functions = functions;
     }
 
     public write(writer: Writer): void {
-        writer.write(`class ${this.name} {`);
 
-        writer.newLine();
+        writer.openBlock(["class", this.name], "{", () => {
 
-        writer.openIndent();
-
-        this.functions.forEach((func) => {
-            writer.writeNode(func);
             writer.newLine();
-        });
 
-        writer.closeIndent();
+            this.functions.forEach((func) => {
+                writer.writeNode(func);
+                writer.newLine();
+            });
 
-        writer.write("}");
+        }, "}");
+
+
     }
 }
