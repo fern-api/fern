@@ -9,6 +9,7 @@ export declare namespace SeedAuthEnvironmentVariablesClient {
     interface Options {
         environment: core.Supplier<string>;
         apiKey?: core.Supplier<string | undefined>;
+        /** Override the X-Another-Header header */
         xAnotherHeader: core.Supplier<string>;
     }
 
