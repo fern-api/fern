@@ -38,7 +38,8 @@ open class Room {
         print("Hey!")
     }
 
-}"
+}
+"
 `;
 
 exports[`Swift Language makes file header 1`] = `"This is the header to a file"`;
@@ -54,6 +55,14 @@ exports[`Swift Language makes function 1`] = `
 `;
 
 exports[`Swift Language makes import 1`] = `"import ExamplePackage"`;
+
+exports[`Swift Language makes primatives 1`] = `" let count: Int"`;
+
+exports[`Swift Language makes struct 1`] = `
+"public struct TopGun: Movie {
+     let description: String
+}"
+`;
 
 exports[`Swift Language makes type 1`] = `
 "open struct ExampleObject: Codable, NSObject {
