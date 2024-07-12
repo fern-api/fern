@@ -50,7 +50,7 @@ paths:
             type: integer
 components:
   schemas:
-    UserResponse:
+    UsersResponse:
       type: object
       properties:
         users:

@@ -11,6 +11,7 @@ class BasePydanticModelCustomConfig(pydantic.BaseModel):
     orm_mode: bool = False
     smart_union: bool = False
     require_optional_fields: bool = False
+    use_str_enums: bool = True
 
 
 class PydanticModelCustomConfig(BasePydanticModelCustomConfig):
@@ -21,7 +22,6 @@ class PydanticModelCustomConfig(BasePydanticModelCustomConfig):
     wrapped_aliases: bool = False
     skip_formatting: bool = False
     include_union_utils: bool = False
-    use_str_enums: bool = True
     # Skip validation of fields (automatically includes additional fields)
     skip_validation: bool = False
     # Leverage defaults specified in the API specification

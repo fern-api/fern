@@ -12,6 +12,10 @@ import { Reference } from "./api/resources/reference/client/Client";
 export declare namespace SeedLiteralClient {
     interface Options {
         environment: core.Supplier<string>;
+        /** Override the X-API-Version header */
+        version?: "02-02-2024";
+        /** Override the X-API-Enable-Audit-Logging header */
+        auditLogging?: true;
     }
 
     interface RequestOptions {

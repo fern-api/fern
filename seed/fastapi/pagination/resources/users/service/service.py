@@ -17,10 +17,8 @@ from ..types.list_users_extended_response import ListUsersExtendedResponse
 from ..types.list_users_pagination_response import ListUsersPaginationResponse
 from ..types.order import Order
 from ..types.username_container import UsernameContainer
-from .list_users_body_cursor_pagination_request import \
-    ListUsersBodyCursorPaginationRequest
-from .list_users_body_offset_pagination_request import \
-    ListUsersBodyOffsetPaginationRequest
+from .list_users_body_cursor_pagination_request import ListUsersBodyCursorPaginationRequest
+from .list_users_body_offset_pagination_request import ListUsersBodyOffsetPaginationRequest
 
 
 class AbstractUsersService(AbstractFernService):
@@ -44,6 +42,12 @@ class AbstractUsersService(AbstractFernService):
         ...
 
     @abc.abstractmethod
+    def list_with_body_cursor_pagination(
+        self, *, body: ListUsersBodyCursorPaginationRequest
+    ) -> ListUsersPaginationResponse:
+        ...
+
+    @abc.abstractmethod
     def list_with_offset_pagination(
         self,
         *,
@@ -51,6 +55,12 @@ class AbstractUsersService(AbstractFernService):
         per_page: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
+    ) -> ListUsersPaginationResponse:
+        ...
+
+    @abc.abstractmethod
+    def list_with_body_offset_pagination(
+        self, *, body: ListUsersBodyOffsetPaginationRequest
     ) -> ListUsersPaginationResponse:
         ...
 
@@ -156,8 +166,10 @@ class AbstractUsersService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls.list_with_body_cursor_pagination, "__signature__", endpoint_function.replace(parameters=new_parameters))
-        
+        setattr(
+            cls.list_with_body_cursor_pagination, "__signature__", endpoint_function.replace(parameters=new_parameters)
+        )
+
         @functools.wraps(cls.list_with_body_cursor_pagination)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ListUsersPaginationResponse:
             try:
@@ -169,17 +181,18 @@ class AbstractUsersService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-        
+
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.list_with_body_cursor_pagination.__globals__)
-        
+
         router.post(
             path="/users",
             response_model=ListUsersPaginationResponse,
             description=AbstractUsersService.list_with_body_cursor_pagination.__doc__,
             **get_route_args(cls.list_with_body_cursor_pagination, default_tag="users"),
         )(wrapper)
+
     @classmethod
     def __init_list_with_offset_pagination(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_with_offset_pagination)
@@ -244,8 +257,10 @@ class AbstractUsersService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls.list_with_body_offset_pagination, "__signature__", endpoint_function.replace(parameters=new_parameters))
-        
+        setattr(
+            cls.list_with_body_offset_pagination, "__signature__", endpoint_function.replace(parameters=new_parameters)
+        )
+
         @functools.wraps(cls.list_with_body_offset_pagination)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ListUsersPaginationResponse:
             try:
@@ -257,17 +272,18 @@ class AbstractUsersService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-        
+
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.list_with_body_offset_pagination.__globals__)
-        
+
         router.post(
             path="/users",
             response_model=ListUsersPaginationResponse,
             description=AbstractUsersService.list_with_body_offset_pagination.__doc__,
             **get_route_args(cls.list_with_body_offset_pagination, default_tag="users"),
         )(wrapper)
+
     @classmethod
     def __init_list_with_offset_step_pagination(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_with_offset_step_pagination)

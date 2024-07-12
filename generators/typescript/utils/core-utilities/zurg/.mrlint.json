@@ -4,6 +4,12 @@
   "rules": {
     "duplicate-dependencies": {
       "exclude": ["@fern-fern/ir-sdk"]
+    },
+    "depcheck": {
+      "ignores": [
+        "@babel/preset-env",
+        "@babel/preset-typescript"
+      ]
     }
   }
 }
