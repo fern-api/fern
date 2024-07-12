@@ -11,6 +11,10 @@ import * as errors from "../../../../errors/index";
 export declare namespace Reference {
     interface Options {
         environment: core.Supplier<string>;
+        /** Override the X-API-Version header */
+        version?: "02-02-2024";
+        /** Override the X-API-Enable-Audit-Logging header */
+        auditLogging?: true;
     }
 
     interface RequestOptions {
@@ -49,9 +53,12 @@ export class Reference {
             url: urlJoin(await core.Supplier.get(this._options.environment), "reference"),
             method: "POST",
             headers: {
-                "X-API-Version": requestOptions?.version ?? "02-02-2024",
-                "X-API-Enable-Audit-Logging":
-                    requestOptions?.auditLogging != null ? requestOptions.auditLogging.toString() : "true",
+                "X-API-Version": requestOptions?.version ?? this._options?.version ?? "02-02-2024",
+                "X-API-Enable-Audit-Logging": (
+                    requestOptions?.auditLogging ??
+                    this._options?.auditLogging ??
+                    true
+                ).toString(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/literal",
                 "X-Fern-SDK-Version": "0.0.1",
