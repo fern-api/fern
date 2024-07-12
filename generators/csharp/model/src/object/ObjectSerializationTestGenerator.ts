@@ -1,5 +1,6 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { TypeDeclaration } from "@fern-api/ir-sdk";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import TestInput = TestClass.TestInput;
@@ -11,27 +12,27 @@ export declare namespace TestClass {
     }
 }
 
+const SERIALIZATION_TEST_FOLDER = RelativeFilePath.of("Unit/Serialization");
+
 export class ObjectSerializationTestGenerator extends FileGenerator<
     CSharpFile,
     ModelCustomConfigSchema,
     ModelGeneratorContext
 > {
-    private readonly testName: string;
-    private readonly objectUnderTestName;
+    private classReference: csharp.ClassReference;
 
     constructor(
         context: ModelGeneratorContext,
-        private readonly objectUnderTestClassReference: csharp.ClassReference,
+        private readonly typeDeclaration: TypeDeclaration,
         private readonly testInputs: TestInput[]
     ) {
         super(context);
-        this.objectUnderTestName = objectUnderTestClassReference.name;
-        this.testName = `${this.objectUnderTestName}SerializationTests`;
+        this.classReference = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration.name);
     }
 
     protected doGenerate(): CSharpFile {
         const testClass = csharp.testClass({
-            name: this.testName,
+            name: this.getTestClassName(),
             namespace: this.context.getTestNamespace()
         });
         this.testInputs.forEach((testInput, index) => {
@@ -65,7 +66,7 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
                     })
                 );
                 writer.write(".Deserialize<");
-                writer.writeNode(this.objectUnderTestClassReference);
+                writer.writeNode(this.classReference);
                 writer.writeTextStatement(">(inputJson, serializerOptions)");
                 writer.writeTextStatement("Assert.That(expectedObject, Is.EqualTo(deserializedObject))");
                 writer.newLine();
@@ -87,20 +88,26 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
             });
             const testNumber = this.testInputs.length > 1 ? `_${index + 1}` : "";
             testClass.addTestMethod({
-                name: `${this.objectUnderTestName}SerializationTest${testNumber}`,
+                name: `TestSerialization${testNumber}`,
                 body: methodBody
             });
         });
         return new CSharpFile({
             clazz: testClass.getClass(),
-            directory: RelativeFilePath.of("Unit/Model/")
+            directory: SERIALIZATION_TEST_FOLDER
         });
     }
+
     protected getFilepath(): RelativeFilePath {
         return join(
             this.context.project.filepaths.getTestFilesDirectory(),
-            RelativeFilePath.of(`Unit/Model/${this.testName}.cs`)
+            SERIALIZATION_TEST_FOLDER,
+            RelativeFilePath.of(`${this.getTestClassName()}.cs`)
         );
+    }
+
+    private getTestClassName(): string {
+        return `${this.classReference.name}Test`;
     }
 
     private convertToCSharpFriendlyJsonString(jsonObject: unknown): string {

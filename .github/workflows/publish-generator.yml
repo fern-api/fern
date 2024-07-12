@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - db/csharp-snippeds
     paths:
       - "generators/openapi/VERSION"
       - "generators/python/sdk/VERSION"

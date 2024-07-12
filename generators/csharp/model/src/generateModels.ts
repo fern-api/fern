@@ -37,11 +37,7 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
                         json: example.jsonExample
                     };
                 });
-                const testGenerator = new ObjectSerializationTestGenerator(
-                    context,
-                    context.csharpTypeMapper.convertToClassReference(typeDeclaration.name),
-                    testInputs
-                );
+                const testGenerator = new ObjectSerializationTestGenerator(context, typeDeclaration, testInputs);
                 context.project.addTestFiles(testGenerator.generate());
                 return generatedObjectCSharpFile;
             },
