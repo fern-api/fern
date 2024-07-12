@@ -35,7 +35,27 @@ export class Writer {
         this.buffer += "\n";
     }
 
-    public openIndent(): void {
+    public openBlock(
+        titles: (string | undefined)[],
+        openingCharacter: string | undefined = "{",
+        callback: () => void,
+        closingCharacter: string | undefined = "}"
+    ): void {
+        const filteredTitles = titles.filter(title => title !== undefined).join(" ");
+        if (filteredTitles) {
+            this.write(`${filteredTitles} ${openingCharacter ?? ""}`);
+        } else {
+            this.write(openingCharacter ?? "");
+        }
+        
+        try {
+            this.indent(callback);
+        } finally {
+            this.write(closingCharacter ?? "");
+        }
+    }
+
+    public indent(callback: () => void): void {
         this.indentLevel++;
         try {
             callback();
