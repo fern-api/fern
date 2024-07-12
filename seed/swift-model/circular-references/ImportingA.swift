@@ -13,6 +13,6 @@ public struct ImportingA: Codable {
         case a = "a"
     }
 
-    public let a: 1: "optional"
+    public let a: A?
 
 }

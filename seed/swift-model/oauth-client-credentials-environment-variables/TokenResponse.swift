@@ -17,6 +17,6 @@ public struct TokenResponse: Codable {
 
     public let accessToken: String
     public let expiresIn: Int
-    public let refreshToken: 1: "optional"
+    public let refreshToken: String?
 
 }

@@ -15,6 +15,6 @@ public struct StreamedCompletion: Codable {
     }
 
     public let delta: String
-    public let tokens: 1: "optional"
+    public let tokens: Int?
 
 }

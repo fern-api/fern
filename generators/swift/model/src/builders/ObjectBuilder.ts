@@ -1,8 +1,8 @@
 /* eslint-disable object-shorthand */
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 /* eslint-disable no-console */
-import Swift, { AccessLevel, EnumCase, Field, SwiftFile, Type, VariableType } from "@fern-api/swift-codegen";
-import { Literal, MapType, ObjectProperty, ObjectTypeDeclaration, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+import Swift, { AccessLevel, Class, EnumCase, Field, SwiftFile, VariableType } from "@fern-api/swift-codegen";
+import { ContainerType, ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "../ModelGeneratorCli";
 import { CodeBuilder } from "./CodeBuilder";
 
@@ -19,6 +19,36 @@ export default class ObjectBuilder extends CodeBuilder<SwiftFile> {
     this.objectDeclaration = objectDeclaration;
   }
 
+  private buildContainer(value: ContainerType): Class {
+    return value._visit<Class>({
+      list: (value) => {
+        throw new Error("Function not implemented.");
+      },
+      map: (value) => {
+        throw new Error("Function not implemented.");
+      },
+      optional: (value) => {
+        const type = value._visit<Class>({
+          container:                 (value) => Swift.factories.types.makeAny(),
+          named:                     (value) => Swift.makeClass({ name: value.name.pascalCase.safeName }),
+          primitive:             (valueType) => Swift.makePrimative({ key: valueType.v2?.type }),
+          unknown:                        () => Swift.factories.types.makeAny(),
+          _other: (value: { type: string; }) => Swift.factories.types.makeAny(),
+        });
+        return type.toOptional();
+      },
+      set: (value) => {
+        throw new Error("Function not implemented.");
+      },
+      literal: (value) => {
+        throw new Error("Function not implemented.");
+      },
+      _other: (value: { type: string; }) => {
+        throw new Error("Function not implemented.");
+      }
+    });
+  }
+
   private buildCodingArgs(properties: ObjectProperty[]): EnumCase.Args[] {
     return properties.map(property => {
       return {
@@ -30,60 +60,32 @@ export default class ObjectBuilder extends CodeBuilder<SwiftFile> {
 
   private buildFields(properties: ObjectProperty[]): Field[] {
 
-    return properties.map(property => {
+    const fields = properties.map(property => {
 
-      const type = property.valueType._visit<Type>({
-        container:                 (value) => {
-
-          return value._visit<Type>({
-            list: (value: TypeReference) => {
-              throw new Error("Function not implemented.");
-            },
-            map: (value: MapType) => {
-              throw new Error("Function not implemented.");
-            },
-            optional: (value: TypeReference) => {
-
-              // THIA CAN BE property.valueType
-
-              throw new Error("Function not implemented.");
-            },
-            set: (value: TypeReference) => {
-              throw new Error("Function not implemented.");
-            },
-            literal: (value: Literal) => {
-              throw new Error("Function not implemented.");
-            },
-            _other: (value: { type: string; }) => {
-              throw new Error("Function not implemented.");
-            }
-          });
-
-          // return value.type._visit<Type>({
-          //   container: (value) => undefined,
-          //   named: (value) => Swift.makeType({ name: value.name.pascalCase.safeName }),
-          //   primitive: (value) => Swift.makeType({ name: value.name.pascalCase.safeName }),
-          //   unknown: () => Swift.makeType({ name: value.name.pascalCase.safeName }),
-          //   _other: (value: { type: string; }) => Swift.makeType({ name: value.name.pascalCase.safeName }),
-          // });
-
-          // Swift.makeType({ name: `1: "${value.type}"` })
-        },
-        named:                     (value) => Swift.makeType({ name: value.name.pascalCase.safeName }),
+      const type = property.valueType._visit<Class | undefined>({
+        container:                 (value) => this.buildContainer(value),
+        named:                     (value) => Swift.makeClass({ name: value.name.pascalCase.safeName }),
         primitive:             (valueType) => Swift.makePrimative({ key: valueType.v2?.type }),
-        unknown:                        () => Swift.makeType({ name: "Unknown" }),
-        _other: (value: { type: string; }) => Swift.makeType({ name: `2: "${value.type}"` }),
+        unknown:                        () => undefined,
+        _other: (value: { type: string; }) => undefined,
       });
+
+      // Drop if undefined
+      if (!type) {
+        return undefined;
+      }
       
       // example: let name: String
       return Swift.makeField({
         accessLevel: AccessLevel.Public,
         variableType: VariableType.Let,
         name: property.name.name.camelCase.safeName,
-        valueType: type
+        class: type
       });
 
     });
+
+    return fields.filter((field): field is Field => field !== undefined);
 
   }
 

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 // Swift Imports
 import { AccessLevel } from "./ast/AccessLevel";
+import { Class } from "./ast/Class";
 import { Enum } from "./ast/Enum";
 import { EnumCase } from "./ast/EnumCase";
 import { Field } from "./ast/Field";
@@ -8,15 +9,15 @@ import { File } from "./ast/File";
 import { FileHeader } from "./ast/FileHeader";
 import { Func } from "./ast/Func";
 import { Import } from "./ast/Import";
+import { Optional } from "./ast/Optional";
 import { Param } from "./ast/Param";
 import { Primative } from "./ast/Primative";
 import { Struct } from "./ast/Struct";
-import { Type } from "./ast/Type";
 import { TypeAlias } from "./ast/TypeAlias";
 
 // Swift Exports
 export { AccessLevel } from "./ast/AccessLevel";
-export { ClassLevel } from "./ast/ClassLevel";
+export { Class } from "./ast/Class";
 export { Enum } from "./ast/Enum";
 export { EnumCase } from "./ast/EnumCase";
 export { Field } from "./ast/Field";
@@ -29,7 +30,6 @@ export { Param } from "./ast/Param";
 export { Primative } from "./ast/Primative";
 export type { PrimativeKey } from "./ast/Primative";
 export { Struct } from "./ast/Struct";
-export { Type } from "./ast/Type";
 export { VariableType } from "./ast/VariableType";
 export { SwiftFile } from "./project/SwiftFile";
 
@@ -85,8 +85,12 @@ export default class Swift {
     return new Struct(args);
   }
 
-  public static makeType(args: Type.Args): Type {
-    return new Type(args);
+  public static makeClass(args: Class.Args): Class {
+    return new Class(args);
+  }
+
+  public static makeOptional(args: Optional.Args): Optional {
+    return new Optional(args);
   }
   
   public static makeFile(args: File.Args): File {
@@ -129,6 +133,24 @@ export default class Swift {
         return Swift.makePrimative({ 
           key: "string" 
         });
+      },
+
+      /**
+       * @returns Int
+       */
+      makeInt(): Primative {
+        return Swift.makePrimative({ 
+          key: "integer" 
+        });
+      },
+
+      /**
+       * @returns Bool
+       */
+      makeBool(): Primative {
+        return Swift.makePrimative({ 
+          key: "boolean" 
+        });
       }
 
     },
@@ -151,11 +173,20 @@ export default class Swift {
       /**
        * @returns class Codable { ... }
        */
-      makeCodable(): Type {
-        return Swift.makeType({
+      makeCodable(): Class {
+        return Swift.makeClass({
           name: "Codable"
         });
       },
+
+      /**
+       * @returns class Any { ... }
+       */
+      makeAny(): Primative {
+        return Swift.makeClass({ 
+          name: "Any" 
+        });
+      }
 
     },
 
@@ -176,7 +207,7 @@ export default class Swift {
           name: "CodingKeys",
           inheritance: [
             Swift.factories.primatives.makeString(),
-            Swift.makeType({ name: "CodingKey" })
+            Swift.makeClass({ name: "CodingKey" })
           ],
           enumCases: enumArgs.map(value => {
             return Swift.makeEnumCase(value);

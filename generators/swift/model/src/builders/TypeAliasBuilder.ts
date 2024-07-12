@@ -2,7 +2,7 @@
 /* eslint-disable object-shorthand */
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 /* eslint-disable no-console */
-import Swift, { PrimativeKey, SwiftFile, Type } from "@fern-api/swift-codegen";
+import Swift, { Class, PrimativeKey, SwiftFile } from "@fern-api/swift-codegen";
 import { EnumTypeDeclaration, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "../ModelGeneratorCli";
 import { CodeBuilder } from "./CodeBuilder";
@@ -20,7 +20,7 @@ export default class TypeAliasBuilder extends CodeBuilder<SwiftFile | undefined>
 
     const name = this.typeDeclaration.name.name.pascalCase.safeName;
 
-    const type = this.typeDeclaration.shape._visit<Type | undefined>({
+    const type = this.typeDeclaration.shape._visit<Class | undefined>({
       alias: (value) => {
 
         // TODO: Doc strings
@@ -57,7 +57,7 @@ export default class TypeAliasBuilder extends CodeBuilder<SwiftFile | undefined>
       fileHeader: Swift.factories.fileHeaders.makeHeaderWithFernStub(name),
       node: Swift.makeTypeAlias({
         name: name,
-        type: type
+        class: type
       })
     });
 

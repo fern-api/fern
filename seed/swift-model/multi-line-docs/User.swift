@@ -17,6 +17,6 @@ public struct User: Codable {
 
     public let id: String
     public let name: String
-    public let age: 1: "optional"
+    public let age: Int?
 
 }

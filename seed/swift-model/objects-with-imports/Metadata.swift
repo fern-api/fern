@@ -15,6 +15,6 @@ public struct Metadata: Codable {
     }
 
     public let id: String
-    public let data: 1: "optional"
+    public let data: Any?
 
 }

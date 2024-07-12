@@ -1,4 +1,4 @@
-import Swift, { AccessLevel, ClassLevel, FunctionModifier } from "../..";
+import Swift, { AccessLevel, FunctionModifier } from "../..";
 import { SwiftFile } from "../../project/SwiftFile";
 import { VariableType } from "../VariableType";
 
@@ -34,12 +34,8 @@ describe("Swift Language", () => {
         const output = Swift.makeEnum({
             name: "CodingKeys",
             inheritance: [
-                Swift.makeType({
-                    name: "String"
-                }),
-                Swift.makeType({
-                    name: "CodingKey"
-                })
+                Swift.factories.primatives.makeString(),
+                Swift.makeClass({ name: "CodingKey" })
             ],
             enumCases: [
                 Swift.makeEnumCase({
@@ -63,18 +59,12 @@ describe("Swift Language", () => {
             params: [
                 Swift.makeParam({
                     title: "name",
-                    type: Swift.makeType({
-                        name: "String"
-                    })
+                    class: Swift.factories.primatives.makeString()
                 }),
                 Swift.makeParam({
                     title: "age",
-                    type: Swift.makeType({
-                        name: "Int"
-                    }),
-                    defaultValue: Swift.makeType({
-                        name: "Int"
-                    })
+                    class: Swift.factories.primatives.makeString(),
+                    defaultValue: "TODO"
                 })
             ]
         });
@@ -84,7 +74,7 @@ describe("Swift Language", () => {
     it("makes primatives", () => {
         const output = Swift.makeField({
             name: "count",
-            valueType: Swift.makePrimative({
+            class: Swift.makePrimative({
                 key: "integer"
             })
         });
@@ -96,7 +86,7 @@ describe("Swift Language", () => {
             accessLevel: AccessLevel.Public,
             name: "TopGun",
             inheritance: [
-                Swift.makeType({
+                Swift.makeClass({
                     name: "Movie"
                 }),
             ],
@@ -104,7 +94,7 @@ describe("Swift Language", () => {
                 Swift.makeField({
                     name: "description",
                     variableType: VariableType.Let,
-                    valueType: Swift.makePrimative({
+                    class: Swift.makePrimative({
                         key: "string"
                     })
                 })
@@ -113,10 +103,9 @@ describe("Swift Language", () => {
         expect(output.render()).toMatchSnapshot();
     });
 
-    it("makes type", () => {
-        const output = Swift.makeType({
+    it("makes class", () => {
+        const output = Swift.makeClass({
             accessLevel: AccessLevel.Open,
-            classLevel: ClassLevel.Struct,
             name: "ExampleObject",
             functions: [
                 Swift.makeFunc({
@@ -124,10 +113,10 @@ describe("Swift Language", () => {
                 })
             ],
             inheritance: [
-                Swift.makeType({
+                Swift.makeClass({
                     name: "Codable"
                 }),
-                Swift.makeType({
+                Swift.makeClass({
                     name: "NSObject"
                 }),
             ]
@@ -144,13 +133,11 @@ describe("Swift Language", () => {
                 Swift.makeImport({ packageName: "Foundation" }),
                 Swift.makeImport({ packageName: "UIKit" })
             ],
-            node: Swift.makeType({
+            node: Swift.makeClass({
                 accessLevel: AccessLevel.Open,
-                classLevel: ClassLevel.Class,
                 name: "Room",
                 subclasses: [
-                    Swift.makeType({
-                        classLevel: ClassLevel.Class,
+                    Swift.makeClass({
                         name: "Person",
                         functions: [
                             Swift.makeFunc({
@@ -181,9 +168,7 @@ describe("Swift Language", () => {
                         name: "closeDoor",
                         async: true,
                         throws: true,
-                        returnType: Swift.makeType({
-                            name: "Int"
-                        })
+                        returnClass: Swift.factories.primatives.makeInt()
                     })
                 ]
             })

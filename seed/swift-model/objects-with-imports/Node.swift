@@ -16,7 +16,7 @@ public struct Node: Codable {
     }
 
     public let id: String
-    public let label: 1: "optional"
-    public let metadata: 1: "optional"
+    public let label: String?
+    public let metadata: Metadata?
 
 }

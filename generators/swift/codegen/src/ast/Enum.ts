@@ -1,11 +1,11 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift, { AccessLevel, EnumCase, Type } from "..";
+import Swift, { AccessLevel, Class, EnumCase } from "..";
 
 export declare namespace Enum {
     interface Args {
         accessLevel?: AccessLevel;
         name: string;
-        inheritance?: Type[],
+        inheritance?: Class[],
         enumCases: EnumCase[]
     }
 }
@@ -14,7 +14,7 @@ export class Enum extends AstNode {
 
     public readonly accessLevel?: AccessLevel;
     public readonly name: string;
-    public readonly inheritance?: Type[];
+    public readonly inheritance?: Class[];
     public readonly enumCases: EnumCase[];
 
     constructor({ 

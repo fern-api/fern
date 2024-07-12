@@ -15,6 +15,6 @@ public struct MyResponse: Codable {
     }
 
     public let id: String
-    public let name: 1: "optional"
+    public let name: String?
 
 }

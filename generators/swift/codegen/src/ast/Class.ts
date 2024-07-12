@@ -1,6 +1,7 @@
 import { AstNode, Writer } from "@fern-api/generator-commons";
-import Swift, { AccessLevel, ClassLevel, Enum, Func } from "..";
+import Swift, { AccessLevel, Enum, Func } from "..";
 import { Field } from "./Field";
+import { Optional } from "./Optional";
 
 /*
 
@@ -33,52 +34,46 @@ Breakdown:
 
 */
 
-export declare namespace Type {
+export declare namespace Class {
     interface Args {
         /* The access level of the type */
         accessLevel?: AccessLevel;
-        /* The class level of the type, such as class or struct */
-        classLevel?: ClassLevel;
         /* The name of the type */
         name: string;
         /* The subclasses of this type, which can be other types or enums */
-        subclasses?: (Type | Enum)[];
+        subclasses?: (Class | Enum)[];
         /* The field variables in the class */
         fields?: Field[];
         /* The functions associated with this type */
         functions?: Func[];
         /* The inheritance hierarchy of this type */
-        inheritance?: Type[];
+        inheritance?: Class[];
     }
 }
 
-export class Type extends AstNode {
+export class Class extends AstNode {
 
     public readonly accessLevel?: AccessLevel;
-    public readonly classLevel?: ClassLevel;
     public readonly name: string;
-    public readonly subclasses?: (Type | Enum)[];
+    public readonly subclasses?: (Class | Enum)[];
     public readonly fields?: Field[];
     public readonly functions?: Func[];
-    public readonly inheritance?: Type[];
+    public readonly inheritance?: Class[];
 
-    constructor({ 
-        accessLevel, 
-        classLevel, 
-        name,
-        subclasses,
-        fields,
-        functions,
-        inheritance,
-    }: Type.Args) {
+    constructor(args: Class.Args) {
         super(Swift.indentSize);
-        this.accessLevel = accessLevel;
-        this.classLevel = classLevel;
-        this.name = name;
-        this.subclasses = subclasses;
-        this.fields = fields;
-        this.functions = functions;
-        this.inheritance = inheritance;
+        this.accessLevel = args.accessLevel;
+        this.name = args.name;
+        this.subclasses = args.subclasses;
+        this.fields = args.fields;
+        this.functions = args.functions;
+        this.inheritance = args.inheritance;
+    }
+
+    public toOptional(): Optional {
+        return Swift.makeOptional({
+            class: this
+        });
     }
 
     private buildTitle(): string | undefined {
@@ -95,7 +90,7 @@ export class Type extends AstNode {
     public write(writer: Writer): void {
 
         // example: public class Name {
-        writer.openBlock([this.accessLevel, this.classLevel, this.buildTitle()], "{", () => {
+        writer.openBlock([this.accessLevel, "class", this.buildTitle()], "{", () => {
 
             writer.newLine();
 

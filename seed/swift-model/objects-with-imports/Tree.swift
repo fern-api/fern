@@ -13,6 +13,6 @@ public struct Tree: Codable {
         case nodes = "nodes"
     }
 
-    public let nodes: 1: "optional"
+    public let nodes: Any?
 
 }
