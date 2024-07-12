@@ -134,7 +134,7 @@ function resolvePath(
     pathToImage: string | undefined,
     { absolutePathToFernFolder, absolutePathToMdx }: AbsolutePathMetadata
 ): AbsoluteFilePath | undefined {
-    if (pathToImage == null || isExternalUrl(pathToImage)) {
+    if (pathToImage == null || isExternalUrl(pathToImage) || isDataUrl(pathToImage)) {
         return undefined;
     }
 
@@ -152,6 +152,10 @@ function resolvePath(
 
 function isExternalUrl(url: string): boolean {
     return /^(https?:)?\/\//.test(url);
+}
+
+function isDataUrl(url: string): boolean {
+    return /^data:/.test(url);
 }
 
 /**
@@ -184,7 +188,7 @@ export function replaceImagePathsAndUrls(
         let replaced = original;
 
         function replaceSrc(src: string | undefined) {
-            if (src != null && !isExternalUrl(src)) {
+            if (src != null && !isExternalUrl(src) && !isDataUrl(src)) {
                 try {
                     const fileId = fileIdsMap.get(AbsoluteFilePath.of(src));
                     if (fileId != null) {
