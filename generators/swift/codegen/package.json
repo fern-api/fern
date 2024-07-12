@@ -30,7 +30,7 @@
     "@fern-api/generator-commons": "workspace:*"
   },
   "devDependencies": {
-    "depcheck": "^1.4r6",
+    "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "jest": "^29.7.0",
     "organize-imports-cli": "^0.10.0",
