@@ -387,11 +387,11 @@ export const FernOpenAPIExtension = {
 
     /**
      * Allows a user to configure that a union wiht a discriminant should
-     * be undiscriminated. 
-     * 
+     * be undiscriminated.
+     *
      * Shape:
      *   x-fern-undiscriminated: true
-     *   oneOf: 
+     *   oneOf:
      *    - $ref: components/schemas/Triangle
      *    - $ref: components/schemas/Square
      */
