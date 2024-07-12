@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/movies/create-movie",
+                "method": "POST",
+                "identifier_override": "endpoint_imdb.createMovie"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/imdb\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.imdb.createMovie({\n    title: \"string\",\n    rating: 1.1\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/movies/{movieId}",
+                "method": "GET",
+                "identifier_override": "endpoint_imdb.getMovie"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/imdb\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.imdb.getMovie(\"string\");\n"
+            }
+        }
+    ],
+    "types": {}
+}

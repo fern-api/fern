@@ -5,6 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.31.0] - 2024-07-12
+
+- Feature: Add `omitUndefined` generator option.
+
+  When enabled, any property set to an explicit `undefined` is _not_ included
+  in the serialized result. For example,
+
+  ```typescript
+  const request: Acme.CreateUserRequest = {
+    firstName: "John",
+    lastName: "Doe",
+    email: undefined
+  };
+  ```
+
+  By default, explicit `undefined` values are serialized as `null` like so:
+
+  ```json
+  {
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": null
+  }
+  ```
+
+  When `omitUndefined` is enabled, the JSON object is instead serialized as:
+
+  ```json
+  {
+    "firstName": "John",
+    "lastName": "Doe"
+  }
+  ```
+
 ## [0.30.0] - 2024-07-11
 
 - Feature: Client-level `Options` now supports overriding global headers like version.

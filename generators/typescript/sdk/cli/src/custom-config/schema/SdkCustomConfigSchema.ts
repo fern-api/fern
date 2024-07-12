@@ -23,6 +23,7 @@ export const SdkCustomConfigSchema = z.strictObject({
     tolerateRepublish: z.optional(z.boolean()),
     packageJson: z.optional(z.record(z.any())),
     publishToJsr: z.optional(z.boolean()),
+    omitUndefined: z.optional(z.boolean()),
 
     // beta (not in docs)
     includeContentHeadersOnFileDownloadResponse: z.optional(z.boolean()),

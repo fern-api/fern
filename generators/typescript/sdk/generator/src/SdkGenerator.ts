@@ -113,6 +113,7 @@ export declare namespace SdkGenerator {
         allowExtraFields: boolean;
         writeUnitTests: boolean;
         inlineFileProperties: boolean;
+        omitUndefined: boolean;
         executionEnvironment: "local" | "dev" | "prod";
         organization: string;
         apiName: string;
@@ -307,7 +308,8 @@ export class SdkGenerator {
             shouldGenerateErrors: config.neverThrowErrors,
             skipResponseValidation: config.skipResponseValidation,
             includeSerdeLayer: config.includeSerdeLayer,
-            allowExtraFields: config.allowExtraFields
+            allowExtraFields: config.allowExtraFields,
+            omitUndefined: config.omitUndefined
         });
         this.requestWrapperGenerator = new RequestWrapperGenerator();
         this.environmentsGenerator = new EnvironmentsGenerator();
@@ -330,13 +332,15 @@ export class SdkGenerator {
             includeSerdeLayer: config.includeSerdeLayer,
             retainOriginalCasing: config.retainOriginalCasing,
             inlineFileProperties: config.inlineFileProperties,
-            oauthTokenProviderGenerator: this.oauthTokenProviderGenerator
+            oauthTokenProviderGenerator: this.oauthTokenProviderGenerator,
+            omitUndefined: config.omitUndefined
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();
         this.sdkInlinedRequestBodySchemaGenerator = new SdkInlinedRequestBodySchemaGenerator({
             includeSerdeLayer: config.includeSerdeLayer,
-            allowExtraFields: config.allowExtraFields
+            allowExtraFields: config.allowExtraFields,
+            omitUndefined: config.omitUndefined
         });
         this.jestTestGenerator = new JestTestGenerator(
             intermediateRepresentation,
@@ -1161,7 +1165,8 @@ export class SdkGenerator {
             retainOriginalCasing: this.config.retainOriginalCasing,
             targetRuntime: this.config.targetRuntime,
             inlineFileProperties: this.config.inlineFileProperties,
-            generateOAuthClients: this.generateOAuthClients
+            generateOAuthClients: this.generateOAuthClients,
+            omitUndefined: this.config.omitUndefined
         });
     }
 }
