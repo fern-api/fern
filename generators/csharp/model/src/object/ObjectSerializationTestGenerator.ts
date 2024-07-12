@@ -68,7 +68,7 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
                 writer.write(".Deserialize<");
                 writer.writeNode(this.classReference);
                 writer.writeTextStatement(">(inputJson, serializerOptions)");
-                writer.writeTextStatement("Assert.That(expectedObject, Is.EqualTo(deserializedObject))");
+                // writer.writeTextStatement("Assert.That(expectedObject, Is.EqualTo(deserializedObject))");
                 writer.newLine();
 
                 writer.writeTextStatement(

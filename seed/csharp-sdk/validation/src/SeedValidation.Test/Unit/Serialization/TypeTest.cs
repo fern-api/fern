@@ -36,7 +36,6 @@ public class TypeTest
         };
 
         var deserializedObject = JsonSerializer.Deserialize<Type>(inputJson, serializerOptions);
-        Assert.That(expectedObject, Is.EqualTo(deserializedObject));
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));

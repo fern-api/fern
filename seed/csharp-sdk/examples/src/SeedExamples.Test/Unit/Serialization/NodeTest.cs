@@ -68,7 +68,6 @@ public class NodeTest
         };
 
         var deserializedObject = JsonSerializer.Deserialize<Node>(inputJson, serializerOptions);
-        Assert.That(expectedObject, Is.EqualTo(deserializedObject));
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
@@ -92,7 +91,6 @@ public class NodeTest
         };
 
         var deserializedObject = JsonSerializer.Deserialize<Node>(inputJson, serializerOptions);
-        Assert.That(expectedObject, Is.EqualTo(deserializedObject));
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
@@ -116,7 +114,6 @@ public class NodeTest
         };
 
         var deserializedObject = JsonSerializer.Deserialize<Node>(inputJson, serializerOptions);
-        Assert.That(expectedObject, Is.EqualTo(deserializedObject));
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));

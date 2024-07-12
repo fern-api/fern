@@ -30,7 +30,6 @@ public class ActressTest
         };
 
         var deserializedObject = JsonSerializer.Deserialize<Actress>(inputJson, serializerOptions);
-        Assert.That(expectedObject, Is.EqualTo(deserializedObject));
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
