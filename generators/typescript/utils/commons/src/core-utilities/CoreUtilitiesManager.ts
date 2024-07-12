@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { cp, rm, writeFile } from "fs/promises";
+import { cp, mkdir, rm, writeFile } from "fs/promises";
 import glob from "glob-promise";
 import path from "path";
 import { SourceFile } from "ts-morph";
@@ -56,7 +56,13 @@ export class CoreUtilitiesManager {
         }
     }
 
-    public async copyCoreUtilities({ pathToSrc }: { pathToSrc: AbsoluteFilePath }): Promise<void> {
+    public async copyCoreUtilities({
+        pathToSrc,
+        pathToRoot
+    }: {
+        pathToSrc: AbsoluteFilePath;
+        pathToRoot: AbsoluteFilePath;
+    }): Promise<void> {
         await Promise.all(
             [...Object.entries(this.referencedCoreUtilities)].map(async ([utilityName, utility]) => {
                 const fromPath =
@@ -86,6 +92,28 @@ export class CoreUtilitiesManager {
                         absolute: true
                     });
                     await Promise.all(filesToDelete.map((filepath) => rm(filepath, { recursive: true })));
+                }
+                if (utility.testsInfo?.useTests) {
+                    const unitTestDestinationPath = path.join(
+                        pathToRoot,
+                        RelativeFilePath.of(`tests/unit/${utility.testsInfo?.testFolderName || utility.name}`)
+                    );
+                    await mkdir(unitTestDestinationPath, { recursive: true });
+
+                    const testFiles = await glob("**/*test.ts", {
+                        cwd: fromPath,
+                        nodir: true,
+                        absolute: true
+                    });
+                    await Promise.all(
+                        testFiles.map(async (file: string) => {
+                            const destinationFile = path.join(unitTestDestinationPath, path.basename(file));
+                            await mkdir(path.dirname(destinationFile), { recursive: true });
+                            await cp(file, destinationFile);
+                            console.log("\n\n\n Just copied file: ", file, " to ", destinationFile, "\n\n\n");
+                        })
+                    );
+                    // await cp(unitTestSourcePath, unitTestDestinationPath, { recursive: true });
                 }
             })
         );

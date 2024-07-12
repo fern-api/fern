@@ -12,6 +12,9 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         },
         originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/fetcher"),
         pathInCoreUtilities: [{ nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } }],
+        testsInfo: {
+            useTests: true
+        },
         addDependencies: (dependencyManager: DependencyManager): void => {
             dependencyManager.addDependency("form-data", "^4.0.0");
             dependencyManager.addDependency("formdata-node", "^6.0.3");
@@ -20,12 +23,23 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             dependencyManager.addDependency("@types/qs", "6.9.8", {
                 type: DependencyType.DEV
             });
+            dependencyManager.addDependency("@types/jest", "^29.5.12", {
+                type: DependencyType.DEV
+            });
             dependencyManager.addDependency("@types/node-fetch", "2.6.9", {
+                type: DependencyType.DEV
+            });
+            dependencyManager.addDependency("jest-environment-jsdom", "^29.7.0", {
+                type: DependencyType.DEV
+            });
+            dependencyManager.addDependency("@babel/preset-env", "^7.24.3", {
+                type: DependencyType.DEV
+            });
+            dependencyManager.addDependency("@babel/preset-typescript", "^7.24.1", {
                 type: DependencyType.DEV
             });
         }
     };
-
     public readonly Fetcher: Fetcher["Fetcher"] = {
         Args: {
             properties: {

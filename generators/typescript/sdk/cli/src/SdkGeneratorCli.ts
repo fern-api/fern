@@ -6,8 +6,8 @@ import { JavaScriptRuntime, NpmPackage, PersistedTypescriptProject } from "@fern
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { SdkGenerator } from "@fern-typescript/sdk-generator";
 import { camelCase, upperFirst } from "lodash-es";
-import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema";
 import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
+import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema";
 
 export declare namespace SdkGeneratorCli {
     export interface Init {
@@ -139,7 +139,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         const typescriptProject = await sdkGenerator.generate();
         const persistedTypescriptProject = await typescriptProject.persist();
         await sdkGenerator.copyCoreUtilities({
-            pathToSrc: persistedTypescriptProject.getSrcDirectory()
+            pathToSrc: persistedTypescriptProject.getSrcDirectory(),
+            pathToRoot: persistedTypescriptProject.getRootDirectory()
         });
 
         return persistedTypescriptProject;
