@@ -5,6 +5,7 @@
   "references": [
     { "path": "../../../packages/commons/core-utils" },
     { "path": "../../../packages/commons/fs-utils" },
+    { "path": "../../../packages/ir-sdk" },
     { "path": "../../commons" },
     { "path": "../codegen" },
     { "path": "../model" }

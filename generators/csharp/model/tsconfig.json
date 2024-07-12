@@ -4,6 +4,7 @@
   "include": ["./src/**/*"],
   "references": [
     { "path": "../../../packages/commons/fs-utils" },
+    { "path": "../../../packages/ir-sdk" },
     { "path": "../../commons" },
     { "path": "../codegen" }
   ]
