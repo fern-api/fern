@@ -10,10 +10,11 @@ import Foundation
 public struct UserPage: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case TEST = TEST
+        case data = "data"
+        case next = "next"
     }
 
     public let data: UserListContainer
-    public let next: optional
+    public let next: 1: "optional"
 
 }

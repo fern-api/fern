@@ -10,10 +10,11 @@ import Foundation
 public struct Record: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case TEST = TEST
+        case foo = "foo"
+        case _3D = "3d"
     }
 
-    public let foo: map
+    public let foo: 1: "map"
     public let _3D: Int
 
 }

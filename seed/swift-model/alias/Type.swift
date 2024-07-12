@@ -10,7 +10,8 @@ import Foundation
 public struct Type: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case TEST = TEST
+        case id = "id"
+        case name = "name"
     }
 
     public let id: TypeId

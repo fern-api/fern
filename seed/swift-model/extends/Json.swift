@@ -10,7 +10,7 @@ import Foundation
 public struct Json: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case TEST = TEST
+        case raw = "raw"
     }
 
     public let raw: String

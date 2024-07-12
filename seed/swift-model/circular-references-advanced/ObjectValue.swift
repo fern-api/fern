@@ -10,7 +10,6 @@ import Foundation
 public struct ObjectValue: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case TEST = TEST
     }
 
 

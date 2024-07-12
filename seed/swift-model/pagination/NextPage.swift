@@ -10,7 +10,8 @@ import Foundation
 public struct NextPage: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case TEST = TEST
+        case page = "page"
+        case startingAfter = "starting_after"
     }
 
     public let page: Int

@@ -10,11 +10,13 @@ import Foundation
 public struct SendResponse: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case TEST = TEST
+        case message = "message"
+        case status = "status"
+        case success = "success"
     }
 
     public let message: String
     public let status: Int
-    public let success: literal
+    public let success: 1: "literal"
 
 }

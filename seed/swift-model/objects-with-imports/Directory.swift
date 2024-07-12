@@ -10,11 +10,13 @@ import Foundation
 public struct Directory: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case TEST = TEST
+        case name = "name"
+        case files = "files"
+        case directories = "directories"
     }
 
     public let name: String
-    public let files: optional
-    public let directories: optional
+    public let files: 1: "optional"
+    public let directories: 1: "optional"
 
 }

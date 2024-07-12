@@ -171,16 +171,16 @@ export default class Swift {
        * }
        * 
        */
-      makeCodingKeys(properties: any[]): Enum {
+      makeCodingKeys(enumArgs: EnumCase.Args[]): Enum {
         return Swift.makeEnum({
           name: "CodingKeys",
           inheritance: [
             Swift.factories.primatives.makeString(),
             Swift.makeType({ name: "CodingKey" })
           ],
-          enumCases: [
-            Swift.makeEnumCase({ name: "TEST", key: "TEST" })
-          ]
+          enumCases: enumArgs.map(value => {
+            return Swift.makeEnumCase(value);
+          })
         });
       }
 
@@ -202,23 +202,23 @@ export default class Swift {
        * 
        * }
        */
-      makeCodableStruct(safeName: string, fields: Field[]): File {
+      makeCodableStruct(props: { safeName: string, codingArgs: EnumCase.Args[], fields: Field[] }): File {
         
         return Swift.makeFile({
-          fileHeader: Swift.factories.fileHeaders.makeHeaderWithFernStub(safeName),
+          fileHeader: Swift.factories.fileHeaders.makeHeaderWithFernStub(props.safeName),
           imports: [
             Swift.factories.imports.makeFoundation()
           ],
           node: Swift.makeStruct({
             accessLevel: AccessLevel.Public,
-            name: safeName,
+            name: props.safeName,
             inheritance: [
               Swift.factories.types.makeCodable()
             ],
             subclasses: [
-              Swift.factories.enums.makeCodingKeys(fields),
+              Swift.factories.enums.makeCodingKeys(props.codingArgs),
             ],
-            fields,
+            fields: props.fields,
           })
         });
       }

@@ -10,7 +10,8 @@ import Foundation
 public struct CreateMovieRequest: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case TEST = TEST
+        case title = "title"
+        case rating = "rating"
     }
 
     public let title: String

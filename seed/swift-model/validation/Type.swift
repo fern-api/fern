@@ -10,7 +10,9 @@ import Foundation
 public struct Type: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case TEST = TEST
+        case decimal = "decimal"
+        case even = "even"
+        case name = "name"
     }
 
     public let decimal: Double

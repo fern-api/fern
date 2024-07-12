@@ -10,7 +10,7 @@ import Foundation
 public struct UsernameCursor: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case TEST = TEST
+        case cursor = "cursor"
     }
 
     public let cursor: UsernamePage

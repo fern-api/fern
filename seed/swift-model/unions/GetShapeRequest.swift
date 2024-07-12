@@ -10,7 +10,7 @@ import Foundation
 public struct GetShapeRequest: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case TEST = TEST
+        case id = "id"
     }
 
     public let id: String

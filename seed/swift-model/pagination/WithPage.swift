@@ -10,9 +10,9 @@ import Foundation
 public struct WithPage: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case TEST = TEST
+        case page = "page"
     }
 
-    public let page: optional
+    public let page: 1: "optional"
 
 }

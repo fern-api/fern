@@ -10,7 +10,7 @@ import Foundation
 public struct MyObject: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case TEST = TEST
+        case unknown = "unknown"
     }
 
     public let unknown: Unknown

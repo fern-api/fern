@@ -10,9 +10,9 @@ import Foundation
 public struct WithCursor: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case TEST = TEST
+        case cursor = "cursor"
     }
 
-    public let cursor: optional
+    public let cursor: 1: "optional"
 
 }

@@ -10,9 +10,9 @@ import Foundation
 public struct Tree: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case TEST = TEST
+        case nodes = "nodes"
     }
 
-    public let nodes: optional
+    public let nodes: 1: "optional"
 
 }

@@ -10,11 +10,13 @@ import Foundation
 public struct ListUsersPaginationResponse: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case TEST = TEST
+        case page = "page"
+        case totalCount = "total_count"
+        case data = "data"
     }
 
-    public let page: optional
+    public let page: 1: "optional"
     public let totalCount: Int
-    public let data: list
+    public let data: 1: "list"
 
 }

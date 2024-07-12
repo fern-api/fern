@@ -10,7 +10,9 @@ import Foundation
 public struct Movie: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case TEST = TEST
+        case id = "id"
+        case title = "title"
+        case rating = "rating"
     }
 
     public let id: MovieId

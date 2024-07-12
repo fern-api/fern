@@ -10,9 +10,9 @@ import Foundation
 public struct WithMetadata: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case TEST = TEST
+        case metadata = "metadata"
     }
 
-    public let metadata: map
+    public let metadata: 1: "map"
 
 }

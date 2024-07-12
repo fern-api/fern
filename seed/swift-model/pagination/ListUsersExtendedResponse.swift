@@ -10,7 +10,7 @@ import Foundation
 public struct ListUsersExtendedResponse: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case TEST = TEST
+        case totalCount = "total_count"
     }
 
     public let totalCount: Int

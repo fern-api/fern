@@ -10,11 +10,13 @@ import Foundation
 public struct SendRequest: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case TEST = TEST
+        case prompt = "prompt"
+        case query = "query"
+        case stream = "stream"
     }
 
-    public let prompt: literal
+    public let prompt: 1: "literal"
     public let query: String
-    public let stream: literal
+    public let stream: 1: "literal"
 
 }

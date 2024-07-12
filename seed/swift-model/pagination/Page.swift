@@ -10,11 +10,14 @@ import Foundation
 public struct Page: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case TEST = TEST
+        case page = "page"
+        case next = "next"
+        case perPage = "per_page"
+        case totalPage = "total_page"
     }
 
     public let page: Int
-    public let next: optional
+    public let next: 1: "optional"
     public let perPage: Int
     public let totalPage: Int
 
