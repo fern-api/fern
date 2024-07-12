@@ -61,6 +61,7 @@ export class Func extends AstNode {
         let parameters = "";
 
         if (this.params) {
+            // eslint-disable-next-line @typescript-eslint/no-base-to-string
             parameters = this.params.map((param) => param.toString()).join(", ");
         }
 

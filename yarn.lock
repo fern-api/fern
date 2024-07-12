@@ -4573,18 +4573,20 @@ __metadata:
   resolution: "@fern-api/swift-codegen@workspace:generators/swift/codegen"
   dependencies:
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
-    "@fern-api/logging-execa": "workspace:*"
-    "@fern-fern/ir-sdk": ^50
     "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
+    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     depcheck: ^1.4.6
+    env-cmd: toddbluhm/env-cmd
+    esbuild: ^0.15.7
     eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
+    prettier: ^2.7.1
     typescript: 4.6.4
-    zod: ^3.22.3
+  bin:
+    fern-swift-sdk: ./dist/bundle.cjs
   languageName: unknown
   linkType: soft
 
@@ -4881,13 +4883,6 @@ __metadata:
   version: 39.0.0
   resolution: "@fern-fern/ir-sdk@npm:39.0.0"
   checksum: 72cf9e729cd47d30092c6c04b847a973c289dbb2b1a7a8f04c874d59afe5d71fb24e99c5440f8663ca23b85d602c601b67c0fe5c0cc5bd6785047e880600c598
-  languageName: node
-  linkType: hard
-
-"@fern-fern/ir-sdk@npm:^50":
-  version: 50.0.0
-  resolution: "@fern-fern/ir-sdk@npm:50.0.0"
-  checksum: 76174545c846d5562aa7cfc40ab2418b69603a44b1ae30e655354623ad6d477823ba925e5a4650d8b63126acebca92e289ca06789c7b9189146c4b9909cc7d18
   languageName: node
   linkType: hard
 
