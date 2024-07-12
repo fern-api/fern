@@ -71,7 +71,8 @@ export class Class extends AstNode {
         parentClassReference,
         interfaceReferences,
         isNestedClass,
-        record
+        record,
+        annotations
     }: Class.Args) {
         super();
         this.name = name;
@@ -84,7 +85,7 @@ export class Class extends AstNode {
 
         this.parentClassReference = parentClassReference;
         this.interfaceReferences = interfaceReferences ?? [];
-
+        this.annotations = annotations ?? [];
         this.reference = new ClassReference({
             name: this.name,
             namespace: this.namespace
@@ -109,6 +110,10 @@ export class Class extends AstNode {
 
     public addNestedInterface(subInterface: Interface): void {
         this.nestedInterfaces.push(subInterface);
+    }
+
+    public addAnnotation(annotation: Annotation): void {
+        this.annotations.push(annotation);
     }
 
     public write(writer: Writer): void {

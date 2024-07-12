@@ -1,6 +1,6 @@
 import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { TypeId } from "@fern-fern/ir-sdk/api";
+import { TypeId } from "@fern-api/ir-sdk";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 
 export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelCustomConfigSchema> {

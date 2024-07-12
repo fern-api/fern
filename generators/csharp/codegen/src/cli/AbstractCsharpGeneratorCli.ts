@@ -1,6 +1,5 @@
 import { AbstractGeneratorCli } from "@fern-api/generator-commons";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
+import { IntermediateRepresentation, serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { readFile } from "fs/promises";
 import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";

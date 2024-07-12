@@ -23,14 +23,15 @@ export class Annotation extends AstNode {
 
     public write(writer: Writer): void {
         writer.addReference(this.reference);
-        writer.write(`${this.reference.name}(`);
+        writer.write(`${this.reference.name}`);
         if (this.argument != null) {
+            writer.write("(");
             if (typeof this.argument === "string") {
                 writer.write(this.argument);
             } else {
                 this.argument.write(writer);
             }
+            writer.write(")");
         }
-        writer.write(")");
     }
 }

@@ -34,7 +34,7 @@
     "@fern-api/csharp-codegen": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generator-commons": "workspace:*",
-    "@fern-fern/ir-sdk": "workspace:*",
+    "@fern-api/ir-sdk": "workspace:*",
     "zod": "^3.22.3"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 import { csharp } from "@fern-api/csharp-codegen";
-import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpMethod } from "@fern-api/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export declare namespace RawClient {

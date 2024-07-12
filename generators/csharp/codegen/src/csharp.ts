@@ -15,9 +15,16 @@ import {
 } from "./ast";
 import { Interface } from "./ast/Interface";
 import { MethodInvocation } from "./ast/MethodInvocation";
+import { List } from "./ast/List";
+import { Set } from "./ast/Set";
+import { TestClass } from "./ast/TestClass";
 
 export function class_(args: Class.Args): Class {
     return new Class(args);
+}
+
+export function testClass(args: TestClass.Args): TestClass {
+    return new TestClass(args);
 }
 
 export function annotation(args: Annotation.Args): Annotation {
@@ -66,6 +73,14 @@ export function enum_(args: Enum.Args): Enum {
 
 export function dictionary(args: Dictionary.Args): Dictionary {
     return new Dictionary(args);
+}
+
+export function list(args: List.Args): List {
+    return new List(args);
+}
+
+export function set(args: Set.Args): Set {
+    return new Set(args);
 }
 
 export const Types = Type;

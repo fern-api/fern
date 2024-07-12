@@ -8,7 +8,7 @@ import {
     SdkRequestWrapper,
     ServiceId,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { RawClient } from "../RawClient";
 import {

@@ -1,6 +1,6 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
+import { HttpService, ServiceId, Subpackage } from "@fern-api/ir-sdk";
 import { EndpointGenerator } from "../endpoint/EndpointGenerator";
 import { RawClient } from "../endpoint/RawClient";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";

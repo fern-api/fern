@@ -1,6 +1,6 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api";
+import { SingleBaseUrlEnvironments } from "@fern-api/ir-sdk";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 

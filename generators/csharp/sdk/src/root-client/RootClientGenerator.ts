@@ -10,7 +10,7 @@ import {
     PrimitiveTypeV2,
     Subpackage,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { RawClient } from "../endpoint/RawClient";
