@@ -7,7 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.31.0] - 2024-07-12
 
-- Feature: Add `omitUndefined` generator option.
+- Feature: Add `omitUndefined` generator option. This is enabled with the following config:
+
+  ```yaml
+  groups:
+    generators:
+      - name: fernapi/fern-typscript-node-sdk
+        version: 0.31.0
+        ...
+        config:
+          omitUndefined: true
+  ```
 
   When enabled, any property set to an explicit `undefined` is _not_ included
   in the serialized result. For example,
