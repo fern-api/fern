@@ -2,7 +2,6 @@ import LANGUAGE from "../../template";
 import { FileGenerator } from "@fern-api/generator-commons";
 
 describe("LANGUAGE Language", () => {
-
     // TODO: 👋 Add your other language tests here
 
     // Note: You can change the language's indentation size with FULL_LANGUAGE_NAME.indentSize

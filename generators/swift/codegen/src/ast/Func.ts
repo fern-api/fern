@@ -40,7 +40,6 @@ export declare namespace Func {
 }
 
 export class Func extends AstNode {
-
     public readonly accessLevel?: AccessLevel;
     public readonly modifier?: FunctionModifier;
     public readonly name: string;

@@ -3,7 +3,6 @@ import * as Ast from "./ast";
 export * from "./ast";
 
 export default class LANGUAGE {
-
     static indentSize = 4;
 
     // Breakdown the language functionality here.

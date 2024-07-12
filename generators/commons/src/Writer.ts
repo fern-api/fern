@@ -35,27 +35,7 @@ export class Writer {
         this.buffer += "\n";
     }
 
-    public openBlock(
-        titles: (string | undefined)[],
-        openingCharacter: string | undefined = "{",
-        callback: () => void,
-        closingCharacter: string | undefined = "}"
-    ): void {
-        const filteredTitles = titles.filter(title => title !== undefined).join(" ");
-        if (filteredTitles) {
-            this.write(`${filteredTitles} ${openingCharacter ?? ""}`);
-        } else {
-            this.write(openingCharacter ?? "");
-        }
-        
-        try {
-            this.indent(callback);
-        } finally {
-            this.write(closingCharacter ?? "");
-        }
-    }
-
-    public indent(callback: () => void): void {
+    public openIndent(): void {
         this.indentLevel++;
         try {
             callback();
@@ -70,17 +50,6 @@ export class Writer {
 
     public toString(): string {
         return this.buffer;
-    }
-
-    private calculateIndentationDistance(example: string): number {
-
-        const trimmedExample = example.trim();
-        if (trimmedExample.length) {
-            return example.indexOf(trimmedExample[0]!!);
-        }
-    
-        return 0;
-
     }
 
     private getIndentString(tabSize: number): string {

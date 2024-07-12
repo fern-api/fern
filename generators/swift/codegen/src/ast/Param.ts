@@ -28,7 +28,6 @@ export declare namespace Param {
 }
 
 export class Param extends AstNode {
-
     public readonly title: string;
     public readonly type: Type;
     public readonly defaultValue?: Type;
@@ -45,7 +44,6 @@ export class Param extends AstNode {
     }
 
     public write(writer: Writer): void {
-
         let title = [`${this.title}:`, this.type].join(" ");
 
         // if (this.defaultValue) {

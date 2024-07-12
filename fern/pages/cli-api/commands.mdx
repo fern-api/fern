@@ -202,41 +202,6 @@ Explore documentation for popular Fern CLI commands.
   </Accordion>
 
 
-  <Accordion title="fern generator upgrade">
-
-    Use `fern generator upgrade` to upgrade the specified generators in `generators.yml` to the latest stable version.
-
-    <CodeBlock title="terminal">
-    ```bash
-    fern generator upgrade [--api <api>] [--group <group>]
-    ```
-    </CodeBlock>
-
-    ### api
-
-    Use `--api` to specify which API to upgrade the generator for. If not specified, 
-    the generator will be upgraded for all APIs.
-
-    ```bash
-    $ fern generator upgrade --api public-api
-    ```
-
-    ### group
-
-    Use `--group` to specify where the generator is located, if group is not specified, 
-    all generators of the specified type will be upgraded.    
-
-    ```bash
-    $ fern generator upgrade --group internal
-    ```
-
-    <Note>
-    If you'd like to upgrade the generators to their minimum-compatible version *and* the Fern CLI to the latest stable version, use [`fern upgrade`](/learn/cli-api/cli-reference/commands#fern-upgrade).
-    </Note>
-
-  </Accordion>
-
-
   <Accordion title="fern init">
 
     Use `fern init` to initialize a new Fern workspace in the current folder. By default, you’ll see the IMDb API example.

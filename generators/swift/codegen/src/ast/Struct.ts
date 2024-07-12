@@ -37,7 +37,6 @@ export declare namespace Struct {
 }
 
 export class Struct extends AstNode {
-
     public readonly accessLevel?: AccessLevel;
     public readonly name: string;
     public readonly fields?: Field[];

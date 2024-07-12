@@ -10,7 +10,6 @@ export declare namespace File {
 }
 
 export class File extends AstNode {
-
     public readonly fileHeader?: FileHeader;
     public readonly imports?: Import[];
     public readonly node: AstNode;
@@ -27,7 +26,6 @@ export class File extends AstNode {
     }
 
     public write(writer: Writer): void {
-
         // e.g. // ClassName.swift...
         if (this.fileHeader) {
             writer.writeNode(this.fileHeader);
@@ -46,6 +44,5 @@ export class File extends AstNode {
 
         // Common for swift files to have an extra line at end
         writer.newLine();
-
     }
 }

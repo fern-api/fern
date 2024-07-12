@@ -1,4 +1,4 @@
-/**
+    /**
  * An enum representing different access levels, similar to Swift's access control levels.
  * This enum can be used to define and check access permissions for various parts of a TypeScript application.
  */

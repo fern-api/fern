@@ -13,7 +13,6 @@ export declare namespace Field {
 }
 
 export class Field extends AstNode {
-
     public readonly accessLevel?: AccessLevel;
     public readonly variableType?: VariableType;
     public readonly name: string;
