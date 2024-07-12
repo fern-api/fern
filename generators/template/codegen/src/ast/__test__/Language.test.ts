@@ -1,5 +1,4 @@
 import LANGUAGE from "../../template";
-import { FileGenerator } from "@fern-api/generator-commons";
 
 describe("LANGUAGE Language", () => {
     // TODO: 👋 Add your other language tests here
@@ -38,11 +37,5 @@ describe("LANGUAGE Language", () => {
             })
         });
         expect(output.toString()).toMatchSnapshot();
-        FileGenerator.generate({
-            fileName: "Sample",
-            node: output,
-            extension: "template",
-            outputDir: "src/ast/__test__"
-        });
     });
 });
