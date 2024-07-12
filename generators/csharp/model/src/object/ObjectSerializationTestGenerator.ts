@@ -48,6 +48,16 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
                 writer.writeNodeStatement(testInput.objectInstantiationSnippet);
                 writer.newLine();
 
+                writer.write("var serializerOptions  = new ");
+                writer.writeNode(
+                    csharp.classReference({
+                        name: "JsonSerializerOptions",
+                        namespace: "System.Text.Json.Serialization"
+                    })
+                );
+                writer.writeTextStatement(" { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull }");
+                writer.writeLine();
+
                 writer.write("var deserializedObject = ");
                 writer.writeNode(
                     csharp.classReference({
@@ -57,11 +67,13 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
                 );
                 writer.write(".Deserialize<");
                 writer.writeNode(this.objectUnderTestClassReference);
-                writer.writeTextStatement(">(inputJson)");
+                writer.writeTextStatement(">(inputJson, serializerOptions)");
                 writer.writeTextStatement("Assert.That(expectedObject, Is.EqualTo(deserializedObject))");
                 writer.newLine();
 
-                writer.writeTextStatement("var serializedJson = JsonSerializer.Serialize(deserializedObject)");
+                writer.writeTextStatement(
+                    "var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions)"
+                );
                 writer.write("Assert.That(");
                 const jTokenClassReference = csharp.classReference({
                     name: "JToken",
@@ -74,7 +86,7 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
                 writer.writeNode(jTokenClassReference);
                 writer.writeTextStatement(".Parse(serializedJson)))");
             });
-            const testNumber = this.testInputs.length > 1 ? `_${index}` : "";
+            const testNumber = this.testInputs.length > 1 ? `_${index + 1}` : "";
             testClass.addTestMethod({
                 name: `${this.objectUnderTestName}SerializationTest${testNumber}`,
                 body: methodBody
@@ -82,13 +94,13 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
         });
         return new CSharpFile({
             clazz: testClass.getClass(),
-            directory: RelativeFilePath.of("")
+            directory: RelativeFilePath.of("Unit/Model/")
         });
     }
     protected getFilepath(): RelativeFilePath {
         return join(
             this.context.project.filepaths.getTestFilesDirectory(),
-            RelativeFilePath.of(`Unit/Model${this.testName}.cs`)
+            RelativeFilePath.of(`Unit/Model/${this.testName}.cs`)
         );
     }
 

@@ -17,6 +17,9 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
             object: (otd: ObjectTypeDeclaration) => {
                 const objectGenerator = new ObjectGenerator(context, typeDeclaration, otd);
                 const generatedObjectCSharpFile = objectGenerator.generate();
+                if (typeDeclaration.examples.length === 0) {
+                    return generatedObjectCSharpFile;
+                }
                 const testInputs = typeDeclaration.examples.map((example) => {
                     const exampleObjectType = example.shape._visit({
                         alias: () => undefined,
@@ -30,7 +33,6 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
                         throw new Error("Unexpected non object type example");
                     }
                     const snippet = objectGenerator.doGenerateSnippet(exampleObjectType);
-                    // context.logger.info(SnippetHelper.tryFormatSnippet(snippet));
                     return {
                         objectInstantiationSnippet: snippet,
                         json: example.jsonExample
@@ -41,7 +43,7 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
                     context.csharpTypeMapper.convertToClassReference(typeDeclaration.name),
                     testInputs
                 );
-                // context.project.addTestFiles(testGenerator.generate());
+                context.project.addTestFiles(testGenerator.generate());
                 return generatedObjectCSharpFile;
             },
             undiscriminatedUnion: () => undefined,

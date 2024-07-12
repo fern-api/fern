@@ -31,7 +31,12 @@ export class SnippetHelper {
     private getSnippetForNamed(c: ExampleNamedType): csharp.CodeBlock | undefined {
         return c.shape._visit<csharp.CodeBlock | undefined>({
             alias: (exampleAliasType) => this.getSnippetForTypeReference(exampleAliasType.value),
-            enum: (exampleEnumType) => csharp.codeblock(exampleEnumType.value.name.screamingSnakeCase.safeName),
+            enum: (exampleEnumType) =>
+                csharp.codeblock(
+                    `${this.context.csharpTypeMapper.convertToClassReference(c.typeName).name}.${
+                        exampleEnumType.value.name.pascalCase.safeName
+                    }`
+                ),
             object: (exampleObjectType) => this.getSnippedForTypeId(c.typeName.typeId, exampleObjectType),
             union: (exampleUnionType) => this.getSnippetForUnion(exampleUnionType),
             undiscriminatedUnion: (exampleUndiscriminatedUnionType) =>
@@ -127,10 +132,10 @@ export class SnippetHelper {
 
     private getSnippetForPrimitive(examplePrimitive: ExamplePrimitive): csharp.CodeBlock {
         const stringValue = examplePrimitive._visit<string>({
-            integer: (p) => `"${p.toString()}"`,
-            double: (p) => `"${p.toString()}"`,
+            integer: (p) => p.toString(),
+            double: (p) => p.toString(),
             string: (p) => `"${this.escapeForCSharp(p.original)}"`,
-            boolean: (p) => `"${p.toString()}"`,
+            boolean: (p) => p.toString(),
             long: (p) => `"${p.toString()}"`,
             datetime: (datetime) => {
                 const year = datetime.getFullYear();
