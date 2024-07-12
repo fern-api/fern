@@ -27,7 +27,6 @@
   "dependencies": {
     "form-data": "4.0.0",
     "form-data-encoder": "^4.0.2",
-    "formdata-node": "^6.0.3",
     "jest-fetch-mock": "^3.0.3",
     "node-fetch": "2.7.0",
     "qs": "6.12.1"

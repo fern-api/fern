@@ -8,7 +8,7 @@ if (RUNTIME.type === "browser") {
 describe("Test getRequestBody", () => {
     it("should return FormData as is in Node environment", async () => {
         if (RUNTIME.type === "node") {
-            const formData = new (await import("formdata-node")).FormData();
+            const formData = new (await import("form-data")).default();
             formData.append("key", "value");
             const result = await getRequestBody(formData, "multipart/form-data");
             expect(result).toBe(formData);
