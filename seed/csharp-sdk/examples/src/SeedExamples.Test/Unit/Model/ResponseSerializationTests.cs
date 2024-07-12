@@ -35,7 +35,7 @@ public class ResponseSerializationTests
 
         var expectedObject = new Response
         {
-            Response_ = "default_unknown",
+            Response_ = "--unknown--",
             Identifiers = new List<Identifier>()
             {
                 new Identifier

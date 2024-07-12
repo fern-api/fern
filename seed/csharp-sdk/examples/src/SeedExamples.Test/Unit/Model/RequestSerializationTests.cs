@@ -21,7 +21,7 @@ public class RequestSerializationTests
 }
 ";
 
-        var expectedObject = new Request { Request_ = "default_unknown" };
+        var expectedObject = new Request { Request_ = "--unknown--" };
 
         var serializerOptions = new JsonSerializerOptions
         {

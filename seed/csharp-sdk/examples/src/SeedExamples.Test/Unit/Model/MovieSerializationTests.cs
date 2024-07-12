@@ -50,9 +50,9 @@ public class MovieSerializationTests
             Tag = "tag-wf9as23d",
             Metadata = new Dictionary<string, object>()
             {
-                { "actors", "default_unknown" },
-                { "releaseDate", "default_unknown" },
-                { "ratings", "default_unknown" },
+                { "actors", "--unknown--" },
+                { "releaseDate", "--unknown--" },
+                { "ratings", "--unknown--" },
             }
         };
 

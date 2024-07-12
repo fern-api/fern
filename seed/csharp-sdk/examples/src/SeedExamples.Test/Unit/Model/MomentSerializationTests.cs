@@ -25,9 +25,9 @@ public class MomentSerializationTests
 
         var expectedObject = new Moment
         {
-            Id = "656f12d6-f592-444c-a1d3-a3cfd46d5b39",
-            Date = new OnlyDate(1993, 12, 31),
-            Datetime = new DateTime(1993, 12, 31, 20, 01, 01, 000)
+            Id = new Guid("656f12d6-f592-444c-a1d3-a3cfd46d5b39"),
+            Date = new DateOnly(1994, 1, 1),
+            Datetime = new DateTime(1994, 01, 01, 01, 01, 01, 000)
         };
 
         var serializerOptions = new JsonSerializerOptions

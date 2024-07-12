@@ -57,9 +57,9 @@ public class ExtendedMovieSerializationTests
             },
             Metadata = new Dictionary<string, object>()
             {
-                { "academyAward", "default_unknown" },
-                { "releaseDate", "default_unknown" },
-                { "ratings", "default_unknown" },
+                { "academyAward", "--unknown--" },
+                { "releaseDate", "--unknown--" },
+                { "ratings", "--unknown--" },
             }
         };
 
