@@ -1,10 +1,9 @@
-import { csharp, CSharpFile } from "@fern-api/csharp-codegen";
+import { CSharpFile } from "@fern-api/csharp-codegen";
 import { EnumTypeDeclaration, ObjectTypeDeclaration } from "@fern-api/ir-sdk";
 import { EnumGenerator } from "./enum/EnumGenerator";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { ObjectGenerator } from "./object/ObjectGenerator";
-import { SnippetHelper } from "./SnippetHelper";
-import { ObjectSerializationTestGenerator, TestClass } from "./object/ObjectSerializationTestGenerator";
+import { ObjectSerializationTestGenerator } from "./object/ObjectSerializationTestGenerator";
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): CSharpFile[] {
     const files: CSharpFile[] = [];

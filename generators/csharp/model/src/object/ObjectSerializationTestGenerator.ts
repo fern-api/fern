@@ -2,7 +2,6 @@ import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { ClassReference, CodeBlock } from "@fern-api/csharp-codegen/lib/ast";
 import TestInput = TestClass.TestInput;
 
 export declare namespace TestClass {
@@ -22,7 +21,7 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
 
     constructor(
         context: ModelGeneratorContext,
-        private readonly objectUnderTestClassReference: ClassReference,
+        private readonly objectUnderTestClassReference: csharp.ClassReference,
         private readonly testInputs: TestInput[]
     ) {
         super(context);

@@ -1,4 +1,4 @@
-import { AbstractCsharpGeneratorContext, csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
+import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ExampleObjectType, NameAndWireValue, ObjectTypeDeclaration, TypeDeclaration } from "@fern-api/ir-sdk";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";

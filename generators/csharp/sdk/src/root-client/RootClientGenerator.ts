@@ -5,7 +5,6 @@ import {
     AuthScheme,
     HttpHeader,
     Literal,
-    PrimitiveType,
     PrimitiveTypeV1,
     PrimitiveTypeV2,
     Subpackage,

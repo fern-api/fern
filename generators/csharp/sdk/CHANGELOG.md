@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.2 - 2024-07-12]
+- Chore: Bump IR to 50.
+- Feature: Generate serialization unit tests for models. 
+
 ## [0.1.1 - 2024-07-10]
 - Improvement: Enable generating unions with up to 32 types by adding the OneOf.Extended package.
 - Fix: The generator now handles double optional fields properly and only adds a single `?` to the type. 

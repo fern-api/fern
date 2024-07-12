@@ -70,7 +70,7 @@ export class EndpointGenerator {
                     headerParameterCodeBlock.code.write(writer);
                 }
                 const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
-                if (endpoint.response != null) {
+                if (endpoint.response?.body != null) {
                     writer.write(`var ${RESPONSE_VARIABLE_NAME} = `);
                 }
                 writer.writeNodeStatement(

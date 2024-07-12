@@ -1,6 +1,6 @@
 import { ExampleTypeReference } from "@fern-api/ir-sdk/lib/sdk/api/resources/types/types/ExampleTypeReference";
 import { csharp } from "@fern-api/csharp-codegen";
-import { ExampleNamedType } from "@fern-api/ir-sdk/lib/sdk/api/resources/types/types/ExampleNamedType";
+import { ExampleNamedType } from "@fern-api/ir-sdk/lib/sdk/api/resources/types/types";
 import { ExampleObjectType } from "@fern-api/ir-sdk/lib/sdk/api/resources/types/types/ExampleObjectType";
 import { ObjectTypeDeclaration } from "@fern-api/ir-sdk/lib/sdk/api/resources/types/types/ObjectTypeDeclaration";
 import { ObjectGenerator } from "./object/ObjectGenerator";
@@ -85,8 +85,11 @@ export class SnippetHelper {
                 return csharp.codeblock((writer) =>
                     writer.writeNode(
                         csharp.list({
-                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                            itemType: this.context.csharpTypeMapper.convert({ reference: p.itemType! }),
+                            itemType: this.context.csharpTypeMapper.convert({
+                                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                                reference: p.itemType!,
+                                unboxOptionals: true
+                            }),
                             entries
                         })
                     )
@@ -100,7 +103,10 @@ export class SnippetHelper {
                     writer.writeNode(
                         csharp.set({
                             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                            itemType: this.context.csharpTypeMapper.convert({ reference: p.itemType! }),
+                            itemType: this.context.csharpTypeMapper.convert({
+                                reference: p.itemType!,
+                                unboxOptionals: true
+                            }),
                             entries
                         })
                     )
@@ -136,7 +142,7 @@ export class SnippetHelper {
             double: (p) => p.toString(),
             string: (p) => `"${this.escapeForCSharp(p.original)}"`,
             boolean: (p) => p.toString(),
-            long: (p) => `"${p.toString()}"`,
+            long: (p) => p.toString(),
             datetime: (datetime) => {
                 const year = datetime.getFullYear();
                 const month = (datetime.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
@@ -152,9 +158,9 @@ export class SnippetHelper {
                 const year = date.getFullYear();
                 const month = date.getMonth() + 1; // Months are zero-based
                 const day = date.getDate();
-                return `new OnlyDate(${year}, ${month}, ${day})`;
+                return `new DateOnly(${year}, ${month}, ${day})`;
             },
-            uuid: (p) => `"${p}"`,
+            uuid: (p) => `new Guid("${p}")`,
             _other: () => ""
         });
         return csharp.codeblock(stringValue);
