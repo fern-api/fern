@@ -75,7 +75,8 @@ export class Writer {
     private calculateIndentationDistance(example: string): number {
         const trimmedExample = example.trim();
         if (trimmedExample.length) {
-            return example.indexOf(trimmedExample[0]!!);
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            return example.indexOf(trimmedExample[0]!);
         }
 
         return 0;

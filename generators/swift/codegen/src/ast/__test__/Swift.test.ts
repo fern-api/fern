@@ -7,6 +7,7 @@ describe("Swift Language", () => {
         const output = Swift.makeFileHeader({
             header: "This is the header to a file"
         });
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         expect(output.toString()).toMatchSnapshot();
     });
 
@@ -14,6 +15,7 @@ describe("Swift Language", () => {
         const output = Swift.makeImport({
             packageName: "ExamplePackage"
         });
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         expect(output.toString()).toMatchSnapshot();
     });
 
@@ -22,6 +24,7 @@ describe("Swift Language", () => {
             name: "fallbackContent",
             key: "fallback_content"
         });
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         expect(output.toString()).toMatchSnapshot();
     });
 
@@ -46,6 +49,7 @@ describe("Swift Language", () => {
                 })
             ]
         });
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         expect(output.toString()).toMatchSnapshot();
     });
 
@@ -73,6 +77,7 @@ describe("Swift Language", () => {
                 })
             ]
         });
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         expect(output.toString()).toMatchSnapshot();
     });
 
@@ -83,6 +88,7 @@ describe("Swift Language", () => {
                 key: "integer"
             })
         });
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         expect(output.toString()).toMatchSnapshot();
     });
 
@@ -105,6 +111,7 @@ describe("Swift Language", () => {
                 })
             ]
         });
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         expect(output.toString()).toMatchSnapshot();
     });
 
@@ -127,6 +134,7 @@ describe("Swift Language", () => {
                 })
             ]
         });
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         expect(output.toString()).toMatchSnapshot();
     });
 
@@ -180,6 +188,7 @@ describe("Swift Language", () => {
                 ]
             })
         });
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         expect(output.toString()).toMatchSnapshot();
 
         const file = new SwiftFile({

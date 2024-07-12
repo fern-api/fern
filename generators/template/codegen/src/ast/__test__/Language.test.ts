@@ -9,6 +9,7 @@ describe("LANGUAGE Language", () => {
         const output = LANGUAGE.makeFunction({
             name: "doSomething"
         });
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         expect(output.toString()).toMatchSnapshot();
     });
 
@@ -21,6 +22,7 @@ describe("LANGUAGE Language", () => {
                 })
             ]
         });
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         expect(output.toString()).toMatchSnapshot();
     });
 
@@ -36,6 +38,7 @@ describe("LANGUAGE Language", () => {
                 ]
             })
         });
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         expect(output.toString()).toMatchSnapshot();
     });
 });
