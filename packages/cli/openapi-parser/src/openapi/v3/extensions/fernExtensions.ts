@@ -383,7 +383,19 @@ export const FernOpenAPIExtension = {
     /**
      * Allows a user to configure the property name for the schema.
      */
-    FERN_PROPERTY_NAME: "x-fern-property-name"
+    FERN_PROPERTY_NAME: "x-fern-property-name",
+
+    /**
+     * Allows a user to configure that a union wiht a discriminant should
+     * be undiscriminated. 
+     * 
+     * Shape:
+     *   x-fern-undiscriminated: true
+     *   oneOf: 
+     *    - $ref: components/schemas/Triangle
+     *    - $ref: components/schemas/Square
+     */
+    IS_UNDISCRIMINATED: "x-fern-undiscriminated"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;
