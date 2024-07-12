@@ -15,7 +15,7 @@ export abstract class AstNode {
     /**
      * Writes the node to a string.
      */
-    public toString(): string {
+    public render(): string {
         const writer = new Writer(this.indentSize);
         this.write(writer);
         return writer.toString();

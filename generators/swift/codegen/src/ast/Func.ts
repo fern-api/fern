@@ -72,7 +72,7 @@ export class Func extends AstNode {
         let parameters = "";
 
         if (this.params) {
-            parameters = this.params.map(param => param.toString()).join(", ");
+            parameters = this.params.map((param) => param.render()).join(", ");
         }
 
         const func = `${this.name}(${parameters})`;

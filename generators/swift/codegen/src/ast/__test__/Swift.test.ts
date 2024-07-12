@@ -7,19 +7,19 @@ describe("Swift Language", () => {
         const output = Swift.makeFileHeader({
             header: "This is the header to a file"
         });
-        expect(output.toString()).toMatchSnapshot();
+        expect(output.render()).toMatchSnapshot();
     });
 
     it("makes import", () => {
         const output = Swift.makeImport({
             packageName: "ExamplePackage"
         });
-        expect(output.toString()).toMatchSnapshot();
+        expect(output.render()).toMatchSnapshot();
     });
 
     it("uses a factory", () => {
         const output = Swift.factories.enums.makeCodingKeys([]);
-        expect(output.toString()).toMatchSnapshot();
+        expect(output.render()).toMatchSnapshot();
     });
 
     it("makes enum case", () => {
@@ -27,7 +27,7 @@ describe("Swift Language", () => {
             name: "fallbackContent",
             key: "fallback_content",
         });
-        expect(output.toString()).toMatchSnapshot();
+        expect(output.render()).toMatchSnapshot();
     });
 
     it("makes enum", () => {
@@ -51,7 +51,7 @@ describe("Swift Language", () => {
                 }),
             ]
         });
-        expect(output.toString()).toMatchSnapshot();
+        expect(output.render()).toMatchSnapshot();
     });
 
     it("makes function", () => {
@@ -78,7 +78,7 @@ describe("Swift Language", () => {
                 })
             ]
         });
-        expect(output.toString()).toMatchSnapshot();
+        expect(output.render()).toMatchSnapshot();
     });
 
     it("makes primatives", () => {
@@ -88,7 +88,7 @@ describe("Swift Language", () => {
                 key: "integer"
             })
         });
-        expect(output.toString()).toMatchSnapshot();
+        expect(output.render()).toMatchSnapshot();
     });
 
     it("makes struct", () => {
@@ -110,7 +110,7 @@ describe("Swift Language", () => {
                 })
             ]
         });
-        expect(output.toString()).toMatchSnapshot();
+        expect(output.render()).toMatchSnapshot();
     });
 
     it("makes type", () => {
@@ -132,7 +132,7 @@ describe("Swift Language", () => {
                 }),
             ]
         });
-        expect(output.toString()).toMatchSnapshot();
+        expect(output.render()).toMatchSnapshot();
     });
 
     it("makes file", async () => {
@@ -188,7 +188,7 @@ describe("Swift Language", () => {
                 ]
             })
         });
-        expect(output.toString()).toMatchSnapshot();
+        expect(output.render()).toMatchSnapshot();
 
         const file = new SwiftFile({
             name: "Example", 

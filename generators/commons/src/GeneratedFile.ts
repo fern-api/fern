@@ -24,7 +24,7 @@ export class GeneratedFile {
     public async generate(): Promise<string> {
         await mkdir(this.outputDirectory, { recursive: true });
         const outputFile = `${this.outputDirectory}/${this.filename}`;
-        await writeFile(outputFile, this.contents.toString());
+        await writeFile(outputFile, this.contents.render());
         return outputFile;
     }
 
