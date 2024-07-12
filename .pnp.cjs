@@ -7695,6 +7695,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/swift-codegen", "workspace:generators/swift/codegen"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/generator-commons", "workspace:generators/commons"],\
+            ["@types/jest", "npm:29.5.12"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
