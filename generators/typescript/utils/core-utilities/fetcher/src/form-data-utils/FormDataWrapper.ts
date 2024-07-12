@@ -13,7 +13,7 @@ class FormDataRequestBody {
      * @returns the multipart form data request
      */
     public async getBody(): Promise<any> {
-        this.fd;
+        return this.fd;
     }
 
     /**
