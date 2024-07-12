@@ -1,10 +1,9 @@
 /* eslint-disable object-shorthand */
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 /* eslint-disable no-console */
-import Swift, { AccessLevel, SwiftFile, Type, VariableType } from "@fern-api/swift-codegen";
-import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import Swift, { AccessLevel, Field, SwiftFile, Type, VariableType } from "@fern-api/swift-codegen";
+import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "../ModelGeneratorCli";
-import Utils from "../Utils";
 import { CodeBuilder } from "./CodeBuilder";
 
 export default class ObjectBuilder extends CodeBuilder<SwiftFile> {
@@ -20,11 +19,9 @@ export default class ObjectBuilder extends CodeBuilder<SwiftFile> {
     this.objectDeclaration = objectDeclaration;
   }
 
-  public build(): SwiftFile {
+  private buildFields(properties: ObjectProperty[]): Field[] {
 
-    const name = this.typeDeclaration.name.name.pascalCase.safeName;
-    
-    const fields = this.objectDeclaration.properties.map(property => {
+    return properties.map(property => {
 
       const type = property.valueType._visit<Type>({
         container:                 (value) => Swift.makeType({ name: value.type }),
@@ -44,19 +41,29 @@ export default class ObjectBuilder extends CodeBuilder<SwiftFile> {
 
     });
 
-    const output = Swift.makeFile({
-      fileHeader: Swift.makeFileHeader({
-        header: Utils.fileHeaderGenerator(name)
-      }),
-      node: Swift.makeStruct({
-        accessLevel: AccessLevel.Public,
-        name: name,
-        fields: fields,
-      })
-    });
+  }
 
+  public build(): SwiftFile {
+
+    // Destrucutre values
+    const { name } = this.typeDeclaration;
+    const { properties } = this.objectDeclaration;
+
+    // Get name
+    const safeName = name.name.pascalCase.safeName;
+
+    // TODO: Coding key support
+    
+
+    // Build file
+    const output = Swift.factories.structs.makeCodableStruct(
+      safeName, 
+      this.buildFields(properties)
+    );
+
+    // Return the GeneratedFile
     return new SwiftFile({
-      name: name,
+      name: safeName,
       file: output,
       directory: this.context.config.output.path,
     });

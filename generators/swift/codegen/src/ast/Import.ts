@@ -11,11 +11,9 @@ export class Import extends AstNode {
 
   public readonly packageName: string;
 
-  constructor({
-    packageName 
-  }: Import.Args) {
+  constructor(args: Import.Args) {
     super(Swift.indentSize);
-    this.packageName = packageName;
+    this.packageName = args.packageName;
   }
 
   public write(writer: Writer): void {

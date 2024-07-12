@@ -5,7 +5,6 @@
 import Swift, { PrimativeKey, SwiftFile, Type } from "@fern-api/swift-codegen";
 import { EnumTypeDeclaration, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "../ModelGeneratorCli";
-import Utils from "../Utils";
 import { CodeBuilder } from "./CodeBuilder";
 
 export default class TypeAliasBuilder extends CodeBuilder<SwiftFile | undefined> {
@@ -55,9 +54,7 @@ export default class TypeAliasBuilder extends CodeBuilder<SwiftFile | undefined>
     }
 
     const output = Swift.makeFile({
-      fileHeader: Swift.makeFileHeader({
-        header: Utils.fileHeaderGenerator(name)
-      }),
+      fileHeader: Swift.factories.fileHeaders.makeHeaderWithFernStub(name),
       node: Swift.makeTypeAlias({
         name: name,
         type: type

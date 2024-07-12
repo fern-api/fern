@@ -4,7 +4,6 @@
 import Swift, { AccessLevel, SwiftFile } from "@fern-api/swift-codegen";
 import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "../ModelGeneratorCli";
-import Utils from "../Utils";
 import { CodeBuilder } from "./CodeBuilder";
 
 export default class EnumBuilder extends CodeBuilder<SwiftFile> {
@@ -45,9 +44,7 @@ export default class EnumBuilder extends CodeBuilder<SwiftFile> {
     });
 
     const output = Swift.makeFile({
-      fileHeader: Swift.makeFileHeader({
-        header: Utils.fileHeaderGenerator(name)
-      }),
+      fileHeader: Swift.factories.fileHeaders.makeHeaderWithFernStub(name),
       node: Swift.makeEnum({
         accessLevel: AccessLevel.Public,
         name: name,

@@ -17,6 +17,11 @@ describe("Swift Language", () => {
         expect(output.toString()).toMatchSnapshot();
     });
 
+    it("uses a factory", () => {
+        const output = Swift.factories.enums.makeCodingKeys([]);
+        expect(output.toString()).toMatchSnapshot();
+    });
+
     it("makes enum case", () => {
         const output = Swift.makeEnumCase({
             name: "fallbackContent",

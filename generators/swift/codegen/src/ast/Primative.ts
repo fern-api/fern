@@ -52,4 +52,6 @@ export class Primative extends Type {
         }
     }
 
+    // 🏭 Factory Methods
+
 }
