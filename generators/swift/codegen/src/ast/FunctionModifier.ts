@@ -1,4 +1,4 @@
 export enum FunctionModifier {
-  Mutating = "mutating",
-  Static = "static",
+    Mutating = "mutating",
+    Static = "static"
 }

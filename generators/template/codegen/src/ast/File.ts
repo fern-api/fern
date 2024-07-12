@@ -12,10 +12,7 @@ export class File extends AstNode {
     public readonly name: string;
     public readonly class: Class;
 
-    constructor({ 
-        name,
-        class: classInstance,
-    }: File.Args) {
+    constructor({ name, class: classInstance }: File.Args) {
         super(LANGUAGE.indentSize);
         this.name = name;
         this.class = classInstance;

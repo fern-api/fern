@@ -30,55 +30,53 @@ export { VariableType } from "./ast/VariableType";
 export { SwiftFile } from "./project/SwiftFile";
 
 export default class Swift {
+    static indentSize = 4;
 
-  static indentSize = 4;
+    public static makeFileHeader(args: FileHeader.Args): FileHeader {
+        return new FileHeader(args);
+    }
 
-  public static makeFileHeader(args: FileHeader.Args): FileHeader {
-    return new FileHeader(args);
-  }
+    public static makeTypeAlias(args: TypeAlias.Args): TypeAlias {
+        return new TypeAlias(args);
+    }
 
-  public static makeTypeAlias(args: TypeAlias.Args): TypeAlias {
-    return new TypeAlias(args);
-  }
-  
-  public static makeImport(args: Import.Args): Import {
-    return new Import(args);
-  }
+    public static makeImport(args: Import.Args): Import {
+        return new Import(args);
+    }
 
-  public static makeField(args: Field.Args): Field {
-    return new Field(args);
-  }
-  
-  public static makeParam(args: Param.Args): Param {
-    return new Param(args);
-  }
+    public static makeField(args: Field.Args): Field {
+        return new Field(args);
+    }
 
-  public static makeEnumCase(args: EnumCase.Args): EnumCase {
-    return new EnumCase(args);
-  }
+    public static makeParam(args: Param.Args): Param {
+        return new Param(args);
+    }
 
-  public static makeEnum(args: Enum.Args): Enum {
-    return new Enum(args);
-  }
-  
-  public static makeFunc(args: Func.Args): Func {
-    return new Func(args);
-  }
+    public static makeEnumCase(args: EnumCase.Args): EnumCase {
+        return new EnumCase(args);
+    }
 
-  public static makePrimative(args: Primative.Args): Primative {
-    return new Primative(args);
-  }
+    public static makeEnum(args: Enum.Args): Enum {
+        return new Enum(args);
+    }
 
-  public static makeStruct(args: Struct.Args): Struct {
-    return new Struct(args);
-  }
+    public static makeFunc(args: Func.Args): Func {
+        return new Func(args);
+    }
 
-  public static makeType(args: Type.Args): Type {
-    return new Type(args);
-  }
-  
-  public static makeFile(args: File.Args): File {
-    return new File(args);
-  }
+    public static makePrimative(args: Primative.Args): Primative {
+        return new Primative(args);
+    }
 
+    public static makeStruct(args: Struct.Args): Struct {
+        return new Struct(args);
+    }
+
+    public static makeType(args: Type.Args): Type {
+        return new Type(args);
+    }
+
+    public static makeFile(args: File.Args): File {
+        return new File(args);
+    }
 }

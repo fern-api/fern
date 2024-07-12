@@ -53,7 +53,6 @@ export declare namespace Type {
 }
 
 export class Type extends AstNode {
-
     public readonly accessLevel?: AccessLevel;
     public readonly classLevel?: ClassLevel;
     public readonly name: string;
@@ -62,15 +61,7 @@ export class Type extends AstNode {
     public readonly functions?: Func[];
     public readonly inheritance?: Type[];
 
-    constructor({ 
-        accessLevel, 
-        classLevel, 
-        name,
-        subclasses,
-        fields,
-        functions,
-        inheritance,
-    }: Type.Args) {
+    constructor({ accessLevel, classLevel, name, subclasses, fields, functions, inheritance }: Type.Args) {
         super(Swift.indentSize);
         this.accessLevel = accessLevel;
         this.classLevel = classLevel;
@@ -82,46 +73,44 @@ export class Type extends AstNode {
     }
 
     private buildTitle(): string | undefined {
-
         if (!this.inheritance) {
             return this.name;
         }
 
-        const names = this.inheritance.map(obj => obj.name).join(", ");
+        const names = this.inheritance.map((obj) => obj.name).join(", ");
         return `${this.name}: ${names}`;
-
     }
 
     public write(writer: Writer): void {
-
         // example: public class Name {
-        writer.openBlock([this.accessLevel, this.classLevel, this.buildTitle()], "{", () => {
-
-            writer.newLine();
-
-            if (this.subclasses) {
-                this.subclasses.forEach(sub => {
-                    writer.writeNode(sub);
-                    writer.newLine();
-                });
-            }
-
-            if (this.fields) {
-                this.fields.forEach(field => {
-                    writer.writeNode(field);
-                });
+        writer.openBlock(
+            [this.accessLevel, this.classLevel, this.buildTitle()],
+            "{",
+            () => {
                 writer.newLine();
-            }
 
-            if (this.functions) {
-                this.functions.forEach(func => {
-                    writer.writeNode(func);
+                if (this.subclasses) {
+                    this.subclasses.forEach((sub) => {
+                        writer.writeNode(sub);
+                        writer.newLine();
+                    });
+                }
+
+                if (this.fields) {
+                    this.fields.forEach((field) => {
+                        writer.writeNode(field);
+                    });
                     writer.newLine();
-                });
-            }
+                }
 
-        }, "}");
-
+                if (this.functions) {
+                    this.functions.forEach((func) => {
+                        writer.writeNode(func);
+                        writer.newLine();
+                    });
+                }
+            },
+            "}"
+        );
     }
-
 }

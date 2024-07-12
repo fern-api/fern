@@ -1,4 +1,4 @@
 export enum ClassLevel {
-  Class = "class",
-  Struct = "struct"
+    Class = "class",
+    Struct = "struct"
 }

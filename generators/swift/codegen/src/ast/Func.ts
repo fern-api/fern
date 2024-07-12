@@ -40,7 +40,6 @@ export declare namespace Func {
 }
 
 export class Func extends AstNode {
-
     public readonly accessLevel?: AccessLevel;
     public readonly modifier?: FunctionModifier;
     public readonly name: string;
@@ -49,31 +48,20 @@ export class Func extends AstNode {
     public readonly throws: boolean;
     public readonly returnType?: Type;
 
-    constructor({ 
-        accessLevel,
-        modifier,
-        name,
-        params,
-        async,
-        throws,
-        returnType,
-    }: Func.Args) {
+    constructor({ accessLevel, modifier, name, params, async, throws, returnType }: Func.Args) {
         super(Swift.indentSize);
         this.accessLevel = accessLevel;
-        this.modifier = modifier,
-        this.name = name,
-        this.params = params;
+        (this.modifier = modifier), (this.name = name), (this.params = params);
         this.async = async ?? false;
         this.throws = throws ?? false;
         this.returnType = returnType;
     }
- 
-    public write(writer: Writer): void {
 
+    public write(writer: Writer): void {
         let parameters = "";
 
         if (this.params) {
-            parameters = this.params.map(param => param.toString()).join(", ");
+            parameters = this.params.map((param) => param.toString()).join(", ");
         }
 
         const func = `${this.name}(${parameters})`;
@@ -89,10 +77,13 @@ export class Func extends AstNode {
             trailingModifiers.push("throws");
         }
 
-        writer.openBlock([this.accessLevel, this.modifier, "func", func, ...trailingModifiers, result], "{", () => {
-            writer.write("print(\"Hey!\")");
-        }, "}");
-
+        writer.openBlock(
+            [this.accessLevel, this.modifier, "func", func, ...trailingModifiers, result],
+            "{",
+            () => {
+                writer.write('print("Hey!")');
+            },
+            "}"
+        );
     }
-    
 }

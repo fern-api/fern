@@ -5,4 +5,3 @@ export * as csharp from "./csharp";
 export { FileGenerator } from "./FileGenerator";
 export * from "./project";
 export { TestFileGenerator } from "./TestFileGenerator";
-

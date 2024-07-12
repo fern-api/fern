@@ -8,18 +8,14 @@ export declare namespace FileHeader {
 }
 
 export class FileHeader extends AstNode {
-
     public readonly header: string;
 
-    constructor({ 
-        header,
-    }: FileHeader.Args) {
+    constructor({ header }: FileHeader.Args) {
         super(Swift.indentSize);
         this.header = header;
     }
- 
+
     public write(writer: Writer): void {
         writer.write(this.header);
     }
-    
 }

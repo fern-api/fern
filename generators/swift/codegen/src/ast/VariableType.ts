@@ -1,4 +1,4 @@
-export enum VariableType {  
-  Var = "var",
-  Let = "let"
+export enum VariableType {
+    Var = "var",
+    Let = "let"
 }

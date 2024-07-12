@@ -10,16 +10,11 @@ export declare namespace File {
 }
 
 export class File extends AstNode {
-
     public readonly fileHeader?: FileHeader;
     public readonly imports?: Import[];
     public readonly node: AstNode;
 
-    constructor({ 
-        fileHeader,
-        imports,
-        node,
-    }: File.Args) {
+    constructor({ fileHeader, imports, node }: File.Args) {
         super(Swift.indentSize);
         this.fileHeader = fileHeader;
         this.imports = imports;
@@ -27,16 +22,15 @@ export class File extends AstNode {
     }
 
     public write(writer: Writer): void {
-
         // e.g. // ClassName.swift...
         if (this.fileHeader) {
             writer.writeNode(this.fileHeader);
             writer.newLine();
         }
-        
+
         // e.g. import Foundation
         if (this.imports) {
-            this.imports.forEach(imp => {
+            this.imports.forEach((imp) => {
                 writer.writeNode(imp);
             });
             writer.newLine();
@@ -46,6 +40,5 @@ export class File extends AstNode {
 
         // Common for swift files to have an extra line at end
         writer.newLine();
-
     }
 }

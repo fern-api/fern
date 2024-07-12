@@ -8,4 +8,3 @@ export * from "./GeneratorNotificationService";
 export * from "./parseGeneratorConfig";
 export * from "./PersistedProject";
 export * from "./Writer";
-

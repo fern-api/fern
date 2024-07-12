@@ -20,7 +20,7 @@ describe("Swift Language", () => {
     it("makes enum case", () => {
         const output = Swift.makeEnumCase({
             name: "fallbackContent",
-            key: "fallback_content",
+            key: "fallback_content"
         });
         expect(output.toString()).toMatchSnapshot();
     });
@@ -38,12 +38,12 @@ describe("Swift Language", () => {
             ],
             enumCases: [
                 Swift.makeEnumCase({
-                    name: "name",
+                    name: "name"
                 }),
                 Swift.makeEnumCase({
                     name: "fallbackContent",
-                    key: "fallback_content",
-                }),
+                    key: "fallback_content"
+                })
             ]
         });
         expect(output.toString()).toMatchSnapshot();
@@ -93,7 +93,7 @@ describe("Swift Language", () => {
             inheritance: [
                 Swift.makeType({
                     name: "Movie"
-                }),
+                })
             ],
             fields: [
                 Swift.makeField({
@@ -124,7 +124,7 @@ describe("Swift Language", () => {
                 }),
                 Swift.makeType({
                     name: "NSObject"
-                }),
+                })
             ]
         });
         expect(output.toString()).toMatchSnapshot();
@@ -135,10 +135,7 @@ describe("Swift Language", () => {
             fileHeader: Swift.makeFileHeader({
                 header: "// Sample.swift"
             }),
-            imports: [
-                Swift.makeImport({ packageName: "Foundation" }),
-                Swift.makeImport({ packageName: "UIKit" })
-            ],
+            imports: [Swift.makeImport({ packageName: "Foundation" }), Swift.makeImport({ packageName: "UIKit" })],
             node: Swift.makeType({
                 accessLevel: AccessLevel.Open,
                 classLevel: ClassLevel.Class,
@@ -162,7 +159,7 @@ describe("Swift Language", () => {
                             Swift.makeEnumCase({
                                 name: "small",
                                 key: "sml"
-                            }),
+                            })
                         ]
                     })
                 ],
@@ -186,12 +183,11 @@ describe("Swift Language", () => {
         expect(output.toString()).toMatchSnapshot();
 
         const file = new SwiftFile({
-            name: "Example", 
-            file: output, 
-            directory: "src/ast/__test__",
+            name: "Example",
+            file: output,
+            directory: "src/ast/__test__"
         });
 
         await file.generate();
-
     });
 });

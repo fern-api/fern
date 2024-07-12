@@ -2,14 +2,13 @@ import LANGUAGE from "../../template";
 import { FileGenerator } from "@fern-api/generator-commons";
 
 describe("LANGUAGE Language", () => {
-
     // TODO: 👋 Add your other language tests here
 
     // Note: You can change the language's indentation size with FULL_LANGUAGE_NAME.indentSize
 
     it("makes function", () => {
         const output = LANGUAGE.makeFunction({
-            name: "doSomething",
+            name: "doSomething"
         });
         expect(output.toString()).toMatchSnapshot();
     });
@@ -19,8 +18,8 @@ describe("LANGUAGE Language", () => {
             name: "Example",
             functions: [
                 LANGUAGE.makeFunction({
-                    name: "doSomething",
-                }),
+                    name: "doSomething"
+                })
             ]
         });
         expect(output.toString()).toMatchSnapshot();
@@ -33,18 +32,17 @@ describe("LANGUAGE Language", () => {
                 name: "Example",
                 functions: [
                     LANGUAGE.makeFunction({
-                        name: "doSomething",
-                    }),
+                        name: "doSomething"
+                    })
                 ]
-            }),
+            })
         });
         expect(output.toString()).toMatchSnapshot();
         FileGenerator.generate({
-            fileName: "Sample", 
-            node: output, 
+            fileName: "Sample",
+            node: output,
             extension: "template",
-            outputDir: "src/ast/__test__",
+            outputDir: "src/ast/__test__"
         });
     });
-
 });

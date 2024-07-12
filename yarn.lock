@@ -4577,7 +4577,7 @@ __metadata:
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
     "@fern-fern/ir-sdk": ^50
-    "@types/jest": ^29.0.3
+    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -7429,7 +7429,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:^29.0.3, @types/jest@npm:^29.5.12":
+"@types/jest@npm:^29.5.12":
   version: 29.5.12
   resolution: "@types/jest@npm:29.5.12"
   dependencies:

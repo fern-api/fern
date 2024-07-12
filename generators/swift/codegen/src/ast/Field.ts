@@ -7,26 +7,19 @@ export declare namespace Field {
         accessLevel?: AccessLevel;
         variableType?: VariableType;
         name: string;
-        valueType: Type,
-        defaultValue?: string,
+        valueType: Type;
+        defaultValue?: string;
     }
 }
 
 export class Field extends AstNode {
-
     public readonly accessLevel?: AccessLevel;
     public readonly variableType?: VariableType;
     public readonly name: string;
     public readonly valueType: Type; // TODO
     public readonly defaultValue?: string; // TODO
 
-    constructor({ 
-        accessLevel, 
-        variableType,
-        name,
-        valueType,
-        defaultValue,
-    }: Field.Args) {
+    constructor({ accessLevel, variableType, name, valueType, defaultValue }: Field.Args) {
         super(Swift.indentSize);
         this.accessLevel = accessLevel;
         this.variableType = variableType;
@@ -36,11 +29,13 @@ export class Field extends AstNode {
     }
 
     public write(writer: Writer): void {
-
         // e.g. public static let name: String
-        const title = [this.accessLevel, this.variableType ?? VariableType.Let, `${this.name}:`, this.valueType.name].join(" ");
+        const title = [
+            this.accessLevel,
+            this.variableType ?? VariableType.Let,
+            `${this.name}:`,
+            this.valueType.name
+        ].join(" ");
         writer.write(title);
-
     }
-
 }

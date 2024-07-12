@@ -15,26 +15,19 @@ NSDecimalNumber = "bigInteger"
 
 */
 
-export type PrimativeKey =
-    | "integer"
-    | "double"
-    | "string"
-    | "boolean"
-    | "long"
-    | "bigInteger";
+export type PrimativeKey = "integer" | "double" | "string" | "boolean" | "long" | "bigInteger";
 
 export declare namespace Primative {
     interface Args {
-        key?: PrimativeKey
+        key?: PrimativeKey;
     }
 }
 
 export class Primative extends Type {
-
     public readonly key?: PrimativeKey;
 
     constructor(args: Primative.Args) {
-        super({ 
+        super({
             name: Primative.getNameForKey(args.key)
         });
         this.key = args.key;
@@ -42,14 +35,21 @@ export class Primative extends Type {
 
     public static getNameForKey(key?: PrimativeKey): string {
         switch (key) {
-            case "integer": return "Int";
-            case "long": return "Int64";
-            case "string": return "String";
-            case "boolean": return "Bool";
-            case "double": return "Double";
-            case "bigInteger": return "NSDecimalNumber";
-            default: { assertNever(key as never); }
+            case "integer":
+                return "Int";
+            case "long":
+                return "Int64";
+            case "string":
+                return "String";
+            case "boolean":
+                return "Bool";
+            case "double":
+                return "Double";
+            case "bigInteger":
+                return "NSDecimalNumber";
+            default: {
+                assertNever(key as never);
+            }
         }
     }
-
 }
