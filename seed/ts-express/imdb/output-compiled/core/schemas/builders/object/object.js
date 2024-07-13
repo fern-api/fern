@@ -53,6 +53,7 @@ function object(schemas) {
                 unrecognizedObjectKeys: opts === null || opts === void 0 ? void 0 : opts.unrecognizedObjectKeys,
                 skipValidation: opts === null || opts === void 0 ? void 0 : opts.skipValidation,
                 breadcrumbsPrefix: opts === null || opts === void 0 ? void 0 : opts.breadcrumbsPrefix,
+                omitUndefined: opts === null || opts === void 0 ? void 0 : opts.omitUndefined,
             });
         },
         json: (parsed, opts) => {
@@ -96,6 +97,7 @@ function object(schemas) {
                 unrecognizedObjectKeys: opts === null || opts === void 0 ? void 0 : opts.unrecognizedObjectKeys,
                 skipValidation: opts === null || opts === void 0 ? void 0 : opts.skipValidation,
                 breadcrumbsPrefix: opts === null || opts === void 0 ? void 0 : opts.breadcrumbsPrefix,
+                omitUndefined: opts === null || opts === void 0 ? void 0 : opts.omitUndefined,
             });
         },
         getType: () => Schema_1.SchemaType.OBJECT,

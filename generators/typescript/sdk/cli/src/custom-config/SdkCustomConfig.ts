@@ -30,4 +30,5 @@ export interface SdkCustomConfig {
     inlineFileProperties: boolean | undefined;
     packageJson: Record<string, unknown> | undefined;
     publishToJsr: boolean | undefined;
+    omitUndefined: boolean | undefined;
 }

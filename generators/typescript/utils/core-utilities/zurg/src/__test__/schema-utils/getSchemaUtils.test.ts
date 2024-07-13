@@ -51,4 +51,33 @@ describe("getSchemaUtils", () => {
             expect(value).toThrowError(new Error('a: Expected string. Received 24.; Missing required key "b"'));
         });
     });
+
+    describe("omitUndefined", () => {
+        it("serializes undefined as null", async () => {
+            const value = object({
+                a: string().optional(),
+                b: string().optional()
+            }).jsonOrThrow({
+                a: "hello",
+                b: undefined
+            });
+            expect(value).toEqual({ a: "hello", b: null });
+        });
+
+        it("omits undefined values", async () => {
+            const value = object({
+                a: string().optional(),
+                b: string().optional()
+            }).jsonOrThrow(
+                {
+                    a: "hello",
+                    b: undefined
+                },
+                {
+                    omitUndefined: true
+                }
+            );
+            expect(value).toEqual({ a: "hello" });
+        });
+    });
 });

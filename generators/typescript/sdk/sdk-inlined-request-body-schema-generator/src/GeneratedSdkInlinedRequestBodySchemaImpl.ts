@@ -11,6 +11,7 @@ export declare namespace GeneratedSdkInlinedRequestBodySchemaImpl {
         inlinedRequestBody: InlinedRequestBody;
         includeSerdeLayer: boolean;
         allowExtraFields: boolean;
+        omitUndefined: boolean;
     }
 }
 
@@ -23,6 +24,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
     private inlinedRequestBody: InlinedRequestBody;
     private includeSerdeLayer: boolean;
     private allowExtraFields: boolean;
+    private omitUndefined: boolean;
 
     constructor({
         packageId,
@@ -30,6 +32,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         inlinedRequestBody,
         includeSerdeLayer,
         allowExtraFields,
+        omitUndefined,
         ...superInit
     }: GeneratedSdkInlinedRequestBodySchemaImpl.Init) {
         super(superInit);
@@ -38,6 +41,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         this.inlinedRequestBody = inlinedRequestBody;
         this.includeSerdeLayer = includeSerdeLayer;
         this.allowExtraFields = allowExtraFields;
+        this.omitUndefined = omitUndefined;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -50,7 +54,8 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         }
         return this.getReferenceToZurgSchema(context).jsonOrThrow(referenceToParsedRequest, {
             ...getSchemaOptions({
-                allowExtraFields: this.allowExtraFields
+                allowExtraFields: this.allowExtraFields,
+                omitUndefined: this.omitUndefined
             })
         });
     }
