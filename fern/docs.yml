@@ -334,4 +334,6 @@ layout:
   searchbar-placement: header
   tabs-placement: header
 
-js: ./js/penguin-ai.js
+js: 
+ - ./js/penguin-ai.js
+ - ./js/koala.js
