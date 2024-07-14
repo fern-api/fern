@@ -18,4 +18,13 @@ describe("FormDataWrapper", () => {
 
         expect(await request.getBody()).toBeInstanceOf((await import("form-data")).default);
     });
+
+    it("should have two payloads", async () => {
+        const wrapper = new FormDataWrapper();
+        await wrapper.append("key", "value");
+        await wrapper.append("key2", "value2");
+        const request = wrapper.getRequest();
+
+        expect((await request.getBody())._streams.length).toBe(6);
+    });
 });

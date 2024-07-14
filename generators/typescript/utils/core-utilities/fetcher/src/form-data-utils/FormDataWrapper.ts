@@ -32,7 +32,9 @@ export class FormDataWrapper {
     private fd: CrossPlatformFormData | undefined;
 
     public async append(name: string, value: any): Promise<void> {
-        this.fd = new (await import("form-data")).default();
+        if (!this.fd) {
+            this.fd = new (await import("form-data")).default();
+        }
         this.fd?.append(name, value);
     }
 
