@@ -155,7 +155,7 @@ function isExternalUrl(url: string): boolean {
 }
 
 function isDataUrl(url: string): boolean {
-    return /^data:/.test(url);
+    return url.startsWith("data:/");
 }
 
 /**
