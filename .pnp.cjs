@@ -8969,7 +8969,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["form-data", "npm:4.0.0"],\
             ["form-data-encoder", "npm:4.0.2"],\
-            ["formdata-node", "npm:6.0.3"],\
             ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
             ["jest-environment-jsdom", "virtual:7be63f1ee9eb34cb62254a57273a43b86b8b7753aa555eb261c4195c28af56c1d0f4f9ed3a307dac6e859be2fc2f1dac6612f92db051061f91f1ec4982afe62a#npm:29.7.0"],\
             ["jest-fetch-mock", "npm:3.0.3"],\
