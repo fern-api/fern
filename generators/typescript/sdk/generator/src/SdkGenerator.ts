@@ -109,7 +109,6 @@ export declare namespace SdkGenerator {
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
         noOptionalProperties: boolean;
-        includeApiReference: boolean;
         tolerateRepublish: boolean;
         retainOriginalCasing: boolean;
         allowExtraFields: boolean;
@@ -177,6 +176,8 @@ export class SdkGenerator {
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private jestTestGenerator: JestTestGenerator;
     private generatorCli: GeneratorCli;
+    private readmeGenerator: ReadmeGenerator;
+    private refGenerator: ReferenceGenerator;
     private FdrClient: FdrSnippetTemplateClient | undefined;
 
     constructor({
@@ -353,6 +354,13 @@ export class SdkGenerator {
         this.generatorCli = new GeneratorCli({
             logger: context.logger
         });
+        this.readmeGenerator = new ReadmeGenerator({
+            generatorCli: this.generatorCli,
+            logger: context.logger
+        });
+        this.refGenerator = new ReferenceGenerator({
+            generatorCli: this.generatorCli
+        });
 
         this.FdrClient =
             this.config.executionEnvironment !== "local"
@@ -422,13 +430,7 @@ export class SdkGenerator {
         }
 
         if (this.config.snippetFilepath != null) {
-            let refGenerator: ReferenceGenerator | undefined;
-            if (this.config.includeApiReference) {
-                refGenerator = new ReferenceGenerator({
-                    generatorCli: this.generatorCli
-                });
-            }
-            this.generateSnippets({ refGenerator });
+            this.generateSnippets();
             const snippets: FernGeneratorExec.Snippets = {
                 endpoints: this.endpointSnippets,
                 types: {}
@@ -472,11 +474,7 @@ export class SdkGenerator {
             }
 
             try {
-                if (refGenerator != null) {
-                    await this.generateReference({
-                        refGenerator
-                    });
-                }
+                await this.generateReference();
             } catch (e) {
                 this.context.logger.warn("Failed to generate reference.md, this is OK");
             }
@@ -710,15 +708,11 @@ export class SdkGenerator {
             this.context.logger.debug("No snippets were produced; skipping README.md generation.");
             return;
         }
-        const readmeGenerator = new ReadmeGenerator({
-            generatorCli: this.generatorCli,
-            logger: this.context.logger
-        });
         await this.withRawFile({
-            filepath: readmeGenerator.getExportedFilePath(),
+            filepath: this.readmeGenerator.getExportedFilePath(),
             run: async ({ sourceFile, importsManager }) => {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
-                const readmeContent = await readmeGenerator.generateReadme({
+                const readmeContent = await this.readmeGenerator.generateReadme({
                     context,
                     ir: this.intermediateRepresentation,
                     organization: this.config.organization,
@@ -732,11 +726,11 @@ export class SdkGenerator {
         });
     }
 
-    private async generateReference({ refGenerator }: { refGenerator: ReferenceGenerator }): Promise<void> {
+    private async generateReference(): Promise<void> {
         await this.withRawFile({
-            filepath: refGenerator.getExportedFilePath(),
+            filepath: this.refGenerator.getExportedFilePath(),
             run: async ({ sourceFile }) => {
-                const referenceContent = await refGenerator.generateReference();
+                const referenceContent = await this.refGenerator.generateReference();
                 sourceFile.replaceWithText(referenceContent);
             }
         });
@@ -792,13 +786,13 @@ export class SdkGenerator {
         return [ts.factory.createExpressionStatement(endpointInvocation)];
     }
 
-    private generateSnippets({ refGenerator }: { refGenerator: ReferenceGenerator | undefined }) {
+    private generateSnippets() {
         const rootPackage: PackageId = { isRoot: true };
         this.forEachService((service, packageId) => {
             if (service.endpoints.length === 0) {
                 return;
             }
-            let serviceReference = refGenerator?.addSection({
+            let serviceReference = this.refGenerator.addSection({
                 title:
                     service.displayName ??
                     service.name.fernFilepath.allParts.map((part) => part.pascalCase.unsafeName).join(" ")
@@ -809,7 +803,7 @@ export class SdkGenerator {
 
             for (const endpoint of service.endpoints) {
                 if (packageId.isRoot) {
-                    serviceReference = refGenerator?.addRootSection();
+                    serviceReference = this.refGenerator.addRootSection();
                 }
 
                 if (this.config.snippetTemplateFilepath != null && this.npmPackage != null) {
