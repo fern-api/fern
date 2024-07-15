@@ -27,10 +27,14 @@ class FormDataRequestBody {
         if (RUNTIME.type !== "node") {
             return this.fd;
         } else {
-            if (this.encoder == null) {
-                await this.setup();
+            if (Number(RUNTIME.version?.split(".")[0]) >= 18) {
+                if (this.encoder == null) {
+                    await this.setup();
+                }
+                return Readable.from(this.encoder);
+            } else {
+                return this.fd;
             }
-            return Readable.from(this.encoder);
         }
     }
 
@@ -41,10 +45,14 @@ class FormDataRequestBody {
         if (RUNTIME.type !== "node") {
             return {};
         } else {
-            if (this.encoder == null) {
-                await this.setup();
+            if (Number(RUNTIME.version?.split(".")[0]) >= 18) {
+                if (this.encoder == null) {
+                    await this.setup();
+                }
+                return this.encoder.headers;
+            } else {
+                return this.fd.getHeaders();
             }
-            return this.encoder.headers;
         }
     }
 }
@@ -59,23 +67,22 @@ export class FormDataWrapper {
     public async append(name: string, value: any, fileName?: string): Promise<void> {
         if (this.fd == null) {
             if (RUNTIME.type === "node") {
-                this.fd = new (await import("formdata-node")).FormData();
+                if (Number(RUNTIME.version?.split(".")[0]) >= 18) {
+                    this.fd = new (await import("formdata-node")).FormData();
+                    this.fd.append(
+                        name,
+                        new (await import("node:buffer")).Blob([value]),
+                        fileName === "" ? undefined : fileName
+                    );
+                } else {
+                    this.fd = new (await import("form-data")).default();
+                    this.fd.append(name, value);
+                }
             } else {
                 this.fd = new FormData();
-            }
-        }
-        if (fileName === "" || fileName) {
-            if (RUNTIME.type === "node") {
-                this.fd.append(
-                    name,
-                    new (await import("node:buffer")).Blob([value]),
-                    fileName === "" ? undefined : fileName
-                );
-            } else {
                 this.fd.append(name, new Blob([value]), fileName === "" ? undefined : fileName);
             }
         }
-        this.fd.append(name, value);
     }
 
     public getRequest(): FormDataRequestBody {

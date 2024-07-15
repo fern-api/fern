@@ -1,25 +1,24 @@
 import express from "express";
+import fs from "fs";
 import { killPortProcess } from "kill-port-process";
 import multer from "multer";
 import { FormDataWrapper } from "../..";
 import { getFetchFn } from "../getFetchFn";
 
 describe("Multipart Form Data Tests", () => {
-    let app;
+    let app = express();
 
     beforeAll(async () => {
-        app = express();
-
         const storage = multer.memoryStorage();
         const upload = multer({ storage: storage });
 
         // Define the file upload route
-        app.post("/upload", upload.any(), (req, res) => {
+        app.post("/upload", upload.any(), (req: any, res: any) => {
             try {
                 if (!req.files) {
                     return res.status(400).send("No file uploaded.");
                 } else {
-                    const file = req.files && (req.files as any[])[0];
+                    const file = req.files && req.files[0];
                     return res.status(200).send(`File sent: ${file.originalname}`);
                 }
             } catch (error) {
@@ -32,14 +31,16 @@ describe("Multipart Form Data Tests", () => {
         app.use(express.json());
         app.use(express.urlencoded({ extended: true }));
         app.listen(4567, () => {
-            console.log("Server started on http://localhost:4567");
+            // console.log("Server started on http://localhost:4567");
         });
     });
 
     it("should return a 200 status code", async () => {
         const fdw = new FormDataWrapper();
 
-        await fdw.append("file", new Blob(["test"]), "test.txt");
+        const y = fs.readFileSync("package.json");
+        // await fdw.append("file", new Blob(["test"]), "test.txt");
+        await fdw.append("file", y);
 
         const request = await fdw.getRequest();
 

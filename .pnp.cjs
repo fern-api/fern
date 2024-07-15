@@ -8961,12 +8961,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/fetcher", "workspace:generators/typescript/utils/core-utilities/fetcher"],\
             ["@babel/preset-env", "virtual:7be63f1ee9eb34cb62254a57273a43b86b8b7753aa555eb261c4195c28af56c1d0f4f9ed3a307dac6e859be2fc2f1dac6612f92db051061f91f1ec4982afe62a#npm:7.24.3"],\
             ["@babel/preset-typescript", "virtual:7be63f1ee9eb34cb62254a57273a43b86b8b7753aa555eb261c4195c28af56c1d0f4f9ed3a307dac6e859be2fc2f1dac6612f92db051061f91f1ec4982afe62a#npm:7.24.1"],\
+            ["@types/busboy", "npm:1.5.4"],\
             ["@types/express", "npm:4.17.21"],\
             ["@types/jest", "npm:29.5.12"],\
             ["@types/multer", "npm:1.4.11"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/node-fetch", "npm:2.6.9"],\
             ["@types/qs", "npm:6.9.15"],\
+            ["busboy", "npm:1.6.0"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
             ["express", "npm:4.19.2"],\
@@ -10608,6 +10610,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@types/boxen", "npm:3.0.1"],\
             ["boxen", "npm:7.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/busboy", [\
+        ["npm:1.5.4", {\
+          "packageLocation": "./.yarn/cache/@types-busboy-npm-1.5.4-3fe84cae05-56444ed122.zip/node_modules/@types/busboy/",\
+          "packageDependencies": [\
+            ["@types/busboy", "npm:1.5.4"],\
+            ["@types/node", "npm:18.7.18"]\
           ],\
           "linkType": "HARD"\
         }]\
