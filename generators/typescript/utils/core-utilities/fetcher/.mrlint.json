@@ -18,11 +18,6 @@
         "@types/qs",
         "jest-environment-jsdom"
       ]
-    },
-    "package-json": {
-      "scripts": {
-        "test": "yarn compile && jest --passWithNoTests && jest --passWithNoTests --env jsdom"
-      }
     }
   }
 }
