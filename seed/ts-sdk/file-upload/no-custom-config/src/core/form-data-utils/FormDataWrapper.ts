@@ -60,7 +60,7 @@ export class FormDataWrapper {
             if (RUNTIME.type === "node") {
                 this.fd = new (await import("formdata-node")).FormData();
             } else {
-                this.fd = new (await import("form-data")).default();
+                this.fd = new FormData();
             }
         }
         this.fd.append(name, value);

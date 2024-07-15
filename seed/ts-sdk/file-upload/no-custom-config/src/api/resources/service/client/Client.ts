@@ -4,6 +4,7 @@
 
 import * as core from "../../../../core";
 import * as fs from "fs";
+import { Blob } from "node:buffer";
 import * as SeedFileUpload from "../../../index";
 import * as errors from "../../../../errors/index";
 import urlJoin from "url-join";
@@ -27,10 +28,10 @@ export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
     /**
-     * @param {File | fs.ReadStream} file
-     * @param {File[] | fs.ReadStream[]} fileList
-     * @param {File | fs.ReadStream | undefined} maybeFile
-     * @param {File[] | fs.ReadStream[] | undefined} maybeFileList
+     * @param {File | fs.ReadStream | Blob.Blob} file
+     * @param {File[] | fs.ReadStream[] | Blob.Blob[]} fileList
+     * @param {File | fs.ReadStream | Blob.Blob | undefined} maybeFile
+     * @param {File[] | fs.ReadStream[] | Blob.Blob[] | undefined} maybeFileList
      * @param {SeedFileUpload.MyRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -38,46 +39,46 @@ export class Service {
      *     await client.service.post(fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], {})
      */
     public async post(
-        file: File | fs.ReadStream,
-        fileList: File[] | fs.ReadStream[],
-        maybeFile: File | fs.ReadStream | undefined,
-        maybeFileList: File[] | fs.ReadStream[] | undefined,
+        file: File | fs.ReadStream | Blob.Blob,
+        fileList: File[] | fs.ReadStream[] | Blob.Blob[],
+        maybeFile: File | fs.ReadStream | Blob.Blob | undefined,
+        maybeFileList: File[] | fs.ReadStream[] | Blob.Blob[] | undefined,
         request: SeedFileUpload.MyRequest,
         requestOptions?: Service.RequestOptions
     ): Promise<void> {
         const _request = new core.FormDataWrapper();
         if (request.maybeString != null) {
-            await _request.append("maybeString", request.maybeString);
+            await _request.append("maybeString", request.maybeString, null);
         }
 
-        await _request.append("integer", request.integer.toString());
-        await _request.append("file", file);
+        await _request.append("integer", request.integer.toString(), null);
+        await _request.append("file", new Blob(file));
         for (const _file of fileList) {
-            await _request.append("fileList", _file);
+            await _request.append("fileList", _file, null);
         }
 
         if (maybeFile != null) {
-            await _request.append("maybeFile", maybeFile);
+            await _request.append("maybeFile", new Blob(maybeFile));
         }
 
         if (maybeFileList != null) {
             for (const _file of maybeFileList) {
-                await _request.append("maybeFileList", _file);
+                await _request.append("maybeFileList", _file, null);
             }
         }
 
         if (request.maybeInteger != null) {
-            await _request.append("maybeInteger", request.maybeInteger.toString());
+            await _request.append("maybeInteger", request.maybeInteger.toString(), null);
         }
 
         if (request.optionalListOfStrings != null) {
             for (const _item of request.optionalListOfStrings) {
-                await _request.append("optionalListOfStrings", _item);
+                await _request.append("optionalListOfStrings", _item, null);
             }
         }
 
         for (const _item of request.listOfObjects) {
-            await _request.append("listOfObjects", JSON.stringify(_item));
+            await _request.append("listOfObjects", JSON.stringify(_item), null);
         }
 
         const _maybeEncodedRequest = _request.getRequest();
@@ -124,15 +125,18 @@ export class Service {
     }
 
     /**
-     * @param {File | fs.ReadStream} file
+     * @param {File | fs.ReadStream | Blob.Blob} file
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.service.justFile(fs.createReadStream("/path/to/your/file"))
      */
-    public async justFile(file: File | fs.ReadStream, requestOptions?: Service.RequestOptions): Promise<void> {
+    public async justFile(
+        file: File | fs.ReadStream | Blob.Blob,
+        requestOptions?: Service.RequestOptions
+    ): Promise<void> {
         const _request = new core.FormDataWrapper();
-        await _request.append("file", file);
+        await _request.append("file", new Blob(file));
         const _maybeEncodedRequest = _request.getRequest();
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/just-file"),
@@ -177,7 +181,7 @@ export class Service {
     }
 
     /**
-     * @param {File | fs.ReadStream} file
+     * @param {File | fs.ReadStream | Blob.Blob} file
      * @param {SeedFileUpload.JustFileWithQueryParamsRequet} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -191,7 +195,7 @@ export class Service {
      *     })
      */
     public async justFileWithQueryParams(
-        file: File | fs.ReadStream,
+        file: File | fs.ReadStream | Blob.Blob,
         request: SeedFileUpload.JustFileWithQueryParamsRequet,
         requestOptions?: Service.RequestOptions
     ): Promise<void> {
@@ -220,7 +224,7 @@ export class Service {
         }
 
         const _request = new core.FormDataWrapper();
-        await _request.append("file", file);
+        await _request.append("file", new Blob(file));
         const _maybeEncodedRequest = _request.getRequest();
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/just-file-with-query-params"),

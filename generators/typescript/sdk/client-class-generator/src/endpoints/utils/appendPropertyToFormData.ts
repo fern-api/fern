@@ -32,7 +32,8 @@ export function appendPropertyToFormData({
                         retainOriginalCasing: context.retainOriginalCasing,
                         inlineFileProperties: context.inlineFileProperties
                     })
-                )
+                ),
+                file: true
             });
 
             if (property.type === "fileArray") {

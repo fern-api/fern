@@ -210,6 +210,13 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                         value: context.externalDependencies.fs.ReadStream._getReferenceToType()
                     })
                 );
+
+                types.push(
+                    this.maybeWrapFileArray({
+                        property,
+                        value: context.externalDependencies.blob.Blob._getReferenceToType()
+                    })
+                );
             },
             browser: () => {
                 types.push(

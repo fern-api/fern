@@ -39,37 +39,37 @@ export class Service {
     public async post(request: SeedFileUpload.MyRequest, requestOptions?: Service.RequestOptions): Promise<void> {
         const _request = new core.FormDataWrapper();
         if (request.maybeString != null) {
-            await _request.append("maybeString", request.maybeString);
+            await _request.append("maybeString", request.maybeString, null);
         }
 
-        await _request.append("integer", request.integer.toString());
-        await _request.append("file", request.file);
+        await _request.append("integer", request.integer.toString(), null);
+        await _request.append("file", new Blob(request.file));
         for (const _file of request.fileList) {
-            await _request.append("fileList", _file);
+            await _request.append("fileList", _file, null);
         }
 
         if (request.maybeFile != null) {
-            await _request.append("maybeFile", request.maybeFile);
+            await _request.append("maybeFile", new Blob(request.maybeFile));
         }
 
         if (request.maybeFileList != null) {
             for (const _file of request.maybeFileList) {
-                await _request.append("maybeFileList", _file);
+                await _request.append("maybeFileList", _file, null);
             }
         }
 
         if (request.maybeInteger != null) {
-            await _request.append("maybeInteger", request.maybeInteger.toString());
+            await _request.append("maybeInteger", request.maybeInteger.toString(), null);
         }
 
         if (request.optionalListOfStrings != null) {
             for (const _item of request.optionalListOfStrings) {
-                await _request.append("optionalListOfStrings", _item);
+                await _request.append("optionalListOfStrings", _item, null);
             }
         }
 
         for (const _item of request.listOfObjects) {
-            await _request.append("listOfObjects", JSON.stringify(_item));
+            await _request.append("listOfObjects", JSON.stringify(_item), null);
         }
 
         const _maybeEncodedRequest = _request.getRequest();
@@ -129,7 +129,7 @@ export class Service {
         requestOptions?: Service.RequestOptions
     ): Promise<void> {
         const _request = new core.FormDataWrapper();
-        await _request.append("file", request.file);
+        await _request.append("file", new Blob(request.file));
         const _maybeEncodedRequest = _request.getRequest();
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/just-file"),
@@ -216,7 +216,7 @@ export class Service {
         }
 
         const _request = new core.FormDataWrapper();
-        await _request.append("file", request.file);
+        await _request.append("file", new Blob(request.file));
         const _maybeEncodedRequest = _request.getRequest();
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/just-file-with-query-params"),

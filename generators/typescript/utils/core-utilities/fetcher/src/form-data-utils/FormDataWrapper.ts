@@ -3,6 +3,7 @@ import { RUNTIME } from "../runtime";
 
 interface CrossPlatformFormData {
     append(key: string, value: any): void;
+    append(key: string, value: any, fileName?: string): void;
 }
 
 class FormDataRequestBody {
@@ -55,12 +56,23 @@ class FormDataRequestBody {
 export class FormDataWrapper {
     private fd: CrossPlatformFormData | undefined;
 
-    public async append(name: string, value: any): Promise<void> {
+    public async append(name: string, value: any, fileName?: string): Promise<void> {
         if (this.fd == null) {
             if (RUNTIME.type === "node") {
                 this.fd = new (await import("formdata-node")).FormData();
             } else {
-                this.fd = new (await import("form-data")).default();
+                this.fd = new FormData();
+            }
+        }
+        if (fileName === "" || fileName) {
+            if (RUNTIME.type === "node") {
+                this.fd.append(
+                    name,
+                    new (await import("node:buffer")).Blob([value]),
+                    fileName === "" ? undefined : fileName
+                );
+            } else {
+                this.fd.append(name, new Blob([value]), fileName === "" ? undefined : fileName);
             }
         }
         this.fd.append(name, value);

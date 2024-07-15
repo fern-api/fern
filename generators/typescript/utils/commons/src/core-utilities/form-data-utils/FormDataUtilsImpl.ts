@@ -27,11 +27,13 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
     public readonly append = ({
         referencetoFormData,
         key,
-        value
+        value,
+        file
     }: {
         referencetoFormData: ts.Expression;
         key: string;
         value: ts.Expression;
+        file?: boolean;
     }): ts.Statement => {
         return ts.factory.createExpressionStatement(
             ts.factory.createAwaitExpression(
@@ -41,7 +43,9 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
                         ts.factory.createIdentifier("append")
                     ),
                     undefined,
-                    [ts.factory.createStringLiteral(key), value]
+                    file
+                        ? [ts.factory.createStringLiteral(key), value, ts.factory.createIdentifier("")]
+                        : [ts.factory.createStringLiteral(key), value]
                 )
             )
         );
