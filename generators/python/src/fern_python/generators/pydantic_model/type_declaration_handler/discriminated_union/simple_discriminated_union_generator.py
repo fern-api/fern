@@ -143,6 +143,7 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                     is_pydantic_v2=self._context.core_utilities.get_is_pydantic_v2(),
                     universal_field_validator=self._context.core_utilities.universal_field_validator,
                     universal_root_validator=self._context.core_utilities.universal_root_validator,
+                    update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
                 ) as internal_pydantic_model_for_single_union_type:
                     internal_pydantic_model_for_single_union_type.add_field(
                         PydanticField(

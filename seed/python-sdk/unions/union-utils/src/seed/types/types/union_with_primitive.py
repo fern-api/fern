@@ -2,76 +2,71 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
+import pydantic
 import typing_extensions
 
-from ...core.datetime_utils import serialize_datetime
-from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
 
 T_Result = typing.TypeVar("T_Result")
 
 
 class _Factory:
     def integer(self, value: int) -> UnionWithPrimitive:
-        return UnionWithPrimitive(__root__=_UnionWithPrimitive.Integer(type="integer", value=value))
+        return UnionWithPrimitive(_UnionWithPrimitive.Integer(type="integer", value=value))
 
     def string(self, value: str) -> UnionWithPrimitive:
-        return UnionWithPrimitive(__root__=_UnionWithPrimitive.String(type="string", value=value))
+        return UnionWithPrimitive(_UnionWithPrimitive.String(type="string", value=value))
 
 
-class UnionWithPrimitive(pydantic_v1.BaseModel):
+class UnionWithPrimitive(UniversalRootModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get_as_union(self) -> typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String]:
-        return self.__root__
+    if IS_PYDANTIC_V2:
+        root: typing_extensions.Annotated[
+            typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String], pydantic.Field(discriminator="type")
+        ]
+
+        def get_as_union(self) -> typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String]:
+            return self.root
+
+    else:
+        __root__: typing_extensions.Annotated[
+            typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String], pydantic.Field(discriminator="type")
+        ]
+
+        def get_as_union(self) -> typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String]:
+            return self.__root__
 
     def visit(self, integer: typing.Callable[[int], T_Result], string: typing.Callable[[str], T_Result]) -> T_Result:
-        if self.__root__.type == "integer":
-            return integer(self.__root__.value)
-        if self.__root__.type == "string":
-            return string(self.__root__.value)
-
-    __root__: typing_extensions.Annotated[
-        typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String], pydantic_v1.Field(discriminator="type")
-    ]
-
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
-
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        frozen = True
-        smart_union = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        if self.get_as_union().type == "integer":
+            return integer(self.get_as_union().value)
+        if self.get_as_union().type == "string":
+            return string(self.get_as_union().value)
 
 
 class _UnionWithPrimitive:
-    class Integer(pydantic_v1.BaseModel):
+    class Integer(UniversalBaseModel):
         type: typing.Literal["integer"] = "integer"
         value: int
 
-        class Config:
-            frozen = True
-            smart_union = True
+        if IS_PYDANTIC_V2:
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
+        else:
 
-    class String(pydantic_v1.BaseModel):
+            class Config:
+                frozen = True
+                smart_union = True
+
+    class String(UniversalBaseModel):
         type: typing.Literal["string"] = "string"
         value: str
 
-        class Config:
-            frozen = True
-            smart_union = True
+        if IS_PYDANTIC_V2:
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
+        else:
 
-
-UnionWithPrimitive.update_forward_refs()
+            class Config:
+                frozen = True
+                smart_union = True

@@ -49,7 +49,7 @@ class EnumClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return parse_obj_as(WeatherReport, _response.json())
+                return typing.cast(WeatherReport, parse_obj_as(type_=WeatherReport, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -100,7 +100,7 @@ class AsyncEnumClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return parse_obj_as(WeatherReport, _response.json())
+                return typing.cast(WeatherReport, parse_obj_as(type_=WeatherReport, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

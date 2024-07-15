@@ -8,7 +8,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pagination import AsyncPager, SyncPager
-from ..core.pydantic_utilities import pydantic_v1
+from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..types.username_cursor import UsernameCursor
 from .types.list_users_extended_response import ListUsersExtendedResponse
@@ -81,7 +81,7 @@ class UsersClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+                _parsed_response = typing.cast(ListUsersPaginationResponse, parse_obj_as(type_=ListUsersPaginationResponse, object_=_response.json()))  # type: ignore
                 _has_next = False
                 _get_next = None
                 if _parsed_response.page is not None and _parsed_response.page.next is not None:
@@ -161,7 +161,7 @@ class UsersClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+                _parsed_response = typing.cast(ListUsersPaginationResponse, parse_obj_as(type_=ListUsersPaginationResponse, object_=_response.json()))  # type: ignore
                 _has_next = True
                 _get_next = lambda: self.list_with_offset_pagination(
                     page=page + 1,
@@ -233,7 +233,7 @@ class UsersClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+                _parsed_response = typing.cast(ListUsersPaginationResponse, parse_obj_as(type_=ListUsersPaginationResponse, object_=_response.json()))  # type: ignore
                 _has_next = True
                 _get_next = lambda: self.list_with_offset_step_pagination(
                     page=page + 1, limit=limit, order=order, request_options=request_options
@@ -286,7 +286,7 @@ class UsersClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = pydantic_v1.parse_obj_as(ListUsersExtendedResponse, _response.json())  # type: ignore
+                _parsed_response = typing.cast(ListUsersExtendedResponse, parse_obj_as(type_=ListUsersExtendedResponse, object_=_response.json()))  # type: ignore
                 _parsed_next = _parsed_response.next
                 _has_next = _parsed_next is not None
                 _get_next = lambda: self.list_with_extended_results(
@@ -340,7 +340,7 @@ class UsersClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = pydantic_v1.parse_obj_as(UsernameCursor, _response.json())  # type: ignore
+                _parsed_response = typing.cast(UsernameCursor, parse_obj_as(type_=UsernameCursor, object_=_response.json()))  # type: ignore
                 _has_next = False
                 _get_next = None
                 if _parsed_response.cursor is not None:
@@ -396,7 +396,7 @@ class UsersClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = pydantic_v1.parse_obj_as(UsernameContainer, _response.json())  # type: ignore
+                _parsed_response = typing.cast(UsernameContainer, parse_obj_as(type_=UsernameContainer, object_=_response.json()))  # type: ignore
                 _has_next = True
                 _get_next = lambda: self.list_with_global_config(offset=offset + 1, request_options=request_options)
                 _items = _parsed_response.results
@@ -478,7 +478,7 @@ class AsyncUsersClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+                _parsed_response = typing.cast(ListUsersPaginationResponse, parse_obj_as(type_=ListUsersPaginationResponse, object_=_response.json()))  # type: ignore
                 _has_next = False
                 _get_next = None
                 if _parsed_response.page is not None and _parsed_response.page.next is not None:
@@ -566,7 +566,7 @@ class AsyncUsersClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+                _parsed_response = typing.cast(ListUsersPaginationResponse, parse_obj_as(type_=ListUsersPaginationResponse, object_=_response.json()))  # type: ignore
                 _has_next = True
                 _get_next = lambda: self.list_with_offset_pagination(
                     page=page + 1,
@@ -646,7 +646,7 @@ class AsyncUsersClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+                _parsed_response = typing.cast(ListUsersPaginationResponse, parse_obj_as(type_=ListUsersPaginationResponse, object_=_response.json()))  # type: ignore
                 _has_next = True
                 _get_next = lambda: self.list_with_offset_step_pagination(
                     page=page + 1, limit=limit, order=order, request_options=request_options
@@ -706,7 +706,7 @@ class AsyncUsersClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = pydantic_v1.parse_obj_as(ListUsersExtendedResponse, _response.json())  # type: ignore
+                _parsed_response = typing.cast(ListUsersExtendedResponse, parse_obj_as(type_=ListUsersExtendedResponse, object_=_response.json()))  # type: ignore
                 _parsed_next = _parsed_response.next
                 _has_next = _parsed_next is not None
                 _get_next = lambda: self.list_with_extended_results(
@@ -768,7 +768,7 @@ class AsyncUsersClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = pydantic_v1.parse_obj_as(UsernameCursor, _response.json())  # type: ignore
+                _parsed_response = typing.cast(UsernameCursor, parse_obj_as(type_=UsernameCursor, object_=_response.json()))  # type: ignore
                 _has_next = False
                 _get_next = None
                 if _parsed_response.cursor is not None:
@@ -832,7 +832,7 @@ class AsyncUsersClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = pydantic_v1.parse_obj_as(UsernameContainer, _response.json())  # type: ignore
+                _parsed_response = typing.cast(UsernameContainer, parse_obj_as(type_=UsernameContainer, object_=_response.json()))  # type: ignore
                 _has_next = True
                 _get_next = lambda: self.list_with_global_config(offset=offset + 1, request_options=request_options)
                 _items = _parsed_response.results

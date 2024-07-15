@@ -52,9 +52,11 @@ class NoAuthClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return parse_obj_as(bool, _response.json())
+                return typing.cast(bool, parse_obj_as(type_=bool, object_=_response.json()))  # type: ignore
             if _response.status_code == 400:
-                raise BadRequestBody(parse_obj_as(BadObjectRequestInfo, _response.json()))
+                raise BadRequestBody(
+                    typing.cast(BadObjectRequestInfo, parse_obj_as(type_=BadObjectRequestInfo, object_=_response.json()))  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -107,9 +109,11 @@ class AsyncNoAuthClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return parse_obj_as(bool, _response.json())
+                return typing.cast(bool, parse_obj_as(type_=bool, object_=_response.json()))  # type: ignore
             if _response.status_code == 400:
-                raise BadRequestBody(parse_obj_as(BadObjectRequestInfo, _response.json()))
+                raise BadRequestBody(
+                    typing.cast(BadObjectRequestInfo, parse_obj_as(type_=BadObjectRequestInfo, object_=_response.json()))  # type: ignore
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

@@ -9,7 +9,6 @@ from pydantic_core import PydanticUndefined
 
 import pydantic
 
-from .datetime_utils import serialize_datetime
 from .pydantic_utilities import get_args  # type: ignore
 from .pydantic_utilities import get_origin  # type: ignore
 from .pydantic_utilities import is_literal_type  # type: ignore
@@ -32,45 +31,11 @@ Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
 class UncheckedBaseModel(UniversalBaseModel):
     if IS_PYDANTIC_V2:
         # Note: `smart_union` is on by defautl in Pydantic v2
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow", populate_by_name=True, json_encoders={dt.datetime: serialize_datetime}
-        )
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
     else:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra=pydantic.Extra.allow,
-            smart_union=True,
-            allow_population_by_field_name=True,
-            json_encoders={dt.datetime: serialize_datetime},
-        )
 
-    @classmethod
-    def get_is_populate_by_name(cls: typing.Type["Model"]) -> bool:
-        if IS_PYDANTIC_V2:
-            return cls.model_config.get("populate_by_name", False)
-        return cls.__config__.allow_population_by_field_name  # type: ignore
-
-    @classmethod
-    def get_model_config(cls: typing.Type["Model"]) -> typing.Any:
-        if IS_PYDANTIC_V2:
-            return cls.model_config
-        return cls.__config__  # type: ignore
-
-    @classmethod
-    def get_model_fields(cls: typing.Type["Model"]) -> typing.Dict[str, pydantic.fields.FieldInfo]:
-        if IS_PYDANTIC_V2:
-            return cls.model_fields
-        return cls.__fields__
-
-    @classmethod
-    def get_field_default(cls: typing.Type["Model"], field: FieldInfo) -> typing.Any:
-        value = field.get_default()
-        if IS_PYDANTIC_V2:
-            from pydantic_core import PydanticUndefined
-
-            if value == PydanticUndefined:
-                return None
-            return value
-        return value
+        class Config:
+            extra = pydantic.Extra.allow
 
     @classmethod
     def model_construct(
@@ -91,9 +56,8 @@ class UncheckedBaseModel(UniversalBaseModel):
         if _fields_set is None:
             _fields_set = set(values.keys())
 
-        fields = UncheckedBaseModel.get_model_fields()
-
-        populate_by_name = UncheckedBaseModel.get_is_populate_by_name()
+        fields = _get_model_fields(cls)
+        populate_by_name = _get_is_populate_by_name(cls)
 
         for name, field in fields.items():
             # Key here is only used to pull data from the values dict
@@ -104,11 +68,20 @@ class UncheckedBaseModel(UniversalBaseModel):
                 key = name
 
             if key in values:
-                type_ = typing.cast(typing.Type, field.outer_type_)  # type: ignore
+                if IS_PYDANTIC_V2:
+                    type_ = field.annotation  # type: ignore
+                else:
+                    type_ = typing.cast(typing.Type, field.outer_type_)  # type: ignore
+
+                if type_ is None:
+                    # No type was found for the field, skip it for now
+                    # even though this is technically not expected behavior
+                    continue
+
                 fields_values[name] = construct_type(object_=values[key], type_=type_)
                 _fields_set.add(name)
             else:
-                default = UncheckedBaseModel.get_field_default(field)
+                default = _get_field_default(field)
 
                 # If the default values are non-null act like they've been set
                 # This effectively allows exclude_unset to work like exclude_none where
@@ -273,3 +246,26 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
             return object_
 
     return object_
+
+
+def _get_is_populate_by_name(model: typing.Type["Model"]) -> bool:
+    if IS_PYDANTIC_V2:
+        return model.model_config.get("populate_by_name", False)
+    return model.__config__.allow_population_by_field_name  # type: ignore
+
+
+def _get_model_fields(model: typing.Type["Model"]) -> typing.Dict[str, pydantic.fields.FieldInfo]:
+    if IS_PYDANTIC_V2:
+        return model.model_fields
+    return model.__fields__
+
+
+def _get_field_default(field: FieldInfo) -> typing.Any:
+    value = field.get_default()
+    if IS_PYDANTIC_V2:
+        from pydantic_core import PydanticUndefined
+
+        if value == PydanticUndefined:
+            return None
+        return value
+    return value

@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
 from .cat import Cat as types_union_types_cat_Cat
 from .dog import Dog as types_union_types_dog_Dog
 
@@ -22,10 +22,10 @@ class _Factory:
         return Animal(_Animal.Cat(**value.dict(exclude_unset=True), animal="cat"))
 
 
-if IS_PYDANTIC_V2:
+class Animal(UniversalRootModel):
+    factory: typing.ClassVar[_Factory] = _Factory()
 
-    class _AnimalBase(pydantic.RootModel, UniversalBaseModel):
-
+    if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
             typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")
         ]
@@ -33,20 +33,13 @@ if IS_PYDANTIC_V2:
         def get_as_union(self) -> typing.Union[_Animal.Dog, _Animal.Cat]:
             return self.root
 
-else:
-
-    class _AnimalBase(UniversalBaseModel):
-
+    else:
         __root__: typing_extensions.Annotated[
             typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")
         ]
 
         def get_as_union(self) -> typing.Union[_Animal.Dog, _Animal.Cat]:
             return self.__root__
-
-
-class Animal(_AnimalBase):
-    factory: typing.ClassVar[_Factory] = _Factory()
 
     def visit(
         self,
@@ -64,18 +57,22 @@ class _Animal:
         animal: typing.Literal["dog"] = "dog"
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(populate_by_name=True, frozen=True)
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
         else:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-                allow_population_by_field_name=True, frozen=True, smart_union=True
-            )
+
+            class Config:
+                frozen = True
+                smart_union = True
+                allow_population_by_field_name = True
 
     class Cat(types_union_types_cat_Cat):
         animal: typing.Literal["cat"] = "cat"
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(populate_by_name=True, frozen=True)
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
         else:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-                allow_population_by_field_name=True, frozen=True, smart_union=True
-            )
+
+            class Config:
+                frozen = True
+                smart_union = True
+                allow_population_by_field_name = True

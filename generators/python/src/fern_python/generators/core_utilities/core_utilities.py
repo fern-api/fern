@@ -30,7 +30,16 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="pydantic_utilities"),
             ),
-            exports={"deep_union_pydantic_dicts", "parse_obj_as", "UniversalBaseModel", "IS_PYDANTIC_V2"},
+            exports={
+                "deep_union_pydantic_dicts",
+                "parse_obj_as",
+                "UniversalBaseModel",
+                "IS_PYDANTIC_V2",
+                "universal_root_validator",
+                "universal_field_validator",
+                "update_forward_refs",
+                "UniversalRootModel",
+            },
         )
 
         if self._allow_skipping_validation:
@@ -141,6 +150,15 @@ class CoreUtilities:
             ),
         )
 
+    def get_update_forward_refs(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"),
+                named_import="update_forward_refs",
+            ),
+        )
+
     def get_parse_obj_as(self, type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
         return AST.Expression(
             AST.FunctionInvocation(
@@ -187,4 +205,12 @@ class CoreUtilities:
             ),
             args=[AST.Expression(expression=f'"{field_name}"')],
             kwargs=[("pre", AST.Expression(expression="True" if pre else "False"))],
+        )
+
+    def get_universal_root_model(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="UniversalRootModel"
+            ),
         )

@@ -75,6 +75,7 @@ class FernAwarePydanticModel:
             universal_field_validator=self._context.core_utilities.universal_field_validator,
             universal_root_validator=self._context.core_utilities.universal_root_validator,
             include_model_config=include_model_config,
+            update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
         )
 
         self._model_contains_forward_refs = False
@@ -178,6 +179,12 @@ class FernAwarePydanticModel:
             ),
             decorator=decorator,
         )
+
+    def add_statement(
+        self,
+        statement: AST.AstNode,
+    ) -> None:
+        return self._pydantic_model.add_statement(statement)
 
     def add_method_unsafe(
         self,

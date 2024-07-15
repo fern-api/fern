@@ -41,7 +41,7 @@ class Pydantic:
     @staticmethod
     def PrivateAttr() -> AST.ClassReference:
         return _export("PrivateAttr")
-    
+
     @staticmethod
     def RootModel() -> AST.ClassReference:
         return _export("RootModel")

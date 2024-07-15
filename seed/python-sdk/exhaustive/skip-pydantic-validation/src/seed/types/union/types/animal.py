@@ -17,13 +17,14 @@ class Animal_Dog(UncheckedBaseModel):
     animal: typing.Literal["dog"] = "dog"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            populate_by_name=True, extra="allow", frozen=True
-        )
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
     else:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            allow_population_by_field_name=True, extra=pydantic.Extra.allow, frozen=True, smart_union=True
-        )
+
+        class Config:
+            frozen = True
+            smart_union = True
+            allow_population_by_field_name = True
+            extra = pydantic.Extra.allow
 
 
 class Animal_Cat(UncheckedBaseModel):
@@ -32,13 +33,14 @@ class Animal_Cat(UncheckedBaseModel):
     animal: typing.Literal["cat"] = "cat"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            populate_by_name=True, extra="allow", frozen=True
-        )
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
     else:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            allow_population_by_field_name=True, extra=pydantic.Extra.allow, frozen=True, smart_union=True
-        )
+
+        class Config:
+            frozen = True
+            smart_union = True
+            allow_population_by_field_name = True
+            extra = pydantic.Extra.allow
 
 
 Animal = typing_extensions.Annotated[typing.Union[Animal_Dog, Animal_Cat], UnionMetadata(discriminant="animal")]

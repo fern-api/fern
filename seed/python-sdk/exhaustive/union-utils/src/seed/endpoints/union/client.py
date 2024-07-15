@@ -53,7 +53,7 @@ class UnionClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return parse_obj_as(Animal, _response.json())
+                return typing.cast(Animal, parse_obj_as(type_=Animal, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -108,7 +108,7 @@ class AsyncUnionClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return parse_obj_as(Animal, _response.json())
+                return typing.cast(Animal, parse_obj_as(type_=Animal, object_=_response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

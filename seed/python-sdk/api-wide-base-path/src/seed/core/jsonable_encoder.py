@@ -10,31 +10,18 @@ https://github.com/tiangolo/fastapi/blob/master/fastapi/encoders.py
 
 import dataclasses
 import datetime as dt
-from collections import defaultdict
 from enum import Enum
 from pathlib import PurePath
 from types import GeneratorType
-from typing import Any, Callable, Dict, List, Optional, Set, Tuple, Union
+from typing import Any, Callable, Dict, List, Optional, Set, Union
 
 import pydantic
 
 from .datetime_utils import serialize_datetime
-from .pydantic_utilities import encoders_by_type, to_jsonable_with_fallback
+from .pydantic_utilities import IS_PYDANTIC_V2, encode_by_type, to_jsonable_with_fallback
 
 SetIntStr = Set[Union[int, str]]
 DictIntStrAny = Dict[Union[int, str], Any]
-
-
-def generate_encoders_by_class_tuples(
-    type_encoder_map: Dict[Any, Callable[[Any], Any]]
-) -> Dict[Callable[[Any], Any], Tuple[Any, ...]]:
-    encoders_by_class_tuples: Dict[Callable[[Any], Any], Tuple[Any, ...]] = defaultdict(tuple)
-    for type_, encoder in type_encoder_map.items():
-        encoders_by_class_tuples[encoder] += (type_,)
-    return encoders_by_class_tuples
-
-
-encoders_by_class_tuples = generate_encoders_by_class_tuples(encoders_by_type)
 
 
 def jsonable_encoder(obj: Any, custom_encoder: Optional[Dict[Any, Callable[[Any], Any]]] = None) -> Any:
@@ -47,7 +34,10 @@ def jsonable_encoder(obj: Any, custom_encoder: Optional[Dict[Any, Callable[[Any]
                 if isinstance(obj, encoder_type):
                     return encoder_instance(obj)
     if isinstance(obj, pydantic.BaseModel):
-        encoder = getattr(obj.__config__, "json_encoders", {})
+        if IS_PYDANTIC_V2:
+            encoder = getattr(obj.model_config, "json_encoders", {})  # type: ignore
+        else:
+            encoder = getattr(obj.__config__, "json_encoders", {})  # type: ignore
         if custom_encoder:
             encoder.update(custom_encoder)
         obj_dict = obj.dict(by_alias=True)
@@ -85,11 +75,9 @@ def jsonable_encoder(obj: Any, custom_encoder: Optional[Dict[Any, Callable[[Any]
         return encoded_list
 
     def fallback_serializer(o: Any) -> Any:
-        if type(o) in encoders_by_type:
-            return encoders_by_type[type(o)](o)
-        for encoder, classes_tuple in encoders_by_class_tuples.items():
-            if isinstance(o, classes_tuple):
-                return encoder(o)
+        attempt_encode = encode_by_type(o)
+        if attempt_encode is not None:
+            return attempt_encode
 
         try:
             data = dict(o)

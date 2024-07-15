@@ -9,10 +9,12 @@ from .jsonable_encoder import jsonable_encoder
 from .pydantic_utilities import (
     IS_PYDANTIC_V2,
     UniversalBaseModel,
+    UniversalRootModel,
     deep_union_pydantic_dicts,
     parse_obj_as,
     universal_field_validator,
     universal_root_validator,
+    update_forward_refs,
 )
 from .query_encoder import encode_query
 from .remove_none_from_dict import remove_none_from_dict
@@ -29,6 +31,7 @@ __all__ = [
     "RequestOptions",
     "SyncClientWrapper",
     "UniversalBaseModel",
+    "UniversalRootModel",
     "convert_file_dict_to_httpx_tuples",
     "deep_union_pydantic_dicts",
     "encode_query",
@@ -38,4 +41,5 @@ __all__ = [
     "serialize_datetime",
     "universal_field_validator",
     "universal_root_validator",
+    "update_forward_refs",
 ]

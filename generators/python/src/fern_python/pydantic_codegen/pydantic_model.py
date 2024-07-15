@@ -42,6 +42,7 @@ class PydanticModel:
         universal_root_validator: Callable[[bool], AST.FunctionInvocation],
         universal_field_validator: Callable[[str, bool], AST.FunctionInvocation],
         require_optional_fields: bool,
+        update_forward_ref_function_reference: AST.Reference,
         should_export: bool = True,
         base_models: Sequence[AST.ClassReference] = [],
         parent: Optional[ClassParent] = None,
@@ -81,6 +82,8 @@ class PydanticModel:
 
         self._include_model_config = include_model_config
 
+        self._update_forward_ref_function_reference = update_forward_ref_function_reference
+
     def to_reference(self) -> LocalClassReference:
         return self._local_class_reference
 
@@ -90,6 +93,21 @@ class PydanticModel:
             if unsanitized_field.name in BASE_MODEL_PROPERTIES
             else unsanitized_field
         )
+
+        # These are public fields so they should not start with an underscore
+        # Fern will automatically add the underscore in the beginning for fields
+        # that start with a number so we actually expect some public fields to
+        # start with an underscore that we need to strip
+        # This isn't just nice to have, Pydantic V2 also disallows underscore prefixes
+        # Python also does not allow fields to start with a number, so we need a new prefix
+        if field.name.startswith("_"):
+            sanitized_name = "f_" + field.name.lstrip("_")
+            prev_fields = field.__dict__
+            del prev_fields["name"]
+            field = PydanticField(
+                **(field.__dict__),
+                name=sanitized_name,
+            )
 
         is_aliased = field.json_field_name != field.name
         self._has_aliases |= is_aliased
@@ -140,6 +158,9 @@ class PydanticModel:
                 ),
             )
         )
+
+    def add_statement(self, statement: AST.AstNode) -> None:
+        self._class_declaration.add_statement(statement)
 
     def add_class_var(self, name: str, type_hint: AST.TypeHint, initializer: Optional[AST.Expression] = None) -> None:
         self._class_declaration.add_class_var(
@@ -262,45 +283,36 @@ class PydanticModel:
 
     def _maybe_model_config(self) -> Optional[AST.Expression]:
         extra_fields = self._extra_fields
-        config_kwargs: List[Tuple[str, AST.Expression]] = [("populate_by_name", AST.Expression("True"))]
-        v1_config_kwargs: List[Tuple[str, AST.Expression]] = [
-            ("allow_population_by_field_name", AST.Expression("True"))
-        ]
+        config_kwargs: List[Tuple[str, AST.Expression]] = []
         if extra_fields == "allow" or extra_fields == "forbid":
             config_kwargs.append(("extra", AST.Expression(f'"{extra_fields}"')))
-            if self._extra_fields == "forbid":
-                v1_config_kwargs.append(("extra", Pydantic.Extra.forbid()))
-            elif self._extra_fields == "allow":
-                v1_config_kwargs.append(("extra", Pydantic.Extra.allow()))
-
         if self._frozen:
             config_kwargs.append(("frozen", AST.Expression("True")))
-            v1_config_kwargs.append(("frozen", AST.Expression("True")))
         if self._orm_mode:
             config_kwargs.append(("from_attributes", AST.Expression("True")))
-            v1_config_kwargs.append(("from_orm", AST.Expression("True")))
-        if self._smart_union:
-            v1_config_kwargs.append(("smart_union", AST.Expression("True")))
 
         def write_extras(writer: AST.NodeWriter) -> None:
-            writer.write("if ")
-            # TODO: this class needs a context, then we can call get_is_pydantic_v2
-            writer.write_node(self._is_pydantic_v2)
-            writer.write_line(":")
-            with writer.indent():
-                writer.write("model_config: ")
-                writer.write_node(AST.TypeHint.class_var(AST.TypeHint(type=Pydantic.ConfigDict())))
-                writer.write(" = ")
-                writer.write_node(AST.Expression(AST.ClassInstantiation(Pydantic.ConfigDict(), kwargs=config_kwargs)))
-            writer.write_newline_if_last_line_not()
-            writer.write_line("else:")
-            with writer.indent():
-                writer.write("model_config: ")
-                writer.write_node(AST.TypeHint.class_var(AST.TypeHint(type=Pydantic.ConfigDict())))
-                writer.write(" = ")
-                writer.write_node(
-                    AST.Expression(AST.ClassInstantiation(Pydantic.ConfigDict(), kwargs=v1_config_kwargs))
-                )
+            config_class = self._get_config_class()
+            if len(config_kwargs) > 0:
+                writer.write("if ")
+                # TODO: this class needs a context, then we can call get_is_pydantic_v2
+                writer.write_node(self._is_pydantic_v2)
+                writer.write_line(":")
+                with writer.indent():
+                    writer.write("model_config: ")
+                    writer.write_node(AST.TypeHint.class_var(AST.TypeHint(type=Pydantic.ConfigDict())))
+                    writer.write(" = ")
+                    writer.write_node(
+                        AST.Expression(AST.ClassInstantiation(Pydantic.ConfigDict(), kwargs=config_kwargs))
+                    )
+                writer.write_newline_if_last_line_not()
+                writer.write_line("else:")
+                with writer.indent():
+                    if config_class is not None:
+                        writer.write_node(config_class)
+            elif config_class is not None:
+                writer.write_node(config_class)
+
         if self._include_model_config:
             self._class_declaration.add_expression(AST.Expression(AST.CodeWriter(write_extras)))
 
@@ -308,13 +320,8 @@ class PydanticModel:
         self._source_file.add_footer_expression(
             AST.Expression(
                 AST.FunctionInvocation(
-                    function_definition=dataclasses.replace(
-                        self._local_class_reference,
-                        qualified_name_excluding_import=(
-                            *self._local_class_reference.qualified_name_excluding_import,
-                            "update_forward_refs",
-                        ),
-                    ),
+                    function_definition=self._update_forward_ref_function_reference,
+                    args=[AST.Expression(self._local_class_reference)],
                     kwargs=sorted(
                         [(get_named_import_or_throw(reference), AST.Expression(reference)) for reference in localns],
                         # sort by name for consistency
@@ -323,6 +330,60 @@ class PydanticModel:
                 )
             )
         )
+
+    def _get_config_class(self) -> Optional[AST.ClassDeclaration]:
+        config = AST.ClassDeclaration(name="Config")
+
+        if self._frozen:
+            config.add_class_var(
+                AST.VariableDeclaration(
+                    name="frozen",
+                    initializer=AST.Expression("True"),
+                )
+            )
+
+        if self._orm_mode:
+            config.add_class_var(
+                AST.VariableDeclaration(
+                    name="orm_mode",
+                    initializer=AST.Expression("True"),
+                )
+            )
+
+        if self._smart_union:
+            config.add_class_var(
+                AST.VariableDeclaration(
+                    name="smart_union",
+                    initializer=AST.Expression("True"),
+                )
+            )
+
+        if self._has_aliases or len(self._base_models) > 0:
+            config.add_class_var(
+                AST.VariableDeclaration(
+                    name="allow_population_by_field_name",
+                    initializer=AST.Expression("True"),
+                )
+            )
+
+        if self._extra_fields == "forbid":
+            config.add_class_var(
+                AST.VariableDeclaration(
+                    name="extra",
+                    initializer=Pydantic.Extra.forbid(),
+                )
+            )
+        elif self._extra_fields == "allow":
+            config.add_class_var(
+                AST.VariableDeclaration(
+                    name="extra",
+                    initializer=Pydantic.Extra.allow(),
+                )
+            )
+
+        if len(config.class_vars) > 0:
+            return config
+        return None
 
     def __enter__(self) -> PydanticModel:
         return self

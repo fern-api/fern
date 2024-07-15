@@ -13,10 +13,11 @@ class Cat(UncheckedBaseModel):
     likes_to_meow: bool = pydantic.Field(alias="likesToMeow")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            populate_by_name=True, extra="allow", frozen=True
-        )
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
     else:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            allow_population_by_field_name=True, extra=pydantic.Extra.allow, frozen=True, smart_union=True
-        )
+
+        class Config:
+            frozen = True
+            smart_union = True
+            allow_population_by_field_name = True
+            extra = pydantic.Extra.allow

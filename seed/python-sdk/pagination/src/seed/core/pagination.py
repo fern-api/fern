@@ -2,9 +2,8 @@
 
 import typing
 
+import pydantic
 from typing_extensions import Self
-
-from .pydantic_utilities import pydantic_v1
 
 # Generic to represent the underlying type of the results within a page
 T = typing.TypeVar("T")
@@ -18,7 +17,7 @@ T = typing.TypeVar("T")
 #     # This should be the outer function that returns the SyncPager again
 #     get_next=lambda: list(..., cursor: response.cursor) (or list(..., offset: offset + 1))
 # )
-class BasePage(pydantic_v1.BaseModel, typing.Generic[T]):
+class BasePage(pydantic.BaseModel, typing.Generic[T]):
     has_next: bool
     items: typing.Optional[typing.List[T]]
 

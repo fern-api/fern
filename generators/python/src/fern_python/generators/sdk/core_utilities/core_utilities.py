@@ -108,6 +108,8 @@ class CoreUtilities:
                 "IS_PYDANTIC_V2",
                 "universal_root_validator",
                 "universal_field_validator",
+                "update_forward_refs",
+                "UniversalRootModel",
             },
         )
 
@@ -388,7 +390,16 @@ class CoreUtilities:
         return (
             self._construct_type(type_of_obj, obj)
             if self._allow_skipping_validation
-            else self.get_parse_obj_as(type_of_obj, obj)
+            else self._parse_obj_as(type_of_obj, obj)
+        )
+
+    def get_update_forward_refs(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"),
+                named_import="update_forward_refs",
+            ),
         )
 
     def get_paginator_reference(self, is_async: bool) -> AST.ClassReference:
@@ -453,17 +464,32 @@ class CoreUtilities:
             ),
         )
 
-    def get_parse_obj_as(self, type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
-        return AST.Expression(
-            AST.FunctionInvocation(
-                function_definition=AST.Reference(
-                    qualified_name_excluding_import=(),
-                    import_=AST.ReferenceImport(
-                        module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="parse_obj_as"
+    def _parse_obj_as(self, type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
+        def write(writer: AST.NodeWriter) -> None:
+            writer.write_node(
+                AST.TypeHint.invoke_cast(
+                    type_casted_to=type_of_obj,
+                    value_being_casted=AST.Expression(
+                        AST.FunctionInvocation(
+                            function_definition=self.get_parse_obj_as(),
+                            kwargs=[("type_", AST.Expression(type_of_obj)), ("object_", obj)],
+                        )
                     ),
-                ),
-                args=[AST.Expression(type_of_obj), obj],
+                )
             )
+
+            # mypy gets confused when passing unions for the Type argument
+            # https://github.com/pydantic/pydantic/issues/1847
+            writer.write_line("# type: ignore")
+
+        return AST.Expression(AST.CodeWriter(write))
+
+    def get_parse_obj_as(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="parse_obj_as"
+            ),
         )
 
     def get_is_pydantic_v2(self) -> AST.Expression:

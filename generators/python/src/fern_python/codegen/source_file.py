@@ -1,12 +1,10 @@
 from __future__ import annotations
 
 from abc import abstractmethod
-from dataclasses import dataclass
 from typing import Callable, List, Optional, TypeVar
 
 from ordered_set import OrderedSet
 
-from fern_python.codegen.ast.ast_node.ast_node import AstNode
 from fern_python.codegen.dependency_manager import DependencyManager
 
 from . import AST
@@ -18,33 +16,6 @@ from .reference_resolver_impl import ReferenceResolverImpl
 from .top_level_statement import TopLevelStatement
 
 T_AstNode = TypeVar("T_AstNode", bound=AST.AstNode)
-
-
-@dataclass
-class IfConditionLeaf:
-    condition: AST.Expression
-    code: AstNode
-
-
-@dataclass
-class ConditionalTree:
-    conditions: List[IfConditionLeaf]
-    else_code: Optional[AstNode]
-
-    def as_expression(self) -> AST.Expression:
-        def writer(writer: AST.NodeWriter):
-            for i, condition in enumerate(self.conditions):
-                writer.write("if " if i == 0 else "elif ")
-                writer.write_node(condition.condition)
-                writer.write(":")
-                with writer.indent():
-                    writer.write_node(condition.code)
-            if self.else_code is not None:
-                writer.write("else:")
-                with writer.indent():
-                    writer.write_node(self.else_code)
-
-        return AST.Expression(AST.CodeWriter(writer))
 
 
 class SourceFile(ClassParent):
@@ -78,7 +49,7 @@ class SourceFile(ClassParent):
 
     @abstractmethod
     def add_conditional_class_declaration(
-        self, declaration: AST.ClassDeclaration, conditional_tree: ConditionalTree, should_export: bool = None
+        self, declaration: AST.ClassDeclaration, conditional_tree: AST.ConditionalTree, should_export: bool = None
     ) -> LocalClassReference:
         ...
 
@@ -196,7 +167,7 @@ class SourceFileImpl(SourceFile):
     def add_conditional_class_declaration(
         self,
         declaration: AST.ClassDeclaration,
-        conditional_tree: ConditionalTree,
+        conditional_tree: AST.ConditionalTree,
     ) -> LocalClassReference:
         self._statements.append(TopLevelStatement(node=conditional_tree.as_expression()))
         new_declaration = declaration

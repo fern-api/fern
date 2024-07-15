@@ -4,27 +4,37 @@ from __future__ import annotations
 
 import typing
 
-from ...core.pydantic_utilities import pydantic_v1
+import pydantic
+
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .bar import Bar
 from .foo import Foo
 
 
-class Union_Foo(pydantic_v1.BaseModel):
+class Union_Foo(UniversalBaseModel):
     foo: Foo
     type: typing.Literal["foo"] = "foo"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
-class Union_Bar(pydantic_v1.BaseModel):
+class Union_Bar(UniversalBaseModel):
     bar: Bar
     type: typing.Literal["bar"] = "bar"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
 Union = typing.Union[Union_Foo, Union_Bar]
