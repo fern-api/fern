@@ -23,6 +23,10 @@ export class ReferenceGenerator {
         };
     }
 
+    public isEmpty(): boolean {
+        return this.rootSection == null && this.sections.length === 0;
+    }
+
     public async generateReference(): Promise<string> {
         const referenceConfig: FernGeneratorCli.ReferenceConfig = {
             rootSection: this.rootSection,

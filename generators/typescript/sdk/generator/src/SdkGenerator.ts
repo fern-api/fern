@@ -727,6 +727,10 @@ export class SdkGenerator {
     }
 
     private async generateReference(): Promise<void> {
+        if (this.refGenerator.isEmpty()) {
+            // Don't generate a reference.md if there aren't any sections.
+            return;
+        }
         await this.withRawFile({
             filepath: this.refGenerator.getExportedFilePath(),
             run: async ({ sourceFile }) => {
