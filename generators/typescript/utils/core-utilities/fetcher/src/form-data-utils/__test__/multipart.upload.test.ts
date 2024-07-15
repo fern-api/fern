@@ -2,7 +2,7 @@ import express from "express";
 import fs from "fs";
 import { killPortProcess } from "kill-port-process";
 import multer from "multer";
-import { FormDataWrapper } from "../..";
+import { newFormData } from "../..";
 import { getFetchFn } from "../../fetcher/getFetchFn";
 
 describe("Multipart Form Data Tests", () => {
@@ -43,19 +43,17 @@ describe("Multipart Form Data Tests", () => {
     });
 
     it("should return a 200 status code", async () => {
-        const fdw = new FormDataWrapper();
+        const fdw = await newFormData();
 
         const y = fs.readFileSync("package.json");
-        await fdw.appendFile("file", y);
-
-        const request = await fdw.getRequest();
+        await fdw.appendFile("file", y, "package.json");
 
         let fetch = await getFetchFn();
 
         const response = await fetch("http://localhost:4567/upload", {
             method: "POST",
-            body: await request.getBody(),
-            headers: await request.getHeaders()
+            body: await fdw.getBody(),
+            headers: await fdw.getHeaders()
         });
 
         expect(response.status).toBe(200);
