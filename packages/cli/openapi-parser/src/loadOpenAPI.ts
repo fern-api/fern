@@ -19,6 +19,21 @@ const XFernStreaming: NodeType = {
     extensionsPrefix: "x-"
 };
 
+const CodeSamples: NodeType = {
+    properties: {
+        language: { type: "string" },
+        code: "Schema"
+    },
+    required: ["language", "code"]
+};
+
+const XReadme: NodeType = {
+    properties: {
+        "code-samples": CodeSamples
+    },
+    extensionsPrefix: "x-"
+};
+
 const FERN_TYPE_EXTENSIONS: Plugin = {
     id: "",
     typeExtension: {
@@ -30,7 +45,8 @@ const FERN_TYPE_EXTENSIONS: Plugin = {
                     ...types.Operation,
                     properties: {
                         ...types.Operation?.properties,
-                        "x-fern-streaming": "XFernStreaming"
+                        "x-fern-streaming": "XFernStreaming",
+                        "x-readme": XReadme
                     }
                 }
             };

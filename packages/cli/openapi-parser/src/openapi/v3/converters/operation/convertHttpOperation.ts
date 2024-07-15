@@ -1,4 +1,4 @@
-import { EndpointWithExample } from "@fern-api/openapi-ir-sdk";
+import { EndpointExample, EndpointWithExample } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../../getExtension";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
@@ -8,6 +8,7 @@ import { OpenAPIExtension } from "../../extensions/extensions";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { getExamplesFromExtension } from "../../extensions/getExamplesFromExtension";
 import { getFernAvailability } from "../../extensions/getFernAvailability";
+import { getReadmeCodeSamples } from "../../extensions/getReadmeCodeSamples";
 import { OperationContext } from "../contexts";
 import { convertServer } from "../convertServer";
 import { convertParameters } from "../endpoint/convertParameters";
@@ -93,19 +94,21 @@ export function convertHttpOperation({
     const availability = getFernAvailability(operation);
     const examples = [...getExamplesFromExtension(operationContext, operation, context)];
     // Validation on readme examples is wrong, but we're changing this data model so it's a wontfix for now
-    // const readmeCodeSamples = getReadmeCodeSamples(operation);
-    // if (readmeCodeSamples.length > 0) {
-    //     examples.push({
-    //         codeSamples: readmeCodeSamples,
-    //         name: undefined,
-    //         description: undefined,
-    //         pathParameters: undefined,
-    //         queryParameters: undefined,
-    //         headers: undefined,
-    //         request: undefined,
-    //         response: undefined
-    //     });
-    // }
+    const readmeCodeSamples = getReadmeCodeSamples(operation);
+    if (readmeCodeSamples.length > 0) {
+        examples.push(
+            EndpointExample.full({
+                codeSamples: readmeCodeSamples,
+                name: undefined,
+                description: undefined,
+                pathParameters: undefined,
+                queryParameters: undefined,
+                headers: undefined,
+                request: undefined,
+                response: undefined
+            })
+        );
+    }
 
     return {
         summary: operation.summary,
