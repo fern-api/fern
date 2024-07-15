@@ -5677,14 +5677,12 @@ __metadata:
   dependencies:
     "@babel/preset-env": ^7.24.3
     "@babel/preset-typescript": ^7.24.1
-    "@types/busboy": ^1.5.4
     "@types/express": ^4.17.21
     "@types/jest": ^29.5.12
     "@types/multer": ^1.4.11
     "@types/node": ^18.7.18
     "@types/node-fetch": 2.6.9
     "@types/qs": 6.9.15
-    busboy: ^1.6.0
     depcheck: ^1.4.6
     eslint: ^8.56.0
     express: ^4.19.2
@@ -7152,15 +7150,6 @@ __metadata:
   dependencies:
     boxen: "*"
   checksum: 83d5dae5036a94b6baeb8e80282371f2821156066a1311361291d7a05a6043b5ba3c58fc9455f33fd403e74b23b97a65b81d1ffe6a061e5c19caba1602b35b50
-  languageName: node
-  linkType: hard
-
-"@types/busboy@npm:^1.5.4":
-  version: 1.5.4
-  resolution: "@types/busboy@npm:1.5.4"
-  dependencies:
-    "@types/node": "*"
-  checksum: 56444ed1223d5c8f6340128561c25bf7d6567494f507d386241de2ed6e22f9a69de7f536d71502c2f0897f81be7e8253455522ddd791db7e3eb769db7eae9e92
   languageName: node
   linkType: hard
 
@@ -9610,7 +9599,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"busboy@npm:^1.0.0, busboy@npm:^1.6.0":
+"busboy@npm:^1.0.0":
   version: 1.6.0
   resolution: "busboy@npm:1.6.0"
   dependencies:
