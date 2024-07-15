@@ -6663,7 +6663,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@types/cors", "npm:2.8.17"],\
             ["@types/decompress", "npm:4.2.7"],\
-            ["@types/express", "npm:4.17.20"],\
+            ["@types/express", "npm:4.17.21"],\
             ["@types/jest", "npm:29.5.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/uuid", "npm:9.0.8"],\
@@ -7270,7 +7270,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/mock", "workspace:packages/cli/mock"],\
             ["@fern-api/ir-sdk", "workspace:packages/ir-sdk"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
-            ["@types/express", "npm:4.17.20"],\
+            ["@types/express", "npm:4.17.21"],\
             ["@types/jest", "npm:29.5.12"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
@@ -10744,17 +10744,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/express", [\
-        ["npm:4.17.20", {\
-          "packageLocation": "./.yarn/cache/@types-express-npm-4.17.20-a63c9e93d3-bf8a97d283.zip/node_modules/@types/express/",\
-          "packageDependencies": [\
-            ["@types/express", "npm:4.17.20"],\
-            ["@types/body-parser", "npm:1.19.2"],\
-            ["@types/express-serve-static-core", "npm:4.17.39"],\
-            ["@types/qs", "npm:6.9.7"],\
-            ["@types/serve-static", "npm:1.15.0"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:4.17.21", {\
           "packageLocation": "./.yarn/cache/@types-express-npm-4.17.21-be92a0245e-fb23829863.zip/node_modules/@types/express/",\
           "packageDependencies": [\
