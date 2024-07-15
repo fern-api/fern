@@ -337,4 +337,4 @@ layout:
 js: 
  - ./js/penguin-ai.js
  - ./js/koala.js
- - .js/rb2b.js
+ - .js/rbtob.js
