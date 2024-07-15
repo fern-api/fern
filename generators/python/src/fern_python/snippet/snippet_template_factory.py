@@ -61,7 +61,7 @@ class SnippetTemplateFactory:
     CLIENT_FIXTURE_NAME = "client"
     TEST_URL_ENVVAR = "TESTS_BASE_URL"
 
-    MAXIMUM_TEMPLATE_DEPTH = 10
+    MAXIMUM_TEMPLATE_DEPTH = 20
 
     TAB_CHAR = "\t"
 
