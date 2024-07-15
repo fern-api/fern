@@ -4,10 +4,6 @@ import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension";
 import { ReadmeOpenAPIExtension } from "./readmeExtensions";
 
-interface ReferencedCodeSample {
-    $ref: string;
-}
-
 // https://docs.readme.com/main/docs/openapi-extensions#custom-code-samples
 interface ReadmeCodeSample {
     language: string;
@@ -24,21 +20,11 @@ function isReadMeCodeSamples(maybeCodeSamples: unknown): maybeCodeSamples is Rea
         if (!isPlainObject(maybeCodeSample)) {
             return false;
         }
-        if (typeof maybeCodeSample.code !== "string") {
-            throw new Error(
-                `Code is actually of type: ${typeof maybeCodeSample.code} ${JSON.stringify(maybeCodeSample.code)}`
-            );
-        }
-        if (
-            typeof maybeCodeSample.code === "string" ||
-            (isPlainObject(maybeCodeSample.code) &&
-                maybeCodeSample.code["$ref"] !== undefined &&
-                typeof maybeCodeSample.code["$ref"] === "string")
-        ) {
-            return true;
+        if (typeof maybeCodeSample.language !== "string" || typeof maybeCodeSample.code !== "string") {
+            return false;
         }
     }
-    return false;
+    return true;
 }
 
 export function getReadmeCodeSamples(operationObject: OpenAPIV3.OperationObject): CustomCodeSample[] {
