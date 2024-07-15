@@ -17,7 +17,7 @@ export interface CrossPlatformFormData {
 export async function newFormData(): Promise<CrossPlatformFormData> {
     let formdata: CrossPlatformFormData;
     if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion > 18) {
-        formdata = new Node18FormData();
+        formdata = new Node19FormData();
     } else if (RUNTIME.type === "node") {
         formdata = new Node16FormData();
     } else {
@@ -30,7 +30,7 @@ export async function newFormData(): Promise<CrossPlatformFormData> {
 /**
  * Form Data Implementation for Node.js 18+
  */
-class Node18FormData implements CrossPlatformFormData {
+class Node19FormData implements CrossPlatformFormData {
     private fd:
         | {
               append(name: string, value: unknown, fileName?: string): void;

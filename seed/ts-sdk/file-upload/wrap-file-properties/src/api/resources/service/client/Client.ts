@@ -37,42 +37,41 @@ export class Service {
      *     })
      */
     public async post(request: SeedFileUpload.MyRequest, requestOptions?: Service.RequestOptions): Promise<void> {
-        const _request = new core.FormDataWrapper();
+        const _request = await core.newFormData();
         if (request.maybeString != null) {
-            await _request.append("maybeString", request.maybeString, null);
+            await _request.append("maybeString", request.maybeString);
         }
 
-        await _request.append("integer", request.integer.toString(), null);
-        await _request.append("file", new Blob(request.file));
+        await _request.append("integer", request.integer.toString());
+        await _request.appendFile("file", request.file);
         for (const _file of request.fileList) {
-            await _request.append("fileList", _file, null);
+            await _request.append("fileList", _file);
         }
 
         if (request.maybeFile != null) {
-            await _request.append("maybeFile", new Blob(request.maybeFile));
+            await _request.appendFile("maybeFile", request.maybeFile);
         }
 
         if (request.maybeFileList != null) {
             for (const _file of request.maybeFileList) {
-                await _request.append("maybeFileList", _file, null);
+                await _request.append("maybeFileList", _file);
             }
         }
 
         if (request.maybeInteger != null) {
-            await _request.append("maybeInteger", request.maybeInteger.toString(), null);
+            await _request.append("maybeInteger", request.maybeInteger.toString());
         }
 
         if (request.optionalListOfStrings != null) {
             for (const _item of request.optionalListOfStrings) {
-                await _request.append("optionalListOfStrings", _item, null);
+                await _request.append("optionalListOfStrings", _item);
             }
         }
 
         for (const _item of request.listOfObjects) {
-            await _request.append("listOfObjects", JSON.stringify(_item), null);
+            await _request.append("listOfObjects", JSON.stringify(_item));
         }
 
-        const _maybeEncodedRequest = _request.getRequest();
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),
             method: "POST",
@@ -82,9 +81,9 @@ export class Service {
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...(await _maybeEncodedRequest.getHeaders()),
+                ...(await _request.getHeaders()),
             },
-            body: await _maybeEncodedRequest.getBody(),
+            body: await _request.getBody(),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -128,9 +127,8 @@ export class Service {
         request: SeedFileUpload.JustFileRequet,
         requestOptions?: Service.RequestOptions
     ): Promise<void> {
-        const _request = new core.FormDataWrapper();
-        await _request.append("file", new Blob(request.file));
-        const _maybeEncodedRequest = _request.getRequest();
+        const _request = await core.newFormData();
+        await _request.appendFile("file", request.file);
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/just-file"),
             method: "POST",
@@ -140,9 +138,9 @@ export class Service {
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...(await _maybeEncodedRequest.getHeaders()),
+                ...(await _request.getHeaders()),
             },
-            body: await _maybeEncodedRequest.getBody(),
+            body: await _request.getBody(),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -215,9 +213,8 @@ export class Service {
             }
         }
 
-        const _request = new core.FormDataWrapper();
-        await _request.append("file", new Blob(request.file));
-        const _maybeEncodedRequest = _request.getRequest();
+        const _request = await core.newFormData();
+        await _request.appendFile("file", request.file);
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/just-file-with-query-params"),
             method: "POST",
@@ -227,10 +224,10 @@ export class Service {
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...(await _maybeEncodedRequest.getHeaders()),
+                ...(await _request.getHeaders()),
             },
             queryParameters: _queryParams,
-            body: await _maybeEncodedRequest.getBody(),
+            body: await _request.getBody(),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
