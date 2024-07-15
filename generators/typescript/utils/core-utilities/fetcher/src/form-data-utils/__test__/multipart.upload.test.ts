@@ -3,7 +3,7 @@ import fs from "fs";
 import { killPortProcess } from "kill-port-process";
 import multer from "multer";
 import { FormDataWrapper } from "../..";
-import { getFetchFn } from "../getFetchFn";
+import { getFetchFn } from "../../fetcher/getFetchFn";
 
 describe("Multipart Form Data Tests", () => {
     let app = express();
