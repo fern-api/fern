@@ -35,6 +35,13 @@ describe("Multipart Form Data Tests", () => {
         });
     });
 
+    it("should reflect that blob of blob has same content as blob", async () => {
+        const b = new Blob(["test"]);
+        const c = new Blob([b]);
+
+        expect(await b.text).toBe(await c.text);
+    });
+
     it("should return a 200 status code", async () => {
         const fdw = new FormDataWrapper();
 
