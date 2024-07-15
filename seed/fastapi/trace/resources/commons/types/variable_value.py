@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
+import pydantic
 import typing_extensions
 
-from ....core.datetime_utils import serialize_datetime
-from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 from .binary_tree_value import BinaryTreeValue as resources_commons_types_binary_tree_value_BinaryTreeValue
 from .doubly_linked_list_value import (
     DoublyLinkedListValue as resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue,
@@ -22,72 +21,119 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def integer_value(self, value: int) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.IntegerValue(type="integerValue", value=value))
+        return VariableValue(_VariableValue.IntegerValue(type="integerValue", value=value))
 
     def boolean_value(self, value: bool) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.BooleanValue(type="booleanValue", value=value))
+        return VariableValue(_VariableValue.BooleanValue(type="booleanValue", value=value))
 
     def double_value(self, value: float) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.DoubleValue(type="doubleValue", value=value))
+        return VariableValue(_VariableValue.DoubleValue(type="doubleValue", value=value))
 
     def string_value(self, value: str) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.StringValue(type="stringValue", value=value))
+        return VariableValue(_VariableValue.StringValue(type="stringValue", value=value))
 
     def char_value(self, value: str) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.CharValue(type="charValue", value=value))
+        return VariableValue(_VariableValue.CharValue(type="charValue", value=value))
 
     def map_value(self, value: resources_commons_types_map_value_MapValue) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.MapValue(**value.dict(exclude_unset=True), type="mapValue"))
+        return VariableValue(_VariableValue.MapValue(**value.dict(exclude_unset=True), type="mapValue"))
 
     def list_value(self, value: typing.List[VariableValue]) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.ListValue(type="listValue", value=value))
+        return VariableValue(_VariableValue.ListValue(type="listValue", value=value))
 
     def binary_tree_value(self, value: resources_commons_types_binary_tree_value_BinaryTreeValue) -> VariableValue:
-        return VariableValue(
-            __root__=_VariableValue.BinaryTreeValue(**value.dict(exclude_unset=True), type="binaryTreeValue")
-        )
+        return VariableValue(_VariableValue.BinaryTreeValue(**value.dict(exclude_unset=True), type="binaryTreeValue"))
 
     def singly_linked_list_value(
         self, value: resources_commons_types_singly_linked_list_value_SinglyLinkedListValue
     ) -> VariableValue:
         return VariableValue(
-            __root__=_VariableValue.SinglyLinkedListValue(
-                **value.dict(exclude_unset=True), type="singlyLinkedListValue"
-            )
+            _VariableValue.SinglyLinkedListValue(**value.dict(exclude_unset=True), type="singlyLinkedListValue")
         )
 
     def doubly_linked_list_value(
         self, value: resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue
     ) -> VariableValue:
         return VariableValue(
-            __root__=_VariableValue.DoublyLinkedListValue(
-                **value.dict(exclude_unset=True), type="doublyLinkedListValue"
-            )
+            _VariableValue.DoublyLinkedListValue(**value.dict(exclude_unset=True), type="doublyLinkedListValue")
         )
 
     def null_value(self) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.NullValue(type="nullValue"))
+        return VariableValue(_VariableValue.NullValue(type="nullValue"))
 
 
-class VariableValue(pydantic_v1.BaseModel):
+class VariableValue(UniversalRootModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get_as_union(
-        self,
-    ) -> typing.Union[
-        _VariableValue.IntegerValue,
-        _VariableValue.BooleanValue,
-        _VariableValue.DoubleValue,
-        _VariableValue.StringValue,
-        _VariableValue.CharValue,
-        _VariableValue.MapValue,
-        _VariableValue.ListValue,
-        _VariableValue.BinaryTreeValue,
-        _VariableValue.SinglyLinkedListValue,
-        _VariableValue.DoublyLinkedListValue,
-        _VariableValue.NullValue,
-    ]:
-        return self.__root__
+    if IS_PYDANTIC_V2:
+        root: typing_extensions.Annotated[
+            typing.Union[
+                _VariableValue.IntegerValue,
+                _VariableValue.BooleanValue,
+                _VariableValue.DoubleValue,
+                _VariableValue.StringValue,
+                _VariableValue.CharValue,
+                _VariableValue.MapValue,
+                _VariableValue.ListValue,
+                _VariableValue.BinaryTreeValue,
+                _VariableValue.SinglyLinkedListValue,
+                _VariableValue.DoublyLinkedListValue,
+                _VariableValue.NullValue,
+            ],
+            pydantic.Field(discriminator="type"),
+        ]
+
+        def get_as_union(
+            self,
+        ) -> typing.Union[
+            _VariableValue.IntegerValue,
+            _VariableValue.BooleanValue,
+            _VariableValue.DoubleValue,
+            _VariableValue.StringValue,
+            _VariableValue.CharValue,
+            _VariableValue.MapValue,
+            _VariableValue.ListValue,
+            _VariableValue.BinaryTreeValue,
+            _VariableValue.SinglyLinkedListValue,
+            _VariableValue.DoublyLinkedListValue,
+            _VariableValue.NullValue,
+        ]:
+            return self.root
+
+    else:
+        __root__: typing_extensions.Annotated[
+            typing.Union[
+                _VariableValue.IntegerValue,
+                _VariableValue.BooleanValue,
+                _VariableValue.DoubleValue,
+                _VariableValue.StringValue,
+                _VariableValue.CharValue,
+                _VariableValue.MapValue,
+                _VariableValue.ListValue,
+                _VariableValue.BinaryTreeValue,
+                _VariableValue.SinglyLinkedListValue,
+                _VariableValue.DoublyLinkedListValue,
+                _VariableValue.NullValue,
+            ],
+            pydantic.Field(discriminator="type"),
+        ]
+
+        def get_as_union(
+            self,
+        ) -> typing.Union[
+            _VariableValue.IntegerValue,
+            _VariableValue.BooleanValue,
+            _VariableValue.DoubleValue,
+            _VariableValue.StringValue,
+            _VariableValue.CharValue,
+            _VariableValue.MapValue,
+            _VariableValue.ListValue,
+            _VariableValue.BinaryTreeValue,
+            _VariableValue.SinglyLinkedListValue,
+            _VariableValue.DoublyLinkedListValue,
+            _VariableValue.NullValue,
+        ]:
+            return self.__root__
 
     def visit(
         self,
@@ -107,75 +153,44 @@ class VariableValue(pydantic_v1.BaseModel):
         ],
         null_value: typing.Callable[[], T_Result],
     ) -> T_Result:
-        if self.__root__.type == "integerValue":
-            return integer_value(self.__root__.value)
-        if self.__root__.type == "booleanValue":
-            return boolean_value(self.__root__.value)
-        if self.__root__.type == "doubleValue":
-            return double_value(self.__root__.value)
-        if self.__root__.type == "stringValue":
-            return string_value(self.__root__.value)
-        if self.__root__.type == "charValue":
-            return char_value(self.__root__.value)
-        if self.__root__.type == "mapValue":
+        if self.get_as_union().type == "integerValue":
+            return integer_value(self.get_as_union().value)
+        if self.get_as_union().type == "booleanValue":
+            return boolean_value(self.get_as_union().value)
+        if self.get_as_union().type == "doubleValue":
+            return double_value(self.get_as_union().value)
+        if self.get_as_union().type == "stringValue":
+            return string_value(self.get_as_union().value)
+        if self.get_as_union().type == "charValue":
+            return char_value(self.get_as_union().value)
+        if self.get_as_union().type == "mapValue":
             return map_value(
-                resources_commons_types_map_value_MapValue(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
+                resources_commons_types_map_value_MapValue(
+                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
+                )
             )
-        if self.__root__.type == "listValue":
-            return list_value(self.__root__.value)
-        if self.__root__.type == "binaryTreeValue":
+        if self.get_as_union().type == "listValue":
+            return list_value(self.get_as_union().value)
+        if self.get_as_union().type == "binaryTreeValue":
             return binary_tree_value(
                 resources_commons_types_binary_tree_value_BinaryTreeValue(
-                    **self.__root__.dict(exclude_unset=True, exclude={"type"})
+                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
                 )
             )
-        if self.__root__.type == "singlyLinkedListValue":
+        if self.get_as_union().type == "singlyLinkedListValue":
             return singly_linked_list_value(
                 resources_commons_types_singly_linked_list_value_SinglyLinkedListValue(
-                    **self.__root__.dict(exclude_unset=True, exclude={"type"})
+                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
                 )
             )
-        if self.__root__.type == "doublyLinkedListValue":
+        if self.get_as_union().type == "doublyLinkedListValue":
             return doubly_linked_list_value(
                 resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue(
-                    **self.__root__.dict(exclude_unset=True, exclude={"type"})
+                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
                 )
             )
-        if self.__root__.type == "nullValue":
+        if self.get_as_union().type == "nullValue":
             return null_value()
-
-    __root__: typing_extensions.Annotated[
-        typing.Union[
-            _VariableValue.IntegerValue,
-            _VariableValue.BooleanValue,
-            _VariableValue.DoubleValue,
-            _VariableValue.StringValue,
-            _VariableValue.CharValue,
-            _VariableValue.MapValue,
-            _VariableValue.ListValue,
-            _VariableValue.BinaryTreeValue,
-            _VariableValue.SinglyLinkedListValue,
-            _VariableValue.DoublyLinkedListValue,
-            _VariableValue.NullValue,
-        ],
-        pydantic_v1.Field(discriminator="type"),
-    ]
-
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
-
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.forbid
-        json_encoders = {dt.datetime: serialize_datetime}
 
 
 from .key_value_pair import KeyValuePair  # noqa: E402
@@ -183,23 +198,23 @@ from .map_value import MapValue as resources_commons_types_map_value_MapValue  #
 
 
 class _VariableValue:
-    class IntegerValue(pydantic_v1.BaseModel):
+    class IntegerValue(UniversalBaseModel):
         type: typing.Literal["integerValue"] = "integerValue"
         value: int
 
-    class BooleanValue(pydantic_v1.BaseModel):
+    class BooleanValue(UniversalBaseModel):
         type: typing.Literal["booleanValue"] = "booleanValue"
         value: bool
 
-    class DoubleValue(pydantic_v1.BaseModel):
+    class DoubleValue(UniversalBaseModel):
         type: typing.Literal["doubleValue"] = "doubleValue"
         value: float
 
-    class StringValue(pydantic_v1.BaseModel):
+    class StringValue(UniversalBaseModel):
         type: typing.Literal["stringValue"] = "stringValue"
         value: str
 
-    class CharValue(pydantic_v1.BaseModel):
+    class CharValue(UniversalBaseModel):
         type: typing.Literal["charValue"] = "charValue"
         value: str
 
@@ -208,9 +223,8 @@ class _VariableValue:
 
         class Config:
             allow_population_by_field_name = True
-            populate_by_name = True
 
-    class ListValue(pydantic_v1.BaseModel):
+    class ListValue(UniversalBaseModel):
         type: typing.Literal["listValue"] = "listValue"
         value: typing.List[VariableValue]
 
@@ -219,30 +233,33 @@ class _VariableValue:
 
         class Config:
             allow_population_by_field_name = True
-            populate_by_name = True
 
     class SinglyLinkedListValue(resources_commons_types_singly_linked_list_value_SinglyLinkedListValue):
         type: typing.Literal["singlyLinkedListValue"] = "singlyLinkedListValue"
 
         class Config:
             allow_population_by_field_name = True
-            populate_by_name = True
 
     class DoublyLinkedListValue(resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue):
         type: typing.Literal["doublyLinkedListValue"] = "doublyLinkedListValue"
 
         class Config:
             allow_population_by_field_name = True
-            populate_by_name = True
 
-    class NullValue(pydantic_v1.BaseModel):
+    class NullValue(UniversalBaseModel):
         type: typing.Literal["nullValue"] = "nullValue"
 
 
-_VariableValue.MapValue.update_forward_refs(
-    KeyValuePair=KeyValuePair, MapValue=resources_commons_types_map_value_MapValue, VariableValue=VariableValue
+update_forward_refs(
+    _VariableValue.MapValue,
+    KeyValuePair=KeyValuePair,
+    MapValue=resources_commons_types_map_value_MapValue,
+    VariableValue=VariableValue,
 )
-_VariableValue.ListValue.update_forward_refs(
-    KeyValuePair=KeyValuePair, MapValue=resources_commons_types_map_value_MapValue, VariableValue=VariableValue
+update_forward_refs(
+    _VariableValue.ListValue,
+    KeyValuePair=KeyValuePair,
+    MapValue=resources_commons_types_map_value_MapValue,
+    VariableValue=VariableValue,
 )
-VariableValue.update_forward_refs()
+update_forward_refs(VariableValue)

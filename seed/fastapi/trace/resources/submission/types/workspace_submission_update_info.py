@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
+import pydantic
 import typing_extensions
 
-from ....core.datetime_utils import serialize_datetime
-from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
 from .error_info import ErrorInfo
 from .running_submission_state import RunningSubmissionState
 from .workspace_run_details import WorkspaceRunDetails
@@ -19,50 +18,87 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def running(self, value: RunningSubmissionState) -> WorkspaceSubmissionUpdateInfo:
-        return WorkspaceSubmissionUpdateInfo(
-            __root__=_WorkspaceSubmissionUpdateInfo.Running(type="running", value=value)
-        )
+        return WorkspaceSubmissionUpdateInfo(_WorkspaceSubmissionUpdateInfo.Running(type="running", value=value))
 
     def ran(self, value: WorkspaceRunDetails) -> WorkspaceSubmissionUpdateInfo:
         return WorkspaceSubmissionUpdateInfo(
-            __root__=_WorkspaceSubmissionUpdateInfo.Ran(**value.dict(exclude_unset=True), type="ran")
+            _WorkspaceSubmissionUpdateInfo.Ran(**value.dict(exclude_unset=True), type="ran")
         )
 
     def stopped(self) -> WorkspaceSubmissionUpdateInfo:
-        return WorkspaceSubmissionUpdateInfo(__root__=_WorkspaceSubmissionUpdateInfo.Stopped(type="stopped"))
+        return WorkspaceSubmissionUpdateInfo(_WorkspaceSubmissionUpdateInfo.Stopped(type="stopped"))
 
     def traced(self) -> WorkspaceSubmissionUpdateInfo:
-        return WorkspaceSubmissionUpdateInfo(__root__=_WorkspaceSubmissionUpdateInfo.Traced(type="traced"))
+        return WorkspaceSubmissionUpdateInfo(_WorkspaceSubmissionUpdateInfo.Traced(type="traced"))
 
     def traced_v_2(self, value: WorkspaceTracedUpdate) -> WorkspaceSubmissionUpdateInfo:
         return WorkspaceSubmissionUpdateInfo(
-            __root__=_WorkspaceSubmissionUpdateInfo.TracedV2(**value.dict(exclude_unset=True), type="tracedV2")
+            _WorkspaceSubmissionUpdateInfo.TracedV2(**value.dict(exclude_unset=True), type="tracedV2")
         )
 
     def errored(self, value: ErrorInfo) -> WorkspaceSubmissionUpdateInfo:
-        return WorkspaceSubmissionUpdateInfo(
-            __root__=_WorkspaceSubmissionUpdateInfo.Errored(type="errored", value=value)
-        )
+        return WorkspaceSubmissionUpdateInfo(_WorkspaceSubmissionUpdateInfo.Errored(type="errored", value=value))
 
     def finished(self) -> WorkspaceSubmissionUpdateInfo:
-        return WorkspaceSubmissionUpdateInfo(__root__=_WorkspaceSubmissionUpdateInfo.Finished(type="finished"))
+        return WorkspaceSubmissionUpdateInfo(_WorkspaceSubmissionUpdateInfo.Finished(type="finished"))
 
 
-class WorkspaceSubmissionUpdateInfo(pydantic_v1.BaseModel):
+class WorkspaceSubmissionUpdateInfo(UniversalRootModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get_as_union(
-        self,
-    ) -> typing.Union[
-        _WorkspaceSubmissionUpdateInfo.Running,
-        _WorkspaceSubmissionUpdateInfo.Ran,
-        _WorkspaceSubmissionUpdateInfo.Stopped,
-        _WorkspaceSubmissionUpdateInfo.Traced,
-        _WorkspaceSubmissionUpdateInfo.TracedV2,
-        _WorkspaceSubmissionUpdateInfo.Errored,
-        _WorkspaceSubmissionUpdateInfo.Finished,
-    ]:
-        return self.__root__
+    if IS_PYDANTIC_V2:
+        root: typing_extensions.Annotated[
+            typing.Union[
+                _WorkspaceSubmissionUpdateInfo.Running,
+                _WorkspaceSubmissionUpdateInfo.Ran,
+                _WorkspaceSubmissionUpdateInfo.Stopped,
+                _WorkspaceSubmissionUpdateInfo.Traced,
+                _WorkspaceSubmissionUpdateInfo.TracedV2,
+                _WorkspaceSubmissionUpdateInfo.Errored,
+                _WorkspaceSubmissionUpdateInfo.Finished,
+            ],
+            pydantic.Field(discriminator="type"),
+        ]
+
+        def get_as_union(
+            self,
+        ) -> typing.Union[
+            _WorkspaceSubmissionUpdateInfo.Running,
+            _WorkspaceSubmissionUpdateInfo.Ran,
+            _WorkspaceSubmissionUpdateInfo.Stopped,
+            _WorkspaceSubmissionUpdateInfo.Traced,
+            _WorkspaceSubmissionUpdateInfo.TracedV2,
+            _WorkspaceSubmissionUpdateInfo.Errored,
+            _WorkspaceSubmissionUpdateInfo.Finished,
+        ]:
+            return self.root
+
+    else:
+        __root__: typing_extensions.Annotated[
+            typing.Union[
+                _WorkspaceSubmissionUpdateInfo.Running,
+                _WorkspaceSubmissionUpdateInfo.Ran,
+                _WorkspaceSubmissionUpdateInfo.Stopped,
+                _WorkspaceSubmissionUpdateInfo.Traced,
+                _WorkspaceSubmissionUpdateInfo.TracedV2,
+                _WorkspaceSubmissionUpdateInfo.Errored,
+                _WorkspaceSubmissionUpdateInfo.Finished,
+            ],
+            pydantic.Field(discriminator="type"),
+        ]
+
+        def get_as_union(
+            self,
+        ) -> typing.Union[
+            _WorkspaceSubmissionUpdateInfo.Running,
+            _WorkspaceSubmissionUpdateInfo.Ran,
+            _WorkspaceSubmissionUpdateInfo.Stopped,
+            _WorkspaceSubmissionUpdateInfo.Traced,
+            _WorkspaceSubmissionUpdateInfo.TracedV2,
+            _WorkspaceSubmissionUpdateInfo.Errored,
+            _WorkspaceSubmissionUpdateInfo.Finished,
+        ]:
+            return self.__root__
 
     def visit(
         self,
@@ -74,53 +110,24 @@ class WorkspaceSubmissionUpdateInfo(pydantic_v1.BaseModel):
         errored: typing.Callable[[ErrorInfo], T_Result],
         finished: typing.Callable[[], T_Result],
     ) -> T_Result:
-        if self.__root__.type == "running":
-            return running(self.__root__.value)
-        if self.__root__.type == "ran":
-            return ran(WorkspaceRunDetails(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
-        if self.__root__.type == "stopped":
+        if self.get_as_union().type == "running":
+            return running(self.get_as_union().value)
+        if self.get_as_union().type == "ran":
+            return ran(WorkspaceRunDetails(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
+        if self.get_as_union().type == "stopped":
             return stopped()
-        if self.__root__.type == "traced":
+        if self.get_as_union().type == "traced":
             return traced()
-        if self.__root__.type == "tracedV2":
-            return traced_v_2(WorkspaceTracedUpdate(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
-        if self.__root__.type == "errored":
-            return errored(self.__root__.value)
-        if self.__root__.type == "finished":
+        if self.get_as_union().type == "tracedV2":
+            return traced_v_2(WorkspaceTracedUpdate(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
+        if self.get_as_union().type == "errored":
+            return errored(self.get_as_union().value)
+        if self.get_as_union().type == "finished":
             return finished()
-
-    __root__: typing_extensions.Annotated[
-        typing.Union[
-            _WorkspaceSubmissionUpdateInfo.Running,
-            _WorkspaceSubmissionUpdateInfo.Ran,
-            _WorkspaceSubmissionUpdateInfo.Stopped,
-            _WorkspaceSubmissionUpdateInfo.Traced,
-            _WorkspaceSubmissionUpdateInfo.TracedV2,
-            _WorkspaceSubmissionUpdateInfo.Errored,
-            _WorkspaceSubmissionUpdateInfo.Finished,
-        ],
-        pydantic_v1.Field(discriminator="type"),
-    ]
-
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
-
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.forbid
-        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _WorkspaceSubmissionUpdateInfo:
-    class Running(pydantic_v1.BaseModel):
+    class Running(UniversalBaseModel):
         type: typing.Literal["running"] = "running"
         value: RunningSubmissionState
 
@@ -129,12 +136,11 @@ class _WorkspaceSubmissionUpdateInfo:
 
         class Config:
             allow_population_by_field_name = True
-            populate_by_name = True
 
-    class Stopped(pydantic_v1.BaseModel):
+    class Stopped(UniversalBaseModel):
         type: typing.Literal["stopped"] = "stopped"
 
-    class Traced(pydantic_v1.BaseModel):
+    class Traced(UniversalBaseModel):
         type: typing.Literal["traced"] = "traced"
 
     class TracedV2(WorkspaceTracedUpdate):
@@ -142,14 +148,10 @@ class _WorkspaceSubmissionUpdateInfo:
 
         class Config:
             allow_population_by_field_name = True
-            populate_by_name = True
 
-    class Errored(pydantic_v1.BaseModel):
+    class Errored(UniversalBaseModel):
         type: typing.Literal["errored"] = "errored"
         value: ErrorInfo
 
-    class Finished(pydantic_v1.BaseModel):
+    class Finished(UniversalBaseModel):
         type: typing.Literal["finished"] = "finished"
-
-
-WorkspaceSubmissionUpdateInfo.update_forward_refs()

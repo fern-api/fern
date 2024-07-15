@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
-from ...core.datetime_utils import serialize_datetime
-from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+import pydantic
+
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..v_2.resources.problem.test_case_id import TestCaseId
 from .error_info import ErrorInfo
 from .execution_session_status import ExecutionSessionStatus
@@ -21,268 +21,159 @@ from .traced_file import TracedFile
 from .workspace_run_details import WorkspaceRunDetails
 
 
-class CodeExecutionUpdate_BuildingExecutor(pydantic_v1.BaseModel):
-    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
+class CodeExecutionUpdate_BuildingExecutor(UniversalBaseModel):
+    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
     status: ExecutionSessionStatus
     type: typing.Literal["buildingExecutor"] = "buildingExecutor"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            allow_population_by_field_name = True
+            extra = pydantic.Extra.allow
 
 
-class CodeExecutionUpdate_Running(pydantic_v1.BaseModel):
-    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
+class CodeExecutionUpdate_Running(UniversalBaseModel):
+    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
     state: RunningSubmissionState
     type: typing.Literal["running"] = "running"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            allow_population_by_field_name = True
+            extra = pydantic.Extra.allow
 
 
-class CodeExecutionUpdate_Errored(pydantic_v1.BaseModel):
-    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
-    error_info: ErrorInfo = pydantic_v1.Field(alias="errorInfo")
+class CodeExecutionUpdate_Errored(UniversalBaseModel):
+    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
+    error_info: ErrorInfo = pydantic.Field(alias="errorInfo")
     type: typing.Literal["errored"] = "errored"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            allow_population_by_field_name = True
+            extra = pydantic.Extra.allow
 
 
-class CodeExecutionUpdate_Stopped(pydantic_v1.BaseModel):
-    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
+class CodeExecutionUpdate_Stopped(UniversalBaseModel):
+    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
     type: typing.Literal["stopped"] = "stopped"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            allow_population_by_field_name = True
+            extra = pydantic.Extra.allow
 
 
-class CodeExecutionUpdate_Graded(pydantic_v1.BaseModel):
-    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
-    test_cases: typing.Dict[str, TestCaseResultWithStdout] = pydantic_v1.Field(alias="testCases")
+class CodeExecutionUpdate_Graded(UniversalBaseModel):
+    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
+    test_cases: typing.Dict[str, TestCaseResultWithStdout] = pydantic.Field(alias="testCases")
     type: typing.Literal["graded"] = "graded"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            allow_population_by_field_name = True
+            extra = pydantic.Extra.allow
 
 
-class CodeExecutionUpdate_GradedV2(pydantic_v1.BaseModel):
-    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
-    test_cases: typing.Dict[TestCaseId, TestCaseGrade] = pydantic_v1.Field(alias="testCases")
+class CodeExecutionUpdate_GradedV2(UniversalBaseModel):
+    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
+    test_cases: typing.Dict[TestCaseId, TestCaseGrade] = pydantic.Field(alias="testCases")
     type: typing.Literal["gradedV2"] = "gradedV2"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            allow_population_by_field_name = True
+            extra = pydantic.Extra.allow
 
 
-class CodeExecutionUpdate_WorkspaceRan(pydantic_v1.BaseModel):
-    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
-    run_details: WorkspaceRunDetails = pydantic_v1.Field(alias="runDetails")
+class CodeExecutionUpdate_WorkspaceRan(UniversalBaseModel):
+    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
+    run_details: WorkspaceRunDetails = pydantic.Field(alias="runDetails")
     type: typing.Literal["workspaceRan"] = "workspaceRan"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            allow_population_by_field_name = True
+            extra = pydantic.Extra.allow
 
 
-class CodeExecutionUpdate_Recording(pydantic_v1.BaseModel):
-    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
-    test_case_id: typing.Optional[str] = pydantic_v1.Field(alias="testCaseId", default=None)
-    line_number: int = pydantic_v1.Field(alias="lineNumber")
-    lightweight_stack_info: LightweightStackframeInformation = pydantic_v1.Field(alias="lightweightStackInfo")
-    traced_file: typing.Optional[TracedFile] = pydantic_v1.Field(alias="tracedFile", default=None)
+class CodeExecutionUpdate_Recording(UniversalBaseModel):
+    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
+    test_case_id: typing.Optional[str] = pydantic.Field(alias="testCaseId", default=None)
+    line_number: int = pydantic.Field(alias="lineNumber")
+    lightweight_stack_info: LightweightStackframeInformation = pydantic.Field(alias="lightweightStackInfo")
+    traced_file: typing.Optional[TracedFile] = pydantic.Field(alias="tracedFile", default=None)
     type: typing.Literal["recording"] = "recording"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            allow_population_by_field_name = True
+            extra = pydantic.Extra.allow
 
 
-class CodeExecutionUpdate_Recorded(pydantic_v1.BaseModel):
-    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
-    trace_responses_size: int = pydantic_v1.Field(alias="traceResponsesSize")
-    test_case_id: typing.Optional[str] = pydantic_v1.Field(alias="testCaseId", default=None)
+class CodeExecutionUpdate_Recorded(UniversalBaseModel):
+    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
+    trace_responses_size: int = pydantic.Field(alias="traceResponsesSize")
+    test_case_id: typing.Optional[str] = pydantic.Field(alias="testCaseId", default=None)
     type: typing.Literal["recorded"] = "recorded"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            allow_population_by_field_name = True
+            extra = pydantic.Extra.allow
 
 
-class CodeExecutionUpdate_InvalidRequest(pydantic_v1.BaseModel):
+class CodeExecutionUpdate_InvalidRequest(UniversalBaseModel):
     request: SubmissionRequest
     cause: InvalidRequestCause
     type: typing.Literal["invalidRequest"] = "invalidRequest"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            extra = pydantic.Extra.allow
 
 
-class CodeExecutionUpdate_Finished(pydantic_v1.BaseModel):
-    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
+class CodeExecutionUpdate_Finished(UniversalBaseModel):
+    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
     type: typing.Literal["finished"] = "finished"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            allow_population_by_field_name = True
+            extra = pydantic.Extra.allow
 
 
 CodeExecutionUpdate = typing.Union[

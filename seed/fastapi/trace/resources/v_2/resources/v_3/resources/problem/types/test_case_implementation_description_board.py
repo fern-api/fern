@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
+import pydantic
 import typing_extensions
 
-from ........core.datetime_utils import serialize_datetime
-from ........core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from ........core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
 from .parameter_id import ParameterId
 
 T_Result = typing.TypeVar("T_Result")
@@ -17,61 +16,58 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def html(self, value: str) -> TestCaseImplementationDescriptionBoard:
         return TestCaseImplementationDescriptionBoard(
-            __root__=_TestCaseImplementationDescriptionBoard.Html(type="html", value=value)
+            _TestCaseImplementationDescriptionBoard.Html(type="html", value=value)
         )
 
     def param_id(self, value: ParameterId) -> TestCaseImplementationDescriptionBoard:
         return TestCaseImplementationDescriptionBoard(
-            __root__=_TestCaseImplementationDescriptionBoard.ParamId(type="paramId", value=value)
+            _TestCaseImplementationDescriptionBoard.ParamId(type="paramId", value=value)
         )
 
 
-class TestCaseImplementationDescriptionBoard(pydantic_v1.BaseModel):
+class TestCaseImplementationDescriptionBoard(UniversalRootModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get_as_union(
-        self,
-    ) -> typing.Union[_TestCaseImplementationDescriptionBoard.Html, _TestCaseImplementationDescriptionBoard.ParamId]:
-        return self.__root__
+    if IS_PYDANTIC_V2:
+        root: typing_extensions.Annotated[
+            typing.Union[_TestCaseImplementationDescriptionBoard.Html, _TestCaseImplementationDescriptionBoard.ParamId],
+            pydantic.Field(discriminator="type"),
+        ]
+
+        def get_as_union(
+            self,
+        ) -> typing.Union[
+            _TestCaseImplementationDescriptionBoard.Html, _TestCaseImplementationDescriptionBoard.ParamId
+        ]:
+            return self.root
+
+    else:
+        __root__: typing_extensions.Annotated[
+            typing.Union[_TestCaseImplementationDescriptionBoard.Html, _TestCaseImplementationDescriptionBoard.ParamId],
+            pydantic.Field(discriminator="type"),
+        ]
+
+        def get_as_union(
+            self,
+        ) -> typing.Union[
+            _TestCaseImplementationDescriptionBoard.Html, _TestCaseImplementationDescriptionBoard.ParamId
+        ]:
+            return self.__root__
 
     def visit(
         self, html: typing.Callable[[str], T_Result], param_id: typing.Callable[[ParameterId], T_Result]
     ) -> T_Result:
-        if self.__root__.type == "html":
-            return html(self.__root__.value)
-        if self.__root__.type == "paramId":
-            return param_id(self.__root__.value)
-
-    __root__: typing_extensions.Annotated[
-        typing.Union[_TestCaseImplementationDescriptionBoard.Html, _TestCaseImplementationDescriptionBoard.ParamId],
-        pydantic_v1.Field(discriminator="type"),
-    ]
-
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
-
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.forbid
-        json_encoders = {dt.datetime: serialize_datetime}
+        if self.get_as_union().type == "html":
+            return html(self.get_as_union().value)
+        if self.get_as_union().type == "paramId":
+            return param_id(self.get_as_union().value)
 
 
 class _TestCaseImplementationDescriptionBoard:
-    class Html(pydantic_v1.BaseModel):
+    class Html(UniversalBaseModel):
         type: typing.Literal["html"] = "html"
         value: str
 
-    class ParamId(pydantic_v1.BaseModel):
+    class ParamId(UniversalBaseModel):
         type: typing.Literal["paramId"] = "paramId"
         value: ParameterId
-
-
-TestCaseImplementationDescriptionBoard.update_forward_refs()

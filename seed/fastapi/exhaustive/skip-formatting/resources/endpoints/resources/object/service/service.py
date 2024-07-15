@@ -24,28 +24,36 @@ class AbstractEndpointsObjectService(AbstractFernService):
     with FastAPI when you register your implementation using Fern's register()
     function.
     """
+    
     @abc.abstractmethod
     def get_and_return_with_optional_field(self, *, body: ObjectWithOptionalField, auth: ApiAuth) -> ObjectWithOptionalField:
         ...
+    
     @abc.abstractmethod
     def get_and_return_with_required_field(self, *, body: ObjectWithRequiredField, auth: ApiAuth) -> ObjectWithRequiredField:
         ...
+    
     @abc.abstractmethod
     def get_and_return_with_map_of_map(self, *, body: ObjectWithMapOfMap, auth: ApiAuth) -> ObjectWithMapOfMap:
         ...
+    
     @abc.abstractmethod
     def get_and_return_nested_with_optional_field(self, *, body: NestedObjectWithOptionalField, auth: ApiAuth) -> NestedObjectWithOptionalField:
         ...
+    
     @abc.abstractmethod
     def get_and_return_nested_with_required_field(self, *, body: NestedObjectWithRequiredField, string: str, auth: ApiAuth) -> NestedObjectWithRequiredField:
         ...
+    
     @abc.abstractmethod
     def get_and_return_nested_with_required_field_as_list(self, *, body: typing.List[NestedObjectWithRequiredField], auth: ApiAuth) -> NestedObjectWithRequiredField:
         ...
+    
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
     """
+    
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_get_and_return_with_optional_field(router=router)
@@ -54,6 +62,7 @@ class AbstractEndpointsObjectService(AbstractFernService):
         cls.__init_get_and_return_nested_with_optional_field(router=router)
         cls.__init_get_and_return_nested_with_required_field(router=router)
         cls.__init_get_and_return_nested_with_required_field_as_list(router=router)
+    
     @classmethod
     def __init_get_and_return_with_optional_field(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_with_optional_field)
@@ -91,6 +100,7 @@ class AbstractEndpointsObjectService(AbstractFernService):
             description=AbstractEndpointsObjectService.get_and_return_with_optional_field.__doc__,
             **get_route_args(cls.get_and_return_with_optional_field, default_tag="endpoints.object"),
         )(wrapper)
+    
     @classmethod
     def __init_get_and_return_with_required_field(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_with_required_field)
@@ -128,6 +138,7 @@ class AbstractEndpointsObjectService(AbstractFernService):
             description=AbstractEndpointsObjectService.get_and_return_with_required_field.__doc__,
             **get_route_args(cls.get_and_return_with_required_field, default_tag="endpoints.object"),
         )(wrapper)
+    
     @classmethod
     def __init_get_and_return_with_map_of_map(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_with_map_of_map)
@@ -165,6 +176,7 @@ class AbstractEndpointsObjectService(AbstractFernService):
             description=AbstractEndpointsObjectService.get_and_return_with_map_of_map.__doc__,
             **get_route_args(cls.get_and_return_with_map_of_map, default_tag="endpoints.object"),
         )(wrapper)
+    
     @classmethod
     def __init_get_and_return_nested_with_optional_field(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_nested_with_optional_field)
@@ -202,6 +214,7 @@ class AbstractEndpointsObjectService(AbstractFernService):
             description=AbstractEndpointsObjectService.get_and_return_nested_with_optional_field.__doc__,
             **get_route_args(cls.get_and_return_nested_with_optional_field, default_tag="endpoints.object"),
         )(wrapper)
+    
     @classmethod
     def __init_get_and_return_nested_with_required_field(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_nested_with_required_field)
@@ -241,6 +254,7 @@ class AbstractEndpointsObjectService(AbstractFernService):
             description=AbstractEndpointsObjectService.get_and_return_nested_with_required_field.__doc__,
             **get_route_args(cls.get_and_return_nested_with_required_field, default_tag="endpoints.object"),
         )(wrapper)
+    
     @classmethod
     def __init_get_and_return_nested_with_required_field_as_list(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_nested_with_required_field_as_list)

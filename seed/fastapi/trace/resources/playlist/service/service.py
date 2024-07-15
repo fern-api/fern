@@ -29,40 +29,47 @@ class AbstractPlaylistService(AbstractFernService):
     with FastAPI when you register your implementation using Fern's register()
     function.
     """
+    
     @abc.abstractmethod
     def create_playlist(self, *, body: PlaylistCreateRequest, service_param: int, datetime: dt.datetime, optional_datetime: typing.Optional[dt.datetime] = None, x_random_header: typing.Optional[str] = None, auth: ApiAuth) -> Playlist:
         """
         Create a new playlist
         """
         ...
+    
     @abc.abstractmethod
     def get_playlists(self, *, service_param: int, limit: typing.Optional[int] = None, other_field: str, multi_line_docs: str, optional_multiple_field: typing.Optional[typing.List[str]] = None, multiple_field: typing.List[str], x_random_header: typing.Optional[str] = None, auth: ApiAuth) -> typing.Sequence[Playlist]:
         """
         Returns the user's playlists
         """
         ...
+    
     @abc.abstractmethod
     def get_playlist(self, *, service_param: int, playlist_id: str, x_random_header: typing.Optional[str] = None) -> Playlist:
         """
         Returns a playlist
         """
         ...
+    
     @abc.abstractmethod
     def update_playlist(self, *, body: typing.Optional[UpdatePlaylistRequest] = None, service_param: int, playlist_id: str, x_random_header: typing.Optional[str] = None, auth: ApiAuth) -> typing.Optional[Playlist]:
         """
         Updates a playlist
         """
         ...
+    
     @abc.abstractmethod
     def delete_playlist(self, *, service_param: int, playlist_id: str, x_random_header: typing.Optional[str] = None, auth: ApiAuth) -> None:
         """
         Deletes a playlist
         """
         ...
+    
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
     """
+    
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_create_playlist(router=router)
@@ -70,6 +77,7 @@ class AbstractPlaylistService(AbstractFernService):
         cls.__init_get_playlist(router=router)
         cls.__init_update_playlist(router=router)
         cls.__init_delete_playlist(router=router)
+    
     @classmethod
     def __init_create_playlist(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.create_playlist)
@@ -115,6 +123,7 @@ class AbstractPlaylistService(AbstractFernService):
             description=AbstractPlaylistService.create_playlist.__doc__,
             **get_route_args(cls.create_playlist, default_tag="playlist"),
         )(wrapper)
+    
     @classmethod
     def __init_get_playlists(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_playlists)
@@ -165,6 +174,7 @@ class AbstractPlaylistService(AbstractFernService):
             description=AbstractPlaylistService.get_playlists.__doc__,
             **get_route_args(cls.get_playlists, default_tag="playlist"),
         )(wrapper)
+    
     @classmethod
     def __init_get_playlist(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_playlist)
@@ -206,6 +216,7 @@ class AbstractPlaylistService(AbstractFernService):
             description=AbstractPlaylistService.get_playlist.__doc__,
             **get_route_args(cls.get_playlist, default_tag="playlist"),
         )(wrapper)
+    
     @classmethod
     def __init_update_playlist(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.update_playlist)
@@ -251,6 +262,7 @@ class AbstractPlaylistService(AbstractFernService):
             description=AbstractPlaylistService.update_playlist.__doc__,
             **get_route_args(cls.update_playlist, default_tag="playlist"),
         )(wrapper)
+    
     @classmethod
     def __init_delete_playlist(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.delete_playlist)

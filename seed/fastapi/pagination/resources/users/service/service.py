@@ -27,28 +27,36 @@ class AbstractUsersService(AbstractFernService):
     with FastAPI when you register your implementation using Fern's register()
     function.
     """
+    
     @abc.abstractmethod
     def list_with_cursor_pagination(self, *, page: typing.Optional[int] = None, per_page: typing.Optional[int] = None, order: typing.Optional[Order] = None, starting_after: typing.Optional[str] = None) -> ListUsersPaginationResponse:
         ...
+    
     @abc.abstractmethod
     def list_with_offset_pagination(self, *, page: typing.Optional[int] = None, per_page: typing.Optional[int] = None, order: typing.Optional[Order] = None, starting_after: typing.Optional[str] = None) -> ListUsersPaginationResponse:
         ...
+    
     @abc.abstractmethod
     def list_with_offset_step_pagination(self, *, page: typing.Optional[int] = None, limit: typing.Optional[int] = None, order: typing.Optional[Order] = None) -> ListUsersPaginationResponse:
         ...
+    
     @abc.abstractmethod
     def list_with_extended_results(self, *, cursor: typing.Optional[uuid.UUID] = None) -> ListUsersExtendedResponse:
         ...
+    
     @abc.abstractmethod
     def list_usernames(self, *, starting_after: typing.Optional[str] = None) -> UsernameCursor:
         ...
+    
     @abc.abstractmethod
     def list_with_global_config(self, *, offset: typing.Optional[int] = None) -> UsernameContainer:
         ...
+    
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
     """
+    
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_list_with_cursor_pagination(router=router)
@@ -57,6 +65,7 @@ class AbstractUsersService(AbstractFernService):
         cls.__init_list_with_extended_results(router=router)
         cls.__init_list_usernames(router=router)
         cls.__init_list_with_global_config(router=router)
+    
     @classmethod
     def __init_list_with_cursor_pagination(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_with_cursor_pagination)
@@ -99,6 +108,7 @@ class AbstractUsersService(AbstractFernService):
             description=AbstractUsersService.list_with_cursor_pagination.__doc__,
             **get_route_args(cls.list_with_cursor_pagination, default_tag="users"),
         )(wrapper)
+    
     @classmethod
     def __init_list_with_offset_pagination(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_with_offset_pagination)
@@ -141,6 +151,7 @@ class AbstractUsersService(AbstractFernService):
             description=AbstractUsersService.list_with_offset_pagination.__doc__,
             **get_route_args(cls.list_with_offset_pagination, default_tag="users"),
         )(wrapper)
+    
     @classmethod
     def __init_list_with_offset_step_pagination(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_with_offset_step_pagination)
@@ -182,6 +193,7 @@ class AbstractUsersService(AbstractFernService):
             description=AbstractUsersService.list_with_offset_step_pagination.__doc__,
             **get_route_args(cls.list_with_offset_step_pagination, default_tag="users"),
         )(wrapper)
+    
     @classmethod
     def __init_list_with_extended_results(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_with_extended_results)
@@ -217,6 +229,7 @@ class AbstractUsersService(AbstractFernService):
             description=AbstractUsersService.list_with_extended_results.__doc__,
             **get_route_args(cls.list_with_extended_results, default_tag="users"),
         )(wrapper)
+    
     @classmethod
     def __init_list_usernames(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_usernames)
@@ -253,6 +266,7 @@ class AbstractUsersService(AbstractFernService):
             description=AbstractUsersService.list_usernames.__doc__,
             **get_route_args(cls.list_usernames, default_tag="users"),
         )(wrapper)
+    
     @classmethod
     def __init_list_with_global_config(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_with_global_config)

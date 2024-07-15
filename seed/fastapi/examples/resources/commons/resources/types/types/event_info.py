@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
+import pydantic
 import typing_extensions
 
-from ......core.datetime_utils import serialize_datetime
-from ......core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
 from .metadata import Metadata as resources_commons_resources_types_types_metadata_Metadata
 from .tag import Tag as resources_commons_resources_types_types_tag_Tag
 
@@ -17,13 +16,13 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def metadata(self, value: resources_commons_resources_types_types_metadata_Metadata) -> EventInfo:
-        return EventInfo(__root__=_EventInfo.Metadata(**value.dict(exclude_unset=True), type="metadata"))
+        return EventInfo(_EventInfo.Metadata(**value.dict(exclude_unset=True), type="metadata"))
 
     def tag(self, value: resources_commons_resources_types_types_tag_Tag) -> EventInfo:
-        return EventInfo(__root__=_EventInfo.Tag(type="tag", value=value))
+        return EventInfo(_EventInfo.Tag(type="tag", value=value))
 
 
-class EventInfo(pydantic_v1.BaseModel):
+class EventInfo(UniversalRootModel):
     """
     Examples
     --------
@@ -38,42 +37,35 @@ class EventInfo(pydantic_v1.BaseModel):
 
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get_as_union(self) -> typing.Union[_EventInfo.Metadata, _EventInfo.Tag]:
-        return self.__root__
+    if IS_PYDANTIC_V2:
+        root: typing_extensions.Annotated[
+            typing.Union[_EventInfo.Metadata, _EventInfo.Tag], pydantic.Field(discriminator="type")
+        ]
+
+        def get_as_union(self) -> typing.Union[_EventInfo.Metadata, _EventInfo.Tag]:
+            return self.root
+
+    else:
+        __root__: typing_extensions.Annotated[
+            typing.Union[_EventInfo.Metadata, _EventInfo.Tag], pydantic.Field(discriminator="type")
+        ]
+
+        def get_as_union(self) -> typing.Union[_EventInfo.Metadata, _EventInfo.Tag]:
+            return self.__root__
 
     def visit(
         self,
         metadata: typing.Callable[[resources_commons_resources_types_types_metadata_Metadata], T_Result],
         tag: typing.Callable[[resources_commons_resources_types_types_tag_Tag], T_Result],
     ) -> T_Result:
-        if self.__root__.type == "metadata":
+        if self.get_as_union().type == "metadata":
             return metadata(
                 resources_commons_resources_types_types_metadata_Metadata(
-                    **self.__root__.dict(exclude_unset=True, exclude={"type"})
+                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
                 )
             )
-        if self.__root__.type == "tag":
-            return tag(self.__root__.value)
-
-    __root__: typing_extensions.Annotated[
-        typing.Union[_EventInfo.Metadata, _EventInfo.Tag], pydantic_v1.Field(discriminator="type")
-    ]
-
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
-
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.forbid
-        json_encoders = {dt.datetime: serialize_datetime}
+        if self.get_as_union().type == "tag":
+            return tag(self.get_as_union().value)
 
 
 class _EventInfo:
@@ -82,11 +74,7 @@ class _EventInfo:
 
         class Config:
             allow_population_by_field_name = True
-            populate_by_name = True
 
-    class Tag(pydantic_v1.BaseModel):
+    class Tag(UniversalBaseModel):
         type: typing.Literal["tag"] = "tag"
         value: resources_commons_resources_types_types_tag_Tag
-
-
-EventInfo.update_forward_refs()

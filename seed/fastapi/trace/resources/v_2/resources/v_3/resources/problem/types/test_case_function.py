@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
+import pydantic
 import typing_extensions
 
-from ........core.datetime_utils import serialize_datetime
-from ........core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from ........core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
 from .test_case_with_actual_result_implementation import TestCaseWithActualResultImplementation
 from .void_function_definition import VoidFunctionDefinition
 
@@ -18,51 +17,45 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def with_actual_result(self, value: TestCaseWithActualResultImplementation) -> TestCaseFunction:
         return TestCaseFunction(
-            __root__=_TestCaseFunction.WithActualResult(**value.dict(exclude_unset=True), type="withActualResult")
+            _TestCaseFunction.WithActualResult(**value.dict(exclude_unset=True), type="withActualResult")
         )
 
     def custom(self, value: VoidFunctionDefinition) -> TestCaseFunction:
-        return TestCaseFunction(__root__=_TestCaseFunction.Custom(**value.dict(exclude_unset=True), type="custom"))
+        return TestCaseFunction(_TestCaseFunction.Custom(**value.dict(exclude_unset=True), type="custom"))
 
 
-class TestCaseFunction(pydantic_v1.BaseModel):
+class TestCaseFunction(UniversalRootModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get_as_union(self) -> typing.Union[_TestCaseFunction.WithActualResult, _TestCaseFunction.Custom]:
-        return self.__root__
+    if IS_PYDANTIC_V2:
+        root: typing_extensions.Annotated[
+            typing.Union[_TestCaseFunction.WithActualResult, _TestCaseFunction.Custom],
+            pydantic.Field(discriminator="type"),
+        ]
+
+        def get_as_union(self) -> typing.Union[_TestCaseFunction.WithActualResult, _TestCaseFunction.Custom]:
+            return self.root
+
+    else:
+        __root__: typing_extensions.Annotated[
+            typing.Union[_TestCaseFunction.WithActualResult, _TestCaseFunction.Custom],
+            pydantic.Field(discriminator="type"),
+        ]
+
+        def get_as_union(self) -> typing.Union[_TestCaseFunction.WithActualResult, _TestCaseFunction.Custom]:
+            return self.__root__
 
     def visit(
         self,
         with_actual_result: typing.Callable[[TestCaseWithActualResultImplementation], T_Result],
         custom: typing.Callable[[VoidFunctionDefinition], T_Result],
     ) -> T_Result:
-        if self.__root__.type == "withActualResult":
+        if self.get_as_union().type == "withActualResult":
             return with_actual_result(
-                TestCaseWithActualResultImplementation(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
+                TestCaseWithActualResultImplementation(**self.get_as_union().dict(exclude_unset=True, exclude={"type"}))
             )
-        if self.__root__.type == "custom":
-            return custom(VoidFunctionDefinition(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
-
-    __root__: typing_extensions.Annotated[
-        typing.Union[_TestCaseFunction.WithActualResult, _TestCaseFunction.Custom],
-        pydantic_v1.Field(discriminator="type"),
-    ]
-
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
-
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.forbid
-        json_encoders = {dt.datetime: serialize_datetime}
+        if self.get_as_union().type == "custom":
+            return custom(VoidFunctionDefinition(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
 
 
 class _TestCaseFunction:
@@ -71,14 +64,9 @@ class _TestCaseFunction:
 
         class Config:
             allow_population_by_field_name = True
-            populate_by_name = True
 
     class Custom(VoidFunctionDefinition):
         type: typing.Literal["custom"] = "custom"
 
         class Config:
             allow_population_by_field_name = True
-            populate_by_name = True
-
-
-TestCaseFunction.update_forward_refs()
