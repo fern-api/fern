@@ -1,3 +1,4 @@
+using System.Net.Http;
 using SeedAlias.Core;
 
 #nullable enable
@@ -13,6 +14,13 @@ public partial class SeedAliasClient
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
             clientOptions ?? new ClientOptions()
+        );
+    }
+
+    public async Task GetAsync(string typeId)
+    {
+        await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"/{typeId}" }
         );
     }
 }
