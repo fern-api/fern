@@ -1297,9 +1297,7 @@ class EndpointFunctionSnippetGenerator:
             if union.type == "named":
                 shape = union.shape.get_as_union()
                 if shape.type == "alias":
-                    return self._get_snippet_for_request_reference(
-                        shape.value, is_optional, request_parameter_names
-                    )
+                    return self._get_snippet_for_request_reference(shape.value, is_optional, request_parameter_names)
                 if shape.type == "object":
                     return self._get_snippet_for_request_reference_flattened(shape, request_parameter_names)
             return self._get_snippet_for_request_reference_default(example_type_reference)
