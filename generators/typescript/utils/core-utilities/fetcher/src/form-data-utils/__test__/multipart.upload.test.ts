@@ -46,8 +46,7 @@ describe("Multipart Form Data Tests", () => {
         const fdw = new FormDataWrapper();
 
         const y = fs.readFileSync("package.json");
-        // await fdw.append("file", new Blob(["test"]), "test.txt");
-        await fdw.append("file", y);
+        await fdw.appendFile("file", y);
 
         const request = await fdw.getRequest();
 

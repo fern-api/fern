@@ -40,12 +40,10 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
                 ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
                         referencetoFormData,
-                        ts.factory.createIdentifier("append")
+                        file ? ts.factory.createIdentifier("appendFile") : ts.factory.createIdentifier("append")
                     ),
                     undefined,
-                    file
-                        ? [ts.factory.createStringLiteral(key), value, ts.factory.createIdentifier("")]
-                        : [ts.factory.createStringLiteral(key), value]
+                    file ? [ts.factory.createStringLiteral(key), value] : [ts.factory.createStringLiteral(key), value]
                 )
             )
         );

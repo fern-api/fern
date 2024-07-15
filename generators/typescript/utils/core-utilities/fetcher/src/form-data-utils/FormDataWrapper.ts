@@ -64,24 +64,43 @@ class FormDataRequestBody {
 export class FormDataWrapper {
     private fd: CrossPlatformFormData | undefined;
 
-    public async append(name: string, value: any, fileName?: string): Promise<void> {
+    public async append(name: string, value: any): Promise<void> {
         if (this.fd == null) {
             if (RUNTIME.type === "node") {
                 if (Number(RUNTIME.version?.split(".")[0]) >= 18) {
                     this.fd = new (await import("formdata-node")).FormData();
-                    this.fd.append(
-                        name,
-                        new (await import("buffer")).Blob([value]),
-                        fileName === "" ? undefined : fileName
-                    );
                 } else {
                     this.fd = new (await import("form-data")).default();
-                    this.fd.append(name, value);
                 }
             } else {
                 this.fd = new FormData();
-                this.fd.append(name, new Blob([value]), fileName === "" ? undefined : fileName);
             }
+        }
+
+        this.fd.append(name, value);
+    }
+
+    public async appendFile(name: string, value: any, fileName?: string): Promise<void> {
+        if (this.fd == null) {
+            if (RUNTIME.type === "node") {
+                if (Number(RUNTIME.version?.split(".")[0]) >= 18) {
+                    this.fd = new (await import("formdata-node")).FormData();
+                } else {
+                    this.fd = new (await import("form-data")).default();
+                }
+            } else {
+                this.fd = new FormData();
+            }
+        }
+
+        if (RUNTIME.type === "node") {
+            if (Number(RUNTIME.version?.split(".")[0]) >= 18) {
+                this.fd.append(name, new (await import("buffer")).Blob([value]), fileName);
+            } else {
+                this.fd.append(name, value);
+            }
+        } else {
+            this.fd.append(name, new Blob([value]), fileName);
         }
     }
 
