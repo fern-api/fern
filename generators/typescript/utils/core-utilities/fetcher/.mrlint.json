@@ -4,7 +4,9 @@
   "private": false,
   "rules": {
     "duplicate-dependencies": {
-      "exclude": ["@fern-fern/ir-sdk"]
+      "exclude": [
+        "@fern-fern/ir-sdk"
+      ]
     },
     "depcheck": {
       "ignores": [
@@ -16,6 +18,11 @@
         "@types/qs",
         "jest-environment-jsdom"
       ]
+    },
+    "package-json": {
+      "scripts": {
+        "test": "yarn compile && jest --passWithNoTests && jest --passWithNoTests --env jsdom"
+      }
     }
   }
 }

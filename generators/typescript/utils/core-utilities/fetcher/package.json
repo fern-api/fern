@@ -16,7 +16,7 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "yarn compile && jest --passWithNoTests",
+    "test": "yarn compile && jest --passWithNoTests && jest --passWithNoTests --env jsdom",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../../../shared/.prettierignore \"**\"",
