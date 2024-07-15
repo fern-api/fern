@@ -71,7 +71,7 @@ export class FormDataWrapper {
                     this.fd = new (await import("formdata-node")).FormData();
                     this.fd.append(
                         name,
-                        new (await import("node:buffer")).Blob([value]),
+                        new (await import("buffer")).Blob([value]),
                         fileName === "" ? undefined : fileName
                     );
                 } else {
