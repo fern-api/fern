@@ -34,7 +34,6 @@ Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
 
 class UncheckedBaseModel(UniversalBaseModel):
     if IS_PYDANTIC_V2:
-        # Note: `smart_union` is on by defautl in Pydantic v2
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
