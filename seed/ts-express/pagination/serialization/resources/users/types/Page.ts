@@ -9,7 +9,7 @@ import * as core from "../../../../core";
 export const Page: core.serialization.ObjectSchema<serializers.Page.Raw, SeedPagination.Page> =
     core.serialization.object({
         page: core.serialization.number(),
-        next: core.serialization.lazyObject(async () => (await import("../../..")).NextPage).optional(),
+        next: core.serialization.lazyObject(() => serializers.NextPage).optional(),
         perPage: core.serialization.property("per_page", core.serialization.number()),
         totalPage: core.serialization.property("total_page", core.serialization.number()),
     });

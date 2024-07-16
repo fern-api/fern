@@ -1,5 +1,6 @@
 using SeedObjectsWithImports;
 using SeedObjectsWithImports.Commons;
+using SeedObjectsWithImports.Core;
 
 #nullable enable
 
@@ -9,7 +10,7 @@ public partial class SeedObjectsWithImportsClient
 {
     private RawClient _client;
 
-    public SeedObjectsWithImportsClient(ClientOptions clientOptions = null)
+    public SeedObjectsWithImportsClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
@@ -19,17 +20,7 @@ public partial class SeedObjectsWithImportsClient
         File = new FileClient(_client);
     }
 
-    public CommonsClient Commons { get; }
+    public CommonsClient Commons { get; init; }
 
-    public FileClient File { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public FileClient File { get; init; }
 }

@@ -55,7 +55,7 @@ export class Auth {
             },
             contentType: "application/json",
             body: {
-                ...(await serializers.GetTokenRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
+                ...serializers.GetTokenRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
                 audience: "https://api.example.com",
                 grant_type: "client_credentials",
             },
@@ -64,7 +64,7 @@ export class Auth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.TokenResponse.parseOrThrow(_response.body, {
+            return serializers.TokenResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -123,7 +123,7 @@ export class Auth {
             },
             contentType: "application/json",
             body: {
-                ...(await serializers.RefreshTokenRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
+                ...serializers.RefreshTokenRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
                 audience: "https://api.example.com",
                 grant_type: "refresh_token",
             },
@@ -132,7 +132,7 @@ export class Auth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.TokenResponse.parseOrThrow(_response.body, {
+            return serializers.TokenResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

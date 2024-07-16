@@ -45,3 +45,17 @@ types:
       second_union: optional<Shape>
       undiscriminated_union: optional<UndiscriminatedShape>
       any: unknown
+  
+  ObjectWithDefaults:
+    docs: |
+      Defines properties with default values and validation rules.
+    properties:
+      decimal:
+        type: optional<double>
+        default: 1.1
+      string:
+        type: optional<string>
+        default: "here's a sentence!"
+      required_string:
+        type: string
+        default: "I neeeeeeeeeed this!"

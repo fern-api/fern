@@ -1,5 +1,7 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedPagination;
+using SeedPagination.Core;
 
 #nullable enable
 
@@ -43,10 +45,30 @@ public class UsersClient
                 Query = _query
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ListUsersPaginationResponse>(responseBody);
+            return JsonSerializer.Deserialize<ListUsersPaginationResponse>(responseBody)!;
+        }
+        throw new Exception(responseBody);
+    }
+
+    public async Task<ListUsersPaginationResponse> ListWithBodyCursorPaginationAsync(
+        ListUsersBodyCursorPaginationRequest request
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "/users",
+                Body = request
+            }
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return JsonSerializer.Deserialize<ListUsersPaginationResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -80,10 +102,30 @@ public class UsersClient
                 Query = _query
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ListUsersPaginationResponse>(responseBody);
+            return JsonSerializer.Deserialize<ListUsersPaginationResponse>(responseBody)!;
+        }
+        throw new Exception(responseBody);
+    }
+
+    public async Task<ListUsersPaginationResponse> ListWithBodyOffsetPaginationAsync(
+        ListUsersBodyOffsetPaginationRequest request
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "/users",
+                Body = request
+            }
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return JsonSerializer.Deserialize<ListUsersPaginationResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -113,10 +155,10 @@ public class UsersClient
                 Query = _query
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ListUsersPaginationResponse>(responseBody);
+            return JsonSerializer.Deserialize<ListUsersPaginationResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -138,10 +180,10 @@ public class UsersClient
                 Query = _query
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ListUsersExtendedResponse>(responseBody);
+            return JsonSerializer.Deserialize<ListUsersExtendedResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -161,10 +203,10 @@ public class UsersClient
                 Query = _query
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<UsernameCursor>(responseBody);
+            return JsonSerializer.Deserialize<UsernameCursor>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -186,10 +228,10 @@ public class UsersClient
                 Query = _query
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<UsernameContainer>(responseBody);
+            return JsonSerializer.Deserialize<UsernameContainer>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

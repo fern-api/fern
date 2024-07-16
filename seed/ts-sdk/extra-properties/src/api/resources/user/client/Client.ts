@@ -51,7 +51,7 @@ export class User {
             },
             contentType: "application/json",
             body: {
-                ...(await serializers.CreateUserRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
+                ...serializers.CreateUserRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
                 _type: "CreateUserRequest",
                 _version: "v1",
             },
@@ -60,7 +60,7 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.User.parseOrThrow(_response.body, {
+            return serializers.User.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

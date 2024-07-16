@@ -1,4 +1,6 @@
+using System.Net.Http;
 using SeedServerSentEvents;
+using SeedServerSentEvents.Core;
 
 #nullable enable
 
@@ -13,9 +15,9 @@ public class CompletionsClient
         _client = client;
     }
 
-    public async void StreamAsync(StreamCompletionRequest request)
+    public async Task StreamAsync(StreamCompletionRequest request)
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,

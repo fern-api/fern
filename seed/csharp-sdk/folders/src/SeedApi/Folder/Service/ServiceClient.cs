@@ -1,4 +1,5 @@
-using SeedApi;
+using System.Net.Http;
+using SeedApi.Core;
 
 #nullable enable
 
@@ -13,16 +14,16 @@ public class ServiceClient
         _client = client;
     }
 
-    public async void EndpointAsync()
+    public async Task EndpointAsync()
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "/service" }
         );
     }
 
-    public async void UnknownRequestAsync(object request)
+    public async Task UnknownRequestAsync(object request)
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,

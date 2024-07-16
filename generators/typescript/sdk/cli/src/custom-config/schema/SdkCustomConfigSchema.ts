@@ -22,18 +22,20 @@ export const SdkCustomConfigSchema = z.strictObject({
     noOptionalProperties: z.optional(z.boolean()),
     tolerateRepublish: z.optional(z.boolean()),
     packageJson: z.optional(z.record(z.any())),
+    publishToJsr: z.optional(z.boolean()),
+    omitUndefined: z.optional(z.boolean()),
 
     // beta (not in docs)
     includeContentHeadersOnFileDownloadResponse: z.optional(z.boolean()),
     includeUtilsOnUnionMembers: z.optional(z.boolean()),
     includeOtherInUnionTypes: z.optional(z.boolean()),
-    includeApiReference: z.optional(z.boolean()),
     retainOriginalCasing: z.optional(z.boolean()),
     allowExtraFields: z.optional(z.boolean()),
     inlineFileProperties: z.optional(z.boolean()),
 
     // deprecated
-    timeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()]))
+    timeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
+    includeApiReference: z.optional(z.boolean())
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

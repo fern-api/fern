@@ -12,11 +12,9 @@ export const TestCaseImplementationReference: core.serialization.Schema<
 > = core.serialization
     .union("type", {
         templateId: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../../../../../..")).v2.v3.TestCaseTemplateId),
+            value: core.serialization.lazy(() => serializers.v2.v3.TestCaseTemplateId),
         }),
-        implementation: core.serialization.lazyObject(
-            async () => (await import("../../../../../../..")).v2.v3.TestCaseImplementation
-        ),
+        implementation: core.serialization.lazyObject(() => serializers.v2.v3.TestCaseImplementation),
     })
     .transform<SeedTrace.v2.v3.TestCaseImplementationReference>({
         transform: (value) => value,

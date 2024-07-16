@@ -12,7 +12,7 @@ export const NonVoidFunctionSignature: core.serialization.ObjectSchema<
     SeedTrace.v2.v3.NonVoidFunctionSignature
 > = core.serialization.object({
     parameters: core.serialization.list(Parameter),
-    returnType: core.serialization.lazy(async () => (await import("../../../../../../..")).VariableType),
+    returnType: core.serialization.lazy(() => serializers.VariableType),
 });
 
 export declare namespace NonVoidFunctionSignature {

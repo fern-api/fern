@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Foo.Builder.class)
 public final class Foo {
     private final Optional<com.seed.audiences.resources.folderc.common.types.Foo> foo;

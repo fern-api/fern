@@ -1,4 +1,5 @@
 using SeedAudiences;
+using SeedAudiences.Core;
 using SeedAudiences.FolderA;
 using SeedAudiences.FolderB;
 using SeedAudiences.FolderC;
@@ -11,7 +12,7 @@ public partial class SeedAudiencesClient
 {
     private RawClient _client;
 
-    public SeedAudiencesClient(ClientOptions clientOptions = null)
+    public SeedAudiencesClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
@@ -24,23 +25,13 @@ public partial class SeedAudiencesClient
         Foo = new FooClient(_client);
     }
 
-    public CommonsClient Commons { get; }
+    public CommonsClient Commons { get; init; }
 
-    public FolderAClient FolderA { get; }
+    public FolderAClient FolderA { get; init; }
 
-    public FolderBClient FolderB { get; }
+    public FolderBClient FolderB { get; init; }
 
-    public FolderCClient FolderC { get; }
+    public FolderCClient FolderC { get; init; }
 
-    public FooClient Foo { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public FooClient Foo { get; init; }
 }

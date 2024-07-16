@@ -11,6 +11,8 @@ from .users import (
     UserListContainer,
     UserPage,
     UsernameContainer,
+    WithCursor,
+    WithPage,
 )
 
 __all__ = [
@@ -23,5 +25,7 @@ __all__ = [
     "UserListContainer",
     "UserPage",
     "UsernameContainer",
+    "WithCursor",
+    "WithPage",
     "users",
 ]

@@ -124,6 +124,8 @@ function getGithubPublishInfo({
                 packageName: `Fern${fixtureName}`,
                 registryUrl: ""
             });
+        case "swift":
+            return undefined;
         default:
             assertNever(language);
     }
@@ -163,6 +165,8 @@ function getPublishInfo({
             throw new Error("Seed doesn't support publish mode in Ruby!");
         case "csharp":
             throw new Error("Seed doesn't support publish mode in C#!");
+        case "swift":
+            throw new Error("Seed doesn't support publish mode in Swift");
         default:
             assertNever(language);
     }

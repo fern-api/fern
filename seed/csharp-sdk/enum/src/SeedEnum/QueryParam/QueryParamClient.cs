@@ -1,5 +1,7 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedEnum;
+using SeedEnum.Core;
 
 #nullable enable
 
@@ -14,7 +16,7 @@ public class QueryParamClient
         _client = client;
     }
 
-    public async void SendAsync(SendEnumAsQueryParamRequest request)
+    public async Task SendAsync(SendEnumAsQueryParamRequest request)
     {
         var _query = new Dictionary<string, object>()
         {
@@ -29,7 +31,7 @@ public class QueryParamClient
         {
             _query["maybeOperandOrColor"] = request.MaybeOperandOrColor.ToString();
         }
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
@@ -39,7 +41,7 @@ public class QueryParamClient
         );
     }
 
-    public async void SendListAsync(SendEnumListAsQueryParamRequest request)
+    public async Task SendListAsync(SendEnumListAsQueryParamRequest request)
     {
         var _query = new Dictionary<string, object>()
         {
@@ -54,7 +56,7 @@ public class QueryParamClient
         {
             _query["maybeOperandOrColor"] = request.MaybeOperandOrColor.ToString();
         }
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,

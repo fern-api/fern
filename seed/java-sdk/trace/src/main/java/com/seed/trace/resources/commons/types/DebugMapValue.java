@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DebugMapValue.Builder.class)
 public final class DebugMapValue {
     private final List<DebugKeyValuePairs> keyValuePairs;

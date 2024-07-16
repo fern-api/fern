@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class ExpressionLocation
+public record ExpressionLocation
 {
     [JsonPropertyName("start")]
-    public int Start { get; init; }
+    public required int Start { get; init; }
 
     [JsonPropertyName("offset")]
-    public int Offset { get; init; }
+    public required int Offset { get; init; }
 }

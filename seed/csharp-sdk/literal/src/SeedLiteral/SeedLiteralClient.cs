@@ -1,4 +1,5 @@
 using SeedLiteral;
+using SeedLiteral.Core;
 
 #nullable enable
 
@@ -8,13 +9,13 @@ public partial class SeedLiteralClient
 {
     private RawClient _client;
 
-    public SeedLiteralClient(ClientOptions clientOptions = null)
+    public SeedLiteralClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>()
             {
-                { "version", $"02-02-2024" },
-                { "auditLogging", true.ToString() },
+                { "X-API-Version", "02-02-2024" },
+                { "X-API-Enable-Audit-Logging", true.ToString() },
                 { "X-Fern-Language", "C#" },
             },
             clientOptions ?? new ClientOptions()
@@ -26,23 +27,13 @@ public partial class SeedLiteralClient
         Reference = new ReferenceClient(_client);
     }
 
-    public HeadersClient Headers { get; }
+    public HeadersClient Headers { get; init; }
 
-    public InlinedClient Inlined { get; }
+    public InlinedClient Inlined { get; init; }
 
-    public PathClient Path { get; }
+    public PathClient Path { get; init; }
 
-    public QueryClient Query { get; }
+    public QueryClient Query { get; init; }
 
-    public ReferenceClient Reference { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public ReferenceClient Reference { get; init; }
 }

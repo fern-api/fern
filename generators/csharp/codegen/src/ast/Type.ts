@@ -106,7 +106,7 @@ export class Type extends AstNode {
         super();
     }
 
-    public write(writer: Writer): void {
+    public write(writer: Writer, parentType: Type | undefined = undefined): void {
         switch (this.internalType.type) {
             case "integer":
                 writer.write("int");
@@ -153,8 +153,11 @@ export class Type extends AstNode {
                 writer.write(">");
                 break;
             case "optional":
-                this.internalType.value.write(writer);
-                writer.write("?");
+                this.internalType.value.write(writer, this);
+                // avoid double optional
+                if (parentType?.internalType?.type !== "optional") {
+                    writer.write("?");
+                }
                 break;
             case "reference":
                 writer.writeNode(this.internalType.value);
@@ -182,6 +185,46 @@ export class Type extends AstNode {
             default:
                 assertNever(this.internalType);
         }
+    }
+
+    public writeEmptyCollectionInitializer(writer: Writer): void {
+        switch (this.internalType.type) {
+            case "list":
+                writer.write(" = new List<");
+                this.internalType.value.write(writer);
+                writer.write(">();");
+                break;
+            case "set":
+                writer.write(" = new HashSet<");
+                this.internalType.value.write(writer);
+                writer.write(">();");
+                break;
+            case "map":
+                writer.write(" = new Dictionary<");
+                this.internalType.keyType.write(writer);
+                writer.write(", ");
+                this.internalType.valueType.write(writer);
+                writer.write(">();");
+                break;
+        }
+    }
+
+    public isCollection(): boolean {
+        return ["list", "set", "map"].includes(this.internalType.type);
+    }
+
+    public toOptionalIfNotAlready(): Type {
+        if (this.internalType.type === "optional") {
+            return this;
+        }
+        return Type.optional(this);
+    }
+
+    public underlyingTypeIfOptional(): Type | undefined {
+        if (this.internalType.type === "optional") {
+            return (this.internalType as Optional).value;
+        }
+        return undefined;
     }
 
     /* Static factory methods for creating a Type */

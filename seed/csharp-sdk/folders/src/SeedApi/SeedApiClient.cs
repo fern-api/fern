@@ -1,5 +1,6 @@
-using SeedApi;
+using System.Net.Http;
 using SeedApi.A;
+using SeedApi.Core;
 using SeedApi.Folder;
 
 #nullable enable
@@ -10,7 +11,7 @@ public partial class SeedApiClient
 {
     private RawClient _client;
 
-    public SeedApiClient(ClientOptions clientOptions = null)
+    public SeedApiClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
@@ -20,19 +21,14 @@ public partial class SeedApiClient
         Folder = new FolderClient(_client);
     }
 
-    public AClient A { get; }
+    public AClient A { get; init; }
 
-    public FolderClient Folder { get; }
+    public FolderClient Folder { get; init; }
 
-    public async void FooAsync() { }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
+    public async Task FooAsync()
     {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
+        await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = "" }
+        );
     }
 }

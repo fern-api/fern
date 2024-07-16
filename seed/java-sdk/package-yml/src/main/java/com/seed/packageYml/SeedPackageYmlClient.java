@@ -12,6 +12,7 @@ import com.seed.packageYml.core.SeedPackageYmlApiException;
 import com.seed.packageYml.core.SeedPackageYmlException;
 import com.seed.packageYml.core.Suppliers;
 import com.seed.packageYml.resources.service.ServiceClient;
+import com.seed.packageYml.types.EchoRequest;
 import java.io.IOException;
 import java.util.function.Supplier;
 import okhttp3.Headers;
@@ -32,11 +33,11 @@ public class SeedPackageYmlClient {
         this.serviceClient = Suppliers.memoize(() -> new ServiceClient(clientOptions));
     }
 
-    public String echo(String request) {
+    public String echo(EchoRequest request) {
         return echo(request, null);
     }
 
-    public String echo(String request, RequestOptions requestOptions) {
+    public String echo(EchoRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .build();

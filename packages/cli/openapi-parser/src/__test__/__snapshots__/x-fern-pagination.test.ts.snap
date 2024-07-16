@@ -12,7 +12,61 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
       "availability": null,
       "description": "",
       "errors": {},
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": null,
+          "response": {
+            "properties": {
+              "users": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "age": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "email": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "email",
+                        },
+                      },
+                      "id": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "id",
+                        },
+                      },
+                      "name": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "name",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+            },
+            "type": "object",
+          },
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "ListRequest",
       "headers": [],
       "idempotent": null,
@@ -83,7 +137,61 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
       "availability": null,
       "description": "",
       "errors": {},
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": null,
+          "response": {
+            "properties": {
+              "users": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "age": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "email": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "email",
+                        },
+                      },
+                      "id": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "id",
+                        },
+                      },
+                      "name": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "name",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+            },
+            "type": "object",
+          },
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "ListRequest",
       "headers": [],
       "idempotent": null,
@@ -315,36 +423,36 @@ exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
       ],
       "type": "object",
     },
-    "UserResponse": {
+    "UsersResponse": {
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "generatedName": "UserResponse",
+      "generatedName": "UsersResponse",
       "groupName": null,
       "nameOverride": null,
       "properties": [
         {
           "audiences": [],
           "conflict": {},
-          "generatedName": "userResponseUsers",
+          "generatedName": "usersResponseUsers",
           "key": "users",
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "userResponseUsers",
+            "generatedName": "usersResponseUsers",
             "groupName": null,
             "nameOverride": null,
             "type": "optional",
             "value": {
               "description": null,
-              "generatedName": "UserResponseUsers",
+              "generatedName": "UsersResponseUsers",
               "groupName": null,
               "nameOverride": null,
               "type": "array",
               "value": {
                 "description": null,
-                "generatedName": "UserResponseUsersItem",
+                "generatedName": "UsersResponseUsersItem",
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "User",

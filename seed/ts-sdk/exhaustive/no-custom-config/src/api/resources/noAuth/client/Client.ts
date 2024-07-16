@@ -59,7 +59,7 @@ export class NoAuth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.noAuth.postWithNoAuth.Response.parseOrThrow(_response.body, {
+            return serializers.noAuth.postWithNoAuth.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -71,7 +71,7 @@ export class NoAuth {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new SeedExhaustive.BadRequestBody(
-                        await serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
+                        serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,

@@ -9,15 +9,11 @@ import * as core from "../../../../../../../../core";
 export const CustomFiles: core.serialization.Schema<serializers.v2.v3.CustomFiles.Raw, SeedTrace.v2.v3.CustomFiles> =
     core.serialization
         .union("type", {
-            basic: core.serialization.lazyObject(
-                async () => (await import("../../../../../../..")).v2.v3.BasicCustomFiles
-            ),
+            basic: core.serialization.lazyObject(() => serializers.v2.v3.BasicCustomFiles),
             custom: core.serialization.object({
                 value: core.serialization.record(
-                    core.serialization.lazy(async () => (await import("../../../../../../..")).Language),
-                    core.serialization
-                        .lazyObject(async () => (await import("../../../../../../..")).v2.v3.Files)
-                        .optional()
+                    core.serialization.lazy(() => serializers.Language),
+                    core.serialization.lazyObject(() => serializers.v2.v3.Files).optional()
                 ),
             }),
         })

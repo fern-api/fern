@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class UpdateProblemResponse
+public record UpdateProblemResponse
 {
     [JsonPropertyName("problemVersion")]
-    public int ProblemVersion { get; init; }
+    public required int ProblemVersion { get; init; }
 }

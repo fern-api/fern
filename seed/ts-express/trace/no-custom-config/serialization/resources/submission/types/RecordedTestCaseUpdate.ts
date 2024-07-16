@@ -10,7 +10,7 @@ export const RecordedTestCaseUpdate: core.serialization.ObjectSchema<
     serializers.RecordedTestCaseUpdate.Raw,
     SeedTrace.RecordedTestCaseUpdate
 > = core.serialization.object({
-    testCaseId: core.serialization.lazy(async () => (await import("../../..")).v2.TestCaseId),
+    testCaseId: core.serialization.lazy(() => serializers.v2.TestCaseId),
     traceResponsesSize: core.serialization.number(),
 });
 

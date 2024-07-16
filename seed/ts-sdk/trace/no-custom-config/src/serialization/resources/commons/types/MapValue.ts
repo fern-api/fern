@@ -8,9 +8,7 @@ import * as core from "../../../../core";
 
 export const MapValue: core.serialization.ObjectSchema<serializers.MapValue.Raw, SeedTrace.MapValue> =
     core.serialization.object({
-        keyValuePairs: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("../../..")).KeyValuePair)
-        ),
+        keyValuePairs: core.serialization.list(core.serialization.lazyObject(() => serializers.KeyValuePair)),
     });
 
 export declare namespace MapValue {

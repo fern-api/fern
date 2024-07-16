@@ -1,0 +1,29 @@
+{
+    "type": "cli",
+    "cliName": "fern-swift-sdk",
+    "environment": {
+      "environments": {
+        "prod": {
+          "cliName": "fern-swift-sdk",
+          "cliPackageName": "@fern-api/fern-swift-sdk"
+        }
+      }
+    },
+    "rules": {
+      "depcheck": {
+        "ignores": ["ts-loader", "@fern-fern/ir-sdk"],
+        "ignore-patterns": ["docker/bundle.js"]
+      },
+      "duplicate-dependencies": {
+        "exclude": ["@fern-fern/ir-sdk"]
+      },
+      "package-json": {
+        "scripts": {
+          "dockerTagLatest": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-swift-sdk:latest ../../..",
+          "dockerTagVersion": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-swift-sdk:${0} ../../.."
+        }
+      }
+    },
+    "private": false
+  }
+  

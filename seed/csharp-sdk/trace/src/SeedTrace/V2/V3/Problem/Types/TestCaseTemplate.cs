@@ -5,14 +5,14 @@ using SeedTrace.V2.V3;
 
 namespace SeedTrace.V2.V3;
 
-public class TestCaseTemplate
+public record TestCaseTemplate
 {
     [JsonPropertyName("templateId")]
-    public string TemplateId { get; init; }
+    public required string TemplateId { get; init; }
 
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     [JsonPropertyName("implementation")]
-    public TestCaseImplementation Implementation { get; init; }
+    public required TestCaseImplementation Implementation { get; init; }
 }

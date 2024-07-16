@@ -30,3 +30,12 @@ service:
             stream: literal<false>
             num_events: integer
       response: StreamResponse
+      examples:
+        - name: Default 
+          request:
+            stream: false
+            num_events: 5
+          response: 
+            body: 
+              id: id
+              name: name

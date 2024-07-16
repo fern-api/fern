@@ -87,7 +87,7 @@ export class ServiceService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.health.service.ping.Response.jsonOrThrow(responseBody, {
+                                serializers.health.service.ping.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );

@@ -10,7 +10,7 @@ export const WorkspaceSubmissionState: core.serialization.ObjectSchema<
     serializers.WorkspaceSubmissionState.Raw,
     SeedTrace.WorkspaceSubmissionState
 > = core.serialization.object({
-    status: core.serialization.lazy(async () => (await import("../../..")).WorkspaceSubmissionStatus),
+    status: core.serialization.lazy(() => serializers.WorkspaceSubmissionStatus),
 });
 
 export declare namespace WorkspaceSubmissionState {

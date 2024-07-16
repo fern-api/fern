@@ -1,5 +1,6 @@
+using System.Net.Http;
 using System.Text.Json;
-using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -19,17 +20,17 @@ public class HomepageClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "/homepage-problems" }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<string>>(responseBody);
+            return JsonSerializer.Deserialize<IEnumerable<string>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
 
-    public async void SetHomepageProblemsAsync(IEnumerable<string> request)
+    public async Task SetHomepageProblemsAsync(IEnumerable<string> request)
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,

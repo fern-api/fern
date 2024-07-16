@@ -4,7 +4,7 @@ using SeedPagination;
 
 namespace SeedPagination;
 
-public class ListUsersOffsetPaginationRequest
+public record ListUsersOffsetPaginationRequest
 {
     /// <summary>
     /// Defaults to first page

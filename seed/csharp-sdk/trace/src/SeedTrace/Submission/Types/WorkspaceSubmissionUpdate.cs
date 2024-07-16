@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class WorkspaceSubmissionUpdate
+public record WorkspaceSubmissionUpdate
 {
     [JsonPropertyName("updateTime")]
-    public DateTime UpdateTime { get; init; }
+    public required DateTime UpdateTime { get; init; }
 
     [JsonPropertyName("updateInfo")]
-    public object UpdateInfo { get; init; }
+    public required object UpdateInfo { get; init; }
 }

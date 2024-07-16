@@ -38,7 +38,7 @@ export class InlinedService {
 
     public toRouter(): express.Router {
         this.router.post("/inlined", async (req, res, next) => {
-            const request = await serializers.SendLiteralsInlinedRequest.parse(req.body);
+            const request = serializers.SendLiteralsInlinedRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -47,7 +47,7 @@ export class InlinedService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.SendResponse.jsonOrThrow(responseBody, {
+                                    serializers.SendResponse.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );

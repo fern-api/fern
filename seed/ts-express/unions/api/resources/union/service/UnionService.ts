@@ -59,9 +59,7 @@ export class UnionService {
                     req as any,
                     {
                         send: async (responseBody) => {
-                            res.json(
-                                await serializers.Shape.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
-                            );
+                            res.json(serializers.Shape.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }));
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
@@ -84,7 +82,7 @@ export class UnionService {
             }
         });
         this.router.patch("", async (req, res, next) => {
-            const request = await serializers.Shape.parse(req.body);
+            const request = serializers.Shape.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -93,7 +91,7 @@ export class UnionService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.union.update.Response.jsonOrThrow(responseBody, {
+                                    serializers.union.update.Response.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );

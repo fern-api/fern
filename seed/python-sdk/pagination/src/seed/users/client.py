@@ -16,6 +16,11 @@ from .types.list_users_pagination_response import ListUsersPaginationResponse
 from .types.order import Order
 from .types.user import User
 from .types.username_container import UsernameContainer
+from .types.with_cursor import WithCursor
+from .types.with_page import WithPage
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class UsersClient:
@@ -101,6 +106,65 @@ class UsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def list_with_body_cursor_pagination(
+        self, *, pagination: typing.Optional[WithCursor] = OMIT, request_options: typing.Optional[RequestOptions] = None
+    ) -> SyncPager[User]:
+        """
+        Parameters
+        ----------
+        pagination : typing.Optional[WithCursor]
+            The object that contains the cursor used for pagination
+            in order to fetch the next page of results.
+
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[User]
+
+        Examples
+        --------
+        from seed import WithCursor
+        from seed.client import SeedPagination
+
+        client = SeedPagination(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.users.list_with_body_cursor_pagination(
+            pagination=WithCursor(
+                cursor="string",
+            ),
+        )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "users", method="POST", json={"pagination": pagination}, request_options=request_options, omit=OMIT
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(ListUsersPaginationResponse, parse_obj_as(type_=ListUsersPaginationResponse, object_=_response.json()))  # type: ignore
+                _has_next = False
+                _get_next = None
+                if _parsed_response.page is not None and _parsed_response.page.next is not None:
+                    _parsed_next = _parsed_response.page.next.starting_after
+                    _has_next = _parsed_next is not None
+                    _get_next = lambda: self.list_with_body_cursor_pagination(
+                        pagination=pagination, request_options=request_options
+                    )
+                _items = _parsed_response.data
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def list_with_offset_pagination(
         self,
         *,
@@ -169,6 +233,62 @@ class UsersClient:
                     order=order,
                     starting_after=starting_after,
                     request_options=request_options,
+                )
+                _items = _parsed_response.data
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def list_with_body_offset_pagination(
+        self, *, pagination: typing.Optional[WithPage] = OMIT, request_options: typing.Optional[RequestOptions] = None
+    ) -> SyncPager[User]:
+        """
+        Parameters
+        ----------
+        pagination : typing.Optional[WithPage]
+            The object that contains the offset used for pagination
+            in order to fetch the next page of results.
+
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[User]
+
+        Examples
+        --------
+        from seed import WithPage
+        from seed.client import SeedPagination
+
+        client = SeedPagination(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.users.list_with_body_offset_pagination(
+            pagination=WithPage(
+                page=1,
+            ),
+        )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
+        """
+        page = page if page is not None else 1
+        _response = self._client_wrapper.httpx_client.request(
+            "users", method="POST", json={"pagination": pagination}, request_options=request_options, omit=OMIT
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(ListUsersPaginationResponse, parse_obj_as(type_=ListUsersPaginationResponse, object_=_response.json()))  # type: ignore
+                _has_next = True
+                _get_next = lambda: self.list_with_body_offset_pagination(
+                    pagination=pagination, request_options=request_options
                 )
                 _items = _parsed_response.data
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
@@ -498,6 +618,73 @@ class AsyncUsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    async def list_with_body_cursor_pagination(
+        self, *, pagination: typing.Optional[WithCursor] = OMIT, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncPager[User]:
+        """
+        Parameters
+        ----------
+        pagination : typing.Optional[WithCursor]
+            The object that contains the cursor used for pagination
+            in order to fetch the next page of results.
+
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[User]
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import WithCursor
+        from seed.client import AsyncSeedPagination
+
+        client = AsyncSeedPagination(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.users.list_with_body_cursor_pagination(
+                pagination=WithCursor(
+                    cursor="string",
+                ),
+            )
+            async for item in response:
+                yield item
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "users", method="POST", json={"pagination": pagination}, request_options=request_options, omit=OMIT
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(ListUsersPaginationResponse, parse_obj_as(type_=ListUsersPaginationResponse, object_=_response.json()))  # type: ignore
+                _has_next = False
+                _get_next = None
+                if _parsed_response.page is not None and _parsed_response.page.next is not None:
+                    _parsed_next = _parsed_response.page.next.starting_after
+                    _has_next = _parsed_next is not None
+                    _get_next = lambda: self.list_with_body_cursor_pagination(
+                        pagination=pagination, request_options=request_options
+                    )
+                _items = _parsed_response.data
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     async def list_with_offset_pagination(
         self,
         *,
@@ -574,6 +761,70 @@ class AsyncUsersClient:
                     order=order,
                     starting_after=starting_after,
                     request_options=request_options,
+                )
+                _items = _parsed_response.data
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def list_with_body_offset_pagination(
+        self, *, pagination: typing.Optional[WithPage] = OMIT, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncPager[User]:
+        """
+        Parameters
+        ----------
+        pagination : typing.Optional[WithPage]
+            The object that contains the offset used for pagination
+            in order to fetch the next page of results.
+
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[User]
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import WithPage
+        from seed.client import AsyncSeedPagination
+
+        client = AsyncSeedPagination(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.users.list_with_body_offset_pagination(
+                pagination=WithPage(
+                    page=1,
+                ),
+            )
+            async for item in response:
+                yield item
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
+        """
+        page = page if page is not None else 1
+        _response = await self._client_wrapper.httpx_client.request(
+            "users", method="POST", json={"pagination": pagination}, request_options=request_options, omit=OMIT
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(ListUsersPaginationResponse, parse_obj_as(type_=ListUsersPaginationResponse, object_=_response.json()))  # type: ignore
+                _has_next = True
+                _get_next = lambda: self.list_with_body_offset_pagination(
+                    pagination=pagination, request_options=request_options
                 )
                 _items = _parsed_response.data
                 return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)

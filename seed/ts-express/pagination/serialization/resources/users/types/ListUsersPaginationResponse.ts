@@ -10,9 +10,9 @@ export const ListUsersPaginationResponse: core.serialization.ObjectSchema<
     serializers.ListUsersPaginationResponse.Raw,
     SeedPagination.ListUsersPaginationResponse
 > = core.serialization.object({
-    page: core.serialization.lazyObject(async () => (await import("../../..")).Page).optional(),
+    page: core.serialization.lazyObject(() => serializers.Page).optional(),
     totalCount: core.serialization.property("total_count", core.serialization.number()),
-    data: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).User)),
+    data: core.serialization.list(core.serialization.lazyObject(() => serializers.User)),
 });
 
 export declare namespace ListUsersPaginationResponse {

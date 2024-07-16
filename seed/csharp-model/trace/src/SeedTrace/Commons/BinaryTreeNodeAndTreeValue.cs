@@ -5,11 +5,11 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class BinaryTreeNodeAndTreeValue
+public record BinaryTreeNodeAndTreeValue
 {
     [JsonPropertyName("nodeId")]
-    public string NodeId { get; init; }
+    public required string NodeId { get; init; }
 
     [JsonPropertyName("fullTree")]
-    public BinaryTreeValue FullTree { get; init; }
+    public required BinaryTreeValue FullTree { get; init; }
 }

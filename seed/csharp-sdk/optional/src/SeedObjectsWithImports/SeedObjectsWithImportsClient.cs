@@ -1,4 +1,5 @@
 using SeedObjectsWithImports;
+using SeedObjectsWithImports.Core;
 
 #nullable enable
 
@@ -8,7 +9,7 @@ public partial class SeedObjectsWithImportsClient
 {
     private RawClient _client;
 
-    public SeedObjectsWithImportsClient(ClientOptions clientOptions = null)
+    public SeedObjectsWithImportsClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
@@ -17,15 +18,5 @@ public partial class SeedObjectsWithImportsClient
         Optional = new OptionalClient(_client);
     }
 
-    public OptionalClient Optional { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public OptionalClient Optional { get; init; }
 }

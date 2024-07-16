@@ -70,6 +70,7 @@ export function buildEndpoint({
         } else {
             pagination = {
                 offset: endpoint.pagination.offset,
+                step: endpoint.pagination.step,
                 results: endpoint.pagination.results
             };
         }
@@ -395,7 +396,19 @@ function getRequest({
                     context
                 });
 
-                if (!usedNames.has(property.key) && property.audiences.length <= 0) {
+                const name = property.nameOverride ?? property.key;
+                if (!usedNames.has(name) && property.audiences.length <= 0) {
+                    usedNames.add(name);
+                    if (property.nameOverride != null) {
+                        return [
+                            property.key,
+                            {
+                                type: getTypeFromTypeReference(propertyTypeReference),
+                                docs: getDocsFromTypeReference(propertyTypeReference),
+                                name: property.nameOverride
+                            }
+                        ];
+                    }
                     return [property.key, propertyTypeReference];
                 }
 
@@ -404,7 +417,7 @@ function getRequest({
                     docs: getDocsFromTypeReference(propertyTypeReference)
                 };
 
-                if (usedNames.has(property.key)) {
+                if (usedNames.has(name)) {
                     typeReference.name = property.generatedName;
                 }
 
@@ -412,6 +425,7 @@ function getRequest({
                     typeReference.audiences = property.audiences;
                 }
 
+                usedNames.add(name);
                 return [property.key, typeReference];
             })
         );

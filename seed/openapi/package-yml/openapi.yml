@@ -24,10 +24,12 @@ paths:
         content:
           application/json:
             schema:
-              type: string
+              $ref: '#/components/schemas/EchoRequest'
             examples:
               Example1:
-                value: Hello world!
+                value:
+                  name: Hello world!
+                  size: 20
   /{nestedId}:
     get:
       operationId: service_nop
@@ -46,5 +48,18 @@ paths:
         '204':
           description: ''
 components:
-  schemas: {}
+  schemas:
+    EchoRequest:
+      title: EchoRequest
+      type: object
+      properties:
+        name:
+          type: string
+          example: Hello world!
+        size:
+          type: integer
+          example: 20
+      required:
+        - name
+        - size
   securitySchemes: {}

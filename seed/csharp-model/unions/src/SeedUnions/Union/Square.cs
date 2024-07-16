@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedUnions;
 
-public class Square
+public record Square
 {
     [JsonPropertyName("length")]
-    public double Length { get; init; }
+    public required double Length { get; init; }
 }

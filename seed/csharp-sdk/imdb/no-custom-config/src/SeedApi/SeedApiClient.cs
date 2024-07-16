@@ -1,4 +1,5 @@
 using SeedApi;
+using SeedApi.Core;
 
 #nullable enable
 
@@ -8,7 +9,7 @@ public partial class SeedApiClient
 {
     private RawClient _client;
 
-    public SeedApiClient(string token, ClientOptions clientOptions = null)
+    public SeedApiClient(string token, ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
@@ -17,15 +18,5 @@ public partial class SeedApiClient
         Imdb = new ImdbClient(_client);
     }
 
-    public ImdbClient Imdb { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public ImdbClient Imdb { get; init; }
 }

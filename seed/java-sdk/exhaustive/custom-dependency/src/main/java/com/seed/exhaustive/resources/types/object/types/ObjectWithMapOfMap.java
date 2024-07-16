@@ -17,7 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ObjectWithMapOfMap.Builder.class)
 public final class ObjectWithMapOfMap {
     private final Map<String, Map<String, String>> map;

@@ -5,22 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.17.1] - 2024-07-10
+
+- Fix: This fixes a bug introduced in `0.17.0-rc0` that prevented the SDK from serializing types
+  with circular references.
+
+## [0.17.0] - 2024-07-09
+
+- Internal: Upgrade to IRv48.
+
+## [0.17.0-rc0] - 2024-07-09
+
+- Fix: All serializers in the generated express server are now synchronous. This makes the serializers
+  easier to use and improves the performance as well.
+
 ## [0.16.3] - 2024-06-26
 
-- Feature: The Express generator now supports a `requestValidationStatusCode` configuration 
-  where a user can specify the status code that should be thrown when the request doesn't 
-  match schema validation. 
+- Feature: The Express generator now supports a `requestValidationStatusCode` configuration
+  where a user can specify the status code that should be thrown when the request doesn't
+  match schema validation.
 
   ```yaml
   - name: fernapi/fern-typescript-express
     version: 0.16.3
-    config: 
+    config:
       requestValidationStatusCode: 400 # Defaults to 422
   ```
 
 ## [0.16.2] - 2024-06-26
 
-- Internal: The generator is now upgraded to `v46.2.0` of the IR. 
+- Internal: The generator is now upgraded to `v46.2.0` of the IR.
 
 ## [0.16.1] - 2024-06-13
 

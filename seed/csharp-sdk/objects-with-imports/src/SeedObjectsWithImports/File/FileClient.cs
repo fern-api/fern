@@ -1,4 +1,4 @@
-using SeedObjectsWithImports;
+using SeedObjectsWithImports.Core;
 using SeedObjectsWithImports.File;
 
 #nullable enable

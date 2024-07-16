@@ -5,14 +5,15 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class GetExecutionSessionStateResponse
+public record GetExecutionSessionStateResponse
 {
     [JsonPropertyName("states")]
-    public Dictionary<string, ExecutionSessionState> States { get; init; }
+    public Dictionary<string, ExecutionSessionState> States { get; init; } =
+        new Dictionary<string, ExecutionSessionState>();
 
     [JsonPropertyName("numWarmingInstances")]
     public int? NumWarmingInstances { get; init; }
 
     [JsonPropertyName("warmingSessionIds")]
-    public IEnumerable<string> WarmingSessionIds { get; init; }
+    public IEnumerable<string> WarmingSessionIds { get; init; } = new List<string>();
 }

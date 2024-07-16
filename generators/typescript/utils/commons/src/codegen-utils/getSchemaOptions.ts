@@ -2,9 +2,11 @@ import { SchemaOptions } from "@fern-typescript/zurg";
 
 export function getSchemaOptions({
     allowExtraFields,
-    skipValidation
+    skipValidation,
+    omitUndefined
 }: {
     allowExtraFields: boolean;
+    omitUndefined: boolean;
     skipValidation?: boolean;
 }): Required<SchemaOptions> {
     return {
@@ -12,6 +14,7 @@ export function getSchemaOptions({
         allowUnrecognizedUnionMembers: allowExtraFields,
         allowUnrecognizedEnumValues: allowExtraFields,
         skipValidation: skipValidation ?? false,
-        breadcrumbsPrefix: []
+        breadcrumbsPrefix: [],
+        omitUndefined
     };
 }

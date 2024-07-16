@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace SeedUndiscriminatedUnions;
+namespace SeedUndiscriminatedUnions.Core;
 
 /// <summary>
 /// Json collection converter.
@@ -21,35 +21,34 @@ public class CollectionItemSerializer<TDatatype, TConverterType>
     /// <param name="typeToConvert">Type to convert.</param>
     /// <param name="options">Serializer options.</param>
     /// <returns>Created object.</returns>
-    public override IEnumerable<TDatatype> Read(
+    public override IEnumerable<TDatatype>? Read(
         ref Utf8JsonReader reader,
-        Type typeToConvert,
+        System.Type typeToConvert,
         JsonSerializerOptions options
     )
     {
         if (reader.TokenType == JsonTokenType.Null)
         {
-            return default(IEnumerable<TDatatype>);
+            return default;
         }
 
-        JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions(options);
+        var jsonSerializerOptions = new JsonSerializerOptions(options);
         jsonSerializerOptions.Converters.Clear();
         jsonSerializerOptions.Converters.Add(Activator.CreateInstance<TConverterType>());
 
-        List<TDatatype> returnValue = new List<TDatatype>();
+        var returnValue = new List<TDatatype>();
 
         while (reader.TokenType != JsonTokenType.EndArray)
         {
             if (reader.TokenType != JsonTokenType.StartArray)
             {
-                returnValue.Add(
-                    (TDatatype)
-                        JsonSerializer.Deserialize(
-                            ref reader,
-                            typeof(TDatatype),
-                            jsonSerializerOptions
-                        )
+                var item = (TDatatype)(
+                    JsonSerializer.Deserialize(ref reader, typeof(TDatatype), jsonSerializerOptions)
+                    ?? throw new Exception(
+                        $"Failed to deserialize collection item of type {typeof(TDatatype)}"
+                    )
                 );
+                returnValue.Add(item);
             }
 
             reader.Read();
@@ -66,7 +65,7 @@ public class CollectionItemSerializer<TDatatype, TConverterType>
     /// <param name="options">Serializer options.</param>
     public override void Write(
         Utf8JsonWriter writer,
-        IEnumerable<TDatatype> value,
+        IEnumerable<TDatatype>? value,
         JsonSerializerOptions options
     )
     {
@@ -82,7 +81,7 @@ public class CollectionItemSerializer<TDatatype, TConverterType>
 
         writer.WriteStartArray();
 
-        foreach (TDatatype data in value)
+        foreach (var data in value)
         {
             JsonSerializer.Serialize(writer, data, jsonSerializerOptions);
         }

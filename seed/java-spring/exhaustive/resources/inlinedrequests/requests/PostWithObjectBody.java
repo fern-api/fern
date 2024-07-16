@@ -15,7 +15,7 @@ import java.lang.String;
 import java.util.Objects;
 import resources.types.object.types.ObjectWithOptionalField;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = PostWithObjectBody.Builder.class
 )

@@ -1,5 +1,6 @@
+using System.Net.Http;
 using System.Text.Json;
-using SeedExhaustive;
+using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
 #nullable enable
@@ -25,10 +26,10 @@ public class EnumClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<WeatherReport>(responseBody);
+            return JsonSerializer.Deserialize<WeatherReport>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

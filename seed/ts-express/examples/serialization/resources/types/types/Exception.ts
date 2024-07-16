@@ -9,7 +9,7 @@ import * as core from "../../../../core";
 export const Exception: core.serialization.Schema<serializers.Exception.Raw, SeedExamples.Exception> =
     core.serialization
         .union("type", {
-            generic: core.serialization.lazyObject(async () => (await import("../../..")).ExceptionInfo),
+            generic: core.serialization.lazyObject(() => serializers.ExceptionInfo),
             timeout: core.serialization.object({}),
         })
         .transform<SeedExamples.Exception>({

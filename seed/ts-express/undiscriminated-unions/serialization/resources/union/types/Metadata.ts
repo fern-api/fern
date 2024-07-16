@@ -8,7 +8,7 @@ import * as core from "../../../../core";
 
 export const Metadata: core.serialization.Schema<serializers.Metadata.Raw, SeedUndiscriminatedUnions.Metadata> =
     core.serialization.record(
-        core.serialization.lazy(async () => (await import("../../..")).Key),
+        core.serialization.lazy(() => serializers.Key),
         core.serialization.string()
     );
 

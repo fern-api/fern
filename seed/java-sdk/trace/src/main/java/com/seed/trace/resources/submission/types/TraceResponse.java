@@ -19,7 +19,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TraceResponse.Builder.class)
 public final class TraceResponse {
     private final UUID submissionId;

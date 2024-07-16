@@ -9,9 +9,10 @@ export const HTTP_CLIENT_FIELD = csharp.field({
     name: "HttpClient",
     get: true,
     init: true,
-    type: csharp.Type.coreClass(
-        csharp.coreClassReference({
-            name: "HttpClient"
+    type: csharp.Type.reference(
+        csharp.classReference({
+            name: "HttpClient",
+            namespace: "System.Net.Http"
         })
     ),
     initializer: csharp.codeblock("new HttpClient()"),
@@ -44,7 +45,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
     public doGenerate(): CSharpFile {
         const class_ = csharp.class_({
             name: CLIENT_OPTIONS_CLASS_NAME,
-            namespace: this.context.getNamespace(),
+            namespace: this.context.getCoreNamespace(),
             partial: true,
             access: "public"
         });
@@ -93,7 +94,8 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
                           writer.writeNode(this.context.getEnvironmentsClassReference());
                           writer.write(`.${defaultEnvironment?.name.screamingSnakeCase.safeName}`);
                       })
-                    : undefined
+                    : csharp.codeblock('""'),
+            useRequired: true
         });
     }
 }

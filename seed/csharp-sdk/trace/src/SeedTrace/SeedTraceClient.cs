@@ -1,4 +1,5 @@
 using SeedTrace;
+using SeedTrace.Core;
 using SeedTrace.V2;
 
 #nullable enable
@@ -12,7 +13,7 @@ public partial class SeedTraceClient
     public SeedTraceClient(
         string token,
         string? xRandomHeader = null,
-        ClientOptions clientOptions = null
+        ClientOptions? clientOptions = null
     )
     {
         _client = new RawClient(
@@ -35,33 +36,23 @@ public partial class SeedTraceClient
         Sysprop = new SyspropClient(_client);
     }
 
-    public V2Client V2 { get; }
+    public V2Client V2 { get; init; }
 
-    public AdminClient Admin { get; }
+    public AdminClient Admin { get; init; }
 
-    public CommonsClient Commons { get; }
+    public CommonsClient Commons { get; init; }
 
-    public HomepageClient Homepage { get; }
+    public HomepageClient Homepage { get; init; }
 
-    public LangServerClient LangServer { get; }
+    public LangServerClient LangServer { get; init; }
 
-    public MigrationClient Migration { get; }
+    public MigrationClient Migration { get; init; }
 
-    public PlaylistClient Playlist { get; }
+    public PlaylistClient Playlist { get; init; }
 
-    public ProblemClient Problem { get; }
+    public ProblemClient Problem { get; init; }
 
-    public SubmissionClient Submission { get; }
+    public SubmissionClient Submission { get; init; }
 
-    public SyspropClient Sysprop { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public SyspropClient Sysprop { get; init; }
 }

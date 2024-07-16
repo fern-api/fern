@@ -19,7 +19,7 @@ import java.util.Objects;
 import java.util.Optional;
 import resources.commons.types.VariableValue;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = TestCaseV2.Builder.class
 )

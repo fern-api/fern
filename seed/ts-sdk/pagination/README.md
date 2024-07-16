@@ -16,14 +16,13 @@ npm i -s @fern/pagination
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedPaginationClient, SeedPagination } from "@fern/pagination";
+import { SeedPaginationClient } from "@fern/pagination";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-await client.users.listWithCursorPagination({
-    page: 1,
-    perPage: 1,
-    order: SeedPagination.Order.Asc,
-    startingAfter: "string",
+await client.users.listWithBodyCursorPagination({
+    pagination: {
+        cursor: "string",
+    },
 });
 ```
 
@@ -49,7 +48,7 @@ will be thrown.
 import { SeedPaginationError } from "@fern/pagination";
 
 try {
-    await client.users.listWithCursorPagination(...);
+    await client.users.listWithBodyCursorPagination(...);
 } catch (err) {
     if (err instanceof SeedPaginationError) {
         console.log(err.statusCode);
@@ -59,7 +58,9 @@ try {
 }
 ```
 
-## Retries
+## Advanced
+
+### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
 as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
@@ -74,34 +75,34 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.users.listWithCursorPagination(..., {
+const response = await client.users.listWithBodyCursorPagination(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
 
-## Timeouts
+### Timeouts
 
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.users.listWithCursorPagination(..., {
+const response = await client.users.listWithBodyCursorPagination(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
 
-## Aborting Requests
+### Aborting Requests
 
 The SDK allows users to abort requests at any point by passing in an abort signal.
 
 ```typescript
 const controller = new AbortController();
-const response = await client.users.listWithCursorPagination(..., {
+const response = await client.users.listWithBodyCursorPagination(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
 ```
 
-## Runtime Compatibility
+### Runtime Compatibility
 
 The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
 runtimes:

@@ -1,6 +1,8 @@
+using System.Net.Http;
 using System.Text.Json;
 using OneOf;
 using SeedUndiscriminatedUnions;
+using SeedUndiscriminatedUnions.Core;
 
 #nullable enable
 
@@ -43,8 +45,8 @@ public class UnionClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
             return JsonSerializer.Deserialize<
                 OneOf<
@@ -55,7 +57,7 @@ public class UnionClient
                     IEnumerable<IEnumerable<int>>,
                     HashSet<string>
                 >
-            >(responseBody);
+            >(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -65,12 +67,12 @@ public class UnionClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "/metadata" }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
             return JsonSerializer.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(
                 responseBody
-            );
+            )!;
         }
         throw new Exception(responseBody);
     }

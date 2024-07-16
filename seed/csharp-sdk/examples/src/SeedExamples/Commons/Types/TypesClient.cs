@@ -1,4 +1,4 @@
-using SeedExamples;
+using SeedExamples.Core;
 
 #nullable enable
 

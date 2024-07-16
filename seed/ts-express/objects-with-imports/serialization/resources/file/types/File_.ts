@@ -10,7 +10,7 @@ export const File_: core.serialization.ObjectSchema<serializers.File_.Raw, SeedO
     core.serialization.object({
         name: core.serialization.string(),
         contents: core.serialization.string(),
-        info: core.serialization.lazy(async () => (await import("../../..")).FileInfo),
+        info: core.serialization.lazy(() => serializers.FileInfo),
     });
 
 export declare namespace File_ {

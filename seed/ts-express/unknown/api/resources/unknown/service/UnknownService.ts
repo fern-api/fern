@@ -43,7 +43,7 @@ export class UnknownService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.unknown.post.Response.jsonOrThrow(responseBody, {
+                                serializers.unknown.post.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );

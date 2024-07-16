@@ -100,6 +100,7 @@ export declare namespace SdkContextImpl {
         retainOriginalCasing: boolean;
         generateOAuthClients: boolean;
         inlineFileProperties: boolean;
+        omitUndefined: boolean;
     }
 }
 
@@ -132,6 +133,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly retainOriginalCasing: boolean;
     public readonly inlineFileProperties: boolean;
     public readonly generateOAuthClients: boolean;
+    public readonly omitUndefined: boolean;
 
     constructor({
         ir,
@@ -176,11 +178,13 @@ export class SdkContextImpl implements SdkContext {
         retainOriginalCasing,
         targetRuntime,
         inlineFileProperties,
-        generateOAuthClients
+        generateOAuthClients,
+        omitUndefined
     }: SdkContextImpl.Init) {
         this.ir = ir;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.omitUndefined = omitUndefined;
         this.inlineFileProperties = inlineFileProperties;
         this.targetRuntime = targetRuntime;
         this.generateOAuthClients = generateOAuthClients;

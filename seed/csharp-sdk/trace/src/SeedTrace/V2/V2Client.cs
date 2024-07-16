@@ -1,4 +1,5 @@
-using SeedTrace;
+using System.Net.Http;
+using SeedTrace.Core;
 using SeedTrace.V2;
 using SeedTrace.V2.V3;
 
@@ -21,9 +22,9 @@ public class V2Client
 
     public V3Client V3 { get; }
 
-    public async void TestAsync()
+    public async Task TestAsync()
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "" }
         );
     }

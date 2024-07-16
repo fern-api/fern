@@ -3,6 +3,8 @@ name: ci
 on:
   push:
     paths:
+      - ".pnp.cjs"
+      - "yarn.lock"
       - "packages/**"
       # IR snapshot tests run on test definitions
       - "test-definitions/**"
@@ -12,10 +14,13 @@ on:
       - "generators/ruby/**"
       - "generators/typescript/**"
       - "generators/csharp/**"
+      - "generators/swift/**"
     branches:
       - main
   pull_request:
     paths:
+      - ".pnp.cjs"
+      - "yarn.lock"
       - "packages/**"
       # IR snapshot tests run on test definitions
       - "test-definitions/**"
@@ -25,6 +30,7 @@ on:
       - "generators/ruby/**"
       - "generators/typescript/**"
       - "generators/csharp/**"
+      - "generators/swift/**"
     branches:
       - main
 

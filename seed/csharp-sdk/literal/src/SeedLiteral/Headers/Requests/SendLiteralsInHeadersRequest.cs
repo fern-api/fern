@@ -1,10 +1,10 @@
 namespace SeedLiteral;
 
-public class SendLiteralsInHeadersRequest
+public record SendLiteralsInHeadersRequest
 {
-    public string EndpointVersion { get; init; }
+    public required string EndpointVersion { get; init; }
 
-    public bool Async { get; init; }
+    public required bool Async { get; init; }
 
-    public string Query { get; init; }
+    public required string Query { get; init; }
 }

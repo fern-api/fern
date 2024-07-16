@@ -12,6 +12,7 @@ export declare namespace Problem {
     interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
@@ -92,7 +93,7 @@ export class Problem {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.CreateProblemRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.CreateProblemRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
@@ -101,7 +102,7 @@ export class Problem {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.CreateProblemResponse.parseOrThrow(_response.body, {
+                body: serializers.CreateProblemResponse.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -164,7 +165,7 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/update/${encodeURIComponent(await serializers.ProblemId.jsonOrThrow(problemId))}`
+                `/problem-crud/update/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId))}`
             ),
             method: "POST",
             headers: {
@@ -180,7 +181,7 @@ export class Problem {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.CreateProblemRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.CreateProblemRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
@@ -189,7 +190,7 @@ export class Problem {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.UpdateProblemResponse.parseOrThrow(_response.body, {
+                body: serializers.UpdateProblemResponse.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -220,7 +221,7 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/delete/${encodeURIComponent(await serializers.ProblemId.jsonOrThrow(problemId))}`
+                `/problem-crud/delete/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId))}`
             ),
             method: "DELETE",
             headers: {
@@ -295,9 +296,7 @@ export class Problem {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.GetDefaultStarterFilesRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-            }),
+            body: serializers.GetDefaultStarterFilesRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
@@ -306,7 +305,7 @@ export class Problem {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.GetDefaultStarterFilesResponse.parseOrThrow(_response.body, {
+                body: serializers.GetDefaultStarterFilesResponse.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,

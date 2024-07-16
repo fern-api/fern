@@ -23,7 +23,7 @@ import resources.commons.types.ProblemId;
 import resources.commons.types.TestCaseWithExpectedResult;
 import resources.commons.types.VariableType;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = ProblemInfo.Builder.class
 )

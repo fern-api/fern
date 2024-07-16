@@ -1,5 +1,7 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -14,9 +16,9 @@ public class SyspropClient
         _client = client;
     }
 
-    public async void SetNumWarmInstancesAsync(Language language, int numWarmInstances)
+    public async Task SetNumWarmInstancesAsync(Language language, int numWarmInstances)
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Put,
@@ -34,10 +36,10 @@ public class SyspropClient
                 Path = "/sysprop/num-warm-instances"
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Dictionary<Language, int>>(responseBody);
+            return JsonSerializer.Deserialize<Dictionary<Language, int>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

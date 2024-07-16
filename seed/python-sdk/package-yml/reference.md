@@ -19,7 +19,8 @@ client = SeedPackageYml(
 )
 client.echo(
     id="id-ksfd9c1",
-    request="Hello world!",
+    name="Hello world!",
+    size=20,
 )
 
 ```
@@ -44,7 +45,15 @@ client.echo(
 <dl>
 <dd>
 
-**request:** `str` 
+**name:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**size:** `int` 
     
 </dd>
 </dl>

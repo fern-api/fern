@@ -48,6 +48,11 @@ HTTPX_PRIMITIVE_DATA_TYPES = set(
     ]
 )
 
+ALLOWED_RESERVED_METHOD_NAMES = [
+    "list",
+    "set",
+]
+
 
 @dataclass
 class GeneratedEndpointFunctionSnippet:
@@ -270,6 +275,9 @@ class EndpointFunctionGenerator:
                         name=get_parameter_name(query_parameter.name.name),
                         docs=query_parameter.docs,
                         type_hint=self._get_typehint_for_query_param(query_parameter, query_parameter_type_hint),
+                        initializer=self._context.pydantic_generator_context.get_initializer_for_type_reference(
+                            query_parameter.value_type
+                        ),
                     ),
                 )
 
@@ -1289,9 +1297,7 @@ class EndpointFunctionSnippetGenerator:
             if union.type == "named":
                 shape = union.shape.get_as_union()
                 if shape.type == "alias":
-                    return self._get_snippet_for_request_reference(
-                        example_type_reference, is_optional, request_parameter_names
-                    )
+                    return self._get_snippet_for_request_reference(shape.value, is_optional, request_parameter_names)
                 if shape.type == "object":
                     return self._get_snippet_for_request_reference_flattened(shape, request_parameter_names)
             return self._get_snippet_for_request_reference_default(example_type_reference)
@@ -1341,8 +1347,8 @@ class EndpointFunctionSnippetGenerator:
 
 
 def get_endpoint_name(endpoint: ir_types.HttpEndpoint) -> str:
-    if endpoint.name.get_as_name().original_name.lower() == "list":
-        return "list"
+    if endpoint.name.get_as_name().original_name.lower() in ALLOWED_RESERVED_METHOD_NAMES:
+        return endpoint.name.get_as_name().snake_case.unsafe_name
     return endpoint.name.get_as_name().snake_case.safe_name
 
 

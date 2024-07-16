@@ -220,6 +220,10 @@ Checkout open source projects that are using Fern Definitions:
 - [Rivet](https://github.com/rivet-gg/rivet/tree/main/fern/definition)
 - [Revert](https://github.com/revertinc/revert/tree/main/fern/definition)
 
+## Inspiration
+
+Fern is inspired by internal tooling built to enhance the developer experience. We stand on the shoulders of giants. While teams were responsible for building the following tools, we want to give a shout out to Mark Elliot (creator of Conjure at Palantir), Michael Dowling (creator of Smithy at AWS), and Ian McCrystal (creator of Stripe Docs).
+
 ## Community
 
 [Join our Discord!](https://discord.com/invite/JkkXumPzcG) We are here to answer questions and help you get the most out of Fern.

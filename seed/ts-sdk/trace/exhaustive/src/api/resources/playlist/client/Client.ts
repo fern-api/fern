@@ -12,6 +12,7 @@ export declare namespace Playlist {
     interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
@@ -79,7 +80,7 @@ export class Playlist {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            body: await serializers.PlaylistCreateRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.PlaylistCreateRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
@@ -88,7 +89,7 @@ export class Playlist {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.Playlist.parseOrThrow(_response.body, {
+                body: serializers.Playlist.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -174,7 +175,7 @@ export class Playlist {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.playlist.getPlaylists.Response.parseOrThrow(_response.body, {
+                body: serializers.playlist.getPlaylists.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -208,7 +209,7 @@ export class Playlist {
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
                 `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(
-                    await serializers.PlaylistId.jsonOrThrow(playlistId)
+                    serializers.PlaylistId.jsonOrThrow(playlistId)
                 )}`
             ),
             method: "GET",
@@ -233,7 +234,7 @@ export class Playlist {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.Playlist.parseOrThrow(_response.body, {
+                body: serializers.Playlist.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -248,7 +249,7 @@ export class Playlist {
                 case "UnauthorizedError":
                     return {
                         ok: false,
-                        error: await serializers.playlist.getPlaylist.Error.parseOrThrow(
+                        error: serializers.playlist.getPlaylist.Error.parseOrThrow(
                             _response.error.body as serializers.playlist.getPlaylist.Error.Raw,
                             {
                                 unrecognizedObjectKeys: "passthrough",
@@ -291,7 +292,7 @@ export class Playlist {
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
                 `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(
-                    await serializers.PlaylistId.jsonOrThrow(playlistId)
+                    serializers.PlaylistId.jsonOrThrow(playlistId)
                 )}`
             ),
             method: "PUT",
@@ -310,7 +311,7 @@ export class Playlist {
             contentType: "application/json",
             body:
                 request != null
-                    ? await serializers.playlist.updatePlaylist.Request.jsonOrThrow(request, {
+                    ? serializers.playlist.updatePlaylist.Request.jsonOrThrow(request, {
                           unrecognizedObjectKeys: "strip",
                       })
                     : undefined,
@@ -322,7 +323,7 @@ export class Playlist {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.playlist.updatePlaylist.Response.parseOrThrow(_response.body, {
+                body: serializers.playlist.updatePlaylist.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -336,7 +337,7 @@ export class Playlist {
                 case "PlaylistIdNotFoundError":
                     return {
                         ok: false,
-                        error: await serializers.playlist.updatePlaylist.Error.parseOrThrow(
+                        error: serializers.playlist.updatePlaylist.Error.parseOrThrow(
                             _response.error.body as serializers.playlist.updatePlaylist.Error.Raw,
                             {
                                 unrecognizedObjectKeys: "passthrough",
@@ -374,7 +375,7 @@ export class Playlist {
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
                 `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(
-                    await serializers.PlaylistId.jsonOrThrow(playlistId)
+                    serializers.PlaylistId.jsonOrThrow(playlistId)
                 )}`
             ),
             method: "DELETE",

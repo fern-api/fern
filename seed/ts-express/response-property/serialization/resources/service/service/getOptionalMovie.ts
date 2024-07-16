@@ -16,7 +16,7 @@ export declare namespace Request {
 export const Response: core.serialization.Schema<
     serializers.service.getOptionalMovie.Response.Raw,
     SeedResponseProperty.Response | undefined
-> = core.serialization.lazyObject(async () => (await import("../../..")).Response).optional();
+> = core.serialization.lazyObject(() => serializers.Response).optional();
 
 export declare namespace Response {
     type Raw = serializers.Response.Raw | null | undefined;

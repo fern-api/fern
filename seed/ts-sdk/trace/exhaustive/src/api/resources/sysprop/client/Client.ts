@@ -12,6 +12,7 @@ export declare namespace Sysprop {
     interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
@@ -47,7 +48,7 @@ export class Sysprop {
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
                 `/sysprop/num-warm-instances/${encodeURIComponent(
-                    await serializers.Language.jsonOrThrow(language)
+                    serializers.Language.jsonOrThrow(language)
                 )}/${encodeURIComponent(numWarmInstances)}`
             ),
             method: "PUT",
@@ -120,7 +121,7 @@ export class Sysprop {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.sysprop.getNumWarmInstances.Response.parseOrThrow(_response.body, {
+                body: serializers.sysprop.getNumWarmInstances.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,

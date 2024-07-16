@@ -1,3 +1,3 @@
 namespace SeedFileUpload;
 
-public class JustFileRequet { }
+public record JustFileRequet { }

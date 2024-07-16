@@ -10,10 +10,8 @@ export const StoreTracedWorkspaceRequest: core.serialization.Schema<
     serializers.StoreTracedWorkspaceRequest.Raw,
     SeedTrace.StoreTracedWorkspaceRequest
 > = core.serialization.object({
-    workspaceRunDetails: core.serialization.lazyObject(async () => (await import("../../../..")).WorkspaceRunDetails),
-    traceResponses: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("../../../..")).TraceResponse)
-    ),
+    workspaceRunDetails: core.serialization.lazyObject(() => serializers.WorkspaceRunDetails),
+    traceResponses: core.serialization.list(core.serialization.lazyObject(() => serializers.TraceResponse)),
 });
 
 export declare namespace StoreTracedWorkspaceRequest {

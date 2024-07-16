@@ -1,5 +1,7 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedAudiences;
+using SeedAudiences.Core;
 
 #nullable enable
 
@@ -29,10 +31,10 @@ public class FooClient
                 Query = _query
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ImportingType>(responseBody);
+            return JsonSerializer.Deserialize<ImportingType>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

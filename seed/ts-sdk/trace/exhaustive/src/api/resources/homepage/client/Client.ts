@@ -12,6 +12,7 @@ export declare namespace Homepage {
     interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
@@ -66,7 +67,7 @@ export class Homepage {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.homepage.getHomepageProblems.Response.parseOrThrow(_response.body, {
+                body: serializers.homepage.getHomepageProblems.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -111,7 +112,7 @@ export class Homepage {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.homepage.setHomepageProblems.Request.jsonOrThrow(request, {
+            body: serializers.homepage.setHomepageProblems.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,

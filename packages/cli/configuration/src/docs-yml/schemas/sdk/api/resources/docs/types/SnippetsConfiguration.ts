@@ -9,4 +9,5 @@ export interface SnippetsConfiguration {
     typescript?: FernDocsConfig.SnippetLanguageConfiguration;
     go?: FernDocsConfig.SnippetLanguageConfiguration;
     java?: FernDocsConfig.SnippetLanguageConfiguration;
+    ruby?: FernDocsConfig.SnippetLanguageConfiguration;
 }

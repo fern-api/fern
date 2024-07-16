@@ -11,7 +11,7 @@ export const GetFunctionSignatureResponse: core.serialization.ObjectSchema<
     SeedTrace.v2.v3.GetFunctionSignatureResponse
 > = core.serialization.object({
     functionByLanguage: core.serialization.record(
-        core.serialization.lazy(async () => (await import("../../../../../../..")).Language),
+        core.serialization.lazy(() => serializers.Language),
         core.serialization.string().optional()
     ),
 });

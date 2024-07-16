@@ -1,11 +1,15 @@
-namespace SeedApi;
+using System.Net.Http;
+
+#nullable enable
+
+namespace SeedApi.Core;
 
 public partial class ClientOptions
 {
     /// <summary>
     /// The Base URL for the API.
     /// </summary>
-    public string BaseUrl { get; init; }
+    public string BaseUrl { get; init; } = "";
 
     /// <summary>
     /// The http client used to make requests.

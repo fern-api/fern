@@ -205,7 +205,7 @@ export class CsharpProject {
         return new File(
             filename.replace(".Template", ""),
             RelativeFilePath.of(""),
-            replaceTemplate({ contents, namespace: this.context.getNamespace() })
+            replaceTemplate({ contents, namespace: this.context.getCoreNamespace() })
         );
     }
 }
@@ -271,15 +271,36 @@ class CsProj {
     public toString(): string {
         const propertyGroups = this.getPropertyGroups();
         const dependencies = this.getDependencies();
-        return `
+        return ` 
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net8.0;net7.0;net6.0;</TargetFrameworks>
+        <TargetFrameworks>net462;net8.0;net7.0;net6.0;netstandard2.0</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
         <NuGetAudit>false</NuGetAudit>
+        <LangVersion>12</LangVersion>
+        <Nullable>enable</Nullable>
         ${propertyGroups.join(`\n${FOUR_SPACES}${FOUR_SPACES}`)}
     </PropertyGroup>
+    
+    <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
+        <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
+    </PropertyGroup>
+    
+    <ItemGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
+        <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.1" />
+    </ItemGroup>
+    
+    <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
+        <Reference Include="System.Net.Http" />
+    </ItemGroup>
+    
+    <ItemGroup Condition="'$(TargetFramework)' == 'net7.0' Or '$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
+        <PackageReference Include="PolySharp" Version="1.14.1">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
 
     <ItemGroup>
         ${dependencies.join(`\n${FOUR_SPACES}${FOUR_SPACES}`)}
@@ -297,6 +318,7 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
     private getDependencies(): string[] {
         const result: string[] = [];
         result.push('<PackageReference Include="OneOf" Version="3.0.263" />');
+        result.push('<PackageReference Include="OneOf.Extended" Version="3.0.263" />');
         result.push('<PackageReference Include="System.Text.Json" Version="8.0.3" />');
         for (const [name, version] of Object.entries(this.context.getExtraDependencies())) {
             result.push(`<PackageReference Include="${name}" Version="${version}" />`);

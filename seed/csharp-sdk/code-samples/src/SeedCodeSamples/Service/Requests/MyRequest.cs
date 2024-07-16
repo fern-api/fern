@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedCodeSamples;
 
-public class MyRequest
+public record MyRequest
 {
     [JsonPropertyName("num_events")]
-    public int NumEvents { get; init; }
+    public required int NumEvents { get; init; }
 }

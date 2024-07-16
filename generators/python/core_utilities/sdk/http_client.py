@@ -106,7 +106,7 @@ def maybe_filter_request_body(
 ) -> typing.Optional[typing.Any]:
     if data is None:
         return (
-            jsonable_encoder(request_options.get("additional_body_parameters", {}))
+            jsonable_encoder(request_options.get("additional_body_parameters", {})) or {}
             if request_options is not None
             else None
         )
@@ -116,7 +116,7 @@ def maybe_filter_request_body(
         data_content = {
             **(jsonable_encoder(remove_omit_from_dict(data, omit))),  # type: ignore
             **(
-                jsonable_encoder(request_options.get("additional_body_parameters", {}))
+                jsonable_encoder(request_options.get("additional_body_parameters", {})) or {}
                 if request_options is not None
                 else {}
             ),
@@ -196,7 +196,7 @@ class HttpClient:
                     {
                         **self.base_headers,
                         **(headers if headers is not None else {}),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
                     }
                 )
             ),
@@ -207,7 +207,7 @@ class HttpClient:
                             {
                                 **(params if params is not None else {}),
                                 **(
-                                    request_options.get("additional_query_parameters", {})
+                                    request_options.get("additional_query_parameters", {}) or {}
                                     if request_options is not None
                                     else {}
                                 ),
@@ -362,7 +362,7 @@ class AsyncHttpClient:
                     {
                         **self.base_headers,
                         **(headers if headers is not None else {}),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                        **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
                     }
                 )
             ),
@@ -373,7 +373,7 @@ class AsyncHttpClient:
                             {
                                 **(params if params is not None else {}),
                                 **(
-                                    request_options.get("additional_query_parameters", {})
+                                    request_options.get("additional_query_parameters", {}) or {}
                                     if request_options is not None
                                     else {}
                                 ),

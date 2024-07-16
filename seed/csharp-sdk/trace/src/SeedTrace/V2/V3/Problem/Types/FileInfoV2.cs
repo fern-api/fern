@@ -4,17 +4,17 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace.V2.V3;
 
-public class FileInfoV2
+public record FileInfoV2
 {
     [JsonPropertyName("filename")]
-    public string Filename { get; init; }
+    public required string Filename { get; init; }
 
     [JsonPropertyName("directory")]
-    public string Directory { get; init; }
+    public required string Directory { get; init; }
 
     [JsonPropertyName("contents")]
-    public string Contents { get; init; }
+    public required string Contents { get; init; }
 
     [JsonPropertyName("editable")]
-    public bool Editable { get; init; }
+    public required bool Editable { get; init; }
 }

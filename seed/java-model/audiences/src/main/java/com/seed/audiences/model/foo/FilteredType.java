@@ -13,7 +13,7 @@ import com.seed.audiences.core.ObjectMappers;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = FilteredType.Builder.class)
 public final class FilteredType {
     private final Optional<String> publicProperty;

@@ -1,4 +1,7 @@
+using System.Net.Http;
+using System.Text.Json;
 using SeedPackageYml;
+using SeedPackageYml.Core;
 
 #nullable enable
 
@@ -8,7 +11,7 @@ public partial class SeedPackageYmlClient
 {
     private RawClient _client;
 
-    public SeedPackageYmlClient(ClientOptions clientOptions = null)
+    public SeedPackageYmlClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
@@ -17,17 +20,23 @@ public partial class SeedPackageYmlClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; }
+    public ServiceClient Service { get; init; }
 
-    public async void EchoAsync() { }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
+    public async Task<string> EchoAsync(string id, EchoRequest request)
     {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = $"/{id}/",
+                Body = request
+            }
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            throw new Exception(message);
+            return JsonSerializer.Deserialize<string>(responseBody)!;
         }
-        return value;
+        throw new Exception(responseBody);
     }
 }

@@ -9,12 +9,8 @@ import * as core from "../../../../core";
 export const Directory: core.serialization.ObjectSchema<serializers.Directory.Raw, SeedExamples.Directory> =
     core.serialization.object({
         name: core.serialization.string(),
-        files: core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("../../..")).File_))
-            .optional(),
-        directories: core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("../../..")).Directory))
-            .optional(),
+        files: core.serialization.list(core.serialization.lazyObject(() => serializers.File_)).optional(),
+        directories: core.serialization.list(core.serialization.lazyObject(() => serializers.Directory)).optional(),
     });
 
 export declare namespace Directory {

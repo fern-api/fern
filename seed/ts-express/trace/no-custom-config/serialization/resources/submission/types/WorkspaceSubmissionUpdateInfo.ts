@@ -12,14 +12,14 @@ export const WorkspaceSubmissionUpdateInfo: core.serialization.Schema<
 > = core.serialization
     .union("type", {
         running: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).RunningSubmissionState),
+            value: core.serialization.lazy(() => serializers.RunningSubmissionState),
         }),
-        ran: core.serialization.lazyObject(async () => (await import("../../..")).WorkspaceRunDetails),
+        ran: core.serialization.lazyObject(() => serializers.WorkspaceRunDetails),
         stopped: core.serialization.object({}),
         traced: core.serialization.object({}),
-        tracedV2: core.serialization.lazyObject(async () => (await import("../../..")).WorkspaceTracedUpdate),
+        tracedV2: core.serialization.lazyObject(() => serializers.WorkspaceTracedUpdate),
         errored: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).ErrorInfo),
+            value: core.serialization.lazy(() => serializers.ErrorInfo),
         }),
         finished: core.serialization.object({}),
     })

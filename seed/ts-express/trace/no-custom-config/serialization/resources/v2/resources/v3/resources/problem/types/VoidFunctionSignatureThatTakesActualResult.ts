@@ -10,10 +10,8 @@ export const VoidFunctionSignatureThatTakesActualResult: core.serialization.Obje
     serializers.v2.v3.VoidFunctionSignatureThatTakesActualResult.Raw,
     SeedTrace.v2.v3.VoidFunctionSignatureThatTakesActualResult
 > = core.serialization.object({
-    parameters: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("../../../../../../..")).v2.v3.Parameter)
-    ),
-    actualResultType: core.serialization.lazy(async () => (await import("../../../../../../..")).VariableType),
+    parameters: core.serialization.list(core.serialization.lazyObject(() => serializers.v2.v3.Parameter)),
+    actualResultType: core.serialization.lazy(() => serializers.VariableType),
 });
 
 export declare namespace VoidFunctionSignatureThatTakesActualResult {

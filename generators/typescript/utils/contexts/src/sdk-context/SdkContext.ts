@@ -32,4 +32,5 @@ export interface SdkContext extends ModelContext {
     retainOriginalCasing: boolean;
     generateOAuthClients: boolean;
     inlineFileProperties: boolean;
+    omitUndefined: boolean;
 }

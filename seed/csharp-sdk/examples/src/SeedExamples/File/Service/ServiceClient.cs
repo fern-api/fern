@@ -1,5 +1,7 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedExamples;
+using SeedExamples.Core;
 using SeedExamples.File;
 
 #nullable enable
@@ -23,10 +25,10 @@ public class ServiceClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"/file/{filename}" }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<File>(responseBody);
+            return JsonSerializer.Deserialize<File>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

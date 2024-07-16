@@ -4,10 +4,10 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace.V2.V3;
 
-public class FunctionImplementation
+public record FunctionImplementation
 {
     [JsonPropertyName("impl")]
-    public string Impl { get; init; }
+    public required string Impl { get; init; }
 
     [JsonPropertyName("imports")]
     public string? Imports { get; init; }

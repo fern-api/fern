@@ -11,6 +11,10 @@ import * as errors from "../../../../errors/index";
 export declare namespace Inlined {
     interface Options {
         environment: core.Supplier<string>;
+        /** Override the X-API-Version header */
+        version?: "02-02-2024";
+        /** Override the X-API-Enable-Audit-Logging header */
+        auditLogging?: true;
     }
 
     interface RequestOptions {
@@ -48,8 +52,12 @@ export class Inlined {
             url: urlJoin(await core.Supplier.get(this._options.environment), "inlined"),
             method: "POST",
             headers: {
-                "X-API-Version": requestOptions?.version ?? "02-02-2024",
-                "X-API-Enable-Audit-Logging": requestOptions?.auditLogging ?? "true",
+                "X-API-Version": requestOptions?.version ?? this._options?.version ?? "02-02-2024",
+                "X-API-Enable-Audit-Logging": (
+                    requestOptions?.auditLogging ??
+                    this._options?.auditLogging ??
+                    true
+                ).toString(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/literal",
                 "X-Fern-SDK-Version": "0.0.1",
@@ -58,9 +66,7 @@ export class Inlined {
             },
             contentType: "application/json",
             body: {
-                ...(await serializers.SendLiteralsInlinedRequest.jsonOrThrow(request, {
-                    unrecognizedObjectKeys: "strip",
-                })),
+                ...serializers.SendLiteralsInlinedRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
                 prompt: "You are a helpful assistant",
                 stream: false,
             },
@@ -69,7 +75,7 @@ export class Inlined {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.SendResponse.parseOrThrow(_response.body, {
+            return serializers.SendResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BuildingExecutorResponse.Builder.class)
 public final class BuildingExecutorResponse {
     private final UUID submissionId;

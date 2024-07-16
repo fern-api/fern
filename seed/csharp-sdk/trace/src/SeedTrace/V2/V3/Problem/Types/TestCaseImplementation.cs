@@ -5,11 +5,11 @@ using SeedTrace.V2.V3;
 
 namespace SeedTrace.V2.V3;
 
-public class TestCaseImplementation
+public record TestCaseImplementation
 {
     [JsonPropertyName("description")]
-    public TestCaseImplementationDescription Description { get; init; }
+    public required TestCaseImplementationDescription Description { get; init; }
 
     [JsonPropertyName("function")]
-    public object Function { get; init; }
+    public required object Function { get; init; }
 }

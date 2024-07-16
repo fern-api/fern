@@ -50,9 +50,7 @@ export class ServiceService {
                     req as any,
                     {
                         send: async (responseBody) => {
-                            res.json(
-                                await serializers.File_.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
-                            );
+                            res.json(serializers.File_.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }));
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,

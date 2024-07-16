@@ -66,7 +66,7 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.File_.parseOrThrow(_response.body, {
+            return serializers.File_.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -78,7 +78,7 @@ export class Service {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new SeedExamples.NotFoundError(
-                        await serializers.NotFoundError.parseOrThrow(_response.error.body, {
+                        serializers.NotFoundError.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,

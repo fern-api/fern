@@ -2862,7 +2862,7 @@ client.balances.list(params: {
                     },
                   },
                   "save_data": {
-                    "default": undefined,
+                    "default": true,
                     "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
@@ -4524,7 +4524,7 @@ At the moment, the employment records resource is available for:
               "body": {
                 "properties": {
                   "attach_pdf": {
-                    "default": undefined,
+                    "default": false,
                     "docs": "When set to \`true\`, you will receive the PDF in binary format in the response.",
                     "type": "optional<boolean>",
                     "validation": undefined,
@@ -4540,7 +4540,7 @@ At the moment, the employment records resource is available for:
                     },
                   },
                   "save_data": {
-                    "default": undefined,
+                    "default": true,
                     "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
@@ -5203,7 +5203,7 @@ client.incomes.list(params: {
                   },
                   "minimum_confidence_level": "optional<root.EnumIncomeMinimumConfidenceLevelRequest>",
                   "save_data": {
-                    "default": undefined,
+                    "default": true,
                     "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
@@ -8290,7 +8290,7 @@ client.invoices.list(params: {
               "body": {
                 "properties": {
                   "attach_xml": {
-                    "default": undefined,
+                    "default": false,
                     "docs": "When set to \`true\`, you will receive the XML invoice in the response.",
                     "type": "optional<boolean>",
                     "validation": undefined,
@@ -8334,7 +8334,7 @@ client.invoices.list(params: {
                     },
                   },
                   "save_data": {
-                    "default": undefined,
+                    "default": true,
                     "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
@@ -11191,7 +11191,7 @@ You can use the Payment Transactions resource in order to get useful information
                     },
                   },
                   "save_data": {
-                    "default": undefined,
+                    "default": true,
                     "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
@@ -11809,7 +11809,7 @@ client. recurring_expenses.list(params: {
                     },
                   },
                   "save_data": {
-                    "default": undefined,
+                    "default": true,
                     "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
@@ -13279,7 +13279,7 @@ client.tax_compliance_status.list(params: {
               "body": {
                 "properties": {
                   "attach_pdf": {
-                    "default": undefined,
+                    "default": false,
                     "docs": "When set to \`true\`, you will receive the PDF in binary format in the response.",
                     "type": "optional<boolean>",
                     "validation": undefined,
@@ -13295,7 +13295,7 @@ client.tax_compliance_status.list(params: {
                     },
                   },
                   "save_data": {
-                    "default": undefined,
+                    "default": true,
                     "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
@@ -13797,7 +13797,7 @@ At the moment, the Tax Declaration resource is available for:
               "body": {
                 "properties": {
                   "attach_pdf": {
-                    "default": undefined,
+                    "default": false,
                     "docs": "When this is set to \`true\`, you will receive the PDF as a binary string in the response.",
                     "type": "optional<boolean>",
                     "validation": undefined,
@@ -13813,7 +13813,7 @@ At the moment, the Tax Declaration resource is available for:
                     },
                   },
                   "save_data": {
-                    "default": undefined,
+                    "default": true,
                     "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
@@ -14240,7 +14240,7 @@ client.tax_retentions.list(params: {
               "body": {
                 "properties": {
                   "attach_xml": {
-                    "default": undefined,
+                    "default": true,
                     "docs": "When set to \`true\`, you will receive the XML tax retention in the response.",
                     "type": "optional<boolean>",
                     "validation": undefined,
@@ -14283,7 +14283,7 @@ client.tax_retentions.list(params: {
                     },
                   },
                   "save_data": {
-                    "default": undefined,
+                    "default": true,
                     "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
@@ -18194,7 +18194,7 @@ client.tax_status.list(params: {
               "body": {
                 "properties": {
                   "attach_pdf": {
-                    "default": undefined,
+                    "default": false,
                     "docs": "When set to \`true\`, you will receive the PDF in binary format in the response.",
                     "type": "optional<boolean>",
                     "validation": undefined,
@@ -18210,7 +18210,7 @@ client.tax_status.list(params: {
                     },
                   },
                   "save_data": {
-                    "default": undefined,
+                    "default": true,
                     "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
@@ -27923,7 +27923,7 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "open_finance_display_confirmation_required": "optional<DisplayConfirmationRequiredOfpi>",
           "ready_to_confirm": {
-            "default": undefined,
+            "default": true,
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -27937,7 +27937,7 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "pse_display_confirmation_required": "optional<DisplayConfirmationRequiredContentPse>",
           "ready_to_confirm": {
-            "default": undefined,
+            "default": true,
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
@@ -27951,7 +27951,7 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "pse_display_credentials_required": "optional<DisplayCredentialsRequiredContentPse>",
           "ready_to_confirm": {
-            "default": undefined,
+            "default": false,
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
@@ -27965,7 +27965,7 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "pse_display_customer_bank_accounts": "optional<DisplayCustomerBankAccountsContentPse>",
           "ready_to_confirm": {
-            "default": undefined,
+            "default": true,
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
@@ -27979,7 +27979,7 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "pse_display_needs_redirect": "optional<NeedsRedirectContentPse>",
           "ready_to_confirm": {
-            "default": undefined,
+            "default": true,
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
@@ -27993,7 +27993,7 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "open_finance_display_payment_failed": "optional<DisplayPaymentFailed>",
           "ready_to_confirm": {
-            "default": undefined,
+            "default": false,
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`,you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -28007,7 +28007,7 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "open_finance_display_payment_method_information": "optional<DisplayPaymentMethodInformationContentOfpi>",
           "ready_to_confirm": {
-            "default": undefined,
+            "default": false,
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -28021,7 +28021,7 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "pse_display_payment_method_information": "optional<DisplayPaymentMethodInformationContentPse>",
           "ready_to_confirm": {
-            "default": undefined,
+            "default": false,
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
@@ -28035,7 +28035,7 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "open_finance_display_payment_processing": "optional<DisplayPaymentProcessing>",
           "ready_to_confirm": {
-            "default": undefined,
+            "default": false,
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -28049,7 +28049,7 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "open_finance_display_payment_succeeded": "optional<DisplayPaymentSucceeded>",
           "ready_to_confirm": {
-            "default": undefined,
+            "default": false,
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -28081,7 +28081,7 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "open_finance_display_needs_redirect": "optional<NeedsRedirectContent>",
           "ready_to_confirm": {
-            "default": undefined,
+            "default": false,
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -28388,7 +28388,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "save_data": {
-            "default": undefined,
+            "default": true,
             "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
             "type": "optional<boolean>",
@@ -28805,6 +28805,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Details about the payment method type selected.",
         "properties": {
           "belvo_flow": {
+            "default": true,
             "docs": "This parameter determines the payment flow of the payment intent. By default, this is set to \`true\` and the payment intent created is processed using the Belvo's payment flow and Belvo-integrated institutions. When set to \`false\`, the payment intent process uses institutions not integrated into Belvo's flow.",
             "type": "boolean",
           },
@@ -30661,7 +30662,7 @@ For \`session_expired\` errors, the description is:
             },
           },
           "save_data": {
-            "default": undefined,
+            "default": true,
             "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
             "type": "optional<boolean>",
@@ -31726,7 +31727,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Request body for monthly tax returns",
         "properties": {
           "attach_pdf": {
-            "default": undefined,
+            "default": false,
             "docs": "When this is set to \`true\`, you will receive the PDF as a binary string in the response.",
             "type": "optional<boolean>",
             "validation": undefined,
@@ -31754,7 +31755,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "save_data": {
-            "default": undefined,
+            "default": true,
             "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
             "type": "optional<boolean>",
@@ -31838,7 +31839,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Request body for yearly tax returns",
         "properties": {
           "attach_pdf": {
-            "default": undefined,
+            "default": false,
             "docs": "When this is set to \`true\`, you will receive the PDF as a binary string in the response.",
             "type": "optional<boolean>",
             "validation": undefined,
@@ -31854,7 +31855,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "save_data": {
-            "default": undefined,
+            "default": true,
             "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
             "type": "optional<boolean>",
@@ -32819,7 +32820,7 @@ For \`token_required\` errors, the description is:
         "docs": "Details on how to generate the token.",
         "properties": {
           "expects_user_input": {
-            "default": undefined,
+            "default": true,
             "docs": "Indicates whether the user needs to provide input in order to complete the authentication.
 When set to \`false\`, your user may need to:
 - confirm the login on another device - scan a QR code
@@ -33168,7 +33169,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "save_data": {
-            "default": undefined,
+            "default": true,
             "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
             "type": "optional<boolean>",
@@ -36252,7 +36253,7 @@ client.balances.list(params: {
                     },
                   },
                   "save_data": {
-                    "default": undefined,
+                    "default": true,
                     "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
@@ -37914,7 +37915,7 @@ At the moment, the employment records resource is available for:
               "body": {
                 "properties": {
                   "attach_pdf": {
-                    "default": undefined,
+                    "default": false,
                     "docs": "When set to \`true\`, you will receive the PDF in binary format in the response.",
                     "type": "optional<boolean>",
                     "validation": undefined,
@@ -37930,7 +37931,7 @@ At the moment, the employment records resource is available for:
                     },
                   },
                   "save_data": {
-                    "default": undefined,
+                    "default": true,
                     "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
@@ -38593,7 +38594,7 @@ client.incomes.list(params: {
                   },
                   "minimum_confidence_level": "optional<root.EnumIncomeMinimumConfidenceLevelRequest>",
                   "save_data": {
-                    "default": undefined,
+                    "default": true,
                     "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
@@ -41680,7 +41681,7 @@ client.invoices.list(params: {
               "body": {
                 "properties": {
                   "attach_xml": {
-                    "default": undefined,
+                    "default": false,
                     "docs": "When set to \`true\`, you will receive the XML invoice in the response.",
                     "type": "optional<boolean>",
                     "validation": undefined,
@@ -41724,7 +41725,7 @@ client.invoices.list(params: {
                     },
                   },
                   "save_data": {
-                    "default": undefined,
+                    "default": true,
                     "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
@@ -44581,7 +44582,7 @@ You can use the Payment Transactions resource in order to get useful information
                     },
                   },
                   "save_data": {
-                    "default": undefined,
+                    "default": true,
                     "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
@@ -45199,7 +45200,7 @@ client. recurring_expenses.list(params: {
                     },
                   },
                   "save_data": {
-                    "default": undefined,
+                    "default": true,
                     "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
@@ -46669,7 +46670,7 @@ client.tax_compliance_status.list(params: {
               "body": {
                 "properties": {
                   "attach_pdf": {
-                    "default": undefined,
+                    "default": false,
                     "docs": "When set to \`true\`, you will receive the PDF in binary format in the response.",
                     "type": "optional<boolean>",
                     "validation": undefined,
@@ -46685,7 +46686,7 @@ client.tax_compliance_status.list(params: {
                     },
                   },
                   "save_data": {
-                    "default": undefined,
+                    "default": true,
                     "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
@@ -47187,7 +47188,7 @@ At the moment, the Tax Declaration resource is available for:
               "body": {
                 "properties": {
                   "attach_pdf": {
-                    "default": undefined,
+                    "default": false,
                     "docs": "When this is set to \`true\`, you will receive the PDF as a binary string in the response.",
                     "type": "optional<boolean>",
                     "validation": undefined,
@@ -47203,7 +47204,7 @@ At the moment, the Tax Declaration resource is available for:
                     },
                   },
                   "save_data": {
-                    "default": undefined,
+                    "default": true,
                     "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
@@ -47630,7 +47631,7 @@ client.tax_retentions.list(params: {
               "body": {
                 "properties": {
                   "attach_xml": {
-                    "default": undefined,
+                    "default": true,
                     "docs": "When set to \`true\`, you will receive the XML tax retention in the response.",
                     "type": "optional<boolean>",
                     "validation": undefined,
@@ -47673,7 +47674,7 @@ client.tax_retentions.list(params: {
                     },
                   },
                   "save_data": {
-                    "default": undefined,
+                    "default": true,
                     "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
@@ -51584,7 +51585,7 @@ client.tax_status.list(params: {
               "body": {
                 "properties": {
                   "attach_pdf": {
-                    "default": undefined,
+                    "default": false,
                     "docs": "When set to \`true\`, you will receive the PDF in binary format in the response.",
                     "type": "optional<boolean>",
                     "validation": undefined,
@@ -51600,7 +51601,7 @@ client.tax_status.list(params: {
                     },
                   },
                   "save_data": {
-                    "default": undefined,
+                    "default": true,
                     "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
@@ -59938,7 +59939,7 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "open_finance_display_confirmation_required": "optional<DisplayConfirmationRequiredOfpi>",
           "ready_to_confirm": {
-            "default": undefined,
+            "default": true,
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -59952,7 +59953,7 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "pse_display_confirmation_required": "optional<DisplayConfirmationRequiredContentPse>",
           "ready_to_confirm": {
-            "default": undefined,
+            "default": true,
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
@@ -59966,7 +59967,7 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "pse_display_credentials_required": "optional<DisplayCredentialsRequiredContentPse>",
           "ready_to_confirm": {
-            "default": undefined,
+            "default": false,
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
@@ -59980,7 +59981,7 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "pse_display_customer_bank_accounts": "optional<DisplayCustomerBankAccountsContentPse>",
           "ready_to_confirm": {
-            "default": undefined,
+            "default": true,
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
@@ -59994,7 +59995,7 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "pse_display_needs_redirect": "optional<NeedsRedirectContentPse>",
           "ready_to_confirm": {
-            "default": undefined,
+            "default": true,
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
@@ -60008,7 +60009,7 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "open_finance_display_payment_failed": "optional<DisplayPaymentFailed>",
           "ready_to_confirm": {
-            "default": undefined,
+            "default": false,
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`,you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -60022,7 +60023,7 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "open_finance_display_payment_method_information": "optional<DisplayPaymentMethodInformationContentOfpi>",
           "ready_to_confirm": {
-            "default": undefined,
+            "default": false,
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -60036,7 +60037,7 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "pse_display_payment_method_information": "optional<DisplayPaymentMethodInformationContentPse>",
           "ready_to_confirm": {
-            "default": undefined,
+            "default": false,
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
@@ -60050,7 +60051,7 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "open_finance_display_payment_processing": "optional<DisplayPaymentProcessing>",
           "ready_to_confirm": {
-            "default": undefined,
+            "default": false,
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -60064,7 +60065,7 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "open_finance_display_payment_succeeded": "optional<DisplayPaymentSucceeded>",
           "ready_to_confirm": {
-            "default": undefined,
+            "default": false,
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -60096,7 +60097,7 @@ For \`login_error\` errors, the description can be one of the following:
         "properties": {
           "open_finance_display_needs_redirect": "optional<NeedsRedirectContent>",
           "ready_to_confirm": {
-            "default": undefined,
+            "default": false,
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -60403,7 +60404,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "save_data": {
-            "default": undefined,
+            "default": true,
             "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
             "type": "optional<boolean>",
@@ -60820,6 +60821,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Details about the payment method type selected.",
         "properties": {
           "belvo_flow": {
+            "default": true,
             "docs": "This parameter determines the payment flow of the payment intent. By default, this is set to \`true\` and the payment intent created is processed using the Belvo's payment flow and Belvo-integrated institutions. When set to \`false\`, the payment intent process uses institutions not integrated into Belvo's flow.",
             "type": "boolean",
           },
@@ -62676,7 +62678,7 @@ For \`session_expired\` errors, the description is:
             },
           },
           "save_data": {
-            "default": undefined,
+            "default": true,
             "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
             "type": "optional<boolean>",
@@ -63741,7 +63743,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Request body for monthly tax returns",
         "properties": {
           "attach_pdf": {
-            "default": undefined,
+            "default": false,
             "docs": "When this is set to \`true\`, you will receive the PDF as a binary string in the response.",
             "type": "optional<boolean>",
             "validation": undefined,
@@ -63769,7 +63771,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "save_data": {
-            "default": undefined,
+            "default": true,
             "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
             "type": "optional<boolean>",
@@ -63853,7 +63855,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Request body for yearly tax returns",
         "properties": {
           "attach_pdf": {
-            "default": undefined,
+            "default": false,
             "docs": "When this is set to \`true\`, you will receive the PDF as a binary string in the response.",
             "type": "optional<boolean>",
             "validation": undefined,
@@ -63869,7 +63871,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "save_data": {
-            "default": undefined,
+            "default": true,
             "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
             "type": "optional<boolean>",
@@ -64834,7 +64836,7 @@ For \`token_required\` errors, the description is:
         "docs": "Details on how to generate the token.",
         "properties": {
           "expects_user_input": {
-            "default": undefined,
+            "default": true,
             "docs": "Indicates whether the user needs to provide input in order to complete the authentication.
 When set to \`false\`, your user may need to:
 - confirm the login on another device - scan a QR code
@@ -65183,7 +65185,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "save_data": {
-            "default": undefined,
+            "default": true,
             "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
             "type": "optional<boolean>",

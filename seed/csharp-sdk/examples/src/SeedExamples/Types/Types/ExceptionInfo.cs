@@ -4,14 +4,14 @@ using System.Text.Json.Serialization;
 
 namespace SeedExamples;
 
-public class ExceptionInfo
+public record ExceptionInfo
 {
     [JsonPropertyName("exceptionType")]
-    public string ExceptionType { get; init; }
+    public required string ExceptionType { get; init; }
 
     [JsonPropertyName("exceptionMessage")]
-    public string ExceptionMessage { get; init; }
+    public required string ExceptionMessage { get; init; }
 
     [JsonPropertyName("exceptionStacktrace")]
-    public string ExceptionStacktrace { get; init; }
+    public required string ExceptionStacktrace { get; init; }
 }

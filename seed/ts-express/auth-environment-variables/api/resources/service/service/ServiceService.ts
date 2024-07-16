@@ -52,7 +52,7 @@ export class ServiceService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.service.getWithApiKey.Response.jsonOrThrow(responseBody, {
+                                serializers.service.getWithApiKey.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -84,7 +84,7 @@ export class ServiceService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.service.getWithHeader.Response.jsonOrThrow(responseBody, {
+                                serializers.service.getWithHeader.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );

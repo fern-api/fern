@@ -11,8 +11,8 @@ export const WorkspaceStarterFilesResponseV2: core.serialization.ObjectSchema<
     SeedTrace.WorkspaceStarterFilesResponseV2
 > = core.serialization.object({
     filesByLanguage: core.serialization.record(
-        core.serialization.lazy(async () => (await import("../../..")).Language),
-        core.serialization.lazyObject(async () => (await import("../../..")).v2.Files).optional()
+        core.serialization.lazy(() => serializers.Language),
+        core.serialization.lazyObject(() => serializers.v2.Files).optional()
     ),
 });
 

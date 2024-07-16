@@ -12,6 +12,7 @@ export declare namespace Migration {
     interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
@@ -72,7 +73,7 @@ export class Migration {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.migration.getAttemptedMigrations.Response.parseOrThrow(_response.body, {
+                body: serializers.migration.getAttemptedMigrations.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,

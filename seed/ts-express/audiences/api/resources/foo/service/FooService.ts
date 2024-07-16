@@ -45,7 +45,7 @@ export class FooService {
 
     public toRouter(): express.Router {
         this.router.post("", async (req, res, next) => {
-            const request = await serializers.FindRequest.parse(req.body);
+            const request = serializers.FindRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -54,7 +54,7 @@ export class FooService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.ImportingType.jsonOrThrow(responseBody, {
+                                    serializers.ImportingType.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );

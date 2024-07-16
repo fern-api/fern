@@ -1,0 +1,1 @@
+{ "ignores": ["@types/jest", "@types/node", "@fern-fern/ir-sdk"], "ignore-patterns": ["lib"] }

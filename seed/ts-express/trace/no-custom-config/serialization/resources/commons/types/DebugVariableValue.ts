@@ -26,24 +26,16 @@ export const DebugVariableValue: core.serialization.Schema<
         charValue: core.serialization.object({
             value: core.serialization.string(),
         }),
-        mapValue: core.serialization.lazyObject(async () => (await import("../../..")).DebugMapValue),
+        mapValue: core.serialization.lazyObject(() => serializers.DebugMapValue),
         listValue: core.serialization.object({
-            value: core.serialization.list(
-                core.serialization.lazy(async () => (await import("../../..")).DebugVariableValue)
-            ),
+            value: core.serialization.list(core.serialization.lazy(() => serializers.DebugVariableValue)),
         }),
-        binaryTreeNodeValue: core.serialization.lazyObject(
-            async () => (await import("../../..")).BinaryTreeNodeAndTreeValue
-        ),
-        singlyLinkedListNodeValue: core.serialization.lazyObject(
-            async () => (await import("../../..")).SinglyLinkedListNodeAndListValue
-        ),
-        doublyLinkedListNodeValue: core.serialization.lazyObject(
-            async () => (await import("../../..")).DoublyLinkedListNodeAndListValue
-        ),
+        binaryTreeNodeValue: core.serialization.lazyObject(() => serializers.BinaryTreeNodeAndTreeValue),
+        singlyLinkedListNodeValue: core.serialization.lazyObject(() => serializers.SinglyLinkedListNodeAndListValue),
+        doublyLinkedListNodeValue: core.serialization.lazyObject(() => serializers.DoublyLinkedListNodeAndListValue),
         undefinedValue: core.serialization.object({}),
         nullValue: core.serialization.object({}),
-        genericValue: core.serialization.lazyObject(async () => (await import("../../..")).GenericValue),
+        genericValue: core.serialization.lazyObject(() => serializers.GenericValue),
     })
     .transform<SeedTrace.DebugVariableValue>({
         transform: (value) => value,

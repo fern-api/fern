@@ -333,3 +333,7 @@ layout:
   header-height: 75px
   searchbar-placement: header
   tabs-placement: header
+
+js: 
+ - ./js/penguin-ai.js
+ - ./js/koala.js

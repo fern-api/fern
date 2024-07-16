@@ -8,7 +8,7 @@ import * as core from "../../../../core";
 
 export const TracedTestCase: core.serialization.ObjectSchema<serializers.TracedTestCase.Raw, SeedTrace.TracedTestCase> =
     core.serialization.object({
-        result: core.serialization.lazyObject(async () => (await import("../../..")).TestCaseResultWithStdout),
+        result: core.serialization.lazyObject(() => serializers.TestCaseResultWithStdout),
         traceResponsesSize: core.serialization.number(),
     });
 

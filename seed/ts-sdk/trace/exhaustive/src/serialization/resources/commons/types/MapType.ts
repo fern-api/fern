@@ -8,8 +8,8 @@ import * as core from "../../../../core";
 
 export const MapType: core.serialization.ObjectSchema<serializers.MapType.Raw, SeedTrace.MapType> =
     core.serialization.object({
-        keyType: core.serialization.lazy(async () => (await import("../../..")).VariableType),
-        valueType: core.serialization.lazy(async () => (await import("../../..")).VariableType),
+        keyType: core.serialization.lazy(() => serializers.VariableType),
+        valueType: core.serialization.lazy(() => serializers.VariableType),
     });
 
 export declare namespace MapType {

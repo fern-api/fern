@@ -55,7 +55,7 @@ export class CustomAuth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.customAuth.getWithCustomAuth.Response.parseOrThrow(_response.body, {
+            return serializers.customAuth.getWithCustomAuth.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -67,7 +67,7 @@ export class CustomAuth {
             switch (_response.error.statusCode) {
                 case 401:
                     throw new SeedCustomAuth.UnauthorizedRequest(
-                        await serializers.UnauthorizedRequestErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.UnauthorizedRequestErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -130,7 +130,7 @@ export class CustomAuth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.customAuth.postWithCustomAuth.Response.parseOrThrow(_response.body, {
+            return serializers.customAuth.postWithCustomAuth.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -142,7 +142,7 @@ export class CustomAuth {
             switch (_response.error.statusCode) {
                 case 401:
                     throw new SeedCustomAuth.UnauthorizedRequest(
-                        await serializers.UnauthorizedRequestErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.UnauthorizedRequestErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,

@@ -1,4 +1,7 @@
+using System.Net.Http;
+using System.Text.Json;
 using SeedValidation;
+using SeedValidation.Core;
 
 #nullable enable
 
@@ -8,7 +11,7 @@ public partial class SeedValidationClient
 {
     private RawClient _client;
 
-    public SeedValidationClient(ClientOptions clientOptions = null)
+    public SeedValidationClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
@@ -16,17 +19,45 @@ public partial class SeedValidationClient
         );
     }
 
-    public async void CreateAsync() { }
-
-    public async void GetAsync() { }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
+    public async Task<Type> CreateAsync(CreateRequest request)
     {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "/create",
+                Body = request
+            }
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            throw new Exception(message);
+            return JsonSerializer.Deserialize<Type>(responseBody)!;
         }
-        return value;
+        throw new Exception(responseBody);
+    }
+
+    public async Task<Type> GetAsync(GetRequest request)
+    {
+        var _query = new Dictionary<string, object>()
+        {
+            { "decimal", request.Decimal.ToString() },
+            { "even", request.Even.ToString() },
+            { "name", request.Name },
+        };
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = "",
+                Query = _query
+            }
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return JsonSerializer.Deserialize<Type>(responseBody)!;
+        }
+        throw new Exception(responseBody);
     }
 }

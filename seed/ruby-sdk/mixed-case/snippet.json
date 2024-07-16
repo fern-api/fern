@@ -18,7 +18,7 @@
                 "identifierOverride": "endpoint_service.listResources"
             },
             "snippet": {
-                "client": "require \"fern_mixed_case\"\n\nmixed_case = SeedMixedCaseClient::Client.new(base_url: \"https://api.example.com\")\nmixed_case.service.list_resources(page_limit: 10, before_date: DateTime.parse(2023-01-01))",
+                "client": "require \"fern_mixed_case\"\n\nmixed_case = SeedMixedCaseClient::Client.new(base_url: \"https://api.example.com\")\nmixed_case.service.list_resources(page_limit: 10, before_date: Date.parse(\"2023-01-01\"))",
                 "type": "ruby"
             }
         },
@@ -40,7 +40,7 @@
                 "identifierOverride": "endpoint_service.listResources"
             },
             "snippet": {
-                "client": "require \"fern_mixed_case\"\n\nmixed_case = SeedMixedCaseClient::Client.new(base_url: \"https://api.example.com\")\nmixed_case.service.list_resources(page_limit: 10, before_date: DateTime.parse(2023-01-01))",
+                "client": "require \"fern_mixed_case\"\n\nmixed_case = SeedMixedCaseClient::Client.new(base_url: \"https://api.example.com\")\nmixed_case.service.list_resources(page_limit: 10, before_date: Date.parse(\"2023-01-01\"))",
                 "type": "ruby"
             }
         }

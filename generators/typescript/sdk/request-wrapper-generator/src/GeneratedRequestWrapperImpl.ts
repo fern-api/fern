@@ -173,7 +173,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private getDocs(context: SdkContext): string | undefined {
         const groups: string[] = [];
 
-        for (const example of getExampleEndpointCalls(this.endpoint.examples)) {
+        for (const example of getExampleEndpointCalls(this.endpoint)) {
             const generatedExample = this.generateExample(example);
             const exampleStr = "@example\n" + getTextOfTsNode(generatedExample.build(context, { isForComment: true }));
             groups.push(exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`));

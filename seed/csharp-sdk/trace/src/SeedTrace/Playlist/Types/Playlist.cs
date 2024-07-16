@@ -4,17 +4,17 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class Playlist
+public record Playlist
 {
     [JsonPropertyName("playlist_id")]
-    public string PlaylistId { get; init; }
+    public required string PlaylistId { get; init; }
 
     [JsonPropertyName("owner-id")]
-    public string OwnerId { get; init; }
+    public required string OwnerId { get; init; }
 
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     [JsonPropertyName("problems")]
-    public IEnumerable<string> Problems { get; init; }
+    public IEnumerable<string> Problems { get; init; } = new List<string>();
 }

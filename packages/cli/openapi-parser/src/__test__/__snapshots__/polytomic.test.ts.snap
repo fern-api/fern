@@ -1438,6 +1438,7 @@ exports[`polytomic polytomic parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": true,
                 "type": "boolean",
               },
               "type": "primitive",

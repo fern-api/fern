@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedMixedCase;
 
-public class Organization
+public record Organization
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 }

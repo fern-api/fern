@@ -9,7 +9,7 @@ import * as core from "../../core";
 export const OptionalStringResponse: core.serialization.Schema<
     serializers.OptionalStringResponse.Raw,
     SeedResponseProperty.OptionalStringResponse
-> = core.serialization.lazyObject(async () => (await import("..")).StringResponse).optional();
+> = core.serialization.lazyObject(() => serializers.StringResponse).optional();
 
 export declare namespace OptionalStringResponse {
     type Raw = serializers.StringResponse.Raw | null | undefined;

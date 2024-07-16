@@ -30,11 +30,9 @@ export const DebugVariableValue: core.serialization.Schema<
         charValue: core.serialization.object({
             value: core.serialization.string(),
         }),
-        mapValue: core.serialization.lazyObject(async () => (await import("../../..")).DebugMapValue),
+        mapValue: core.serialization.lazyObject(() => serializers.DebugMapValue),
         listValue: core.serialization.object({
-            value: core.serialization.list(
-                core.serialization.lazy(async () => (await import("../../..")).DebugVariableValue)
-            ),
+            value: core.serialization.list(core.serialization.lazy(() => serializers.DebugVariableValue)),
         }),
         binaryTreeNodeValue: BinaryTreeNodeAndTreeValue,
         singlyLinkedListNodeValue: SinglyLinkedListNodeAndListValue,

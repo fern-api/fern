@@ -11,6 +11,10 @@ import * as errors from "../../../../errors/index";
 export declare namespace Headers {
     interface Options {
         environment: core.Supplier<string>;
+        /** Override the X-API-Version header */
+        version?: "02-02-2024";
+        /** Override the X-API-Enable-Audit-Logging header */
+        auditLogging?: true;
     }
 
     interface RequestOptions {
@@ -47,8 +51,12 @@ export class Headers {
             url: urlJoin(await core.Supplier.get(this._options.environment), "headers"),
             method: "POST",
             headers: {
-                "X-API-Version": requestOptions?.version ?? "02-02-2024",
-                "X-API-Enable-Audit-Logging": requestOptions?.auditLogging ?? "true",
+                "X-API-Version": requestOptions?.version ?? this._options?.version ?? "02-02-2024",
+                "X-API-Enable-Audit-Logging": (
+                    requestOptions?.auditLogging ??
+                    this._options?.auditLogging ??
+                    true
+                ).toString(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/literal",
                 "X-Fern-SDK-Version": "0.0.1",
@@ -58,15 +66,13 @@ export class Headers {
                 "X-Async": "true",
             },
             contentType: "application/json",
-            body: await serializers.SendLiteralsInHeadersRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-            }),
+            body: serializers.SendLiteralsInHeadersRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.SendResponse.parseOrThrow(_response.body, {
+            return serializers.SendResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

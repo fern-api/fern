@@ -24,6 +24,7 @@ export declare namespace GeneratedDefaultEndpointImplementation {
         response: GeneratedEndpointResponse;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
+        omitUndefined: boolean;
     }
 }
 
@@ -38,6 +39,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     private response: GeneratedEndpointResponse;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
+    private omitUndefined: boolean;
 
     constructor({
         endpoint,
@@ -47,7 +49,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         defaultTimeoutInSeconds,
         request,
         includeSerdeLayer,
-        retainOriginalCasing
+        retainOriginalCasing,
+        omitUndefined
     }: GeneratedDefaultEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -57,6 +60,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         this.response = response;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.omitUndefined = omitUndefined;
     }
 
     public getOverloads(): EndpointSignature[] {
@@ -118,7 +122,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         }
 
         const examples: string[] = [];
-        for (const example of getExampleEndpointCalls(this.endpoint.examples)) {
+        for (const example of getExampleEndpointCalls(this.endpoint)) {
             const generatedExample = this.getExample({
                 context,
                 example,
@@ -208,8 +212,11 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 ],
                 ts.NodeFlags.Const
             );
-            return [
-                ts.factory.createVariableStatement(undefined, listFn),
+            const statements: ts.Statement[] = [ts.factory.createVariableStatement(undefined, listFn)];
+            if (paginationInfo.type === "offset" || paginationInfo.type === "offset-step") {
+                statements.push(paginationInfo.initializeOffset);
+            }
+            statements.push(
                 ts.factory.createReturnStatement(
                     context.coreUtilities.pagination.Pageable._construct({
                         responseType: paginationInfo.responseType,
@@ -219,19 +226,28 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                                 ts.factory.createIdentifier("request")
                             ])
                         ),
-                        hasNextPage: this.createLambdaWithResponse(paginationInfo.hasNextPage),
-                        getItems: this.createLambdaWithResponse(paginationInfo.getItems),
-                        loadPage: this.createLambdaWithResponse(
-                            ts.factory.createBlock([ts.factory.createReturnStatement(paginationInfo.loadPage)])
-                        )
+                        hasNextPage: this.createLambdaWithResponse({ body: paginationInfo.hasNextPage }),
+                        getItems: this.createLambdaWithResponse({ body: paginationInfo.getItems }),
+                        loadPage: this.createLambdaWithResponse({
+                            body: ts.factory.createBlock(paginationInfo.loadPage),
+                            ignoreResponse: paginationInfo.type === "offset"
+                        })
                     })
                 )
-            ];
+            );
+            return statements;
         }
         return body;
     }
 
-    private createLambdaWithResponse(body: ts.ConciseBody): ts.Expression {
+    private createLambdaWithResponse({
+        body,
+        ignoreResponse
+    }: {
+        body: ts.ConciseBody;
+        ignoreResponse?: boolean;
+    }): ts.Expression {
+        const responseParameterName = ignoreResponse ? "_response" : "response";
         return ts.factory.createArrowFunction(
             undefined,
             undefined,
@@ -240,7 +256,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                     undefined,
                     undefined,
                     undefined,
-                    ts.factory.createIdentifier("response"),
+                    ts.factory.createIdentifier(responseParameterName),
                     undefined,
                     undefined,
                     undefined
@@ -263,7 +279,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             generatedClientClass: this.generatedSdkClientClass,
             context,
             includeSerdeLayer: this.includeSerdeLayer,
-            retainOriginalCasing: this.retainOriginalCasing
+            retainOriginalCasing: this.retainOriginalCasing,
+            omitUndefined: this.omitUndefined
         });
         if (url != null) {
             return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);

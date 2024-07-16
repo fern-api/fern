@@ -20,7 +20,7 @@ export declare namespace PrimitiveSchemaValue {
         type: "int";
     }
 
-    interface Int64 extends _Utils {
+    interface Int64 extends FernOpenapiIr.LongSchema, _Utils {
         type: "int64";
     }
 
@@ -48,7 +48,7 @@ export declare namespace PrimitiveSchemaValue {
         type: "base64";
     }
 
-    interface Boolean extends _Utils {
+    interface Boolean extends FernOpenapiIr.BooleanSchema, _Utils {
         type: "boolean";
     }
 
@@ -58,14 +58,14 @@ export declare namespace PrimitiveSchemaValue {
 
     interface _Visitor<_Result> {
         int: (value: FernOpenapiIr.IntSchema) => _Result;
-        int64: () => _Result;
+        int64: (value: FernOpenapiIr.LongSchema) => _Result;
         float: () => _Result;
         double: (value: FernOpenapiIr.DoubleSchema) => _Result;
         string: (value: FernOpenapiIr.StringSchema) => _Result;
         datetime: () => _Result;
         date: () => _Result;
         base64: () => _Result;
-        boolean: () => _Result;
+        boolean: (value: FernOpenapiIr.BooleanSchema) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -84,8 +84,9 @@ export const PrimitiveSchemaValue = {
         };
     },
 
-    int64: (): FernOpenapiIr.PrimitiveSchemaValue.Int64 => {
+    int64: (value: FernOpenapiIr.LongSchema): FernOpenapiIr.PrimitiveSchemaValue.Int64 => {
         return {
+            ...value,
             type: "int64",
             _visit: function <_Result>(
                 this: FernOpenapiIr.PrimitiveSchemaValue.Int64,
@@ -170,8 +171,9 @@ export const PrimitiveSchemaValue = {
         };
     },
 
-    boolean: (): FernOpenapiIr.PrimitiveSchemaValue.Boolean => {
+    boolean: (value: FernOpenapiIr.BooleanSchema): FernOpenapiIr.PrimitiveSchemaValue.Boolean => {
         return {
+            ...value,
             type: "boolean",
             _visit: function <_Result>(
                 this: FernOpenapiIr.PrimitiveSchemaValue.Boolean,
@@ -190,7 +192,7 @@ export const PrimitiveSchemaValue = {
             case "int":
                 return visitor.int(value);
             case "int64":
-                return visitor.int64();
+                return visitor.int64(value);
             case "float":
                 return visitor.float();
             case "double":
@@ -204,7 +206,7 @@ export const PrimitiveSchemaValue = {
             case "base64":
                 return visitor.base64();
             case "boolean":
-                return visitor.boolean();
+                return visitor.boolean(value);
             default:
                 return visitor._other(value as any);
         }

@@ -1,4 +1,5 @@
 using SeedCodeSamples;
+using SeedCodeSamples.Core;
 
 #nullable enable
 
@@ -8,7 +9,7 @@ public partial class SeedCodeSamplesClient
 {
     private RawClient _client;
 
-    public SeedCodeSamplesClient(ClientOptions clientOptions = null)
+    public SeedCodeSamplesClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
@@ -17,15 +18,5 @@ public partial class SeedCodeSamplesClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public ServiceClient Service { get; init; }
 }

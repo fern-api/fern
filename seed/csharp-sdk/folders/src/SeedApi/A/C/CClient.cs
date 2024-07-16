@@ -1,4 +1,5 @@
-using SeedApi;
+using System.Net.Http;
+using SeedApi.Core;
 
 #nullable enable
 
@@ -13,9 +14,9 @@ public class CClient
         _client = client;
     }
 
-    public async void FooAsync()
+    public async Task FooAsync()
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = "" }
         );
     }

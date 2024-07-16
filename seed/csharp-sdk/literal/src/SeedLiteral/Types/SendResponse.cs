@@ -4,14 +4,14 @@ using System.Text.Json.Serialization;
 
 namespace SeedLiteral;
 
-public class SendResponse
+public record SendResponse
 {
     [JsonPropertyName("message")]
-    public string Message { get; init; }
+    public required string Message { get; init; }
 
     [JsonPropertyName("status")]
-    public int Status { get; init; }
+    public required int Status { get; init; }
 
     [JsonPropertyName("success")]
-    public bool Success { get; init; }
+    public required bool Success { get; init; }
 }

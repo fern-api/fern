@@ -53,7 +53,7 @@ export class Optional {
             contentType: "application/json",
             body:
                 request != null
-                    ? await serializers.optional.sendOptionalBody.Request.jsonOrThrow(request, {
+                    ? serializers.optional.sendOptionalBody.Request.jsonOrThrow(request, {
                           unrecognizedObjectKeys: "strip",
                       })
                     : undefined,
@@ -62,7 +62,7 @@ export class Optional {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.optional.sendOptionalBody.Response.parseOrThrow(_response.body, {
+            return serializers.optional.sendOptionalBody.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

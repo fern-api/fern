@@ -8398,6 +8398,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -8661,6 +8662,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -17308,6 +17310,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -17586,6 +17589,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -17781,6 +17785,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -19388,6 +19393,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -19840,6 +19846,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -23008,6 +23015,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",

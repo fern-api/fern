@@ -1,5 +1,7 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedIdempotencyHeaders;
+using SeedIdempotencyHeaders.Core;
 
 #nullable enable
 
@@ -24,17 +26,17 @@ public class PaymentClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Guid>(responseBody);
+            return JsonSerializer.Deserialize<Guid>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
 
-    public async void DeleteAsync(string paymentId)
+    public async Task DeleteAsync(string paymentId)
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Delete,

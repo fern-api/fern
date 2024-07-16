@@ -11,7 +11,7 @@ export const GetBasicSolutionFileRequest: core.serialization.ObjectSchema<
     SeedTrace.v2.GetBasicSolutionFileRequest
 > = core.serialization.object({
     methodName: core.serialization.string(),
-    signature: core.serialization.lazyObject(async () => (await import("../../../../..")).v2.NonVoidFunctionSignature),
+    signature: core.serialization.lazyObject(() => serializers.v2.NonVoidFunctionSignature),
 });
 
 export declare namespace GetBasicSolutionFileRequest {

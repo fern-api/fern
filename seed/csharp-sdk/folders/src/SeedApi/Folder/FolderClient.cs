@@ -1,4 +1,5 @@
-using SeedApi;
+using System.Net.Http;
+using SeedApi.Core;
 using SeedApi.Folder;
 
 #nullable enable
@@ -17,9 +18,9 @@ public class FolderClient
 
     public ServiceClient Service { get; }
 
-    public async void FooAsync()
+    public async Task FooAsync()
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = "" }
         );
     }

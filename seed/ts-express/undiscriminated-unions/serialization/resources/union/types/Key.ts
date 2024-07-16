@@ -8,7 +8,7 @@ import * as core from "../../../../core";
 
 export const Key: core.serialization.Schema<serializers.Key.Raw, SeedUndiscriminatedUnions.Key> =
     core.serialization.undiscriminatedUnion([
-        core.serialization.lazy(async () => (await import("../../..")).KeyType),
+        core.serialization.lazy(() => serializers.KeyType),
         core.serialization.stringLiteral("default"),
     ]);
 

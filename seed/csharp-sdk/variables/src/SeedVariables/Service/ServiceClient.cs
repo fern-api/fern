@@ -1,4 +1,5 @@
-using SeedVariables;
+using System.Net.Http;
+using SeedVariables.Core;
 
 #nullable enable
 
@@ -13,9 +14,9 @@ public class ServiceClient
         _client = client;
     }
 
-    public async void PostAsync(string endpointParam)
+    public async Task PostAsync(string endpointParam)
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = $"/{endpointParam}" }
         );
     }

@@ -10,7 +10,7 @@ export const Scope: core.serialization.ObjectSchema<serializers.Scope.Raw, SeedT
     {
         variables: core.serialization.record(
             core.serialization.string(),
-            core.serialization.lazy(async () => (await import("../../..")).DebugVariableValue)
+            core.serialization.lazy(() => serializers.DebugVariableValue)
         ),
     }
 );

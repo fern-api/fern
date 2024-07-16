@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.8.0] - 2024-07-03
+
+- Fix: Date snippets now wrap their examples in quotation marks to correctly use `.parse`
+
 ## [0.8.0-rc0] - 2024-07-01
 
 - Improvement: allow users to specify additional dependencies and dev dependencies for Ruby SDKs.

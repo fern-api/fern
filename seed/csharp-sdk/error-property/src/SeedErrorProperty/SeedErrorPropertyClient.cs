@@ -1,4 +1,5 @@
 using SeedErrorProperty;
+using SeedErrorProperty.Core;
 
 #nullable enable
 
@@ -8,7 +9,7 @@ public partial class SeedErrorPropertyClient
 {
     private RawClient _client;
 
-    public SeedErrorPropertyClient(ClientOptions clientOptions = null)
+    public SeedErrorPropertyClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
@@ -18,17 +19,7 @@ public partial class SeedErrorPropertyClient
         PropertyBasedError = new PropertyBasedErrorClient(_client);
     }
 
-    public ErrorsClient Errors { get; }
+    public ErrorsClient Errors { get; init; }
 
-    public PropertyBasedErrorClient PropertyBasedError { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public PropertyBasedErrorClient PropertyBasedError { get; init; }
 }

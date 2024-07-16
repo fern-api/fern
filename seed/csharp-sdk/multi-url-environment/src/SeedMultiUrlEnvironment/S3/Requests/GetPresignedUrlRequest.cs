@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedMultiUrlEnvironment;
 
-public class GetPresignedUrlRequest
+public record GetPresignedUrlRequest
 {
     [JsonPropertyName("s3Key")]
-    public string S3Key { get; init; }
+    public required string S3Key { get; init; }
 }

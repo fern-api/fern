@@ -40,7 +40,7 @@
                 "identifierOverride": "endpoint_admin.sendTestSubmissionUpdate"
             },
             "snippet": {
-                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.send_test_submission_update(submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", request: { update_time: DateTime.parse(2024-01-15T09:30:00.000Z) })",
+                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.send_test_submission_update(submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", request: { update_time: DateTime.parse(\"2024-01-15T09:30:00.000Z\") })",
                 "type": "ruby"
             }
         },
@@ -62,7 +62,7 @@
                 "identifierOverride": "endpoint_admin.sendWorkspaceSubmissionUpdate"
             },
             "snippet": {
-                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.send_workspace_submission_update(submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", request: { update_time: DateTime.parse(2024-01-15T09:30:00.000Z) })",
+                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.send_workspace_submission_update(submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", request: { update_time: DateTime.parse(\"2024-01-15T09:30:00.000Z\") })",
                 "type": "ruby"
             }
         },
@@ -128,7 +128,7 @@
                 "identifierOverride": "endpoint_admin.sendTestSubmissionUpdate"
             },
             "snippet": {
-                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.send_test_submission_update(submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", request: { update_time: DateTime.parse(2024-01-15T09:30:00.000Z) })",
+                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.send_test_submission_update(submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", request: { update_time: DateTime.parse(\"2024-01-15T09:30:00.000Z\") })",
                 "type": "ruby"
             }
         },
@@ -150,7 +150,7 @@
                 "identifierOverride": "endpoint_admin.sendWorkspaceSubmissionUpdate"
             },
             "snippet": {
-                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.send_workspace_submission_update(submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", request: { update_time: DateTime.parse(2024-01-15T09:30:00.000Z) })",
+                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.send_workspace_submission_update(submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", request: { update_time: DateTime.parse(\"2024-01-15T09:30:00.000Z\") })",
                 "type": "ruby"
             }
         },
@@ -271,7 +271,7 @@
                 "identifierOverride": "endpoint_playlist.createPlaylist"
             },
             "snippet": {
-                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.playlist.create_playlist(\n  service_param: 1,\n  datetime: DateTime.parse(2024-01-15T09:30:00.000Z),\n  optional_datetime: DateTime.parse(2024-01-15T09:30:00.000Z),\n  request: { name: \"string\", problems: [\"string\"] }\n)",
+                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.playlist.create_playlist(\n  service_param: 1,\n  datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"),\n  optional_datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"),\n  request: { name: \"string\", problems: [\"string\"] }\n)",
                 "type": "ruby"
             }
         },
@@ -326,7 +326,7 @@
                 "identifierOverride": "endpoint_playlist.createPlaylist"
             },
             "snippet": {
-                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.playlist.create_playlist(\n  service_param: 1,\n  datetime: DateTime.parse(2024-01-15T09:30:00.000Z),\n  optional_datetime: DateTime.parse(2024-01-15T09:30:00.000Z),\n  request: { name: \"string\", problems: [\"string\"] }\n)",
+                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.playlist.create_playlist(\n  service_param: 1,\n  datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"),\n  optional_datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"),\n  request: { name: \"string\", problems: [\"string\"] }\n)",
                 "type": "ruby"
             }
         },

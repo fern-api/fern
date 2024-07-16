@@ -80,6 +80,7 @@ export function convertNumber({
             nameOverride,
             generatedName,
             primitive: PrimitiveSchemaValueWithExample.int64({
+                default: _default,
                 example
             }),
             wrapAsNullable,

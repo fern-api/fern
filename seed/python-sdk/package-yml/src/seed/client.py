@@ -63,13 +63,15 @@ class SeedPackageYml:
         )
         self.service = ServiceClient(client_wrapper=self._client_wrapper)
 
-    def echo(self, id: str, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
+    def echo(self, id: str, *, name: str, size: int, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------
         id : str
 
-        request : str
+        name : str
+
+        size : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -87,11 +89,16 @@ class SeedPackageYml:
         )
         client.echo(
             id="id-ksfd9c1",
-            request="Hello world!",
+            name="Hello world!",
+            size=20,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(id)}/", method="POST", json=request, request_options=request_options, omit=OMIT
+            f"{jsonable_encoder(id)}/",
+            method="POST",
+            json={"name": name, "size": size},
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -149,13 +156,17 @@ class AsyncSeedPackageYml:
         )
         self.service = AsyncServiceClient(client_wrapper=self._client_wrapper)
 
-    async def echo(self, id: str, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
+    async def echo(
+        self, id: str, *, name: str, size: int, request_options: typing.Optional[RequestOptions] = None
+    ) -> str:
         """
         Parameters
         ----------
         id : str
 
-        request : str
+        name : str
+
+        size : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -178,14 +189,19 @@ class AsyncSeedPackageYml:
         async def main() -> None:
             await client.echo(
                 id="id-ksfd9c1",
-                request="Hello world!",
+                name="Hello world!",
+                size=20,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(id)}/", method="POST", json=request, request_options=request_options, omit=OMIT
+            f"{jsonable_encoder(id)}/",
+            method="POST",
+            json={"name": name, "size": size},
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:

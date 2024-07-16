@@ -9,8 +9,8 @@ import * as core from "../../../../core";
 export const TestCaseGrade: core.serialization.Schema<serializers.TestCaseGrade.Raw, SeedTrace.TestCaseGrade> =
     core.serialization
         .union("type", {
-            hidden: core.serialization.lazyObject(async () => (await import("../../..")).TestCaseHiddenGrade),
-            nonHidden: core.serialization.lazyObject(async () => (await import("../../..")).TestCaseNonHiddenGrade),
+            hidden: core.serialization.lazyObject(() => serializers.TestCaseHiddenGrade),
+            nonHidden: core.serialization.lazyObject(() => serializers.TestCaseNonHiddenGrade),
         })
         .transform<SeedTrace.TestCaseGrade>({
             transform: (value) => value,

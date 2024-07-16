@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedUnions;
 
-public class Foo
+public record Foo
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 }

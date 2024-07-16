@@ -5,11 +5,11 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class WorkspaceRanResponse
+public record WorkspaceRanResponse
 {
     [JsonPropertyName("submissionId")]
-    public Guid SubmissionId { get; init; }
+    public required Guid SubmissionId { get; init; }
 
     [JsonPropertyName("runDetails")]
-    public WorkspaceRunDetails RunDetails { get; init; }
+    public required WorkspaceRunDetails RunDetails { get; init; }
 }

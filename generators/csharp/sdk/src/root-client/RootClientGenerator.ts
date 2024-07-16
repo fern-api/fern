@@ -4,6 +4,10 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AuthScheme, HttpHeader, Literal, PrimitiveType, Subpackage, TypeReference } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { RawClient } from "../endpoint/RawClient";
+import { EndpointGenerator } from "../endpoint/EndpointGenerator";
+
+export const CLIENT_MEMBER_NAME = "_client";
 
 interface ConstructorParameter {
     name: string;
@@ -30,6 +34,14 @@ interface HeaderInfo {
 const GetFromEnvironmentOrThrow = "GetFromEnvironmentOrThrow";
 
 export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+    private rawClient: RawClient;
+    private endpointGenerator: EndpointGenerator;
+    constructor(context: SdkGeneratorContext) {
+        super(context);
+        this.rawClient = new RawClient(context);
+        this.endpointGenerator = new EndpointGenerator(context, this.rawClient);
+    }
+
     protected getFilepath(): RelativeFilePath {
         return join(RelativeFilePath.of(this.context.getRootClientClassName() + ".cs"));
     }
@@ -57,6 +69,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 csharp.field({
                     access: "public",
                     get: true,
+                    init: true,
                     name: subpackage.name.pascalCase.safeName,
                     type: csharp.Type.reference(this.context.getSubpackageClassReference(subpackage))
                 })
@@ -67,20 +80,19 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         if (rootServiceId != null) {
             const service = this.context.getHttpServiceOrThrow(rootServiceId);
             for (const endpoint of service.endpoints) {
-                class_.addMethod(
-                    csharp.method({
-                        name: this.context.getEndpointMethodName(endpoint),
-                        access: "public",
-                        isAsync: true,
-                        parameters: [],
-                        summary: endpoint.docs
-                    })
-                );
+                const method = this.endpointGenerator.generate({
+                    serviceId: rootServiceId,
+                    endpoint,
+                    rawClientReference: CLIENT_MEMBER_NAME
+                });
+                class_.addMethod(method);
             }
         }
 
-        class_.addMethod(this.getFromEnvironmentOrThrowMethod());
-
+        const { optionalParameters } = this.getConstructorParameters();
+        if (optionalParameters.some((parameter) => parameter.environmentVariable != null)) {
+            class_.addMethod(this.getFromEnvironmentOrThrowMethod());
+        }
         return new CSharpFile({
             clazz: class_,
             directory: RelativeFilePath.of("")
@@ -103,7 +115,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             parameters.push(
                 csharp.parameter({
                     name: param.name,
-                    type: this.context.csharpTypeMapper.convert({ reference: param.typeReference }),
+                    type: this.context.csharpTypeMapper
+                        .convert({ reference: param.typeReference })
+                        .toOptionalIfNotAlready(),
                     docs: param.docs,
                     initializer: "null"
                 })
@@ -112,7 +126,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         parameters.push(
             csharp.parameter({
                 name: "clientOptions",
-                type: csharp.Type.reference(this.context.getClientOptionsClassReference()),
+                type: csharp.Type.optional(csharp.Type.reference(this.context.getClientOptionsClassReference())),
                 initializer: "null"
             })
         );
@@ -133,7 +147,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             headerEntries.push({
                 key: csharp.codeblock(`"${param.name}"`),
                 value: csharp.codeblock(
-                    param.value.type === "string" ? `$"${param.value.string}"` : `${param.value.boolean}.ToString()`
+                    param.value.type === "string" ? `"${param.value.string}"` : `${param.value.boolean}.ToString()`
                 )
             });
         }
@@ -165,13 +179,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             body: csharp.codeblock((writer) => {
                 for (const param of optionalParameters) {
                     if (param.environmentVariable != null) {
-                        writer.writeLine(`${param.name} = ${param.name} ?? ${GetFromEnvironmentOrThrow}(`);
+                        writer.writeLine(`${param.name} ??= ${GetFromEnvironmentOrThrow}(`);
                         writer.indent();
                         writer.writeLine(`"${param.environmentVariable}",`);
                         writer.writeLine(
                             `"Please pass in ${param.name} or set the environment variable ${param.environmentVariable}."`
                         );
                         writer.dedent();
+                        writer.writeLine(");");
                     }
                 }
                 writer.writeLine("_client = ");
@@ -222,7 +237,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 optionalParameters.push(param);
             } else if (param.typeReference.type === "container" && param.typeReference.container.type === "literal") {
                 literalParameters.push({
-                    name: param.name,
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    name: param.header!.name,
                     value: param.typeReference.container.literal
                 });
             } else {
@@ -327,12 +343,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             ],
             isAsync: false,
             body: csharp.codeblock((writer) => {
-                writer.writeLine("var value = System.Environment.GetEnvironmentVariable(env);");
-                writer.writeLine("if (value == null) {");
-                writer.writeLine("    throw new Exception(message);");
-                writer.writeLine("}");
-                writer.writeLine("return value;");
-            })
+                writer.writeLine("return Environment.GetEnvironmentVariable(env) ?? throw new Exception(message);");
+            }),
+            type: csharp.MethodType.STATIC
         });
     }
 

@@ -5,7 +5,7 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class WorkspaceRunDetails
+public record WorkspaceRunDetails
 {
     [JsonPropertyName("exceptionV2")]
     public object? ExceptionV2 { get; init; }
@@ -14,5 +14,5 @@ public class WorkspaceRunDetails
     public ExceptionInfo? Exception { get; init; }
 
     [JsonPropertyName("stdout")]
-    public string Stdout { get; init; }
+    public required string Stdout { get; init; }
 }

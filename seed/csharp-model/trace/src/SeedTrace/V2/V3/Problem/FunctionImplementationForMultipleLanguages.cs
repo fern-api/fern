@@ -6,8 +6,9 @@ using SeedTrace.V2.V3;
 
 namespace SeedTrace.V2.V3;
 
-public class FunctionImplementationForMultipleLanguages
+public record FunctionImplementationForMultipleLanguages
 {
     [JsonPropertyName("codeByLanguage")]
-    public Dictionary<Language, FunctionImplementation> CodeByLanguage { get; init; }
+    public Dictionary<Language, FunctionImplementation> CodeByLanguage { get; init; } =
+        new Dictionary<Language, FunctionImplementation>();
 }

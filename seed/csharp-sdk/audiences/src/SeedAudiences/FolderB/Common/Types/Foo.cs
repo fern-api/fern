@@ -5,7 +5,7 @@ using SeedAudiences.FolderC;
 
 namespace SeedAudiences.FolderB;
 
-public class Foo
+public record Foo
 {
     [JsonPropertyName("foo")]
     public Foo? Foo_ { get; init; }

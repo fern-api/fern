@@ -5,11 +5,11 @@ using SeedMixedCase;
 
 namespace SeedMixedCase;
 
-public class NestedUser
+public record NestedUser
 {
     [JsonPropertyName("Name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     [JsonPropertyName("NestedUser")]
-    public User NestedUser_ { get; init; }
+    public required User NestedUser_ { get; init; }
 }

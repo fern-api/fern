@@ -78,6 +78,37 @@
         },
         {
           "_type": "endpoint",
+          "name": "List With Body Cursor Pagination",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"pagination\": {\n        \"cursor\": \"example\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "_type": "endpoint",
           "name": "List With Offset Pagination",
           "request": {
             "description": null,
@@ -117,6 +148,37 @@
             "method": "GET",
             "auth": null,
             "body": null
+          },
+          "response": []
+        },
+        {
+          "_type": "endpoint",
+          "name": "List With Body Offset Pagination",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"pagination\": {\n        \"page\": 0\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
           },
           "response": []
         },

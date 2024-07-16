@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class TestCaseHiddenGrade
+public record TestCaseHiddenGrade
 {
     [JsonPropertyName("passed")]
-    public bool Passed { get; init; }
+    public required bool Passed { get; init; }
 }

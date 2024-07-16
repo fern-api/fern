@@ -11,7 +11,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = TerminatedResponse.Builder.class
 )

@@ -164,6 +164,10 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
     Pydantic models.
     The idea is to essentially attempt to coerce object_ to type_ (recursively)
     """
+    # Short circuit when dealing with optionals, don't try to coerces None to a type
+    if object_ is None:
+        return None
+
     base_type = get_origin(type_) or type_
     is_annotated = base_type == typing_extensions.Annotated
     maybe_annotation_members = get_args(type_)

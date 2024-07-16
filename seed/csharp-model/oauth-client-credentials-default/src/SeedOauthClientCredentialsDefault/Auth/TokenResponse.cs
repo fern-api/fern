@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedOauthClientCredentialsDefault;
 
-public class TokenResponse
+public record TokenResponse
 {
     [JsonPropertyName("access_token")]
-    public string AccessToken { get; init; }
+    public required string AccessToken { get; init; }
 
     [JsonPropertyName("expires_in")]
-    public int ExpiresIn { get; init; }
+    public required int ExpiresIn { get; init; }
 }

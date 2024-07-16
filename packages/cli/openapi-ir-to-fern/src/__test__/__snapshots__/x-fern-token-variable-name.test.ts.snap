@@ -1,0 +1,173 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`x-fern-token-variable-name x-fern-token-variable-name docs 1`] = `
+{
+  "definitionFiles": {
+    "chatCompletions.yml": {
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "create": {
+            "auth": false,
+            "docs": undefined,
+            "examples": [
+              {
+                "request": {
+                  "prompt": "prompt",
+                },
+                "response": {
+                  "body": "string",
+                },
+              },
+            ],
+            "method": "POST",
+            "pagination": undefined,
+            "path": "/completions/chat",
+            "request": {
+              "body": {
+                "properties": {
+                  "prompt": "string",
+                  "stream": "optional<boolean>",
+                },
+              },
+              "headers": undefined,
+              "name": "CreateCompletionRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Success!",
+              "type": "string",
+            },
+          },
+        },
+      },
+    },
+  },
+  "packageMarkerFile": {
+    "types": {
+      "Completion": {
+        "docs": undefined,
+        "properties": {
+          "text": "optional<string>",
+        },
+      },
+      "CompletionChunk": {
+        "docs": undefined,
+        "properties": {
+          "text": "optional<string>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "auth": "BearerAuthScheme",
+    "auth-schemes": {
+      "BearerAuthScheme": {
+        "scheme": "bearer",
+        "token": {
+          "name": "apiKey",
+        },
+      },
+    },
+    "display-name": "Test extension \`x-fern-token-variable-name\`.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "headers": {
+      "X-API-Key": {
+        "env": undefined,
+        "name": "apiKey",
+        "type": "string",
+      },
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`x-fern-token-variable-name x-fern-token-variable-name simple 1`] = `
+{
+  "definitionFiles": {
+    "chatCompletions.yml": {
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "create": {
+            "auth": false,
+            "docs": undefined,
+            "examples": [
+              {
+                "request": {
+                  "prompt": "prompt",
+                },
+                "response": {
+                  "body": "string",
+                },
+              },
+            ],
+            "method": "POST",
+            "pagination": undefined,
+            "path": "/completions/chat",
+            "request": {
+              "body": {
+                "properties": {
+                  "prompt": "string",
+                  "stream": "optional<boolean>",
+                },
+              },
+              "headers": undefined,
+              "name": "CreateCompletionRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Success!",
+              "type": "string",
+            },
+          },
+        },
+      },
+    },
+  },
+  "packageMarkerFile": {
+    "types": {
+      "Completion": {
+        "docs": undefined,
+        "properties": {
+          "text": "optional<string>",
+        },
+      },
+      "CompletionChunk": {
+        "docs": undefined,
+        "properties": {
+          "text": "optional<string>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "auth": "BearerAuthScheme",
+    "auth-schemes": {
+      "BearerAuthScheme": {
+        "scheme": "bearer",
+        "token": {
+          "name": "apiKey",
+        },
+      },
+    },
+    "display-name": "Test extension \`x-fern-token-variable-name\`.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "headers": {
+      "X-API-Key": {
+        "env": undefined,
+        "name": "apiKey",
+        "type": "string",
+      },
+    },
+    "name": "api",
+  },
+}
+`;

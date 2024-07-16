@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace SeedErrorProperty;
 
-public class PropertyBasedErrorTestBody
+public record PropertyBasedErrorTestBody
 {
     [JsonPropertyName("message")]
-    public string Message { get; init; }
+    public required string Message { get; init; }
 }

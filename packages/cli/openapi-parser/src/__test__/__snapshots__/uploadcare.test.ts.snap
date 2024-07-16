@@ -10522,6 +10522,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -10539,6 +10540,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -10556,6 +10558,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -11628,6 +11631,7 @@ that are tool old (or that have not been created at all).
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -12858,6 +12862,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",

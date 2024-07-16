@@ -1,5 +1,6 @@
+using System.Net.Http;
 using System.Text.Json;
-using SeedExhaustive;
+using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
 #nullable enable
@@ -20,10 +21,10 @@ public class NoReqBodyClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "/no-req-body" }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody);
+            return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -33,10 +34,10 @@ public class NoReqBodyClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = "/no-req-body" }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody);
+            return JsonSerializer.Deserialize<string>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

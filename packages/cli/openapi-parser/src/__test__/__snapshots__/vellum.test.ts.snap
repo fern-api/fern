@@ -8308,6 +8308,7 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": false,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -8593,6 +8594,7 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": false,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -11256,6 +11258,7 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",

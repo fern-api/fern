@@ -5,10 +5,10 @@ using SeedPagination;
 
 namespace SeedPagination;
 
-public class UserPage
+public record UserPage
 {
     [JsonPropertyName("data")]
-    public UserListContainer Data { get; init; }
+    public required UserListContainer Data { get; init; }
 
     [JsonPropertyName("next")]
     public Guid? Next { get; init; }

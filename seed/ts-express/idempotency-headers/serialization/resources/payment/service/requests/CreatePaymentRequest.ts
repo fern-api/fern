@@ -11,7 +11,7 @@ export const CreatePaymentRequest: core.serialization.Schema<
     SeedIdempotencyHeaders.CreatePaymentRequest
 > = core.serialization.object({
     amount: core.serialization.number(),
-    currency: core.serialization.lazy(async () => (await import("../../../..")).Currency),
+    currency: core.serialization.lazy(() => serializers.Currency),
 });
 
 export declare namespace CreatePaymentRequest {

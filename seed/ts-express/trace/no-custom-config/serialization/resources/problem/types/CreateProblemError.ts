@@ -11,7 +11,7 @@ export const CreateProblemError: core.serialization.Schema<
     SeedTrace.CreateProblemError
 > = core.serialization
     .union(core.serialization.discriminant("errorType", "_type"), {
-        generic: core.serialization.lazyObject(async () => (await import("../../..")).GenericCreateProblemError),
+        generic: core.serialization.lazyObject(() => serializers.GenericCreateProblemError),
     })
     .transform<SeedTrace.CreateProblemError>({
         transform: (value) => value,

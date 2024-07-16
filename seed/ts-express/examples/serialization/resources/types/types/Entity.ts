@@ -8,7 +8,7 @@ import * as core from "../../../../core";
 
 export const Entity: core.serialization.ObjectSchema<serializers.Entity.Raw, SeedExamples.Entity> =
     core.serialization.object({
-        type: core.serialization.lazy(async () => (await import("../../..")).Type),
+        type: core.serialization.lazy(() => serializers.Type),
         name: core.serialization.string(),
     });
 

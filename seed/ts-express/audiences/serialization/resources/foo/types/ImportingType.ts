@@ -10,7 +10,7 @@ export const ImportingType: core.serialization.ObjectSchema<
     serializers.ImportingType.Raw,
     SeedAudiences.ImportingType
 > = core.serialization.object({
-    imported: core.serialization.lazy(async () => (await import("../../..")).Imported),
+    imported: core.serialization.lazy(() => serializers.Imported),
 });
 
 export declare namespace ImportingType {

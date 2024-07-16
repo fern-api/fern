@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedTrace;
 
-public class LightweightStackframeInformation
+public record LightweightStackframeInformation
 {
     [JsonPropertyName("numStackFrames")]
-    public int NumStackFrames { get; init; }
+    public required int NumStackFrames { get; init; }
 
     [JsonPropertyName("topStackFrameMethodName")]
-    public string TopStackFrameMethodName { get; init; }
+    public required string TopStackFrameMethodName { get; init; }
 }

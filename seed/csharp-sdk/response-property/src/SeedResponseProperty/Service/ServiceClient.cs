@@ -1,5 +1,7 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedResponseProperty;
+using SeedResponseProperty.Core;
 
 #nullable enable
 
@@ -24,10 +26,10 @@ public class ServiceClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Response>(responseBody);
+            return JsonSerializer.Deserialize<Response>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -42,10 +44,10 @@ public class ServiceClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Response>(responseBody);
+            return JsonSerializer.Deserialize<Response>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -60,10 +62,10 @@ public class ServiceClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<StringResponse>(responseBody);
+            return JsonSerializer.Deserialize<StringResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -78,10 +80,10 @@ public class ServiceClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Response>(responseBody);
+            return JsonSerializer.Deserialize<Response>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -96,10 +98,10 @@ public class ServiceClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Response?>(responseBody);
+            return JsonSerializer.Deserialize<Response?>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -114,10 +116,10 @@ public class ServiceClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<WithDocs?>(responseBody);
+            return JsonSerializer.Deserialize<WithDocs?>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -132,10 +134,10 @@ public class ServiceClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<StringResponse?>(responseBody);
+            return JsonSerializer.Deserialize<StringResponse?>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

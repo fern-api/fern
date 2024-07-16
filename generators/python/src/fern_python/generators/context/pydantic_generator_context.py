@@ -83,6 +83,10 @@ class PydanticGeneratorContext(ABC):
         ...
 
     @abstractmethod
+    def get_initializer_for_type_reference(self, type_reference: ir_types.TypeReference) -> Optional[AST.Expression]:
+        ...
+
+    @abstractmethod
     def get_filepath_for_type_id(self, type_id: ir_types.TypeId) -> Filepath:
         ...
 

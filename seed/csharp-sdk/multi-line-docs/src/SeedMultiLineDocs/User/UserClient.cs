@@ -1,5 +1,7 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedMultiLineDocs;
+using SeedMultiLineDocs.Core;
 
 #nullable enable
 
@@ -18,9 +20,9 @@ public class UserClient
     /// Retrieve a user.
     /// This endpoint is used to retrieve a user.
     /// </summary>
-    public async void GetUserAsync(string userId)
+    public async Task GetUserAsync(string userId)
     {
-        var response = await _client.MakeRequestAsync(
+        await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"users/{userId}" }
         );
     }
@@ -39,10 +41,10 @@ public class UserClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<User>(responseBody);
+            return JsonSerializer.Deserialize<User>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

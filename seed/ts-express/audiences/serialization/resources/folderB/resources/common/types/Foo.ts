@@ -8,7 +8,7 @@ import * as core from "../../../../../../core";
 
 export const Foo: core.serialization.ObjectSchema<serializers.folderB.Foo.Raw, SeedAudiences.folderB.Foo> =
     core.serialization.object({
-        foo: core.serialization.lazyObject(async () => (await import("../../../../..")).folderC.Foo).optional(),
+        foo: core.serialization.lazyObject(() => serializers.folderC.Foo).optional(),
     });
 
 export declare namespace Foo {

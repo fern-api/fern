@@ -127,7 +127,7 @@ module SeedExhaustiveClient
       # @return [DateTime]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  exhaustive.endpoints.primitive.get_and_return_datetime(request: DateTime.parse(2024-01-15T09:30:00.000Z))
+      #  exhaustive.endpoints.primitive.get_and_return_datetime(request: DateTime.parse("2024-01-15T09:30:00.000Z"))
       def get_and_return_datetime(request:, request_options: nil)
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -151,7 +151,7 @@ module SeedExhaustiveClient
       # @return [Date]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  exhaustive.endpoints.primitive.get_and_return_date(request: DateTime.parse(2023-01-15))
+      #  exhaustive.endpoints.primitive.get_and_return_date(request: Date.parse("2023-01-15"))
       def get_and_return_date(request:, request_options: nil)
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -348,7 +348,7 @@ module SeedExhaustiveClient
       # @return [DateTime]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  exhaustive.endpoints.primitive.get_and_return_datetime(request: DateTime.parse(2024-01-15T09:30:00.000Z))
+      #  exhaustive.endpoints.primitive.get_and_return_datetime(request: DateTime.parse("2024-01-15T09:30:00.000Z"))
       def get_and_return_datetime(request:, request_options: nil)
         Async do
           response = @request_client.conn.post do |req|
@@ -372,7 +372,7 @@ module SeedExhaustiveClient
       # @return [Date]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  exhaustive.endpoints.primitive.get_and_return_date(request: DateTime.parse(2023-01-15))
+      #  exhaustive.endpoints.primitive.get_and_return_date(request: Date.parse("2023-01-15"))
       def get_and_return_date(request:, request_options: nil)
         Async do
           response = @request_client.conn.post do |req|

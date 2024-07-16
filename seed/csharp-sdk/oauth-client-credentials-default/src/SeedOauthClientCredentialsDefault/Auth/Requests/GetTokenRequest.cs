@@ -4,14 +4,14 @@ using System.Text.Json.Serialization;
 
 namespace SeedOauthClientCredentialsDefault;
 
-public class GetTokenRequest
+public record GetTokenRequest
 {
     [JsonPropertyName("client_id")]
-    public string ClientId { get; init; }
+    public required string ClientId { get; init; }
 
     [JsonPropertyName("client_secret")]
-    public string ClientSecret { get; init; }
+    public required string ClientSecret { get; init; }
 
     [JsonPropertyName("grant_type")]
-    public string GrantType { get; init; }
+    public required string GrantType { get; init; }
 }

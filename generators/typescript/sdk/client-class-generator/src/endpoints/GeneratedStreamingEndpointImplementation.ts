@@ -24,6 +24,7 @@ export declare namespace GeneratedStreamingEndpointImplementation {
         request: GeneratedEndpointRequest;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
+        omitUndefined: boolean;
     }
 }
 
@@ -39,6 +40,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     private request: GeneratedEndpointRequest;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
+    private omitUndefined: boolean;
 
     constructor({
         endpoint,
@@ -48,7 +50,8 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         defaultTimeoutInSeconds,
         request,
         includeSerdeLayer,
-        retainOriginalCasing
+        retainOriginalCasing,
+        omitUndefined
     }: GeneratedStreamingEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -58,6 +61,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         this.request = request;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.omitUndefined = omitUndefined;
     }
 
     public getExample(args: {
@@ -131,7 +135,8 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             generatedClientClass: this.generatedSdkClientClass,
             context,
             includeSerdeLayer: this.includeSerdeLayer,
-            retainOriginalCasing: this.retainOriginalCasing
+            retainOriginalCasing: this.retainOriginalCasing,
+            omitUndefined: this.omitUndefined
         });
         if (url != null) {
             return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);

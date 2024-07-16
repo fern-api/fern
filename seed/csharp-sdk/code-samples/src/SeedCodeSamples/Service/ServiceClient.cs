@@ -1,5 +1,7 @@
+using System.Net.Http;
 using System.Text.Json;
 using SeedCodeSamples;
+using SeedCodeSamples.Core;
 
 #nullable enable
 
@@ -24,10 +26,10 @@ public class ServiceClient
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<MyResponse>(responseBody);
+            return JsonSerializer.Deserialize<MyResponse>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

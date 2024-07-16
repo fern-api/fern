@@ -1,4 +1,5 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import {
@@ -55,7 +56,8 @@ import { SdkInlinedRequestBodyDeclarationReferencer } from "./declaration-refere
 import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 import { GeneratorCli } from "./generator-cli/Client";
-import { ReferenceGenerator, ReferenceParameterDeclaration } from "./ReferenceGenerator";
+import { ReadmeGenerator } from "./generator-cli/ReadmeGenerator";
+import { ReferenceGenerator } from "./generator-cli/ReferenceGenerator";
 import { TemplateGenerator } from "./TemplateGenerator";
 import { JestTestGenerator } from "./test-generator/JestTestGenerator";
 
@@ -91,6 +93,7 @@ export declare namespace SdkGenerator {
         neverThrowErrors: boolean;
         includeCredentialsOnCrossOriginRequests: boolean;
         outputEsm: boolean;
+        outputJsr: boolean;
         allowCustomFetcher: boolean;
         includeUtilsOnUnionMembers: boolean;
         includeOtherInUnionTypes: boolean;
@@ -106,12 +109,12 @@ export declare namespace SdkGenerator {
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
         noOptionalProperties: boolean;
-        includeApiReference: boolean;
         tolerateRepublish: boolean;
         retainOriginalCasing: boolean;
         allowExtraFields: boolean;
         writeUnitTests: boolean;
         inlineFileProperties: boolean;
+        omitUndefined: boolean;
         executionEnvironment: "local" | "dev" | "prod";
         organization: string;
         apiName: string;
@@ -173,6 +176,8 @@ export class SdkGenerator {
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private jestTestGenerator: JestTestGenerator;
     private generatorCli: GeneratorCli;
+    private readmeGenerator: ReadmeGenerator;
+    private refGenerator: ReferenceGenerator;
     private FdrClient: FdrSnippetTemplateClient | undefined;
 
     constructor({
@@ -306,7 +311,8 @@ export class SdkGenerator {
             shouldGenerateErrors: config.neverThrowErrors,
             skipResponseValidation: config.skipResponseValidation,
             includeSerdeLayer: config.includeSerdeLayer,
-            allowExtraFields: config.allowExtraFields
+            allowExtraFields: config.allowExtraFields,
+            omitUndefined: config.omitUndefined
         });
         this.requestWrapperGenerator = new RequestWrapperGenerator();
         this.environmentsGenerator = new EnvironmentsGenerator();
@@ -329,13 +335,15 @@ export class SdkGenerator {
             includeSerdeLayer: config.includeSerdeLayer,
             retainOriginalCasing: config.retainOriginalCasing,
             inlineFileProperties: config.inlineFileProperties,
-            oauthTokenProviderGenerator: this.oauthTokenProviderGenerator
+            oauthTokenProviderGenerator: this.oauthTokenProviderGenerator,
+            omitUndefined: config.omitUndefined
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();
         this.sdkInlinedRequestBodySchemaGenerator = new SdkInlinedRequestBodySchemaGenerator({
             includeSerdeLayer: config.includeSerdeLayer,
-            allowExtraFields: config.allowExtraFields
+            allowExtraFields: config.allowExtraFields,
+            omitUndefined: config.omitUndefined
         });
         this.jestTestGenerator = new JestTestGenerator(
             intermediateRepresentation,
@@ -344,10 +352,14 @@ export class SdkGenerator {
             this.config.writeUnitTests
         );
         this.generatorCli = new GeneratorCli({
-            logger: context.logger,
-            organization: config.organization,
-            intermediateRepresentation,
-            npmPackage
+            logger: context.logger
+        });
+        this.readmeGenerator = new ReadmeGenerator({
+            generatorCli: this.generatorCli,
+            logger: context.logger
+        });
+        this.refGenerator = new ReferenceGenerator({
+            generatorCli: this.generatorCli
         });
 
         this.FdrClient =
@@ -418,13 +430,7 @@ export class SdkGenerator {
         }
 
         if (this.config.snippetFilepath != null) {
-            let refGenerator: ReferenceGenerator | undefined;
-            if (this.config.includeApiReference) {
-                refGenerator = new ReferenceGenerator({
-                    apiName: this.namespaceExport === "api" ? "client" : this.namespaceExport
-                });
-            }
-            this.generateSnippets({ refGenerator });
+            this.generateSnippets();
             const snippets: FernGeneratorExec.Snippets = {
                 endpoints: this.endpointSnippets,
                 types: {}
@@ -459,15 +465,18 @@ export class SdkGenerator {
                     }
                 }
             }
-            if (this.config.includeApiReference && refGenerator !== undefined) {
-                this.extraFiles["reference.md"] = refGenerator.write();
-            }
             this.context.logger.debug("Generated snippets");
 
             try {
                 await this.generateReadme();
             } catch (e) {
                 this.context.logger.warn("Failed to generate README.md, this is OK");
+            }
+
+            try {
+                await this.generateReference();
+            } catch (e) {
+                this.context.logger.warn("Failed to generate reference.md, this is OK");
             }
         }
 
@@ -482,13 +491,15 @@ export class SdkGenerator {
                   extraPeerDependenciesMeta: this.config.extraPeerDependenciesMeta,
                   extraFiles: this.extraFiles,
                   extraScripts: this.extraScripts,
-                  extraConfigs: this.config.packageJson
+                  extraConfigs: this.config.packageJson,
+                  outputJsr: this.config.outputJsr
               })
             : new SimpleTypescriptProject({
                   npmPackage: this.npmPackage,
                   dependencies: this.dependencyManager.getDependencies(),
                   tsMorphProject: this.project,
                   outputEsm: this.config.outputEsm,
+                  outputJsr: this.config.outputJsr,
                   extraDependencies: this.config.extraDependencies,
                   extraDevDependencies: this.config.extraDevDependencies,
                   extraPeerDependencies: this.config.extraPeerDependencies,
@@ -698,17 +709,33 @@ export class SdkGenerator {
             return;
         }
         await this.withRawFile({
-            filepath: this.generatorCli.getReadmeExportedFilePath(),
+            filepath: this.readmeGenerator.getExportedFilePath(),
             run: async ({ sourceFile, importsManager }) => {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
-                const readmeContent = await this.generatorCli.generateReadme({
+                const readmeContent = await this.readmeGenerator.generateReadme({
                     context,
+                    ir: this.intermediateRepresentation,
+                    organization: this.config.organization,
+                    npmPackage: this.npmPackage,
                     endpointSnippets: this.endpointSnippets,
-                    originalReadmeFilepath: this.config.originalReadmeFilepath,
                     githubRepoUrl: this.config.githubRepoUrl,
                     githubInstallationToken: this.config.githubInstallationToken
                 });
                 sourceFile.replaceWithText(readmeContent);
+            }
+        });
+    }
+
+    private async generateReference(): Promise<void> {
+        if (this.refGenerator.isEmpty()) {
+            // Don't generate a reference.md if there aren't any sections.
+            return;
+        }
+        await this.withRawFile({
+            filepath: this.refGenerator.getExportedFilePath(),
+            run: async ({ sourceFile }) => {
+                const referenceContent = await this.refGenerator.generateReference();
+                sourceFile.replaceWithText(referenceContent);
             }
         });
     }
@@ -763,25 +790,24 @@ export class SdkGenerator {
         return [ts.factory.createExpressionStatement(endpointInvocation)];
     }
 
-    private generateSnippets({ refGenerator }: { refGenerator: ReferenceGenerator | undefined }) {
+    private generateSnippets() {
         const rootPackage: PackageId = { isRoot: true };
         this.forEachService((service, packageId) => {
             if (service.endpoints.length === 0) {
                 return;
             }
-            let serviceReference = refGenerator?.addSection(
-                service.displayName ??
+            let serviceReference = this.refGenerator.addSection({
+                title:
+                    service.displayName ??
                     service.name.fernFilepath.allParts.map((part) => part.pascalCase.unsafeName).join(" ")
-            );
+            });
 
             const exportedFilepath = this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId);
             const serviceFilepath = convertExportedFilePathToFilePath(exportedFilepath);
 
             for (const endpoint of service.endpoints) {
                 if (packageId.isRoot) {
-                    serviceReference = refGenerator?.addSection(
-                        endpoint.displayName ?? endpoint.name.pascalCase.unsafeName
-                    );
+                    serviceReference = this.refGenerator.addRootSection();
                 }
 
                 if (this.config.snippetTemplateFilepath != null && this.npmPackage != null) {
@@ -836,15 +862,19 @@ export class SdkGenerator {
                     }
                 }
 
-                let examplesForEndpoint = endpoint.examples.filter((example) => {
-                    return example.exampleType === "userProvided";
-                });
-                // use a single autogenerated example if no user provided examples
-                if (examplesForEndpoint.length === 0 && endpoint.examples[0] != null) {
-                    examplesForEndpoint = [endpoint.examples[0]];
+                let examplesForEndpoint: ExampleEndpointCall[] = [];
+                for (const userDefinedExample of endpoint.userSpecifiedExamples) {
+                    if (userDefinedExample.example != null) {
+                        examplesForEndpoint.push(userDefinedExample.example);
+                    }
+                }
+                if (examplesForEndpoint.length === 0) {
+                    // use a single autogenerated example if no user provided examples
+                    const maybeAutogeneratedExample = endpoint.autogeneratedExamples[0]?.example;
+                    examplesForEndpoint = maybeAutogeneratedExample != null ? [maybeAutogeneratedExample] : [];
                 }
 
-                for (const example of examplesForEndpoint) {
+                for (const [index, example] of examplesForEndpoint.entries()) {
                     const snippet = this.withSnippet({
                         run: ({ sourceFile, importsManager }): ts.Node[] | undefined => {
                             return this.runWithSnippet({
@@ -878,10 +908,11 @@ export class SdkGenerator {
                         this.endpointSnippets.push(endpointSnippet);
                     }
 
-                    if (serviceReference !== undefined) {
+                    if (index === 0 && serviceReference != null) {
+                        // We only include a reference section for the first example.
                         let returnType = undefined;
                         let endpointClientAccess: ts.Expression | undefined = undefined;
-                        const parameters: ReferenceParameterDeclaration[] = [];
+                        const parameters: FernGeneratorCli.ParameterReference[] = [];
                         const referenceSnippet = this.withSnippet({
                             run: ({ sourceFile, importsManager }): ts.Node[] | undefined => {
                                 const context = this.generateSdkContext(
@@ -900,8 +931,9 @@ export class SdkGenerator {
                                     ...(endpointDetailed?.getSignature(context).parameters.map((param) => {
                                         return {
                                             name: param.name,
+                                            description: param.docs,
                                             type: param.type?.toString() ?? "unknown",
-                                            description: param.docs
+                                            required: param.hasQuestionToken != null ? !param.hasQuestionToken : true
                                         };
                                     }) ?? [])
                                 );
@@ -926,19 +958,40 @@ export class SdkGenerator {
                         let statement = undefined;
                         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                         if (endpointClientAccess !== undefined) {
-                            statement = getTextOfTsNode(endpointClientAccess);
+                            statement = getTextOfTsNode(endpointClientAccess) + ".";
                         }
 
-                        serviceReference.addEndpoint({
-                            // clientPath: getTextOfTsNode(statement),
-                            clientPath: statement,
-                            functionPath: serviceFilepath,
-                            functionName: this.getEndpointFunctionName(endpoint),
-                            returnType,
-                            parameters,
-                            codeSnippet: referenceSnippet,
-                            description: endpoint.docs
-                        });
+                        if (referenceSnippet != null && statement != null) {
+                            serviceReference.addEndpoint({
+                                title: {
+                                    snippetParts: [
+                                        {
+                                            text: statement
+                                        },
+                                        {
+                                            text: this.getEndpointFunctionName(endpoint),
+                                            location: {
+                                                path: serviceFilepath
+                                            }
+                                        },
+                                        {
+                                            text: this.getReferenceEndpointInvocationParameters({
+                                                parameters
+                                            })
+                                        }
+                                    ],
+                                    returnValue:
+                                        returnType != null
+                                            ? {
+                                                  text: returnType
+                                              }
+                                            : undefined
+                                },
+                                description: endpoint.docs,
+                                snippet: referenceSnippet,
+                                parameters
+                            });
+                        }
                     }
                 }
             }
@@ -947,6 +1000,17 @@ export class SdkGenerator {
 
     private getEndpointFunctionName(endpoint: HttpEndpoint): string {
         return endpoint.name.camelCase.unsafeName;
+    }
+
+    private getReferenceEndpointInvocationParameters({
+        parameters
+    }: {
+        parameters: FernGeneratorCli.ParameterReference[];
+    }): string {
+        return `(${parameters
+            .filter((param) => param.name !== "requestOptions")
+            .map((param) => (param.name === "request" ? "{ ...params }" : param.name))
+            .join(", ")})`;
     }
 
     // TODO(dsinghvi): HACKHACK Move this to IR
@@ -1154,7 +1218,8 @@ export class SdkGenerator {
             retainOriginalCasing: this.config.retainOriginalCasing,
             targetRuntime: this.config.targetRuntime,
             inlineFileProperties: this.config.inlineFileProperties,
-            generateOAuthClients: this.generateOAuthClients
+            generateOAuthClients: this.generateOAuthClients,
+            omitUndefined: this.config.omitUndefined
         });
     }
 }

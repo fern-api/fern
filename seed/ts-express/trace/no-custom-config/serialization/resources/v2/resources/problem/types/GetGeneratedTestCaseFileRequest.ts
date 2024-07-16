@@ -10,10 +10,8 @@ export const GetGeneratedTestCaseFileRequest: core.serialization.ObjectSchema<
     serializers.v2.GetGeneratedTestCaseFileRequest.Raw,
     SeedTrace.v2.GetGeneratedTestCaseFileRequest
 > = core.serialization.object({
-    template: core.serialization
-        .lazyObject(async () => (await import("../../../../..")).v2.TestCaseTemplate)
-        .optional(),
-    testCase: core.serialization.lazyObject(async () => (await import("../../../../..")).v2.TestCaseV2),
+    template: core.serialization.lazyObject(() => serializers.v2.TestCaseTemplate).optional(),
+    testCase: core.serialization.lazyObject(() => serializers.v2.TestCaseV2),
 });
 
 export declare namespace GetGeneratedTestCaseFileRequest {

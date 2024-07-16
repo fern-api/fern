@@ -875,6 +875,7 @@ The parameter should map to a JSON encoded list of strings.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -7154,6 +7155,7 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -7178,6 +7180,7 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -7202,6 +7205,7 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -7327,6 +7331,7 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -7469,6 +7474,7 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -7493,6 +7499,7 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -7517,6 +7524,7 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -7621,6 +7629,7 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -7682,6 +7691,7 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -7706,6 +7716,7 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -7730,6 +7741,7 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -7783,6 +7795,7 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -7807,6 +7820,7 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -7831,6 +7845,7 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -7855,6 +7870,7 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -7914,6 +7930,7 @@ Valid values are in the range [0, 1] inclusive.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -7982,6 +7999,7 @@ Valid values are in the range [0, 1] inclusive.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -8630,6 +8648,7 @@ Valid values are in the range [0, 1] inclusive.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -8647,6 +8666,7 @@ Valid values are in the range [0, 1] inclusive.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -10177,6 +10197,7 @@ Can be any value between 0.0 and 1.0 inclusive.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -11316,6 +11337,7 @@ Can be any value between 0.0 and 1.0 inclusive.
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -11861,6 +11883,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -11892,6 +11915,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -11923,6 +11947,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -12015,6 +12040,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -12080,6 +12106,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -12099,6 +12126,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -12298,6 +12326,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -12317,6 +12346,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -12350,6 +12380,7 @@ either true or false. See [PII redaction](https://www.assemblyai.com/docs/Models
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -12483,6 +12514,7 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -12551,6 +12583,7 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -12656,6 +12689,7 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -12805,6 +12839,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -12872,6 +12907,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -12927,6 +12963,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
               "type": "boolean",
             },
             "type": "primitive",
@@ -13068,6 +13105,7 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -13135,6 +13173,7 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -13166,6 +13205,7 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -13237,6 +13277,7 @@ See [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analys
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -13343,6 +13384,7 @@ Valid values are in the range [0, 1] inclusive.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -14099,6 +14141,7 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
                 "type": "boolean",
               },
               "type": "primitive",

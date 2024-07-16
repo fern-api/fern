@@ -9,11 +9,11 @@ import * as core from "../../../../core";
 export const FieldValue: core.serialization.Schema<serializers.FieldValue.Raw, SeedApi.FieldValue> = core.serialization
     .union("type", {
         primitive_value: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).PrimitiveValue),
+            value: core.serialization.lazy(() => serializers.PrimitiveValue),
         }),
-        object_value: core.serialization.lazyObject(async () => (await import("../../..")).ObjectValue),
+        object_value: core.serialization.lazyObject(() => serializers.ObjectValue),
         container_value: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).ContainerValue),
+            value: core.serialization.lazy(() => serializers.ContainerValue),
         }),
     })
     .transform<SeedApi.FieldValue>({

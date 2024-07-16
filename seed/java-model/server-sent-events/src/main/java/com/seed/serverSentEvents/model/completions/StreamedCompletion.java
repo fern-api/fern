@@ -13,7 +13,7 @@ import com.seed.serverSentEvents.core.ObjectMappers;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = StreamedCompletion.Builder.class)
 public final class StreamedCompletion {
     private final String delta;

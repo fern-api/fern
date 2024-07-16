@@ -13,6 +13,7 @@ export declare namespace Admin {
     interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
@@ -50,7 +51,7 @@ export class Admin {
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
                 `/admin/store-test-submission-status/${encodeURIComponent(
-                    await serializers.SubmissionId.jsonOrThrow(submissionId)
+                    serializers.SubmissionId.jsonOrThrow(submissionId)
                 )}`
             ),
             method: "POST",
@@ -67,7 +68,7 @@ export class Admin {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.TestSubmissionStatus.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.TestSubmissionStatus.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -121,7 +122,7 @@ export class Admin {
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
                 `/admin/store-test-submission-status-v2/${encodeURIComponent(
-                    await serializers.SubmissionId.jsonOrThrow(submissionId)
+                    serializers.SubmissionId.jsonOrThrow(submissionId)
                 )}`
             ),
             method: "POST",
@@ -138,7 +139,7 @@ export class Admin {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.TestSubmissionUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.TestSubmissionUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -188,7 +189,7 @@ export class Admin {
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
                 `/admin/store-workspace-submission-status/${encodeURIComponent(
-                    await serializers.SubmissionId.jsonOrThrow(submissionId)
+                    serializers.SubmissionId.jsonOrThrow(submissionId)
                 )}`
             ),
             method: "POST",
@@ -205,7 +206,7 @@ export class Admin {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.WorkspaceSubmissionStatus.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.WorkspaceSubmissionStatus.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -259,7 +260,7 @@ export class Admin {
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
                 `/admin/store-workspace-submission-status-v2/${encodeURIComponent(
-                    await serializers.SubmissionId.jsonOrThrow(submissionId)
+                    serializers.SubmissionId.jsonOrThrow(submissionId)
                 )}`
             ),
             method: "POST",
@@ -276,7 +277,7 @@ export class Admin {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.WorkspaceSubmissionUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.WorkspaceSubmissionUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -342,7 +343,7 @@ export class Admin {
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
                 `/admin/store-test-trace/submission/${encodeURIComponent(
-                    await serializers.SubmissionId.jsonOrThrow(submissionId)
+                    serializers.SubmissionId.jsonOrThrow(submissionId)
                 )}/testCase/${encodeURIComponent(testCaseId)}`
             ),
             method: "POST",
@@ -359,9 +360,7 @@ export class Admin {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.StoreTracedTestCaseRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-            }),
+            body: serializers.StoreTracedTestCaseRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -422,8 +421,8 @@ export class Admin {
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
                 `/admin/store-test-trace-v2/submission/${encodeURIComponent(
-                    await serializers.SubmissionId.jsonOrThrow(submissionId)
-                )}/testCase/${encodeURIComponent(await serializers.v2.TestCaseId.jsonOrThrow(testCaseId))}`
+                    serializers.SubmissionId.jsonOrThrow(submissionId)
+                )}/testCase/${encodeURIComponent(serializers.v2.TestCaseId.jsonOrThrow(testCaseId))}`
             ),
             method: "POST",
             headers: {
@@ -439,7 +438,7 @@ export class Admin {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.admin.storeTracedTestCaseV2.Request.jsonOrThrow(request, {
+            body: serializers.admin.storeTracedTestCaseV2.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -508,7 +507,7 @@ export class Admin {
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
                 `/admin/store-workspace-trace/submission/${encodeURIComponent(
-                    await serializers.SubmissionId.jsonOrThrow(submissionId)
+                    serializers.SubmissionId.jsonOrThrow(submissionId)
                 )}`
             ),
             method: "POST",
@@ -525,9 +524,7 @@ export class Admin {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.StoreTracedWorkspaceRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-            }),
+            body: serializers.StoreTracedWorkspaceRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -586,7 +583,7 @@ export class Admin {
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
                 `/admin/store-workspace-trace-v2/submission/${encodeURIComponent(
-                    await serializers.SubmissionId.jsonOrThrow(submissionId)
+                    serializers.SubmissionId.jsonOrThrow(submissionId)
                 )}`
             ),
             method: "POST",
@@ -603,7 +600,7 @@ export class Admin {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.admin.storeTracedWorkspaceV2.Request.jsonOrThrow(request, {
+            body: serializers.admin.storeTracedWorkspaceV2.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

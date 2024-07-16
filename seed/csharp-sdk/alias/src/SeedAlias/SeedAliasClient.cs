@@ -1,4 +1,5 @@
-using SeedAlias;
+using System.Net.Http;
+using SeedAlias.Core;
 
 #nullable enable
 
@@ -8,7 +9,7 @@ public partial class SeedAliasClient
 {
     private RawClient _client;
 
-    public SeedAliasClient(ClientOptions clientOptions = null)
+    public SeedAliasClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
@@ -16,13 +17,10 @@ public partial class SeedAliasClient
         );
     }
 
-    private string GetFromEnvironmentOrThrow(string env, string message)
+    public async Task GetAsync(string typeId)
     {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
+        await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"/{typeId}" }
+        );
     }
 }

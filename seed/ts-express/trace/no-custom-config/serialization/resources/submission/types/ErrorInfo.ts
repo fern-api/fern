@@ -8,9 +8,9 @@ import * as core from "../../../../core";
 
 export const ErrorInfo: core.serialization.Schema<serializers.ErrorInfo.Raw, SeedTrace.ErrorInfo> = core.serialization
     .union("type", {
-        compileError: core.serialization.lazyObject(async () => (await import("../../..")).CompileError),
-        runtimeError: core.serialization.lazyObject(async () => (await import("../../..")).RuntimeError),
-        internalError: core.serialization.lazyObject(async () => (await import("../../..")).InternalError),
+        compileError: core.serialization.lazyObject(() => serializers.CompileError),
+        runtimeError: core.serialization.lazyObject(() => serializers.RuntimeError),
+        internalError: core.serialization.lazyObject(() => serializers.InternalError),
     })
     .transform<SeedTrace.ErrorInfo>({
         transform: (value) => value,

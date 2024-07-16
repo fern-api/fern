@@ -5,11 +5,12 @@ using SeedTrace;
 
 namespace SeedTrace;
 
-public class BinaryTreeValue
+public record BinaryTreeValue
 {
     [JsonPropertyName("root")]
     public string? Root { get; init; }
 
     [JsonPropertyName("nodes")]
-    public Dictionary<string, BinaryTreeNodeValue> Nodes { get; init; }
+    public Dictionary<string, BinaryTreeNodeValue> Nodes { get; init; } =
+        new Dictionary<string, BinaryTreeNodeValue>();
 }

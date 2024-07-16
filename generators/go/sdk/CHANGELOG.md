@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.22.2 - 2024-07-04]
+
+- Fix: Request types set to `nil` no longer send an explicit `null` value.
+
+  ```go
+  user, err := client.Users.Create(ctx, nil) // No request body is sent in the POST.
+  ```
+
 ## [0.22.1 - 2024-06-11]
 
 - Fix: Array of `deepObject` query parameters are correctly serialized. An array of objects

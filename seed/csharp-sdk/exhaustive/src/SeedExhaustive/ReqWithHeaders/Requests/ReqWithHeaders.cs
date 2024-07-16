@@ -1,8 +1,8 @@
 namespace SeedExhaustive;
 
-public class ReqWithHeaders
+public record ReqWithHeaders
 {
-    public string XTestEndpointHeader { get; init; }
+    public required string XTestEndpointHeader { get; init; }
 
-    public string Body { get; init; }
+    public required string Body { get; init; }
 }
