@@ -2,6 +2,7 @@ import os
 from typing import Set
 
 from fern_python.codegen import AST, Filepath, Project
+from fern_python.external_dependencies.pydantic import PYDANTIC_CORE_DEPENDENCY
 from fern_python.source_file_factory import SourceFileFactory
 
 
@@ -40,6 +41,7 @@ class CoreUtilities:
                 "UniversalRootModel",
             },
         )
+        project.add_dependency(PYDANTIC_CORE_DEPENDENCY)
 
         if self._allow_skipping_validation:
             self._copy_file_to_project(
