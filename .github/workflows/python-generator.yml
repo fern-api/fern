@@ -63,7 +63,7 @@ jobs:
       - name: Install Dependencies - Pydantic V2
         working-directory: ./generators/python
         run: |
-          poetry add pydantic=^1.10
+          poetry add pydantic=^2.8
           poetry lock
           poetry install
       - name: Unit Test - Pydantic V2
