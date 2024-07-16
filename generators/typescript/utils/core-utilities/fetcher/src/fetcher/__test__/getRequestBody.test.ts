@@ -12,7 +12,7 @@ describe("Test getRequestBody", () => {
             formData.append("key", "value");
             const result = await getRequestBody({
                 body: formData,
-                type: "multipart/form-data"
+                type: "file"
             });
             expect(result).toBe(formData);
         }
@@ -23,7 +23,7 @@ describe("Test getRequestBody", () => {
             const body = { key: "value" };
             const result = await getRequestBody({
                 body,
-                type: "application/json"
+                type: "json"
             });
             expect(result).toBe('{"key":"value"}');
         }
@@ -35,7 +35,7 @@ describe("Test getRequestBody", () => {
             formData.append("key", "value");
             const result = await getRequestBody({
                 body: formData,
-                type: "multipart/form-data"
+                type: "file"
             });
             expect(result).toBe(formData);
         }
@@ -46,29 +46,36 @@ describe("Test getRequestBody", () => {
             const body = { key: "value" };
             const result = await getRequestBody({
                 body,
-                type: "application/json"
+                type: "json"
             });
             expect(result).toBe('{"key":"value"}');
         }
     });
+
+    it("should return the Uint8Array", async () => {
+        const input = new Uint8Array([1, 2, 3]);
+        const result = await getRequestBody({
+            body: input,
+            type: "bytes"
+        });
+        expect(result).toBe(input);
+    });
+
+    it("should return the input for content-type 'application/x-www-form-urlencoded'", async () => {
+        const input = "key=value&another=param";
+        const result = await getRequestBody({
+            body: input,
+            type: "other"
+        });
+        expect(result).toBe(input);
+    });
+
+    it("should JSON stringify objects", async () => {
+        const input = { key: "value" };
+        const result = await getRequestBody({
+            body: input,
+            type: "json"
+        });
+        expect(result).toBe('{"key":"value"}');
+    });
 });
-
-// describe("Test maybeStringifyBody", () => {
-//     it("should return the Uint8Array", () => {
-//         const input = new Uint8Array([1, 2, 3]);
-//         const result = maybeStringifyBody(input, "application/octet-stream");
-//         expect(result).toBe(input);
-//     });
-
-//     it("should return the input for content-type 'application/x-www-form-urlencoded'", () => {
-//         const input = "key=value&another=param";
-//         const result = maybeStringifyBody(input, "application/x-www-form-urlencoded");
-//         expect(result).toBe(input);
-//     });
-
-//     it("should JSON stringify objects", () => {
-//         const input = { key: "value" };
-//         const result = maybeStringifyBody(input, "application/json");
-//         expect(result).toBe('{"key":"value"}');
-//     });
-// });

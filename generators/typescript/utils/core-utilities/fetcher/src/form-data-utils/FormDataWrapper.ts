@@ -34,12 +34,6 @@ export async function newFormData(): Promise<CrossPlatformFormData> {
  * Form Data Implementation for Node.js 18+
  */
 class Node19FormData implements CrossPlatformFormData {
-    getBody(): unknown {
-        throw new Error("Method not implemented.");
-    }
-    getHeaders(): MaybePromise<Record<string, string>> {
-        throw new Error("Method not implemented.");
-    }
     private fd:
         | {
               append(name: string, value: unknown, fileName?: string): void;
@@ -59,15 +53,11 @@ class Node19FormData implements CrossPlatformFormData {
     }
 
     public async getRequest(): Promise<FormDataRequest<unknown>> {
-        if (!this.fd) {
-            throw new Error("Form data is not defined");
-        } else {
-            const encoder = new (await import("form-data-encoder")).FormDataEncoder(this.fd as any);
-            return {
-                body: (await import("stream")).Readable.from(encoder),
-                headers: encoder.headers
-            };
-        }
+        const encoder = new (await import("form-data-encoder")).FormDataEncoder(this.fd as any);
+        return {
+            body: (await import("stream")).Readable.from(encoder),
+            headers: encoder.headers
+        };
     }
 }
 

@@ -308,10 +308,11 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
 
     public getFetcherRequestArgs(
         context: SdkContext
-    ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType"> {
+    ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType"> {
         return {
             headers: this.getHeaders(context),
             queryParameters: this.queryParams != null ? this.queryParams.getReferenceTo(context) : undefined,
+            requestType: "file",
             body: context.coreUtilities.formDataUtils.getBody({
                 referencetoFormData: ts.factory.createIdentifier(
                     GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME

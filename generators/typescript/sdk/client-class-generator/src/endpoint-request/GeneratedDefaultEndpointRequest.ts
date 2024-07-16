@@ -176,12 +176,13 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
 
     public getFetcherRequestArgs(
         context: SdkContext
-    ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType"> {
+    ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType"> {
         return {
             headers: this.getHeaders(context),
             queryParameters: this.queryParams.getReferenceTo(context),
             body: this.getSerializedRequestBodyWithNullCheck(context),
-            contentType: "application/json"
+            contentType: "application/json",
+            requestType: "json"
         };
     }
 

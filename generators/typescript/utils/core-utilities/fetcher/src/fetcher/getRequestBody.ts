@@ -1,7 +1,7 @@
 export declare namespace GetRequestBody {
     interface Args {
         body: unknown;
-        type: string;
+        type: "json" | "file" | "bytes" | "other";
     }
 }
 
