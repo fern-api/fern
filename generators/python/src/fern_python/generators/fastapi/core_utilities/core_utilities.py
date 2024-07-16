@@ -2,6 +2,7 @@ import os
 from typing import List, Optional, Set, Tuple
 
 from fern_python.codegen import AST, ExportStrategy, Filepath, Project
+from fern_python.external_dependencies.pydantic import PYDANTIC_CORE_DEPENDENCY
 from fern_python.source_file_factory import SourceFileFactory
 
 
@@ -142,6 +143,7 @@ class CoreUtilities:
                 "UniversalRootModel",
             },
         )
+        project.add_dependency(PYDANTIC_CORE_DEPENDENCY)
         self._copy_security_to_project(project=project)
         self._copy_exceptions_to_project(project=project)
 

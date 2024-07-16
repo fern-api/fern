@@ -3,10 +3,10 @@ from typing import Optional, Set
 
 from fern_python.codegen import AST, Filepath, Project
 from fern_python.external_dependencies.pydantic import (
+    PYDANTIC_CORE_DEPENDENCY,
     PYDANTIC_DEPENDENCY,
     PYDANTIC_V1_DEPENDENCY,
     PYDANTIC_V2_DEPENDENCY,
-    PYDANTIC_CORE_DEPENDENCY,
     PydanticVersionCompatibility,
 )
 from fern_python.external_dependencies.typing_extensions import (
