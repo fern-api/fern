@@ -10,6 +10,7 @@ import pydantic
 
 from .pydantic_utilities import (
     IS_PYDANTIC_V2,
+    ModelField,
     UniversalBaseModel,
     get_args,
     get_origin,
@@ -255,12 +256,7 @@ def _get_is_populate_by_name(model: typing.Type["Model"]) -> bool:
     return model.__config__.allow_population_by_field_name
 
 
-# typing.Type and typing.UnionType are incompatible, so assigning to typing.Any
-PydanticField: typing.Any
-if IS_PYDANTIC_V2:
-    PydanticField = pydantic.fields.FieldInfo
-else:
-    PydanticField = typing.Union[pydantic.fields.ModelField, pydantic.fields.FieldInfo]
+PydanticField = typing.Union[ModelField, pydantic.fields.FieldInfo]
 
 # Pydantic V1 swapped the typing of __fields__'s values from ModelField to FieldInfo
 # And so we try to handle both V1 cases, as well as V2 (FieldInfo from model.model_fields)

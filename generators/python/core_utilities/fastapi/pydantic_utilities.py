@@ -34,12 +34,14 @@ if IS_PYDANTIC_V2:
     from pydantic.v1.typing import (  # pyright: ignore[reportMissingImports] # Pydantic v2
         is_union as is_union,
     )
+    from pydantic.v1.fields import ModelField as ModelField  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
 
     # isort: on
 
 else:
     from pydantic.datetime_parse import parse_date as parse_date
     from pydantic.datetime_parse import parse_datetime as parse_datetime
+    from pydantic.fields import ModelField as ModelField
     from pydantic.json import ENCODERS_BY_TYPE as encoders_by_type
     from pydantic.typing import get_args as get_args
     from pydantic.typing import get_origin as get_origin
