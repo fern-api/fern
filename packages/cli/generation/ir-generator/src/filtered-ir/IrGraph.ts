@@ -406,7 +406,7 @@ export class IrGraph {
                 for (const audience of this.audiences.audiences) {
                     const parametersByAudience = queryParametersNode.parametersByAudience[audience];
                     if (parametersByAudience != null) {
-                        parametersForEndpoint.forEach((parameter) => {
+                        parametersByAudience.forEach((parameter) => {
                             parametersForEndpoint.add(parameter);
                         });
                     }
