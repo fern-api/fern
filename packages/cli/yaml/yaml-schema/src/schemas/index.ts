@@ -69,6 +69,9 @@ export { TypeReferenceSchema, TypeReferenceWithDocsSchema } from "./TypeReferenc
 export { UndiscriminatedUnionSchema } from "./UndiscriminatedUnionSchema";
 export { ValidationSchema } from "./ValidationSchema";
 export { VariableDeclarationSchema } from "./VariableDeclarationSchema";
+export { VersionDeclarationHeaderObjectSchema } from "./VersionDeclarationHeaderObjectSchema";
+export { VersionDeclarationHeaderSchema } from "./VersionDeclarationHeaderSchema";
+export { VersionDeclarationSchema } from "./VersionDeclarationSchema";
 export { WebhookInlinedPayloadSchema } from "./WebhookInlinedPayloadSchema";
 export { WebhookPayloadSchema } from "./WebhookPayloadSchema";
 export { WebhookReferencedPayloadSchema } from "./WebhookReferencedPayloadSchema";

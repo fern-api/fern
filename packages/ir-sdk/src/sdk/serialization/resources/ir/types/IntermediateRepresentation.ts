@@ -10,6 +10,7 @@ export const IntermediateRepresentation: core.serialization.ObjectSchema<
     serializers.IntermediateRepresentation.Raw,
     FernIr.IntermediateRepresentation
 > = core.serialization.objectWithoutOptionalProperties({
+    apiVersion: core.serialization.lazy(async () => (await import("../../..")).ApiVersionScheme).optional(),
     apiName: core.serialization.lazyObject(async () => (await import("../../..")).Name),
     apiDisplayName: core.serialization.string().optional(),
     apiDocs: core.serialization.string().optional(),
@@ -66,6 +67,7 @@ export const IntermediateRepresentation: core.serialization.ObjectSchema<
 
 export declare namespace IntermediateRepresentation {
     interface Raw {
+        apiVersion?: serializers.ApiVersionScheme.Raw | null;
         apiName: serializers.Name.Raw;
         apiDisplayName?: string | null;
         apiDocs?: string | null;

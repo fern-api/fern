@@ -228,6 +228,7 @@ async function getAreRootApiFilesEquivalent(
     let areRootApiFilesEquivalent = true as boolean;
     const differences: string[] = [];
     await visitObject(rootApiFile, {
+        version: noop,
         name: noop,
         imports: noop,
         "display-name": noop,

@@ -2,6 +2,7 @@
 
 exports[`examples enum-casing parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": null,

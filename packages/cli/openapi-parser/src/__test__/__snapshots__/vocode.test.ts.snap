@@ -2,6 +2,7 @@
 
 exports[`open api parser vocode parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": "

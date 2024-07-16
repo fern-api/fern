@@ -2,6 +2,7 @@
 
 exports[`open api parser gen-yml-use-title parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": null,
