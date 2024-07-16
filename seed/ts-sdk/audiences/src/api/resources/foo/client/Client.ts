@@ -58,6 +58,7 @@ export class Foo {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             body: serializers.FindRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,

@@ -54,6 +54,7 @@ export class Auth {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: {
                 ...serializers.GetTokenRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
                 audience: "https://api.example.com",
@@ -122,6 +123,7 @@ export class Auth {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: {
                 ...serializers.RefreshTokenRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
                 audience: "https://api.example.com",

@@ -72,6 +72,7 @@ export class Service {
             await _request.append("listOfObjects", JSON.stringify(_item));
         }
 
+        const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),
             method: "POST",
@@ -81,9 +82,10 @@ export class Service {
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...(await _request.getHeaders()),
+                ...(await _maybeEncodedRequest.headers),
             },
-            body: await _request.getBody(),
+            requestType: "file",
+            body: await _maybeEncodedRequest.body,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -129,6 +131,7 @@ export class Service {
     ): Promise<void> {
         const _request = await core.newFormData();
         await _request.appendFile("file", request.file);
+        const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/just-file"),
             method: "POST",
@@ -138,9 +141,10 @@ export class Service {
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...(await _request.getHeaders()),
+                ...(await _maybeEncodedRequest.headers),
             },
-            body: await _request.getBody(),
+            requestType: "file",
+            body: await _maybeEncodedRequest.body,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -215,6 +219,7 @@ export class Service {
 
         const _request = await core.newFormData();
         await _request.appendFile("file", request.file);
+        const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/just-file-with-query-params"),
             method: "POST",
@@ -224,10 +229,11 @@ export class Service {
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...(await _request.getHeaders()),
+                ...(await _maybeEncodedRequest.headers),
             },
             queryParameters: _queryParams,
-            body: await _request.getBody(),
+            requestType: "file",
+            body: await _maybeEncodedRequest.body,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
