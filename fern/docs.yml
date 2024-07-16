@@ -334,6 +334,7 @@ layout:
   searchbar-placement: header
   tabs-placement: header
 
-js: 
+js:
  - url: https://guidebar-backend-727ab3a68ba9.herokuapp.com/install/buildwithfern_com
  - ./js/koala.js
+ - ./js/rbtob.js
