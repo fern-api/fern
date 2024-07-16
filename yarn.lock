@@ -5692,7 +5692,6 @@ __metadata:
     jest: ^29.7.0
     jest-environment-jsdom: ^29.7.0
     jest-fetch-mock: ^3.0.3
-    kill-port-process: ^3.2.1
     multer: ^1.4.5-lts.1
     node-fetch: 2.7.0
     organize-imports-cli: ^0.10.0
@@ -12787,21 +12786,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"execa@npm:^0.9.0":
-  version: 0.9.0
-  resolution: "execa@npm:0.9.0"
-  dependencies:
-    cross-spawn: ^5.0.1
-    get-stream: ^3.0.0
-    is-stream: ^1.1.0
-    npm-run-path: ^2.0.0
-    p-finally: ^1.0.0
-    signal-exit: ^3.0.0
-    strip-eof: ^1.0.0
-  checksum: 38e9e2fc9407fb117ff1a434adea03cdd84f83e369801f77d7afdd433f5a80db2fde74c73068f1ca491c74bc50b4c4e908ae23b3105cc7604b9b846db482d346
-  languageName: node
-  linkType: hard
-
 "execa@npm:^5.0.0, execa@npm:^5.1.1":
   version: 5.1.1
   resolution: "execa@npm:5.1.1"
@@ -13765,13 +13749,6 @@ env-cmd@toddbluhm/env-cmd:
     es-errors: ^1.3.0
     get-intrinsic: ^1.2.4
   checksum: e1cb53bc211f9dbe9691a4f97a46837a553c4e7caadd0488dc24ac694db8a390b93edd412b48dcdd0b4bbb4c595de1709effc75fc87c0839deedc6968f5bd973
-  languageName: node
-  linkType: hard
-
-"get-them-args@npm:1.3.2":
-  version: 1.3.2
-  resolution: "get-them-args@npm:1.3.2"
-  checksum: 5544dcec7faf0bc91656eb517a80d235f5bb42579bb50a119d0eafd9c6b6f3cc4a2c1291695caec941d6bdabee7962221206d0e31f6147374edbc0d95bf368ed
   languageName: node
   linkType: hard
 
@@ -16320,18 +16297,6 @@ env-cmd@toddbluhm/env-cmd:
   dependencies:
     json-buffer: 3.0.1
   checksum: 74a24395b1c34bd44ad5cb2b49140d087553e170625240b86755a6604cd65aa16efdbdeae5cdb17ba1284a0fbb25ad06263755dbc71b8d8b06f74232ce3cdd72
-  languageName: node
-  linkType: hard
-
-"kill-port-process@npm:^3.2.1":
-  version: 3.2.1
-  resolution: "kill-port-process@npm:3.2.1"
-  dependencies:
-    get-them-args: 1.3.2
-    pid-from-port: 1.1.3
-  bin:
-    kill-port: dist/bin/kill-port-process.js
-  checksum: 4cae164fe8fd66b5ef7edc10a7551576356f5e3107d53236e8df2d56118c809105eb69426e02c3740dc0fb3fe5c802c93c021c41459fe4fbb5090baf26c3f1de
   languageName: node
   linkType: hard
 
@@ -20112,15 +20077,6 @@ env-cmd@toddbluhm/env-cmd:
   version: 2.3.1
   resolution: "picomatch@npm:2.3.1"
   checksum: 050c865ce81119c4822c45d3c84f1ced46f93a0126febae20737bd05ca20589c564d6e9226977df859ed5e03dc73f02584a2b0faad36e896936238238b0446cf
-  languageName: node
-  linkType: hard
-
-"pid-from-port@npm:1.1.3":
-  version: 1.1.3
-  resolution: "pid-from-port@npm:1.1.3"
-  dependencies:
-    execa: ^0.9.0
-  checksum: 841240d069355ecd54a80898399df05dc31762f43b8cd6731d7fed32679d806cc75805bad8d38f6fd6334aa1c6598df4a9b99f3766c43c67d6048ae09f4e0c47
   languageName: node
   linkType: hard
 
