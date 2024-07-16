@@ -39,17 +39,40 @@ export function convertSdkLanguageAlias(sdk: SupportedSdkLanguageSchema): Suppor
     return RESOLVE_ALIAS[sdk] ?? (sdk as SupportedSdkLanguage);
 }
 
-export const ExampleCodeSampleSchemaSdk = WithNameAndDocsSchema.extend({
+export const ExampleCodeReferenceSchema = z.strictObject({
+    $ref: z.string()
+});
+
+export type ExampleCodeReferenceSchema = z.infer<typeof ExampleCodeReferenceSchema>;
+
+const UnresolvedCodeSampleSchema = WithNameAndDocsSchema.extend({
+    code: z.union([z.string(), ExampleCodeReferenceSchema])
+});
+
+export const UnresolvedExampleCodeSampleSchemaSdk = UnresolvedCodeSampleSchema.extend({
     sdk: SupportedSdkLanguageSchema,
+    code: z.string()
+});
+
+export type UnresolvedExampleCodeSampleSchemaSdk = z.infer<typeof UnresolvedExampleCodeSampleSchemaSdk>;
+
+// Override code to be a string
+export const ExampleCodeSampleSchemaSdk = UnresolvedExampleCodeSampleSchemaSdk.extend({
     code: z.string()
 });
 
 export type ExampleCodeSampleSchemaSdk = z.infer<typeof ExampleCodeSampleSchemaSdk>;
 
-export const ExampleCodeSampleSchemaLanguage = WithNameAndDocsSchema.extend({
+export const UnresolvedExampleCodeSampleSchemaLanguage = UnresolvedCodeSampleSchema.extend({
     language: z.string(),
-    code: z.string(),
     install: z.optional(z.string())
+});
+
+export type UnresolvedExampleCodeSampleSchemaLanguage = z.infer<typeof UnresolvedExampleCodeSampleSchemaLanguage>;
+
+// Override code to be a string
+export const ExampleCodeSampleSchemaLanguage = UnresolvedExampleCodeSampleSchemaLanguage.extend({
+    code: z.string()
 });
 
 export type ExampleCodeSampleSchemaLanguage = z.infer<typeof ExampleCodeSampleSchemaLanguage>;
@@ -57,3 +80,10 @@ export type ExampleCodeSampleSchemaLanguage = z.infer<typeof ExampleCodeSampleSc
 export const ExampleCodeSampleSchema = z.union([ExampleCodeSampleSchemaSdk, ExampleCodeSampleSchemaLanguage]);
 
 export type ExampleCodeSampleSchema = z.infer<typeof ExampleCodeSampleSchema>;
+
+export const UnresolvedExampleCodeSampleSchema = z.union([
+    UnresolvedExampleCodeSampleSchemaSdk,
+    UnresolvedExampleCodeSampleSchemaLanguage
+]);
+
+export type UnresolvedExampleCodeSampleSchema = z.infer<typeof UnresolvedExampleCodeSampleSchema>;

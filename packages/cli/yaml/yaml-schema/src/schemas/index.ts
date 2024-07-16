@@ -18,8 +18,17 @@ export { EnvironmentSchema } from "./EnvironmentSchema";
 export { ErrorDeclarationSchema } from "./ErrorDeclarationSchema";
 export { ErrorDiscriminationSchema } from "./ErrorDiscriminationSchema";
 export { ErrorReferenceSchema } from "./ErrorReferenceSchema";
-export { ExampleCodeSampleSchema, SupportedSdkLanguageSchema } from "./ExampleCodeSampleSchema";
-export { ExampleEndpointCallArraySchema, ExampleEndpointCallSchema } from "./ExampleEndpointCallSchema";
+export {
+    ExampleCodeReferenceSchema,
+    ExampleCodeSampleSchema,
+    SupportedSdkLanguageSchema,
+    UnresolvedExampleCodeSampleSchema
+} from "./ExampleCodeSampleSchema";
+export {
+    ExampleEndpointCallSchema,
+    UnresolvedExampleEndpointCallArraySchema,
+    UnresolvedExampleEndpointCallSchema
+} from "./ExampleEndpointCallSchema";
 export {
     ExampleBodyResponseSchema,
     ExampleResponseSchema,

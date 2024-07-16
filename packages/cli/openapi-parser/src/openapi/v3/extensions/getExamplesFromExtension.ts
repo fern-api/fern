@@ -1,5 +1,7 @@
+import { AbsoluteFilePath, cwd, doesPathExistSync, resolve } from "@fern-api/fs-utils";
 import { EndpointExample } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
+import { readFileSync } from "fs";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtensionAndValidate } from "../../../getExtension";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
@@ -9,16 +11,47 @@ import { OpenAPIExtension } from "./extensions";
 import { FernOpenAPIExtension } from "./fernExtensions";
 import { getRawReadmeCodeSamples } from "./getReadmeCodeSamples";
 
+function maybeGetReferencedCode(code: string | RawSchemas.ExampleCodeReferenceSchema | undefined): string | undefined {
+    if (code == null) {
+        return;
+    }
+
+    if (typeof code === "string") {
+        return code;
+    } else {
+        const path = resolve(cwd(), code.$ref);
+        const pathExists = doesPathExistSync(AbsoluteFilePath.of(path));
+        if (pathExists) {
+            return readFileSync(path).toString();
+        }
+    }
+    return;
+}
+
+function convertRawExamples(examples: RawSchemas.UnresolvedExampleEndpointCallArraySchema): EndpointExample[] {
+    return examples
+        .map((ex) => ({
+            ...ex,
+            "code-samples": ex["code-samples"]
+                ?.map((cs) => ({
+                    ...cs,
+                    code: maybeGetReferencedCode(cs.code)
+                }))
+                .filter((cs): cs is RawSchemas.ExampleCodeSampleSchema => cs.code != null)
+        }))
+        .map(EndpointExample.unknown);
+}
+
 export function getExamplesFromExtension(
     operationContext: OperationContext,
     operationObject: OpenAPIV3.OperationObject,
     context: AbstractOpenAPIV3ParserContext
 ): EndpointExample[] {
-    const exampleEndpointCalls: RawSchemas.ExampleEndpointCallArraySchema =
+    const exampleEndpointCalls: RawSchemas.UnresolvedExampleEndpointCallArraySchema =
         getExtensionAndValidate(
             operationObject,
             FernOpenAPIExtension.EXAMPLES,
-            RawSchemas.ExampleEndpointCallArraySchema,
+            RawSchemas.UnresolvedExampleEndpointCallArraySchema,
             context,
             [...operationContext.baseBreadcrumbs, `${operationContext.method} ${operationContext.path}`]
         ) ?? [];
@@ -49,7 +82,7 @@ export function getExamplesFromExtension(
     if (redoclyCodeSamples.length > 0) {
         exampleEndpointCalls.push({
             "code-samples": redoclyCodeSamples.map(
-                (value): RawSchemas.ExampleCodeSampleSchema => ({
+                (value): RawSchemas.UnresolvedExampleCodeSampleSchema => ({
                     name: value.label ?? value.lang,
                     language: value.lang,
                     code: value.source,
@@ -67,5 +100,5 @@ export function getExamplesFromExtension(
         });
     }
 
-    return exampleEndpointCalls.map(EndpointExample.unknown);
+    return convertRawExamples(exampleEndpointCalls);
 }
