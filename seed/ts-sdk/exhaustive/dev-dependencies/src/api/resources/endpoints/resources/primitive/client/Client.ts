@@ -49,6 +49,7 @@ export class Primitive {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnString.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
@@ -97,6 +98,7 @@ export class Primitive {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnInt.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
@@ -145,6 +147,7 @@ export class Primitive {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnLong.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
@@ -193,6 +196,7 @@ export class Primitive {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnDouble.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
@@ -241,6 +245,7 @@ export class Primitive {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnBool.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
@@ -289,6 +294,7 @@ export class Primitive {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnDatetime.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
@@ -337,6 +343,7 @@ export class Primitive {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnDate.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
@@ -385,6 +392,7 @@ export class Primitive {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnUuid.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
@@ -433,6 +441,7 @@ export class Primitive {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnBase64.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),

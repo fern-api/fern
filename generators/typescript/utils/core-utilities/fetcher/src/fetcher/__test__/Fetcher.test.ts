@@ -29,7 +29,8 @@ describe("Test fetcherImpl", () => {
             method: "POST",
             headers: { "X-Test": "x-test-header" },
             body: { data: "test" },
-            contentType: "application/json"
+            contentType: "application/json",
+            requestType: "json"
         };
 
         mockCreateUrl.mockReturnValue("https://test.com");

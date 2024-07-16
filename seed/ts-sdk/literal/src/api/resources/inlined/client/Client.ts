@@ -65,6 +65,7 @@ export class Inlined {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: {
                 ...serializers.SendLiteralsInlinedRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
                 prompt: "You are a helpful assistant",
