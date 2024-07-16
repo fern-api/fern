@@ -83,24 +83,13 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
 
     public readonly getBody = ({ referencetoFormData }: { referencetoFormData: ts.Expression }): ts.Expression => {
         return ts.factory.createAwaitExpression(
-            ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(referencetoFormData, ts.factory.createIdentifier("getBody")),
-                undefined,
-                []
-            )
+            ts.factory.createPropertyAccessExpression(referencetoFormData, ts.factory.createIdentifier("body"))
         );
     };
 
     public readonly getHeaders = ({ referencetoFormData }: { referencetoFormData: ts.Expression }): ts.Expression => {
         return ts.factory.createAwaitExpression(
-            ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(
-                    referencetoFormData,
-                    ts.factory.createIdentifier("getHeaders")
-                ),
-                undefined,
-                []
-            )
+            ts.factory.createPropertyAccessExpression(referencetoFormData, ts.factory.createIdentifier("headers"))
         );
     };
 }

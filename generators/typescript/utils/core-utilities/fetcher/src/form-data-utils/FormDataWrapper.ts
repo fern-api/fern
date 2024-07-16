@@ -2,6 +2,11 @@ import { RUNTIME } from "../runtime";
 
 export type MaybePromise<T> = Promise<T> | T;
 
+type FormDataRequest<Body> = {
+    body: Body;
+    headers: Record<string, string>;
+};
+
 export interface CrossPlatformFormData {
     setup(): Promise<void>;
 
@@ -9,9 +14,7 @@ export interface CrossPlatformFormData {
 
     appendFile(key: string, value: unknown, fileName?: string): Promise<void>;
 
-    getBody(): MaybePromise<unknown>;
-
-    getHeaders(): MaybePromise<Record<string, string>>;
+    getRequest(): MaybePromise<FormDataRequest<unknown>>;
 }
 
 export async function newFormData(): Promise<CrossPlatformFormData> {
@@ -31,16 +34,20 @@ export async function newFormData(): Promise<CrossPlatformFormData> {
  * Form Data Implementation for Node.js 18+
  */
 class Node19FormData implements CrossPlatformFormData {
+    getBody(): unknown {
+        throw new Error("Method not implemented.");
+    }
+    getHeaders(): MaybePromise<Record<string, string>> {
+        throw new Error("Method not implemented.");
+    }
     private fd:
         | {
               append(name: string, value: unknown, fileName?: string): void;
           }
         | undefined;
-    private encoder: any;
 
     public async setup() {
         this.fd = new (await import("formdata-node")).FormData();
-        this.encoder = new (await import("form-data-encoder")).FormDataEncoder(this.fd as any);
     }
 
     public append(key: string, value: any): void {
@@ -51,12 +58,16 @@ class Node19FormData implements CrossPlatformFormData {
         this.fd?.append(key, new (await import("buffer")).Blob([value]), fileName);
     }
 
-    public async getBody(): Promise<unknown> {
-        return (await import("stream")).Readable.from(this.encoder);
-    }
-
-    public getHeaders(): Promise<Record<string, string>> {
-        return this.encoder.headers;
+    public async getRequest(): Promise<FormDataRequest<unknown>> {
+        if (!this.fd) {
+            throw new Error("Form data is not defined");
+        } else {
+            const encoder = new (await import("form-data-encoder")).FormDataEncoder(this.fd as any);
+            return {
+                body: (await import("stream")).Readable.from(encoder),
+                headers: encoder.headers
+            };
+        }
     }
 }
 
@@ -77,6 +88,8 @@ class Node16FormData implements CrossPlatformFormData {
                       contentType?: string;
                   }
               ): void;
+
+              getHeaders(): Record<string, string>;
           }
         | undefined;
 
@@ -96,12 +109,11 @@ class Node16FormData implements CrossPlatformFormData {
         }
     }
 
-    public getBody(): unknown {
-        return this.fd;
-    }
-
-    public getHeaders(): Record<string, string> {
-        return {};
+    public getRequest(): FormDataRequest<typeof this.fd> {
+        return {
+            body: this.fd,
+            headers: this.fd ? this.fd.getHeaders() : {}
+        };
     }
 }
 
@@ -123,11 +135,10 @@ class WebFormData implements CrossPlatformFormData {
         this.fd?.append(key, new Blob([value]), fileName);
     }
 
-    public getBody(): unknown {
-        return this.fd;
-    }
-
-    public getHeaders(): Record<string, string> {
-        return {};
+    public getRequest(): FormDataRequest<typeof this.fd> {
+        return {
+            body: this.fd,
+            headers: {}
+        };
     }
 }

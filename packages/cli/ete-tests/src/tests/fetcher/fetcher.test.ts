@@ -21,7 +21,7 @@ describe("Fetcher Tests", () => {
         const formData = await newFormData();
         formData.append("data", file);
 
-        const headers = await formData.getHeaders();
+        const { headers, body } = await formData.getRequest();
         const response = await fetcher({
             url: "https://api.cohere.ai/v1/datasets",
             method: "POST",
@@ -33,7 +33,7 @@ describe("Fetcher Tests", () => {
                 name: "my-dataset",
                 type: "embed-input"
             },
-            body: await formData.getBody()
+            body
         });
         expect((response as any)?.ok).toEqual(true);
     }, 90_000);

@@ -52,8 +52,7 @@ describe("Multipart Form Data Tests", () => {
 
         const response = await fetch("http://localhost:4567/upload", {
             method: "POST",
-            body: await fdw.getBody(),
-            headers: await fdw.getHeaders()
+            ...(await fdw.getRequest())
         });
 
         expect(response.status).toBe(200);
