@@ -5,7 +5,7 @@ import { FernFileContext } from "../../FernFileContext";
 import { AudienceId } from "../../filtered-ir/ids";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
-import { getPropertiesForAudience } from "../../utils/getPropertiesForAudience";
+import { getPropertiesByAudience } from "../../utils/getPropertiesByAudience";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { convertDeclaration } from "../convertDeclaration";
 import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
@@ -46,7 +46,7 @@ export async function convertTypeDeclaration({
 
     let propertiesByAudience: Record<AudienceId, Set<string>> = {};
     if (isRawObjectDefinition(typeDeclaration)) {
-        propertiesByAudience = getPropertiesForAudience(typeDeclaration.properties ?? {});
+        propertiesByAudience = getPropertiesByAudience(typeDeclaration.properties ?? {});
     }
 
     return {
