@@ -124,14 +124,25 @@ fixtures:
           skip_validation: true
       outputFolder: skip-pydantic-validation
 scripts:
+  # Test Pydantic V2
   - docker: fernapi/python-seed
     commands:
-      # - poetry run mypy .
       # The global python version is 3.8
       # Tests now run a mock server, you can always run seed with --skip-scripts to save time
       - export NPM_CONFIG_CACHE="$(pwd)/.cache"
       - export HOME="$(pwd)/"
       - poetry config virtualenvs.path .
+      - poetry add pydantic=^2.8
+      - poetry install
+      - poetry run mypy .
+      - fern test --command "poetry run pytest -rP ."
+  # Test Pydantic V1
+  - docker: fernapi/python-seed
+    commands:
+      - export NPM_CONFIG_CACHE="$(pwd)/.cache"
+      - export HOME="$(pwd)/"
+      - poetry config virtualenvs.path .
+      - poetry add pydantic=^1.10
       - poetry install
       - poetry run mypy .
       - fern test --command "poetry run pytest -rP ."
