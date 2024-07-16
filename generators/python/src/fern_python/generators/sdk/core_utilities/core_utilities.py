@@ -6,6 +6,7 @@ from fern_python.external_dependencies.pydantic import (
     PYDANTIC_DEPENDENCY,
     PYDANTIC_V1_DEPENDENCY,
     PYDANTIC_V2_DEPENDENCY,
+    PYDANTIC_CORE_DEPENDENCY,
     PydanticVersionCompatibility,
 )
 from fern_python.external_dependencies.typing_extensions import (
@@ -112,6 +113,7 @@ class CoreUtilities:
                 "UniversalRootModel",
             },
         )
+        project.add_dependency(PYDANTIC_CORE_DEPENDENCY)
 
         self._copy_file_to_project(
             project=project,
