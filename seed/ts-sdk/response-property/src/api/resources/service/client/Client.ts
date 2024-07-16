@@ -48,6 +48,7 @@ export class Service {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.service.getMovie.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -106,6 +107,7 @@ export class Service {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.service.getMovieDocs.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -164,6 +166,7 @@ export class Service {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.service.getMovieName.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -222,6 +225,7 @@ export class Service {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.service.getMovieMetadata.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
@@ -282,6 +286,7 @@ export class Service {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.service.getOptionalMovie.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
@@ -342,6 +347,7 @@ export class Service {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.service.getOptionalMovieDocs.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
@@ -402,6 +408,7 @@ export class Service {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.service.getOptionalMovieName.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
