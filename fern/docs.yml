@@ -335,5 +335,5 @@ layout:
   tabs-placement: header
 
 js: 
- - ./js/penguin-ai.js
+ - https://guidebar-backend-727ab3a68ba9.herokuapp.com/install/buildwithfern_com
  - ./js/koala.js
