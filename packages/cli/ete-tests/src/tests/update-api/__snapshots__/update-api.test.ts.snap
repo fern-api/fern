@@ -4,7 +4,11 @@ exports[`fern api update fern api update 1`] = `
 [
   {
     "contents": "{
+  "openapi": "3.1.0",
   "info": {
+    "title": "Train Travel API",
+    "description": "API for finding and booking train trips across Europe.\\n\\n## Run in Postman\\n\\nExperiment with this API in Postman, using our Postman Collection.\\n\\n[<img src=\\"https://run.pstmn.io/button.svg\\" alt=\\"Run In Postman\\" style=\\"width: 128px; height: 32px;\\">](https://app.getpostman.com/run-collection/9265903-7a75a0d0-b108-4436-ba54-c6139698dc08?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D9265903-7a75a0d0-b108-4436-ba54-c6139698dc08%26entityType%3Dcollection%26workspaceId%3Df507f69d-9564-419c-89a2-cb8e4c8c7b8f)\\n\\n## Run in Insomnia\\n\\nExperiment with this API in Insomnia, using our Insomnia Collection.\\n\\n[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Train%20Travel%20API&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fbump-sh-examples%2Ftrain-travel-api%2Fmain%2Finsomnia%2FInsomnia_2024-05-27.json)\\n",
+    "version": "1.0.0",
     "contact": {
       "name": "Train Support",
       "url": "https://example.com/support",
@@ -42,10 +46,6 @@ exports[`fern api update fern api update 1`] = `
       "description": "Find and filter train stations across Europe, including their location\\nand local timezone.\\n"
     },
     {
-      "name": "Train Tracks",
-      "description": "Find and filter all the different rail roads available across Europe, including their location\\nand local timezone.\\n"
-    },
-    {
       "name": "Trips",
       "description": "Timetables and routes for train trips between stations, including pricing\\nand availability.\\n"
     },
@@ -59,6 +59,136 @@ exports[`fern api update fern api update 1`] = `
     }
   ],
   "paths": {
+    "/stations": {
+      "get": {
+        "summary": "Get a list of train stations",
+        "description": "Returns a list of all train stations in the system.",
+        "operationId": "get-stations",
+        "tags": [
+          "Stations"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of train stations",
+            "headers": {
+              "RateLimit": {
+                "$ref": "#/components/headers/RateLimit"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Wrapper-Collection"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Station"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "properties": {
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/Links-Self"
+                            },
+                            {
+                              "$ref": "#/components/schemas/Links-Pagination"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                "example": {
+                  "data": [
+                    {
+                      "id": "efdbb9d1-02c2-4bc3-afb7-6788d8782b1e",
+                      "name": "Berlin Hauptbahnhof",
+                      "address": "Invalidenstraße 10557 Berlin, Germany",
+                      "country_code": "DE",
+                      "timezone": "Europe/Berlin"
+                    },
+                    {
+                      "id": "b2e783e1-c824-4d63-b37a-d8d698862f1d",
+                      "name": "Paris Gare du Nord",
+                      "address": "18 Rue de Dunkerque 75010 Paris, France",
+                      "country_code": "FR",
+                      "timezone": "Europe/Paris"
+                    }
+                  ],
+                  "links": {
+                    "self": "https://api.example.com/stations&page=2",
+                    "next": "https://api.example.com/stations?page=3",
+                    "prev": "https://api.example.com/stations?page=1"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Wrapper-Collection"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "xml": {
+                            "name": "stations",
+                            "wrapped": true
+                          },
+                          "items": {
+                            "$ref": "#/components/schemas/Station"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "properties": {
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/Links-Self"
+                            },
+                            {
+                              "$ref": "#/components/schemas/Links-Pagination"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
     "/trips": {
       "get": {
         "summary": "Get available train trips",
@@ -632,6 +762,7 @@ exports[`fern api update fern api update 1`] = `
           "Payments"
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -916,6 +1047,39 @@ exports[`fern api update fern api update 1`] = `
           "prev": {
             "type": "string",
             "format": "uri"
+          }
+        }
+      },
+      "Problem": {
+        "xml": {
+          "name": "problem",
+          "namespace": "urn:ietf:rfc:7807"
+        },
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "A URI reference that identifies the problem type",
+            "example": "https://example.com/probs/out-of-credit"
+          },
+          "title": {
+            "type": "string",
+            "description": "A short, human-readable summary of the problem type",
+            "example": "You do not have enough credit."
+          },
+          "detail": {
+            "type": "string",
+            "description": "A human-readable explanation specific to this occurrence of the problem",
+            "example": "Your current balance is 30, but that costs 50."
+          },
+          "instance": {
+            "type": "string",
+            "description": "A URI reference that identifies the specific occurrence of the problem",
+            "example": "/account/12345/msgs/abc"
+          },
+          "status": {
+            "type": "integer",
+            "description": "The HTTP status code",
+            "example": 400
           }
         }
       },
