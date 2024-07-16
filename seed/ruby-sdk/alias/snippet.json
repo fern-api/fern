@@ -1,4 +1,27 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/{typeId}",
+                "method": "GET",
+                "identifierOverride": "endpoint_.get"
+            },
+            "snippet": {
+                "client": "require \"fern_alias\"\n\nalias_ = SeedAliasClient::Client.new(base_url: \"https://api.example.com\")\nalias_.get(type_id: \"type-kaljhv87\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/{typeId}",
+                "method": "GET",
+                "identifierOverride": "endpoint_.get"
+            },
+            "snippet": {
+                "client": "require \"fern_alias\"\n\nalias_ = SeedAliasClient::Client.new(base_url: \"https://api.example.com\")\nalias_.get(type_id: \"type-kaljhv87\")",
+                "type": "ruby"
+            }
+        }
+    ],
     "types": {}
 }

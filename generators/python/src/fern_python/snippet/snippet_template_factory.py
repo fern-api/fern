@@ -61,6 +61,8 @@ class SnippetTemplateFactory:
     CLIENT_FIXTURE_NAME = "client"
     TEST_URL_ENVVAR = "TESTS_BASE_URL"
 
+    MAXIMUM_TEMPLATE_DEPTH = 20
+
     TAB_CHAR = "\t"
 
     def __init__(
@@ -336,8 +338,6 @@ class SnippetTemplateFactory:
         name_breadcrumbs: Optional[List[str]],
         indentation_level: int = 0,
     ) -> Union[Template, None]:
-        child_indentation_level = indentation_level + 1
-        example_expression = f"\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}"
         sut_shape = sut.shape.get_as_union()
         if sut_shape.properties_type == "samePropertiesAsObject":
             object_properties = self._context.pydantic_generator_context.get_all_properties_including_extensions(
@@ -360,9 +360,6 @@ class SnippetTemplateFactory:
                 if template_input is not None:
                     template_inputs.append(template_input)
 
-            object_reference = self._context.pydantic_generator_context.get_class_reference_for_type_id(
-                type_id=type_name.type_id
-            )
             snippet_template = DiscriminatedUnionSnippetGenerator(
                 snippet_writer=self._snippet_writer,
                 name=type_name,
@@ -385,9 +382,6 @@ class SnippetTemplateFactory:
             return None
 
         elif sut_shape.properties_type == "singleProperty":
-            object_reference = self._context.pydantic_generator_context.get_class_reference_for_type_id(
-                type_id=type_name.type_id
-            )
             snippet_template = DiscriminatedUnionSnippetGenerator(
                 snippet_writer=self._snippet_writer,
                 name=type_name,
@@ -423,9 +417,6 @@ class SnippetTemplateFactory:
             return None
 
         elif sut_shape.properties_type == "noProperties":
-            object_reference = self._context.pydantic_generator_context.get_class_reference_for_type_id(
-                type_id=type_name.type_id
-            )
             snippet_template = DiscriminatedUnionSnippetGenerator(
                 snippet_writer=self._snippet_writer,
                 name=type_name,
@@ -489,7 +480,6 @@ class SnippetTemplateFactory:
     def _get_object_template(
         self,
         type_name: ir_types.DeclaredTypeName,
-        object_declaration: ir_types.ObjectTypeDeclaration,
         name: Optional[str],
         location: PayloadLocation,
         wire_or_original_name: Optional[str],
@@ -566,9 +556,8 @@ class SnippetTemplateFactory:
                     wire_or_original_name=wire_or_original_name,
                     name_breadcrumbs=name_breadcrumbs,
                 ),
-                object=lambda otd: self._get_object_template(
+                object=lambda _: self._get_object_template(
                     type_name=type_name,
-                    object_declaration=otd,
                     name=name,
                     location=location,
                     wire_or_original_name=wire_or_original_name,
@@ -641,6 +630,10 @@ class SnippetTemplateFactory:
         name_breadcrumbs: Optional[List[str]],
         indentation_level: int = 0,
     ) -> Union[TemplateInput, None]:
+        # Terminate if depth is too deep
+        if indentation_level >= self.MAXIMUM_TEMPLATE_DEPTH:
+            return None
+
         # if type is literal return None, we do not use literals as inputs
         if self._is_type_literal(type_):
             return None

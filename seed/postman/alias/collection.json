@@ -12,5 +12,35 @@
     }
   ],
   "auth": null,
-  "item": []
+  "item": [
+    {
+      "_type": "endpoint",
+      "name": "Get",
+      "request": {
+        "description": null,
+        "url": {
+          "raw": "{{baseUrl}}/:typeId",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            ":typeId"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "key": "typeId",
+              "value": "",
+              "description": null
+            }
+          ]
+        },
+        "header": [],
+        "method": "GET",
+        "auth": null,
+        "body": null
+      },
+      "response": []
+    }
+  ]
 }
