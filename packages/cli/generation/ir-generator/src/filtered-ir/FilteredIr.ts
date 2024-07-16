@@ -14,6 +14,7 @@ export interface FilteredIr {
     hasWebhook(webhook: Webhook): boolean;
     hasWebhookPayloadProperty(webhookId: string, property: string): boolean;
     hasRequestProperty(endpoint: string, property: string): boolean;
+    hasQueryParameter(endpoint: string, parameter: string): boolean;
     hasSubpackageId(subpackageId: string): boolean;
 }
 
@@ -24,6 +25,7 @@ export class FilteredIrImpl implements FilteredIr {
     private services: Set<ServiceId> = new Set();
     private endpoints: Set<EndpointId> = new Set();
     private requestProperties: Record<EndpointId, Set<string>>;
+    private queryParameters: Record<EndpointId, Set<string>>;
     private webhooks: Set<WebhookId> = new Set();
     private webhookPayloadProperties: Record<WebhookId, Set<string>>;
     private subpackages: Set<SubpackageId> = new Set();
@@ -35,6 +37,7 @@ export class FilteredIrImpl implements FilteredIr {
         endpoints,
         webhooks,
         subpackages,
+        queryParameters,
         requestProperties,
         webhookPayloadProperties,
         properties
@@ -43,6 +46,7 @@ export class FilteredIrImpl implements FilteredIr {
         properties: Record<TypeId, Set<string>>;
         errors: Set<ErrorId>;
         services: Set<ServiceId>;
+        queryParameters: Record<EndpointId, Set<string>>;
         requestProperties: Record<EndpointId, Set<string>>;
         endpoints: Set<EndpointId>;
         webhooks: Set<WebhookId>;
@@ -58,6 +62,7 @@ export class FilteredIrImpl implements FilteredIr {
         this.webhookPayloadProperties = webhookPayloadProperties;
         this.subpackages = subpackages;
         this.requestProperties = requestProperties;
+        this.queryParameters = queryParameters;
     }
 
     public hasTypeId(typeId: string): boolean {
@@ -111,6 +116,15 @@ export class FilteredIrImpl implements FilteredIr {
             return true;
         }
         return properties.has(property);
+    }
+
+    public hasQueryParameter(endpoint: string, parameter: string): boolean {
+        const parameters = this.queryParameters[endpoint];
+        // no properties were filtered for inlined request
+        if (parameters == null) {
+            return true;
+        }
+        return parameters.has(parameter);
     }
 
     public hasSubpackage(subpackageId: string): boolean {

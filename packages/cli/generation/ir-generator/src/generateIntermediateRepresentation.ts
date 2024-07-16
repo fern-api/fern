@@ -534,6 +534,11 @@ function filterIntermediateRepresentationForAudiences(
                                         : undefined
                             };
                         });
+                        if (httpEndpoint.queryParameters.length > 0) {
+                            httpEndpoint.queryParameters = httpEndpoint.queryParameters.filter((queryParameter) => {
+                                return filteredIr.hasQueryParameter(httpEndpoint.id, queryParameter.name.wireValue);
+                            });
+                        }
                         if (httpEndpoint.requestBody?.type === "inlinedRequestBody") {
                             return {
                                 ...httpEndpoint,
