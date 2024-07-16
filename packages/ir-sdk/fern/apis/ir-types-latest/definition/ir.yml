@@ -77,11 +77,24 @@ types:
       hasPaginatedEndpoints: boolean
       hasFileDownloadEndpoints: boolean
       platformHeaders: PlatformHeaders
+      version: optional<VersionDeclaration>
   PlatformHeaders:
     properties:
       language: string
       sdkName: string
       sdkVersion: string
+  VersionDeclaration:
+    docs: |
+      The available set of versions for the API. This is used to generate a special
+      enum that can be used to specify the version of the API to use. This information
+      is sent as an HTTP header (e.g. X-API-Version) on every request.
+
+      If the enum does _not_ define a default value, the version should be treated like
+      a required global header parameter. The version header should also support any
+      environment variable scanning specified by the header.
+    properties:
+      header: http.HttpHeader
+      value: types.EnumTypeDeclaration
   ErrorDiscriminationStrategy:
     union:
       statusCode: {}

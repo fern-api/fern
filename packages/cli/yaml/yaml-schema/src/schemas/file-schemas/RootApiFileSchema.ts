@@ -7,6 +7,7 @@ import { HttpHeaderSchema } from "../HttpHeaderSchema";
 import { HttpPathParameterSchema } from "../HttpPathParameterSchema";
 import { PaginationSchema } from "../PaginationSchema";
 import { VariableDeclarationSchema } from "../VariableDeclarationSchema";
+import { VersionDeclarationSchema } from "../VersionDeclarationSchema";
 
 export const RootApiFileSchema = z.strictObject({
     name: z.string(), // TODO: should this be migrated to id?
@@ -25,7 +26,8 @@ export const RootApiFileSchema = z.strictObject({
     ["path-parameters"]: z.optional(z.record(HttpPathParameterSchema)),
     "idempotency-headers": z.optional(z.record(z.string(), HttpHeaderSchema)),
     variables: z.optional(z.record(VariableDeclarationSchema)),
-    pagination: z.optional(PaginationSchema)
+    pagination: z.optional(PaginationSchema),
+    version: z.optional(VersionDeclarationSchema)
 });
 
 export type RootApiFileSchema = z.infer<typeof RootApiFileSchema>;
