@@ -59,7 +59,7 @@ class _UnionWithOptionalTime:
         value: typing.Optional[dt.date] = None
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:
@@ -71,7 +71,7 @@ class _UnionWithOptionalTime:
         value: typing.Optional[dt.datetime] = None
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:

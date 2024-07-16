@@ -14,7 +14,7 @@ class Test_And(UniversalBaseModel):
     type: typing.Literal["and"] = "and"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -27,7 +27,7 @@ class Test_Or(UniversalBaseModel):
     type: typing.Literal["or"] = "or"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

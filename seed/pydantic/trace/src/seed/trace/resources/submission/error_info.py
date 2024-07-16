@@ -15,7 +15,7 @@ class ErrorInfo_CompileError(UniversalBaseModel):
     type: typing.Literal["compileError"] = "compileError"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -27,7 +27,7 @@ class ErrorInfo_RuntimeError(UniversalBaseModel):
     type: typing.Literal["runtimeError"] = "runtimeError"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -39,7 +39,7 @@ class ErrorInfo_InternalError(UniversalBaseModel):
     type: typing.Literal["internalError"] = "internalError"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

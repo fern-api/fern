@@ -17,7 +17,7 @@ class GetSubmissionStateResponse(UniversalBaseModel):
     submission_type_state: SubmissionTypeState = pydantic.Field(alias="submissionTypeState")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

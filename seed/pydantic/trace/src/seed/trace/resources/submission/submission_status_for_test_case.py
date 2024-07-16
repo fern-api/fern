@@ -18,7 +18,7 @@ class SubmissionStatusForTestCase_Graded(UniversalBaseModel):
     type: typing.Literal["graded"] = "graded"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -36,7 +36,7 @@ class SubmissionStatusForTestCase_Traced(UniversalBaseModel):
     type: typing.Literal["traced"] = "traced"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

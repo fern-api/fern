@@ -57,7 +57,7 @@ class _Shape:
         type: typing.Literal["circle"] = "circle"
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:
@@ -69,7 +69,7 @@ class _Shape:
         type: typing.Literal["square"] = "square"
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:

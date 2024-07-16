@@ -57,7 +57,7 @@ class _UnionWithoutKey:
         type: typing.Literal["foo"] = "foo"
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:
@@ -69,7 +69,7 @@ class _UnionWithoutKey:
         type: typing.Literal["bar"] = "bar"
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:

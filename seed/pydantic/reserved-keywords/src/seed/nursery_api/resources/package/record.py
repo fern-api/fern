@@ -12,7 +12,7 @@ class Record(UniversalBaseModel):
     f_3_d: int = pydantic.Field(alias="3d")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

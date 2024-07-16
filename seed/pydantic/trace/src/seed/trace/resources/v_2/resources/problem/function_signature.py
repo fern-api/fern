@@ -16,7 +16,7 @@ class FunctionSignature_Void(UniversalBaseModel):
     type: typing.Literal["void"] = "void"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -29,7 +29,7 @@ class FunctionSignature_NonVoid(UniversalBaseModel):
     type: typing.Literal["nonVoid"] = "nonVoid"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -43,7 +43,7 @@ class FunctionSignature_VoidThatTakesActualResult(UniversalBaseModel):
     type: typing.Literal["voidThatTakesActualResult"] = "voidThatTakesActualResult"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

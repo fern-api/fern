@@ -19,7 +19,7 @@ class FieldValue_ObjectValue(UniversalBaseModel):
     type: typing.Literal["object_value"] = "object_value"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

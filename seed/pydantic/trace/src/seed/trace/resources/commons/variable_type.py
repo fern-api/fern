@@ -13,7 +13,7 @@ class VariableType_IntegerType(UniversalBaseModel):
     type: typing.Literal["integerType"] = "integerType"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -24,7 +24,7 @@ class VariableType_DoubleType(UniversalBaseModel):
     type: typing.Literal["doubleType"] = "doubleType"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -35,7 +35,7 @@ class VariableType_BooleanType(UniversalBaseModel):
     type: typing.Literal["booleanType"] = "booleanType"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -46,7 +46,7 @@ class VariableType_StringType(UniversalBaseModel):
     type: typing.Literal["stringType"] = "stringType"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -57,7 +57,7 @@ class VariableType_CharType(UniversalBaseModel):
     type: typing.Literal["charType"] = "charType"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -70,7 +70,7 @@ class VariableType_ListType(UniversalBaseModel):
     type: typing.Literal["listType"] = "listType"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -84,7 +84,7 @@ class VariableType_MapType(UniversalBaseModel):
     type: typing.Literal["mapType"] = "mapType"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -96,7 +96,7 @@ class VariableType_BinaryTreeType(UniversalBaseModel):
     type: typing.Literal["binaryTreeType"] = "binaryTreeType"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -107,7 +107,7 @@ class VariableType_SinglyLinkedListType(UniversalBaseModel):
     type: typing.Literal["singlyLinkedListType"] = "singlyLinkedListType"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -118,7 +118,7 @@ class VariableType_DoublyLinkedListType(UniversalBaseModel):
     type: typing.Literal["doublyLinkedListType"] = "doublyLinkedListType"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

@@ -15,7 +15,7 @@ class GradedResponseV2(UniversalBaseModel):
     test_cases: typing.Dict[TestCaseId, TestCaseGrade] = pydantic.Field(alias="testCases")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

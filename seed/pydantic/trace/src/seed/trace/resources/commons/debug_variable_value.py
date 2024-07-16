@@ -50,7 +50,7 @@ class DebugVariableValue_MapValue(UniversalBaseModel):
     type: typing.Literal["mapValue"] = "mapValue"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -69,7 +69,7 @@ class DebugVariableValue_BinaryTreeNodeValue(UniversalBaseModel):
     type: typing.Literal["binaryTreeNodeValue"] = "binaryTreeNodeValue"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -83,7 +83,7 @@ class DebugVariableValue_SinglyLinkedListNodeValue(UniversalBaseModel):
     type: typing.Literal["singlyLinkedListNodeValue"] = "singlyLinkedListNodeValue"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -97,7 +97,7 @@ class DebugVariableValue_DoublyLinkedListNodeValue(UniversalBaseModel):
     type: typing.Literal["doublyLinkedListNodeValue"] = "doublyLinkedListNodeValue"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -109,7 +109,7 @@ class DebugVariableValue_UndefinedValue(UniversalBaseModel):
     type: typing.Literal["undefinedValue"] = "undefinedValue"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -120,7 +120,7 @@ class DebugVariableValue_NullValue(UniversalBaseModel):
     type: typing.Literal["nullValue"] = "nullValue"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -133,7 +133,7 @@ class DebugVariableValue_GenericValue(UniversalBaseModel):
     type: typing.Literal["genericValue"] = "genericValue"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

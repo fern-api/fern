@@ -18,7 +18,7 @@ class VoidFunctionDefinitionThatTakesActualResult(UniversalBaseModel):
     code: FunctionImplementationForMultipleLanguages
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

@@ -54,7 +54,7 @@ class _UnionWithUnknown:
         type: typing.Literal["foo"] = "foo"
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:
@@ -66,7 +66,7 @@ class _UnionWithUnknown:
         type: typing.Literal["unknown"] = "unknown"
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:

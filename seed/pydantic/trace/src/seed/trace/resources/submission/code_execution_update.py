@@ -27,7 +27,7 @@ class CodeExecutionUpdate_BuildingExecutor(UniversalBaseModel):
     type: typing.Literal["buildingExecutor"] = "buildingExecutor"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -41,7 +41,7 @@ class CodeExecutionUpdate_Running(UniversalBaseModel):
     type: typing.Literal["running"] = "running"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -55,7 +55,7 @@ class CodeExecutionUpdate_Errored(UniversalBaseModel):
     type: typing.Literal["errored"] = "errored"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -68,7 +68,7 @@ class CodeExecutionUpdate_Stopped(UniversalBaseModel):
     type: typing.Literal["stopped"] = "stopped"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -82,7 +82,7 @@ class CodeExecutionUpdate_Graded(UniversalBaseModel):
     type: typing.Literal["graded"] = "graded"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -96,7 +96,7 @@ class CodeExecutionUpdate_GradedV2(UniversalBaseModel):
     type: typing.Literal["gradedV2"] = "gradedV2"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -110,7 +110,7 @@ class CodeExecutionUpdate_WorkspaceRan(UniversalBaseModel):
     type: typing.Literal["workspaceRan"] = "workspaceRan"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -127,7 +127,7 @@ class CodeExecutionUpdate_Recording(UniversalBaseModel):
     type: typing.Literal["recording"] = "recording"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -142,7 +142,7 @@ class CodeExecutionUpdate_Recorded(UniversalBaseModel):
     type: typing.Literal["recorded"] = "recorded"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -156,7 +156,7 @@ class CodeExecutionUpdate_InvalidRequest(UniversalBaseModel):
     type: typing.Literal["invalidRequest"] = "invalidRequest"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -168,7 +168,7 @@ class CodeExecutionUpdate_Finished(UniversalBaseModel):
     type: typing.Literal["finished"] = "finished"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

@@ -19,7 +19,7 @@ class SubmissionRequest_InitializeProblemRequest(UniversalBaseModel):
     type: typing.Literal["initializeProblemRequest"] = "initializeProblemRequest"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -31,7 +31,7 @@ class SubmissionRequest_InitializeWorkspaceRequest(UniversalBaseModel):
     type: typing.Literal["initializeWorkspaceRequest"] = "initializeWorkspaceRequest"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -48,7 +48,7 @@ class SubmissionRequest_SubmitV2(UniversalBaseModel):
     type: typing.Literal["submitV2"] = "submitV2"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -64,7 +64,7 @@ class SubmissionRequest_WorkspaceSubmit(UniversalBaseModel):
     type: typing.Literal["workspaceSubmit"] = "workspaceSubmit"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -77,7 +77,7 @@ class SubmissionRequest_Stop(UniversalBaseModel):
     type: typing.Literal["stop"] = "stop"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

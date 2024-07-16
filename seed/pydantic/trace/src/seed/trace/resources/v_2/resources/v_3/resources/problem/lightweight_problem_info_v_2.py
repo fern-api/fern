@@ -16,7 +16,7 @@ class LightweightProblemInfoV2(UniversalBaseModel):
     variable_types: typing.List[VariableType] = pydantic.Field(alias="variableTypes")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

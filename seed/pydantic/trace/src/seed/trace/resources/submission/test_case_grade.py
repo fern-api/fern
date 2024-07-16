@@ -16,7 +16,7 @@ class TestCaseGrade_Hidden(UniversalBaseModel):
     type: typing.Literal["hidden"] = "hidden"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -31,7 +31,7 @@ class TestCaseGrade_NonHidden(UniversalBaseModel):
     type: typing.Literal["nonHidden"] = "nonHidden"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

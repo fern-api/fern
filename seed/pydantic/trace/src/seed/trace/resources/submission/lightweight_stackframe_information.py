@@ -12,7 +12,7 @@ class LightweightStackframeInformation(UniversalBaseModel):
     top_stack_frame_method_name: str = pydantic.Field(alias="topStackFrameMethodName")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

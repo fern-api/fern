@@ -58,7 +58,7 @@ class _UnionWithDiscriminant:
         foo: types_types_foo_Foo
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:
@@ -71,7 +71,7 @@ class _UnionWithDiscriminant:
         bar: types_types_bar_Bar
 
         if IS_PYDANTIC_V2:
-            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
 
             class Config:

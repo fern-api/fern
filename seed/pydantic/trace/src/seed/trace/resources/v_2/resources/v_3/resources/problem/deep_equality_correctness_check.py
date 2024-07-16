@@ -12,7 +12,7 @@ class DeepEqualityCorrectnessCheck(UniversalBaseModel):
     expected_value_parameter_id: ParameterId = pydantic.Field(alias="expectedValueParameterId")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

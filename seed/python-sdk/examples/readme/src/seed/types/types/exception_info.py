@@ -25,7 +25,7 @@ class ExceptionInfo(UniversalBaseModel):
     exception_stacktrace: str = pydantic.Field(alias="exceptionStacktrace")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

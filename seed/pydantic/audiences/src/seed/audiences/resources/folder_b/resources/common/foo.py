@@ -12,7 +12,7 @@ class Foo(UniversalBaseModel):
     foo: typing.Optional[resources_folder_c_resources_common_foo_Foo] = None
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

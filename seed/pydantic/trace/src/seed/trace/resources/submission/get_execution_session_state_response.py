@@ -14,7 +14,7 @@ class GetExecutionSessionStateResponse(UniversalBaseModel):
     warming_session_ids: typing.List[str] = pydantic.Field(alias="warmingSessionIds")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

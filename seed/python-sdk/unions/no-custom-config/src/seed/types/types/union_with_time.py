@@ -15,7 +15,7 @@ class UnionWithTime_Value(UniversalBaseModel):
     type: typing.Literal["value"] = "value"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -28,7 +28,7 @@ class UnionWithTime_Date(UniversalBaseModel):
     type: typing.Literal["date"] = "date"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -41,7 +41,7 @@ class UnionWithTime_Datetime(UniversalBaseModel):
     type: typing.Literal["datetime"] = "datetime"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

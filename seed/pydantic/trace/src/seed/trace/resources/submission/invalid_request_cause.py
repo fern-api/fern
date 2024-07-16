@@ -17,7 +17,7 @@ class InvalidRequestCause_SubmissionIdNotFound(UniversalBaseModel):
     type: typing.Literal["submissionIdNotFound"] = "submissionIdNotFound"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -31,7 +31,7 @@ class InvalidRequestCause_CustomTestCasesUnsupported(UniversalBaseModel):
     type: typing.Literal["customTestCasesUnsupported"] = "customTestCasesUnsupported"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -45,7 +45,7 @@ class InvalidRequestCause_UnexpectedLanguage(UniversalBaseModel):
     type: typing.Literal["unexpectedLanguage"] = "unexpectedLanguage"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

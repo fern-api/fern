@@ -14,7 +14,7 @@ class WorkspaceSubmissionUpdate(UniversalBaseModel):
     update_info: WorkspaceSubmissionUpdateInfo = pydantic.Field(alias="updateInfo")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

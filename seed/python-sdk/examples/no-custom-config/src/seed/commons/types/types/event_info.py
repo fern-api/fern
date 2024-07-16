@@ -29,7 +29,7 @@ class EventInfo_Metadata(UniversalBaseModel):
     type: typing.Literal["metadata"] = "metadata"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -44,7 +44,7 @@ class EventInfo_Tag(UniversalBaseModel):
     type: typing.Literal["tag"] = "tag"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

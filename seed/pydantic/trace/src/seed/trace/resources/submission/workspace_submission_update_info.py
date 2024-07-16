@@ -25,7 +25,7 @@ class WorkspaceSubmissionUpdateInfo_Ran(UniversalBaseModel):
     type: typing.Literal["ran"] = "ran"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -37,7 +37,7 @@ class WorkspaceSubmissionUpdateInfo_Stopped(UniversalBaseModel):
     type: typing.Literal["stopped"] = "stopped"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -48,7 +48,7 @@ class WorkspaceSubmissionUpdateInfo_Traced(UniversalBaseModel):
     type: typing.Literal["traced"] = "traced"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -60,7 +60,7 @@ class WorkspaceSubmissionUpdateInfo_TracedV2(UniversalBaseModel):
     type: typing.Literal["tracedV2"] = "tracedV2"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -77,7 +77,7 @@ class WorkspaceSubmissionUpdateInfo_Finished(UniversalBaseModel):
     type: typing.Literal["finished"] = "finished"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

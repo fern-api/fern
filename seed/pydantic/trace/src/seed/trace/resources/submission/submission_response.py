@@ -15,7 +15,7 @@ class SubmissionResponse_ServerInitialized(UniversalBaseModel):
     type: typing.Literal["serverInitialized"] = "serverInitialized"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -31,7 +31,7 @@ class SubmissionResponse_WorkspaceInitialized(UniversalBaseModel):
     type: typing.Literal["workspaceInitialized"] = "workspaceInitialized"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -45,7 +45,7 @@ class SubmissionResponse_ServerErrored(UniversalBaseModel):
     type: typing.Literal["serverErrored"] = "serverErrored"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -62,7 +62,7 @@ class SubmissionResponse_Terminated(UniversalBaseModel):
     type: typing.Literal["terminated"] = "terminated"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

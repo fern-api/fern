@@ -22,7 +22,7 @@ class TestSubmissionUpdateInfo_Stopped(UniversalBaseModel):
     type: typing.Literal["stopped"] = "stopped"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -40,7 +40,7 @@ class TestSubmissionUpdateInfo_GradedTestCase(UniversalBaseModel):
     type: typing.Literal["gradedTestCase"] = "gradedTestCase"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -54,7 +54,7 @@ class TestSubmissionUpdateInfo_RecordedTestCase(UniversalBaseModel):
     type: typing.Literal["recordedTestCase"] = "recordedTestCase"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -66,7 +66,7 @@ class TestSubmissionUpdateInfo_Finished(UniversalBaseModel):
     type: typing.Literal["finished"] = "finished"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:

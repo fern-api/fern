@@ -16,7 +16,7 @@ class ContainerValue_List(UniversalBaseModel):
     type: typing.Literal["list"] = "list"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -29,7 +29,7 @@ class ContainerValue_Optional(UniversalBaseModel):
     type: typing.Literal["optional"] = "optional"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

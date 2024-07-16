@@ -18,7 +18,7 @@ class TraceResponsesPageV2(UniversalBaseModel):
     trace_responses: typing.List[TraceResponseV2] = pydantic.Field(alias="traceResponses")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:
