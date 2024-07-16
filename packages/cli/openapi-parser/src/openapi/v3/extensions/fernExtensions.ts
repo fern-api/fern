@@ -395,7 +395,20 @@ export const FernOpenAPIExtension = {
      *    - $ref: components/schemas/Triangle
      *    - $ref: components/schemas/Square
      */
-    IS_UNDISCRIMINATED: "x-fern-undiscriminated"
+    IS_UNDISCRIMINATED: "x-fern-undiscriminated",
+
+    /**
+     * Allows users to specify the version scheme supported by the API.
+     *
+     * x-fern-version:
+     *   header: X-API-Version
+     *   default: "2.0"
+     *   values:
+     *     - "1.0"
+     *     - "2.0"
+     *     - "Latest"
+     */
+    FERN_VERSION: "x-fern-version"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

@@ -2,6 +2,7 @@
 
 exports[`open api parser default-content parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": null,

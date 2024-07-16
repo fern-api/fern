@@ -49,6 +49,23 @@ paths:
       x-fern-sdk-method-name: create
 ```
 
+## API version
+
+You can define your API version scheme, such as a `X-API-Version` header. The supported versions and default value are specified like so:
+
+```yaml title="openapi.yaml"
+x-fern-version:
+  version:
+    header: X-API-Version
+    default: "2.0.0"
+    values:
+      - "1.0.0"
+      - "2.0.0"
+      - "latest"
+paths:
+  ...
+```
+
 ## Authentication overrides
 
 For authentication within your SDK, you may want to customize the:
@@ -116,6 +133,7 @@ components:
 This adds a header of the form `X-API-Key: Token <value>` to the request.
 
 ## Global headers
+
 At times, your API will leverage certain headers for every endpoint, or the majority of them, we call these "global headers". For convenience, generated Fern SDKs expose "global headers" to easily be updated on API calls. Take for example an API key, if we declare the API key as a global header, a user will be able to plug theirs in easily:
 
 ```python
@@ -610,7 +628,6 @@ If instead of overlaying your extensions within an overrides file, as mentioned 
 
 Please view our page on [FastAPI](/learn/api-definition/openapi/frameworks/fastapi) for more information on how to extend your OpenAPI spec within FastAPI.
 
-
 ## Request + response examples
 
 While OpenAPI has several fields for examples, there is no easy way
@@ -695,7 +712,6 @@ paths:
 This renders as:
 
 ![Screenshot of API Reference endpoint with tag showing deprecated](https://fern-image-hosting.s3.amazonaws.com/fern/x-fern-availability-example.png)
-
 
 ### Request new extensions
 

@@ -39,6 +39,22 @@ docs: |  # <---
 ```
 </CodeBlock>
 
+## API version
+
+You can define your API version scheme, such as a `X-API-Version` header. The supported versions and default value are specified like so:
+
+<CodeBlock title="api.yml">
+```yaml
+version:
+  header: X-API-Version
+  default: "2.0.0"
+  values:
+    - "1.0.0"
+    - "2.0.0"
+    - "latest"
+```
+</CodeBlock>
+
 ## Authentication
 
 You can specify the authentication scheme used by your API.

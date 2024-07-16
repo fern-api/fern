@@ -21,6 +21,9 @@ export const EXTERNAL_AUDIENCE = "external";
 export const ERROR_DECLARATIONS_FILENAME = RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME);
 
 export function buildFernDefinition(context: OpenApiIrConverterContext): FernDefinition {
+    if (context.ir.apiVersion != null) {
+        context.builder.setApiVersion(context.ir.apiVersion);
+    }
     buildEnvironments(context);
     buildGlobalHeaders(context);
     buildIdempotencyHeaders(context);

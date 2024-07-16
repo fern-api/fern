@@ -2,6 +2,7 @@
 
 exports[`open api parser apiture parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": "APIs for digital banking client applications.

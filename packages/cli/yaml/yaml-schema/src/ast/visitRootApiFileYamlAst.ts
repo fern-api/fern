@@ -9,6 +9,7 @@ export async function visitRootApiFileYamlAst(
 ): Promise<void> {
     await visitor.file?.(contents, []);
     await visitObject(contents, {
+        version: noop,
         name: noop,
         "display-name": noop,
         imports: noop,

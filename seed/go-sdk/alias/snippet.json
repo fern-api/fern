@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/{typeId}",
+                "method": "GET",
+                "identifier_override": "endpoint_.get"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/alias/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Get(\n\tcontext.TODO(),\n\t\"type-kaljhv87\",\n)\n"
+            }
+        }
+    ]
+}

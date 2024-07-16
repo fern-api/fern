@@ -7,6 +7,7 @@ import { OperationContext } from "../converters/contexts";
 import { RedoclyCodeSampleArraySchema, RedoclyCodeSampleSchema } from "../schemas/RedoclyCodeSampleSchema";
 import { OpenAPIExtension } from "./extensions";
 import { FernOpenAPIExtension } from "./fernExtensions";
+import { getRawReadmeCodeSamples } from "./getReadmeCodeSamples";
 
 export function getExamplesFromExtension(
     operationContext: OperationContext,
@@ -58,5 +59,13 @@ export function getExamplesFromExtension(
             )
         });
     }
+
+    const readmeCodeSamples = getRawReadmeCodeSamples(operationObject);
+    if (readmeCodeSamples.length > 0) {
+        exampleEndpointCalls.push({
+            "code-samples": readmeCodeSamples
+        });
+    }
+
     return exampleEndpointCalls.map(EndpointExample.unknown);
 }

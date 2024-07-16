@@ -2,6 +2,7 @@
 
 exports[`x-fern-pagination x-fern-pagination parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": null,

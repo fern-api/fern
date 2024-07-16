@@ -2,6 +2,7 @@
 
 exports[`open api parser merge parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": "The unified API for building rich integrations with multiple HR Information System platforms.",

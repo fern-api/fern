@@ -61,6 +61,7 @@ types:
 
   EnumTypeDeclaration:
     properties:
+      default: optional<EnumValue>
       values: list<EnumValue>
   EnumValue:
     extends: commons.Declaration

@@ -2,6 +2,7 @@
 
 exports[`dependencies correctly incorporates dependencies 1`] = `
 "{
+    "apiVersion": null,
     "apiName": {
         "originalName": "dependent",
         "camelCase": {
@@ -842,4 +843,4 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `2805086`;
+exports[`dependencies file dependencies 1`] = `2805341`;
