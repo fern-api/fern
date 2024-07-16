@@ -2,133 +2,86 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
-from ...core.datetime_utils import serialize_datetime
-from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+import pydantic
+
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .error_info import ErrorInfo
 from .exception_info import ExceptionInfo
 from .exception_v_2 import ExceptionV2
 from .running_submission_state import RunningSubmissionState
 
 
-class WorkspaceSubmissionUpdateInfo_Running(pydantic_v1.BaseModel):
+class WorkspaceSubmissionUpdateInfo_Running(UniversalBaseModel):
     value: RunningSubmissionState
     type: typing.Literal["running"] = "running"
 
 
-class WorkspaceSubmissionUpdateInfo_Ran(pydantic_v1.BaseModel):
-    exception_v_2: typing.Optional[ExceptionV2] = pydantic_v1.Field(alias="exceptionV2", default=None)
+class WorkspaceSubmissionUpdateInfo_Ran(UniversalBaseModel):
+    exception_v_2: typing.Optional[ExceptionV2] = pydantic.Field(alias="exceptionV2", default=None)
     exception: typing.Optional[ExceptionInfo] = None
     stdout: str
     type: typing.Literal["ran"] = "ran"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            allow_population_by_field_name = True
+            extra = pydantic.Extra.allow
 
 
-class WorkspaceSubmissionUpdateInfo_Stopped(pydantic_v1.BaseModel):
+class WorkspaceSubmissionUpdateInfo_Stopped(UniversalBaseModel):
     type: typing.Literal["stopped"] = "stopped"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            extra = pydantic.Extra.allow
 
 
-class WorkspaceSubmissionUpdateInfo_Traced(pydantic_v1.BaseModel):
+class WorkspaceSubmissionUpdateInfo_Traced(UniversalBaseModel):
     type: typing.Literal["traced"] = "traced"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            extra = pydantic.Extra.allow
 
 
-class WorkspaceSubmissionUpdateInfo_TracedV2(pydantic_v1.BaseModel):
-    trace_responses_size: int = pydantic_v1.Field(alias="traceResponsesSize")
+class WorkspaceSubmissionUpdateInfo_TracedV2(UniversalBaseModel):
+    trace_responses_size: int = pydantic.Field(alias="traceResponsesSize")
     type: typing.Literal["tracedV2"] = "tracedV2"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            allow_population_by_field_name = True
+            extra = pydantic.Extra.allow
 
 
-class WorkspaceSubmissionUpdateInfo_Errored(pydantic_v1.BaseModel):
+class WorkspaceSubmissionUpdateInfo_Errored(UniversalBaseModel):
     value: ErrorInfo
     type: typing.Literal["errored"] = "errored"
 
 
-class WorkspaceSubmissionUpdateInfo_Finished(pydantic_v1.BaseModel):
+class WorkspaceSubmissionUpdateInfo_Finished(UniversalBaseModel):
     type: typing.Literal["finished"] = "finished"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 WorkspaceSubmissionUpdateInfo = typing.Union[

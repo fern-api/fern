@@ -4,16 +4,16 @@ from __future__ import annotations
 
 import typing
 
-from .....core.pydantic_utilities import pydantic_v1
+from .....core.pydantic_utilities import UniversalBaseModel
 from .parameter_id import ParameterId
 
 
-class TestCaseImplementationDescriptionBoard_Html(pydantic_v1.BaseModel):
+class TestCaseImplementationDescriptionBoard_Html(UniversalBaseModel):
     value: str
     type: typing.Literal["html"] = "html"
 
 
-class TestCaseImplementationDescriptionBoard_ParamId(pydantic_v1.BaseModel):
+class TestCaseImplementationDescriptionBoard_ParamId(UniversalBaseModel):
     value: ParameterId
     type: typing.Literal["paramId"] = "paramId"
 

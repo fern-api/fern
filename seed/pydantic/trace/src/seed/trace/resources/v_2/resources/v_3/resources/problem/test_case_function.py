@@ -2,61 +2,42 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
-from .......core.datetime_utils import serialize_datetime
-from .......core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+import pydantic
+
+from .......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .assert_correctness_check import AssertCorrectnessCheck
 from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
 from .non_void_function_definition import NonVoidFunctionDefinition
 from .parameter import Parameter
 
 
-class TestCaseFunction_WithActualResult(pydantic_v1.BaseModel):
-    get_actual_result: NonVoidFunctionDefinition = pydantic_v1.Field(alias="getActualResult")
-    assert_correctness_check: AssertCorrectnessCheck = pydantic_v1.Field(alias="assertCorrectnessCheck")
+class TestCaseFunction_WithActualResult(UniversalBaseModel):
+    get_actual_result: NonVoidFunctionDefinition = pydantic.Field(alias="getActualResult")
+    assert_correctness_check: AssertCorrectnessCheck = pydantic.Field(alias="assertCorrectnessCheck")
     type: typing.Literal["withActualResult"] = "withActualResult"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            allow_population_by_field_name = True
+            extra = pydantic.Extra.allow
 
 
-class TestCaseFunction_Custom(pydantic_v1.BaseModel):
+class TestCaseFunction_Custom(UniversalBaseModel):
     parameters: typing.List[Parameter]
     code: FunctionImplementationForMultipleLanguages
     type: typing.Literal["custom"] = "custom"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 TestCaseFunction = typing.Union[TestCaseFunction_WithActualResult, TestCaseFunction_Custom]

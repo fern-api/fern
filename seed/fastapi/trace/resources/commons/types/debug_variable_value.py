@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
+import pydantic
 import typing_extensions
 
-from ....core.datetime_utils import serialize_datetime
-from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
 from .binary_tree_node_and_tree_value import BinaryTreeNodeAndTreeValue
 from .doubly_linked_list_node_and_list_value import DoublyLinkedListNodeAndListValue
 from .generic_value import GenericValue as resources_commons_types_generic_value_GenericValue
@@ -19,82 +18,137 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def integer_value(self, value: int) -> DebugVariableValue:
-        return DebugVariableValue(__root__=_DebugVariableValue.IntegerValue(type="integerValue", value=value))
+        return DebugVariableValue(_DebugVariableValue.IntegerValue(type="integerValue", value=value))
 
     def boolean_value(self, value: bool) -> DebugVariableValue:
-        return DebugVariableValue(__root__=_DebugVariableValue.BooleanValue(type="booleanValue", value=value))
+        return DebugVariableValue(_DebugVariableValue.BooleanValue(type="booleanValue", value=value))
 
     def double_value(self, value: float) -> DebugVariableValue:
-        return DebugVariableValue(__root__=_DebugVariableValue.DoubleValue(type="doubleValue", value=value))
+        return DebugVariableValue(_DebugVariableValue.DoubleValue(type="doubleValue", value=value))
 
     def string_value(self, value: str) -> DebugVariableValue:
-        return DebugVariableValue(__root__=_DebugVariableValue.StringValue(type="stringValue", value=value))
+        return DebugVariableValue(_DebugVariableValue.StringValue(type="stringValue", value=value))
 
     def char_value(self, value: str) -> DebugVariableValue:
-        return DebugVariableValue(__root__=_DebugVariableValue.CharValue(type="charValue", value=value))
+        return DebugVariableValue(_DebugVariableValue.CharValue(type="charValue", value=value))
 
     def map_value(self, value: DebugMapValue) -> DebugVariableValue:
-        return DebugVariableValue(
-            __root__=_DebugVariableValue.MapValue(**value.dict(exclude_unset=True), type="mapValue")
-        )
+        return DebugVariableValue(_DebugVariableValue.MapValue(**value.dict(exclude_unset=True), type="mapValue"))
 
     def list_value(self, value: typing.List[DebugVariableValue]) -> DebugVariableValue:
-        return DebugVariableValue(__root__=_DebugVariableValue.ListValue(type="listValue", value=value))
+        return DebugVariableValue(_DebugVariableValue.ListValue(type="listValue", value=value))
 
     def binary_tree_node_value(self, value: BinaryTreeNodeAndTreeValue) -> DebugVariableValue:
         return DebugVariableValue(
-            __root__=_DebugVariableValue.BinaryTreeNodeValue(
-                **value.dict(exclude_unset=True), type="binaryTreeNodeValue"
-            )
+            _DebugVariableValue.BinaryTreeNodeValue(**value.dict(exclude_unset=True), type="binaryTreeNodeValue")
         )
 
     def singly_linked_list_node_value(self, value: SinglyLinkedListNodeAndListValue) -> DebugVariableValue:
         return DebugVariableValue(
-            __root__=_DebugVariableValue.SinglyLinkedListNodeValue(
+            _DebugVariableValue.SinglyLinkedListNodeValue(
                 **value.dict(exclude_unset=True), type="singlyLinkedListNodeValue"
             )
         )
 
     def doubly_linked_list_node_value(self, value: DoublyLinkedListNodeAndListValue) -> DebugVariableValue:
         return DebugVariableValue(
-            __root__=_DebugVariableValue.DoublyLinkedListNodeValue(
+            _DebugVariableValue.DoublyLinkedListNodeValue(
                 **value.dict(exclude_unset=True), type="doublyLinkedListNodeValue"
             )
         )
 
     def undefined_value(self) -> DebugVariableValue:
-        return DebugVariableValue(__root__=_DebugVariableValue.UndefinedValue(type="undefinedValue"))
+        return DebugVariableValue(_DebugVariableValue.UndefinedValue(type="undefinedValue"))
 
     def null_value(self) -> DebugVariableValue:
-        return DebugVariableValue(__root__=_DebugVariableValue.NullValue(type="nullValue"))
+        return DebugVariableValue(_DebugVariableValue.NullValue(type="nullValue"))
 
     def generic_value(self, value: resources_commons_types_generic_value_GenericValue) -> DebugVariableValue:
         return DebugVariableValue(
-            __root__=_DebugVariableValue.GenericValue(**value.dict(exclude_unset=True), type="genericValue")
+            _DebugVariableValue.GenericValue(**value.dict(exclude_unset=True), type="genericValue")
         )
 
 
-class DebugVariableValue(pydantic_v1.BaseModel):
+class DebugVariableValue(UniversalRootModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get_as_union(
-        self,
-    ) -> typing.Union[
-        _DebugVariableValue.IntegerValue,
-        _DebugVariableValue.BooleanValue,
-        _DebugVariableValue.DoubleValue,
-        _DebugVariableValue.StringValue,
-        _DebugVariableValue.CharValue,
-        _DebugVariableValue.MapValue,
-        _DebugVariableValue.ListValue,
-        _DebugVariableValue.BinaryTreeNodeValue,
-        _DebugVariableValue.SinglyLinkedListNodeValue,
-        _DebugVariableValue.DoublyLinkedListNodeValue,
-        _DebugVariableValue.UndefinedValue,
-        _DebugVariableValue.NullValue,
-        _DebugVariableValue.GenericValue,
-    ]:
-        return self.__root__
+    if IS_PYDANTIC_V2:
+        root: typing_extensions.Annotated[
+            typing.Union[
+                _DebugVariableValue.IntegerValue,
+                _DebugVariableValue.BooleanValue,
+                _DebugVariableValue.DoubleValue,
+                _DebugVariableValue.StringValue,
+                _DebugVariableValue.CharValue,
+                _DebugVariableValue.MapValue,
+                _DebugVariableValue.ListValue,
+                _DebugVariableValue.BinaryTreeNodeValue,
+                _DebugVariableValue.SinglyLinkedListNodeValue,
+                _DebugVariableValue.DoublyLinkedListNodeValue,
+                _DebugVariableValue.UndefinedValue,
+                _DebugVariableValue.NullValue,
+                _DebugVariableValue.GenericValue,
+            ],
+            pydantic.Field(discriminator="type"),
+        ]
+
+        def get_as_union(
+            self,
+        ) -> typing.Union[
+            _DebugVariableValue.IntegerValue,
+            _DebugVariableValue.BooleanValue,
+            _DebugVariableValue.DoubleValue,
+            _DebugVariableValue.StringValue,
+            _DebugVariableValue.CharValue,
+            _DebugVariableValue.MapValue,
+            _DebugVariableValue.ListValue,
+            _DebugVariableValue.BinaryTreeNodeValue,
+            _DebugVariableValue.SinglyLinkedListNodeValue,
+            _DebugVariableValue.DoublyLinkedListNodeValue,
+            _DebugVariableValue.UndefinedValue,
+            _DebugVariableValue.NullValue,
+            _DebugVariableValue.GenericValue,
+        ]:
+            return self.root
+
+    else:
+        __root__: typing_extensions.Annotated[
+            typing.Union[
+                _DebugVariableValue.IntegerValue,
+                _DebugVariableValue.BooleanValue,
+                _DebugVariableValue.DoubleValue,
+                _DebugVariableValue.StringValue,
+                _DebugVariableValue.CharValue,
+                _DebugVariableValue.MapValue,
+                _DebugVariableValue.ListValue,
+                _DebugVariableValue.BinaryTreeNodeValue,
+                _DebugVariableValue.SinglyLinkedListNodeValue,
+                _DebugVariableValue.DoublyLinkedListNodeValue,
+                _DebugVariableValue.UndefinedValue,
+                _DebugVariableValue.NullValue,
+                _DebugVariableValue.GenericValue,
+            ],
+            pydantic.Field(discriminator="type"),
+        ]
+
+        def get_as_union(
+            self,
+        ) -> typing.Union[
+            _DebugVariableValue.IntegerValue,
+            _DebugVariableValue.BooleanValue,
+            _DebugVariableValue.DoubleValue,
+            _DebugVariableValue.StringValue,
+            _DebugVariableValue.CharValue,
+            _DebugVariableValue.MapValue,
+            _DebugVariableValue.ListValue,
+            _DebugVariableValue.BinaryTreeNodeValue,
+            _DebugVariableValue.SinglyLinkedListNodeValue,
+            _DebugVariableValue.DoublyLinkedListNodeValue,
+            _DebugVariableValue.UndefinedValue,
+            _DebugVariableValue.NullValue,
+            _DebugVariableValue.GenericValue,
+        ]:
+            return self.__root__
 
     def visit(
         self,
@@ -112,77 +166,42 @@ class DebugVariableValue(pydantic_v1.BaseModel):
         null_value: typing.Callable[[], T_Result],
         generic_value: typing.Callable[[resources_commons_types_generic_value_GenericValue], T_Result],
     ) -> T_Result:
-        if self.__root__.type == "integerValue":
-            return integer_value(self.__root__.value)
-        if self.__root__.type == "booleanValue":
-            return boolean_value(self.__root__.value)
-        if self.__root__.type == "doubleValue":
-            return double_value(self.__root__.value)
-        if self.__root__.type == "stringValue":
-            return string_value(self.__root__.value)
-        if self.__root__.type == "charValue":
-            return char_value(self.__root__.value)
-        if self.__root__.type == "mapValue":
-            return map_value(DebugMapValue(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
-        if self.__root__.type == "listValue":
-            return list_value(self.__root__.value)
-        if self.__root__.type == "binaryTreeNodeValue":
+        if self.get_as_union().type == "integerValue":
+            return integer_value(self.get_as_union().value)
+        if self.get_as_union().type == "booleanValue":
+            return boolean_value(self.get_as_union().value)
+        if self.get_as_union().type == "doubleValue":
+            return double_value(self.get_as_union().value)
+        if self.get_as_union().type == "stringValue":
+            return string_value(self.get_as_union().value)
+        if self.get_as_union().type == "charValue":
+            return char_value(self.get_as_union().value)
+        if self.get_as_union().type == "mapValue":
+            return map_value(DebugMapValue(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
+        if self.get_as_union().type == "listValue":
+            return list_value(self.get_as_union().value)
+        if self.get_as_union().type == "binaryTreeNodeValue":
             return binary_tree_node_value(
-                BinaryTreeNodeAndTreeValue(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
+                BinaryTreeNodeAndTreeValue(**self.get_as_union().dict(exclude_unset=True, exclude={"type"}))
             )
-        if self.__root__.type == "singlyLinkedListNodeValue":
+        if self.get_as_union().type == "singlyLinkedListNodeValue":
             return singly_linked_list_node_value(
-                SinglyLinkedListNodeAndListValue(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
+                SinglyLinkedListNodeAndListValue(**self.get_as_union().dict(exclude_unset=True, exclude={"type"}))
             )
-        if self.__root__.type == "doublyLinkedListNodeValue":
+        if self.get_as_union().type == "doublyLinkedListNodeValue":
             return doubly_linked_list_node_value(
-                DoublyLinkedListNodeAndListValue(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
+                DoublyLinkedListNodeAndListValue(**self.get_as_union().dict(exclude_unset=True, exclude={"type"}))
             )
-        if self.__root__.type == "undefinedValue":
+        if self.get_as_union().type == "undefinedValue":
             return undefined_value()
-        if self.__root__.type == "nullValue":
+        if self.get_as_union().type == "nullValue":
             return null_value()
-        if self.__root__.type == "genericValue":
+        if self.get_as_union().type == "genericValue":
             return generic_value(
                 resources_commons_types_generic_value_GenericValue(
-                    **self.__root__.dict(exclude_unset=True, exclude={"type"})
+                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
                 )
             )
-
-    __root__: typing_extensions.Annotated[
-        typing.Union[
-            _DebugVariableValue.IntegerValue,
-            _DebugVariableValue.BooleanValue,
-            _DebugVariableValue.DoubleValue,
-            _DebugVariableValue.StringValue,
-            _DebugVariableValue.CharValue,
-            _DebugVariableValue.MapValue,
-            _DebugVariableValue.ListValue,
-            _DebugVariableValue.BinaryTreeNodeValue,
-            _DebugVariableValue.SinglyLinkedListNodeValue,
-            _DebugVariableValue.DoublyLinkedListNodeValue,
-            _DebugVariableValue.UndefinedValue,
-            _DebugVariableValue.NullValue,
-            _DebugVariableValue.GenericValue,
-        ],
-        pydantic_v1.Field(discriminator="type"),
-    ]
-
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
-
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.forbid
-        json_encoders = {dt.datetime: serialize_datetime}
 
 
 from .debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402
@@ -190,23 +209,23 @@ from .debug_map_value import DebugMapValue  # noqa: E402
 
 
 class _DebugVariableValue:
-    class IntegerValue(pydantic_v1.BaseModel):
+    class IntegerValue(UniversalBaseModel):
         type: typing.Literal["integerValue"] = "integerValue"
         value: int
 
-    class BooleanValue(pydantic_v1.BaseModel):
+    class BooleanValue(UniversalBaseModel):
         type: typing.Literal["booleanValue"] = "booleanValue"
         value: bool
 
-    class DoubleValue(pydantic_v1.BaseModel):
+    class DoubleValue(UniversalBaseModel):
         type: typing.Literal["doubleValue"] = "doubleValue"
         value: float
 
-    class StringValue(pydantic_v1.BaseModel):
+    class StringValue(UniversalBaseModel):
         type: typing.Literal["stringValue"] = "stringValue"
         value: str
 
-    class CharValue(pydantic_v1.BaseModel):
+    class CharValue(UniversalBaseModel):
         type: typing.Literal["charValue"] = "charValue"
         value: str
 
@@ -215,9 +234,8 @@ class _DebugVariableValue:
 
         class Config:
             allow_population_by_field_name = True
-            populate_by_name = True
 
-    class ListValue(pydantic_v1.BaseModel):
+    class ListValue(UniversalBaseModel):
         type: typing.Literal["listValue"] = "listValue"
         value: typing.List[DebugVariableValue]
 
@@ -226,26 +244,23 @@ class _DebugVariableValue:
 
         class Config:
             allow_population_by_field_name = True
-            populate_by_name = True
 
     class SinglyLinkedListNodeValue(SinglyLinkedListNodeAndListValue):
         type: typing.Literal["singlyLinkedListNodeValue"] = "singlyLinkedListNodeValue"
 
         class Config:
             allow_population_by_field_name = True
-            populate_by_name = True
 
     class DoublyLinkedListNodeValue(DoublyLinkedListNodeAndListValue):
         type: typing.Literal["doublyLinkedListNodeValue"] = "doublyLinkedListNodeValue"
 
         class Config:
             allow_population_by_field_name = True
-            populate_by_name = True
 
-    class UndefinedValue(pydantic_v1.BaseModel):
+    class UndefinedValue(UniversalBaseModel):
         type: typing.Literal["undefinedValue"] = "undefinedValue"
 
-    class NullValue(pydantic_v1.BaseModel):
+    class NullValue(UniversalBaseModel):
         type: typing.Literal["nullValue"] = "nullValue"
 
     class GenericValue(resources_commons_types_generic_value_GenericValue):
@@ -253,13 +268,18 @@ class _DebugVariableValue:
 
         class Config:
             allow_population_by_field_name = True
-            populate_by_name = True
 
 
-_DebugVariableValue.MapValue.update_forward_refs(
-    DebugKeyValuePairs=DebugKeyValuePairs, DebugMapValue=DebugMapValue, DebugVariableValue=DebugVariableValue
+update_forward_refs(
+    _DebugVariableValue.MapValue,
+    DebugKeyValuePairs=DebugKeyValuePairs,
+    DebugMapValue=DebugMapValue,
+    DebugVariableValue=DebugVariableValue,
 )
-_DebugVariableValue.ListValue.update_forward_refs(
-    DebugKeyValuePairs=DebugKeyValuePairs, DebugMapValue=DebugMapValue, DebugVariableValue=DebugVariableValue
+update_forward_refs(
+    _DebugVariableValue.ListValue,
+    DebugKeyValuePairs=DebugKeyValuePairs,
+    DebugMapValue=DebugMapValue,
+    DebugVariableValue=DebugVariableValue,
 )
-DebugVariableValue.update_forward_refs()
+update_forward_refs(DebugVariableValue)

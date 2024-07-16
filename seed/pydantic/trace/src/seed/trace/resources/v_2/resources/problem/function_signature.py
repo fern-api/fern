@@ -2,82 +2,53 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
-from .....core.datetime_utils import serialize_datetime
-from .....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+import pydantic
+
+from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ....commons.variable_type import VariableType
 from .parameter import Parameter
 
 
-class FunctionSignature_Void(pydantic_v1.BaseModel):
+class FunctionSignature_Void(UniversalBaseModel):
     parameters: typing.List[Parameter]
     type: typing.Literal["void"] = "void"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            extra = pydantic.Extra.allow
 
 
-class FunctionSignature_NonVoid(pydantic_v1.BaseModel):
+class FunctionSignature_NonVoid(UniversalBaseModel):
     parameters: typing.List[Parameter]
-    return_type: VariableType = pydantic_v1.Field(alias="returnType")
+    return_type: VariableType = pydantic.Field(alias="returnType")
     type: typing.Literal["nonVoid"] = "nonVoid"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            allow_population_by_field_name = True
+            extra = pydantic.Extra.allow
 
 
-class FunctionSignature_VoidThatTakesActualResult(pydantic_v1.BaseModel):
+class FunctionSignature_VoidThatTakesActualResult(UniversalBaseModel):
     parameters: typing.List[Parameter]
-    actual_result_type: VariableType = pydantic_v1.Field(alias="actualResultType")
+    actual_result_type: VariableType = pydantic.Field(alias="actualResultType")
     type: typing.Literal["voidThatTakesActualResult"] = "voidThatTakesActualResult"
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            allow_population_by_field_name = True
+            extra = pydantic.Extra.allow
 
 
 FunctionSignature = typing.Union[

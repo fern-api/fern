@@ -2,11 +2,9 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
-from ....core.datetime_utils import serialize_datetime
-from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
 from .playlist_id import PlaylistId as resources_playlist_types_playlist_id_PlaylistId
 
 T_Result = typing.TypeVar("T_Result")
@@ -14,46 +12,32 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def playlist_id(self, value: resources_playlist_types_playlist_id_PlaylistId) -> PlaylistIdNotFoundErrorBody:
-        return PlaylistIdNotFoundErrorBody(
-            __root__=_PlaylistIdNotFoundErrorBody.PlaylistId(type="playlistId", value=value)
-        )
+        return PlaylistIdNotFoundErrorBody(_PlaylistIdNotFoundErrorBody.PlaylistId(type="playlistId", value=value))
 
 
-class PlaylistIdNotFoundErrorBody(pydantic_v1.BaseModel):
+class PlaylistIdNotFoundErrorBody(UniversalRootModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get_as_union(self) -> _PlaylistIdNotFoundErrorBody.PlaylistId:
-        return self.__root__
+    if IS_PYDANTIC_V2:
+        root: typing.Union[_PlaylistIdNotFoundErrorBody.PlaylistId]
+
+        def get_as_union(self) -> typing.Union[_PlaylistIdNotFoundErrorBody.PlaylistId]:
+            return self.root
+
+    else:
+        __root__: typing.Union[_PlaylistIdNotFoundErrorBody.PlaylistId]
+
+        def get_as_union(self) -> typing.Union[_PlaylistIdNotFoundErrorBody.PlaylistId]:
+            return self.__root__
 
     def visit(
         self, playlist_id: typing.Callable[[resources_playlist_types_playlist_id_PlaylistId], T_Result]
     ) -> T_Result:
-        if self.__root__.type == "playlistId":
-            return playlist_id(self.__root__.value)
-
-    __root__: _PlaylistIdNotFoundErrorBody.PlaylistId
-
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
-
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.forbid
-        json_encoders = {dt.datetime: serialize_datetime}
+        if self.get_as_union().type == "playlistId":
+            return playlist_id(self.get_as_union().value)
 
 
 class _PlaylistIdNotFoundErrorBody:
-    class PlaylistId(pydantic_v1.BaseModel):
+    class PlaylistId(UniversalBaseModel):
         type: typing.Literal["playlistId"] = "playlistId"
         value: resources_playlist_types_playlist_id_PlaylistId
-
-
-PlaylistIdNotFoundErrorBody.update_forward_refs()

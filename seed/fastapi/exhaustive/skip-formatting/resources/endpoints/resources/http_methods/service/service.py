@@ -21,25 +21,32 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
     with FastAPI when you register your implementation using Fern's register()
     function.
     """
+    
     @abc.abstractmethod
     def test_get(self, *, id: str, auth: ApiAuth) -> str:
         ...
+    
     @abc.abstractmethod
     def test_post(self, *, body: ObjectWithRequiredField, auth: ApiAuth) -> ObjectWithOptionalField:
         ...
+    
     @abc.abstractmethod
     def test_put(self, *, body: ObjectWithRequiredField, id: str, auth: ApiAuth) -> ObjectWithOptionalField:
         ...
+    
     @abc.abstractmethod
     def test_patch(self, *, body: ObjectWithOptionalField, id: str, auth: ApiAuth) -> ObjectWithOptionalField:
         ...
+    
     @abc.abstractmethod
     def test_delete(self, *, id: str, auth: ApiAuth) -> bool:
         ...
+    
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
     """
+    
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_test_get(router=router)
@@ -47,6 +54,7 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
         cls.__init_test_put(router=router)
         cls.__init_test_patch(router=router)
         cls.__init_test_delete(router=router)
+    
     @classmethod
     def __init_test_get(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.test_get)
@@ -84,6 +92,7 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
             description=AbstractEndpointsHttpMethodsService.test_get.__doc__,
             **get_route_args(cls.test_get, default_tag="endpoints.http_methods"),
         )(wrapper)
+    
     @classmethod
     def __init_test_post(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.test_post)
@@ -121,6 +130,7 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
             description=AbstractEndpointsHttpMethodsService.test_post.__doc__,
             **get_route_args(cls.test_post, default_tag="endpoints.http_methods"),
         )(wrapper)
+    
     @classmethod
     def __init_test_put(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.test_put)
@@ -160,6 +170,7 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
             description=AbstractEndpointsHttpMethodsService.test_put.__doc__,
             **get_route_args(cls.test_put, default_tag="endpoints.http_methods"),
         )(wrapper)
+    
     @classmethod
     def __init_test_patch(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.test_patch)
@@ -199,6 +210,7 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
             description=AbstractEndpointsHttpMethodsService.test_patch.__doc__,
             **get_route_args(cls.test_patch, default_tag="endpoints.http_methods"),
         )(wrapper)
+    
     @classmethod
     def __init_test_delete(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.test_delete)

@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
+import pydantic
 import typing_extensions
 
-from ....core.datetime_utils import serialize_datetime
-from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
 from .initialize_problem_request import (
     InitializeProblemRequest as resources_submission_types_initialize_problem_request_InitializeProblemRequest,
 )
@@ -24,43 +23,74 @@ class _Factory:
         self, value: resources_submission_types_initialize_problem_request_InitializeProblemRequest
     ) -> SubmissionRequest:
         return SubmissionRequest(
-            __root__=_SubmissionRequest.InitializeProblemRequest(
+            _SubmissionRequest.InitializeProblemRequest(
                 **value.dict(exclude_unset=True), type="initializeProblemRequest"
             )
         )
 
     def initialize_workspace_request(self) -> SubmissionRequest:
-        return SubmissionRequest(
-            __root__=_SubmissionRequest.InitializeWorkspaceRequest(type="initializeWorkspaceRequest")
-        )
+        return SubmissionRequest(_SubmissionRequest.InitializeWorkspaceRequest(type="initializeWorkspaceRequest"))
 
     def submit_v_2(self, value: SubmitRequestV2) -> SubmissionRequest:
-        return SubmissionRequest(
-            __root__=_SubmissionRequest.SubmitV2(**value.dict(exclude_unset=True), type="submitV2")
-        )
+        return SubmissionRequest(_SubmissionRequest.SubmitV2(**value.dict(exclude_unset=True), type="submitV2"))
 
     def workspace_submit(self, value: WorkspaceSubmitRequest) -> SubmissionRequest:
         return SubmissionRequest(
-            __root__=_SubmissionRequest.WorkspaceSubmit(**value.dict(exclude_unset=True), type="workspaceSubmit")
+            _SubmissionRequest.WorkspaceSubmit(**value.dict(exclude_unset=True), type="workspaceSubmit")
         )
 
     def stop(self, value: StopRequest) -> SubmissionRequest:
-        return SubmissionRequest(__root__=_SubmissionRequest.Stop(**value.dict(exclude_unset=True), type="stop"))
+        return SubmissionRequest(_SubmissionRequest.Stop(**value.dict(exclude_unset=True), type="stop"))
 
 
-class SubmissionRequest(pydantic_v1.BaseModel):
+class SubmissionRequest(UniversalRootModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get_as_union(
-        self,
-    ) -> typing.Union[
-        _SubmissionRequest.InitializeProblemRequest,
-        _SubmissionRequest.InitializeWorkspaceRequest,
-        _SubmissionRequest.SubmitV2,
-        _SubmissionRequest.WorkspaceSubmit,
-        _SubmissionRequest.Stop,
-    ]:
-        return self.__root__
+    if IS_PYDANTIC_V2:
+        root: typing_extensions.Annotated[
+            typing.Union[
+                _SubmissionRequest.InitializeProblemRequest,
+                _SubmissionRequest.InitializeWorkspaceRequest,
+                _SubmissionRequest.SubmitV2,
+                _SubmissionRequest.WorkspaceSubmit,
+                _SubmissionRequest.Stop,
+            ],
+            pydantic.Field(discriminator="type"),
+        ]
+
+        def get_as_union(
+            self,
+        ) -> typing.Union[
+            _SubmissionRequest.InitializeProblemRequest,
+            _SubmissionRequest.InitializeWorkspaceRequest,
+            _SubmissionRequest.SubmitV2,
+            _SubmissionRequest.WorkspaceSubmit,
+            _SubmissionRequest.Stop,
+        ]:
+            return self.root
+
+    else:
+        __root__: typing_extensions.Annotated[
+            typing.Union[
+                _SubmissionRequest.InitializeProblemRequest,
+                _SubmissionRequest.InitializeWorkspaceRequest,
+                _SubmissionRequest.SubmitV2,
+                _SubmissionRequest.WorkspaceSubmit,
+                _SubmissionRequest.Stop,
+            ],
+            pydantic.Field(discriminator="type"),
+        ]
+
+        def get_as_union(
+            self,
+        ) -> typing.Union[
+            _SubmissionRequest.InitializeProblemRequest,
+            _SubmissionRequest.InitializeWorkspaceRequest,
+            _SubmissionRequest.SubmitV2,
+            _SubmissionRequest.WorkspaceSubmit,
+            _SubmissionRequest.Stop,
+        ]:
+            return self.__root__
 
     def visit(
         self,
@@ -72,47 +102,22 @@ class SubmissionRequest(pydantic_v1.BaseModel):
         workspace_submit: typing.Callable[[WorkspaceSubmitRequest], T_Result],
         stop: typing.Callable[[StopRequest], T_Result],
     ) -> T_Result:
-        if self.__root__.type == "initializeProblemRequest":
+        if self.get_as_union().type == "initializeProblemRequest":
             return initialize_problem_request(
                 resources_submission_types_initialize_problem_request_InitializeProblemRequest(
-                    **self.__root__.dict(exclude_unset=True, exclude={"type"})
+                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
                 )
             )
-        if self.__root__.type == "initializeWorkspaceRequest":
+        if self.get_as_union().type == "initializeWorkspaceRequest":
             return initialize_workspace_request()
-        if self.__root__.type == "submitV2":
-            return submit_v_2(SubmitRequestV2(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
-        if self.__root__.type == "workspaceSubmit":
-            return workspace_submit(WorkspaceSubmitRequest(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
-        if self.__root__.type == "stop":
-            return stop(StopRequest(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
-
-    __root__: typing_extensions.Annotated[
-        typing.Union[
-            _SubmissionRequest.InitializeProblemRequest,
-            _SubmissionRequest.InitializeWorkspaceRequest,
-            _SubmissionRequest.SubmitV2,
-            _SubmissionRequest.WorkspaceSubmit,
-            _SubmissionRequest.Stop,
-        ],
-        pydantic_v1.Field(discriminator="type"),
-    ]
-
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
-
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.forbid
-        json_encoders = {dt.datetime: serialize_datetime}
+        if self.get_as_union().type == "submitV2":
+            return submit_v_2(SubmitRequestV2(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
+        if self.get_as_union().type == "workspaceSubmit":
+            return workspace_submit(
+                WorkspaceSubmitRequest(**self.get_as_union().dict(exclude_unset=True, exclude={"type"}))
+            )
+        if self.get_as_union().type == "stop":
+            return stop(StopRequest(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
 
 
 class _SubmissionRequest:
@@ -121,9 +126,8 @@ class _SubmissionRequest:
 
         class Config:
             allow_population_by_field_name = True
-            populate_by_name = True
 
-    class InitializeWorkspaceRequest(pydantic_v1.BaseModel):
+    class InitializeWorkspaceRequest(UniversalBaseModel):
         type: typing.Literal["initializeWorkspaceRequest"] = "initializeWorkspaceRequest"
 
     class SubmitV2(SubmitRequestV2):
@@ -131,21 +135,15 @@ class _SubmissionRequest:
 
         class Config:
             allow_population_by_field_name = True
-            populate_by_name = True
 
     class WorkspaceSubmit(WorkspaceSubmitRequest):
         type: typing.Literal["workspaceSubmit"] = "workspaceSubmit"
 
         class Config:
             allow_population_by_field_name = True
-            populate_by_name = True
 
     class Stop(StopRequest):
         type: typing.Literal["stop"] = "stop"
 
         class Config:
             allow_population_by_field_name = True
-            populate_by_name = True
-
-
-SubmissionRequest.update_forward_refs()

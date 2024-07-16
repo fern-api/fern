@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
+import pydantic
 import typing_extensions
 
-from ....core.datetime_utils import serialize_datetime
-from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
 from .cat import Cat as types_union_types_cat_Cat
 from .dog import Dog as types_union_types_dog_Dog
 
@@ -17,69 +16,63 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def dog(self, value: types_union_types_dog_Dog) -> Animal:
-        return Animal(__root__=_Animal.Dog(**value.dict(exclude_unset=True), animal="dog"))
+        return Animal(_Animal.Dog(**value.dict(exclude_unset=True), animal="dog"))
 
     def cat(self, value: types_union_types_cat_Cat) -> Animal:
-        return Animal(__root__=_Animal.Cat(**value.dict(exclude_unset=True), animal="cat"))
+        return Animal(_Animal.Cat(**value.dict(exclude_unset=True), animal="cat"))
 
 
-class Animal(pydantic_v1.BaseModel):
+class Animal(UniversalRootModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get_as_union(self) -> typing.Union[_Animal.Dog, _Animal.Cat]:
-        return self.__root__
+    if IS_PYDANTIC_V2:
+        root: typing_extensions.Annotated[
+            typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")
+        ]
+
+        def get_as_union(self) -> typing.Union[_Animal.Dog, _Animal.Cat]:
+            return self.root
+
+    else:
+        __root__: typing_extensions.Annotated[
+            typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")
+        ]
+
+        def get_as_union(self) -> typing.Union[_Animal.Dog, _Animal.Cat]:
+            return self.__root__
 
     def visit(
         self,
         dog: typing.Callable[[types_union_types_dog_Dog], T_Result],
         cat: typing.Callable[[types_union_types_cat_Cat], T_Result],
     ) -> T_Result:
-        if self.__root__.animal == "dog":
-            return dog(types_union_types_dog_Dog(**self.__root__.dict(exclude_unset=True, exclude={"animal"})))
-        if self.__root__.animal == "cat":
-            return cat(types_union_types_cat_Cat(**self.__root__.dict(exclude_unset=True, exclude={"animal"})))
-
-    __root__: typing_extensions.Annotated[
-        typing.Union[_Animal.Dog, _Animal.Cat], pydantic_v1.Field(discriminator="animal")
-    ]
-
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
-
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        frozen = True
-        smart_union = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        if self.get_as_union().animal == "dog":
+            return dog(types_union_types_dog_Dog(**self.get_as_union().dict(exclude_unset=True, exclude={"animal"})))
+        if self.get_as_union().animal == "cat":
+            return cat(types_union_types_cat_Cat(**self.get_as_union().dict(exclude_unset=True, exclude={"animal"})))
 
 
 class _Animal:
     class Dog(types_union_types_dog_Dog):
         animal: typing.Literal["dog"] = "dog"
 
-        class Config:
-            frozen = True
-            smart_union = True
-            allow_population_by_field_name = True
-            populate_by_name = True
+        if IS_PYDANTIC_V2:
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+        else:
+
+            class Config:
+                frozen = True
+                smart_union = True
+                allow_population_by_field_name = True
 
     class Cat(types_union_types_cat_Cat):
         animal: typing.Literal["cat"] = "cat"
 
-        class Config:
-            frozen = True
-            smart_union = True
-            allow_population_by_field_name = True
-            populate_by_name = True
+        if IS_PYDANTIC_V2:
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+        else:
 
-
-Animal.update_forward_refs()
+            class Config:
+                frozen = True
+                smart_union = True
+                allow_population_by_field_name = True

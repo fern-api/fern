@@ -8,8 +8,9 @@ import typing
 import uuid
 
 import fastapi
+import pydantic
 
-from ..pydantic_utilities import pydantic_v1
+from ..unchecked_base_model import UncheckedBaseModel
 
 
 class FernHTTPException(abc.ABC, fastapi.HTTPException):
@@ -21,14 +22,13 @@ class FernHTTPException(abc.ABC, fastapi.HTTPException):
         self.status_code = status_code
         self.content = content
 
-    class Body(pydantic_v1.BaseModel):
-        error_name: typing.Optional[str] = pydantic_v1.Field(alias="errorName", default=None)
-        error_instance_id: uuid.UUID = pydantic_v1.Field(alias="errorInstanceId", default_factory=uuid.uuid4)
+    class Body(UncheckedBaseModel):
+        error_name: typing.Optional[str] = pydantic.Field(alias="errorName", default=None)
+        error_instance_id: uuid.UUID = pydantic.Field(alias="errorInstanceId", default_factory=uuid.uuid4)
         content: typing.Optional[typing.Any] = None
 
         class Config:
             allow_population_by_field_name = True
-            populate_by_name = True
 
     def to_json_response(self) -> fastapi.responses.JSONResponse:
         body = FernHTTPException.Body(

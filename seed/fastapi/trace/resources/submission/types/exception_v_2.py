@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
+import pydantic
 import typing_extensions
 
-from ....core.datetime_utils import serialize_datetime
-from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
 from .exception_info import ExceptionInfo
 
 T_Result = typing.TypeVar("T_Result")
@@ -16,45 +15,38 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def generic(self, value: ExceptionInfo) -> ExceptionV2:
-        return ExceptionV2(__root__=_ExceptionV2.Generic(**value.dict(exclude_unset=True), type="generic"))
+        return ExceptionV2(_ExceptionV2.Generic(**value.dict(exclude_unset=True), type="generic"))
 
     def timeout(self) -> ExceptionV2:
-        return ExceptionV2(__root__=_ExceptionV2.Timeout(type="timeout"))
+        return ExceptionV2(_ExceptionV2.Timeout(type="timeout"))
 
 
-class ExceptionV2(pydantic_v1.BaseModel):
+class ExceptionV2(UniversalRootModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get_as_union(self) -> typing.Union[_ExceptionV2.Generic, _ExceptionV2.Timeout]:
-        return self.__root__
+    if IS_PYDANTIC_V2:
+        root: typing_extensions.Annotated[
+            typing.Union[_ExceptionV2.Generic, _ExceptionV2.Timeout], pydantic.Field(discriminator="type")
+        ]
+
+        def get_as_union(self) -> typing.Union[_ExceptionV2.Generic, _ExceptionV2.Timeout]:
+            return self.root
+
+    else:
+        __root__: typing_extensions.Annotated[
+            typing.Union[_ExceptionV2.Generic, _ExceptionV2.Timeout], pydantic.Field(discriminator="type")
+        ]
+
+        def get_as_union(self) -> typing.Union[_ExceptionV2.Generic, _ExceptionV2.Timeout]:
+            return self.__root__
 
     def visit(
         self, generic: typing.Callable[[ExceptionInfo], T_Result], timeout: typing.Callable[[], T_Result]
     ) -> T_Result:
-        if self.__root__.type == "generic":
-            return generic(ExceptionInfo(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
-        if self.__root__.type == "timeout":
+        if self.get_as_union().type == "generic":
+            return generic(ExceptionInfo(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
+        if self.get_as_union().type == "timeout":
             return timeout()
-
-    __root__: typing_extensions.Annotated[
-        typing.Union[_ExceptionV2.Generic, _ExceptionV2.Timeout], pydantic_v1.Field(discriminator="type")
-    ]
-
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
-
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        extra = pydantic_v1.Extra.forbid
-        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _ExceptionV2:
@@ -63,10 +55,6 @@ class _ExceptionV2:
 
         class Config:
             allow_population_by_field_name = True
-            populate_by_name = True
 
-    class Timeout(pydantic_v1.BaseModel):
+    class Timeout(UniversalBaseModel):
         type: typing.Literal["timeout"] = "timeout"
-
-
-ExceptionV2.update_forward_refs()

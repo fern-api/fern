@@ -8,19 +8,34 @@ from .exceptions import (
     fern_http_exception_handler,
     http_exception_handler,
 )
-from .pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from .pydantic_utilities import (
+    IS_PYDANTIC_V2,
+    UniversalBaseModel,
+    UniversalRootModel,
+    deep_union_pydantic_dicts,
+    parse_obj_as,
+    universal_field_validator,
+    universal_root_validator,
+    update_forward_refs,
+)
 from .route_args import route_args
 from .security import BearerToken
 
 __all__ = [
     "BearerToken",
     "FernHTTPException",
+    "IS_PYDANTIC_V2",
     "UnauthorizedException",
+    "UniversalBaseModel",
+    "UniversalRootModel",
     "deep_union_pydantic_dicts",
     "default_exception_handler",
     "fern_http_exception_handler",
     "http_exception_handler",
-    "pydantic_v1",
+    "parse_obj_as",
     "route_args",
     "serialize_datetime",
+    "universal_field_validator",
+    "universal_root_validator",
+    "update_forward_refs",
 ]

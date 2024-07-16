@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
+import pydantic
 import typing_extensions
 
-from ...core.datetime_utils import serialize_datetime
-from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
 from .bar import Bar as types_types_bar_Bar
 from .foo import Foo as types_types_foo_Foo
 
@@ -17,69 +16,65 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def foo(self, value: types_types_foo_Foo) -> Union:
-        return Union(__root__=_Union.Foo(type="foo", foo=value))
+        return Union(_Union.Foo(type="foo", foo=value))
 
     def bar(self, value: types_types_bar_Bar) -> Union:
-        return Union(__root__=_Union.Bar(type="bar", bar=value))
+        return Union(_Union.Bar(type="bar", bar=value))
 
 
-class Union(pydantic_v1.BaseModel):
+class Union(UniversalRootModel):
     """
     This is a simple union.
     """
 
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get_as_union(self) -> typing.Union[_Union.Foo, _Union.Bar]:
-        return self.__root__
+    if IS_PYDANTIC_V2:
+        root: typing_extensions.Annotated[typing.Union[_Union.Foo, _Union.Bar], pydantic.Field(discriminator="type")]
+
+        def get_as_union(self) -> typing.Union[_Union.Foo, _Union.Bar]:
+            return self.root
+
+    else:
+        __root__: typing_extensions.Annotated[
+            typing.Union[_Union.Foo, _Union.Bar], pydantic.Field(discriminator="type")
+        ]
+
+        def get_as_union(self) -> typing.Union[_Union.Foo, _Union.Bar]:
+            return self.__root__
 
     def visit(
         self,
         foo: typing.Callable[[types_types_foo_Foo], T_Result],
         bar: typing.Callable[[types_types_bar_Bar], T_Result],
     ) -> T_Result:
-        if self.__root__.type == "foo":
-            return foo(self.__root__.foo)
-        if self.__root__.type == "bar":
-            return bar(self.__root__.bar)
-
-    __root__: typing_extensions.Annotated[typing.Union[_Union.Foo, _Union.Bar], pydantic_v1.Field(discriminator="type")]
-
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
-
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
-
-        return deep_union_pydantic_dicts(
-            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
-        )
-
-    class Config:
-        frozen = True
-        smart_union = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        if self.get_as_union().type == "foo":
+            return foo(self.get_as_union().foo)
+        if self.get_as_union().type == "bar":
+            return bar(self.get_as_union().bar)
 
 
 class _Union:
-    class Foo(pydantic_v1.BaseModel):
+    class Foo(UniversalBaseModel):
         type: typing.Literal["foo"] = "foo"
         foo: types_types_foo_Foo
 
-        class Config:
-            frozen = True
-            smart_union = True
+        if IS_PYDANTIC_V2:
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+        else:
 
-    class Bar(pydantic_v1.BaseModel):
+            class Config:
+                frozen = True
+                smart_union = True
+
+    class Bar(UniversalBaseModel):
         type: typing.Literal["bar"] = "bar"
         bar: types_types_bar_Bar
 
-        class Config:
-            frozen = True
-            smart_union = True
+        if IS_PYDANTIC_V2:
+            model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+        else:
 
-
-Union.update_forward_refs()
+            class Config:
+                frozen = True
+                smart_union = True
