@@ -263,6 +263,7 @@ def _get_is_populate_by_name(model: typing.Type["Model"]) -> bool:
 
 PydanticField = typing.Union[pydantic.fields.ModelField, pydantic.fields.FieldInfo]
 
+
 # Pydantic V1 swapped the typing of __fields__'s values from ModelField to FieldInfo
 # And so we try to handle both V1 cases, as well as V2 (FieldInfo from model.model_fields)
 def _get_model_fields(model: typing.Type["Model"]) -> typing.Mapping[str, PydanticField]:

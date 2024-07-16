@@ -12,7 +12,6 @@ HTTPX_SSE = AST.Module.external(
 
 
 class HttpxSSE:
-
     EVENT_SOURCE = AST.ClassReference(
         qualified_name_excluding_import=("EventSource",),
         import_=AST.ReferenceImport(module=HTTPX_SSE),

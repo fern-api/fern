@@ -7,6 +7,7 @@ import pydantic
 # Generic to represent the underlying type of the results within a page
 T = typing.TypeVar("T")
 
+
 # SDKs implement a Page ABC per-pagination request, the endpoint then retuns a pager that wraps this type
 # for example, an endpoint will return SyncPager[UserPage] where UserPage implements the Page ABC. ex:
 #

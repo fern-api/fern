@@ -13,27 +13,31 @@ from .datetime_utils import serialize_datetime
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
 if IS_PYDANTIC_V2:
-    from pydantic.v1.datetime_parse import (
-        parse_date as parse_date,  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
+    # isort will try to reformat the comments on these imports, which breaks mypy
+    # isort: off
+    from pydantic.v1.datetime_parse import (  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
+        parse_date as parse_date,
     )
-    from pydantic.v1.datetime_parse import (
-        parse_datetime as parse_datetime,  # pyright: ignore[reportMissingImports] # Pydantic v2
+    from pydantic.v1.datetime_parse import (  # pyright: ignore[reportMissingImports] # Pydantic v2
+        parse_datetime as parse_datetime,
     )
-    from pydantic.v1.json import (
-        ENCODERS_BY_TYPE as encoders_by_type,  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
+    from pydantic.v1.json import (  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
+        ENCODERS_BY_TYPE as encoders_by_type,
     )
-    from pydantic.v1.typing import (
-        get_args as get_args,  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
+    from pydantic.v1.typing import (  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
+        get_args as get_args,
     )
-    from pydantic.v1.typing import (
-        get_origin as get_origin,  # pyright: ignore[reportMissingImports] # Pydantic v2
+    from pydantic.v1.typing import (  # pyright: ignore[reportMissingImports] # Pydantic v2
+        get_origin as get_origin,
     )
-    from pydantic.v1.typing import (
-        is_literal_type as is_literal_type,  # pyright: ignore[reportMissingImports] # Pydantic v2
+    from pydantic.v1.typing import (  # pyright: ignore[reportMissingImports] # Pydantic v2
+        is_literal_type as is_literal_type,
     )
-    from pydantic.v1.typing import (
-        is_union as is_union,  # pyright: ignore[reportMissingImports] # Pydantic v2
+    from pydantic.v1.typing import (  # pyright: ignore[reportMissingImports] # Pydantic v2
+        is_union as is_union,
     )
+
+    # isort: on
 
 else:
     from pydantic.datetime_parse import parse_date as parse_date

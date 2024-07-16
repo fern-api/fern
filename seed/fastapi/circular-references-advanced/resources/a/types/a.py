@@ -9,7 +9,6 @@ from ....types.root_type import RootType
 
 
 class A(RootType):
-
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")
     else:
