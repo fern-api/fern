@@ -5,48 +5,34 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import pydantic
-
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import pydantic_v1
 
 
-class UnionWithTime_Value(UniversalBaseModel):
+class UnionWithTime_Value(pydantic_v1.BaseModel):
     value: int
     type: typing.Literal["value"] = "value"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
+    class Config:
+        frozen = True
+        smart_union = True
 
 
-class UnionWithTime_Date(UniversalBaseModel):
+class UnionWithTime_Date(pydantic_v1.BaseModel):
     value: dt.date
     type: typing.Literal["date"] = "date"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
+    class Config:
+        frozen = True
+        smart_union = True
 
 
-class UnionWithTime_Datetime(UniversalBaseModel):
+class UnionWithTime_Datetime(pydantic_v1.BaseModel):
     value: dt.datetime
     type: typing.Literal["datetime"] = "datetime"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
+    class Config:
+        frozen = True
+        smart_union = True
 
 
 UnionWithTime = typing.Union[UnionWithTime_Value, UnionWithTime_Date, UnionWithTime_Datetime]

@@ -4,15 +4,15 @@ from __future__ import annotations
 
 import typing
 
-from ...core.pydantic_utilities import UniversalBaseModel
+from ...core.pydantic_utilities import pydantic_v1
 
 
-class UnionWithPrimitive_Integer(UniversalBaseModel):
+class UnionWithPrimitive_Integer(pydantic_v1.BaseModel):
     value: int
     type: typing.Literal["integer"] = "integer"
 
 
-class UnionWithPrimitive_String(UniversalBaseModel):
+class UnionWithPrimitive_String(pydantic_v1.BaseModel):
     value: str
     type: typing.Literal["string"] = "string"
 

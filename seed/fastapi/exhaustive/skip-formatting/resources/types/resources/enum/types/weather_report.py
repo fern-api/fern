@@ -8,7 +8,6 @@ class WeatherReport(str, enum.Enum):
     CLOUDY = "CLOUDY"
     RAINING = "RAINING"
     SNOWING = "SNOWING"
-    
     def visit(self, sunny: typing.Callable[[], T_Result], cloudy: typing.Callable[[], T_Result], raining: typing.Callable[[], T_Result], snowing: typing.Callable[[], T_Result]) -> T_Result:
         if self is WeatherReport.SUNNY:
             return sunny(

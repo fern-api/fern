@@ -4,35 +4,25 @@ from __future__ import annotations
 
 import typing
 
-import pydantic
-
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import pydantic_v1
 
 
-class Data_String(UniversalBaseModel):
+class Data_String(pydantic_v1.BaseModel):
     value: str
     type: typing.Literal["string"] = "string"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
+    class Config:
+        frozen = True
+        smart_union = True
 
 
-class Data_Base64(UniversalBaseModel):
+class Data_Base64(pydantic_v1.BaseModel):
     value: str
     type: typing.Literal["base64"] = "base64"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
+    class Config:
+        frozen = True
+        smart_union = True
 
 
 """

@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
-import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
+from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from .circle import Circle as resources_union_types_circle_Circle
 from .square import Square as resources_union_types_square_Square
 
@@ -16,44 +17,51 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def circle(self, value: resources_union_types_circle_Circle) -> Shape:
-        return Shape(_Shape.Circle(**value.dict(exclude_unset=True), type="circle"))
+        return Shape(__root__=_Shape.Circle(**value.dict(exclude_unset=True), type="circle"))
 
     def square(self, value: resources_union_types_square_Square) -> Shape:
-        return Shape(_Shape.Square(**value.dict(exclude_unset=True), type="square"))
+        return Shape(__root__=_Shape.Square(**value.dict(exclude_unset=True), type="square"))
 
 
-class Shape(UniversalRootModel):
+class Shape(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    if IS_PYDANTIC_V2:
-        root: typing_extensions.Annotated[
-            typing.Union[_Shape.Circle, _Shape.Square], pydantic.Field(discriminator="type")
-        ]
-
-        def get_as_union(self) -> typing.Union[_Shape.Circle, _Shape.Square]:
-            return self.root
-
-    else:
-        __root__: typing_extensions.Annotated[
-            typing.Union[_Shape.Circle, _Shape.Square], pydantic.Field(discriminator="type")
-        ]
-
-        def get_as_union(self) -> typing.Union[_Shape.Circle, _Shape.Square]:
-            return self.__root__
+    def get_as_union(self) -> typing.Union[_Shape.Circle, _Shape.Square]:
+        return self.__root__
 
     def visit(
         self,
         circle: typing.Callable[[resources_union_types_circle_Circle], T_Result],
         square: typing.Callable[[resources_union_types_square_Square], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "circle":
+        if self.__root__.type == "circle":
             return circle(
-                resources_union_types_circle_Circle(**self.get_as_union().dict(exclude_unset=True, exclude={"type"}))
+                resources_union_types_circle_Circle(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
             )
-        if self.get_as_union().type == "square":
+        if self.__root__.type == "square":
             return square(
-                resources_union_types_square_Square(**self.get_as_union().dict(exclude_unset=True, exclude={"type"}))
+                resources_union_types_square_Square(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
             )
+
+    __root__: typing_extensions.Annotated[
+        typing.Union[_Shape.Circle, _Shape.Square], pydantic_v1.Field(discriminator="type")
+    ]
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        extra = pydantic_v1.Extra.forbid
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _Shape:
@@ -62,9 +70,14 @@ class _Shape:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class Square(resources_union_types_square_Square):
         type: typing.Literal["square"] = "square"
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
+
+
+Shape.update_forward_refs()

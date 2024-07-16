@@ -8,7 +8,7 @@ import httpx_sse
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.pydantic_utilities import pydantic_v1
 from ..core.request_options import RequestOptions
 from .types.streamed_completion import StreamedCompletion
 
@@ -58,7 +58,7 @@ class CompletionsClient:
                         if _sse.data == "[[DONE]]":
                             return
                         try:
-                            yield typing.cast(StreamedCompletion, parse_obj_as(type_=StreamedCompletion, object_=json.loads(_sse.data)))  # type: ignore
+                            yield pydantic_v1.parse_obj_as(StreamedCompletion, json.loads(_sse.data))  # type: ignore
                         except:
                             pass
                     return
@@ -119,7 +119,7 @@ class AsyncCompletionsClient:
                         if _sse.data == "[[DONE]]":
                             return
                         try:
-                            yield typing.cast(StreamedCompletion, parse_obj_as(type_=StreamedCompletion, object_=json.loads(_sse.data)))  # type: ignore
+                            yield pydantic_v1.parse_obj_as(StreamedCompletion, json.loads(_sse.data))  # type: ignore
                         except:
                             pass
                     return

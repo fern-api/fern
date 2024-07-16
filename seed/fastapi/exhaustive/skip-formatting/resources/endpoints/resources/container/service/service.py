@@ -20,40 +20,31 @@ class AbstractEndpointsContainerService(AbstractFernService):
     with FastAPI when you register your implementation using Fern's register()
     function.
     """
-    
     @abc.abstractmethod
     def get_and_return_list_of_primitives(self, *, body: typing.List[str], auth: ApiAuth) -> typing.Sequence[str]:
         ...
-    
     @abc.abstractmethod
     def get_and_return_list_of_objects(self, *, body: typing.List[ObjectWithRequiredField], auth: ApiAuth) -> typing.Sequence[ObjectWithRequiredField]:
         ...
-    
     @abc.abstractmethod
     def get_and_return_set_of_primitives(self, *, body: typing.Set[str], auth: ApiAuth) -> typing.Set[str]:
         ...
-    
     @abc.abstractmethod
     def get_and_return_set_of_objects(self, *, body: typing.List[ObjectWithRequiredField], auth: ApiAuth) -> typing.Sequence[ObjectWithRequiredField]:
         ...
-    
     @abc.abstractmethod
     def get_and_return_map_prim_to_prim(self, *, body: typing.Dict[str, str], auth: ApiAuth) -> typing.Dict[str, str]:
         ...
-    
     @abc.abstractmethod
     def get_and_return_map_of_prim_to_object(self, *, body: typing.Dict[str, ObjectWithRequiredField], auth: ApiAuth) -> typing.Dict[str, ObjectWithRequiredField]:
         ...
-    
     @abc.abstractmethod
     def get_and_return_optional(self, *, body: typing.Optional[ObjectWithRequiredField] = None, auth: ApiAuth) -> typing.Optional[ObjectWithRequiredField]:
         ...
-    
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
     """
-    
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_get_and_return_list_of_primitives(router=router)
@@ -63,7 +54,6 @@ class AbstractEndpointsContainerService(AbstractFernService):
         cls.__init_get_and_return_map_prim_to_prim(router=router)
         cls.__init_get_and_return_map_of_prim_to_object(router=router)
         cls.__init_get_and_return_optional(router=router)
-    
     @classmethod
     def __init_get_and_return_list_of_primitives(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_list_of_primitives)
@@ -101,7 +91,6 @@ class AbstractEndpointsContainerService(AbstractFernService):
             description=AbstractEndpointsContainerService.get_and_return_list_of_primitives.__doc__,
             **get_route_args(cls.get_and_return_list_of_primitives, default_tag="endpoints.container"),
         )(wrapper)
-    
     @classmethod
     def __init_get_and_return_list_of_objects(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_list_of_objects)
@@ -139,7 +128,6 @@ class AbstractEndpointsContainerService(AbstractFernService):
             description=AbstractEndpointsContainerService.get_and_return_list_of_objects.__doc__,
             **get_route_args(cls.get_and_return_list_of_objects, default_tag="endpoints.container"),
         )(wrapper)
-    
     @classmethod
     def __init_get_and_return_set_of_primitives(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_set_of_primitives)
@@ -177,7 +165,6 @@ class AbstractEndpointsContainerService(AbstractFernService):
             description=AbstractEndpointsContainerService.get_and_return_set_of_primitives.__doc__,
             **get_route_args(cls.get_and_return_set_of_primitives, default_tag="endpoints.container"),
         )(wrapper)
-    
     @classmethod
     def __init_get_and_return_set_of_objects(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_set_of_objects)
@@ -215,7 +202,6 @@ class AbstractEndpointsContainerService(AbstractFernService):
             description=AbstractEndpointsContainerService.get_and_return_set_of_objects.__doc__,
             **get_route_args(cls.get_and_return_set_of_objects, default_tag="endpoints.container"),
         )(wrapper)
-    
     @classmethod
     def __init_get_and_return_map_prim_to_prim(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_map_prim_to_prim)
@@ -253,7 +239,6 @@ class AbstractEndpointsContainerService(AbstractFernService):
             description=AbstractEndpointsContainerService.get_and_return_map_prim_to_prim.__doc__,
             **get_route_args(cls.get_and_return_map_prim_to_prim, default_tag="endpoints.container"),
         )(wrapper)
-    
     @classmethod
     def __init_get_and_return_map_of_prim_to_object(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_map_of_prim_to_object)
@@ -291,7 +276,6 @@ class AbstractEndpointsContainerService(AbstractFernService):
             description=AbstractEndpointsContainerService.get_and_return_map_of_prim_to_object.__doc__,
             **get_route_args(cls.get_and_return_map_of_prim_to_object, default_tag="endpoints.container"),
         )(wrapper)
-    
     @classmethod
     def __init_get_and_return_optional(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_optional)

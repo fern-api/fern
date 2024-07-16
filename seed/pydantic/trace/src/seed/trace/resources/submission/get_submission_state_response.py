@@ -3,23 +3,32 @@
 import datetime as dt
 import typing
 
-import pydantic
-
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.datetime_utils import serialize_datetime
+from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from ..commons.language import Language
 from .submission_type_state import SubmissionTypeState
 
 
-class GetSubmissionStateResponse(UniversalBaseModel):
-    time_submitted: typing.Optional[dt.datetime] = pydantic.Field(alias="timeSubmitted", default=None)
+class GetSubmissionStateResponse(pydantic_v1.BaseModel):
+    time_submitted: typing.Optional[dt.datetime] = pydantic_v1.Field(alias="timeSubmitted", default=None)
     submission: str
     language: Language
-    submission_type_state: SubmissionTypeState = pydantic.Field(alias="submissionTypeState")
+    submission_type_state: SubmissionTypeState = pydantic_v1.Field(alias="submissionTypeState")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
 
-        class Config:
-            allow_population_by_field_name = True
-            extra = pydantic.Extra.allow
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        allow_population_by_field_name = True
+        populate_by_name = True
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}

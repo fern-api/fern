@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.pydantic_utilities import pydantic_v1
 from ..core.request_options import RequestOptions
 from .types.shape import Shape
 
@@ -47,7 +47,7 @@ class UnionClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(Shape, parse_obj_as(type_=Shape, object_=_response.json()))  # type: ignore
+                return pydantic_v1.parse_obj_as(Shape, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -86,7 +86,7 @@ class UnionClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(bool, parse_obj_as(type_=bool, object_=_response.json()))  # type: ignore
+                return pydantic_v1.parse_obj_as(bool, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -134,7 +134,7 @@ class AsyncUnionClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(Shape, parse_obj_as(type_=Shape, object_=_response.json()))  # type: ignore
+                return pydantic_v1.parse_obj_as(Shape, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -181,7 +181,7 @@ class AsyncUnionClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(bool, parse_obj_as(type_=bool, object_=_response.json()))  # type: ignore
+                return pydantic_v1.parse_obj_as(bool, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

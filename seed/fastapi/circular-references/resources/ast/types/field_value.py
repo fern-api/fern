@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
-import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
+from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from .object_value import ObjectValue as resources_ast_types_object_value_ObjectValue
 from .primitive_value import PrimitiveValue as resources_ast_types_primitive_value_PrimitiveValue
 
@@ -16,39 +17,22 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def primitive_value(self, value: resources_ast_types_primitive_value_PrimitiveValue) -> FieldValue:
-        return FieldValue(_FieldValue.PrimitiveValue(type="primitive_value", value=value))
+        return FieldValue(__root__=_FieldValue.PrimitiveValue(type="primitive_value", value=value))
 
     def object_value(self, value: resources_ast_types_object_value_ObjectValue) -> FieldValue:
-        return FieldValue(_FieldValue.ObjectValue(**value.dict(exclude_unset=True), type="object_value"))
+        return FieldValue(__root__=_FieldValue.ObjectValue(**value.dict(exclude_unset=True), type="object_value"))
 
     def container_value(self, value: resources_ast_types_container_value_ContainerValue) -> FieldValue:
-        return FieldValue(_FieldValue.ContainerValue(type="container_value", value=value))
+        return FieldValue(__root__=_FieldValue.ContainerValue(type="container_value", value=value))
 
 
-class FieldValue(UniversalRootModel):
+class FieldValue(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    if IS_PYDANTIC_V2:
-        root: typing_extensions.Annotated[
-            typing.Union[_FieldValue.PrimitiveValue, _FieldValue.ObjectValue, _FieldValue.ContainerValue],
-            pydantic.Field(discriminator="type"),
-        ]
-
-        def get_as_union(
-            self,
-        ) -> typing.Union[_FieldValue.PrimitiveValue, _FieldValue.ObjectValue, _FieldValue.ContainerValue]:
-            return self.root
-
-    else:
-        __root__: typing_extensions.Annotated[
-            typing.Union[_FieldValue.PrimitiveValue, _FieldValue.ObjectValue, _FieldValue.ContainerValue],
-            pydantic.Field(discriminator="type"),
-        ]
-
-        def get_as_union(
-            self,
-        ) -> typing.Union[_FieldValue.PrimitiveValue, _FieldValue.ObjectValue, _FieldValue.ContainerValue]:
-            return self.__root__
+    def get_as_union(
+        self,
+    ) -> typing.Union[_FieldValue.PrimitiveValue, _FieldValue.ObjectValue, _FieldValue.ContainerValue]:
+        return self.__root__
 
     def visit(
         self,
@@ -56,23 +40,42 @@ class FieldValue(UniversalRootModel):
         object_value: typing.Callable[[resources_ast_types_object_value_ObjectValue], T_Result],
         container_value: typing.Callable[[resources_ast_types_container_value_ContainerValue], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "primitive_value":
-            return primitive_value(self.get_as_union().value)
-        if self.get_as_union().type == "object_value":
+        if self.__root__.type == "primitive_value":
+            return primitive_value(self.__root__.value)
+        if self.__root__.type == "object_value":
             return object_value(
-                resources_ast_types_object_value_ObjectValue(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
-                )
+                resources_ast_types_object_value_ObjectValue(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
             )
-        if self.get_as_union().type == "container_value":
-            return container_value(self.get_as_union().value)
+        if self.__root__.type == "container_value":
+            return container_value(self.__root__.value)
+
+    __root__: typing_extensions.Annotated[
+        typing.Union[_FieldValue.PrimitiveValue, _FieldValue.ObjectValue, _FieldValue.ContainerValue],
+        pydantic_v1.Field(discriminator="type"),
+    ]
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        extra = pydantic_v1.Extra.forbid
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 from .container_value import ContainerValue as resources_ast_types_container_value_ContainerValue  # noqa: E402
 
 
 class _FieldValue:
-    class PrimitiveValue(UniversalBaseModel):
+    class PrimitiveValue(pydantic_v1.BaseModel):
         type: typing.Literal["primitive_value"] = "primitive_value"
         value: resources_ast_types_primitive_value_PrimitiveValue
 
@@ -81,13 +84,14 @@ class _FieldValue:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
-    class ContainerValue(UniversalBaseModel):
+    class ContainerValue(pydantic_v1.BaseModel):
         type: typing.Literal["container_value"] = "container_value"
         value: resources_ast_types_container_value_ContainerValue
 
 
-update_forward_refs(
-    _FieldValue.ContainerValue, ContainerValue=resources_ast_types_container_value_ContainerValue, FieldValue=FieldValue
+_FieldValue.ContainerValue.update_forward_refs(
+    ContainerValue=resources_ast_types_container_value_ContainerValue, FieldValue=FieldValue
 )
-update_forward_refs(FieldValue)
+FieldValue.update_forward_refs()

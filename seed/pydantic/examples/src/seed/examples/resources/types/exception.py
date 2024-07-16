@@ -2,14 +2,14 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
-import pydantic
+from ...core.datetime_utils import serialize_datetime
+from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
-
-class Exception_Generic(UniversalBaseModel):
+class Exception_Generic(pydantic_v1.BaseModel):
     """
     Examples
     --------
@@ -22,21 +22,31 @@ class Exception_Generic(UniversalBaseModel):
     )
     """
 
-    exception_type: str = pydantic.Field(alias="exceptionType")
-    exception_message: str = pydantic.Field(alias="exceptionMessage")
-    exception_stacktrace: str = pydantic.Field(alias="exceptionStacktrace")
+    exception_type: str = pydantic_v1.Field(alias="exceptionType")
+    exception_message: str = pydantic_v1.Field(alias="exceptionMessage")
+    exception_stacktrace: str = pydantic_v1.Field(alias="exceptionStacktrace")
     type: typing.Literal["generic"] = "generic"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
 
-        class Config:
-            allow_population_by_field_name = True
-            extra = pydantic.Extra.allow
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        allow_population_by_field_name = True
+        populate_by_name = True
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
-class Exception_Timeout(UniversalBaseModel):
+class Exception_Timeout(pydantic_v1.BaseModel):
     """
     Examples
     --------
@@ -51,12 +61,21 @@ class Exception_Timeout(UniversalBaseModel):
 
     type: typing.Literal["timeout"] = "timeout"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
 
-        class Config:
-            extra = pydantic.Extra.allow
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 """

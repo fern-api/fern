@@ -4,11 +4,11 @@ from __future__ import annotations
 
 import typing
 
-from ...core.pydantic_utilities import UniversalBaseModel
+from ...core.pydantic_utilities import pydantic_v1
 from .playlist_id import PlaylistId
 
 
-class PlaylistIdNotFoundErrorBody_PlaylistId(UniversalBaseModel):
+class PlaylistIdNotFoundErrorBody_PlaylistId(pydantic_v1.BaseModel):
     value: PlaylistId
     type: typing.Literal["playlistId"] = "playlistId"
 

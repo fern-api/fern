@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
-import pydantic
 import typing_extensions
 
-from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ......core.datetime_utils import serialize_datetime
+from ......core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from .....commons.types.language import Language
 from .basic_custom_files import BasicCustomFiles
 from .files import Files
@@ -17,40 +18,47 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def basic(self, value: BasicCustomFiles) -> CustomFiles:
-        return CustomFiles(_CustomFiles.Basic(**value.dict(exclude_unset=True), type="basic"))
+        return CustomFiles(__root__=_CustomFiles.Basic(**value.dict(exclude_unset=True), type="basic"))
 
     def custom(self, value: typing.Dict[Language, Files]) -> CustomFiles:
-        return CustomFiles(_CustomFiles.Custom(type="custom", value=value))
+        return CustomFiles(__root__=_CustomFiles.Custom(type="custom", value=value))
 
 
-class CustomFiles(UniversalRootModel):
+class CustomFiles(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    if IS_PYDANTIC_V2:
-        root: typing_extensions.Annotated[
-            typing.Union[_CustomFiles.Basic, _CustomFiles.Custom], pydantic.Field(discriminator="type")
-        ]
-
-        def get_as_union(self) -> typing.Union[_CustomFiles.Basic, _CustomFiles.Custom]:
-            return self.root
-
-    else:
-        __root__: typing_extensions.Annotated[
-            typing.Union[_CustomFiles.Basic, _CustomFiles.Custom], pydantic.Field(discriminator="type")
-        ]
-
-        def get_as_union(self) -> typing.Union[_CustomFiles.Basic, _CustomFiles.Custom]:
-            return self.__root__
+    def get_as_union(self) -> typing.Union[_CustomFiles.Basic, _CustomFiles.Custom]:
+        return self.__root__
 
     def visit(
         self,
         basic: typing.Callable[[BasicCustomFiles], T_Result],
         custom: typing.Callable[[typing.Dict[Language, Files]], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "basic":
-            return basic(BasicCustomFiles(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "custom":
-            return custom(self.get_as_union().value)
+        if self.__root__.type == "basic":
+            return basic(BasicCustomFiles(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
+        if self.__root__.type == "custom":
+            return custom(self.__root__.value)
+
+    __root__: typing_extensions.Annotated[
+        typing.Union[_CustomFiles.Basic, _CustomFiles.Custom], pydantic_v1.Field(discriminator="type")
+    ]
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        extra = pydantic_v1.Extra.forbid
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _CustomFiles:
@@ -59,7 +67,11 @@ class _CustomFiles:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
-    class Custom(UniversalBaseModel):
+    class Custom(pydantic_v1.BaseModel):
         type: typing.Literal["custom"] = "custom"
         value: typing.Dict[Language, Files]
+
+
+CustomFiles.update_forward_refs()

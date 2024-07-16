@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
-import pydantic
 import typing_extensions
 
-from ........core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
+from ........core.datetime_utils import serialize_datetime
+from ........core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from .non_void_function_signature import NonVoidFunctionSignature
 from .void_function_signature import VoidFunctionSignature
 from .void_function_signature_that_takes_actual_result import VoidFunctionSignatureThatTakesActualResult
@@ -17,51 +18,28 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def void(self, value: VoidFunctionSignature) -> FunctionSignature:
-        return FunctionSignature(_FunctionSignature.Void(**value.dict(exclude_unset=True), type="void"))
+        return FunctionSignature(__root__=_FunctionSignature.Void(**value.dict(exclude_unset=True), type="void"))
 
     def non_void(self, value: NonVoidFunctionSignature) -> FunctionSignature:
-        return FunctionSignature(_FunctionSignature.NonVoid(**value.dict(exclude_unset=True), type="nonVoid"))
+        return FunctionSignature(__root__=_FunctionSignature.NonVoid(**value.dict(exclude_unset=True), type="nonVoid"))
 
     def void_that_takes_actual_result(self, value: VoidFunctionSignatureThatTakesActualResult) -> FunctionSignature:
         return FunctionSignature(
-            _FunctionSignature.VoidThatTakesActualResult(
+            __root__=_FunctionSignature.VoidThatTakesActualResult(
                 **value.dict(exclude_unset=True), type="voidThatTakesActualResult"
             )
         )
 
 
-class FunctionSignature(UniversalRootModel):
+class FunctionSignature(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    if IS_PYDANTIC_V2:
-        root: typing_extensions.Annotated[
-            typing.Union[
-                _FunctionSignature.Void, _FunctionSignature.NonVoid, _FunctionSignature.VoidThatTakesActualResult
-            ],
-            pydantic.Field(discriminator="type"),
-        ]
-
-        def get_as_union(
-            self,
-        ) -> typing.Union[
-            _FunctionSignature.Void, _FunctionSignature.NonVoid, _FunctionSignature.VoidThatTakesActualResult
-        ]:
-            return self.root
-
-    else:
-        __root__: typing_extensions.Annotated[
-            typing.Union[
-                _FunctionSignature.Void, _FunctionSignature.NonVoid, _FunctionSignature.VoidThatTakesActualResult
-            ],
-            pydantic.Field(discriminator="type"),
-        ]
-
-        def get_as_union(
-            self,
-        ) -> typing.Union[
-            _FunctionSignature.Void, _FunctionSignature.NonVoid, _FunctionSignature.VoidThatTakesActualResult
-        ]:
-            return self.__root__
+    def get_as_union(
+        self,
+    ) -> typing.Union[
+        _FunctionSignature.Void, _FunctionSignature.NonVoid, _FunctionSignature.VoidThatTakesActualResult
+    ]:
+        return self.__root__
 
     def visit(
         self,
@@ -69,16 +47,35 @@ class FunctionSignature(UniversalRootModel):
         non_void: typing.Callable[[NonVoidFunctionSignature], T_Result],
         void_that_takes_actual_result: typing.Callable[[VoidFunctionSignatureThatTakesActualResult], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "void":
-            return void(VoidFunctionSignature(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "nonVoid":
-            return non_void(NonVoidFunctionSignature(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "voidThatTakesActualResult":
+        if self.__root__.type == "void":
+            return void(VoidFunctionSignature(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
+        if self.__root__.type == "nonVoid":
+            return non_void(NonVoidFunctionSignature(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
+        if self.__root__.type == "voidThatTakesActualResult":
             return void_that_takes_actual_result(
-                VoidFunctionSignatureThatTakesActualResult(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
-                )
+                VoidFunctionSignatureThatTakesActualResult(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
             )
+
+    __root__: typing_extensions.Annotated[
+        typing.Union[_FunctionSignature.Void, _FunctionSignature.NonVoid, _FunctionSignature.VoidThatTakesActualResult],
+        pydantic_v1.Field(discriminator="type"),
+    ]
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        extra = pydantic_v1.Extra.forbid
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _FunctionSignature:
@@ -87,15 +84,21 @@ class _FunctionSignature:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class NonVoid(NonVoidFunctionSignature):
         type: typing.Literal["nonVoid"] = "nonVoid"
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
         type: typing.Literal["voidThatTakesActualResult"] = "voidThatTakesActualResult"
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
+
+
+FunctionSignature.update_forward_refs()

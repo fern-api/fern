@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
-import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from ...commons.types.variable_value import VariableValue
 
 T_Result = typing.TypeVar("T_Result")
@@ -15,47 +16,24 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def html(self, value: str) -> ProblemDescriptionBoard:
-        return ProblemDescriptionBoard(_ProblemDescriptionBoard.Html(type="html", value=value))
+        return ProblemDescriptionBoard(__root__=_ProblemDescriptionBoard.Html(type="html", value=value))
 
     def variable(self, value: VariableValue) -> ProblemDescriptionBoard:
-        return ProblemDescriptionBoard(_ProblemDescriptionBoard.Variable(type="variable", value=value))
+        return ProblemDescriptionBoard(__root__=_ProblemDescriptionBoard.Variable(type="variable", value=value))
 
     def test_case_id(self, value: str) -> ProblemDescriptionBoard:
-        return ProblemDescriptionBoard(_ProblemDescriptionBoard.TestCaseId(type="testCaseId", value=value))
+        return ProblemDescriptionBoard(__root__=_ProblemDescriptionBoard.TestCaseId(type="testCaseId", value=value))
 
 
-class ProblemDescriptionBoard(UniversalRootModel):
+class ProblemDescriptionBoard(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    if IS_PYDANTIC_V2:
-        root: typing_extensions.Annotated[
-            typing.Union[
-                _ProblemDescriptionBoard.Html, _ProblemDescriptionBoard.Variable, _ProblemDescriptionBoard.TestCaseId
-            ],
-            pydantic.Field(discriminator="type"),
-        ]
-
-        def get_as_union(
-            self,
-        ) -> typing.Union[
-            _ProblemDescriptionBoard.Html, _ProblemDescriptionBoard.Variable, _ProblemDescriptionBoard.TestCaseId
-        ]:
-            return self.root
-
-    else:
-        __root__: typing_extensions.Annotated[
-            typing.Union[
-                _ProblemDescriptionBoard.Html, _ProblemDescriptionBoard.Variable, _ProblemDescriptionBoard.TestCaseId
-            ],
-            pydantic.Field(discriminator="type"),
-        ]
-
-        def get_as_union(
-            self,
-        ) -> typing.Union[
-            _ProblemDescriptionBoard.Html, _ProblemDescriptionBoard.Variable, _ProblemDescriptionBoard.TestCaseId
-        ]:
-            return self.__root__
+    def get_as_union(
+        self,
+    ) -> typing.Union[
+        _ProblemDescriptionBoard.Html, _ProblemDescriptionBoard.Variable, _ProblemDescriptionBoard.TestCaseId
+    ]:
+        return self.__root__
 
     def visit(
         self,
@@ -63,23 +41,49 @@ class ProblemDescriptionBoard(UniversalRootModel):
         variable: typing.Callable[[VariableValue], T_Result],
         test_case_id: typing.Callable[[str], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "html":
-            return html(self.get_as_union().value)
-        if self.get_as_union().type == "variable":
-            return variable(self.get_as_union().value)
-        if self.get_as_union().type == "testCaseId":
-            return test_case_id(self.get_as_union().value)
+        if self.__root__.type == "html":
+            return html(self.__root__.value)
+        if self.__root__.type == "variable":
+            return variable(self.__root__.value)
+        if self.__root__.type == "testCaseId":
+            return test_case_id(self.__root__.value)
+
+    __root__: typing_extensions.Annotated[
+        typing.Union[
+            _ProblemDescriptionBoard.Html, _ProblemDescriptionBoard.Variable, _ProblemDescriptionBoard.TestCaseId
+        ],
+        pydantic_v1.Field(discriminator="type"),
+    ]
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        extra = pydantic_v1.Extra.forbid
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _ProblemDescriptionBoard:
-    class Html(UniversalBaseModel):
+    class Html(pydantic_v1.BaseModel):
         type: typing.Literal["html"] = "html"
         value: str
 
-    class Variable(UniversalBaseModel):
+    class Variable(pydantic_v1.BaseModel):
         type: typing.Literal["variable"] = "variable"
         value: VariableValue
 
-    class TestCaseId(UniversalBaseModel):
+    class TestCaseId(pydantic_v1.BaseModel):
         type: typing.Literal["testCaseId"] = "testCaseId"
         value: str
+
+
+ProblemDescriptionBoard.update_forward_refs()

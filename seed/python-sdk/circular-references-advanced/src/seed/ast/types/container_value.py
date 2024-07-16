@@ -4,41 +4,31 @@ from __future__ import annotations
 
 import typing
 
-import pydantic
-
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
+from ...core.pydantic_utilities import pydantic_v1
 from .object_value import ObjectValue
 from .primitive_value import PrimitiveValue
 
 
-class ContainerValue_List(UniversalBaseModel):
+class ContainerValue_List(pydantic_v1.BaseModel):
     value: typing.List[FieldValue]
     type: typing.Literal["list"] = "list"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
+    class Config:
+        frozen = True
+        smart_union = True
 
 
-class ContainerValue_Optional(UniversalBaseModel):
+class ContainerValue_Optional(pydantic_v1.BaseModel):
     value: typing.Optional[FieldValue] = None
     type: typing.Literal["optional"] = "optional"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
+    class Config:
+        frozen = True
+        smart_union = True
 
 
 ContainerValue = typing.Union[ContainerValue_List, ContainerValue_Optional]
 from .field_value import FieldValue  # noqa: E402
 
-update_forward_refs(ContainerValue_List, FieldValue=FieldValue)
-update_forward_refs(ContainerValue_Optional, FieldValue=FieldValue)
+ContainerValue_List.update_forward_refs(FieldValue=FieldValue)
+ContainerValue_Optional.update_forward_refs(FieldValue=FieldValue)

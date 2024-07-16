@@ -4,35 +4,25 @@ from __future__ import annotations
 
 import typing
 
-import pydantic
-
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import pydantic_v1
 
 
-class Test_And(UniversalBaseModel):
+class Test_And(pydantic_v1.BaseModel):
     value: bool
     type: typing.Literal["and"] = "and"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
+    class Config:
+        frozen = True
+        smart_union = True
 
 
-class Test_Or(UniversalBaseModel):
+class Test_Or(pydantic_v1.BaseModel):
     value: bool
     type: typing.Literal["or"] = "or"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
+    class Config:
+        frozen = True
+        smart_union = True
 
 
 """

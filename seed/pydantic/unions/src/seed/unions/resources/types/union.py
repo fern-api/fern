@@ -4,17 +4,17 @@ from __future__ import annotations
 
 import typing
 
-from ...core.pydantic_utilities import UniversalBaseModel
+from ...core.pydantic_utilities import pydantic_v1
 from .bar import Bar
 from .foo import Foo
 
 
-class Union_Foo(UniversalBaseModel):
+class Union_Foo(pydantic_v1.BaseModel):
     foo: Foo
     type: typing.Literal["foo"] = "foo"
 
 
-class Union_Bar(UniversalBaseModel):
+class Union_Bar(pydantic_v1.BaseModel):
     bar: Bar
     type: typing.Literal["bar"] = "bar"
 

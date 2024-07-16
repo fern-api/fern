@@ -16,6 +16,7 @@ from .core.exceptions.fern_http_exception import FernHTTPException
 
 
 def register(_app: fastapi.FastAPI, *, dependencies: typing.Optional[typing.Sequence[params.Depends]] = None) -> None:
+
     _app.add_exception_handler(FernHTTPException, fern_http_exception_handler)
     _app.add_exception_handler(starlette.exceptions.HTTPException, http_exception_handler)
     _app.add_exception_handler(Exception, default_exception_handler)

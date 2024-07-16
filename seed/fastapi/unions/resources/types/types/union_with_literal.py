@@ -2,39 +2,53 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
 T_Result = typing.TypeVar("T_Result")
 
 
 class _Factory:
     def fern(self, value: typing.Literal["fern"]) -> UnionWithLiteral:
-        return UnionWithLiteral(_UnionWithLiteral.Fern(type="fern", value=value))
+        return UnionWithLiteral(__root__=_UnionWithLiteral.Fern(type="fern", value=value))
 
 
-class UnionWithLiteral(UniversalRootModel):
+class UnionWithLiteral(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    if IS_PYDANTIC_V2:
-        root: typing.Union[_UnionWithLiteral.Fern]
-
-        def get_as_union(self) -> typing.Union[_UnionWithLiteral.Fern]:
-            return self.root
-
-    else:
-        __root__: typing.Union[_UnionWithLiteral.Fern]
-
-        def get_as_union(self) -> typing.Union[_UnionWithLiteral.Fern]:
-            return self.__root__
+    def get_as_union(self) -> _UnionWithLiteral.Fern:
+        return self.__root__
 
     def visit(self, fern: typing.Callable[[typing.Literal["fern"]], T_Result]) -> T_Result:
-        if self.get_as_union().type == "fern":
-            return fern(self.get_as_union().value)
+        if self.__root__.type == "fern":
+            return fern(self.__root__.value)
+
+    __root__: _UnionWithLiteral.Fern
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        extra = pydantic_v1.Extra.forbid
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _UnionWithLiteral:
-    class Fern(UniversalBaseModel):
+    class Fern(pydantic_v1.BaseModel):
         type: typing.Literal["fern"] = "fern"
         value: typing.Literal["fern"]
+
+
+UnionWithLiteral.update_forward_refs()

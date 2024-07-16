@@ -4,12 +4,13 @@ import datetime as dt
 import typing
 import uuid
 
-import pydantic
+import pydantic.v1 as pydantic
 
-from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .....core.datetime_utils import serialize_datetime
+from .....core.pydantic_utilities import deep_union_pydantic_dicts
 
 
-class ObjectWithOptionalField(UniversalBaseModel):
+class ObjectWithOptionalField(pydantic.BaseModel):
     string: typing.Optional[str] = None
     integer: typing.Optional[int] = None
     long_: typing.Optional[int] = pydantic.Field(alias="long", default=None)
@@ -24,10 +25,20 @@ class ObjectWithOptionalField(UniversalBaseModel):
     map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(alias="map", default=None)
     bigint: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
 
-        class Config:
-            allow_population_by_field_name = True
-            extra = pydantic.Extra.allow
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        allow_population_by_field_name = True
+        populate_by_name = True
+        extra = pydantic.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}

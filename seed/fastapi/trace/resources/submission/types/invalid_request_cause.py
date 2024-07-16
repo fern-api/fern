@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
-import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
+from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from .custom_test_cases_unsupported import (
     CustomTestCasesUnsupported as resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported,
 )
@@ -24,64 +25,39 @@ class _Factory:
         self, value: resources_submission_types_submission_id_not_found_SubmissionIdNotFound
     ) -> InvalidRequestCause:
         return InvalidRequestCause(
-            _InvalidRequestCause.SubmissionIdNotFound(**value.dict(exclude_unset=True), type="submissionIdNotFound")
+            __root__=_InvalidRequestCause.SubmissionIdNotFound(
+                **value.dict(exclude_unset=True), type="submissionIdNotFound"
+            )
         )
 
     def custom_test_cases_unsupported(
         self, value: resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported
     ) -> InvalidRequestCause:
         return InvalidRequestCause(
-            _InvalidRequestCause.CustomTestCasesUnsupported(
+            __root__=_InvalidRequestCause.CustomTestCasesUnsupported(
                 **value.dict(exclude_unset=True), type="customTestCasesUnsupported"
             )
         )
 
     def unexpected_language(self, value: UnexpectedLanguageError) -> InvalidRequestCause:
         return InvalidRequestCause(
-            _InvalidRequestCause.UnexpectedLanguage(**value.dict(exclude_unset=True), type="unexpectedLanguage")
+            __root__=_InvalidRequestCause.UnexpectedLanguage(
+                **value.dict(exclude_unset=True), type="unexpectedLanguage"
+            )
         )
 
 
-class InvalidRequestCause(UniversalRootModel):
+class InvalidRequestCause(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    if IS_PYDANTIC_V2:
-        root: typing_extensions.Annotated[
-            typing.Union[
-                _InvalidRequestCause.SubmissionIdNotFound,
-                _InvalidRequestCause.CustomTestCasesUnsupported,
-                _InvalidRequestCause.UnexpectedLanguage,
-            ],
-            pydantic.Field(discriminator="type"),
-        ]
-
-        def get_as_union(
-            self,
-        ) -> typing.Union[
-            _InvalidRequestCause.SubmissionIdNotFound,
-            _InvalidRequestCause.CustomTestCasesUnsupported,
-            _InvalidRequestCause.UnexpectedLanguage,
-        ]:
-            return self.root
-
-    else:
-        __root__: typing_extensions.Annotated[
-            typing.Union[
-                _InvalidRequestCause.SubmissionIdNotFound,
-                _InvalidRequestCause.CustomTestCasesUnsupported,
-                _InvalidRequestCause.UnexpectedLanguage,
-            ],
-            pydantic.Field(discriminator="type"),
-        ]
-
-        def get_as_union(
-            self,
-        ) -> typing.Union[
-            _InvalidRequestCause.SubmissionIdNotFound,
-            _InvalidRequestCause.CustomTestCasesUnsupported,
-            _InvalidRequestCause.UnexpectedLanguage,
-        ]:
-            return self.__root__
+    def get_as_union(
+        self,
+    ) -> typing.Union[
+        _InvalidRequestCause.SubmissionIdNotFound,
+        _InvalidRequestCause.CustomTestCasesUnsupported,
+        _InvalidRequestCause.UnexpectedLanguage,
+    ]:
+        return self.__root__
 
     def visit(
         self,
@@ -93,22 +69,47 @@ class InvalidRequestCause(UniversalRootModel):
         ],
         unexpected_language: typing.Callable[[UnexpectedLanguageError], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "submissionIdNotFound":
+        if self.__root__.type == "submissionIdNotFound":
             return submission_id_not_found(
                 resources_submission_types_submission_id_not_found_SubmissionIdNotFound(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
+                    **self.__root__.dict(exclude_unset=True, exclude={"type"})
                 )
             )
-        if self.get_as_union().type == "customTestCasesUnsupported":
+        if self.__root__.type == "customTestCasesUnsupported":
             return custom_test_cases_unsupported(
                 resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"type"})
+                    **self.__root__.dict(exclude_unset=True, exclude={"type"})
                 )
             )
-        if self.get_as_union().type == "unexpectedLanguage":
+        if self.__root__.type == "unexpectedLanguage":
             return unexpected_language(
-                UnexpectedLanguageError(**self.get_as_union().dict(exclude_unset=True, exclude={"type"}))
+                UnexpectedLanguageError(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
             )
+
+    __root__: typing_extensions.Annotated[
+        typing.Union[
+            _InvalidRequestCause.SubmissionIdNotFound,
+            _InvalidRequestCause.CustomTestCasesUnsupported,
+            _InvalidRequestCause.UnexpectedLanguage,
+        ],
+        pydantic_v1.Field(discriminator="type"),
+    ]
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        extra = pydantic_v1.Extra.forbid
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _InvalidRequestCause:
@@ -117,6 +118,7 @@ class _InvalidRequestCause:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class CustomTestCasesUnsupported(
         resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported
@@ -125,9 +127,14 @@ class _InvalidRequestCause:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class UnexpectedLanguage(UnexpectedLanguageError):
         type: typing.Literal["unexpectedLanguage"] = "unexpectedLanguage"
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
+
+
+InvalidRequestCause.update_forward_refs()

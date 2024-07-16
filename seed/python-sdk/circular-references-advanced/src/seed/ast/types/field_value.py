@@ -2,54 +2,55 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
-import pydantic
-
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
+from ...core.datetime_utils import serialize_datetime
+from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from .primitive_value import PrimitiveValue
 
 
-class FieldValue_PrimitiveValue(UniversalBaseModel):
+class FieldValue_PrimitiveValue(pydantic_v1.BaseModel):
     value: PrimitiveValue
     type: typing.Literal["primitive_value"] = "primitive_value"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
+    class Config:
+        frozen = True
+        smart_union = True
 
 
-class FieldValue_ObjectValue(UniversalBaseModel):
+class FieldValue_ObjectValue(pydantic_v1.BaseModel):
     type: typing.Literal["object_value"] = "object_value"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
 
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        frozen = True
+        smart_union = True
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
-class FieldValue_ContainerValue(UniversalBaseModel):
+class FieldValue_ContainerValue(pydantic_v1.BaseModel):
     value: ContainerValue
     type: typing.Literal["container_value"] = "container_value"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
+    class Config:
+        frozen = True
+        smart_union = True
 
 
 FieldValue = typing.Union[FieldValue_PrimitiveValue, FieldValue_ObjectValue, FieldValue_ContainerValue]
 from .container_value import ContainerValue  # noqa: E402
 
-update_forward_refs(FieldValue_ContainerValue, ContainerValue=ContainerValue)
+FieldValue_ContainerValue.update_forward_refs(ContainerValue=ContainerValue)

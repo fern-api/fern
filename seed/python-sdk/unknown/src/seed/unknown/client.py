@@ -5,7 +5,7 @@ from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.pydantic_utilities import pydantic_v1
 from ..core.request_options import RequestOptions
 
 # this is used as the default value for optional parameters
@@ -47,7 +47,7 @@ class UnknownClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(typing.List[typing.Any], parse_obj_as(type_=typing.List[typing.Any], object_=_response.json()))  # type: ignore
+                return pydantic_v1.parse_obj_as(typing.List[typing.Any], _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -97,7 +97,7 @@ class AsyncUnknownClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(typing.List[typing.Any], parse_obj_as(type_=typing.List[typing.Any], object_=_response.json()))  # type: ignore
+                return pydantic_v1.parse_obj_as(typing.List[typing.Any], _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

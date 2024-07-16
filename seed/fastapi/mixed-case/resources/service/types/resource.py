@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
-import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
+from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from .organization import Organization as resources_service_types_organization_Organization
 from .user import User as resources_service_types_user_User
 
@@ -16,13 +17,13 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def user(self, value: resources_service_types_user_User) -> Resource:
-        return Resource(_Resource.User(**value.dict(exclude_unset=True), resource_type="user"))
+        return Resource(__root__=_Resource.User(**value.dict(exclude_unset=True), resource_type="user"))
 
     def organization(self, value: resources_service_types_organization_Organization) -> Resource:
-        return Resource(_Resource.Organization(**value.dict(exclude_unset=True), resource_type="Organization"))
+        return Resource(__root__=_Resource.Organization(**value.dict(exclude_unset=True), resource_type="Organization"))
 
 
-class Resource(UniversalRootModel):
+class Resource(pydantic_v1.BaseModel):
     """
     Examples
     --------
@@ -37,39 +38,44 @@ class Resource(UniversalRootModel):
 
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    if IS_PYDANTIC_V2:
-        root: typing_extensions.Annotated[
-            typing.Union[_Resource.User, _Resource.Organization], pydantic.Field(discriminator="resource_type")
-        ]
-
-        def get_as_union(self) -> typing.Union[_Resource.User, _Resource.Organization]:
-            return self.root
-
-    else:
-        __root__: typing_extensions.Annotated[
-            typing.Union[_Resource.User, _Resource.Organization], pydantic.Field(discriminator="resource_type")
-        ]
-
-        def get_as_union(self) -> typing.Union[_Resource.User, _Resource.Organization]:
-            return self.__root__
+    def get_as_union(self) -> typing.Union[_Resource.User, _Resource.Organization]:
+        return self.__root__
 
     def visit(
         self,
         user: typing.Callable[[resources_service_types_user_User], T_Result],
         organization: typing.Callable[[resources_service_types_organization_Organization], T_Result],
     ) -> T_Result:
-        if self.get_as_union().resource_type == "user":
+        if self.__root__.resource_type == "user":
             return user(
-                resources_service_types_user_User(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"resource_type"})
-                )
+                resources_service_types_user_User(**self.__root__.dict(exclude_unset=True, exclude={"resource_type"}))
             )
-        if self.get_as_union().resource_type == "Organization":
+        if self.__root__.resource_type == "Organization":
             return organization(
                 resources_service_types_organization_Organization(
-                    **self.get_as_union().dict(exclude_unset=True, exclude={"resource_type"})
+                    **self.__root__.dict(exclude_unset=True, exclude={"resource_type"})
                 )
             )
+
+    __root__: typing_extensions.Annotated[
+        typing.Union[_Resource.User, _Resource.Organization], pydantic_v1.Field(discriminator="resource_type")
+    ]
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        extra = pydantic_v1.Extra.forbid
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _Resource:
@@ -78,9 +84,14 @@ class _Resource:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
     class Organization(resources_service_types_organization_Organization):
         resource_type: typing.Literal["Organization"] = "Organization"
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
+
+
+Resource.update_forward_refs()

@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
-import pydantic
-
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
+from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from .generic_create_problem_error import GenericCreateProblemError
 
 T_Result = typing.TypeVar("T_Result")
@@ -14,32 +14,47 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def generic(self, value: GenericCreateProblemError) -> CreateProblemError:
-        return CreateProblemError(_CreateProblemError.Generic(**value.dict(exclude_unset=True), error_type="generic"))
+        return CreateProblemError(
+            __root__=_CreateProblemError.Generic(**value.dict(exclude_unset=True), error_type="generic")
+        )
 
 
-class CreateProblemError(UniversalRootModel):
+class CreateProblemError(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    if IS_PYDANTIC_V2:
-        root: typing.Union[_CreateProblemError.Generic]
-
-        def get_as_union(self) -> typing.Union[_CreateProblemError.Generic]:
-            return self.root
-
-    else:
-        __root__: typing.Union[_CreateProblemError.Generic]
-
-        def get_as_union(self) -> typing.Union[_CreateProblemError.Generic]:
-            return self.__root__
+    def get_as_union(self) -> _CreateProblemError.Generic:
+        return self.__root__
 
     def visit(self, generic: typing.Callable[[GenericCreateProblemError], T_Result]) -> T_Result:
-        if self.get_as_union().error_type == "generic":
-            return generic(GenericCreateProblemError(**self.get_as_union().dict(exclude_unset=True, exclude={"_type"})))
+        if self.__root__.error_type == "generic":
+            return generic(GenericCreateProblemError(**self.__root__.dict(exclude_unset=True, exclude={"_type"})))
+
+    __root__: _CreateProblemError.Generic
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        extra = pydantic_v1.Extra.forbid
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _CreateProblemError:
     class Generic(GenericCreateProblemError):
-        error_type: typing.Literal["generic"] = pydantic.Field(alias="_type", default="generic")
+        error_type: typing.Literal["generic"] = pydantic_v1.Field(alias="_type", default="generic")
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
+
+
+CreateProblemError.update_forward_refs()

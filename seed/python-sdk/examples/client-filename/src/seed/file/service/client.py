@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
-from ...core.pydantic_utilities import parse_obj_as
+from ...core.pydantic_utilities import pydantic_v1
 from ...core.request_options import RequestOptions
 from ...types.errors.not_found_error import NotFoundError
 from ...types.types.file import File
@@ -58,9 +58,9 @@ class ServiceClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(File, parse_obj_as(type_=File, object_=_response.json()))  # type: ignore
+                return pydantic_v1.parse_obj_as(File, _response.json())  # type: ignore
             if _response.status_code == 404:
-                raise NotFoundError(typing.cast(str, parse_obj_as(type_=str, object_=_response.json())))  # type: ignore
+                raise NotFoundError(pydantic_v1.parse_obj_as(str, _response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -121,9 +121,9 @@ class AsyncServiceClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(File, parse_obj_as(type_=File, object_=_response.json()))  # type: ignore
+                return pydantic_v1.parse_obj_as(File, _response.json())  # type: ignore
             if _response.status_code == 404:
-                raise NotFoundError(typing.cast(str, parse_obj_as(type_=str, object_=_response.json())))  # type: ignore
+                raise NotFoundError(pydantic_v1.parse_obj_as(str, _response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

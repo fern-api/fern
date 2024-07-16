@@ -4,35 +4,25 @@ from __future__ import annotations
 
 import typing
 
-import pydantic
-
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import pydantic_v1
 
 
-class UnionWithPrimitive_Integer(UniversalBaseModel):
+class UnionWithPrimitive_Integer(pydantic_v1.BaseModel):
     value: int
     type: typing.Literal["integer"] = "integer"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
+    class Config:
+        frozen = True
+        smart_union = True
 
 
-class UnionWithPrimitive_String(UniversalBaseModel):
+class UnionWithPrimitive_String(pydantic_v1.BaseModel):
     value: str
     type: typing.Literal["string"] = "string"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
+    class Config:
+        frozen = True
+        smart_union = True
 
 
 UnionWithPrimitive = typing.Union[UnionWithPrimitive_Integer, UnionWithPrimitive_String]

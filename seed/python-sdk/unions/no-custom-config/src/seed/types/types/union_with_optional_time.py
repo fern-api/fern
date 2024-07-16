@@ -5,35 +5,25 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-import pydantic
-
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import pydantic_v1
 
 
-class UnionWithOptionalTime_Date(UniversalBaseModel):
+class UnionWithOptionalTime_Date(pydantic_v1.BaseModel):
     value: typing.Optional[dt.date] = None
     type: typing.Literal["date"] = "date"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
+    class Config:
+        frozen = True
+        smart_union = True
 
 
-class UnionWithOptionalTime_Dateimte(UniversalBaseModel):
+class UnionWithOptionalTime_Dateimte(pydantic_v1.BaseModel):
     value: typing.Optional[dt.datetime] = None
     type: typing.Literal["dateimte"] = "dateimte"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
+    class Config:
+        frozen = True
+        smart_union = True
 
 
 UnionWithOptionalTime = typing.Union[UnionWithOptionalTime_Date, UnionWithOptionalTime_Dateimte]

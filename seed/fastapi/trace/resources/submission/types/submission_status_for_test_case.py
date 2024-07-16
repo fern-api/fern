@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
-import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
+from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from .test_case_grade import TestCaseGrade
 from .test_case_result_with_stdout import TestCaseResultWithStdout
 from .traced_test_case import TracedTestCase
@@ -18,58 +19,27 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def graded(self, value: TestCaseResultWithStdout) -> SubmissionStatusForTestCase:
         return SubmissionStatusForTestCase(
-            _SubmissionStatusForTestCase.Graded(**value.dict(exclude_unset=True), type="graded")
+            __root__=_SubmissionStatusForTestCase.Graded(**value.dict(exclude_unset=True), type="graded")
         )
 
     def graded_v_2(self, value: TestCaseGrade) -> SubmissionStatusForTestCase:
-        return SubmissionStatusForTestCase(_SubmissionStatusForTestCase.GradedV2(type="gradedV2", value=value))
+        return SubmissionStatusForTestCase(__root__=_SubmissionStatusForTestCase.GradedV2(type="gradedV2", value=value))
 
     def traced(self, value: TracedTestCase) -> SubmissionStatusForTestCase:
         return SubmissionStatusForTestCase(
-            _SubmissionStatusForTestCase.Traced(**value.dict(exclude_unset=True), type="traced")
+            __root__=_SubmissionStatusForTestCase.Traced(**value.dict(exclude_unset=True), type="traced")
         )
 
 
-class SubmissionStatusForTestCase(UniversalRootModel):
+class SubmissionStatusForTestCase(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    if IS_PYDANTIC_V2:
-        root: typing_extensions.Annotated[
-            typing.Union[
-                _SubmissionStatusForTestCase.Graded,
-                _SubmissionStatusForTestCase.GradedV2,
-                _SubmissionStatusForTestCase.Traced,
-            ],
-            pydantic.Field(discriminator="type"),
-        ]
-
-        def get_as_union(
-            self,
-        ) -> typing.Union[
-            _SubmissionStatusForTestCase.Graded,
-            _SubmissionStatusForTestCase.GradedV2,
-            _SubmissionStatusForTestCase.Traced,
-        ]:
-            return self.root
-
-    else:
-        __root__: typing_extensions.Annotated[
-            typing.Union[
-                _SubmissionStatusForTestCase.Graded,
-                _SubmissionStatusForTestCase.GradedV2,
-                _SubmissionStatusForTestCase.Traced,
-            ],
-            pydantic.Field(discriminator="type"),
-        ]
-
-        def get_as_union(
-            self,
-        ) -> typing.Union[
-            _SubmissionStatusForTestCase.Graded,
-            _SubmissionStatusForTestCase.GradedV2,
-            _SubmissionStatusForTestCase.Traced,
-        ]:
-            return self.__root__
+    def get_as_union(
+        self,
+    ) -> typing.Union[
+        _SubmissionStatusForTestCase.Graded, _SubmissionStatusForTestCase.GradedV2, _SubmissionStatusForTestCase.Traced
+    ]:
+        return self.__root__
 
     def visit(
         self,
@@ -77,12 +47,37 @@ class SubmissionStatusForTestCase(UniversalRootModel):
         graded_v_2: typing.Callable[[TestCaseGrade], T_Result],
         traced: typing.Callable[[TracedTestCase], T_Result],
     ) -> T_Result:
-        if self.get_as_union().type == "graded":
-            return graded(TestCaseResultWithStdout(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "gradedV2":
-            return graded_v_2(self.get_as_union().value)
-        if self.get_as_union().type == "traced":
-            return traced(TracedTestCase(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
+        if self.__root__.type == "graded":
+            return graded(TestCaseResultWithStdout(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
+        if self.__root__.type == "gradedV2":
+            return graded_v_2(self.__root__.value)
+        if self.__root__.type == "traced":
+            return traced(TracedTestCase(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
+
+    __root__: typing_extensions.Annotated[
+        typing.Union[
+            _SubmissionStatusForTestCase.Graded,
+            _SubmissionStatusForTestCase.GradedV2,
+            _SubmissionStatusForTestCase.Traced,
+        ],
+        pydantic_v1.Field(discriminator="type"),
+    ]
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
+    class Config:
+        extra = pydantic_v1.Extra.forbid
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _SubmissionStatusForTestCase:
@@ -91,8 +86,9 @@ class _SubmissionStatusForTestCase:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
 
-    class GradedV2(UniversalBaseModel):
+    class GradedV2(pydantic_v1.BaseModel):
         type: typing.Literal["gradedV2"] = "gradedV2"
         value: TestCaseGrade
 
@@ -101,3 +97,7 @@ class _SubmissionStatusForTestCase:
 
         class Config:
             allow_population_by_field_name = True
+            populate_by_name = True
+
+
+SubmissionStatusForTestCase.update_forward_refs()

@@ -7,7 +7,7 @@ from ..commons.types.types.tag import Tag
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.pydantic_utilities import pydantic_v1
 from ..core.request_options import RequestOptions
 from ..types.types.metadata import Metadata
 from ..types.types.movie import Movie
@@ -53,7 +53,7 @@ class ServiceClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(Movie, parse_obj_as(type_=Movie, object_=_response.json()))  # type: ignore
+                return pydantic_v1.parse_obj_as(Movie, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -141,7 +141,7 @@ class ServiceClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(MovieId, parse_obj_as(type_=MovieId, object_=_response.json()))  # type: ignore
+                return pydantic_v1.parse_obj_as(MovieId, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -195,7 +195,7 @@ class ServiceClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(Metadata, parse_obj_as(type_=Metadata, object_=_response.json()))  # type: ignore
+                return pydantic_v1.parse_obj_as(Metadata, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -228,7 +228,7 @@ class ServiceClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(Response, parse_obj_as(type_=Response, object_=_response.json()))  # type: ignore
+                return pydantic_v1.parse_obj_as(Response, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -278,7 +278,7 @@ class AsyncServiceClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(Movie, parse_obj_as(type_=Movie, object_=_response.json()))  # type: ignore
+                return pydantic_v1.parse_obj_as(Movie, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -374,7 +374,7 @@ class AsyncServiceClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(MovieId, parse_obj_as(type_=MovieId, object_=_response.json()))  # type: ignore
+                return pydantic_v1.parse_obj_as(MovieId, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -436,7 +436,7 @@ class AsyncServiceClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(Metadata, parse_obj_as(type_=Metadata, object_=_response.json()))  # type: ignore
+                return pydantic_v1.parse_obj_as(Metadata, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -477,7 +477,7 @@ class AsyncServiceClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(Response, parse_obj_as(type_=Response, object_=_response.json()))  # type: ignore
+                return pydantic_v1.parse_obj_as(Response, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
