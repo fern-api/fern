@@ -16,6 +16,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
         {
           "type": "unknown",
           "value": {
+            "code-samples": undefined,
             "response": {
               "body": {
                 "message": "This is a test",
@@ -26,6 +27,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
         {
           "type": "unknown",
           "value": {
+            "code-samples": undefined,
             "response": {
               "body": {
                 "id": 1,

@@ -16,6 +16,7 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
         {
           "type": "unknown",
           "value": {
+            "code-samples": undefined,
             "name": "Chat Completion Stream",
             "request": {
               "messages": [
@@ -875,6 +876,7 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
         {
           "type": "unknown",
           "value": {
+            "code-samples": undefined,
             "name": "Chat Completion Batch",
             "request": {
               "messages": [
