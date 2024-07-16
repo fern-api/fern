@@ -6,4 +6,4 @@ export const VersionDeclarationHeaderObjectSchema = z.strictObject({
     value: z.string().describe("The wire representation of the header (e.g. X-API-Version)")
 });
 
-export type VersionDeclarationHeaderSchema = z.infer<typeof VersionDeclarationHeaderObjectSchema>;
+export type VersionDeclarationHeaderObjectSchema = z.infer<typeof VersionDeclarationHeaderObjectSchema>;

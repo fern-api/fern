@@ -18,6 +18,7 @@ import { mapValues, pickBy } from "lodash-es";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
 import { generateFernConstants } from "./converters/constants";
 import { convertApiAuth } from "./converters/convertApiAuth";
+import { convertApiVersionScheme } from "./converters/convertApiVersionScheme";
 import { convertChannel } from "./converters/convertChannel";
 import { getAudiences } from "./converters/convertDeclaration";
 import { convertEnvironments } from "./converters/convertEnvironments";
@@ -88,6 +89,10 @@ export async function generateIntermediateRepresentation({
     const variableResolver = new VariableResolverImpl();
 
     const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> = {
+        apiVersion: await convertApiVersionScheme({
+            file: rootApiFileContext,
+            rawApiFileSchema: workspace.definition.rootApiFile.contents
+        }),
         apiName: casingsGenerator.generateName(workspace.definition.rootApiFile.contents.name),
         apiDisplayName: workspace.definition.rootApiFile.contents["display-name"],
         apiDocs: await formatDocs(workspace.definition.rootApiFile.contents.docs),
