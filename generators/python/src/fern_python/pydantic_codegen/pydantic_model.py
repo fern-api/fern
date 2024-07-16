@@ -305,6 +305,7 @@ class PydanticModel:
                     writer.write_node(
                         AST.Expression(AST.ClassInstantiation(Pydantic.ConfigDict(), kwargs=config_kwargs))
                     )
+                    writer.write("  # type: ignore # Pydantic v2")
                 writer.write_newline_if_last_line_not()
                 writer.write_line("else:")
                 with writer.indent():
