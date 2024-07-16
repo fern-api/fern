@@ -2,6 +2,7 @@
 
 exports[`open api parser suger parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": "CRUD operations on a set of resources, including organizations, products, offers, entitlements, usage record groups for meterting, etc.",

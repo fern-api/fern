@@ -1,0 +1,185 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`x-fern-version x-fern-version docs 1`] = `
+{
+  "definitionFiles": {
+    "chatCompletions.yml": {
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "create": {
+            "auth": false,
+            "docs": undefined,
+            "examples": [
+              {
+                "request": {
+                  "prompt": "prompt",
+                },
+                "response": {
+                  "body": "string",
+                },
+              },
+            ],
+            "method": "POST",
+            "pagination": undefined,
+            "path": "/completions/chat",
+            "request": {
+              "body": {
+                "properties": {
+                  "prompt": "string",
+                  "stream": "optional<boolean>",
+                },
+              },
+              "headers": undefined,
+              "name": "CreateCompletionRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Success!",
+              "type": "string",
+            },
+          },
+        },
+      },
+    },
+  },
+  "packageMarkerFile": {
+    "types": {
+      "Completion": {
+        "docs": undefined,
+        "properties": {
+          "text": "optional<string>",
+        },
+      },
+      "CompletionChunk": {
+        "docs": undefined,
+        "properties": {
+          "text": "optional<string>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "auth": "BearerAuthScheme",
+    "auth-schemes": {
+      "BearerAuthScheme": {
+        "scheme": "bearer",
+      },
+    },
+    "display-name": "Test extension \`x-fern-version\`.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "headers": {
+      "X-API-Key": {
+        "env": undefined,
+        "name": "apiKey",
+        "type": "string",
+      },
+    },
+    "name": "api",
+    "version": {
+      "default": "2.0.0",
+      "header": "X-API-Version",
+      "values": [
+        "1.0.0",
+        "2.0.0",
+        "Latest",
+      ],
+    },
+  },
+}
+`;
+
+exports[`x-fern-version x-fern-version simple 1`] = `
+{
+  "definitionFiles": {
+    "chatCompletions.yml": {
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "create": {
+            "auth": false,
+            "docs": undefined,
+            "examples": [
+              {
+                "request": {
+                  "prompt": "prompt",
+                },
+                "response": {
+                  "body": "string",
+                },
+              },
+            ],
+            "method": "POST",
+            "pagination": undefined,
+            "path": "/completions/chat",
+            "request": {
+              "body": {
+                "properties": {
+                  "prompt": "string",
+                  "stream": "optional<boolean>",
+                },
+              },
+              "headers": undefined,
+              "name": "CreateCompletionRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Success!",
+              "type": "string",
+            },
+          },
+        },
+      },
+    },
+  },
+  "packageMarkerFile": {
+    "types": {
+      "Completion": {
+        "docs": undefined,
+        "properties": {
+          "text": "optional<string>",
+        },
+      },
+      "CompletionChunk": {
+        "docs": undefined,
+        "properties": {
+          "text": "optional<string>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "auth": "BearerAuthScheme",
+    "auth-schemes": {
+      "BearerAuthScheme": {
+        "scheme": "bearer",
+      },
+    },
+    "display-name": "Test extension \`x-fern-version\`.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "headers": {
+      "X-API-Key": {
+        "env": undefined,
+        "name": "apiKey",
+        "type": "string",
+      },
+    },
+    "name": "api",
+    "version": {
+      "default": "2.0.0",
+      "header": "X-API-Version",
+      "values": [
+        "1.0.0",
+        "2.0.0",
+        "Latest",
+      ],
+    },
+  },
+}
+`;
