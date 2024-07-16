@@ -10,11 +10,13 @@ export const EnumTypeDeclaration: core.serialization.ObjectSchema<
     serializers.EnumTypeDeclaration.Raw,
     FernIr.EnumTypeDeclaration
 > = core.serialization.objectWithoutOptionalProperties({
+    default: core.serialization.lazyObject(async () => (await import("../../..")).EnumValue).optional(),
     values: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).EnumValue)),
 });
 
 export declare namespace EnumTypeDeclaration {
     interface Raw {
+        default?: serializers.EnumValue.Raw | null;
         values: serializers.EnumValue.Raw[];
     }
 }

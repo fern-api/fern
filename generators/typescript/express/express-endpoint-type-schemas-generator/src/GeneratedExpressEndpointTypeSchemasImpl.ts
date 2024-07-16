@@ -135,7 +135,8 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                             allowUnrecognizedEnumValues: true,
                             allowUnrecognizedUnionMembers: true,
                             skipValidation: true,
-                            breadcrumbsPrefix: []
+                            breadcrumbsPrefix: [],
+                            omitUndefined: false
                         });
                 }
                 return context.typeSchema
@@ -145,7 +146,8 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                         allowUnrecognizedEnumValues: false,
                         allowUnrecognizedUnionMembers: false,
                         skipValidation: false,
-                        breadcrumbsPrefix: []
+                        breadcrumbsPrefix: [],
+                        omitUndefined: false
                     });
             }
 
@@ -160,7 +162,8 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                         allowUnrecognizedEnumValues: true,
                         allowUnrecognizedUnionMembers: true,
                         skipValidation: true,
-                        breadcrumbsPrefix: []
+                        breadcrumbsPrefix: [],
+                        omitUndefined: false
                     });
                 }
                 return this.generatedRequestSchema.getReferenceToZurgSchema(context).parse(referenceToRawRequest, {
@@ -168,7 +171,8 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                     allowUnrecognizedEnumValues: false,
                     allowUnrecognizedUnionMembers: false,
                     skipValidation: false,
-                    breadcrumbsPrefix: []
+                    breadcrumbsPrefix: [],
+                    omitUndefined: false
                 });
             default:
                 assertNever(this.endpoint.requestBody.requestBodyType);
@@ -205,7 +209,8 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                     .jsonOrThrow(referenceToParsedResponse, {
                         ...getSchemaOptions({
                             allowExtraFields: this.allowExtraFields,
-                            skipValidation: this.skipResponseValidation
+                            skipValidation: this.skipResponseValidation,
+                            omitUndefined: false
                         })
                     });
             case "primitive":
@@ -218,7 +223,8 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                     .jsonOrThrow(referenceToParsedResponse, {
                         ...getSchemaOptions({
                             allowExtraFields: this.allowExtraFields,
-                            skipValidation: this.skipResponseValidation
+                            skipValidation: this.skipResponseValidation,
+                            omitUndefined: false
                         })
                     });
             default:

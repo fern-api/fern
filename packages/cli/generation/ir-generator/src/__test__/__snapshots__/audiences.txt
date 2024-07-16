@@ -23,6 +23,7 @@ exports[`generate IR 1`] = `
       "unsafeName": "api",
     },
   },
+  "apiVersion": null,
   "auth": {
     "docs": null,
     "requirement": "ALL",

@@ -451,12 +451,23 @@ export function convertSchemaObject(
 
     // handle oneOf
     if (schema.oneOf != null && schema.oneOf.length > 0) {
+        const isUndiscriminated = getExtension(schema, FernOpenAPIExtension.IS_UNDISCRIMINATED);
         if (
             schema.discriminator != null &&
             schema.discriminator.mapping != null &&
             Object.keys(schema.discriminator.mapping).length > 0
         ) {
-            if (!context.options.discriminatedUnionV2) {
+            if (context.options.discriminatedUnionV2 || isUndiscriminated) {
+                return convertUndiscriminatedOneOfWithDiscriminant({
+                    nameOverride,
+                    generatedName,
+                    description,
+                    wrapAsNullable,
+                    context,
+                    groupName,
+                    discriminator: schema.discriminator
+                });
+            } else {
                 return convertDiscriminatedOneOf({
                     nameOverride,
                     generatedName,
@@ -468,16 +479,6 @@ export function convertSchemaObject(
                     wrapAsNullable,
                     context,
                     groupName
-                });
-            } else {
-                return convertUndiscriminatedOneOfWithDiscriminant({
-                    nameOverride,
-                    generatedName,
-                    description,
-                    wrapAsNullable,
-                    context,
-                    groupName,
-                    discriminator: schema.discriminator
                 });
             }
         } else if (schema.oneOf.length === 1 && schema.oneOf[0] != null) {
@@ -516,7 +517,7 @@ export function convertSchemaObject(
             }
 
             const maybeDiscriminant = getDiscriminant({ schemas: schema.oneOf, context });
-            if (maybeDiscriminant != null && !context.options.discriminatedUnionV2) {
+            if (maybeDiscriminant != null && !context.options.discriminatedUnionV2 && !isUndiscriminated) {
                 return convertDiscriminatedOneOfWithVariants({
                     nameOverride,
                     generatedName,

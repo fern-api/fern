@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "clean": "yarn workspaces foreach --verbose --parallel --topological-dev run clean",
-    "compile": "yarn workspaces foreach --verbose --parallel --topological-dev run compile",
+    "compile": "yarn workspaces foreach --exclude @fern-api/template-codegen --verbose --parallel --topological-dev run compile",
     "test": "yarn compile && jest --passWithNoTests",
     "test:ete": "yarn workspace @fern-api/cli dist:cli:dev && yarn workspace @fern-api/seed-cli dist:cli && yarn workspace @fern-api/ete-tests test",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path .eslintignore",
@@ -59,7 +59,7 @@
     "@blueprintjs/eslint-plugin": "^2.1.2",
     "@blueprintjs/stylelint-plugin": "^4.1.3",
     "@types/is-ci": "^3.0.4",
-    "@types/jest": "^29.0.3",
+    "@types/jest": "^29.5.12",
     "@types/lodash-es": "^4.17.6",
     "@types/node": "^18.7.18",
     "@typescript-eslint/eslint-plugin": "^5.27.1",

@@ -23,6 +23,7 @@ exports[`generate IR from OpenAPI 1`] = `
       "unsafeName": "api",
     },
   },
+  "apiVersion": null,
   "auth": {
     "docs": null,
     "requirement": "ALL",
@@ -1345,6 +1346,7 @@ exports[`generate IR from OpenAPI 1`] = `
       "referencedTypes": [],
       "shape": {
         "_type": "enum",
+        "default": null,
         "values": [
           {
             "availability": null,
@@ -1436,6 +1438,7 @@ exports[`generate IR from OpenAPI 1`] = `
       "referencedTypes": [],
       "shape": {
         "_type": "enum",
+        "default": null,
         "values": [
           {
             "availability": null,

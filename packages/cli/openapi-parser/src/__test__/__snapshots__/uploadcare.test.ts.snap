@@ -2,6 +2,7 @@
 
 exports[`open api parser uploadcare parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": "### Summary

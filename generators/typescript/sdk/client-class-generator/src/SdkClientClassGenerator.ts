@@ -21,6 +21,7 @@ export declare namespace SdkClientClassGenerator {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
+        omitUndefined: boolean;
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     }
 
@@ -49,6 +50,7 @@ export class SdkClientClassGenerator {
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
     private inlineFileProperties: boolean;
+    private omitUndefined: boolean;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
 
     constructor({
@@ -66,7 +68,8 @@ export class SdkClientClassGenerator {
         includeSerdeLayer,
         retainOriginalCasing,
         inlineFileProperties,
-        oauthTokenProviderGenerator
+        oauthTokenProviderGenerator,
+        omitUndefined
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -83,6 +86,7 @@ export class SdkClientClassGenerator {
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
+        this.omitUndefined = omitUndefined;
     }
 
     public generateService({
@@ -110,7 +114,8 @@ export class SdkClientClassGenerator {
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
             inlineFileProperties: this.inlineFileProperties,
-            oauthTokenProviderGenerator: this.oauthTokenProviderGenerator
+            oauthTokenProviderGenerator: this.oauthTokenProviderGenerator,
+            omitUndefined: this.omitUndefined
         });
     }
 }

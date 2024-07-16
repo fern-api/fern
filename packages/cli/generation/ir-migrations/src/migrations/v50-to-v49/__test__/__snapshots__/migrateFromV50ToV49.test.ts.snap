@@ -23,6 +23,7 @@ exports[`migrateFromV50ToV49 simple 1`] = `
       "unsafeName": "simple_api",
     },
   },
+  "apiVersion": null,
   "auth": {
     "docs": null,
     "requirement": "ALL",

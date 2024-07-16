@@ -81,6 +81,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                 unrecognizedObjectKeys: opts?.unrecognizedObjectKeys,
                 skipValidation: opts?.skipValidation,
                 breadcrumbsPrefix: opts?.breadcrumbsPrefix,
+                omitUndefined: opts?.omitUndefined,
             });
         },
 
@@ -133,6 +134,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                 unrecognizedObjectKeys: opts?.unrecognizedObjectKeys,
                 skipValidation: opts?.skipValidation,
                 breadcrumbsPrefix: opts?.breadcrumbsPrefix,
+                omitUndefined: opts?.omitUndefined,
             });
         },
 
@@ -163,6 +165,7 @@ function validateAndTransformObject<Transformed>({
     unrecognizedObjectKeys: "fail" | "passthrough" | "strip" | undefined;
     skipValidation: boolean | undefined;
     breadcrumbsPrefix: string[] | undefined;
+    omitUndefined: boolean | undefined;
 }): MaybeValid<Transformed> {
     if (!isPlainObject(value)) {
         return {

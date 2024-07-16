@@ -53,6 +53,12 @@ export function optional<Raw, Parsed>(
             return schema.parse(raw, opts);
         },
         json: (parsed, opts) => {
+            if (opts?.omitUndefined && parsed === undefined) {
+                return {
+                    ok: true,
+                    value: undefined,
+                };
+            }
             if (parsed == null) {
                 return {
                     ok: true,

@@ -35,6 +35,7 @@ import { ConvertedOperation } from "./converters/operation/convertOperation";
 import { FernOpenAPIExtension } from "./extensions/fernExtensions";
 import { getFernBasePath } from "./extensions/getFernBasePath";
 import { getFernGroups } from "./extensions/getFernGroups";
+import { getFernVersion } from "./extensions/getFernVersion";
 import { getGlobalHeaders } from "./extensions/getGlobalHeaders";
 import { getIdempotencyHeaders } from "./extensions/getIdempotencyHeaders";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
@@ -269,6 +270,10 @@ export function generateIr({
     const groupInfo = getFernGroups({ document: openApi, context });
 
     const ir: OpenApiIntermediateRepresentation = {
+        apiVersion: getFernVersion({
+            context,
+            document: openApi
+        }),
         basePath: getFernBasePath(openApi),
         title: openApi.info.title,
         description: openApi.info.description,

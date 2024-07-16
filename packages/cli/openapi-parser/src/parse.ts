@@ -44,6 +44,7 @@ export async function parse({
     optionOverrides?: Partial<ParseOpenAPIOptions>;
 }): Promise<OpenApiIntermediateRepresentation> {
     let ir: OpenApiIntermediateRepresentation = {
+        apiVersion: undefined,
         title: undefined,
         description: undefined,
         basePath: undefined,
@@ -146,6 +147,7 @@ function merge(
     ir2: OpenApiIntermediateRepresentation
 ): OpenApiIntermediateRepresentation {
     return {
+        apiVersion: ir1.apiVersion ?? ir2.apiVersion,
         title: ir1.title ?? ir2.title,
         description: ir1.description ?? ir2.description,
         basePath: ir1.basePath ?? ir2.basePath,

@@ -31,7 +31,7 @@
     "whatwg-mimetype": "^4.0.0"
   },
   "devDependencies": {
-    "@types/jest": "^29.0.3",
+    "@types/jest": "^29.5.12",
     "@types/node": "^18.7.18",
     "@types/ua-parser-js": "^0.7.39",
     "@types/whatwg-mimetype": "^3.0.2",

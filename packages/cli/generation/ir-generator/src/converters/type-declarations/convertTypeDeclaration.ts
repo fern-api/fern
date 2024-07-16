@@ -99,6 +99,6 @@ export async function convertType({
         object: (object) => convertObjectTypeDeclaration({ object, file }),
         discriminatedUnion: (union) => convertDiscriminatedUnionTypeDeclaration({ union, file, typeResolver }),
         undiscriminatedUnion: (union) => convertUndiscriminatedUnionTypeDeclaration({ union, file }),
-        enum: (enum_) => convertEnumTypeDeclaration({ _enum: enum_, file })
+        enum: async (enum_) => Type.enum(await convertEnumTypeDeclaration({ _enum: enum_, file }))
     });
 }

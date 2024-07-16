@@ -15,6 +15,7 @@ types:
   IntermediateRepresentation:
     docs: "Complete representation of the API schema"
     properties:
+      apiVersion: optional<ApiVersionScheme>
       apiName:
         type: commons.Name
         docs: This is the human readable unique id for the API.
@@ -82,6 +83,22 @@ types:
       language: string
       sdkName: string
       sdkVersion: string
+  ApiVersionScheme:
+    docs: |
+      The available set of versions for the API. This is used to generate a special
+      enum that can be used to specify the version of the API to use.
+    union:
+      header: HeaderApiVersionScheme
+  HeaderApiVersionScheme:
+    docs: |
+      The version information is sent as an HTTP header (e.g. X-API-Version) on every request.
+
+      If the enum does _not_ define a default value, the version should be treated like
+      a required global header parameter. The version header should also support any
+      environment variable scanning specified by the header.
+    properties:
+      header: http.HttpHeader
+      value: types.EnumTypeDeclaration
   ErrorDiscriminationStrategy:
     union:
       statusCode: {}

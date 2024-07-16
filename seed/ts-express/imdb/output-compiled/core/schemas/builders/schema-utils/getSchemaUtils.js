@@ -40,6 +40,12 @@ function optional(schema) {
             return schema.parse(raw, opts);
         },
         json: (parsed, opts) => {
+            if ((opts === null || opts === void 0 ? void 0 : opts.omitUndefined) && parsed === undefined) {
+                return {
+                    ok: true,
+                    value: undefined,
+                };
+            }
             if (parsed == null) {
                 return {
                     ok: true,

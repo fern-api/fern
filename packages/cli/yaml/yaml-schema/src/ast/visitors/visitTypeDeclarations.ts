@@ -204,6 +204,7 @@ export async function visitTypeDeclaration({
                 },
                 availability: noop,
                 audiences: noop,
+                default: noop,
                 examples: visitExamples
             });
         }
