@@ -140,6 +140,7 @@ scripts:
       - export HOME="$(pwd)/"
       - poetry config virtualenvs.path .
       - poetry add pydantic=^2.8
+      - poetry lock
       - poetry install
       - poetry run mypy .
       - fern test --command "poetry run pytest -rP ."
@@ -150,6 +151,7 @@ scripts:
       - export HOME="$(pwd)/"
       - poetry config virtualenvs.path .
       - poetry add pydantic=^1.10
+      - poetry lock
       - poetry install
       - poetry run mypy .
       - fern test --command "poetry run pytest -rP ."

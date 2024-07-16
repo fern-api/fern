@@ -2,9 +2,10 @@
 
 
 from datetime import datetime, date
-from re import M
 from typing import cast
 import uuid
+
+import pytest
 from core_utilities.sdk.unchecked_base_model import construct_type
 from .example_models.manual_types.defaulted_object import ObjectWithDefaultedOptionalFields
 from .example_models.types.resources.types import ObjectWithOptionalField, Circle, Shape_Square, Shape_Circle

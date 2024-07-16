@@ -76,15 +76,11 @@ class UncheckedBaseModel(UniversalBaseModel):
                 else:
                     type_ = typing.cast(typing.Type, field.outer_type_)  # type: ignore # Pydantic < v1.10.15
 
-                if type_ is None:
-                    # No type was found for the field, skip it for now
-                    # even though this is technically not expected behavior
-                    continue
-
                 fields_values[name] = construct_type(object_=values[key], type_=type_)
                 _fields_set.add(name)
             else:
                 default = _get_field_default(field)
+                fields_values[name] = default
 
                 # If the default values are non-null act like they've been set
                 # This effectively allows exclude_unset to work like exclude_none where
@@ -94,8 +90,6 @@ class UncheckedBaseModel(UniversalBaseModel):
 
         # Add extras back in
         extras = {}
-        # for key, value in values.items():
-        #     if key not in fields:
         alias_fields = [field.alias for field in fields.values()]
         for key, value in values.items():
             if key not in alias_fields and key not in fields:
