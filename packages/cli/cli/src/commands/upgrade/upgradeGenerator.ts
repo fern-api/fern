@@ -28,7 +28,7 @@ export async function loadAndUpdateGenerators({
         return undefined;
     }
     const contents = await readFile(filepath);
-    context.logger.info(`Found generators: ${contents.toString()}`);
+    context.logger.debug(`Found generators: ${contents.toString()}`);
 
     const parsedDocument = YAML.parseDocument(contents.toString());
     // We cannot use zod to parse the schema since then it loses order
@@ -42,7 +42,7 @@ export async function loadAndUpdateGenerators({
         context.failAndThrow(`Expected 'groups' to be a map in ${path.relative(process.cwd(), filepath)}`);
         return undefined;
     }
-    context.logger.info(`Groups found: ${generatorGroups.toString()}`);
+    context.logger.debug(`Groups found: ${generatorGroups.toString()}`);
 
     for (const groupBlock of generatorGroups.items) {
         const groupName = groupBlock.key;
@@ -67,7 +67,7 @@ export async function loadAndUpdateGenerators({
             );
             continue;
         }
-        context.logger.info(`Generators found: ${generators.toString()}`);
+        context.logger.debug(`Generators found: ${generators.toString()}`);
         for (const generator of generators.items) {
             if (!YAML.isMap(generator)) {
                 context.failAndThrow(
@@ -84,7 +84,7 @@ export async function loadAndUpdateGenerators({
             const currentVersion = generator.get("version") as string;
 
             const latestVersion = await generatorsYml.getLatestGeneratorVersion(normalizedGeneratorName, context);
-            context.logger.info(`${generatorName}, ${currentVersion}, ${latestVersion}`);
+            context.logger.debug(`${generatorName}, ${currentVersion}, ${latestVersion}`);
 
             if (latestVersion == null) {
                 continue;
