@@ -13,14 +13,14 @@ export const ExampleMapContainer: core.serialization.ObjectSchema<
     map: core.serialization.list(
         core.serialization.lazyObject(async () => (await import("../../..")).ExampleKeyValuePair)
     ),
-    keyType: core.serialization.lazy(async () => (await import("../../..")).TypeReference).optional(),
-    valueType: core.serialization.lazy(async () => (await import("../../..")).TypeReference).optional(),
+    keyType: core.serialization.lazy(async () => (await import("../../..")).TypeReference),
+    valueType: core.serialization.lazy(async () => (await import("../../..")).TypeReference),
 });
 
 export declare namespace ExampleMapContainer {
     interface Raw {
         map: serializers.ExampleKeyValuePair.Raw[];
-        keyType?: serializers.TypeReference.Raw | null;
-        valueType?: serializers.TypeReference.Raw | null;
+        keyType: serializers.TypeReference.Raw;
+        valueType: serializers.TypeReference.Raw;
     }
 }

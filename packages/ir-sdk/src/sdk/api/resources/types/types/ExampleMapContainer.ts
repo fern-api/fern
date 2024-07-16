@@ -6,6 +6,6 @@ import * as FernIr from "../../..";
 
 export interface ExampleMapContainer {
     map: FernIr.ExampleKeyValuePair[];
-    keyType: FernIr.TypeReference | undefined;
-    valueType: FernIr.TypeReference | undefined;
+    keyType: FernIr.TypeReference;
+    valueType: FernIr.TypeReference;
 }

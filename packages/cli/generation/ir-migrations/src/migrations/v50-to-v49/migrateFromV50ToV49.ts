@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { GeneratorName } from "@fern-api/configuration";
 import { mapValues } from "lodash-es";
 import { IrSerialization } from "../../ir-serialization";
@@ -95,7 +94,7 @@ export const V50_TO_V49_MIGRATION: IrMigration<
                     })
                 };
             }
-        ) as any;
+        );
         return {
             ...v50,
             auth: convertAuth(v50.auth),
@@ -125,7 +124,7 @@ function convertWebsocketChannel(
         ),
         pathParameters: websocketChannel.pathParameters.map((pathParameter) => convertPathParameter(pathParameter)),
         messages: websocketChannel.messages.map((message) => convertWebsocketMessage(message))
-    } as any;
+    };
 }
 
 function convertWebsocketMessage(
@@ -168,7 +167,7 @@ function convertWebhook(webhook: IrVersions.V50.webhooks.Webhook): IrVersions.V4
         ...webhook,
         headers: webhook.headers.map((header) => convertHttpHeader(header)),
         payload: convertWebhookPayload(webhook.payload)
-    } as any;
+    };
 }
 
 function convertWebhookPayload(
@@ -452,14 +451,14 @@ function convertEndpoint(endpoint: IrVersions.V50.http.HttpEndpoint): IrVersions
         response: endpoint.response != null ? convertHttpResponse(endpoint.response) : undefined,
         headers: endpoint.headers.map((header) => convertHttpHeader(header)),
         queryParameters: endpoint.queryParameters.map((queryParameter) => convertQueryParameter(queryParameter))
-    } as any;
+    };
 }
 
 function convertHttpResponse(response: IrVersions.V50.http.HttpResponse): IrVersions.V49.http.HttpResponse {
     return {
         ...response,
         body: response.body != null ? convertResponseBody(response.body) : undefined
-    } as any;
+    };
 }
 
 function convertResponseBody(responseBody: IrVersions.V50.http.HttpResponseBody): IrVersions.V49.http.HttpResponseBody {
@@ -703,5 +702,5 @@ function convertErrorDeclaration(
     return {
         ...error,
         type: error.type != null ? convertTypeReference(error.type) : undefined
-    } as any;
+    };
 }

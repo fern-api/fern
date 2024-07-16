@@ -3581,9 +3581,7 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
                           },
                           "shape": {
                             "type": "unknown",
-                            "unknown": {
-                              "key": "value",
-                            },
+                            "unknown": undefined,
                           },
                         },
                         "type": "optional",

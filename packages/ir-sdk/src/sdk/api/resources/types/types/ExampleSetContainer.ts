@@ -6,5 +6,5 @@ import * as FernIr from "../../..";
 
 export interface ExampleSetContainer {
     set: FernIr.ExampleTypeReference[];
-    itemType: FernIr.TypeReference | undefined;
+    itemType: FernIr.TypeReference;
 }

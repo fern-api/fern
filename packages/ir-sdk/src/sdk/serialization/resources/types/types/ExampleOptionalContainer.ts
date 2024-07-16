@@ -11,12 +11,12 @@ export const ExampleOptionalContainer: core.serialization.ObjectSchema<
     FernIr.ExampleOptionalContainer
 > = core.serialization.objectWithoutOptionalProperties({
     optional: core.serialization.lazyObject(async () => (await import("../../..")).ExampleTypeReference).optional(),
-    valueType: core.serialization.lazy(async () => (await import("../../..")).TypeReference).optional(),
+    valueType: core.serialization.lazy(async () => (await import("../../..")).TypeReference),
 });
 
 export declare namespace ExampleOptionalContainer {
     interface Raw {
         optional?: serializers.ExampleTypeReference.Raw | null;
-        valueType?: serializers.TypeReference.Raw | null;
+        valueType: serializers.TypeReference.Raw;
     }
 }
