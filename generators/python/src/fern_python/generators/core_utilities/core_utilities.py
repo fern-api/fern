@@ -2,7 +2,6 @@ import os
 from typing import Set
 
 from fern_python.codegen import AST, Filepath, Project
-from fern_python.external_dependencies.pydantic import PydanticVersionCompatibility
 from fern_python.source_file_factory import SourceFileFactory
 
 
@@ -129,7 +128,7 @@ class CoreUtilities:
         return (
             self._construct_type(type_of_obj, obj)
             if self._allow_skipping_validation
-            else self.get_parse_obj_as(PydanticVersionCompatibility.Both, type_of_obj, obj)
+            else self.get_parse_obj_as(type_of_obj, obj)
         )
 
     def get_pydantic_deep_union_import(self) -> AST.Reference:

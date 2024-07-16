@@ -37,7 +37,7 @@ def jsonable_encoder(obj: Any, custom_encoder: Optional[Dict[Any, Callable[[Any]
         if IS_PYDANTIC_V2:
             encoder = getattr(obj.model_config, "json_encoders", {})  # type: ignore
         else:
-            encoder = getattr(obj.__config__, "json_encoders", {})  # type: ignore
+            encoder = getattr(obj.__config__, "json_encoders", {})
         if custom_encoder:
             encoder.update(custom_encoder)
         obj_dict = obj.dict(by_alias=True)

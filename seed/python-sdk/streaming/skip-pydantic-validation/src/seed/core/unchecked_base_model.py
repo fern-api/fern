@@ -7,16 +7,19 @@ import uuid
 
 import pydantic
 import typing_extensions
-from pydantic.fields import FieldInfo
 from pydantic_core import PydanticUndefined
 
-from .pydantic_utilities import get_args  # type: ignore
-from .pydantic_utilities import get_origin  # type: ignore
-from .pydantic_utilities import is_literal_type  # type: ignore
-from .pydantic_utilities import is_union  # type: ignore
-from .pydantic_utilities import parse_date  # type: ignore
-from .pydantic_utilities import parse_datetime  # type: ignore
-from .pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, parse_obj_as
+from .pydantic_utilities import (
+    IS_PYDANTIC_V2,
+    UniversalBaseModel,
+    get_args,
+    get_origin,
+    is_literal_type,
+    is_union,
+    parse_date,
+    parse_datetime,
+    parse_obj_as,
+)
 
 
 class UnionMetadata:
@@ -32,7 +35,7 @@ Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
 class UncheckedBaseModel(UniversalBaseModel):
     if IS_PYDANTIC_V2:
         # Note: `smart_union` is on by defautl in Pydantic v2
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -51,7 +54,7 @@ class UncheckedBaseModel(UniversalBaseModel):
     def construct(
         cls: typing.Type["Model"], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
     ) -> "Model":
-        m = cls.__new__(cls)  # type: ignore
+        m = cls.__new__(cls)
         fields_values = {}
 
         if _fields_set is None:
@@ -70,9 +73,9 @@ class UncheckedBaseModel(UniversalBaseModel):
 
             if key in values:
                 if IS_PYDANTIC_V2:
-                    type_ = field.annotation  # type: ignore
+                    type_ = field.annotation  # type: ignore # Pydantic v2
                 else:
-                    type_ = typing.cast(typing.Type, field.outer_type_)  # type: ignore
+                    type_ = typing.cast(typing.Type, field.outer_type_)  # type: ignore # Pydantic < v1.10.15
 
                 if type_ is None:
                     # No type was found for the field, skip it for now
@@ -111,7 +114,7 @@ class UncheckedBaseModel(UniversalBaseModel):
             object.__setattr__(m, "__pydantic_fields_set__", _fields_set)
         else:
             object.__setattr__(m, "__fields_set__", _fields_set)
-            m._init_private_attributes()  # type: ignore
+            m._init_private_attributes()
         return m
 
 
@@ -255,18 +258,26 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
 
 def _get_is_populate_by_name(model: typing.Type["Model"]) -> bool:
     if IS_PYDANTIC_V2:
-        return model.model_config.get("populate_by_name", False)
-    return model.__config__.allow_population_by_field_name  # type: ignore
+        return model.model_config.get("populate_by_name", False)  # type: ignore # Pydantic v2
+    return model.__config__.allow_population_by_field_name
 
 
-def _get_model_fields(model: typing.Type["Model"]) -> typing.Dict[str, pydantic.fields.FieldInfo]:
+PydanticField = typing.Union[pydantic.fields.ModelField, pydantic.fields.FieldInfo]
+
+# Pydantic V1 swapped the typing of __fields__'s values from ModelField to FieldInfo
+# And so we try to handle both V1 cases, as well as V2 (FieldInfo from model.model_fields)
+def _get_model_fields(model: typing.Type["Model"]) -> typing.Mapping[str, PydanticField]:
     if IS_PYDANTIC_V2:
-        return model.model_fields
-    return model.__fields__
+        return model.model_fields  # type: ignore # Pydantic v2
+    else:
+        return model.__fields__
 
 
-def _get_field_default(field: FieldInfo) -> typing.Any:
-    value = field.get_default()
+def _get_field_default(field: PydanticField) -> typing.Any:
+    try:
+        value = field.get_default()  # type: ignore # Pydantic < v1.10.15
+    except:
+        value = field.default
     if IS_PYDANTIC_V2:
         from pydantic_core import PydanticUndefined
 

@@ -48,15 +48,7 @@ class SourceFile(ClassParent):
         ...
 
     @abstractmethod
-    def add_conditional_class_declaration(
-        self, declaration: AST.ClassDeclaration, conditional_tree: AST.ConditionalTree, should_export: bool = None
-    ) -> LocalClassReference:
-        ...
-
-    @abstractmethod
-    def get_dummy_class_declaration(
-        self, declaration: AST.ClassDeclaration, should_export: bool = None
-    ) -> LocalClassReference:
+    def get_dummy_class_declaration(self, declaration: AST.ClassDeclaration) -> LocalClassReference:
         ...
 
 
@@ -146,39 +138,6 @@ class SourceFileImpl(SourceFile):
                 declaration: AST.ClassDeclaration,
                 should_export: bool = None,
             ) -> LocalClassReference:
-                return LocalClassReferenceImpl(
-                    qualified_name_excluding_import=(
-                        class_reference_self.qualified_name_excluding_import + (declaration.name,)
-                    ),
-                    import_=AST.ReferenceImport(
-                        module=AST.Module.local(*self._module_path),
-                        named_import=new_declaration.name,
-                    ),
-                )
-
-        return LocalClassReferenceImpl(
-            qualified_name_excluding_import=(),
-            import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path),
-                named_import=declaration.name,
-            ),
-        )
-
-    def add_conditional_class_declaration(
-        self,
-        declaration: AST.ClassDeclaration,
-        conditional_tree: AST.ConditionalTree,
-    ) -> LocalClassReference:
-        self._statements.append(TopLevelStatement(node=conditional_tree.as_expression()))
-        new_declaration = declaration
-
-        class LocalClassReferenceImpl(LocalClassReference):
-            def add_class_declaration(
-                class_reference_self,
-                declaration: AST.ClassDeclaration,
-                should_export: bool = None,
-            ) -> LocalClassReference:
-                new_declaration.add_class(declaration)
                 return LocalClassReferenceImpl(
                     qualified_name_excluding_import=(
                         class_reference_self.qualified_name_excluding_import + (declaration.name,)

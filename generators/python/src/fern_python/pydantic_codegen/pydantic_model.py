@@ -152,7 +152,7 @@ class PydanticModel:
                 type_hint=type_hint,
                 initializer=AST.Expression(
                     AST.ClassInstantiation(
-                        Pydantic.PrivateAttr(self._version),
+                        Pydantic.PrivateAttr(),
                         kwargs=[("default_factory", default_factory)] if default_factory is not None else [],
                     )
                 ),
@@ -281,7 +281,7 @@ class PydanticModel:
             is_forward_reference=True,
         )
 
-    def _maybe_model_config(self) -> Optional[AST.Expression]:
+    def _maybe_model_config(self) -> None:
         extra_fields = self._extra_fields
         config_kwargs: List[Tuple[str, AST.Expression]] = []
         if extra_fields == "allow" or extra_fields == "forbid":
