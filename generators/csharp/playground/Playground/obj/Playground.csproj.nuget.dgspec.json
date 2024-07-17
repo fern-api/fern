@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/danielburke/Documents/Fern/fern/generators/csharp/playground/Playground/Playground.csproj": {}
+    "/Users/dsinghvi/Git/fern/generators/csharp/playground/Playground/Playground.csproj": {}
   },
   "projects": {
-    "/Users/danielburke/Documents/Fern/fern/generators/csharp/playground/Playground/Playground.csproj": {
+    "/Users/dsinghvi/Git/fern/generators/csharp/playground/Playground/Playground.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/danielburke/Documents/Fern/fern/generators/csharp/playground/Playground/Playground.csproj",
+        "projectUniqueName": "/Users/dsinghvi/Git/fern/generators/csharp/playground/Playground/Playground.csproj",
         "projectName": "Playground",
-        "projectPath": "/Users/danielburke/Documents/Fern/fern/generators/csharp/playground/Playground/Playground.csproj",
-        "packagesPath": "/Users/danielburke/.nuget/packages/",
-        "outputPath": "/Users/danielburke/Documents/Fern/fern/generators/csharp/playground/Playground/obj/",
+        "projectPath": "/Users/dsinghvi/Git/fern/generators/csharp/playground/Playground/Playground.csproj",
+        "packagesPath": "/Users/dsinghvi/.nuget/packages/",
+        "outputPath": "/Users/dsinghvi/Git/fern/generators/csharp/playground/Playground/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/danielburke/.nuget/NuGet/NuGet.Config"
+          "/Users/dsinghvi/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -58,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.302/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

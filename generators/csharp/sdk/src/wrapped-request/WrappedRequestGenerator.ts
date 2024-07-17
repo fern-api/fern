@@ -1,11 +1,14 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import { getUndiscriminatedUnionSerializerAnnotation } from "@fern-api/fern-csharp-model";
-import { SnippetHelper } from "@fern-api/fern-csharp-model/src/SnippetHelper";
+import { getUndiscriminatedUnionSerializerAnnotation, SnippetHelper } from "@fern-api/fern-csharp-model";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { Name } from "@fern-api/ir-sdk/lib/sdk/api/resources/commons/types/Name";
-import { ExampleEndpointCall } from "@fern-api/ir-sdk/lib/sdk/api/resources/http/types/ExampleEndpointCall";
-import { ExampleTypeReference } from "@fern-api/ir-sdk/lib/sdk/api/resources/types/types/ExampleTypeReference";
-import { HttpEndpoint, SdkRequestWrapper, ServiceId } from "@fern-fern/ir-sdk/api";
+import {
+    ExampleEndpointCall,
+    ExampleTypeReference,
+    HttpEndpoint,
+    Name,
+    SdkRequestWrapper,
+    ServiceId
+} from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 

@@ -1,15 +1,17 @@
-import { ExampleTypeReference } from "@fern-api/ir-sdk/lib/sdk/api/resources/types/types/ExampleTypeReference";
 import { csharp } from "@fern-api/csharp-codegen";
-import { ExampleNamedType } from "@fern-api/ir-sdk/lib/sdk/api/resources/types/types";
-import { ExampleObjectType } from "@fern-api/ir-sdk/lib/sdk/api/resources/types/types/ExampleObjectType";
-import { ObjectTypeDeclaration } from "@fern-api/ir-sdk/lib/sdk/api/resources/types/types/ObjectTypeDeclaration";
-import { ObjectGenerator } from "./object/ObjectGenerator";
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
-import { ExampleUndiscriminatedUnionType } from "@fern-api/ir-sdk/lib/sdk/api/resources/types/types/ExampleUndiscriminatedUnionType";
-import { ExampleUnionType } from "@fern-api/ir-sdk/lib/sdk/api/resources/types/types/ExampleUnionType";
-import { ExampleContainer } from "@fern-api/ir-sdk/lib/sdk/api/resources/types/types/ExampleContainer";
-import { ExamplePrimitive } from "@fern-api/ir-sdk/lib/sdk/api/resources/types/types/ExamplePrimitive";
+import {
+    ExampleContainer,
+    ExampleNamedType,
+    ExampleObjectType,
+    ExamplePrimitive,
+    ExampleTypeReference,
+    ExampleUndiscriminatedUnionType,
+    ExampleUnionType,
+    ObjectTypeDeclaration
+} from "@fern-fern/ir-sdk/api";
 import { execSync } from "child_process";
+import { ModelGeneratorContext } from "./ModelGeneratorContext";
+import { ObjectGenerator } from "./object/ObjectGenerator";
 
 export class SnippetHelper {
     private context: ModelGeneratorContext;

@@ -15,6 +15,5 @@
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "python.analysis.typeCheckingMode": "basic",
-  "java.compile.nullAnalysis.mode": "automatic"
+  "python.analysis.typeCheckingMode": "basic"
 }

@@ -16,10 +16,10 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
             object: (otd: ObjectTypeDeclaration) => {
                 const objectGenerator = new ObjectGenerator(context, typeDeclaration, otd);
                 const generatedObjectCSharpFile = objectGenerator.generate();
-                if (typeDeclaration.examples.length === 0) {
+                if (typeDeclaration.userProvidedExamples.length === 0) {
                     return generatedObjectCSharpFile;
                 }
-                const testInputs = typeDeclaration.examples.map((example) => {
+                const testInputs = typeDeclaration.userProvidedExamples.map((example) => {
                     const exampleObjectType = example.shape._visit({
                         alias: () => undefined,
                         enum: () => undefined,
