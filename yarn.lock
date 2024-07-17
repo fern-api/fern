@@ -4004,7 +4004,7 @@ __metadata:
     "@fern-fern/ir-v48-sdk": 0.0.1
     "@fern-fern/ir-v49-sdk": 0.0.1
     "@fern-fern/ir-v5-model": 0.0.3
-    "@fern-fern/ir-v50-sdk": 0.0.1
+    "@fern-fern/ir-v50-sdk": 0.0.3
     "@fern-fern/ir-v6-model": 0.0.33
     "@fern-fern/ir-v7-model": 0.0.2
     "@fern-fern/ir-v8-model": 0.0.1
@@ -5202,10 +5202,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-v50-sdk@npm:0.0.1":
-  version: 0.0.1
-  resolution: "@fern-fern/ir-v50-sdk@npm:0.0.1"
-  checksum: 0aee4fb1bf20b64dc663bae1344fb79c412a0eb93d121e2ea8f75c088cb38779afe407e8bfe4c5bfa9bd0d2071a7814f92e7a8c35657df310428fa29ab1b5b74
+"@fern-fern/ir-v50-sdk@npm:0.0.3":
+  version: 0.0.3
+  resolution: "@fern-fern/ir-v50-sdk@npm:0.0.3"
+  checksum: 765f402f930b6041d651e1f00c2f8e04cea6d3c87dc03d17ae8e02ffa5eae96a121077cf2d523c3ac8e847c918e9e199a5e6002866dde6d5f1dbde177045100b
   languageName: node
   linkType: hard
 
