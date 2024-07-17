@@ -44,6 +44,7 @@ else:
     from pydantic.typing import get_origin as get_origin  # type: ignore # Pydantic v1
     from pydantic.typing import is_literal_type as is_literal_type  # type: ignore # Pydantic v1
     from pydantic.typing import is_union as is_union  # type: ignore # Pydantic v1
+
     # isort: on
 
 
@@ -84,17 +85,11 @@ def to_jsonable_with_fallback(
 
 
 class UniversalBaseModel(pydantic.BaseModel):
-    if IS_PYDANTIC_V2:
-        # Note: `smart_union` is on by default in Pydantic v2
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(  # type: ignore # Pydantic v2
-            populate_by_name=True, json_encoders={dt.datetime: serialize_datetime}
-        )
-    else:
-
-        class Config:
-            smart_union = True
-            allow_population_by_field_name = True
-            json_encoders = {dt.datetime: serialize_datetime}
+    class Config:
+        populate_by_name = True
+        smart_union = True
+        allow_population_by_field_name = True
+        json_encoders = {dt.datetime: serialize_datetime}
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
