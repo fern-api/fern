@@ -17,7 +17,7 @@ class OAuthTokenProvider:
         self._auth_client = AuthClient(client_wrapper=client_wrapper)
 
     def get_token(self) -> str:
-        if self._access_token and self._expires_at > dt.datetime.now():
+        if self._access_token:
             return self._access_token
         return self._refresh()
 
