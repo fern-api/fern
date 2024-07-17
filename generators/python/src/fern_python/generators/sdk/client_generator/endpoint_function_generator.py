@@ -15,11 +15,15 @@ from fern_python.generators.sdk.client_generator.endpoint_metadata_collector imp
 )
 from fern_python.generators.sdk.client_generator.endpoint_response_code_writer import (
     EndpointResponseCodeWriter,
-    raise_stream_parameter_unsupported,
 )
 from fern_python.generators.sdk.client_generator.pagination.abstract_paginator import (
     PaginationSnippetConfig,
+)
+from fern_python.generators.sdk.client_generator.request_properties import (
     request_property_to_name,
+)
+from fern_python.generators.sdk.client_generator.streaming.utilities import (
+    StreamingParameterType,
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.generators.sdk.environment_generators.multiple_base_urls_environment_generator import (
@@ -125,21 +129,21 @@ class EndpointFunctionGenerator:
             if self._endpoint.request_body is not None
             else None
         )
-        self._named_parameters, self._parameter_names_to_deconflict = self._get_endpoint_named_parameters(
-            service=self._service,
-            endpoint=self._endpoint,
-            request_body_parameters=self.request_body_parameters,
-            idempotency_headers=self._idempotency_headers,
-        )
-
         self._request_parameter_name_rewrites = (
             self.request_body_parameters.get_parameter_name_rewrites()
             if self.request_body_parameters is not None
             else {}
         )
 
+        self._named_parameters_raw, self._parameter_names_to_deconflict = self._get_endpoint_named_parameters(
+            service=self._service,
+            endpoint=self._endpoint,
+            request_body_parameters=self.request_body_parameters,
+            idempotency_headers=self._idempotency_headers,
+        )
+
         self._path_parameter_names = dict()
-        _named_parameter_names: List[str] = [param.name for param in self._named_parameters]
+        _named_parameter_names: List[str] = [param.name for param in self._named_parameters_raw]
         for path_parameter in self._endpoint.all_path_parameters:
             if not self._is_type_literal(path_parameter.value_type):
                 name = self.deconflict_parameter_name(get_parameter_name(path_parameter.name), _named_parameter_names)
@@ -156,7 +160,7 @@ class EndpointFunctionGenerator:
         # Consolidate the named parameters and path parameters in a single list.
         parameters: List[AST.NamedFunctionParameter] = []
         parameters = self._named_parameters_from_path_parameters(self._endpoint.all_path_parameters)
-        parameters.extend(self._named_parameters)
+        parameters.extend(self._named_parameters_raw)
 
         for param in parameters:
             self.endpoint_metadata_collector.register_endpoint_parameter(
@@ -179,7 +183,64 @@ class EndpointFunctionGenerator:
             ),
         )
 
-    def generate(self) -> GeneratedEndpointFunction:
+    def _is_overloaded_streaming_method(self) -> bool:
+        return (
+            self._endpoint.response is not None
+            and self._endpoint.response.body is not None
+            and self._endpoint.response.body.get_as_union().type == "streamParameter"
+        )
+
+    def generate(self) -> List[GeneratedEndpointFunction]:
+        if self._is_overloaded_streaming_method():
+            base_function = self.generate_single_function(is_overloaded=False, include_snippet=False)
+            streaming_function = self.generate_single_function(is_overloaded=True, streaming_parameter="streaming")
+            non_streaming_function = self.generate_single_function(
+                is_overloaded=True, streaming_parameter="non-streaming"
+            )
+            # NOTE: the order is important here, mypy will complain if the stubs come after the actual function
+            return [
+                streaming_function,
+                non_streaming_function,
+                base_function,
+            ]
+        else:
+            return [self.generate_single_function(is_overloaded=False)]
+
+    def _get_overridden_parameter_types(
+        self, streaming_parameter: Optional[StreamingParameterType] = None
+    ) -> List[AST.NamedFunctionParameter]:
+        if (
+            streaming_parameter is not None
+            and self._endpoint.sdk_request is not None
+            and self._endpoint.sdk_request.stream_parameter is not None
+        ):
+            response_property = self._endpoint.sdk_request.stream_parameter
+            streaming_parameter_name = request_property_to_name(response_property.property)
+
+            cleaned_parameters = []
+            for param in self._named_parameters_raw:
+                if param.raw_name == streaming_parameter_name:
+                    cleaned_parameters.append(AST.NamedFunctionParameter(
+                        name=param.name,
+                        docs=param.docs,
+                        type_hint=AST.TypeHint.literal(
+                            AST.Expression("True" if streaming_parameter == "streaming" else "False")
+                        ),
+                        initializer=param.initializer,
+                        raw_name=param.raw_name,
+                        raw_type=param.raw_type,
+                    ))
+                else:
+                    cleaned_parameters.append(param)
+            return cleaned_parameters
+        return self._named_parameters_raw
+
+    def generate_single_function(
+        self,
+        is_overloaded: bool,
+        include_snippet: bool = True,
+        streaming_parameter: Optional[StreamingParameterType] = None,
+    ) -> GeneratedEndpointFunction:
         endpoint_snippets = self._generate_endpoint_snippets(
             package=self._package,
             service=self._service,
@@ -187,23 +248,27 @@ class EndpointFunctionGenerator:
             generated_root_client=self._generated_root_client,
             snippet_writer=self.snippet_writer,
             is_async=self._is_async,
+            streaming_parameter=streaming_parameter,
         )
+
         unnamed_parameters = self._get_endpoint_path_parameters()
+        named_parameters = self._get_overridden_parameter_types(streaming_parameter)
+
         function_declaration = AST.FunctionDeclaration(
             name=get_endpoint_name(self._endpoint),
             is_async=self._is_async,
             docstring=self._get_docstring_for_endpoint(
                 endpoint=self._endpoint,
-                named_parameters=self._named_parameters,
+                named_parameters=named_parameters,
                 path_parameters=self._endpoint.all_path_parameters,
                 snippet=endpoint_snippets[0].snippet
-                if endpoint_snippets is not None and len(endpoint_snippets) > 0
+                if endpoint_snippets is not None and len(endpoint_snippets) > 0 and include_snippet
                 else None,
             ),
             signature=AST.FunctionSignature(
                 parameters=unnamed_parameters,
-                named_parameters=self._named_parameters,
-                return_type=self._get_endpoint_return_type(),
+                named_parameters=named_parameters,
+                return_type=self._get_endpoint_return_type(streaming_parameter=streaming_parameter),
             ),
             body=self._create_endpoint_body_writer(
                 service=self._service,
@@ -212,8 +277,20 @@ class EndpointFunctionGenerator:
                 request_body_parameters=self.request_body_parameters,
                 is_async=self._is_async,
                 parameters=unnamed_parameters,
-                named_parameters=self._named_parameters,
-            ),
+                named_parameters=named_parameters,
+            )
+            if not is_overloaded
+            else self._create_empty_body_writer(),
+            decorators=[
+                AST.Expression(
+                    AST.Reference(
+                        qualified_name_excluding_import=("overload",),
+                        import_=AST.ReferenceImport(module=AST.Module.built_in(("typing",))),
+                    )
+                )
+            ]
+            if is_overloaded
+            else [],
         )
         return GeneratedEndpointFunction(
             function=function_declaration,
@@ -221,9 +298,9 @@ class EndpointFunctionGenerator:
             snippets=endpoint_snippets or [],
         )
 
-    def _get_endpoint_return_type(self) -> AST.TypeHint:
+    def _get_endpoint_return_type(self, streaming_parameter: Optional[StreamingParameterType] = None) -> AST.TypeHint:
         return_type = (
-            self._get_response_body_type(self._endpoint.response.body, self._is_async)
+            self._get_response_body_type(self._endpoint.response.body, self._is_async, streaming_parameter)
             if self._endpoint.response is not None and self._endpoint.response.body is not None
             else AST.TypeHint.none()
         )
@@ -342,6 +419,12 @@ class EndpointFunctionGenerator:
 
         return parameters, parameter_names_to_deconflict
 
+    def _create_empty_body_writer(self) -> AST.CodeWriter:
+        def write(writer: AST.NodeWriter) -> None:
+            writer.write_line("...")
+
+        return AST.CodeWriter(write)
+
     def _create_endpoint_body_writer(
         self,
         *,
@@ -353,6 +436,13 @@ class EndpointFunctionGenerator:
         named_parameters: List[AST.NamedFunctionParameter],
         parameters: List[AST.FunctionParameter],
     ) -> AST.CodeWriter:
+        # Need to call this once with the streaming response and another time with the non-streaming response
+        # This needs to set all the variables and then call the actual functions so there's limited duplication
+        #   - pre-fetch statements
+        #   - `write_request_body`
+        #   - `files`
+        #   - `self._get_headers_for_endpoint`
+        #   - `self._get_query_parameters_for_endpoint`
         def write(writer: AST.NodeWriter) -> None:
             request_pre_fetch_statements = (
                 request_body_parameters.get_pre_fetch_statements(self._parameter_names_to_deconflict)
@@ -376,28 +466,6 @@ class EndpointFunctionGenerator:
                 if json_request_body is not None:
                     writer.write_node(json_request_body)
 
-            is_streaming = (
-                True
-                if endpoint.response is not None
-                and endpoint.response.body
-                and (
-                    endpoint.response.body.get_as_union().type == "streaming"
-                    or endpoint.response.body.get_as_union().type == "fileDownload"
-                )
-                else False
-            )
-            response_code_writer = EndpointResponseCodeWriter(
-                context=self._context,
-                endpoint=endpoint,
-                is_async=is_async,
-                pagination=self.pagination,
-                pagination_snippet_config=PaginationSnippetConfig(
-                    endpoint_name=get_endpoint_name(self._endpoint),
-                    parameters=parameters,
-                    named_parameters=named_parameters,
-                ),
-            )
-
             files = (
                 request_body_parameters.get_files()
                 if request_body_parameters is not None and request_body_parameters.get_files() is not None
@@ -411,8 +479,8 @@ class EndpointFunctionGenerator:
                     page_param_name = request_property_to_name(param.property)
                     writer.write_line(f"{page_param_name} = {page_param_name} if {page_param_name} is not None else 1")
 
-            writer.write_node(
-                HttpX.make_request(
+            def get_httpx_request(is_streaming: bool, response_code_writer: EndpointResponseCodeWriter) -> AST.Expression:
+                return HttpX.make_request(
                     is_streaming=is_streaming,
                     is_async=is_async,
                     path=self._get_path_for_endpoint(endpoint=endpoint)
@@ -437,7 +505,77 @@ class EndpointFunctionGenerator:
                     ),
                     is_default_body_parameter_used=self.is_default_body_parameter_used,
                 )
-            )
+
+            if (
+                self._endpoint.sdk_request is not None
+                and self._endpoint.sdk_request.stream_parameter is not None
+            ):
+                response_property = self._endpoint.sdk_request.stream_parameter
+                streaming_parameter_name = request_property_to_name(response_property.property)
+                streaming_response_code_writer = EndpointResponseCodeWriter(
+                    context=self._context,
+                    errors=endpoint.errors,
+                    response=endpoint.response,
+                    is_async=is_async,
+                    streaming_parameter="streaming",
+                    pagination=self.pagination,
+                    pagination_snippet_config=PaginationSnippetConfig(
+                        endpoint_name=get_endpoint_name(self._endpoint),
+                        parameters=parameters,
+                        named_parameters=named_parameters,
+                    ),
+                )
+                streaming_request = get_httpx_request(is_streaming=True, response_code_writer=streaming_response_code_writer)
+                writer.write("if ")
+                writer.write_node(AST.Expression(streaming_parameter_name))
+                writer.write_line(":")
+                with writer.indent():
+                    writer.write_node(streaming_request)
+
+                non_streaming_response_code_writer = EndpointResponseCodeWriter(
+                    context=self._context,
+                    errors=endpoint.errors,
+                    response=endpoint.response,
+                    is_async=is_async,
+                    streaming_parameter="non-streaming",
+                    pagination=self.pagination,
+                    pagination_snippet_config=PaginationSnippetConfig(
+                        endpoint_name=get_endpoint_name(self._endpoint),
+                        parameters=parameters,
+                        named_parameters=named_parameters,
+                    ),
+                )
+                non_streaming_request = get_httpx_request(is_streaming=False, response_code_writer=non_streaming_response_code_writer)
+                writer.write_newline_if_last_line_not()
+                writer.write_line("else:")
+                with writer.indent():
+                    writer.write_node(non_streaming_request)
+
+            else:
+                response_code_writer = EndpointResponseCodeWriter(
+                    context=self._context,
+                    errors=endpoint.errors,
+                    response=endpoint.response,
+                    is_async=is_async,
+                    pagination=self.pagination,
+                    pagination_snippet_config=PaginationSnippetConfig(
+                        endpoint_name=get_endpoint_name(self._endpoint),
+                        parameters=parameters,
+                        named_parameters=named_parameters,
+                    ),
+                )
+                is_streaming = (
+                    True
+                    if endpoint.response is not None
+                    and endpoint.response.body
+                    and (
+                        endpoint.response.body.get_as_union().type == "streaming"
+                        or endpoint.response.body.get_as_union().type == "fileDownload"
+                    )
+                    else False
+                )
+                httpx_request = get_httpx_request(is_streaming=is_streaming, response_code_writer=response_code_writer)
+                writer.write_node(httpx_request)
 
         return AST.CodeWriter(write)
 
@@ -516,6 +654,7 @@ class EndpointFunctionGenerator:
         generated_root_client: GeneratedRootClient,
         snippet_writer: SnippetWriter,
         is_async: bool,
+        streaming_parameter: Optional[StreamingParameterType] = None,
     ) -> Optional[List[GeneratedEndpointFunctionSnippet]]:
         # Stick to user provided examples for snippets for now,
         # only use autogenerated if no user-provided examples are available, and if you're doing this, just pick the first.
@@ -537,6 +676,7 @@ class EndpointFunctionGenerator:
                 path_parameter_names=self._path_parameter_names,
                 request_parameter_names=self._request_parameter_name_rewrites,
                 generate_pagination=self.is_paginated == True,
+                streaming_parameter=streaming_parameter,
             )
 
             endpoint_snippet = endpoint_snippet_generator.generate_snippet()
@@ -739,19 +879,55 @@ class EndpointFunctionGenerator:
 
         return fallback_typehint
 
-    def _get_response_body_type(self, response_body: ir_types.HttpResponseBody, is_async: bool) -> AST.TypeHint:
+    def _get_non_streaming_response_body_type(
+        self, non_stream_response: ir_types.NonStreamHttpResponseBody, is_async: bool
+    ) -> AST.TypeHint:
+        return non_stream_response.visit(
+            file_download=lambda _: self._get_file_download_response_body_type(is_async),
+            json=lambda json_response: self._get_json_response_body_type(json_response),
+            text=lambda _: AST.TypeHint.str_(),
+        )
+
+    def _get_file_download_response_body_type(self, is_async: bool) -> AST.TypeHint:
+        return (
+            AST.TypeHint.async_iterator(AST.TypeHint.bytes())
+            if is_async
+            else AST.TypeHint.iterator(AST.TypeHint.bytes())
+        )
+
+    def _get_streaming_parameter_response_body_type(
+        self,
+        stream_param_response: ir_types.StreamParameterResponse,
+        is_async: bool,
+        streaming_parameter: Optional[StreamingParameterType] = None,
+    ) -> AST.TypeHint:
+        stream_response = self._get_streaming_response_body_type(
+            stream_response=stream_param_response.stream_response, is_async=is_async
+        )
+        non_stream_response = self._get_non_streaming_response_body_type(
+            stream_param_response.non_stream_response, is_async=is_async
+        )
+        if streaming_parameter is None:
+            return AST.TypeHint.union(stream_response, non_stream_response)
+        else:
+            return stream_response if streaming_parameter == "streaming" else non_stream_response
+
+    def _get_response_body_type(
+        self,
+        response_body: ir_types.HttpResponseBody,
+        is_async: bool,
+        streaming_parameter: Optional[StreamingParameterType] = None,
+    ) -> AST.TypeHint:
         response_type = response_body.visit(
-            file_download=lambda _: (
-                AST.TypeHint.async_iterator(AST.TypeHint.bytes())
-                if self._is_async
-                else AST.TypeHint.iterator(AST.TypeHint.bytes())
-            ),
+            file_download=lambda _: self._get_file_download_response_body_type(is_async=is_async),
             json=lambda json_response: self._get_json_response_body_type(json_response),
             streaming=lambda stream_response: self._get_streaming_response_body_type(
                 stream_response=stream_response, is_async=is_async
             ),
             text=lambda _: AST.TypeHint.str_(),
-            stream_parameter=lambda _: raise_stream_parameter_unsupported(),
+            stream_parameter=lambda stream_param_response: self._get_streaming_parameter_response_body_type(
+                stream_param_response=stream_param_response, is_async=is_async, streaming_parameter=streaming_parameter
+            ),
         )
 
         return response_type if not self.is_paginated else self._get_pagination_results_type(response_type)
@@ -785,7 +961,7 @@ class EndpointFunctionGenerator:
                     writer, response_hint, stream_response.get_as_union().docs
                 ),
                 text=lambda t: self._write_standard_return(writer, response_hint, t.docs),
-                stream_parameter=lambda _: raise_stream_parameter_unsupported(),
+                stream_parameter=lambda _: None,
             )
         else:
             writer.write_line("Returns")
@@ -1107,7 +1283,6 @@ def _is_type_reference_optional(type_reference: ir_types.TypeReference) -> bool:
     return False
 
 
-# TODO: this is effectively what should be exposed when creating the snippets API.
 class EndpointFunctionSnippetGenerator:
     def __init__(
         self,
@@ -1119,6 +1294,7 @@ class EndpointFunctionSnippetGenerator:
         path_parameter_names: Dict[ir_types.Name, str],
         request_parameter_names: Dict[ir_types.Name, str],
         generate_pagination: bool,
+        streaming_parameter: Optional[StreamingParameterType] = None,
     ):
         self.context = context
         self.snippet_writer = snippet_writer
@@ -1128,6 +1304,7 @@ class EndpointFunctionSnippetGenerator:
         self.path_parameter_names = path_parameter_names
         self.request_parameter_names = request_parameter_names
         self.generate_pagination = generate_pagination
+        self.streaming_parameter = streaming_parameter
 
     # TODO: It should be sufficient for this to just take in the example and client
     def generate_snippet(self) -> AST.Expression:
@@ -1225,7 +1402,11 @@ class EndpointFunctionSnippetGenerator:
         if (
             self.endpoint.response is not None
             and self.endpoint.response.body
-            and (self.endpoint.response.body.get_as_union().type == "streaming" or is_paginated)
+            and (
+                self.endpoint.response.body.get_as_union().type == "streaming"
+                or is_paginated
+                or self.streaming_parameter == "streaming"
+            )
         ):
 
             def snippet_writer(writer: AST.NodeWriter) -> None:

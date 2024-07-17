@@ -15,6 +15,9 @@ from fern_python.generators.sdk.client_generator.pagination.cursor import (
 from fern_python.generators.sdk.client_generator.pagination.offset import (
     OffsetPagination,
 )
+from fern_python.generators.sdk.client_generator.streaming.utilities import (
+    StreamingParameterType,
+)
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 
@@ -32,13 +35,17 @@ class EndpointResponseCodeWriter:
         self,
         *,
         context: SdkGeneratorContext,
-        endpoint: ir_types.HttpEndpoint,
+        response: Optional[ir_types.HttpResponse],
+        errors: ir_types.ResponseErrors,
         is_async: bool,
+        streaming_parameter: Optional[StreamingParameterType] = None,
         pagination: Optional[ir_types.Pagination],
         pagination_snippet_config: PaginationSnippetConfig,
     ):
         self._context = context
-        self._endpoint = endpoint
+        self._response = response
+        self._errors = errors
+        self._streaming_parameter = streaming_parameter
         self._is_async = is_async
         self._pagination = pagination
         self._pagination_snippet_config = pagination_snippet_config
@@ -203,10 +210,10 @@ class EndpointResponseCodeWriter:
         def handle_endpoint_response(writer: AST.NodeWriter) -> None:
             writer.write_line(f"if 200 <= {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.status_code < 300:")
             with writer.indent():
-                if self._endpoint.response is None or self._endpoint.response.body is None:
+                if self._response is None or self._response.body is None:
                     writer.write_line("return")
                 else:
-                    self._endpoint.response.body.visit(
+                    self._response.body.visit(
                         json=lambda json_response: self._handle_success_json(
                             writer=writer, json_response=json_response, use_response_json=False
                         ),
@@ -215,17 +222,27 @@ class EndpointResponseCodeWriter:
                         ),
                         file_download=lambda _: self._handle_success_file_download(writer=writer),
                         text=lambda _: self._handle_success_text(writer=writer),
-                        stream_parameter=lambda _: raise_stream_parameter_unsupported(),
+                        stream_parameter=lambda stream_param_response: self._handle_success_stream(
+                            writer=writer, stream_response=stream_param_response.stream_response
+                        )
+                        if self._streaming_parameter == "stream"
+                        else stream_param_response.non_stream_response.visit(
+                            json=lambda json_response: self._handle_success_json(
+                                writer=writer, json_response=json_response, use_response_json=False
+                            ),
+                            file_download=lambda _: self._handle_success_file_download(writer=writer),
+                            text=lambda _: self._handle_success_text(writer=writer),
+                        ),
                     )
 
             # in streaming responses, we need to call read() or aread()
             # before deserializing or httpx will raise ResponseNotRead
             if (
-                self._endpoint.response is not None
-                and self._endpoint.response.body
+                self._response is not None
+                and self._response.body
                 and (
-                    self._endpoint.response.body.get_as_union().type == "streaming"
-                    or self._endpoint.response.body.get_as_union().type == "fileDownload"
+                    self._response.body.get_as_union().type == "streaming"
+                    or self._response.body.get_as_union().type == "fileDownload"
                 )
             ):
                 writer.write_line(
@@ -234,7 +251,7 @@ class EndpointResponseCodeWriter:
                     else f"{EndpointResponseCodeWriter.RESPONSE_VARIABLE}.read()"
                 )
 
-            for error in self._endpoint.errors.get_as_list():
+            for error in self._errors.get_as_list():
                 error_declaration = self._context.ir.errors[error.error.error_id]
 
                 writer.write_line(
@@ -276,15 +293,15 @@ class EndpointResponseCodeWriter:
         writer: AST.NodeWriter,
         strategy: ir_types.ErrorDiscriminationByPropertyStrategy,
     ) -> None:
-        if self._endpoint.response is not None and self._endpoint.response.body is not None:
+        if self._response is not None and self._response.body is not None:
             self._try_deserialize_json_response(writer=writer)
 
         writer.write_line(f"if 200 <= {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.status_code < 300:")
         with writer.indent():
-            if self._endpoint.response is None or self._endpoint.response.body is None:
+            if self._response is None or self._response.body is None:
                 writer.write_line("return")
             else:
-                self._endpoint.response.body.visit(
+                self._response.body.visit(
                     json=lambda json_response: self._handle_success_json(
                         writer=writer, json_response=json_response, use_response_json=True
                     ),
@@ -293,18 +310,28 @@ class EndpointResponseCodeWriter:
                     ),
                     file_download=lambda _: self._handle_success_file_download(writer=writer),
                     text=lambda _: self._handle_success_text(writer=writer),
-                    stream_parameter=lambda _: raise_stream_parameter_unsupported(),
+                    stream_parameter=lambda stream_param_response: self._handle_success_stream(
+                        writer=writer, stream_response=stream_param_response.stream_response
+                    )
+                    if self._streaming_parameter == "stream"
+                    else stream_param_response.non_stream_response.visit(
+                        json=lambda json_response: self._handle_success_json(
+                            writer=writer, json_response=json_response, use_response_json=False
+                        ),
+                        file_download=lambda _: self._handle_success_file_download(writer=writer),
+                        text=lambda _: self._handle_success_text(writer=writer),
+                    ),
                 )
 
-        if self._endpoint.response is None or self._endpoint.response.body is None:
+        if self._response is None or self._response.body is None:
             self._try_deserialize_json_response(writer=writer, response_handler=None)
 
-        if len(self._endpoint.errors.get_as_list()) > 0:
+        if len(self._errors.get_as_list()) > 0:
             writer.write_line(
                 f'if "{strategy.discriminant.wire_value}" in {EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE}:'
             )
             with writer.indent():
-                for error in self._endpoint.errors.get_as_list():
+                for error in self._errors.get_as_list():
                     error_declaration = self._context.ir.errors[error.error.error_id]
 
                     writer.write_line(
@@ -366,20 +393,6 @@ class EndpointResponseCodeWriter:
             )
             writer.write_newline_if_last_line_not()
 
-    def _get_response_body_type(self, response: ir_types.HttpResponse) -> Optional[AST.TypeHint]:
-        print(f"response {response}")
-        if response.body is not None:
-            return response.body.visit(
-                file_download=lambda _: AST.TypeHint.async_iterator(AST.TypeHint.bytes())
-                if self._is_async
-                else AST.TypeHint.iterator(AST.TypeHint.bytes()),
-                json=lambda json_response: self._get_json_response_body_type(json_response),
-                streaming=lambda streaming_response: self._get_streaming_response_data_type(streaming_response),
-                text=lambda _: AST.TypeHint.str_(),
-                stream_parameter=lambda _: raise_stream_parameter_unsupported(),
-            )
-        return None
-
     def _get_json_response_body_type(
         self,
         json_response: ir_types.JsonResponse,
@@ -404,7 +417,3 @@ class EndpointResponseCodeWriter:
 
 def raise_json_nested_property_as_response_unsupported() -> Never:
     raise RuntimeError("nested property json response is unsupported")
-
-
-def raise_stream_parameter_unsupported() -> Never:
-    raise RuntimeError("stream parameter is unsupported")
