@@ -23,15 +23,19 @@ export class GeneratedVersionImpl implements GeneratedVersion {
     }
 
     public writeToFile(context: SdkContext): void {
-        const enumValues = this.apiVersion.value.values.map((version) =>
-            ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(version.name.wireValue))
-        );
         context.sourceFile.addTypeAlias({
             docs: [`The version of the API, sent as the ${this.apiVersion.header.name.wireValue} header.`],
             name: this.versionEnumName,
             isExported: true,
-            type: getTextOfTsNode(ts.factory.createUnionTypeNode(enumValues))
+            type: this.getEnumValueUnion()
         });
+    }
+
+    public getEnumValueUnion(): string {
+        const enumValues = this.apiVersion.value.values.map((version) =>
+            ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(version.name.wireValue))
+        );
+        return getTextOfTsNode(ts.factory.createUnionTypeNode(enumValues));
     }
 
     public getFirstEnumValue(): string {

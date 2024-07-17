@@ -923,12 +923,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         };
 
         const generatedVersion = context.version.getGeneratedVersion();
-        const generatedVersionReference = context.version.getReferenceToVersionEnum();
-        if (generatedVersion != null && generatedVersionReference != null) {
+        if (generatedVersion != null) {
             const header = generatedVersion.getHeader();
             requestOptions.properties.push({
                 name: this.getOptionKeyForHeader(header),
-                type: getTextOfTsNode(generatedVersionReference.getTypeNode()),
+                type: generatedVersion.getEnumValueUnion(),
                 hasQuestionToken: true,
                 docs: [`Override the ${header.name.wireValue} header`]
             });
@@ -1237,12 +1236,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
 
         const generatedVersion = context.version.getGeneratedVersion();
-        const generatedVersionReference = context.version.getReferenceToVersionEnum();
-        if (generatedVersion != null && generatedVersionReference != null) {
+        if (generatedVersion != null) {
             const header = generatedVersion.getHeader();
             properties.push({
                 name: this.getOptionKeyForHeader(header),
-                type: getTextOfTsNode(generatedVersionReference.getTypeNode()),
+                type: generatedVersion.getEnumValueUnion(),
                 hasQuestionToken: generatedVersion.hasDefaultVersion(),
                 docs: [`Override the ${header.name.wireValue} header`]
             });
