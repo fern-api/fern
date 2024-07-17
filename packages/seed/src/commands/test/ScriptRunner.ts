@@ -84,7 +84,7 @@ export class ScriptRunner {
 
         const workDir = id.replace(":", "_");
         const scriptFile = await tmp.file();
-        await writeFile(scriptFile.path, [`cd /${workDir}/generated`, ...script.commands].join("\n"));
+        await writeFile(scriptFile.path, ["set -e", `cd /${workDir}/generated`, ...script.commands].join("\n"));
 
         // Move scripts and generated files into the container
         const mkdirCommand = await loggingExeca(
