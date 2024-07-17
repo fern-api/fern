@@ -54,7 +54,8 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
                 allowUnrecognizedEnumValues: true,
                 allowUnrecognizedUnionMembers: true,
                 skipValidation: true,
-                breadcrumbsPrefix: []
+                breadcrumbsPrefix: [],
+                omitUndefined: false
             });
         }
         return this.getReferenceToZurgSchema(context).parse(referenceToRawRequest, {
@@ -62,7 +63,8 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
             allowUnrecognizedEnumValues: false,
             allowUnrecognizedUnionMembers: false,
             skipValidation: false,
-            breadcrumbsPrefix: []
+            breadcrumbsPrefix: [],
+            omitUndefined: false
         });
     }
 

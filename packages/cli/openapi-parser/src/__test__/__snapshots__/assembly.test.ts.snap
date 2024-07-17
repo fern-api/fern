@@ -2,6 +2,7 @@
 
 exports[`open api parser assembly parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [
     {

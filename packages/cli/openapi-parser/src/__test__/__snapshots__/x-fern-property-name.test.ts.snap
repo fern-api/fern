@@ -2,6 +2,7 @@
 
 exports[`x-fern-property-name x-fern-property-name parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": null,

@@ -62,6 +62,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
+        omitUndefined: boolean;
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     }
 }
@@ -97,6 +98,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private packageId: PackageId;
     private retainOriginalCasing: boolean;
     private inlineFileProperties: boolean;
+    private omitUndefined: boolean;
     private importsManager: ImportsManager;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
 
@@ -118,6 +120,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         includeSerdeLayer,
         retainOriginalCasing,
         inlineFileProperties,
+        omitUndefined,
         importsManager,
         oauthTokenProviderGenerator
     }: GeneratedSdkClientClassImpl.Init) {
@@ -132,6 +135,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.targetRuntime = targetRuntime;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
+        this.omitUndefined = omitUndefined;
         this.importsManager = importsManager;
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
 
@@ -152,7 +156,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     }
                     if (requestBody?.type === "fileUpload") {
                         return new GeneratedFileUploadEndpointRequest({
-                            importsManager,
+                            importsManager: this.importsManager,
                             ir: this.intermediateRepresentation,
                             packageId,
                             service,
@@ -222,7 +226,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         includeCredentialsOnCrossOriginRequests,
                         defaultTimeoutInSeconds,
                         includeSerdeLayer,
-                        retainOriginalCasing
+                        retainOriginalCasing: this.retainOriginalCasing,
+                        omitUndefined: this.omitUndefined
                     });
                 };
 
@@ -242,7 +247,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 response: HttpResponseBody.fileDownload(fileDownload)
                             }),
                             includeSerdeLayer,
-                            retainOriginalCasing
+                            retainOriginalCasing: this.retainOriginalCasing,
+                            omitUndefined: this.omitUndefined
                         }),
                     json: (jsonResponse) =>
                         getDefaultEndpointImplementation({
@@ -260,7 +266,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             defaultTimeoutInSeconds,
                             request: getGeneratedEndpointRequest(),
                             includeSerdeLayer,
-                            retainOriginalCasing
+                            retainOriginalCasing: this.retainOriginalCasing,
+                            omitUndefined: this.omitUndefined
                         }),
                     text: (textResponse) => {
                         return getDefaultEndpointImplementation({

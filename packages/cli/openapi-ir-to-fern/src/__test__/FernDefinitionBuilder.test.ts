@@ -5,6 +5,7 @@ describe("Fern Definition Builder", () => {
     it("removes base path from environment", async () => {
         const builder = new FernDefinitionBuilderImpl(
             {
+                apiVersion: undefined,
                 title: undefined,
                 description: undefined,
                 basePath: undefined,

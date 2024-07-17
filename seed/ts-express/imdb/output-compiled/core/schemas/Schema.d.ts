@@ -77,4 +77,8 @@ export interface SchemaOptions {
      * helpful for zurg's internal debug logging.
      */
     breadcrumbsPrefix?: string[];
+    /**
+     * whether to send 'null' for optional properties explicitly set to 'undefined'.
+     */
+    omitUndefined?: boolean;
 }

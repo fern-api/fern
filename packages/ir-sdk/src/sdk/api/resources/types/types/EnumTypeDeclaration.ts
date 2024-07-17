@@ -5,5 +5,6 @@
 import * as FernIr from "../../..";
 
 export interface EnumTypeDeclaration {
+    default: FernIr.EnumValue | undefined;
     values: FernIr.EnumValue[];
 }

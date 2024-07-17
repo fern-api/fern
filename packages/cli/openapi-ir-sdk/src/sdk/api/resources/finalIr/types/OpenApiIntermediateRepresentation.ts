@@ -5,6 +5,12 @@
 import * as FernOpenapiIr from "../../..";
 
 export interface OpenApiIntermediateRepresentation {
+    /**
+     * The API version scheme populated via `x-fern-version`.
+     * This is intentionally typed as `unknown` so that we can
+     * simply echo the Fern configuration as-is.
+     */
+    apiVersion: unknown | undefined;
     title: string | undefined;
     description: string | undefined;
     basePath: string | undefined;

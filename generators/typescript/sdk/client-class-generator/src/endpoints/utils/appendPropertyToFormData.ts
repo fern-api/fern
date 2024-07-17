@@ -21,7 +21,7 @@ export function appendPropertyToFormData({
         file: (property) => {
             const FOR_LOOP_ITEM_VARIABLE_NAME = "_file";
 
-            let statement = context.coreUtilities.formDataUtils.append({
+            let statement = context.coreUtilities.formDataUtils.appendFile({
                 referencetoFormData: referenceToFormData,
                 key: property.key.wireValue,
                 value: ts.factory.createIdentifier(

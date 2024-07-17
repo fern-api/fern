@@ -38,6 +38,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 body: "body",
                 timeoutMs: "timeoutMs",
                 withCredentials: "withCredentials",
+                requestType: "requestType",
                 responseType: "responseType",
                 abortSignal: "abortSignal"
             },
@@ -103,6 +104,14 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                     ts.factory.createPropertyAssignment(
                         this.Fetcher.Args.properties.queryParameters,
                         args.queryParameters
+                    )
+                );
+            }
+            if (args.requestType != null && args.responseType !== "json") {
+                properties.push(
+                    ts.factory.createPropertyAssignment(
+                        this.Fetcher.Args.properties.requestType,
+                        ts.factory.createStringLiteral(args.requestType)
                     )
                 );
             }

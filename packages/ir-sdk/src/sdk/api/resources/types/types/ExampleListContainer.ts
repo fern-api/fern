@@ -6,5 +6,5 @@ import * as FernIr from "../../..";
 
 export interface ExampleListContainer {
     list: FernIr.ExampleTypeReference[];
-    itemType: FernIr.TypeReference | undefined;
+    itemType: FernIr.TypeReference;
 }

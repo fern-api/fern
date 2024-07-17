@@ -13,12 +13,12 @@ export const ExampleSetContainer: core.serialization.ObjectSchema<
     set: core.serialization.list(
         core.serialization.lazyObject(async () => (await import("../../..")).ExampleTypeReference)
     ),
-    itemType: core.serialization.lazy(async () => (await import("../../..")).TypeReference).optional(),
+    itemType: core.serialization.lazy(async () => (await import("../../..")).TypeReference),
 });
 
 export declare namespace ExampleSetContainer {
     interface Raw {
         set: serializers.ExampleTypeReference.Raw[];
-        itemType?: serializers.TypeReference.Raw | null;
+        itemType: serializers.TypeReference.Raw;
     }
 }

@@ -5,6 +5,12 @@ imports:
 types:
   OpenAPIIntermediateRepresentation:
     properties:
+      apiVersion:
+        docs: |
+          The API version scheme populated via `x-fern-version`.
+          This is intentionally typed as `unknown` so that we can
+          simply echo the Fern configuration as-is.
+        type: optional<unknown>
       title: optional<string>
       description: optional<string>
       basePath: optional<string>

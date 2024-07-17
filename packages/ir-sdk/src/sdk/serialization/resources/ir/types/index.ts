@@ -2,6 +2,8 @@ export * from "./IntermediateRepresentation";
 export * from "./ReadmeConfig";
 export * from "./SdkConfig";
 export * from "./PlatformHeaders";
+export * from "./ApiVersionScheme";
+export * from "./HeaderApiVersionScheme";
 export * from "./ErrorDiscriminationStrategy";
 export * from "./ErrorDiscriminationByPropertyStrategy";
 export * from "./Package";

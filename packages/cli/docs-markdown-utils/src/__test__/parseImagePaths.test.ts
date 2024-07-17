@@ -273,12 +273,30 @@ describe("parseImagePaths", () => {
         );
     });
 
+    it("should ignore data urls", () => {
+        const page = "This is a test page with an image ![image](data:image/png;base64,abc)";
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual([]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(
+            '"This is a test page with an image ![image](data:image/png;base64,abc)"'
+        );
+    });
+
     it("should ignore external urls in html tags", () => {
         const page = "This is a test page with an image <img src='https://external.com/image.png' />";
         const result = parseImagePaths(page, PATHS);
         expect(result.filepaths).toEqual([]);
         expect(result.markdown.trim()).toMatchInlineSnapshot(
             "\"This is a test page with an image <img src='https://external.com/image.png' />\""
+        );
+    });
+
+    it("should ignore data urls in html tags", () => {
+        const page = "This is a test page with an image <img src='data:image/png;base64,abc' />";
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual([]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(
+            "\"This is a test page with an image <img src='data:image/png;base64,abc' />\""
         );
     });
 

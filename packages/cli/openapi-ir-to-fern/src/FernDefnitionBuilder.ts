@@ -26,6 +26,8 @@ export interface FernDefinitionBuilder {
 
     setBasePath(basePath: string): void;
 
+    setApiVersion(apiVersionScheme: unknown): void;
+
     getEnvironmentType(): "single" | "multi" | undefined;
 
     addAudience(name: string): void;
@@ -152,6 +154,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
     public setBasePath(basePath: string): void {
         this.basePath = basePath;
+    }
+
+    public setApiVersion(apiVersionScheme: unknown): void {
+        this.rootApiFile.version = apiVersionScheme as RawSchemas.VersionDeclarationSchema;
     }
 
     public getEnvironmentType(): "single" | "multi" | undefined {

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO: Add generation of this: https://github.com/fern-api/fern/pull/4034
+
 # Change to the root directory of the project
 cd "$(dirname "$0")/.." || { echo "Failed to change to root directory"; exit 1; }
 
@@ -32,22 +34,29 @@ fi
 # Copy template directory to a new directory with the user-provided name
 cp -r "$template_dir" "$new_dir"
 
-# Function to recursively replace "FULL_LANGUAGE_NAME" in all files
+# Function to recursively replace "LANGUAGE" in all files
 replace_full_language_name() {
-  original_name="$1"
-  find "$new_dir" -type f -exec sed -i '' -e "s/FULL_LANGUAGE_NAME/$original_name/g" {} +
+  local original_name="$1"
+  find "$new_dir" -type f -exec sed -i '' -e "s/LANGUAGE/$original_name/g" {} +
 }
 
-# Call the function to replace "FULL_LANGUAGE_NAME" in all files within the new directory
+# Call the function to replace "LANGUAGE" in all files within the new directory
 replace_full_language_name "$original_name"
 
-# Function to recursively replace "LANGUAGE_NAME" in all files
+# Function to recursively replace "template" in all files and filenames
 replace_language_name() {
-  find "$1" -type f -exec sed -i '' -e "s/LANGUAGE_NAME/$new_name/g" {} +
+  local directory="$1"
+  local new_name="$2"
+
+  # Replace in filenames first
+  find "$directory" -depth -name "*template*" -execdir bash -c 'mv "$1" "${1//template/'"$new_name"'}"' _ {} \;
+
+  # Replace in file contents
+  find "$directory" -type f -exec sed -i '' -e "s/template/$new_name/g" {} +
 }
 
-# Call the function to replace "LANGUAGE_NAME" in all files within the new directory
-replace_language_name "$new_dir"
+# Call the function to replace "template" in all files and filenames within the new directory
+replace_language_name "$new_dir" "$new_name"
 
 echo "Directory '$new_name' created successfully at '$new_dir'"
 cd "$new_dir/codegen"
@@ -56,7 +65,23 @@ echo "🌿 Install typescript dependencies"
 yarn install
 
 echo "🌿 Running sample tests"
-yarn test
+yarn test -u
+
+echo "🌿 Opening test result output"
+file="./src/ast/__test__/__snapshots__/Language.test.ts.snap"
+
+# Specify the full path to code (modify this based on your system)
+code_path="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
+
+# Check if code is available at the specified path
+if [ -x "$code_path" ]; then
+  # Open in VSCode, reusing existing window if open
+  "$code_path" --reuse-window "$file"
+else
+  echo "VSCode is not installed or not found."
+  # Optionally, open in Finder if VSCode is not available
+  open -R "$file"
+fi
 
 echo "🌿 New language generator created for $new_name!"
 echo "Start building it at: $new_dir"

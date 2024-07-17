@@ -2,7 +2,21 @@ openapi: 3.0.1
 info:
   title: alias
   version: ''
-paths: {}
+paths:
+  /{typeId}:
+    get:
+      operationId: get
+      tags:
+        - ''
+      parameters:
+        - name: typeId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/TypeId'
+      responses:
+        '204':
+          description: ''
 components:
   schemas:
     TypeId:
