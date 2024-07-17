@@ -3828,7 +3828,9 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
                           },
                           "shape": {
                             "type": "unknown",
-                            "unknown": undefined,
+                            "unknown": {
+                              "key": "value",
+                            },
                           },
                         },
                         "type": "optional",
