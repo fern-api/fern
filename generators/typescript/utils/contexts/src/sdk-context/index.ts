@@ -9,3 +9,4 @@ export * from "./sdk-error-schema";
 export * from "./sdk-inlined-request-body-schema";
 export { type SdkContext } from "./SdkContext";
 export * from "./timeout-sdk-error";
+export * from "./version";
