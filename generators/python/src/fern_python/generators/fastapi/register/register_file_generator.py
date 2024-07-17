@@ -112,7 +112,9 @@ class RegisterFileGenerator:
                 handler=handler,
             )
         )
-        writer.write_line()
+        # Starlette seems to have some oddities with it's Python version such that it doesn't recognize
+        # the base Exception we are using from a typing perspective.
+        writer.write_line("  # type: ignore")
 
     def _get_register_service_method(self) -> AST.FunctionDeclaration:
         return AST.FunctionDeclaration(
