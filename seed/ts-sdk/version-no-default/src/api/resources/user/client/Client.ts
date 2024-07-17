@@ -3,7 +3,6 @@
  */
 
 import * as core from "../../../../core";
-import * as version from "../../../version";
 import * as SeedVersion from "../../../index";
 import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
@@ -13,7 +12,7 @@ export declare namespace User {
     interface Options {
         environment: core.Supplier<string>;
         /** Override the X-API-Version header */
-        xApiVersion: version.SeedVersionVersion;
+        xApiVersion: "1.0.0" | "2.0.0" | "latest";
     }
 
     interface RequestOptions {
@@ -24,7 +23,7 @@ export declare namespace User {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Override the X-API-Version header */
-        xApiVersion?: version.SeedVersionVersion;
+        xApiVersion?: "1.0.0" | "2.0.0" | "latest";
     }
 }
 
@@ -54,6 +53,7 @@ export class User {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

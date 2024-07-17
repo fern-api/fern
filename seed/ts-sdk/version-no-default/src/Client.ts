@@ -3,14 +3,13 @@
  */
 
 import * as core from "./core";
-import * as version from "./api/version";
 import { User } from "./api/resources/user/client/Client";
 
 export declare namespace SeedVersionClient {
     interface Options {
         environment: core.Supplier<string>;
         /** Override the X-API-Version header */
-        xApiVersion: version.SeedVersionVersion;
+        xApiVersion: "1.0.0" | "2.0.0" | "latest";
     }
 
     interface RequestOptions {
@@ -21,7 +20,7 @@ export declare namespace SeedVersionClient {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Override the X-API-Version header */
-        xApiVersion?: version.SeedVersionVersion;
+        xApiVersion?: "1.0.0" | "2.0.0" | "latest";
     }
 }
 
