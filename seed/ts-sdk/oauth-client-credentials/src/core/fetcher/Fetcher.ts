@@ -89,6 +89,10 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
         let responseBody = await getResponseBody(response, args.responseType);
 
         if (response.status >= 200 && response.status < 400) {
+            if (args.duplex) {
+                responseBody = (await import("stream")).Readable.from(responseBody as any);
+            }
+
             return {
                 ok: true,
                 body: responseBody as R,

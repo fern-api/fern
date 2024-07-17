@@ -9,11 +9,11 @@ TEST=generators/typescript/utils/core-utilities/fetcher/src/form-data-utils/__te
 cd $TEST
 
 # Run the tests with different Node.js versions and update the flag if any command fails
-nvm use 20 && yarn test || EXIT_STATUS=$?
-nvm use 19 && yarn test || EXIT_STATUS=$?
-nvm use 18 && yarn test || EXIT_STATUS=$?
-nvm use 17 && yarn test || EXIT_STATUS=$?
-nvm use 16 && yarn test || EXIT_STATUS=$?
+nvm install 20 && nvm use 20 && yarn test || EXIT_STATUS=$?
+nvm install 19 && nvm use 19 && yarn test || EXIT_STATUS=$?
+nvm install 18 && nvm use 18 && yarn test || EXIT_STATUS=$?
+nvm install 17 && nvm use 17 && yarn test || EXIT_STATUS=$?
+nvm install 16 && nvm use 16 && yarn test || EXIT_STATUS=$?
 
 # Exit with the appropriate status
 exit $EXIT_STATUS
