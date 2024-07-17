@@ -5694,7 +5694,6 @@ __metadata:
     depcheck: ^1.4.6
     eslint: ^8.56.0
     express: ^4.19.2
-    file-type: ^19.2.0
     form-data: ^4.0.0
     form-data-encoder: ^4.0.2
     formdata-node: ^6.0.3
@@ -5707,7 +5706,6 @@ __metadata:
     prettier: ^2.7.1
     qs: 6.12.1
     stream-head: ^3.0.0
-    stream-mime-type: ^2.0.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -13125,17 +13123,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"file-type@npm:^18.2.0":
-  version: 18.7.0
-  resolution: "file-type@npm:18.7.0"
-  dependencies:
-    readable-web-to-node-stream: ^3.0.2
-    strtok3: ^7.0.0
-    token-types: ^5.0.1
-  checksum: 039dcb819858a3bc8285b51e4a756eb4b8d943dcf20e52fa4c097624cc99efd61d51aa595414879b7f86ea23fdbd83553aa3be679df2a85f5840e1ea03f93ef9
-  languageName: node
-  linkType: hard
-
 "file-type@npm:^19.0.0":
   version: 19.0.0
   resolution: "file-type@npm:19.0.0"
@@ -13144,17 +13131,6 @@ env-cmd@toddbluhm/env-cmd:
     strtok3: ^7.0.0
     token-types: ^5.0.1
   checksum: 03eec30a0b098f400436d5c578a0f2e8eaf58989fe7eae8762477348305181489c6108c4d560d78d6425fd0e16e99a302ea85fb33d1e046aa166c86884e109af
-  languageName: node
-  linkType: hard
-
-"file-type@npm:^19.2.0":
-  version: 19.2.0
-  resolution: "file-type@npm:19.2.0"
-  dependencies:
-    strtok3: ^8.0.0
-    token-types: ^6.0.0
-    uint8array-extras: ^1.3.0
-  checksum: b209b1a2a6743fcdd863e0384dcd5ef5fe1118fb83256ff54b5750a027d3c73a846750ff87600262440db931c30a5c94810c7beb69798a582ed2b83b0d446147
   languageName: node
   linkType: hard
 
@@ -20074,13 +20050,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"peek-readable@npm:^5.1.3":
-  version: 5.1.3
-  resolution: "peek-readable@npm:5.1.3"
-  checksum: 636f3a16cd88bd944e931525572f0c3a098d2a7108a45933e5c3d31544cc61df0cbf455d49164a66f1885a722f7511defbd4710c65a9bb57ed7d5cf96a64c539
-  languageName: node
-  linkType: hard
-
 "pend@npm:~1.2.0":
   version: 1.2.0
   resolution: "pend@npm:1.2.0"
@@ -22535,17 +22504,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"stream-mime-type@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "stream-mime-type@npm:2.0.0"
-  dependencies:
-    file-type: ^18.2.0
-    mime-types: ^2.1.35
-    stream-head: ^3.0.0
-  checksum: 43feb836d40431b5937c3b86b6acc76c9072e61ef3083feddb5d54ecb01b17b0bfc2a1c11c2b296f860708763627c6d1062d0d10f385d09820726cbf9c7849f0
-  languageName: node
-  linkType: hard
-
 "stream-shift@npm:^1.0.0":
   version: 1.0.3
   resolution: "stream-shift@npm:1.0.3"
@@ -22924,16 +22882,6 @@ env-cmd@toddbluhm/env-cmd:
     "@tokenizer/token": ^0.3.0
     peek-readable: ^5.0.0
   checksum: 2ebe7ad8f2aea611dec6742cf6a42e82764892a362907f7ce493faf334501bf981ce21c828dcc300457e6d460dc9c34d644ededb3b01dcb9e37559203cf1748c
-  languageName: node
-  linkType: hard
-
-"strtok3@npm:^8.0.0":
-  version: 8.0.0
-  resolution: "strtok3@npm:8.0.0"
-  dependencies:
-    "@tokenizer/token": ^0.3.0
-    peek-readable: ^5.1.3
-  checksum: a6b6aa98a137df51213eb313639986168e2eb135930a3acd06947aa3e30870262b113647c472e270aaa016f035e43a44feefcbf9cee451b7b46a7875ec4a8227
   languageName: node
   linkType: hard
 
@@ -23634,16 +23582,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"token-types@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "token-types@npm:6.0.0"
-  dependencies:
-    "@tokenizer/token": ^0.3.0
-    ieee754: ^1.2.1
-  checksum: 9d4fb5fad76bb968687a03aaae37f7eb606cca54c35b840ec438bbbc9b696ad0fbbd72760248b4eed16cbb3c87ab61590c287fc6bd973583944626b7c772f47b
-  languageName: node
-  linkType: hard
-
 "tough-cookie@npm:^4.1.2":
   version: 4.1.4
   resolution: "tough-cookie@npm:4.1.4"
@@ -24133,13 +24071,6 @@ env-cmd@toddbluhm/env-cmd:
   version: 0.0.6
   resolution: "uid-number@npm:0.0.6"
   checksum: ff17525bb9b17313b839222efa1fe69baf136992cf675e8d1d50e9b1ef4563742968e390a96a57645d99cf8b283866c36ef9747bbf186bbbf2ef601b60ed4443
-  languageName: node
-  linkType: hard
-
-"uint8array-extras@npm:^1.3.0":
-  version: 1.4.0
-  resolution: "uint8array-extras@npm:1.4.0"
-  checksum: 791c07e1f632cb6b4d5c0275dcac2efa4689be523f021cc78b66377872e500dbe5b4c56749367cc97892f6952bc5bccd34cf9147a2a16ccb253f3b7f94588398
   languageName: node
   linkType: hard
 

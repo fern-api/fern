@@ -50,26 +50,14 @@ class Node18FormData implements CrossPlatformFormData {
         this.fd?.append(key, value);
     }
 
-    private async getMimeTypeAndBuffer(stream: fs.ReadStream) {
-        const chunks = [];
-        for await (const chunk of stream) {
-            chunks.push(chunk);
-        }
-        const buffer = Buffer.concat(chunks);
-        const fileType = await (await import("file-type")).fileTypeFromBuffer(buffer);
-        const mime = fileType ? fileType.mime : "Unknown";
-        return { mime, stream: (await import("stream")).Readable.from(buffer) };
-    }
-
     public async appendFile(key: string, value: Blob | File | fs.ReadStream, fileName?: string): Promise<void> {
         if (value instanceof fs.ReadStream) {
-            const { stream, mime } = await this.getMimeTypeAndBuffer(value);
             this.fd?.append(key, {
-                type: mime,
+                type: undefined,
                 name: fileName,
                 [Symbol.toStringTag]: "File",
                 stream() {
-                    return stream;
+                    return value;
                 }
             });
         } else {
