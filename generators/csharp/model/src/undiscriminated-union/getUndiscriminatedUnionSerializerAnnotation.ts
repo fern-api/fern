@@ -1,5 +1,5 @@
 import { AbstractCsharpGeneratorContext, csharp } from "@fern-api/csharp-codegen";
-import { UndiscriminatedUnionTypeDeclaration } from "@fern-api/ir-sdk";
+import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 /**
  * Returns a C# annotation used to deserialize and serialize OneOf references.

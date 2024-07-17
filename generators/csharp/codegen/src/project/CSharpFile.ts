@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { FernFilepath } from "@fern-api/ir-sdk";
+import { FernFilepath } from "@fern-fern/ir-sdk/api";
 import path from "path";
 import { Class, Enum } from "../ast";
 import { File } from "./File";

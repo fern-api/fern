@@ -2,7 +2,7 @@ import { AbstractCsharpGeneratorCli, TestFileGenerator } from "@fern-api/csharp-
 import { generateModels } from "@fern-api/fern-csharp-model";
 import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { HttpService, IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ClientOptionsGenerator } from "./client-options/ClientOptionsGenerator";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
@@ -10,8 +10,6 @@ import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
-import { SnippetHelper } from "@fern-api/fern-csharp-model/src/SnippetHelper";
-import { ObjectSerializationTestGenerator } from "@fern-api/fern-csharp-model/lib/object/ObjectSerializationTestGenerator";
 
 export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({

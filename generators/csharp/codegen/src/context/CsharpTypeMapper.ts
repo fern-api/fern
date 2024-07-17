@@ -5,9 +5,8 @@ import {
     Literal,
     PrimitiveType,
     PrimitiveTypeV1,
-    PrimitiveTypeV2,
     TypeReference
-} from "@fern-api/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 import { csharp } from "../";
 import { ClassReference, Type } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";

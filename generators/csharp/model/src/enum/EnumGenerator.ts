@@ -1,6 +1,6 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { EnumTypeDeclaration, TypeDeclaration } from "@fern-api/ir-sdk";
+import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 

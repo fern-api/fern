@@ -1,5 +1,5 @@
 import { CSharpFile } from "@fern-api/csharp-codegen";
-import { EnumTypeDeclaration, ObjectTypeDeclaration } from "@fern-api/ir-sdk";
+import { EnumTypeDeclaration, ObjectTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { EnumGenerator } from "./enum/EnumGenerator";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { ObjectGenerator } from "./object/ObjectGenerator";

@@ -12,7 +12,7 @@ import {
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
-} from "@fern-api/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
 import { csharp } from "..";
 import {

@@ -1,5 +1,5 @@
 import { csharp } from "@fern-api/csharp-codegen";
-import { HttpEndpoint, ServiceId } from "@fern-api/ir-sdk";
+import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { RawClient } from "./RawClient";
 import { EndpointRequest } from "./request/EndpointRequest";

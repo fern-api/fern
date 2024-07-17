@@ -1,6 +1,6 @@
 import { AbstractCsharpGeneratorCli } from "@fern-api/csharp-codegen";
 import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/generator-commons";
-import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { generateModels } from "./generateModels";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";

@@ -10,7 +10,7 @@ import {
     SubpackageId,
     TypeId,
     TypeReference
-} from "@fern-api/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
 import { CLIENT_OPTIONS_CLASS_NAME } from "./client-options/ClientOptionsGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";

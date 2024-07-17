@@ -9,11 +9,11 @@ import {
     PrimitiveTypeV2,
     Subpackage,
     TypeReference
-} from "@fern-api/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
+import { EndpointGenerator } from "../endpoint/EndpointGenerator";
+import { RawClient } from "../endpoint/RawClient";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { RawClient } from "../endpoint/RawClient";
-import { EndpointGenerator } from "../endpoint/EndpointGenerator";
 
 export const CLIENT_MEMBER_NAME = "_client";
 
