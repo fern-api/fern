@@ -15,8 +15,8 @@ export const V50_TO_V49_MIGRATION: IrMigration<
     laterVersion: "v50",
     earlierVersion: "v49",
     firstGeneratorVersionToConsumeNewIR: {
-        [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.32.1",
-        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.32.1",
+        [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.34.0",
+        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.34.0",
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_EXPRESS]: "0.17.2",
