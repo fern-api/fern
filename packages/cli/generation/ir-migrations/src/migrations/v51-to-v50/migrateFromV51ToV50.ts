@@ -175,7 +175,7 @@ function convertExampleTypeReferenceShape(
         case "container":
             return IrVersions.V50.ExampleTypeReferenceShape.container(convertExampleContainerTypeReferenceShape(shape));
         case "unknown":
-            return IrVersions.V50.ExampleTypeReferenceShape.unknown();
+            return IrVersions.V50.ExampleTypeReferenceShape.unknown(shape.unknown);
         case "named":
             return IrVersions.V50.ExampleTypeReferenceShape.named({
                 ...shape,
