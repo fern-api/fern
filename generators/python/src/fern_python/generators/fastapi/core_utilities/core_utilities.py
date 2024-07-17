@@ -261,8 +261,8 @@ class CoreUtilities:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "unchecked_base_model"),
-                named_import="UncheckedBaseModel",
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"),
+                named_import="UniversalBaseModel",
             ),
         )
 
