@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.15.2] - 2024-07-10
+## [2.15.4] - 2024-07-10
+
+- Fix: The generated python SDK now serializes bytes within JSON as a utf-8 encoded string.
+
+## [2.15.3] - 2024-07-10
 
 - Fix: The generated python SDK no longer runs into a recursion error during snippet generation.
 

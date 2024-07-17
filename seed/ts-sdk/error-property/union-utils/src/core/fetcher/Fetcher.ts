@@ -20,6 +20,7 @@ export declare namespace Fetcher {
         maxRetries?: number;
         withCredentials?: boolean;
         abortSignal?: AbortSignal;
+        requestType?: "json" | "file" | "bytes";
         responseType?: "json" | "blob" | "streaming" | "text";
     }
 
@@ -62,7 +63,10 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
     }
 
     const url = createRequestUrl(args.url, args.queryParameters);
-    let requestBody: BodyInit | undefined = await getRequestBody(args.body, args.contentType ?? "");
+    let requestBody: BodyInit | undefined = await getRequestBody({
+        body: args.body,
+        type: args.requestType === "json" ? "json" : "other",
+    });
     const fetchFn = await getFetchFn();
 
     try {

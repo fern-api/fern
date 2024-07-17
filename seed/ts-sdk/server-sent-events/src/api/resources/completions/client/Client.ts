@@ -42,6 +42,7 @@ export class Completions {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: serializers.StreamCompletionRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             responseType: "streaming",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
