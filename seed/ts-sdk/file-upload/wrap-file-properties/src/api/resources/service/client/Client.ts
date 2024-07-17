@@ -37,19 +37,19 @@ export class Service {
      *     })
      */
     public async post(request: SeedFileUpload.MyRequest, requestOptions?: Service.RequestOptions): Promise<void> {
-        const _request = new core.FormDataWrapper();
+        const _request = await core.newFormData();
         if (request.maybeString != null) {
             await _request.append("maybeString", request.maybeString);
         }
 
         await _request.append("integer", request.integer.toString());
-        await _request.append("file", request.file);
+        await _request.appendFile("file", request.file);
         for (const _file of request.fileList) {
             await _request.append("fileList", _file);
         }
 
         if (request.maybeFile != null) {
-            await _request.append("maybeFile", request.maybeFile);
+            await _request.appendFile("maybeFile", request.maybeFile);
         }
 
         if (request.maybeFileList != null) {
@@ -72,7 +72,7 @@ export class Service {
             await _request.append("listOfObjects", JSON.stringify(_item));
         }
 
-        const _maybeEncodedRequest = _request.getRequest();
+        const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),
             method: "POST",
@@ -82,9 +82,10 @@ export class Service {
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...(await _maybeEncodedRequest.getHeaders()),
+                ...(await _maybeEncodedRequest.headers),
             },
-            body: await _maybeEncodedRequest.getBody(),
+            requestType: "file",
+            body: await _maybeEncodedRequest.body,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -128,9 +129,9 @@ export class Service {
         request: SeedFileUpload.JustFileRequet,
         requestOptions?: Service.RequestOptions
     ): Promise<void> {
-        const _request = new core.FormDataWrapper();
-        await _request.append("file", request.file);
-        const _maybeEncodedRequest = _request.getRequest();
+        const _request = await core.newFormData();
+        await _request.appendFile("file", request.file);
+        const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/just-file"),
             method: "POST",
@@ -140,9 +141,10 @@ export class Service {
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...(await _maybeEncodedRequest.getHeaders()),
+                ...(await _maybeEncodedRequest.headers),
             },
-            body: await _maybeEncodedRequest.getBody(),
+            requestType: "file",
+            body: await _maybeEncodedRequest.body,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -215,9 +217,9 @@ export class Service {
             }
         }
 
-        const _request = new core.FormDataWrapper();
-        await _request.append("file", request.file);
-        const _maybeEncodedRequest = _request.getRequest();
+        const _request = await core.newFormData();
+        await _request.appendFile("file", request.file);
+        const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/just-file-with-query-params"),
             method: "POST",
@@ -227,10 +229,11 @@ export class Service {
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...(await _maybeEncodedRequest.getHeaders()),
+                ...(await _maybeEncodedRequest.headers),
             },
             queryParameters: _queryParams,
-            body: await _maybeEncodedRequest.getBody(),
+            requestType: "file",
+            body: await _maybeEncodedRequest.body,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

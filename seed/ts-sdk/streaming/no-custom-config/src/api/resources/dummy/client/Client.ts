@@ -42,6 +42,7 @@ export class Dummy {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: {
                 ...serializers.GenerateStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
                 stream: true,
@@ -116,6 +117,7 @@ export class Dummy {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: {
                 ...serializers.Generateequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
                 stream: false,

@@ -73,38 +73,48 @@ function filterExampleTypeReference({
                 list: (l) => ({
                     ...exampleTypeReference,
                     shape: ExampleTypeReferenceShape.container(
-                        ExampleContainer.list(
-                            l
+                        ExampleContainer.list({
+                            ...l,
+                            list: l.list
                                 .map((t) => filterExampleTypeReference({ filteredIr, exampleTypeReference: t }))
                                 .filter((t): t is ExampleTypeReference => t !== undefined)
-                        )
+                        })
                     )
                 }),
                 set: (s) => ({
                     ...exampleTypeReference,
                     shape: ExampleTypeReferenceShape.container(
-                        ExampleContainer.set(
-                            s
+                        ExampleContainer.set({
+                            ...s,
+                            set: s.set
                                 .map((t) => filterExampleTypeReference({ filteredIr, exampleTypeReference: t }))
                                 .filter((t): t is ExampleTypeReference => t !== undefined)
-                        )
+                        })
                     )
                 }),
                 optional: (o) => {
-                    const innerOption =
-                        o !== undefined ? filterExampleTypeReference({ filteredIr, exampleTypeReference: o }) : o;
-                    return innerOption !== undefined
+                    const filteredOptionalTypReference =
+                        o.optional != null
+                            ? filterExampleTypeReference({ filteredIr, exampleTypeReference: o.optional })
+                            : undefined;
+                    return filteredOptionalTypReference != null
                         ? {
                               ...exampleTypeReference,
-                              shape: ExampleTypeReferenceShape.container(ExampleContainer.optional(innerOption))
+                              shape: ExampleTypeReferenceShape.container(
+                                  ExampleContainer.optional({
+                                      optional: filteredOptionalTypReference,
+                                      valueType: o.valueType
+                                  })
+                              )
                           }
                         : undefined;
                 },
                 map: (m) => ({
                     ...exampleTypeReference,
                     shape: ExampleTypeReferenceShape.container(
-                        ExampleContainer.map(
-                            m
+                        ExampleContainer.map({
+                            ...m,
+                            map: m.map
                                 .map((v) => {
                                     const filteredKey = filterExampleTypeReference({
                                         filteredIr,
@@ -119,7 +129,7 @@ function filterExampleTypeReference({
                                         : undefined;
                                 })
                                 .filter((t): t is ExampleKeyValuePair => t !== undefined)
-                        )
+                        })
                     )
                 }),
                 // This is just a primitive, don't do anything

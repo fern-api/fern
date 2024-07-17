@@ -123,7 +123,7 @@ exports[`generate IR from OpenAPI 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "9ceae6ad1543f6ab04412872d5399a1178bab5a1",
+                "id": "d2060330d1cc62fe73b00b557ac72e04512d9fb5",
                 "name": null,
                 "queryParameters": [],
                 "request": null,
@@ -255,6 +255,34 @@ exports[`generate IR from OpenAPI 1`] = `
                                       },
                                     },
                                     "type": "optional",
+                                    "valueType": {
+                                      "_type": "named",
+                                      "fernFilepath": {
+                                        "allParts": [],
+                                        "file": null,
+                                        "packagePath": [],
+                                      },
+                                      "name": {
+                                        "camelCase": {
+                                          "safeName": "exampleResponseStatus",
+                                          "unsafeName": "exampleResponseStatus",
+                                        },
+                                        "originalName": "ExampleResponseStatus",
+                                        "pascalCase": {
+                                          "safeName": "ExampleResponseStatus",
+                                          "unsafeName": "ExampleResponseStatus",
+                                        },
+                                        "screamingSnakeCase": {
+                                          "safeName": "EXAMPLE_RESPONSE_STATUS",
+                                          "unsafeName": "EXAMPLE_RESPONSE_STATUS",
+                                        },
+                                        "snakeCase": {
+                                          "safeName": "example_response_status",
+                                          "unsafeName": "example_response_status",
+                                        },
+                                      },
+                                      "typeId": "type_:ExampleResponseStatus",
+                                    },
                                   },
                                   "type": "container",
                                 },
@@ -327,6 +355,17 @@ exports[`generate IR from OpenAPI 1`] = `
                                       },
                                     },
                                     "type": "optional",
+                                    "valueType": {
+                                      "_type": "primitive",
+                                      "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                          "default": null,
+                                          "type": "string",
+                                          "validation": null,
+                                        },
+                                      },
+                                    },
                                   },
                                   "type": "container",
                                 },
@@ -394,6 +433,17 @@ exports[`generate IR from OpenAPI 1`] = `
                                       },
                                       "shape": {
                                         "container": {
+                                          "keyType": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                              "v1": "STRING",
+                                              "v2": {
+                                                "default": null,
+                                                "type": "string",
+                                                "validation": null,
+                                              },
+                                            },
+                                          },
                                           "map": [
                                             {
                                               "key": {
@@ -423,11 +473,50 @@ exports[`generate IR from OpenAPI 1`] = `
                                             },
                                           ],
                                           "type": "map",
+                                          "valueType": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                              "v1": "STRING",
+                                              "v2": {
+                                                "default": null,
+                                                "type": "string",
+                                                "validation": null,
+                                              },
+                                            },
+                                          },
                                         },
                                         "type": "container",
                                       },
                                     },
                                     "type": "optional",
+                                    "valueType": {
+                                      "_type": "container",
+                                      "container": {
+                                        "_type": "map",
+                                        "keyType": {
+                                          "_type": "primitive",
+                                          "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                              "default": null,
+                                              "type": "string",
+                                              "validation": null,
+                                            },
+                                          },
+                                        },
+                                        "valueType": {
+                                          "_type": "primitive",
+                                          "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                              "default": null,
+                                              "type": "string",
+                                              "validation": null,
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
                                   },
                                   "type": "container",
                                 },
@@ -693,6 +782,34 @@ exports[`generate IR from OpenAPI 1`] = `
                                       },
                                     },
                                     "type": "optional",
+                                    "valueType": {
+                                      "_type": "named",
+                                      "fernFilepath": {
+                                        "allParts": [],
+                                        "file": null,
+                                        "packagePath": [],
+                                      },
+                                      "name": {
+                                        "camelCase": {
+                                          "safeName": "exampleResponseStatus",
+                                          "unsafeName": "exampleResponseStatus",
+                                        },
+                                        "originalName": "ExampleResponseStatus",
+                                        "pascalCase": {
+                                          "safeName": "ExampleResponseStatus",
+                                          "unsafeName": "ExampleResponseStatus",
+                                        },
+                                        "screamingSnakeCase": {
+                                          "safeName": "EXAMPLE_RESPONSE_STATUS",
+                                          "unsafeName": "EXAMPLE_RESPONSE_STATUS",
+                                        },
+                                        "snakeCase": {
+                                          "safeName": "example_response_status",
+                                          "unsafeName": "example_response_status",
+                                        },
+                                      },
+                                      "typeId": "type_:ExampleResponseStatus",
+                                    },
                                   },
                                   "type": "container",
                                 },
@@ -765,6 +882,17 @@ exports[`generate IR from OpenAPI 1`] = `
                                       },
                                     },
                                     "type": "optional",
+                                    "valueType": {
+                                      "_type": "primitive",
+                                      "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                          "default": null,
+                                          "type": "string",
+                                          "validation": null,
+                                        },
+                                      },
+                                    },
                                   },
                                   "type": "container",
                                 },
@@ -832,6 +960,17 @@ exports[`generate IR from OpenAPI 1`] = `
                                       },
                                       "shape": {
                                         "container": {
+                                          "keyType": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                              "v1": "STRING",
+                                              "v2": {
+                                                "default": null,
+                                                "type": "string",
+                                                "validation": null,
+                                              },
+                                            },
+                                          },
                                           "map": [
                                             {
                                               "key": {
@@ -861,11 +1000,50 @@ exports[`generate IR from OpenAPI 1`] = `
                                             },
                                           ],
                                           "type": "map",
+                                          "valueType": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                              "v1": "STRING",
+                                              "v2": {
+                                                "default": null,
+                                                "type": "string",
+                                                "validation": null,
+                                              },
+                                            },
+                                          },
                                         },
                                         "type": "container",
                                       },
                                     },
                                     "type": "optional",
+                                    "valueType": {
+                                      "_type": "container",
+                                      "container": {
+                                        "_type": "map",
+                                        "keyType": {
+                                          "_type": "primitive",
+                                          "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                              "default": null,
+                                              "type": "string",
+                                              "validation": null,
+                                            },
+                                          },
+                                        },
+                                        "valueType": {
+                                          "_type": "primitive",
+                                          "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                              "default": null,
+                                              "type": "string",
+                                              "validation": null,
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
                                   },
                                   "type": "container",
                                 },
@@ -929,9 +1107,9 @@ exports[`generate IR from OpenAPI 1`] = `
   "subpackages": {},
   "types": {
     "type_:ExampleResponse": {
+      "autogeneratedExamples": [],
       "availability": null,
       "docs": null,
-      "examples": [],
       "name": {
         "fernFilepath": {
           "allParts": [],
@@ -1132,11 +1310,12 @@ exports[`generate IR from OpenAPI 1`] = `
           },
         ],
       },
+      "userProvidedExamples": [],
     },
     "type_:ExampleResponseStatus": {
+      "autogeneratedExamples": [],
       "availability": null,
       "docs": null,
-      "examples": [],
       "name": {
         "fernFilepath": {
           "allParts": [],
@@ -1223,11 +1402,12 @@ exports[`generate IR from OpenAPI 1`] = `
           },
         ],
       },
+      "userProvidedExamples": [],
     },
     "type_:GrantTypeEnum": {
+      "autogeneratedExamples": [],
       "availability": null,
       "docs": null,
-      "examples": [],
       "name": {
         "fernFilepath": {
           "allParts": [],
@@ -1314,6 +1494,7 @@ exports[`generate IR from OpenAPI 1`] = `
           },
         ],
       },
+      "userProvidedExamples": [],
     },
   },
   "variables": [],

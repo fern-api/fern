@@ -94,6 +94,7 @@ export declare namespace Fetcher {
         withCredentials: boolean;
         timeoutInSeconds: ts.Expression;
         maxRetries?: ts.Expression;
+        requestType?: "json" | "file" | "bytes" | "other";
         responseType?: "json" | "blob" | "streaming" | "text";
     }
 }
