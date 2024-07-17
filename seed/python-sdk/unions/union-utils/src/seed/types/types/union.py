@@ -50,7 +50,7 @@ class Union(UniversalRootModel):
     ) -> T_Result:
         if self.get_as_union().type == "foo":
             return foo(self.get_as_union().foo)
-        if self.get_as_union().type == "bar":
+        else:
             return bar(self.get_as_union().bar)
 
 

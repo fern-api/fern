@@ -55,7 +55,7 @@ class UnionWithTime(UniversalRootModel):
             return value(self.get_as_union().value)
         if self.get_as_union().type == "date":
             return date(self.get_as_union().value)
-        if self.get_as_union().type == "datetime":
+        else:
             return datetime(self.get_as_union().value)
 
 

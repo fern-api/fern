@@ -32,8 +32,7 @@ class UnionWithLiteral(UniversalRootModel):
             return self.__root__
 
     def visit(self, fern: typing.Callable[[typing.Literal["fern"]], T_Result]) -> T_Result:
-        if self.get_as_union().type == "fern":
-            return fern(self.get_as_union().value)
+        return fern(self.get_as_union().value)
 
 
 class _UnionWithLiteral:

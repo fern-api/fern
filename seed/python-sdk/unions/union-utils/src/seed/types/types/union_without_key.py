@@ -48,7 +48,7 @@ class UnionWithoutKey(UniversalRootModel):
     ) -> T_Result:
         if self.get_as_union().type == "foo":
             return foo(types_types_foo_Foo(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "bar":
+        else:
             return bar(types_types_bar_Bar(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
 
 

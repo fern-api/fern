@@ -35,7 +35,6 @@ Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
 
 class UncheckedBaseModel(UniversalBaseModel):
     if IS_PYDANTIC_V2:
-        # Note: `smart_union` is on by defautl in Pydantic v2
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
@@ -78,7 +77,9 @@ class UncheckedBaseModel(UniversalBaseModel):
                 else:
                     type_ = typing.cast(typing.Type, field.outer_type_)  # type: ignore # Pydantic < v1.10.15
 
-                fields_values[name] = construct_type(object_=values[key], type_=type_)
+                fields_values[name] = (
+                    construct_type(object_=values[key], type_=type_) if type_ is not None else values[key]
+                )
                 _fields_set.add(name)
             else:
                 default = _get_field_default(field)
@@ -109,7 +110,7 @@ class UncheckedBaseModel(UniversalBaseModel):
             object.__setattr__(m, "__pydantic_fields_set__", _fields_set)
         else:
             object.__setattr__(m, "__fields_set__", _fields_set)
-            m._init_private_attributes()
+            m._init_private_attributes()  # type: ignore # Pydantic v1
         return m
 
 
@@ -254,7 +255,7 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
 def _get_is_populate_by_name(model: typing.Type["Model"]) -> bool:
     if IS_PYDANTIC_V2:
         return model.model_config.get("populate_by_name", False)  # type: ignore # Pydantic v2
-    return model.__config__.allow_population_by_field_name
+    return model.__config__.allow_population_by_field_name  # type: ignore # Pydantic v1
 
 
 PydanticField = typing.Union[ModelField, pydantic.fields.FieldInfo]

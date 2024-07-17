@@ -49,7 +49,7 @@ class UnionWithOptionalTime(UniversalRootModel):
     ) -> T_Result:
         if self.get_as_union().type == "date":
             return date(self.get_as_union().value)
-        if self.get_as_union().type == "dateimte":
+        else:
             return dateimte(self.get_as_union().value)
 
 

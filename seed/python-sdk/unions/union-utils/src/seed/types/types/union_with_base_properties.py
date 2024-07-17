@@ -67,7 +67,7 @@ class UnionWithBaseProperties(UniversalRootModel):
             return integer(self.get_as_union().value)
         if self.get_as_union().type == "string":
             return string(self.get_as_union().value)
-        if self.get_as_union().type == "foo":
+        else:
             return foo(types_types_foo_Foo(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
 
 

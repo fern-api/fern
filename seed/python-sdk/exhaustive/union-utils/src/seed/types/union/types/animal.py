@@ -48,7 +48,7 @@ class Animal(UniversalRootModel):
     ) -> T_Result:
         if self.get_as_union().animal == "dog":
             return dog(types_union_types_dog_Dog(**self.get_as_union().dict(exclude_unset=True, exclude={"animal"})))
-        if self.get_as_union().animal == "cat":
+        else:
             return cat(types_union_types_cat_Cat(**self.get_as_union().dict(exclude_unset=True, exclude={"animal"})))
 
 

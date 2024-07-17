@@ -48,7 +48,7 @@ class Shape(UniversalRootModel):
     ) -> T_Result:
         if self.get_as_union().type == "circle":
             return circle(union_types_circle_Circle(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
-        if self.get_as_union().type == "square":
+        else:
             return square(union_types_square_Square(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
 
 

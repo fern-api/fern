@@ -42,7 +42,7 @@ class UnionWithPrimitive(UniversalRootModel):
     def visit(self, integer: typing.Callable[[int], T_Result], string: typing.Callable[[str], T_Result]) -> T_Result:
         if self.get_as_union().type == "integer":
             return integer(self.get_as_union().value)
-        if self.get_as_union().type == "string":
+        else:
             return string(self.get_as_union().value)
 
 

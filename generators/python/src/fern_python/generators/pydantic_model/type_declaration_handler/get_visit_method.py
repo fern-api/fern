@@ -30,20 +30,29 @@ def get_visit_method(
     def write_visitor_body(
         writer: AST.NodeWriter,
     ) -> None:
-        for idx, item in enumerate(items):
-            if idx == len(items) - 1:
-                writer.write_line("else:")
-            else:
-                writer.write_line(
-                    f"if {reference_to_current_value}"
-                    + f' {"is" if should_use_is_for_equality_check else "=="} '
-                    + f"{item.expected_value}:"
-                )
-            with writer.indent():
-                writer.write_line(f"return {item.parameter_name}(")
-                if item.visitor_argument is not None:
-                    writer.write_node(item.visitor_argument.expression)
-                writer.write(")\n")
+        if len(items) == 0:
+            writer.write_line("return")
+        elif len(items) == 1:
+            item = items[0]
+            writer.write(f"return {item.parameter_name}(")
+            if item.visitor_argument is not None:
+                writer.write_node(item.visitor_argument.expression)
+            writer.write(")\n")
+        else:
+            for idx, item in enumerate(items):
+                if idx == len(items) - 1:
+                    writer.write_line("else:")
+                else:
+                    writer.write_line(
+                        f"if {reference_to_current_value}"
+                        + f' {"is" if should_use_is_for_equality_check else "=="} '
+                        + f"{item.expected_value}:"
+                    )
+                with writer.indent():
+                    writer.write(f"return {item.parameter_name}(")
+                    if item.visitor_argument is not None:
+                        writer.write_node(item.visitor_argument.expression)
+                    writer.write(")\n")
 
     return AST.FunctionDeclaration(
         name="visit",

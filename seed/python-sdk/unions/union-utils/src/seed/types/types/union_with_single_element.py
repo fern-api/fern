@@ -33,8 +33,7 @@ class UnionWithSingleElement(UniversalRootModel):
             return self.__root__
 
     def visit(self, foo: typing.Callable[[types_types_foo_Foo], T_Result]) -> T_Result:
-        if self.get_as_union().type == "foo":
-            return foo(types_types_foo_Foo(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
+        return foo(types_types_foo_Foo(**self.get_as_union().dict(exclude_unset=True, exclude={"type"})))
 
 
 class _UnionWithSingleElement:
