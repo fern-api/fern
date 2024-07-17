@@ -16,7 +16,7 @@ class SeedMultiUrlEnvironmentNoDefault:
 
     Parameters
     ----------
-    environment : typing.Optional[SeedMultiUrlEnvironmentNoDefaultEnvironment]
+    environment : SeedMultiUrlEnvironmentNoDefaultEnvironment
         The environment to use for requests from the client.
 
     token : typing.Union[str, typing.Callable[[], str]]
@@ -43,7 +43,7 @@ class SeedMultiUrlEnvironmentNoDefault:
     def __init__(
         self,
         *,
-        environment: typing.Optional[SeedMultiUrlEnvironmentNoDefaultEnvironment] = None,
+        environment: SeedMultiUrlEnvironmentNoDefaultEnvironment,
         token: typing.Union[str, typing.Callable[[], str]],
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -70,7 +70,7 @@ class AsyncSeedMultiUrlEnvironmentNoDefault:
 
     Parameters
     ----------
-    environment : typing.Optional[SeedMultiUrlEnvironmentNoDefaultEnvironment]
+    environment : SeedMultiUrlEnvironmentNoDefaultEnvironment
         The environment to use for requests from the client.
 
     token : typing.Union[str, typing.Callable[[], str]]
@@ -97,7 +97,7 @@ class AsyncSeedMultiUrlEnvironmentNoDefault:
     def __init__(
         self,
         *,
-        environment: typing.Optional[SeedMultiUrlEnvironmentNoDefaultEnvironment] = None,
+        environment: SeedMultiUrlEnvironmentNoDefaultEnvironment,
         token: typing.Union[str, typing.Callable[[], str]],
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
