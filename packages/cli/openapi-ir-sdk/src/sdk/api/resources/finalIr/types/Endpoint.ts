@@ -9,7 +9,7 @@ export interface Endpoint extends FernOpenapiIr.WithDescription {
     internal: boolean | undefined;
     idempotent: boolean | undefined;
     method: FernOpenapiIr.HttpMethod;
-    availability: FernOpenapiIr.EndpointAvailability | undefined;
+    availability: FernOpenapiIr.Availability | undefined;
     audiences: string[];
     /**
      * This string includes templated path parameters.

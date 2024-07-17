@@ -19,6 +19,7 @@ export const ObjectSchema: core.serialization.ObjectSchema<serializers.ObjectSch
                 core.serialization.lazyObject(async () => (await import("../../..")).AllOfPropertyConflict)
             ),
             additionalProperties: core.serialization.boolean(),
+            availability: core.serialization.lazy(async () => (await import("../../..")).Availability),
         })
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
@@ -30,5 +31,6 @@ export declare namespace ObjectSchema {
         properties: serializers.ObjectProperty.Raw[];
         allOfPropertyConflicts: serializers.AllOfPropertyConflict.Raw[];
         additionalProperties: boolean;
+        availability: serializers.Availability.Raw;
     }
 }

@@ -14,6 +14,7 @@ export const QueryParameterWithExample: core.serialization.ObjectSchema<
         name: core.serialization.string(),
         schema: core.serialization.lazy(async () => (await import("../../..")).SchemaWithExample),
         parameterNameOverride: core.serialization.string().optional(),
+        availability: core.serialization.lazy(async () => (await import("../../..")).Availability),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
 
@@ -22,5 +23,6 @@ export declare namespace QueryParameterWithExample {
         name: string;
         schema: serializers.SchemaWithExample.Raw;
         parameterNameOverride?: string | null;
+        availability: serializers.Availability.Raw;
     }
 }

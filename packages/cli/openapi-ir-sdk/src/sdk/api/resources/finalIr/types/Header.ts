@@ -10,4 +10,5 @@ export interface Header extends FernOpenapiIr.WithDescription {
     env: string | undefined;
     /** Populated by `x-fern-parameter-name` on a parameter object. */
     parameterNameOverride: string | undefined;
+    availability: FernOpenapiIr.Availability;
 }

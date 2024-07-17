@@ -8,4 +8,5 @@ export interface PathParameter extends FernOpenapiIr.WithDescription {
     name: string;
     schema: FernOpenapiIr.Schema;
     variableReference: string | undefined;
+    availability: FernOpenapiIr.Availability;
 }

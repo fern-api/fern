@@ -12,6 +12,7 @@ export const Header: core.serialization.ObjectSchema<serializers.Header.Raw, Fer
         schema: core.serialization.lazy(async () => (await import("../../..")).Schema),
         env: core.serialization.string().optional(),
         parameterNameOverride: core.serialization.string().optional(),
+        availability: core.serialization.lazy(async () => (await import("../../..")).Availability),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
 
@@ -21,5 +22,6 @@ export declare namespace Header {
         schema: serializers.Schema.Raw;
         env?: string | null;
         parameterNameOverride?: string | null;
+        availability: serializers.Availability.Raw;
     }
 }

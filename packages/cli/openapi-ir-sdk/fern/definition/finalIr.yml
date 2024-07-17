@@ -126,7 +126,7 @@ types:
       - GET
       - POST
 
-  EndpointAvailability:
+  Availability:
     enum:
       - GenerallyAvailable
       - Beta
@@ -139,7 +139,7 @@ types:
       internal: optional<boolean>
       idempotent: optional<boolean>
       method: HttpMethod
-      availability: optional<EndpointAvailability>
+      availability: optional<Availability>
       audiences: list<string>
       path:
         type: string
@@ -310,6 +310,7 @@ types:
       name: string
       schema: Schema
       variableReference: optional<string>
+      availability: Availability
 
   QueryParameter:
     extends: commons.WithDescription
@@ -320,6 +321,7 @@ types:
         type: optional<string>
         docs: |
           Populated by `x-fern-parameter-name` on a parameter object.
+      availability: Availability
 
   Header:
     extends: commons.WithDescription
@@ -331,6 +333,7 @@ types:
         type: optional<string>
         docs: |
           Populated by `x-fern-parameter-name` on a parameter object.
+      availability: Availability
 
   Request:
     union:
@@ -487,6 +490,7 @@ types:
       properties: list<ObjectProperty>
       allOfPropertyConflicts: list<AllOfPropertyConflict>
       additionalProperties: boolean
+      availability: Availability
 
   # OpenAPI IR to Fern:
   # For every allOfPropertyConflict, we will inline the SchemaIds that conflict.
@@ -517,6 +521,7 @@ types:
         docs: | 
           An optional name override populated via `x-fern-property-name`. 
       audiences: list<string>
+      availability: Availability
 
   ObjectPropertyConflictInfo:
     properties:

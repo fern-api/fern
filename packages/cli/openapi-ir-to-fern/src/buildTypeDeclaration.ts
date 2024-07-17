@@ -107,6 +107,7 @@ export function buildObjectTypeDeclaration({
             context,
             fileContainingReference: declarationFile
         });
+
         const audiences = property.audiences;
         const name = property.nameOverride;
         if (audiences.length > 0 && name != null) {
@@ -207,6 +208,7 @@ export function buildObjectTypeDeclaration({
     if (schema.additionalProperties) {
         objectTypeDeclaration["extra-properties"] = true;
     }
+
     return {
         name: schema.nameOverride ?? schema.generatedName,
         schema: objectTypeDeclaration

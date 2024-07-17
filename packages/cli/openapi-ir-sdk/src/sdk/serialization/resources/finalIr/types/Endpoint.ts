@@ -13,9 +13,7 @@ export const Endpoint: core.serialization.ObjectSchema<serializers.Endpoint.Raw,
             internal: core.serialization.boolean().optional(),
             idempotent: core.serialization.boolean().optional(),
             method: core.serialization.lazy(async () => (await import("../../..")).HttpMethod),
-            availability: core.serialization
-                .lazy(async () => (await import("../../..")).EndpointAvailability)
-                .optional(),
+            availability: core.serialization.lazy(async () => (await import("../../..")).Availability).optional(),
             audiences: core.serialization.list(core.serialization.string()),
             path: core.serialization.string(),
             summary: core.serialization.string().optional(),
@@ -55,7 +53,7 @@ export declare namespace Endpoint {
         internal?: boolean | null;
         idempotent?: boolean | null;
         method: serializers.HttpMethod.Raw;
-        availability?: serializers.EndpointAvailability.Raw | null;
+        availability?: serializers.Availability.Raw | null;
         audiences: string[];
         path: string;
         summary?: string | null;

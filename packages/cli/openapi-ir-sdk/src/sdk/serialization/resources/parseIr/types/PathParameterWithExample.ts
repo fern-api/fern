@@ -14,6 +14,7 @@ export const PathParameterWithExample: core.serialization.ObjectSchema<
         name: core.serialization.string(),
         schema: core.serialization.lazy(async () => (await import("../../..")).SchemaWithExample),
         variableReference: core.serialization.string().optional(),
+        availability: core.serialization.lazy(async () => (await import("../../..")).Availability),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
 
@@ -22,5 +23,6 @@ export declare namespace PathParameterWithExample {
         name: string;
         schema: serializers.SchemaWithExample.Raw;
         variableReference?: string | null;
+        availability: serializers.Availability.Raw;
     }
 }

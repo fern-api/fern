@@ -1,7 +1,7 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { Endpoint, EndpointAvailability, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
+import { Availability, Endpoint, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { buildEndpointExample } from "./buildEndpointExample";
 import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition";
@@ -215,11 +215,11 @@ export function buildEndpoint({
         convertedEndpoint.idempotent = true;
     }
 
-    if (endpoint.availability === EndpointAvailability.Beta) {
+    if (endpoint.availability === Availability.Beta) {
         convertedEndpoint.availability = "pre-release";
-    } else if (endpoint.availability === EndpointAvailability.GenerallyAvailable) {
+    } else if (endpoint.availability === Availability.GenerallyAvailable) {
         convertedEndpoint.availability = "generally-available";
-    } else if (endpoint.availability === EndpointAvailability.Deprecated) {
+    } else if (endpoint.availability === Availability.Deprecated) {
         convertedEndpoint.availability = "deprecated";
     }
 
