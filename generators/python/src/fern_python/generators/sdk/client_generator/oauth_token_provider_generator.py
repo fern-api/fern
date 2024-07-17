@@ -72,7 +72,8 @@ class OAuthTokenProviderGenerator:
         )
         class_declaration.add_method(self._get_token_function_declaration(client_credentials=client_credentials))
         class_declaration.add_method(self._get_refresh_function_declaration(client_credentials=client_credentials))
-        class_declaration.add_method(self._get_expires_at_function_declaration())
+        if self._has_expires_in_property(client_credentials):
+            class_declaration.add_method(self._get_expires_at_function_declaration())
 
         return class_declaration
 
