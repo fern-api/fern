@@ -220,16 +220,18 @@ class EndpointFunctionGenerator:
             cleaned_parameters = []
             for param in self._named_parameters_raw:
                 if param.raw_name == streaming_parameter_name:
-                    cleaned_parameters.append(AST.NamedFunctionParameter(
-                        name=param.name,
-                        docs=param.docs,
-                        type_hint=AST.TypeHint.literal(
-                            AST.Expression("True" if streaming_parameter == "streaming" else "False")
-                        ),
-                        initializer=param.initializer,
-                        raw_name=param.raw_name,
-                        raw_type=param.raw_type,
-                    ))
+                    cleaned_parameters.append(
+                        AST.NamedFunctionParameter(
+                            name=param.name,
+                            docs=param.docs,
+                            type_hint=AST.TypeHint.literal(
+                                AST.Expression("True" if streaming_parameter == "streaming" else "False")
+                            ),
+                            initializer=param.initializer,
+                            raw_name=param.raw_name,
+                            raw_type=param.raw_type,
+                        )
+                    )
                 else:
                     cleaned_parameters.append(param)
             return cleaned_parameters
@@ -425,6 +427,43 @@ class EndpointFunctionGenerator:
 
         return AST.CodeWriter(write)
 
+    def _get_request_body(
+        self, *, method: str, request_body_parameters: Optional[AbstractRequestBodyParameters], writer: AST.NodeWriter
+    ) -> Optional[AST.Expression]:
+        json_request_body = request_body_parameters.get_json_body() if request_body_parameters is not None else None
+
+        def write_request_body(writer: AST.NodeWriter) -> None:
+            if json_request_body is not None:
+                writer.write_node(json_request_body)
+
+        json_request_body_var = None
+        if (method != "GET") and json_request_body is not None:
+            if self._is_overloaded_streaming_method():
+                request_json_variable_name = "_request_json"
+                writer.write(f"{request_json_variable_name} = ")
+                writer.write_node(AST.CodeWriter(write_request_body))
+                json_request_body_var = AST.Expression(request_json_variable_name)
+            else:
+                json_request_body_var = AST.Expression(AST.CodeWriter(write_request_body))
+        return json_request_body_var
+
+    def _get_files(
+        self, *, request_body_parameters: Optional[AbstractRequestBodyParameters], writer: AST.NodeWriter
+    ) -> Optional[AST.Expression]:
+        files = (
+            request_body_parameters.get_files()
+            if request_body_parameters is not None and request_body_parameters.get_files() is not None
+            else None
+        )
+
+        if files is not None and self._is_overloaded_streaming_method():
+            files_variable_name = "_request_files"
+            writer.write(f"{files_variable_name} = ")
+            writer.write_node(files)
+            return AST.Expression(files_variable_name)
+        else:
+            return files
+
     def _create_endpoint_body_writer(
         self,
         *,
@@ -436,24 +475,7 @@ class EndpointFunctionGenerator:
         named_parameters: List[AST.NamedFunctionParameter],
         parameters: List[AST.FunctionParameter],
     ) -> AST.CodeWriter:
-        # Need to call this once with the streaming response and another time with the non-streaming response
-        # This needs to set all the variables and then call the actual functions so there's limited duplication
-        #   - pre-fetch statements
-        #   - `write_request_body`
-        #   - `files`
-        #   - `self._get_headers_for_endpoint`
-        #   - `self._get_query_parameters_for_endpoint`
         def write(writer: AST.NodeWriter) -> None:
-            request_pre_fetch_statements = (
-                request_body_parameters.get_pre_fetch_statements(self._parameter_names_to_deconflict)
-                if request_body_parameters is not None
-                else None
-            )
-            if request_pre_fetch_statements is not None:
-                writer.write_node(AST.Expression(request_pre_fetch_statements))
-
-            json_request_body = request_body_parameters.get_json_body() if request_body_parameters is not None else None
-
             method = endpoint.method.visit(
                 get=lambda: "GET",
                 post=lambda: "POST",
@@ -462,15 +484,10 @@ class EndpointFunctionGenerator:
                 delete=lambda: "DELETE",
             )
 
-            def write_request_body(writer: AST.NodeWriter) -> None:
-                if json_request_body is not None:
-                    writer.write_node(json_request_body)
-
-            files = (
-                request_body_parameters.get_files()
-                if request_body_parameters is not None and request_body_parameters.get_files() is not None
-                else None
+            json_request_body_var = self._get_request_body(
+                method=method, request_body_parameters=request_body_parameters, writer=writer
             )
+            files = self._get_files(request_body_parameters=request_body_parameters, writer=writer)
 
             if self.is_paginated and self.pagination is not None:
                 pagination = self.pagination.get_as_union()
@@ -479,7 +496,9 @@ class EndpointFunctionGenerator:
                     page_param_name = request_property_to_name(param.property)
                     writer.write_line(f"{page_param_name} = {page_param_name} if {page_param_name} is not None else 1")
 
-            def get_httpx_request(is_streaming: bool, response_code_writer: EndpointResponseCodeWriter) -> AST.Expression:
+            def get_httpx_request(
+                is_streaming: bool, response_code_writer: EndpointResponseCodeWriter
+            ) -> AST.Expression:
                 return HttpX.make_request(
                     is_streaming=is_streaming,
                     is_async=is_async,
@@ -488,16 +507,17 @@ class EndpointFunctionGenerator:
                     else None,
                     url=self._get_environment_as_str(endpoint=endpoint),
                     method=method,
-                    query_parameters=self._get_query_parameters_for_endpoint(endpoint=endpoint),
-                    request_body=AST.Expression(AST.CodeWriter(write_request_body))
-                    if (method != "GET") and json_request_body is not None
-                    else None,
+                    query_parameters=self._get_query_parameters_for_endpoint(endpoint=endpoint, parent_writer=writer),
+                    request_body=json_request_body_var,
                     content=request_body_parameters.get_content() if request_body_parameters is not None else None,
                     files=files,
                     response_variable_name=EndpointResponseCodeWriter.RESPONSE_VARIABLE,
                     request_options_variable_name=EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE,
                     headers=self._get_headers_for_endpoint(
-                        service=service, endpoint=endpoint, idempotency_headers=idempotency_headers
+                        service=service,
+                        endpoint=endpoint,
+                        idempotency_headers=idempotency_headers,
+                        parent_writer=writer,
                     ),
                     response_code_writer=response_code_writer.get_writer(),
                     reference_to_client=AST.Expression(
@@ -506,10 +526,7 @@ class EndpointFunctionGenerator:
                     is_default_body_parameter_used=self.is_default_body_parameter_used,
                 )
 
-            if (
-                self._endpoint.sdk_request is not None
-                and self._endpoint.sdk_request.stream_parameter is not None
-            ):
+            if self._endpoint.sdk_request is not None and self._endpoint.sdk_request.stream_parameter is not None:
                 response_property = self._endpoint.sdk_request.stream_parameter
                 streaming_parameter_name = request_property_to_name(response_property.property)
                 streaming_response_code_writer = EndpointResponseCodeWriter(
@@ -525,7 +542,9 @@ class EndpointFunctionGenerator:
                         named_parameters=named_parameters,
                     ),
                 )
-                streaming_request = get_httpx_request(is_streaming=True, response_code_writer=streaming_response_code_writer)
+                streaming_request = get_httpx_request(
+                    is_streaming=True, response_code_writer=streaming_response_code_writer
+                )
                 writer.write("if ")
                 writer.write_node(AST.Expression(streaming_parameter_name))
                 writer.write_line(":")
@@ -545,7 +564,9 @@ class EndpointFunctionGenerator:
                         named_parameters=named_parameters,
                     ),
                 )
-                non_streaming_request = get_httpx_request(is_streaming=False, response_code_writer=non_streaming_response_code_writer)
+                non_streaming_request = get_httpx_request(
+                    is_streaming=False, response_code_writer=non_streaming_response_code_writer
+                )
                 writer.write_newline_if_last_line_not()
                 writer.write_line("else:")
                 with writer.indent():
@@ -1074,6 +1095,7 @@ class EndpointFunctionGenerator:
         service: ir_types.HttpService,
         endpoint: ir_types.HttpEndpoint,
         idempotency_headers: List[ir_types.HttpHeader],
+        parent_writer: AST.NodeWriter,
     ) -> Optional[AST.Expression]:
         headers: List[Tuple[str, AST.Expression]] = []
 
@@ -1108,7 +1130,14 @@ class EndpointFunctionGenerator:
                 writer.write(", ")
             writer.write_line("}")
 
-        return AST.Expression(AST.CodeWriter(write_headers_dict))
+        if self._is_overloaded_streaming_method():
+            request_headers_var = "_request_headers"
+            parent_writer.write(f"{request_headers_var} = ")
+            parent_writer.write_node(AST.CodeWriter(write_headers_dict))
+
+            return AST.Expression(request_headers_var)
+        else:
+            return AST.Expression(AST.CodeWriter(write_headers_dict))
 
     def _get_query_parameter_reference(self, query_parameter: ir_types.QueryParameter) -> AST.Expression:
         possible_query_literal = self._context.get_literal_value(query_parameter.value_type)
@@ -1119,9 +1148,7 @@ class EndpointFunctionGenerator:
         return self._get_reference_to_query_parameter(query_parameter)
 
     def _get_query_parameters_for_endpoint(
-        self,
-        *,
-        endpoint: ir_types.HttpEndpoint,
+        self, *, endpoint: ir_types.HttpEndpoint, parent_writer: AST.NodeWriter
     ) -> Optional[AST.Expression]:
         query_parameters = [
             (query_parameter.name.wire_value, self._get_query_parameter_reference(query_parameter))
@@ -1139,7 +1166,14 @@ class EndpointFunctionGenerator:
                 writer.write(", ")
             writer.write_line("}")
 
-        return AST.Expression(AST.CodeWriter(write_query_parameters_dict))
+        if self._is_overloaded_streaming_method():
+            request_query_params_var = "_request_query_params"
+            parent_writer.write(f"{request_query_params_var} = ")
+            parent_writer.write_node(AST.CodeWriter(write_query_parameters_dict))
+
+            return AST.Expression(request_query_params_var)
+        else:
+            return AST.Expression(AST.CodeWriter(write_query_parameters_dict))
 
     def _is_datetime(
         self,

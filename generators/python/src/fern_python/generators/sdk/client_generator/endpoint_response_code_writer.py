@@ -225,7 +225,7 @@ class EndpointResponseCodeWriter:
                         stream_parameter=lambda stream_param_response: self._handle_success_stream(
                             writer=writer, stream_response=stream_param_response.stream_response
                         )
-                        if self._streaming_parameter == "stream"
+                        if self._streaming_parameter == "streaming"
                         else stream_param_response.non_stream_response.visit(
                             json=lambda json_response: self._handle_success_json(
                                 writer=writer, json_response=json_response, use_response_json=False
@@ -243,6 +243,7 @@ class EndpointResponseCodeWriter:
                 and (
                     self._response.body.get_as_union().type == "streaming"
                     or self._response.body.get_as_union().type == "fileDownload"
+                    or self._streaming_parameter == "streaming"
                 )
             ):
                 writer.write_line(
@@ -313,7 +314,7 @@ class EndpointResponseCodeWriter:
                     stream_parameter=lambda stream_param_response: self._handle_success_stream(
                         writer=writer, stream_response=stream_param_response.stream_response
                     )
-                    if self._streaming_parameter == "stream"
+                    if self._streaming_parameter == "streaming"
                     else stream_param_response.non_stream_response.visit(
                         json=lambda json_response: self._handle_success_json(
                             writer=writer, json_response=json_response, use_response_json=False
