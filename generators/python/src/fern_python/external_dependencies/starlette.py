@@ -29,7 +29,7 @@ def _export_exception(*name: str) -> AST.ClassReference:
 
 
 class Starlette:
-    HTTPException = _export_exception("exceptions", "HTTPException")
+    HTTPException = _export_exception("HTTPException")
 
     HTTPException_STATUS_CODE_MEMBER = "status_code"
     HTTPException_DETAIL_MEMBER = "detail"
