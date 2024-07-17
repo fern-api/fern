@@ -5705,7 +5705,6 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     qs: 6.12.1
-    stream-head: ^3.0.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -20865,17 +20864,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"readable-stream@npm:3":
-  version: 3.6.2
-  resolution: "readable-stream@npm:3.6.2"
-  dependencies:
-    inherits: ^2.0.3
-    string_decoder: ^1.1.1
-    util-deprecate: ^1.0.1
-  checksum: bdcbe6c22e846b6af075e32cf8f4751c2576238c5043169a1c221c92ee2878458a816a4ea33f4c67623c0b6827c8a400409bfb3cf0bf3381392d0b1dfb52ac8d
-  languageName: node
-  linkType: hard
-
 "readable-stream@npm:^2.3.0, readable-stream@npm:^2.3.5":
   version: 2.3.7
   resolution: "readable-stream@npm:2.3.7"
@@ -22485,15 +22473,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"stream-head@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "stream-head@npm:3.0.0"
-  dependencies:
-    through2: 4.0.2
-  checksum: 27d2cfc25b9498df398e1295a8484e96eb99ce1ba235c7ed47f56393d5a3d871e2c801f15b59e5f6481fd2b81c2dadcc95e0fc8e0a426367edd7e14b085c649d
-  languageName: node
-  linkType: hard
-
 "stream-iterate@npm:^1.1.0":
   version: 1.2.0
   resolution: "stream-iterate@npm:1.2.0"
@@ -23421,15 +23400,6 @@ env-cmd@toddbluhm/env-cmd:
   dependencies:
     any-promise: ^1.0.0
   checksum: 84e1b804bfec49f3531215f17b4a6e50fd4397b5f7c1bccc427b9c656e1ecfb13ea79d899930184f78bc2f57285c54d9a50a590c8868f4f0cef5c1d9f898b05e
-  languageName: node
-  linkType: hard
-
-"through2@npm:4.0.2":
-  version: 4.0.2
-  resolution: "through2@npm:4.0.2"
-  dependencies:
-    readable-stream: 3
-  checksum: ac7430bd54ccb7920fd094b1c7ff3e1ad6edd94202e5528331253e5fde0cc56ceaa690e8df9895de2e073148c52dfbe6c4db74cacae812477a35660090960cc0
   languageName: node
   linkType: hard
 

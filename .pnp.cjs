@@ -8991,7 +8991,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["qs", "npm:6.12.1"],\
-            ["stream-head", "npm:3.0.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -26135,16 +26134,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["util-deprecate", "npm:1.0.2"]\
           ],\
           "linkType": "HARD"\
-        }],\
-        ["npm:3.6.2", {\
-          "packageLocation": "./.yarn/cache/readable-stream-npm-3.6.2-d2a6069158-bdcbe6c22e.zip/node_modules/readable-stream/",\
-          "packageDependencies": [\
-            ["readable-stream", "npm:3.6.2"],\
-            ["inherits", "npm:2.0.4"],\
-            ["string_decoder", "npm:1.3.0"],\
-            ["util-deprecate", "npm:1.0.2"]\
-          ],\
-          "linkType": "HARD"\
         }]\
       ]],\
       ["readable-web-to-node-stream", [\
@@ -27673,16 +27662,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["stream-head", [\
-        ["npm:3.0.0", {\
-          "packageLocation": "./.yarn/cache/stream-head-npm-3.0.0-284857751c-27d2cfc25b.zip/node_modules/stream-head/",\
-          "packageDependencies": [\
-            ["stream-head", "npm:3.0.0"],\
-            ["through2", "npm:4.0.2"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["stream-iterate", [\
         ["npm:1.2.0", {\
           "packageLocation": "./.yarn/cache/stream-iterate-npm-1.2.0-ec079ef618-55d3890d45.zip/node_modules/stream-iterate/",\
@@ -28738,14 +28717,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["through2", "npm:2.0.5"],\
             ["readable-stream", "npm:2.3.8"],\
             ["xtend", "npm:4.0.2"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:4.0.2", {\
-          "packageLocation": "./.yarn/cache/through2-npm-4.0.2-da7b2da443-ac7430bd54.zip/node_modules/through2/",\
-          "packageDependencies": [\
-            ["through2", "npm:4.0.2"],\
-            ["readable-stream", "npm:3.6.2"]\
           ],\
           "linkType": "HARD"\
         }]\

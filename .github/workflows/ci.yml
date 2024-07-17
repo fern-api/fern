@@ -179,11 +179,19 @@ jobs:
   version-tests:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        run: yarn install
+
       - name: Load NVM
         run: |
           source /home/runner/.nvm/nvm.sh
         shell: bash
 
       - name: Run file tests
-        run: |
-          ./generators/typescript/utils/core-utilities/fetcher/src/form-data-utils/__test__/nodeAllVersions.test.sh 
+        run: ./scripts/node-all-versions-test.sh
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
