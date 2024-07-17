@@ -140,7 +140,7 @@ scripts:
       - export HOME="$(pwd)/"
       - poetry config virtualenvs.path .
       - poetry install
-      - poetry run mypy .
+      - poetry run mypy ./src ./tests
       - fern test --command "poetry run pytest -rP ."
 allowedFailures: 
   # This is the only one that should always fail
