@@ -179,17 +179,9 @@ jobs:
   version-tests:
     runs-on: ubuntu-latest
     steps:
-      - name: Install NVM
-        run: |
-          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-          echo 'export NVM_DIR="$HOME/.nvm"' >> $GITHUB_ENV
-          echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $GITHUB_ENV
-          echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> $GITHUB_ENV
-        shell: bash
-
       - name: Load NVM
         run: |
-          source $HOME/.nvm/nvm.sh
+          source /home/runner/.nvm/nvm.sh
         shell: bash
 
       - name: Run file tests
