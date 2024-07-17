@@ -218,7 +218,7 @@ class SnippetWriter:
     ) -> Optional[AST.Expression]:
         values: List[AST.Expression] = []
         # We use lists for sets if the inner type is non-primitive because Pydantic models aren't hashable
-        contents_are_primitive =  False
+        contents_are_primitive = False
         for example_type_reference in example_type_references:
             contents_are_primitive = example_type_reference.shape.visit(
                 primitive=lambda _: True,
@@ -231,7 +231,9 @@ class SnippetWriter:
             )
             if expression is not None:
                 values.append(expression)
-        return self._write_list(values=values) if is_list or not contents_are_primitive else self._write_set(values=values)
+        return (
+            self._write_list(values=values) if is_list or not contents_are_primitive else self._write_set(values=values)
+        )
 
     def _get_snippet_for_map(
         self,
