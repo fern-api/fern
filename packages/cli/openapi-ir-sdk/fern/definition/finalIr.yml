@@ -310,7 +310,7 @@ types:
       name: string
       schema: Schema
       variableReference: optional<string>
-      availability: Availability
+      availability: optional<Availability>
 
   QueryParameter:
     extends: commons.WithDescription
@@ -321,7 +321,7 @@ types:
         type: optional<string>
         docs: |
           Populated by `x-fern-parameter-name` on a parameter object.
-      availability: Availability
+      availability: optional<Availability>
 
   Header:
     extends: commons.WithDescription
@@ -333,7 +333,7 @@ types:
         type: optional<string>
         docs: |
           Populated by `x-fern-parameter-name` on a parameter object.
-      availability: Availability
+      availability: optional<Availability>
 
   Request:
     union:
@@ -490,7 +490,7 @@ types:
       properties: list<ObjectProperty>
       allOfPropertyConflicts: list<AllOfPropertyConflict>
       additionalProperties: boolean
-      availability: Availability
+      availability: optional<Availability>
 
   # OpenAPI IR to Fern:
   # For every allOfPropertyConflict, we will inline the SchemaIds that conflict.
@@ -521,7 +521,7 @@ types:
         docs: | 
           An optional name override populated via `x-fern-property-name`. 
       audiences: list<string>
-      availability: Availability
+      availability: optional<Availability>
 
   ObjectPropertyConflictInfo:
     properties:

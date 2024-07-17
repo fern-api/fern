@@ -9,5 +9,5 @@ export interface QueryParameterWithExample extends FernOpenapiIr.WithDescription
     schema: FernOpenapiIr.SchemaWithExample;
     /** Populated by `x-fern-parameter-name` on a parameter object. */
     parameterNameOverride: string | undefined;
-    availability: FernOpenapiIr.Availability;
+    availability: FernOpenapiIr.Availability | undefined;
 }

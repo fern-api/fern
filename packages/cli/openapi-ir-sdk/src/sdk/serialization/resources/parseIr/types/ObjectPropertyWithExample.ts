@@ -19,7 +19,7 @@ export const ObjectPropertyWithExample: core.serialization.ObjectSchema<
     ),
     nameOverride: core.serialization.string().optional(),
     generatedName: core.serialization.string(),
-    availability: core.serialization.lazy(async () => (await import("../../..")).Availability),
+    availability: core.serialization.lazy(async () => (await import("../../..")).Availability).optional(),
 });
 
 export declare namespace ObjectPropertyWithExample {
@@ -30,6 +30,6 @@ export declare namespace ObjectPropertyWithExample {
         conflict: Record<serializers.SchemaId.Raw, serializers.ObjectPropertyConflictInfo.Raw>;
         nameOverride?: string | null;
         generatedName: string;
-        availability: serializers.Availability.Raw;
+        availability?: serializers.Availability.Raw | null;
     }
 }

@@ -1,0 +1,143 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`availability availability docs 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "getCollection": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {},
+          ],
+          "method": "GET",
+          "pagination": undefined,
+          "path": "/collection",
+          "request": {
+            "name": "GetCollectionRequest",
+            "query-parameters": {
+              "lang": "optional<string>",
+            },
+          },
+        },
+        "patchSettings": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": {
+                  "new_setting": true,
+                  "old_setting": true,
+                },
+              },
+            },
+          ],
+          "method": "PATCH",
+          "pagination": undefined,
+          "path": "/settings",
+          "request": {
+            "body": "Settings",
+          },
+          "response": {
+            "docs": "OK",
+            "type": "Settings",
+          },
+        },
+      },
+    },
+    "types": {
+      "Settings": {
+        "docs": undefined,
+        "properties": {
+          "new_setting": "optional<boolean>",
+          "old_setting": "optional<boolean>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Deprecated params and fields",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`availability availability simple 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "getCollection": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {},
+          ],
+          "method": "GET",
+          "pagination": undefined,
+          "path": "/collection",
+          "request": {
+            "name": "GetCollectionRequest",
+            "query-parameters": {
+              "lang": "optional<string>",
+            },
+          },
+        },
+        "patchSettings": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": {
+                  "new_setting": true,
+                  "old_setting": true,
+                },
+              },
+            },
+          ],
+          "method": "PATCH",
+          "pagination": undefined,
+          "path": "/settings",
+          "request": {
+            "body": "Settings",
+          },
+          "response": {
+            "docs": "OK",
+            "type": "Settings",
+          },
+        },
+      },
+    },
+    "types": {
+      "Settings": {
+        "docs": undefined,
+        "properties": {
+          "new_setting": "optional<boolean>",
+          "old_setting": "optional<boolean>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Deprecated params and fields",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;

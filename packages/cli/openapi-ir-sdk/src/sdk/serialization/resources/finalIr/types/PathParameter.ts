@@ -14,7 +14,7 @@ export const PathParameter: core.serialization.ObjectSchema<
         name: core.serialization.string(),
         schema: core.serialization.lazy(async () => (await import("../../..")).Schema),
         variableReference: core.serialization.string().optional(),
-        availability: core.serialization.lazy(async () => (await import("../../..")).Availability),
+        availability: core.serialization.lazy(async () => (await import("../../..")).Availability).optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
 
@@ -23,6 +23,6 @@ export declare namespace PathParameter {
         name: string;
         schema: serializers.Schema.Raw;
         variableReference?: string | null;
-        availability: serializers.Availability.Raw;
+        availability?: serializers.Availability.Raw | null;
     }
 }

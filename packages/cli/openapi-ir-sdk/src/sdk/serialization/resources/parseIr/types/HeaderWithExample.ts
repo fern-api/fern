@@ -15,7 +15,7 @@ export const HeaderWithExample: core.serialization.ObjectSchema<
         schema: core.serialization.lazy(async () => (await import("../../..")).SchemaWithExample),
         env: core.serialization.string().optional(),
         parameterNameOverride: core.serialization.string().optional(),
-        availability: core.serialization.lazy(async () => (await import("../../..")).Availability),
+        availability: core.serialization.lazy(async () => (await import("../../..")).Availability).optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
 
@@ -25,6 +25,6 @@ export declare namespace HeaderWithExample {
         schema: serializers.SchemaWithExample.Raw;
         env?: string | null;
         parameterNameOverride?: string | null;
-        availability: serializers.Availability.Raw;
+        availability?: serializers.Availability.Raw | null;
     }
 }

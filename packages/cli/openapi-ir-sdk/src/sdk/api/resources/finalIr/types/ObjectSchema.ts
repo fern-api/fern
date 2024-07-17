@@ -12,5 +12,5 @@ export interface ObjectSchema
     properties: FernOpenapiIr.ObjectProperty[];
     allOfPropertyConflicts: FernOpenapiIr.AllOfPropertyConflict[];
     additionalProperties: boolean;
-    availability: FernOpenapiIr.Availability;
+    availability: FernOpenapiIr.Availability | undefined;
 }

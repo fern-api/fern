@@ -1,0 +1,42 @@
+openapi: 3.1.0
+info:
+  title: Deprecated params and fields
+  version: 1.0.0
+paths:
+  /collection:
+    get:
+      parameters:
+        - in: query
+          name: lang
+          schema:
+            type: string
+            description: language code
+          deprecated: true
+      responses:
+        '200':
+          description: OK
+  /settings:
+    patch:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Settings'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Settings'
+
+components:
+  schemas:
+    Settings:
+      type: object
+      properties:
+        old_setting:
+          type: boolean
+          deprecated: true
+        new_setting:
+          type: boolean

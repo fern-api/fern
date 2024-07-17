@@ -1,4 +1,5 @@
 import {
+    Availability,
     LiteralSchemaValue,
     NamedFullExample,
     PrimitiveSchemaValueWithExample,
@@ -127,6 +128,11 @@ export function convertSchemaObject(
     const groupName = typeof mixedGroupName === "string" ? [mixedGroupName] : mixedGroupName;
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;
+    // TODO: style, map more availability types
+    const availability =
+        getExtension<string>(schema, FernOpenAPIExtension.AVAILABILITY) === "deprecated" || schema.deprecated
+            ? Availability.Deprecated
+            : undefined;
 
     const examples = getExtension<Record<string, OpenAPIV3.ExampleObject>>(schema, OpenAPIExtension.EXAMPLES);
     const fullExamples: NamedFullExample[] = [];
@@ -680,7 +686,8 @@ export function convertSchemaObject(
             propertiesToExclude,
             groupName,
             fullExamples,
-            additionalProperties: schema.additionalProperties
+            additionalProperties: schema.additionalProperties,
+            availability
         });
     }
 

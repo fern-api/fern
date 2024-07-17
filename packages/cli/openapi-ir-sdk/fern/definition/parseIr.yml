@@ -105,7 +105,7 @@ types:
       name: string
       schema: SchemaWithExample
       variableReference: optional<string>
-      availability: finalIr.Availability
+      availability: optional<finalIr.Availability>
 
   QueryParameterWithExample:
     extends: commons.WithDescription
@@ -116,7 +116,7 @@ types:
         type: optional<string>
         docs: |
           Populated by `x-fern-parameter-name` on a parameter object.
-      availability: finalIr.Availability
+      availability: optional<finalIr.Availability>
 
 
   HeaderWithExample:
@@ -129,7 +129,7 @@ types:
         type: optional<string>
         docs: |
           Populated by `x-fern-parameter-name` on a parameter object.
-      availability: finalIr.Availability
+      availability: optional<finalIr.Availability>
 
   SchemaWithExample:
     union:
@@ -208,7 +208,7 @@ types:
       allOfPropertyConflicts: list<finalIr.AllOfPropertyConflict>
       fullExamples: optional<list<NamedFullExample>>
       additionalProperties: boolean
-      availability: finalIr.Availability
+      availability: optional<finalIr.Availability>
 
   ObjectPropertyWithExample:
     properties:
@@ -226,7 +226,7 @@ types:
         type: string
         docs: |
           A unique name for the property.
-      availability: finalIr.Availability
+      availability: optional<finalIr.Availability>
 
   OneOfSchemaWithExample:
     union:

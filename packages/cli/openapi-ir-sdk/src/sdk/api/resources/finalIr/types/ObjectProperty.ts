@@ -14,5 +14,5 @@ export interface ObjectProperty {
     /** An optional name override populated via `x-fern-property-name`. */
     nameOverride: string | undefined;
     audiences: string[];
-    availability: FernOpenapiIr.Availability;
+    availability: FernOpenapiIr.Availability | undefined;
 }

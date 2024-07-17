@@ -1,4 +1,5 @@
 import {
+    Availability,
     HeaderWithExample,
     PathParameterWithExample,
     PrimitiveSchemaValueWithExample,
@@ -90,7 +91,9 @@ export function parseAsyncAPI({
                                   groupName: undefined,
                                   nameOverride: undefined
                               }),
-                    variableReference: undefined
+                    variableReference: undefined,
+                    // TODO: fix style, getExtension
+                    availability: parameter.deprecated ? Availability.Deprecated : undefined
                 });
             }
         }
@@ -105,7 +108,9 @@ export function parseAsyncAPI({
                     schema: convertSchema(resolvedHeader, !required.includes(name), context, breadcrumbs),
                     description: resolvedHeader.description,
                     parameterNameOverride: undefined,
-                    env: undefined
+                    env: undefined,
+                    // TODO: fix style, getExtension
+                    availability: resolvedHeader.deprecated ? Availability.Deprecated : undefined
                 });
             }
         }
@@ -121,7 +126,9 @@ export function parseAsyncAPI({
                     name,
                     schema: convertSchema(resolvedQueryParameter, !required.includes(name), context, breadcrumbs),
                     description: resolvedQueryParameter.description,
-                    parameterNameOverride: undefined
+                    parameterNameOverride: undefined,
+                    // TODO: fix style, getExtension
+                    availability: resolvedQueryParameter.deprecated ? Availability.Deprecated : undefined
                 });
             }
         }

@@ -22,7 +22,8 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 nameOverride: schema.nameOverride,
                 groupName: schema.groupName,
                 fullExamples: undefined,
-                additionalProperties: schema.additionalProperties
+                additionalProperties: schema.additionalProperties,
+                availability: schema.availability
             });
         case "array":
             return SchemaWithExample.array({
@@ -257,6 +258,7 @@ function convertToObjectProperty(objectProperty: ObjectProperty): ObjectProperty
         key: objectProperty.key,
         schema: convertSchemaToSchemaWithExample(objectProperty.schema),
         audiences: objectProperty.audiences,
-        nameOverride: objectProperty.nameOverride
+        nameOverride: objectProperty.nameOverride,
+        availability: objectProperty.availability
     };
 }

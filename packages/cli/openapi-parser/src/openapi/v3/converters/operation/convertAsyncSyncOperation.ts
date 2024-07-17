@@ -72,7 +72,8 @@ export function convertAsyncSyncOperation({
         }),
         description: undefined,
         parameterNameOverride: undefined,
-        env: undefined
+        env: undefined,
+        availability: undefined
     });
 
     return {

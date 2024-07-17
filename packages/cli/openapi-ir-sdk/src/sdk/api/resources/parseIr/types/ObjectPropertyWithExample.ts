@@ -14,5 +14,5 @@ export interface ObjectPropertyWithExample {
     nameOverride: string | undefined;
     /** A unique name for the property. */
     generatedName: string;
-    availability: FernOpenapiIr.Availability;
+    availability: FernOpenapiIr.Availability | undefined;
 }

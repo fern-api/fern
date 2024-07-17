@@ -19,7 +19,7 @@ export const ObjectProperty: core.serialization.ObjectSchema<
     generatedName: core.serialization.string(),
     nameOverride: core.serialization.string().optional(),
     audiences: core.serialization.list(core.serialization.string()),
-    availability: core.serialization.lazy(async () => (await import("../../..")).Availability),
+    availability: core.serialization.lazy(async () => (await import("../../..")).Availability).optional(),
 });
 
 export declare namespace ObjectProperty {
@@ -30,6 +30,6 @@ export declare namespace ObjectProperty {
         generatedName: string;
         nameOverride?: string | null;
         audiences: string[];
-        availability: serializers.Availability.Raw;
+        availability?: serializers.Availability.Raw | null;
     }
 }
