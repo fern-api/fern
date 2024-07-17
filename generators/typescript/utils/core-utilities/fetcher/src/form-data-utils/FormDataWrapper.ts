@@ -1,3 +1,4 @@
+import * as fs from "fs";
 import { RUNTIME } from "../runtime";
 
 export type MaybePromise<T> = Promise<T> | T;
@@ -19,8 +20,8 @@ export interface CrossPlatformFormData {
 
 export async function newFormData(): Promise<CrossPlatformFormData> {
     let formdata: CrossPlatformFormData;
-    if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion > 18) {
-        formdata = new Node19FormData();
+    if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
+        formdata = new Node18FormData();
     } else if (RUNTIME.type === "node") {
         formdata = new Node16FormData();
     } else {
@@ -33,7 +34,7 @@ export async function newFormData(): Promise<CrossPlatformFormData> {
 /**
  * Form Data Implementation for Node.js 18+
  */
-class Node19FormData implements CrossPlatformFormData {
+class Node18FormData implements CrossPlatformFormData {
     private fd:
         | {
               append(name: string, value: unknown, fileName?: string): void;
@@ -41,7 +42,7 @@ class Node19FormData implements CrossPlatformFormData {
         | undefined;
 
     public async setup() {
-        this.fd = new (await import("formdata-node")).FormData();
+        this.fd = new FormData();
     }
 
     public append(key: string, value: any): void {
@@ -49,16 +50,31 @@ class Node19FormData implements CrossPlatformFormData {
     }
 
     public async appendFile(key: string, value: any, fileName?: string): Promise<void> {
-        this.fd?.append(key, new (await import("buffer")).Blob([value]), fileName);
+        if (value instanceof fs.ReadStream) {
+            value = await streamToBlob(value);
+        }
+        this.fd?.append(key, new Blob([value]), fileName);
     }
 
     public async getRequest(): Promise<FormDataRequest<unknown>> {
-        const encoder = new (await import("form-data-encoder")).FormDataEncoder(this.fd as any);
         return {
-            body: (await import("stream")).Readable.from(encoder),
-            headers: encoder.headers
+            body: this.fd,
+            headers: {}
         };
     }
+}
+
+function streamToBlob(stream: fs.ReadStream, mimeType?: string): Promise<Blob> {
+    return new Promise((resolve, reject) => {
+        const chunks: any = [];
+        stream
+            .on("data", (chunk) => chunks.push(chunk))
+            .once("end", () => {
+                const blob = mimeType != null ? new Blob(chunks, { type: mimeType }) : new Blob(chunks);
+                resolve(blob);
+            })
+            .once("error", reject);
+    });
 }
 
 /**
