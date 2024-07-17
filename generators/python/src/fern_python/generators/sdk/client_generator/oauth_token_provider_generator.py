@@ -263,7 +263,9 @@ class OAuthTokenProviderGenerator:
 
         return _write_auth_client_initialization
 
-    def _get_token_function_declaration(self, client_credentials: ir_types.OAuthClientCredentials) -> AST.FunctionDeclaration:
+    def _get_token_function_declaration(
+        self, client_credentials: ir_types.OAuthClientCredentials
+    ) -> AST.FunctionDeclaration:
         def _write_get_token_body(writer: AST.NodeWriter) -> None:
             if self._has_expires_in_property(client_credentials):
                 writer.write(
