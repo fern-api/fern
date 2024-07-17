@@ -13,9 +13,10 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
         originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/form-data-utils"),
         pathInCoreUtilities: [{ nameOnDisk: "form-data-utils", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
-            dependencyManager.addDependency("form-data", "4.0.0");
+            dependencyManager.addDependency("form-data", "^4.0.0");
             dependencyManager.addDependency("form-data-encoder", "^4.0.2");
             dependencyManager.addDependency("formdata-node", "^6.0.3");
+            dependencyManager.addDependency("stream-mime-type", "^2.0.0");
         }
     };
 
@@ -82,14 +83,18 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
     };
 
     public readonly getBody = ({ referencetoFormData }: { referencetoFormData: ts.Expression }): ts.Expression => {
-        return ts.factory.createAwaitExpression(
-            ts.factory.createPropertyAccessExpression(referencetoFormData, ts.factory.createIdentifier("body"))
-        );
+        return ts.factory.createPropertyAccessExpression(referencetoFormData, ts.factory.createIdentifier("body"));
     };
 
     public readonly getHeaders = ({ referencetoFormData }: { referencetoFormData: ts.Expression }): ts.Expression => {
-        return ts.factory.createAwaitExpression(
-            ts.factory.createPropertyAccessExpression(referencetoFormData, ts.factory.createIdentifier("headers"))
-        );
+        return ts.factory.createPropertyAccessExpression(referencetoFormData, ts.factory.createIdentifier("headers"));
+    };
+
+    public readonly getDuplexSetting = ({
+        referencetoFormData
+    }: {
+        referencetoFormData: ts.Expression;
+    }): ts.Expression => {
+        return ts.factory.createPropertyAccessExpression(referencetoFormData, ts.factory.createIdentifier("duplex"));
     };
 }

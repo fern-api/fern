@@ -6,6 +6,7 @@ export type MaybePromise<T> = Promise<T> | T;
 type FormDataRequest<Body> = {
     body: Body;
     headers: Record<string, string>;
+    duplex?: "half";
 };
 
 export interface CrossPlatformFormData {
@@ -42,39 +43,48 @@ class Node18FormData implements CrossPlatformFormData {
         | undefined;
 
     public async setup() {
-        this.fd = new FormData();
+        this.fd = new (await import("formdata-node")).FormData();
     }
 
     public append(key: string, value: any): void {
         this.fd?.append(key, value);
     }
 
-    public async appendFile(key: string, value: any, fileName?: string): Promise<void> {
-        if (value instanceof fs.ReadStream) {
-            value = await streamToBlob(value);
+    private async getMimeTypeAndBuffer(stream: fs.ReadStream) {
+        const chunks = [];
+        for await (const chunk of stream) {
+            chunks.push(chunk);
         }
-        this.fd?.append(key, new Blob([value]), fileName);
+        const buffer = Buffer.concat(chunks);
+        const fileType = await (await import("file-type")).fileTypeFromBuffer(buffer);
+        const mime = fileType ? fileType.mime : "Unknown";
+        return { mime, stream: (await import("stream")).Readable.from(buffer) };
+    }
+
+    public async appendFile(key: string, value: Blob | File | fs.ReadStream, fileName?: string): Promise<void> {
+        if (value instanceof fs.ReadStream) {
+            const { stream, mime } = await this.getMimeTypeAndBuffer(value);
+            this.fd?.append(key, {
+                type: mime,
+                name: fileName,
+                [Symbol.toStringTag]: "File",
+                stream() {
+                    return stream;
+                }
+            });
+        } else {
+            this.fd?.append(key, value, fileName);
+        }
     }
 
     public async getRequest(): Promise<FormDataRequest<unknown>> {
+        const encoder = new (await import("form-data-encoder")).FormDataEncoder(this.fd as any);
         return {
-            body: this.fd,
-            headers: {}
+            body: await (await import("stream")).Readable.from(encoder),
+            headers: encoder.headers,
+            duplex: "half"
         };
     }
-}
-
-function streamToBlob(stream: fs.ReadStream, mimeType?: string): Promise<Blob> {
-    return new Promise((resolve, reject) => {
-        const chunks: any = [];
-        stream
-            .on("data", (chunk) => chunks.push(chunk))
-            .once("end", () => {
-                const blob = mimeType != null ? new Blob(chunks, { type: mimeType }) : new Blob(chunks);
-                resolve(blob);
-            })
-            .once("error", reject);
-    });
 }
 
 /**
@@ -86,13 +96,15 @@ class Node16FormData implements CrossPlatformFormData {
               append(
                   name: string,
                   value: unknown,
-                  options?: {
-                      header?: string | Headers;
-                      knownLength?: number;
-                      filename?: string;
-                      filepath?: string;
-                      contentType?: string;
-                  }
+                  options?:
+                      | string
+                      | {
+                            header?: string | Headers;
+                            knownLength?: number;
+                            filename?: string;
+                            filepath?: string;
+                            contentType?: string;
+                        }
               ): void;
 
               getHeaders(): Record<string, string>;
@@ -107,11 +119,18 @@ class Node16FormData implements CrossPlatformFormData {
         this.fd?.append(key, value);
     }
 
-    public async appendFile(key: string, value: any, fileName?: string): Promise<void> {
-        if (fileName == null) {
-            this.fd?.append(key, value);
+    public async appendFile(key: string, value: Blob | File | fs.ReadStream, fileName?: string): Promise<void> {
+        let bufferedValue: Buffer | fs.ReadStream;
+        if (!(value instanceof fs.ReadStream)) {
+            bufferedValue = Buffer.from(await value.arrayBuffer());
         } else {
-            this.fd?.append(key, value, { filename: fileName });
+            bufferedValue = value;
+        }
+
+        if (fileName == null) {
+            this.fd?.append(key, bufferedValue);
+        } else {
+            this.fd?.append(key, bufferedValue, { filename: fileName });
         }
     }
 

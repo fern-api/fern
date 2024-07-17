@@ -14,4 +14,5 @@ export interface FormDataUtils {
     getBody: (args: { referencetoFormData: ts.Expression }) => ts.Expression;
     getHeaders: (args: { referencetoFormData: ts.Expression }) => ts.Expression;
     getRequest: (args: { referencetoFormData: ts.Expression }) => ts.Expression;
+    getDuplexSetting: (args: { referencetoFormData: ts.Expression }) => ts.Expression;
 }

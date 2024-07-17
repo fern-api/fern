@@ -13,7 +13,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/fetcher"),
         pathInCoreUtilities: [{ nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
-            dependencyManager.addDependency("form-data", "4.0.0");
+            dependencyManager.addDependency("form-data", "^4.0.0");
             dependencyManager.addDependency("formdata-node", "^6.0.3");
             dependencyManager.addDependency("node-fetch", "2.7.0");
             dependencyManager.addDependency("qs", "6.11.2");
@@ -40,7 +40,8 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 withCredentials: "withCredentials",
                 requestType: "requestType",
                 responseType: "responseType",
-                abortSignal: "abortSignal"
+                abortSignal: "abortSignal",
+                duplex: "duplex"
             },
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("Args")
         },
@@ -114,6 +115,9 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                         ts.factory.createStringLiteral(args.requestType)
                     )
                 );
+            }
+            if (args.duplex != null) {
+                properties.push(ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.duplex, args.duplex));
             }
             if (args.body != null) {
                 properties.push(ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.body, args.body));

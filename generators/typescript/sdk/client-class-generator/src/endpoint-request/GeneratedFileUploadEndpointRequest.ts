@@ -308,12 +308,17 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
 
     public getFetcherRequestArgs(
         context: SdkContext
-    ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType"> {
+    ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType" | "duplex"> {
         return {
             headers: this.getHeaders(context),
             queryParameters: this.queryParams != null ? this.queryParams.getReferenceTo(context) : undefined,
             requestType: "file",
             body: context.coreUtilities.formDataUtils.getBody({
+                referencetoFormData: ts.factory.createIdentifier(
+                    GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME
+                )
+            }),
+            duplex: context.coreUtilities.formDataUtils.getDuplexSetting({
                 referencetoFormData: ts.factory.createIdentifier(
                     GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME
                 )
