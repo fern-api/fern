@@ -40,6 +40,8 @@ import { SdkErrorDeclarationReferencer } from "../declaration-referencers/SdkErr
 import { SdkInlinedRequestBodyDeclarationReferencer } from "../declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer";
 import { TimeoutSdkErrorDeclarationReferencer } from "../declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
+import { VersionDeclarationReferencer } from "../declaration-referencers/VersionDeclarationReferencer";
+import { VersionGenerator } from "../version/VersionGenerator";
 import { EndpointErrorUnionContextImpl } from "./endpoint-error-union/EndpointErrorUnionContextImpl";
 import { EnvironmentsContextImpl } from "./environments/EnvironmentsContextImpl";
 import { GenericAPISdkErrorContextImpl } from "./generic-api-sdk-error/GenericAPISdkErrorContextImpl";
@@ -52,6 +54,7 @@ import { SdkInlinedRequestBodySchemaContextImpl } from "./sdk-inlined-request-bo
 import { TimeoutSdkErrorContextImpl } from "./timeout-sdk-error/TimeoutSdkErrorContextImpl";
 import { TypeSchemaContextImpl } from "./type-schema/TypeSchemaContextImpl";
 import { TypeContextImpl } from "./type/TypeContextImpl";
+import { VersionContextImpl } from "./version/VersionContextImpl";
 
 const ROOT_CLIENT_VARIABLE_NAME = "client";
 
@@ -64,6 +67,8 @@ export declare namespace SdkContextImpl {
         coreUtilitiesManager: CoreUtilitiesManager;
         fernConstants: Constants;
         intermediateRepresentation: IntermediateRepresentation;
+        versionGenerator: VersionGenerator;
+        versionDeclarationReferencer: VersionDeclarationReferencer;
         typeGenerator: TypeGenerator;
         typeResolver: TypeResolver;
         typeDeclarationReferencer: TypeDeclarationReferencer;
@@ -118,6 +123,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly rootClientVariableName: string;
     public readonly sdkInstanceReferenceForSnippet: ts.Identifier;
 
+    public readonly version: VersionContextImpl;
     public readonly sdkError: SdkErrorContextImpl;
     public readonly sdkErrorSchema: SdkErrorSchemaContextImpl;
     public readonly endpointErrorUnion: EndpointErrorUnionContextImpl;
@@ -140,6 +146,8 @@ export class SdkContextImpl implements SdkContext {
         npmPackage,
         isForSnippet,
         intermediateRepresentation,
+        versionGenerator,
+        versionDeclarationReferencer,
         typeGenerator,
         typeResolver,
         typeDeclarationReferencer,
@@ -203,6 +211,13 @@ export class SdkContextImpl implements SdkContext {
         });
         this.fernConstants = fernConstants;
 
+        this.version = new VersionContextImpl({
+            intermediateRepresentation,
+            versionGenerator,
+            versionDeclarationReferencer,
+            importsManager,
+            sourceFile
+        });
         this.type = new TypeContextImpl({
             npmPackage,
             isForSnippet,
