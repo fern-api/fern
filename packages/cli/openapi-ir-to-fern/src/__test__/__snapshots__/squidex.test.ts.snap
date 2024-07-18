@@ -4521,7 +4521,10 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                   "publish": {
                     "availability": "deprecated",
+                    "default": undefined,
+                    "docs": "True to automatically publish the content.",
                     "type": "optional<boolean>",
+                    "validation": undefined,
                   },
                 },
               },
@@ -5731,7 +5734,10 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                   "publish": {
                     "availability": "deprecated",
+                    "default": undefined,
+                    "docs": "True to automatically publish the content.",
                     "type": "optional<boolean>",
+                    "validation": undefined,
                   },
                 },
               },
@@ -9002,6 +9008,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "isSingleton": {
                     "availability": "deprecated",
+                    "docs": "Set to true to allow a single content item only.",
                     "type": "boolean",
                   },
                   "name": {
@@ -23468,7 +23475,10 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                   "publish": {
                     "availability": "deprecated",
+                    "default": undefined,
+                    "docs": "True to automatically publish the content.",
                     "type": "optional<boolean>",
+                    "validation": undefined,
                   },
                 },
               },
@@ -24678,7 +24688,10 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                   "publish": {
                     "availability": "deprecated",
+                    "default": undefined,
+                    "docs": "True to automatically publish the content.",
                     "type": "optional<boolean>",
+                    "validation": undefined,
                   },
                 },
               },
@@ -27949,6 +27962,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "isSingleton": {
                     "availability": "deprecated",
+                    "docs": "Set to true to allow a single content item only.",
                     "type": "boolean",
                   },
                   "name": {

@@ -2171,7 +2171,10 @@ exports[`open api parser flexport docs 1`] = `
                   "line_items": "list<root.CreateCommercialInvoiceLineItem>",
                   "manufacturer_refs": {
                     "availability": "deprecated",
+                    "default": undefined,
+                    "docs": "[DEPRECATED] Array of your custom strings used to refer to a manufacturer location.",
                     "type": "optional<list<string>>",
+                    "validation": undefined,
                   },
                   "metadata": "optional<root.MetadataCreate>",
                   "proration_amount": "root.MoneyCreate",
@@ -17463,7 +17466,10 @@ exports[`open api parser flexport simple 1`] = `
                   "line_items": "list<root.CreateCommercialInvoiceLineItem>",
                   "manufacturer_refs": {
                     "availability": "deprecated",
+                    "default": undefined,
+                    "docs": "[DEPRECATED] Array of your custom strings used to refer to a manufacturer location.",
                     "type": "optional<list<string>>",
+                    "validation": undefined,
                   },
                   "metadata": "optional<root.MetadataCreate>",
                   "proration_amount": "root.MoneyCreate",

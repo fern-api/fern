@@ -413,7 +413,9 @@ function getRequest({
                         property.key,
                         availability
                             ? {
-                                  type: getTypeFromTypeReference(propertyTypeReference),
+                                  ...(typeof propertyTypeReference === "string"
+                                      ? { type: propertyTypeReference }
+                                      : propertyTypeReference),
                                   availability
                               }
                             : propertyTypeReference
