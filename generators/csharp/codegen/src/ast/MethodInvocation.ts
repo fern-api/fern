@@ -44,7 +44,7 @@ export class MethodInvocation extends AstNode {
             this.on.write(writer);
             writer.write(".");
         }
-        writer.write(`${this.method}(`);
+        writer.write(this.method);
         if (this.generics != null && this.generics.length > 0) {
             writer.write("<");
             this.generics.forEach((generic, idx) => {
@@ -55,6 +55,7 @@ export class MethodInvocation extends AstNode {
             });
             writer.write(">");
         }
+        writer.write("(");
 
         writer.indent();
         this.arguments.forEach((arg, idx) => {

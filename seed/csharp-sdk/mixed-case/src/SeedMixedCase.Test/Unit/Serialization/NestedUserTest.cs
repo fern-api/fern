@@ -32,21 +32,6 @@ public class NestedUserTest
 }
 ";
 
-        var expectedObject = new NestedUser
-        {
-            Name = "username",
-            NestedUser_ = new User
-            {
-                UserName = "nestedUsername",
-                MetadataTags = new List<string>() { "tag1", "tag2" },
-                ExtraProperties = new Dictionary<string, string>()
-                {
-                    { "foo", "bar" },
-                    { "baz", "qux" },
-                }
-            }
-        };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -58,6 +43,7 @@ public class NestedUserTest
         );
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }

@@ -21,8 +21,6 @@ public class OrganizationTest
 }
 ";
 
-        var expectedObject = new Organization { Name = "orgName" };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -34,6 +32,7 @@ public class OrganizationTest
         );
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }

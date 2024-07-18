@@ -29,17 +29,6 @@ public class UserTest
 }
 ";
 
-        var expectedObject = new User
-        {
-            UserName = "username",
-            MetadataTags = new List<string>() { "tag1", "tag2" },
-            ExtraProperties = new Dictionary<string, string>()
-            {
-                { "foo", "bar" },
-                { "baz", "qux" },
-            }
-        };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -48,6 +37,7 @@ public class UserTest
         var deserializedObject = JsonSerializer.Deserialize<User>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }

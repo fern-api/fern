@@ -24,7 +24,7 @@ jobs:
       - name: Build Release
         run: dotnet build src -c Release /p:ContinuousIntegrationBuild=true
 
-  unit-test:
+  unit-tests:
     runs-on: ubuntu-latest
 
     steps:
