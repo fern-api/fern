@@ -69,7 +69,7 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
                     })
                 );
                 // todo: figure out what's broken with this object comparison
-                // writer.writeTextStatement("Assert.That(expectedObject, Is.EqualTo(deserializedObject))");
+                writer.writeTextStatement("Assert.That(expectedObject, Is.EqualTo(deserializedObject))");
                 writer.newLine();
                 writer.write("var serializedJson");
                 writer.writeNodeStatement(
