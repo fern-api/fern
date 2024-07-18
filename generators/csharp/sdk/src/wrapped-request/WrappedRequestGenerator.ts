@@ -1,5 +1,5 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import { getUndiscriminatedUnionSerializerAnnotation, SnippetHelper } from "@fern-api/fern-csharp-model";
+import { ExampleGenerator, getUndiscriminatedUnionSerializerAnnotation } from "@fern-api/fern-csharp-model";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
     ExampleEndpointCall,
@@ -26,7 +26,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
     private wrapper: SdkRequestWrapper;
     private serviceId: ServiceId;
     private endpoint: HttpEndpoint;
-    private snippetHelper: SnippetHelper;
+    private snippetHelper: ExampleGenerator;
 
     public constructor({ wrapper, context, serviceId, endpoint }: WrappedRequestGenerator.Args) {
         super(context);
@@ -34,7 +34,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         this.serviceId = serviceId;
         this.classReference = this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
         this.endpoint = endpoint;
-        this.snippetHelper = new SnippetHelper(context);
+        this.snippetHelper = new ExampleGenerator(context);
     }
 
     protected doGenerate(): CSharpFile {

@@ -1,4 +1,5 @@
 export { generateModels } from "./generateModels";
+export { generateTests } from "./generateTests";
 export * from "./ModelGeneratorCli";
-export { SnippetHelper } from "./SnippetHelper";
+export { ExampleGenerator } from "./snippets/ExampleGenerator";
 export { getUndiscriminatedUnionSerializerAnnotation } from "./undiscriminated-union/getUndiscriminatedUnionSerializerAnnotation";

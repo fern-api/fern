@@ -1,3 +1,4 @@
+import { execSync } from "child_process";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
@@ -20,5 +21,24 @@ export class CodeBlock extends AstNode {
         } else {
             this.value(writer);
         }
+    }
+
+    /**
+     * function for formatting snippets, useful in testing
+     */
+    public toFormattedSnippet(addSemiColon = true): string {
+        let codeString = this.toString();
+        if (addSemiColon) {
+            codeString += ";";
+        }
+        try {
+            return CodeBlock.formatCSharpCode(codeString);
+        } catch (e: unknown) {
+            return codeString;
+        }
+    }
+
+    private static formatCSharpCode(code: string): string {
+        return execSync("dotnet csharpier", { input: code, encoding: "utf-8" });
     }
 }

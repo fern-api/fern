@@ -1,3 +1,4 @@
+import { csharp } from "..";
 import { ClassInstantiation } from "./ClassInstantiation";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
@@ -13,6 +14,8 @@ export declare namespace MethodInvocation {
         arguments_: (CodeBlock | ClassInstantiation)[];
         /* In the event of an instance method, you'll want to invoke it on said instance */
         on: CodeBlock;
+        /* Any generics used in the method invocation */
+        generics?: csharp.Type[];
     }
 }
 
@@ -21,14 +24,16 @@ export class MethodInvocation extends AstNode {
     private method: string;
     private on: CodeBlock | undefined;
     private async: boolean;
+    private generics: csharp.Type[];
 
-    constructor({ method, arguments_, on, async }: MethodInvocation.Args) {
+    constructor({ method, arguments_, on, async, generics }: MethodInvocation.Args) {
         super();
 
         this.method = method;
         this.arguments = arguments_;
         this.on = on;
         this.async = async ?? false;
+        this.generics = generics ?? [];
     }
 
     public write(writer: Writer): void {
@@ -40,6 +45,16 @@ export class MethodInvocation extends AstNode {
             writer.write(".");
         }
         writer.write(`${this.method}(`);
+        if (this.generics != null && this.generics.length > 0) {
+            writer.write("<");
+            this.generics.forEach((generic, idx) => {
+                writer.writeNode(generic);
+                if (idx < this.generics.length - 1) {
+                    writer.write(", ");
+                }
+            });
+            writer.write(">");
+        }
 
         writer.indent();
         this.arguments.forEach((arg, idx) => {
