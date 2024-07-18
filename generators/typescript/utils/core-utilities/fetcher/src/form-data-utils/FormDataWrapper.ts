@@ -109,7 +109,7 @@ class Node16FormData implements CrossPlatformFormData {
     public async appendFile(key: string, value: unknown, fileName?: string): Promise<void> {
         let bufferedValue;
         if (!(value instanceof (await import("stream")).Readable)) {
-            bufferedValue = Buffer.from(((await value) as any).arrayBuffer());
+            bufferedValue = Buffer.from(await (value as any).arrayBuffer());
         } else {
             bufferedValue = value;
         }
