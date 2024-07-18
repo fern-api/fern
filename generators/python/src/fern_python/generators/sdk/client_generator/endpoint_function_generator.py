@@ -529,27 +529,40 @@ class EndpointFunctionGenerator:
             if self._endpoint.sdk_request is not None and self._endpoint.sdk_request.stream_parameter is not None:
                 response_property = self._endpoint.sdk_request.stream_parameter
                 streaming_parameter_name = request_property_to_name(response_property.property)
-                streaming_response_code_writer = EndpointResponseCodeWriter(
-                    context=self._context,
-                    errors=endpoint.errors,
-                    response=endpoint.response,
-                    is_async=is_async,
-                    streaming_parameter="streaming",
-                    pagination=self.pagination,
-                    pagination_snippet_config=PaginationSnippetConfig(
-                        endpoint_name=get_endpoint_name(self._endpoint),
-                        parameters=parameters,
-                        named_parameters=named_parameters,
-                    ),
-                )
-                streaming_request = get_httpx_request(
-                    is_streaming=True, response_code_writer=streaming_response_code_writer
-                )
+
+                def write_stream_generator(writer: AST.NodeWriter) -> None:
+                    streaming_response_code_writer = EndpointResponseCodeWriter(
+                        context=self._context,
+                        errors=endpoint.errors,
+                        response=endpoint.response,
+                        is_async=is_async,
+                        streaming_parameter="streaming",
+                        pagination=self.pagination,
+                        pagination_snippet_config=PaginationSnippetConfig(
+                            endpoint_name=get_endpoint_name(self._endpoint),
+                            parameters=parameters,
+                            named_parameters=named_parameters,
+                        ),
+                    )
+                    streaming_request = get_httpx_request(
+                        is_streaming=True, response_code_writer=streaming_response_code_writer
+                    )
+
+                    writer.write_node(streaming_request)
+
                 writer.write("if ")
                 writer.write_node(AST.Expression(streaming_parameter_name))
                 writer.write_line(":")
                 with writer.indent():
-                    writer.write_node(streaming_request)
+                    stream_generator_func_name = "stream_generator"
+                    writer.write_node(AST.FunctionDeclaration(
+                        name=stream_generator_func_name,
+                        signature=AST.FunctionSignature(),
+                        body=AST.CodeWriter(write_stream_generator),
+                        is_async=True,
+                    ))
+                    writer.write_newline_if_last_line_not()
+                    writer.write(f"return {stream_generator_func_name}()")
 
                 non_streaming_response_code_writer = EndpointResponseCodeWriter(
                     context=self._context,

@@ -95,24 +95,28 @@ class DummyClient:
         """
         _request_json = {"stream": stream, "num_events": num_events}
         if stream:
-            with self._client_wrapper.httpx_client.stream(
-                "generate", method="POST", json=_request_json, request_options=request_options, omit=OMIT
-            ) as _response:
-                try:
-                    if 200 <= _response.status_code < 300:
-                        for _text in _response.iter_lines():
-                            try:
-                                if len(_text) == 0:
-                                    continue
-                                yield pydantic_v1.parse_obj_as(StreamResponse, json.loads(_text))  # type: ignore
-                            except:
-                                pass
-                        return
-                    _response.read()
-                    _response_json = _response.json()
-                except JSONDecodeError:
-                    raise ApiError(status_code=_response.status_code, body=_response.text)
-                raise ApiError(status_code=_response.status_code, body=_response_json)
+
+            async def stream_generator():
+                with self._client_wrapper.httpx_client.stream(
+                    "generate", method="POST", json=_request_json, request_options=request_options, omit=OMIT
+                ) as _response:
+                    try:
+                        if 200 <= _response.status_code < 300:
+                            for _text in _response.iter_lines():
+                                try:
+                                    if len(_text) == 0:
+                                        continue
+                                    yield pydantic_v1.parse_obj_as(StreamResponse, json.loads(_text))  # type: ignore
+                                except:
+                                    pass
+                            return
+                        _response.read()
+                        _response_json = _response.json()
+                    except JSONDecodeError:
+                        raise ApiError(status_code=_response.status_code, body=_response.text)
+                    raise ApiError(status_code=_response.status_code, body=_response_json)
+
+            return stream_generator()
         else:
             _response = self._client_wrapper.httpx_client.request(
                 "generate", method="POST", json=_request_json, request_options=request_options, omit=OMIT
@@ -222,24 +226,28 @@ class AsyncDummyClient:
         """
         _request_json = {"stream": stream, "num_events": num_events}
         if stream:
-            async with self._client_wrapper.httpx_client.stream(
-                "generate", method="POST", json=_request_json, request_options=request_options, omit=OMIT
-            ) as _response:
-                try:
-                    if 200 <= _response.status_code < 300:
-                        async for _text in _response.aiter_lines():
-                            try:
-                                if len(_text) == 0:
-                                    continue
-                                yield pydantic_v1.parse_obj_as(StreamResponse, json.loads(_text))  # type: ignore
-                            except:
-                                pass
-                        return
-                    await _response.aread()
-                    _response_json = _response.json()
-                except JSONDecodeError:
-                    raise ApiError(status_code=_response.status_code, body=_response.text)
-                raise ApiError(status_code=_response.status_code, body=_response_json)
+
+            async def stream_generator():
+                async with self._client_wrapper.httpx_client.stream(
+                    "generate", method="POST", json=_request_json, request_options=request_options, omit=OMIT
+                ) as _response:
+                    try:
+                        if 200 <= _response.status_code < 300:
+                            async for _text in _response.aiter_lines():
+                                try:
+                                    if len(_text) == 0:
+                                        continue
+                                    yield pydantic_v1.parse_obj_as(StreamResponse, json.loads(_text))  # type: ignore
+                                except:
+                                    pass
+                            return
+                        await _response.aread()
+                        _response_json = _response.json()
+                    except JSONDecodeError:
+                        raise ApiError(status_code=_response.status_code, body=_response.text)
+                    raise ApiError(status_code=_response.status_code, body=_response_json)
+
+            return stream_generator()
         else:
             _response = await self._client_wrapper.httpx_client.request(
                 "generate", method="POST", json=_request_json, request_options=request_options, omit=OMIT
