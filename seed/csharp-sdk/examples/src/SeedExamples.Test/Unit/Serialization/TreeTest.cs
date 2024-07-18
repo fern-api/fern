@@ -28,15 +28,6 @@ public class TreeTest
 }
 ";
 
-        var expectedObject = new Tree
-        {
-            Nodes = new List<Node>()
-            {
-                new Node { Name = "left" },
-                new Node { Name = "right" }
-            }
-        };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -45,6 +36,7 @@ public class TreeTest
         var deserializedObject = JsonSerializer.Deserialize<Tree>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }

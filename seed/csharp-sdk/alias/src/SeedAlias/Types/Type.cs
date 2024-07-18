@@ -11,7 +11,4 @@ public record Type
 
     [JsonPropertyName("name")]
     public required string Name { get; init; }
-
-    [JsonPropertyName("unknownValue")]
-    public required object UnknownValue { get; init; }
 }

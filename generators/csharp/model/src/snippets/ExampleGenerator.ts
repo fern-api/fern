@@ -80,7 +80,12 @@ export class ExampleGenerator {
 
     private getSnippetForTypeId(typeId: string, exampleObjectType: ExampleObjectType): csharp.AstNode {
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(typeId);
-        return new ObjectGenerator(this.context, typeDeclaration).doGenerateSnippet(exampleObjectType);
+        if (typeDeclaration.shape.type !== "object") {
+            throw new Error("Unexpected non object in Example Generator");
+        }
+        return new ObjectGenerator(this.context, typeDeclaration, typeDeclaration.shape).doGenerateSnippet(
+            exampleObjectType
+        );
     }
 
     private getSnippetForUndiscriminatedUnion(

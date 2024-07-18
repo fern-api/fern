@@ -39,23 +39,6 @@ public class MovieTest
 }
 ";
 
-        var expectedObject = new Movie
-        {
-            Id = "movie-c06a4ad7",
-            Prequel = "movie-cv9b914f",
-            Title = "The Boy and the Heron",
-            From = "Hayao Miyazaki",
-            Rating = 8,
-            Type = "movie",
-            Tag = "tag-wf9as23d",
-            Metadata = new Dictionary<string, object>()
-            {
-                { "actors", "--unknown--" },
-                { "releaseDate", "--unknown--" },
-                { "ratings", "--unknown--" },
-            }
-        };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -64,6 +47,7 @@ public class MovieTest
         var deserializedObject = JsonSerializer.Deserialize<Movie>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }

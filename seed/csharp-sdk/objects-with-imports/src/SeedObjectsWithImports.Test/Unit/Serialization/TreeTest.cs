@@ -44,41 +44,6 @@ public class TreeTest
 }
 ";
 
-        var expectedObject = new Tree
-        {
-            Nodes = new List<Node>()
-            {
-                new Node
-                {
-                    Id = "node-8dvgfja2",
-                    Label = "left",
-                    Metadata = new Metadata
-                    {
-                        Id = "metadata-kjasf923",
-                        Data = new Dictionary<string, string>()
-                        {
-                            { "foo", "bar" },
-                            { "baz", "qux" },
-                        }
-                    }
-                },
-                new Node
-                {
-                    Id = "node-cwda9fi2x",
-                    Label = "right",
-                    Metadata = new Metadata
-                    {
-                        Id = "metadata-lkasdfv9j",
-                        Data = new Dictionary<string, string>()
-                        {
-                            { "one", "two" },
-                            { "three", "four" },
-                        }
-                    }
-                }
-            }
-        };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -87,6 +52,7 @@ public class TreeTest
         var deserializedObject = JsonSerializer.Deserialize<Tree>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }

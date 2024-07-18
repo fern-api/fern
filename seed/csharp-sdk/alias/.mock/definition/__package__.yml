@@ -11,21 +11,11 @@ types:
     properties:
       id: TypeId
       name: string
-      unknownValue: unknown
     examples:
       - name: One
         value:
           id: type-df89sdg1
           name: foo
-          unknownValue:
-            id: hello
-            number: hi
-            listy:
-              - hello
-              - there
-            nested:
-              thing: bop
-              otherthing: boop
 
   Object:
     docs: Object is an alias for a type.

@@ -22,8 +22,6 @@ public class NameTest
 }
 ";
 
-        var expectedObject = new Name { Id = "name-sdfg8ajk", Value = "name" };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -32,6 +30,7 @@ public class NameTest
         var deserializedObject = JsonSerializer.Deserialize<Name>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }

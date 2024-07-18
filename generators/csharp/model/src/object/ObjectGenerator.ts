@@ -1,6 +1,6 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { ExampleObjectType, NameAndWireValue, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { ExampleObjectType, NameAndWireValue, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { ExampleGenerator } from "../snippets/ExampleGenerator";
@@ -8,12 +8,15 @@ import { getUndiscriminatedUnionSerializerAnnotation } from "../undiscriminated-
 
 export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly classReference: csharp.ClassReference;
-    private readonly snippetHelper: ExampleGenerator;
-
-    constructor(context: ModelGeneratorContext, private readonly typeDeclaration: TypeDeclaration) {
+    private readonly exampleGenerator: ExampleGenerator;
+    constructor(
+        context: ModelGeneratorContext,
+        private readonly typeDeclaration: TypeDeclaration,
+        private readonly objectDeclaration: ObjectTypeDeclaration
+    ) {
         super(context);
         this.classReference = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration.name);
-        this.snippetHelper = new ExampleGenerator(context);
+        this.exampleGenerator = new ExampleGenerator(context);
     }
 
     public doGenerate(): CSharpFile {
@@ -24,10 +27,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             access: "public",
             record: true
         });
-        if (this.typeDeclaration.shape.type !== "object") {
-            throw new Error("Unexpected non-object type in ObjectGenerator");
-        }
-        const properties = this.context.flattenedProperties.get(typeId) ?? this.typeDeclaration.shape.properties;
+        const properties = this.context.flattenedProperties.get(typeId) ?? this.objectDeclaration.properties;
         properties.forEach((property) => {
             const annotations: csharp.Annotation[] = [];
             const maybeUndiscriminatedUnion = this.context.getAsUndiscriminatedUnionTypeDeclaration(property.valueType);
@@ -68,7 +68,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                 className: this.classReference.name,
                 objectProperty: exampleProperty.name
             });
-            const assignment = this.snippetHelper.getSnippetForTypeReference(exampleProperty.value);
+            const assignment = this.exampleGenerator.getSnippetForTypeReference(exampleProperty.value);
             // todo: considering filtering out "assignments" are are actually just null so that null properties
             // are completely excluded from object initializers
             return { name: propertyName, assignment };

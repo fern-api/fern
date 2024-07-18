@@ -22,8 +22,6 @@ public class ActressTest
 }
 ";
 
-        var expectedObject = new Actress { Name = "Jennifer Lawrence", Id = "actor_456" };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -32,6 +30,7 @@ public class ActressTest
         var deserializedObject = JsonSerializer.Deserialize<Actress>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }

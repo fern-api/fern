@@ -22,8 +22,6 @@ public class EntityTest
 }
 ";
 
-        var expectedObject = new Entity { Type = ComplexType.Unknown, Name = "unknown" };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -32,6 +30,7 @@ public class EntityTest
         var deserializedObject = JsonSerializer.Deserialize<Entity>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }

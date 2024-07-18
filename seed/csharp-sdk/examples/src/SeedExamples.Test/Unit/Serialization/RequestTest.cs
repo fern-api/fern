@@ -21,8 +21,6 @@ public class RequestTest
 }
 ";
 
-        var expectedObject = new Request { Request_ = "--unknown--" };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -31,6 +29,7 @@ public class RequestTest
         var deserializedObject = JsonSerializer.Deserialize<Request>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }

@@ -23,13 +23,6 @@ public class MomentTest
 }
 ";
 
-        var expectedObject = new Moment
-        {
-            Id = new Guid("656f12d6-f592-444c-a1d3-a3cfd46d5b39"),
-            Date = new DateOnly(1994, 1, 1),
-            Datetime = new DateTime(1994, 01, 01, 01, 01, 01, 000)
-        };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -38,6 +31,7 @@ public class MomentTest
         var deserializedObject = JsonSerializer.Deserialize<Moment>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }

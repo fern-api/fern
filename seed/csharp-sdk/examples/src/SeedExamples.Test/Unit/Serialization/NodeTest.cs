@@ -41,27 +41,6 @@ public class NodeTest
 }
 ";
 
-        var expectedObject = new Node
-        {
-            Name = "root",
-            Nodes = new List<Node>()
-            {
-                new Node { Name = "left" },
-                new Node { Name = "right" }
-            },
-            Trees = new List<Tree>()
-            {
-                new Tree
-                {
-                    Nodes = new List<Node>()
-                    {
-                        new Node { Name = "left" },
-                        new Node { Name = "right" }
-                    }
-                }
-            }
-        };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -70,6 +49,7 @@ public class NodeTest
         var deserializedObject = JsonSerializer.Deserialize<Node>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 
@@ -83,8 +63,6 @@ public class NodeTest
 }
 ";
 
-        var expectedObject = new Node { Name = "left" };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -93,6 +71,7 @@ public class NodeTest
         var deserializedObject = JsonSerializer.Deserialize<Node>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 
@@ -106,8 +85,6 @@ public class NodeTest
 }
 ";
 
-        var expectedObject = new Node { Name = "right" };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -116,6 +93,7 @@ public class NodeTest
         var deserializedObject = JsonSerializer.Deserialize<Node>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }

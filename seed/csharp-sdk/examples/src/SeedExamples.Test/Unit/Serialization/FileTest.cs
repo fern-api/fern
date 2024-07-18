@@ -22,8 +22,6 @@ public class FileTest
 }
 ";
 
-        var expectedObject = new File { Name = "file.txt", Contents = "..." };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -32,6 +30,7 @@ public class FileTest
         var deserializedObject = JsonSerializer.Deserialize<File>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 
@@ -46,8 +45,6 @@ public class FileTest
 }
 ";
 
-        var expectedObject = new File { Name = "another_file.txt", Contents = "..." };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -56,6 +53,7 @@ public class FileTest
         var deserializedObject = JsonSerializer.Deserialize<File>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }

@@ -22,8 +22,6 @@ public class MigrationTest
 }
 ";
 
-        var expectedObject = new Migration { Name = "001_init", Status = MigrationStatus.Running };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -35,6 +33,7 @@ public class MigrationTest
         );
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }

@@ -22,12 +22,6 @@ public class JsonTest
 }
 ";
 
-        var expectedObject = new Json
-        {
-            Docs = "Types extend this type to include a docs and json property.",
-            Raw = "{\"docs\": true, \"json\": true}"
-        };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -36,6 +30,7 @@ public class JsonTest
         var deserializedObject = JsonSerializer.Deserialize<Json>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }

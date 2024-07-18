@@ -33,26 +33,6 @@ public class ResponseTest
 }
 ";
 
-        var expectedObject = new Response
-        {
-            Response_ = "--unknown--",
-            Identifiers = new List<Identifier>()
-            {
-                new Identifier
-                {
-                    Type = BasicType.Primitive,
-                    Value = "example",
-                    Label = "Primitive"
-                },
-                new Identifier
-                {
-                    Type = ComplexType.Unknown,
-                    Value = "{}",
-                    Label = "Unknown"
-                }
-            }
-        };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -61,6 +41,7 @@ public class ResponseTest
         var deserializedObject = JsonSerializer.Deserialize<Response>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }

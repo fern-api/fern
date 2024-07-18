@@ -23,13 +23,6 @@ public class TypeTest
 }
 ";
 
-        var expectedObject = new Type
-        {
-            Decimal = 1.1,
-            Even = 2,
-            Name = "rules"
-        };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -38,6 +31,7 @@ public class TypeTest
         var deserializedObject = JsonSerializer.Deserialize<Type>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }

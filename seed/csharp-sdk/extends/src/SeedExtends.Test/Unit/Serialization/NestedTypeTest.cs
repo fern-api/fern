@@ -23,13 +23,6 @@ public class NestedTypeTest
 }
 ";
 
-        var expectedObject = new NestedType
-        {
-            Docs = "This is an example nested type.",
-            Name = "NestedExample",
-            Raw = "{\"nested\": \"example\"}"
-        };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -41,6 +34,7 @@ public class NestedTypeTest
         );
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }

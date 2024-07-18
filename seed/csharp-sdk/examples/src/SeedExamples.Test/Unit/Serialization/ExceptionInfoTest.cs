@@ -23,13 +23,6 @@ public class ExceptionInfoTest
 }
 ";
 
-        var expectedObject = new ExceptionInfo
-        {
-            ExceptionType = "Unavailable",
-            ExceptionMessage = "This component is unavailable!",
-            ExceptionStacktrace = "<logs>"
-        };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -41,6 +34,7 @@ public class ExceptionInfoTest
         );
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }

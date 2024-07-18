@@ -25,12 +25,6 @@ public class MetadataTest
 }
 ";
 
-        var expectedObject = new Metadata
-        {
-            Id = "metadata-js8dg24b",
-            Data = new Dictionary<string, string>() { { "foo", "bar" }, { "baz", "qux" }, }
-        };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -39,6 +33,7 @@ public class MetadataTest
         var deserializedObject = JsonSerializer.Deserialize<Metadata>(inputJson, serializerOptions);
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }

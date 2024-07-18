@@ -22,12 +22,6 @@ public class ExampleTypeTest
 }
 ";
 
-        var expectedObject = new ExampleType
-        {
-            Docs = "This is an example type.",
-            Name = "Example"
-        };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -39,6 +33,7 @@ public class ExampleTypeTest
         );
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }

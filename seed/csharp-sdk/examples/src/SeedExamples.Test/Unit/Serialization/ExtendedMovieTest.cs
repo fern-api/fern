@@ -40,29 +40,6 @@ public class ExtendedMovieTest
 }
 ";
 
-        var expectedObject = new ExtendedMovie
-        {
-            Id = "movie-sda231x",
-            Title = "Pulp Fiction",
-            From = "Quentin Tarantino",
-            Rating = 8.5,
-            Type = "movie",
-            Tag = "tag-12efs9dv",
-            Cast = new List<string>()
-            {
-                "John Travolta",
-                "Samuel L. Jackson",
-                "Uma Thurman",
-                "Bruce Willis"
-            },
-            Metadata = new Dictionary<string, object>()
-            {
-                { "academyAward", "--unknown--" },
-                { "releaseDate", "--unknown--" },
-                { "ratings", "--unknown--" },
-            }
-        };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -74,6 +51,7 @@ public class ExtendedMovieTest
         );
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }

@@ -38,26 +38,6 @@ public class DirectoryTest
 }
 ";
 
-        var expectedObject = new Directory
-        {
-            Name = "root",
-            Files = new List<File>()
-            {
-                new File { Name = "file.txt", Contents = "..." }
-            },
-            Directories = new List<Directory>()
-            {
-                new Directory
-                {
-                    Name = "tmp",
-                    Files = new List<File>()
-                    {
-                        new File { Name = "another_file.txt", Contents = "..." }
-                    }
-                }
-            }
-        };
-
         var serializerOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -69,6 +49,7 @@ public class DirectoryTest
         );
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
+
         Assert.That(JToken.DeepEquals(JToken.Parse(inputJson), JToken.Parse(serializedJson)));
     }
 }
