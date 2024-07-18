@@ -52,6 +52,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
       response-stream: User
   ```
 
+## [2.15.6] - 2024-07-17
+
+- Fix: The generated python SDK now requires an environment be specified if a default is not provided.
+
+## [2.15.5] - 2024-07-17
+
+- Fix: The generated python SDK Oauth client now no longer checks for an expiry when getting the access token if an expiry field is not configured.
+
 ## [2.15.4] - 2024-07-10
 
 - Fix: The generated python SDK now serializes bytes within JSON as a utf-8 encoded string.

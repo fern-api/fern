@@ -269,6 +269,23 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             retainOriginalCasing: this.retainOriginalCasing,
                             omitUndefined: this.omitUndefined
                         }),
+                    streamParameter: (streamParameter) =>
+                        // TODO(amckinney): For now we just generate the stream variant of the endpoint.
+                        // We need to implement both the non-streaming and streaming variants.
+                        new GeneratedStreamingEndpointImplementation({
+                            packageId,
+                            endpoint,
+                            generatedSdkClientClass: this,
+                            includeCredentialsOnCrossOriginRequests,
+                            response: getGeneratedEndpointResponse({
+                                response: HttpResponseBody.streaming(streamParameter.streamResponse)
+                            }),
+                            defaultTimeoutInSeconds,
+                            request: getGeneratedEndpointRequest(),
+                            includeSerdeLayer,
+                            retainOriginalCasing: this.retainOriginalCasing,
+                            omitUndefined: this.omitUndefined
+                        }),
                     text: (textResponse) => {
                         return getDefaultEndpointImplementation({
                             response: HttpResponseBody.text(textResponse)
@@ -797,6 +814,57 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             );
         }
 
+        const generatedVersion = context.version.getGeneratedVersion();
+        if (generatedVersion != null) {
+            const header = generatedVersion.getHeader();
+            const headerName = this.getOptionKeyForHeader(header);
+            const defaultVersion = generatedVersion.getDefaultVersion();
+
+            let value: ts.Expression;
+            if (defaultVersion != null) {
+                value = ts.factory.createBinaryExpression(
+                    ts.factory.createPropertyAccessChain(
+                        ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                        ts.factory.createIdentifier(headerName)
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                    ts.factory.createBinaryExpression(
+                        ts.factory.createPropertyAccessChain(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createThis(),
+                                GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                            ts.factory.createIdentifier(headerName)
+                        ),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                        ts.factory.createStringLiteral(defaultVersion)
+                    )
+                );
+            } else {
+                value = ts.factory.createBinaryExpression(
+                    ts.factory.createPropertyAccessChain(
+                        ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                        ts.factory.createIdentifier(headerName)
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createThis(),
+                            GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
+                        ),
+                        ts.factory.createIdentifier(headerName)
+                    )
+                );
+            }
+            headers.push({
+                header: header.name.wireValue,
+                value
+            });
+        }
+
         headers.push(
             {
                 header: "X-Fern-Runtime",
@@ -822,7 +890,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     private generateRequestOptionsInterface(context: SdkContext): OptionalKind<InterfaceDeclarationStructure> {
-        return {
+        const requestOptions = {
             name: GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME,
             properties: [
                 {
@@ -853,6 +921,18 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 })
             ]
         };
+
+        const generatedVersion = context.version.getGeneratedVersion();
+        if (generatedVersion != null) {
+            const header = generatedVersion.getHeader();
+            requestOptions.properties.push({
+                name: this.getOptionKeyForHeader(header),
+                type: generatedVersion.getEnumValueUnion(),
+                hasQuestionToken: true,
+                docs: [`Override the ${header.name.wireValue} header`]
+            });
+        }
+        return requestOptions;
     }
 
     /******************************
@@ -962,6 +1042,17 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     )
                 );
             }
+        }
+
+        const generatedVersion = context.version.getGeneratedVersion();
+        if (generatedVersion != null && !generatedVersion.hasDefaultVersion()) {
+            const header = generatedVersion.getHeader();
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    this.getOptionKeyForHeader(header),
+                    ts.factory.createStringLiteral(generatedVersion.getFirstEnumValue())
+                )
+            );
         }
 
         return properties;
@@ -1142,6 +1233,17 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     docs: [`Override the ${header.name.wireValue} header`]
                 });
             }
+        }
+
+        const generatedVersion = context.version.getGeneratedVersion();
+        if (generatedVersion != null) {
+            const header = generatedVersion.getHeader();
+            properties.push({
+                name: this.getOptionKeyForHeader(header),
+                type: generatedVersion.getEnumValueUnion(),
+                hasQuestionToken: generatedVersion.hasDefaultVersion(),
+                docs: [`Override the ${header.name.wireValue} header`]
+            });
         }
 
         if (this.allowCustomFetcher) {
