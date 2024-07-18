@@ -179,10 +179,19 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     }
 
     public getGlobalHeaderNames(): Set<string> {
-        return new Set(Object.keys(this.rootApiFile.headers ?? {}));
+        const headerNames = Object.keys(this.rootApiFile.headers ?? {});
+        const maybeVersionHeader = this.getVersionHeader();
+        if (maybeVersionHeader != null) {
+            headerNames.push(maybeVersionHeader);
+        }
+        return new Set(headerNames);
     }
 
     public addGlobalHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void {
+        const maybeVersionHeader = this.getVersionHeader();
+        if (maybeVersionHeader != null && maybeVersionHeader === name) {
+            return;
+        }
         if (this.rootApiFile.headers == null) {
             this.rootApiFile.headers = {};
         }
@@ -514,6 +523,15 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         } else {
             return (this.definitionFiles[file] ??= {});
         }
+    }
+
+    private getVersionHeader(): string | undefined {
+        if (this.rootApiFile.version == null) {
+            return undefined;
+        }
+        return typeof this.rootApiFile.version.header === "string"
+            ? this.rootApiFile.version.header
+            : this.rootApiFile.version.header.value;
     }
 }
 

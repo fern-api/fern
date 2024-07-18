@@ -1,0 +1,383 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+types:
+  TypeDeclaration:
+    docs: "A type, which is a name and a shape"
+    extends: commons.Declaration
+    properties:
+      name: DeclaredTypeName
+      shape: Type
+      examples: list<ExampleType>
+      referencedTypes:
+        docs: All other named types that this type references (directly or indirectly)
+        type: set<commons.TypeId>
+
+  DeclaredTypeName:
+    properties:
+      typeId: commons.TypeId
+      fernFilepath: commons.FernFilepath
+      name: commons.Name
+
+  Type:
+    discriminant:
+      value: _type
+      name: type
+    union:
+      alias: AliasTypeDeclaration
+      enum: EnumTypeDeclaration
+      object: ObjectTypeDeclaration
+      union: UnionTypeDeclaration
+      undiscriminatedUnion: UndiscriminatedUnionTypeDeclaration
+
+  AliasTypeDeclaration:
+    properties:
+      aliasOf: TypeReference
+      resolvedType: ResolvedTypeReference
+  ResolvedTypeReference:
+    discriminant:
+      value: _type
+      name: type
+    union:
+      container:
+        type: ContainerType
+        key: container
+      named: ResolvedNamedType
+      primitive:
+        type: PrimitiveType
+        key: primitive
+      unknown: {}
+  ResolvedNamedType:
+    properties:
+      name: DeclaredTypeName
+      shape: ShapeType
+  ShapeType:
+    enum:
+      - ENUM
+      - OBJECT
+      - UNION
+      - UNDISCRIMINATED_UNION
+
+  EnumTypeDeclaration:
+    properties:
+      default: optional<EnumValue>
+      values: list<EnumValue>
+  EnumValue:
+    extends: commons.Declaration
+    properties:
+      name: commons.NameAndWireValue
+
+  ObjectTypeDeclaration:
+    properties:
+      extends:
+        docs: A list of other types to inherit from
+        type: list<DeclaredTypeName>
+      properties: list<ObjectProperty>
+      extra-properties:
+        docs: Whether to allow extra properties on the object.
+        type: boolean
+  ObjectProperty:
+    extends: commons.Declaration
+    properties:
+      name: commons.NameAndWireValue
+      valueType: TypeReference
+
+  UnionTypeDeclaration:
+    properties:
+      discriminant: commons.NameAndWireValue
+      extends:
+        docs: "A list of other types to inherit from"
+        type: list<DeclaredTypeName>
+      types: list<SingleUnionType>
+      baseProperties: list<ObjectProperty>
+  SingleUnionType:
+    extends: commons.WithDocs
+    properties:
+      discriminantValue: commons.NameAndWireValue
+      shape: SingleUnionTypeProperties
+  SingleUnionTypeProperties:
+    discriminant:
+      value: _type
+      name: propertiesType
+    union:
+      samePropertiesAsObject: DeclaredTypeName
+      singleProperty: SingleUnionTypeProperty
+      noProperties: {}
+  SingleUnionTypeProperty:
+    properties:
+      name: commons.NameAndWireValue
+      type: TypeReference
+
+  UndiscriminatedUnionTypeDeclaration:
+    properties:
+      members: list<UndiscriminatedUnionMember>
+  UndiscriminatedUnionMember:
+    extends: commons.WithDocs
+    properties:
+      type: TypeReference
+
+  TypeReference:
+    discriminant:
+      value: _type
+      name: type
+    union:
+      container:
+        type: ContainerType
+        key: container
+      named: DeclaredTypeName
+      primitive:
+        type: PrimitiveType
+        key: primitive
+      unknown: {}
+  ContainerType:
+    discriminant:
+      value: _type
+      name: type
+    union:
+      list:
+        type: TypeReference
+        key: list
+      map: MapType
+      optional:
+        type: TypeReference
+        key: optional
+      set:
+        type: TypeReference
+        key: set
+      literal:
+        type: Literal
+        key: literal
+  MapType:
+    properties:
+      keyType: TypeReference
+      valueType: TypeReference
+
+  PrimitiveType:
+    properties:
+      v1: PrimitiveTypeV1
+      v2: optional<PrimitiveTypeV2>
+  PrimitiveTypeV1:
+    enum:
+      - INTEGER
+      - DOUBLE
+      - STRING
+      - BOOLEAN
+      - value: LONG
+        docs: "Within the range -2^53 to 2^53"
+      - DATE_TIME
+      - DATE
+      - UUID
+      - BASE_64
+      - BIG_INTEGER
+  PrimitiveTypeV2:
+    union:
+      integer: IntegerType
+      double: DoubleType
+      string: StringType
+      boolean: BooleanType
+      long: LongType
+      bigInteger: BigIntegerType
+
+  IntegerType:
+    properties:
+      default: optional<integer>
+      validation: optional<IntegerValidationRules>
+  IntegerValidationRules:
+    properties:
+      min: optional<integer>
+      max: optional<integer>
+      exclusiveMin: optional<boolean>
+      exclusiveMax: optional<boolean>
+      multipleOf: optional<integer>
+  DoubleType:
+    properties:
+      default: optional<integer>
+      validation: optional<DoubleValidationRules>
+  DoubleValidationRules:
+    properties:
+      min: optional<double>
+      max: optional<double>
+      exclusiveMin: optional<boolean>
+      exclusiveMax: optional<boolean>
+      multipleOf: optional<double>
+  StringType:
+    properties:
+      default: optional<string>
+      validation: optional<StringValidationRules>
+  StringValidationRules:
+    properties:
+      format: optional<string>
+      pattern: optional<string>
+      minLength: optional<integer>
+      maxLength: optional<integer>
+  BooleanType:
+    properties:
+      default: optional<boolean>
+  LongType:
+    properties:
+      default: optional<long>
+  BigIntegerType:
+    properties:
+      default: optional<string>
+
+  Literal:
+    union:
+      string:
+        type: string
+        key: string
+      boolean:
+        type: boolean
+        key: boolean
+
+  # examples
+
+  ExampleType:
+    extends:
+      - commons.WithJsonExample
+      - commons.WithDocs
+    properties:
+      name: optional<commons.Name>
+      shape: ExampleTypeShape
+
+  ExampleTypeShape:
+    union:
+      alias: ExampleAliasType
+      enum: ExampleEnumType
+      object: ExampleObjectType
+      union: ExampleUnionType
+      undiscriminatedUnion: ExampleUndiscriminatedUnionType
+
+  ExampleAliasType:
+    properties:
+      value: ExampleTypeReference
+
+  ExampleEnumType:
+    properties:
+      value: commons.NameAndWireValue
+
+  ExampleObjectType:
+    properties:
+      properties: list<ExampleObjectProperty>
+
+  ExampleObjectProperty:
+    properties:
+      name: commons.NameAndWireValue
+      value: ExampleTypeReference
+      originalTypeDeclaration:
+        docs: |
+          This property may have been brought in via extension. originalTypeDeclaration
+          is the name of the type that contains this property.
+        type: DeclaredTypeName
+
+  ExampleUnionType:
+    properties:
+      discriminant: commons.NameAndWireValue
+      singleUnionType: ExampleSingleUnionType
+  
+  ExampleUndiscriminatedUnionType: 
+    properties: 
+      index:
+        type: integer
+        docs: | 
+          The zero-based index of the undiscriminated union variant.  
+          For the following undiscriminated union 
+          ```
+          MyUnion: 
+            discriminated: false
+            union: 
+              - string
+              - integer
+          ```
+          a string example would have an index 0 and an integer example
+          would have an index 1. 
+      singleUnionType: ExampleTypeReference
+
+  ExampleSingleUnionType:
+    properties:
+      wireDiscriminantValue: commons.NameAndWireValue
+      shape: ExampleSingleUnionTypeProperties
+
+  ExampleSingleUnionTypeProperties:
+    union:
+      samePropertiesAsObject: ExampleObjectTypeWithTypeId
+      singleProperty: ExampleTypeReference
+      noProperties: {}
+
+  ExampleTypeReference:
+    extends: commons.WithJsonExample
+    properties:
+      shape: ExampleTypeReferenceShape
+
+  ExampleTypeReferenceShape:
+    union:
+      primitive:
+        type: ExamplePrimitive
+        key: primitive
+      container:
+        type: ExampleContainer
+        key: container
+      unknown:
+        type: unknown
+        key: unknown
+      named: ExampleNamedType
+
+  ExampleContainer:
+    union:
+      list:
+        type: list<ExampleTypeReference>
+        key: list
+      set:
+        type: list<ExampleTypeReference>
+        key: set
+      optional:
+        type: optional<ExampleTypeReference>
+        key: optional
+      map:
+        type: list<ExampleKeyValuePair>
+        key: map
+      literal:
+        type: ExamplePrimitive
+        key: literal
+
+  ExampleKeyValuePair:
+    properties:
+      key: ExampleTypeReference
+      value: ExampleTypeReference
+
+  ExamplePrimitive:
+    union:
+      integer:
+        type: integer
+        key: integer
+      double:
+        type: double
+        key: double
+      string:
+        type: commons.EscapedString
+        key: string
+      boolean:
+        type: boolean
+        key: boolean
+      long:
+        type: long
+        key: long
+      datetime:
+        type: datetime
+        key: datetime
+      date:
+        type: date
+        key: date
+      uuid:
+        type: uuid
+        key: uuid
+
+  ExampleNamedType:
+    properties:
+      typeName: DeclaredTypeName
+      shape: ExampleTypeShape
+
+  ExampleObjectTypeWithTypeId:
+    properties:
+      typeId: commons.TypeId
+      object: ExampleObjectType

@@ -1,5 +1,5 @@
 import { RUNTIME } from "../../runtime";
-import { getRequestBody, maybeStringifyBody } from "../getRequestBody";
+import { getRequestBody } from "../getRequestBody";
 
 if (RUNTIME.type === "browser") {
     require("jest-fetch-mock").enableMocks();
@@ -10,7 +10,10 @@ describe("Test getRequestBody", () => {
         if (RUNTIME.type === "node") {
             const formData = new (await import("formdata-node")).FormData();
             formData.append("key", "value");
-            const result = await getRequestBody(formData, "multipart/form-data");
+            const result = await getRequestBody({
+                body: formData,
+                type: "file"
+            });
             expect(result).toBe(formData);
         }
     });
@@ -18,7 +21,10 @@ describe("Test getRequestBody", () => {
     it("should stringify body if not FormData in Node environment", async () => {
         if (RUNTIME.type === "node") {
             const body = { key: "value" };
-            const result = await getRequestBody(body, "application/json");
+            const result = await getRequestBody({
+                body,
+                type: "json"
+            });
             expect(result).toBe('{"key":"value"}');
         }
     });
@@ -27,7 +33,10 @@ describe("Test getRequestBody", () => {
         if (RUNTIME.type === "browser") {
             const formData = new (await import("form-data")).default();
             formData.append("key", "value");
-            const result = await getRequestBody(formData, "multipart/form-data");
+            const result = await getRequestBody({
+                body: formData,
+                type: "file"
+            });
             expect(result).toBe(formData);
         }
     });
@@ -35,28 +44,38 @@ describe("Test getRequestBody", () => {
     it("should stringify body if not FormData in browser environment", async () => {
         if (RUNTIME.type === "browser") {
             const body = { key: "value" };
-            const result = await getRequestBody(body, "application/json");
+            const result = await getRequestBody({
+                body,
+                type: "json"
+            });
             expect(result).toBe('{"key":"value"}');
         }
     });
-});
 
-describe("Test maybeStringifyBody", () => {
-    it("should return the Uint8Array", () => {
+    it("should return the Uint8Array", async () => {
         const input = new Uint8Array([1, 2, 3]);
-        const result = maybeStringifyBody(input, "application/octet-stream");
+        const result = await getRequestBody({
+            body: input,
+            type: "bytes"
+        });
         expect(result).toBe(input);
     });
 
-    it("should return the input for content-type 'application/x-www-form-urlencoded'", () => {
+    it("should return the input for content-type 'application/x-www-form-urlencoded'", async () => {
         const input = "key=value&another=param";
-        const result = maybeStringifyBody(input, "application/x-www-form-urlencoded");
+        const result = await getRequestBody({
+            body: input,
+            type: "other"
+        });
         expect(result).toBe(input);
     });
 
-    it("should JSON stringify objects", () => {
+    it("should JSON stringify objects", async () => {
         const input = { key: "value" };
-        const result = maybeStringifyBody(input, "application/json");
+        const result = await getRequestBody({
+            body: input,
+            type: "json"
+        });
         expect(result).toBe('{"key":"value"}');
     });
 });

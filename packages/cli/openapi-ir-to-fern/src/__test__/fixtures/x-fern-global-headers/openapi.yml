@@ -2,6 +2,12 @@ openapi: 3.1.0
 info:
   title: Test extension `x-fern-audiences` alongside `x-fern-streaming`.
   version: 1.0.0
+x-fern-version:
+  header: my-api-version
+  default: '1.0'
+  values:
+    - '1.0'
+    - 'latest'
 x-fern-global-headers:
   - header: my-api-key
     name: api-key-alias
@@ -43,6 +49,11 @@ paths:
           required: true
         - in: header
           name: x-api-key
+          schema:
+            type: string
+          required: true
+        - in: header
+          name: my-api-version
           schema:
             type: string
           required: true
