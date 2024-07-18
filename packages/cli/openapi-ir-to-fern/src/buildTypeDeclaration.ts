@@ -524,7 +524,7 @@ function convertPropertyTypeReferenceToTypeDefinition(
     typeReference: RawSchemas.TypeReferenceWithDocsSchema,
     audiences: string[],
     name?: string | undefined,
-    availability?: RawSchemas.DeclarationWithoutDocsSchema["availability"]
+    availability?: RawSchemas.AvailabilityUnionSchema
 ): RawSchemas.ObjectPropertySchema {
     if (audiences.length === 0 && name == null && availability == null) {
         return typeReference;

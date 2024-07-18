@@ -311,8 +311,7 @@ function getQueryParameterTypeReference({
                         generatedName: schema.generatedName,
                         value: oneOfSchema,
                         description: undefined,
-                        // TODO (rohin): not sure about this:
-                        availability: undefined,
+                        availability: schema.availability,
                         groupName: undefined
                     }),
                     context,
